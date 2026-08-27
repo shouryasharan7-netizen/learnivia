@@ -1,0 +1,150 @@
+.main {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.mascotImg {
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+
+.title {
+  color: var(--deep-navy);
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.125rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.searchInput, .filterSelect {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  min-width: 250px;
+}
+
+.searchInput:focus, .filterSelect:focus {
+  outline: none;
+  border-color: var(--fresh-teal);
+}
+
+.tutorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.noTutors {
+  text-align: center;
+  color: #666;
+  grid-column: 1 / -1;
+  font-size: 1.25rem;
+  padding: 4rem;
+  background: white;
+  border-radius: 16px;
+}
+
+.tutorCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tutorCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.tutorHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatarPlaceholder {
+  width: 60px;
+  height: 60px;
+  background-color: var(--soft-sky-blue);
+  color: var(--deep-navy);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.tutorName {
+  font-size: 1.25rem;
+  color: var(--deep-navy);
+  margin-bottom: 0.25rem;
+}
+
+.tutorTimezone {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.tutorBio {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  background-color: var(--soft-gold);
+  color: var(--deep-navy);
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.viewProfileBtn {
+  display: block;
+  text-align: center;
+  background-color: var(--fresh-teal);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.viewProfileBtn:hover {
+  opacity: 0.9;
+}
