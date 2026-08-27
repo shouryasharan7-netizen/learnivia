@@ -39,6 +39,11 @@ export async function bookSession(formData: FormData) {
   const [hours, minutes] = availability.startTime.split(':').map(Number);
   targetDate.setHours(hours, minutes, 0, 0);
 
+  // Calculate end time
+  const endDate = new Date(targetDate);
+  const [endHours, endMinutes] = availability.endTime.split(':').map(Number);
+  endDate.setHours(endHours, endMinutes, 0, 0);
+
   // In a real app, we would call Zoom API here to generate a meeting link.
   // For MVP without API keys, we generate a mock Zoom link.
   const meetingUrl = `https://zoom.us/j/${Math.floor(Math.random() * 10000000000)}`;
@@ -47,10 +52,13 @@ export async function bookSession(formData: FormData) {
     data: {
       studentId: session.user.id,
       tutorId,
-      availabilityId: slotId,
+      subject: "General Tutoring", // Hardcoded for MVP since form doesn't capture it yet
+      grade: "High School",
+      topic: "Homework Help",
       startTime: targetDate,
-      status: "SCHEDULED",
-      meetingUrl,
+      endTime: endDate,
+      status: "CONFIRMED",
+      zoomLink: meetingUrl,
     }
   });
 

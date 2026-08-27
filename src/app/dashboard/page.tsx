@@ -19,7 +19,7 @@ export default async function StudentDashboard() {
   const upcomingBookings = await prisma.booking.findMany({
     where: { 
       studentId: session.user.id,
-      status: "SCHEDULED"
+      status: "CONFIRMED"
     },
     include: {
       tutor: { include: { user: true } }
@@ -55,7 +55,7 @@ export default async function StudentDashboard() {
                     </p>
                   </div>
                   <div className={styles.bookingAction}>
-                    <a href={booking.meetingUrl} target="_blank" rel="noopener noreferrer" className={styles.joinBtn}>
+                    <a href={booking.zoomLink || "#"} target="_blank" rel="noopener noreferrer" className={styles.joinBtn}>
                       Join Zoom Meeting
                     </a>
                   </div>

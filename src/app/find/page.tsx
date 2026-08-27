@@ -8,7 +8,7 @@ export default async function FindTutorPage() {
     where: { status: "APPROVED" },
     include: { 
       user: true,
-      subjects: { include: { subject: true } }
+      subjects: true
     }
   });
 
