@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { auth } from "./auth"
+import NextAuth from "next-auth"
+import { authConfig } from "./auth.config"
+
+const { auth } = NextAuth(authConfig)
 
 // Paths that require authentication but not necessarily onboarding
 const publicPaths = ["/", "/signin", "/find", "/api/auth"]
