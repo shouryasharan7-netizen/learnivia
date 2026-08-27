@@ -1,13 +1,13 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Core Palette */
+  --deep-navy: #17324D;
+  --soft-sky-blue: #DDEFFC;
+  --warm-cream: #FFF9F2;
+  --fresh-teal: #39A6A3;
+  --soft-gold: #F4C95D;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: var(--warm-cream);
+  --foreground: var(--deep-navy);
 }
 
 html {

@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// NextAuth Required Models
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Application Models
+enum Role {
+  STUDENT
+  TUTOR
+  ADMIN
+}
+
+enum TutorStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  INACTIVE
+  SUSPENDED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(STUDENT)
+  timezone      String?   // e.g. "America/New_York"
+  
+  accounts      Account[]
+  sessions      Session[]
+  
+  // Custom platform relations
+  tutorProfile  TutorProfile?
+  
+  // Bookings where this user is the student
+  studentBookings Booking[] @relation("StudentBookings")
+}
+
+model TutorProfile {
+  id              String      @id @default(cuid())
+  userId          String      @unique
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  bio             String?     @db.Text
+  school          String?
+  currentGrade    String?
+  languages       String?     // Comma separated list for now
+  teachingStyles  String?     // Comma separated tags
+  
+  status          TutorStatus @default(PENDING)
+  volunteerHours  Float       @default(0.0)
+
+  gradeLevels     GradeLevel[]
+  subjects        Subject[]
+  availabilities  Availability[]
+  
+  // Bookings where this user is the tutor
+  tutorBookings   Booking[] @relation("TutorBookings")
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model GradeLevel {
+  id          String   @id @default(cuid())
+  name        String   @unique // e.g. "Grade 1", "High School", etc.
+  category    String?  // e.g. "Elementary", "Middle", "High"
+  
+  tutors      TutorProfile[]
+}
+
+model Subject {
+  id          String   @id @default(cuid())
+  name        String   @unique // e.g. "Math", "Science", "Algebra I"
+  category    String?  // e.g. "High School", "Elementary"
+  
+  tutors      TutorProfile[]
+}
+
+model Availability {
+  id            String       @id @default(cuid())
+  tutorId       String
+  tutor         TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  
+  dayOfWeek     Int          // 0 = Sunday, 1 = Monday, etc.
+  startTime     String       // e.g. "17:00" in 24hr format
+  endTime       String       // e.g. "20:00" in 24hr format
+  timezone      String       // The timezone this was created in, fallback to Tutor's timezone
+  
+  @@unique([tutorId, dayOfWeek, startTime, endTime])
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELED
+  COMPLETED
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  
+  studentId       String
+  student         User          @relation("StudentBookings", fields: [studentId], references: [id])
+  
+  tutorId         String
+  tutor           TutorProfile  @relation("TutorBookings", fields: [tutorId], references: [id])
+  
+  subject         String
+  grade           String
+  topic           String
+  helpNeeded      String?       @db.Text
+  
+  startTime       DateTime      // Stored in UTC
+  endTime         DateTime      // Stored in UTC
+  
+  status          BookingStatus @default(CONFIRMED)
+  zoomLink        String?       @db.Text
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
