@@ -6,7 +6,7 @@ import { authConfig } from "./auth.config"
 const { auth } = NextAuth(authConfig)
 
 // Paths that require authentication but not necessarily onboarding
-const publicPaths = ["/", "/signin", "/find", "/api/auth"]
+const publicPaths = ["/", "/signin", "/find", "/api/auth", "/how-it-works", "/about"]
 const onboardingPaths = ["/onboarding"]
 
 export default auth((req) => {

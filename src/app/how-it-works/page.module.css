@@ -1,0 +1,135 @@
+.main {
+  min-height: calc(100vh - 80px);
+  background-color: var(--warm-cream);
+  padding-bottom: 4rem;
+}
+
+.hero {
+  background-color: var(--soft-sky-blue);
+  padding: 6rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  color: var(--deep-navy);
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  color: #444;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.stepsSection {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.altSection {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 5rem 3rem;
+  margin-top: 2rem;
+}
+
+.sectionTitle {
+  text-align: center;
+  color: var(--deep-navy);
+  font-size: 2.2rem;
+  margin-bottom: 3rem;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.stepCard {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.stepCard:hover {
+  transform: translateY(-5px);
+}
+
+.altSection .stepCard {
+  background: var(--warm-cream);
+  box-shadow: none;
+  border: 1px solid #eee;
+}
+
+.stepNumber {
+  width: 50px;
+  height: 50px;
+  background-color: var(--fresh-teal);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 auto 1.5rem auto;
+}
+
+.stepCard h3 {
+  color: var(--deep-navy);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.stepCard p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.ctaWrapper {
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+.primaryBtn {
+  background-color: var(--fresh-teal);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 99px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+
+.primaryBtn:hover {
+  opacity: 0.9;
+}
+
+.secondaryBtn {
+  background-color: var(--deep-navy);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 99px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+
+.secondaryBtn:hover {
+  opacity: 0.9;
+}
