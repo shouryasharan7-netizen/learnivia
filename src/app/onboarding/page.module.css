@@ -1,0 +1,248 @@
+.main {
+  min-height: calc(100vh - 80px);
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Progress Bar mimicking Schoolhouse */
+.progressBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 4rem;
+  padding: 0 2rem;
+}
+
+.progressLine {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 2px;
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+.progressLine:nth-child(1) { left: 2rem; right: 50%; }
+.progressLine:nth-child(2) { left: 50%; right: 2rem; }
+
+.activeLine {
+  background-color: var(--fresh-teal);
+}
+
+.stepCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #e0e0e0;
+  position: relative;
+  z-index: 2;
+}
+
+.activeCircle {
+  border-color: var(--fresh-teal);
+  background-color: white;
+}
+.activeCircle::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  background-color: var(--fresh-teal);
+  border-radius: 50%;
+}
+
+/* Typography & Layout */
+.stepContent {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.title {
+  color: #111;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.subtitle {
+  color: #444;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.required {
+  color: #d63031;
+}
+
+/* Step 1 */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.formGroup label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--deep-navy);
+}
+
+.formGroup select {
+  padding: 0.875rem;
+  border: 1px solid var(--fresh-teal);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: white;
+}
+
+/* Step 2 */
+.featuresBox {
+  background-color: #f1f8fc;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.featureItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.icon {
+  font-size: 1.5rem;
+}
+
+.featureItem p {
+  color: var(--deep-navy);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.guidelinesIntro {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Step 3 */
+.guidelinesBox {
+  background-color: #f8f6fb;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.guideItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.iconPink { font-size: 1.5rem; color: #ff6b81; }
+.iconGreen { font-size: 1.5rem; color: #2ed573; }
+.iconBlue { font-size: 1.5rem; color: #1e90ff; }
+
+.guideItem h3 {
+  font-size: 1.1rem;
+  color: #111;
+  margin-bottom: 0.25rem;
+}
+
+.guideItem p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.checkboxGroup {
+  margin-bottom: 2rem;
+}
+
+.checkboxGroup label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--deep-navy);
+}
+
+.checkboxGroup input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Navigation */
+.navButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.backBtn {
+  background: white;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.backBtn:hover {
+  background: #f9f9f9;
+}
+
+.nextBtn {
+  background-color: var(--fresh-teal);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.nextBtn:hover {
+  opacity: 0.9;
+}
+
+.nextBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

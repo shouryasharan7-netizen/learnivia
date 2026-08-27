@@ -1,0 +1,202 @@
+.main {
+  min-height: 100vh;
+  background-color: var(--soft-sky-blue); /* A light minty/blue background */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Abstract Background Shapes mimicking Schoolhouse */
+.bgShape1, .bgShape2, .bgShape3 {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  z-index: 0;
+}
+
+.bgShape1 {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  left: -100px;
+}
+
+.bgShape2 {
+  width: 250px;
+  height: 250px;
+  bottom: 50px;
+  right: -50px;
+  background-color: rgba(57, 166, 163, 0.15); /* Learnivia Teal transparent */
+}
+
+.bgShape3 {
+  width: 150px;
+  height: 150px;
+  top: 20%;
+  right: 15%;
+  background-color: var(--deep-navy);
+  opacity: 0.05;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 450px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.title {
+  color: var(--deep-navy);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+}
+
+.card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+.googleBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 0.875rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.googleBtn:hover {
+  background-color: #f9f9f9;
+}
+
+.divider {
+  margin: 1.5rem 0;
+  position: relative;
+  text-align: center;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #eee;
+  z-index: 1;
+}
+
+.divider span {
+  position: relative;
+  z-index: 2;
+  background: white;
+  padding: 0 1rem;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.emailForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.inputGroup label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--deep-navy);
+}
+
+.inputGroup input {
+  padding: 0.875rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: var(--fresh-teal);
+}
+
+.submitBtn {
+  background-color: var(--fresh-teal);
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 0.5rem;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errorBanner {
+  background-color: #ffeaea;
+  color: #d63031;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.footerLinks {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.forgotLink {
+  color: var(--fresh-teal);
+  font-weight: 600;
+}
+
+.toggleText {
+  color: #666;
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  color: var(--fresh-teal);
+  font-weight: 700;
+  font-size: inherit;
+  cursor: pointer;
+  margin-left: 0.25rem;
+}

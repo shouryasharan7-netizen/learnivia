@@ -1,13 +1,20 @@
 :root {
-  /* Core Palette */
+  /* Core Palette (Enhanced for modern UI) */
   --deep-navy: #17324D;
-  --soft-sky-blue: #DDEFFC;
-  --warm-cream: #FFF9F2;
+  --soft-sky-blue: #e8f4fc;
+  --warm-cream: #fdfbf7;
   --fresh-teal: #39A6A3;
   --soft-gold: #F4C95D;
 
   --background: var(--warm-cream);
   --foreground: var(--deep-navy);
+
+  /* New utility variables */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
 }
 
 html {
