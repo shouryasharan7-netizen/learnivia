@@ -20,6 +20,6 @@ export async function completeOnboarding(formData: FormData) {
     }
   });
 
-  // Redirect to dashboard or home after successful onboarding
-  redirect("/dashboard");
+  // Return success to the client so it can handle the redirect
+  return { success: true };
 }

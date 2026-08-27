@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { completeOnboarding } from "./actions";
 
@@ -9,6 +10,8 @@ export default function OnboardingClient() {
   const [goal, setGoal] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleNext = () => {
     if (step < 3) setStep(step + 1);
@@ -23,10 +26,18 @@ export default function OnboardingClient() {
     if (!agreed) return;
     
     setLoading(true);
-    const formData = new FormData();
-    formData.append("primaryGoal", goal);
-    
-    await completeOnboarding(formData);
+    try {
+      const formData = new FormData();
+      formData.append("primaryGoal", goal);
+      
+      const res = await completeOnboarding(formData);
+      if (res?.success) {
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.error("Onboarding failed", error);
+      setLoading(false);
+    }
   };
 
   return (
