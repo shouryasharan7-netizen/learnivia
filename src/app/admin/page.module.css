@@ -1,0 +1,107 @@
+.main {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.title {
+  color: var(--deep-navy);
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.statCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.statCard h3 {
+  color: #666;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.statValue {
+  color: var(--fresh-teal);
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.sectionTitle {
+  color: var(--deep-navy);
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--soft-sky-blue);
+}
+
+.applicationsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.applicationCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.appInfo {
+  flex: 1;
+}
+
+.appInfo h3 {
+  color: var(--deep-navy);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.appInfo p {
+  color: #444;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.appActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.approveBtn, .rejectBtn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.approveBtn {
+  background-color: var(--fresh-teal);
+  color: white;
+}
+
+.rejectBtn {
+  background-color: #ff4757;
+  color: white;
+}
+
+.approveBtn:hover, .rejectBtn:hover {
+  opacity: 0.8;
+}

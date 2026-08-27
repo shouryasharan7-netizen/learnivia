@@ -15,7 +15,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, user }) {
       if (session.user) {
         session.user.id = user.id
-        // Add custom fields like role if needed
+        // @ts-ignore
+        session.user.role = user.role
       }
       return session
     },
