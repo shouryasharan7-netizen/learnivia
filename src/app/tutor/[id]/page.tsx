@@ -11,15 +11,12 @@ const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "F
 export default async function TutorProfilePage({ params }: { params: { id: string } }) {
   const session = await auth();
   
-  const tutor = await prisma.tutorProfile.findUnique({
+  const tutorProfile = await prisma.tutorProfile.findUnique({
     where: { id: params.id },
-    include: {
-      user: true,
-      availability: true,
-    }
+    include: { availabilities: true, user: true }
   });
 
-  if (!tutor || tutor.status !== "APPROVED") {
+  if (!tutorProfile || tutorProfile.status !== "APPROVED") {
     notFound();
   }
 
@@ -30,21 +27,32 @@ export default async function TutorProfilePage({ params }: { params: { id: strin
 
   return (
     <main className={styles.main}>
-      <div className={styles.profileHeader}>
+      <header className={styles.profileHeader}>
         <div className={styles.avatarLarge}>
-          {tutor.user.name?.charAt(0).toUpperCase() || "?"}
+          {tutorProfile.user.name?.charAt(0).toUpperCase() || "?"}
         </div>
         <div className={styles.headerInfo}>
-          <h1 className={styles.name}>{tutor.user.name}</h1>
-          <p className={styles.timezone}>🌍 Timezone: {tutor.user.timezone || "UTC"}</p>
+          <h1 className={styles.name}>{tutorProfile.user.name}</h1>
+          <p className={styles.grade}>{tutorProfile.currentGrade || "University"}</p>
         </div>
-      </div>
+        
+        <div className={styles.metaInfo}>
+          <div className={styles.metaItem}>
+            <span>Joined</span>
+            <strong>{new Date(tutorProfile.createdAt).getFullYear()}</strong>
+          </div>
+          <div className={styles.metaItem}>
+            <span>Volunteer Hours</span>
+            <strong>{tutorProfile.volunteerHours}</strong>
+          </div>
+        </div>
+      </header>
 
       <div className={styles.contentGrid}>
-        <div className={styles.mainContent}>
+        <div className={styles.mainCol}>
           <section className={styles.section}>
             <h2>About Me</h2>
-            <p className={styles.bio}>{tutor.bio}</p>
+            <p className={styles.bio}>{tutorProfile.bio || "This tutor hasn't written a bio yet."}</p>
           </section>
 
           <section className={styles.section}>
@@ -67,17 +75,17 @@ export default async function TutorProfilePage({ params }: { params: { id: strin
                 <p>You must be logged in to book a session.</p>
                 <Link href="/api/auth/signin" className={styles.loginBtn}>Log In</Link>
               </div>
-            ) : tutor.availability.length === 0 ? (
+            ) : tutorProfile.availabilities.length === 0 ? (
               <p className={styles.noAvailability}>This tutor hasn't set their availability yet.</p>
             ) : (
               <form action={bookSession} className={styles.bookingForm}>
-                <input type="hidden" name="tutorId" value={tutor.id} />
+                <input type="hidden" name="tutorId" value={tutorProfile.id} />
                 
                 <div className={styles.formGroup}>
                   <label>Select a Time Slot</label>
                   <select name="slotId" required>
                     <option value="">Choose an available time...</option>
-                    {tutor.availability.map(slot => (
+                    {tutorProfile.availabilities.map((slot: any) => (
                       <option key={slot.id} value={slot.id}>
                         {DAYS_OF_WEEK[slot.dayOfWeek]} {slot.startTime} - {slot.endTime}
                       </option>

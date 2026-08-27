@@ -20,7 +20,7 @@ export default async function TutorDashboard() {
 
   const tutor = await prisma.tutorProfile.findUnique({
     where: { userId: session.user.id },
-    include: { availability: true }
+    include: { availabilities: true }
   });
 
   if (!tutor) {
@@ -54,7 +54,7 @@ export default async function TutorDashboard() {
   const availabilityByDay = DAYS_OF_WEEK.map((name, index) => ({
     name,
     index,
-    slots: tutor.availability.filter(a => a.dayOfWeek === index).sort((a, b) => a.startTime.localeCompare(b.startTime))
+    slots: tutor.availabilities.filter((a: any) => a.dayOfWeek === index).sort((a: any, b: any) => a.startTime.localeCompare(b.startTime))
   }));
 
   return (

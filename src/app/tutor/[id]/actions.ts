@@ -17,31 +17,35 @@ export async function bookSession(formData: FormData) {
     throw new Error("Missing required fields.");
   }
 
-  const availability = await prisma.availability.findUnique({
-    where: { id: slotId }
-  });
-
-  if (!availability) {
-    throw new Error("Time slot not found.");
+  if (!session?.user?.id) {
+    throw new Error("Unauthorized");
   }
 
-  // Next week's date for this dayOfWeek
+  // Find slot
+  const slot = await prisma.availability.findUnique({
+    where: { id: slotId },
+  });
+
+  if (!slot) {
+    throw new Error("Time slot not found");
+  }
+
+  // Calculate the target booking date based on day of week
   const today = new Date();
-  const targetDate = new Date(today);
   const currentDay = today.getDay();
-  const targetDay = availability.dayOfWeek;
+  const targetDay = slot.dayOfWeek;
+  const daysUntil = (targetDay + 7 - currentDay) % 7;
   
-  let daysToAdd = targetDay - currentDay;
-  if (daysToAdd <= 0) daysToAdd += 7;
+  const targetDate = new Date(today);
+  targetDate.setDate(today.getDate() + daysUntil);
   
-  targetDate.setDate(targetDate.getDate() + daysToAdd);
-  // Reset time to the start of the slot
-  const [hours, minutes] = availability.startTime.split(':').map(Number);
+  // Set start time
+  const [hours, minutes] = slot.startTime.split(':').map(Number);
   targetDate.setHours(hours, minutes, 0, 0);
 
   // Calculate end time
   const endDate = new Date(targetDate);
-  const [endHours, endMinutes] = availability.endTime.split(':').map(Number);
+  const [endHours, endMinutes] = slot.endTime.split(':').map(Number);
   endDate.setHours(endHours, endMinutes, 0, 0);
 
   // In a real app, we would call Zoom API here to generate a meeting link.

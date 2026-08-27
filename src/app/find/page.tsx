@@ -47,7 +47,7 @@ export default async function FindTutorPage() {
                 </div>
               </div>
               <p className={styles.tutorBio}>
-                {tutor.bio.length > 100 ? `${tutor.bio.substring(0, 100)}...` : tutor.bio}
+                {(tutor.bio || "").length > 100 ? `${(tutor.bio || "").substring(0, 100)}...` : (tutor.bio || "No bio available.")}
               </p>
               
               <div className={styles.tags}>

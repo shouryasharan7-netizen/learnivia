@@ -29,6 +29,7 @@ export async function addAvailability(formData: FormData) {
       dayOfWeek,
       startTime,
       endTime,
+      timezone: session.user.timezone || "UTC"
     }
   });
 

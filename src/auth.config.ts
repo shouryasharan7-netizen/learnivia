@@ -19,6 +19,8 @@ export const authConfig = {
         token.role = user.role
         // @ts-ignore
         token.onboardingCompleted = user.onboardingCompleted
+        // @ts-ignore
+        token.timezone = user.timezone
       }
       return token
     },
@@ -29,6 +31,8 @@ export const authConfig = {
         session.user.role = token.role
         // @ts-ignore
         session.user.onboardingCompleted = token.onboardingCompleted
+        // @ts-ignore
+        session.user.timezone = token.timezone
       }
       return session
     },
