@@ -60,6 +60,7 @@ export async function loginWithEmail(formData: FormData) {
   }
 }
 
-export async function loginWithGoogle() {
-  await signIn("google", { redirectTo: "/dashboard" });
+export async function loginWithGoogle(formData: FormData) {
+  const callbackUrl = formData.get("callbackUrl") as string || "/dashboard";
+  await signIn("google", { redirectTo: callbackUrl });
 }
