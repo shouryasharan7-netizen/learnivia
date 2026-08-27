@@ -1,40 +1,19 @@
+import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
-import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Community Stories",
   description: "Real stories from the Learnivia community about learning, volunteering, and connection.",
 };
 
-/**
- * DEMO stories — clearly marked. Replace with DB query when Story model is ready.
- * All stories require explicit user consent before publication.
- */
-const DEMO_STORIES = [
-  {
-    id: "1",
-    quote: "My tutor didn't just help me pass my maths exam — she helped me understand why I'd been struggling for years. I went from a D to a B in two months.",
-    name: "A learner, Year 11",
-    subject: "GCSE Maths",
-    isDemo: true,
-  },
-  {
-    id: "2",
-    quote: "Volunteering here has been one of the most rewarding things I've done. I've logged 60+ hours and learned as much from my students as they've learned from me.",
-    name: "A volunteer tutor, University Year 2",
-    subject: "Biology & Chemistry",
-    isDemo: true,
-  },
-  {
-    id: "3",
-    quote: "As a parent, I was sceptical. But after sitting in on a session and seeing how patient and knowledgeable the tutor was, I'm completely convinced.",
-    name: "A parent of a Year 9 student",
-    subject: "English & Writing",
-    isDemo: true,
-  },
-];
+export default async function StoriesPage() {
+  const stories = await prisma.story.findMany({
+    where: { isPublished: true },
+    orderBy: { createdAt: "desc" }
+  });
 
-export default function StoriesPage() {
   return (
     <main>
       <section style={{ background: "linear-gradient(135deg, var(--color-sky) 0%, var(--color-cream) 100%)", padding: "5rem 1.5rem", textAlign: "center" }}>
@@ -49,23 +28,9 @@ export default function StoriesPage() {
       </section>
 
       <section style={{ maxWidth: "var(--container-lg)", margin: "0 auto", padding: "4rem 1.5rem" }}>
-        {/* Demo warning */}
-        <div style={{ background: "var(--color-warning-bg)", border: "1px solid rgb(243 156 18 / 0.3)", borderRadius: "0.75rem", padding: "1rem 1.5rem", marginBottom: "3rem", display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-          <span style={{ fontSize: "1.25rem", flexShrink: 0 }}>⚠️</span>
-          <div>
-            <strong style={{ color: "var(--color-navy)", fontSize: "0.875rem" }}>These are demonstration stories</strong>
-            <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
-              Real stories will appear here once community members choose to share their experiences. All stories require explicit consent before publication.
-            </p>
-          </div>
-        </div>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.5rem", marginBottom: "4rem" }}>
-          {DEMO_STORIES.map(s => (
+          {stories.map(s => (
             <div key={s.id} style={{ background: "white", border: "1px solid var(--color-border)", borderRadius: "1rem", padding: "2rem", position: "relative", boxShadow: "var(--shadow-sm)" }}>
-              {s.isDemo && (
-                <span style={{ position: "absolute", top: "1rem", right: "1rem", fontSize: "0.625rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", background: "var(--color-warning-bg)", color: "var(--color-warning)", border: "1px solid rgb(243 156 18 / 0.3)", borderRadius: "999px", padding: "2px 8px" }}>Demo</span>
-              )}
               <p style={{ fontSize: "1rem", color: "var(--color-navy)", lineHeight: 1.7, fontStyle: "italic", marginBottom: "1.5rem" }}>
                 "{s.quote}"
               </p>

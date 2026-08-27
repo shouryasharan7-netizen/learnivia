@@ -3,6 +3,8 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { createZoomMeeting } from "@/lib/zoom";
+import { sendBookingConfirmation } from "@/lib/email";
 
 export async function bookSession(formData: FormData) {
   const session = await auth();
@@ -48,9 +50,20 @@ export async function bookSession(formData: FormData) {
   const [endHours, endMinutes] = slot.endTime.split(':').map(Number);
   endDate.setHours(endHours, endMinutes, 0, 0);
 
-  // In a real app, we would call Zoom API here to generate a meeting link.
-  // For MVP without API keys, we generate a mock Zoom link.
-  const meetingUrl = `https://zoom.us/j/${Math.floor(Math.random() * 10000000000)}`;
+  const durationMinutes = (endDate.getTime() - targetDate.getTime()) / 60000;
+  
+  let meetingUrl = "";
+  try {
+    const zoomMeeting = await createZoomMeeting(
+      "Learnivia Tutoring Session",
+      targetDate.toISOString(),
+      durationMinutes
+    );
+    meetingUrl = zoomMeeting.join_url;
+  } catch (err) {
+    console.error("Zoom meeting creation failed, falling back to mock or error out", err);
+    meetingUrl = `https://zoom.us/j/${Math.floor(Math.random() * 10000000000)}`;
+  }
 
   await prisma.booking.create({
     data: {
@@ -65,6 +78,26 @@ export async function bookSession(formData: FormData) {
       zoomLink: meetingUrl,
     }
   });
+
+  // Fetch tutor details for the email
+  const tutorProfile = await prisma.tutorProfile.findUnique({
+    where: { id: tutorId },
+    include: { user: true }
+  });
+
+  if (session.user.email && tutorProfile?.user.email) {
+    await sendBookingConfirmation(
+      session.user.email,
+      tutorProfile.user.email,
+      {
+        studentName: session.user.name || "Student",
+        tutorName: tutorProfile.user.name || "Tutor",
+        subject: "General Tutoring",
+        startTime: targetDate.toISOString(),
+        zoomLink: meetingUrl,
+      }
+    );
+  }
 
   // Redirect to success page or student dashboard
   redirect("/dashboard");

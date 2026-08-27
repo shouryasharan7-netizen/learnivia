@@ -1,14 +1,20 @@
-import { PROGRAMS } from "@/lib/programs";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Learning Programs",
   description: "Browse all Learnivia programs — free, one-on-one tutoring from homework help to exam prep.",
 };
 
-export default function LearnPage() {
+export default async function LearnPage() {
+  const programs = await prisma.program.findMany({
+    orderBy: { createdAt: "asc" }
+  });
+
   return (
     <main>
       <section className={styles.hero}>
@@ -23,7 +29,7 @@ export default function LearnPage() {
       <section className={styles.catalogSection}>
         <div className={styles.inner}>
           <div className={styles.grid}>
-            {PROGRAMS.map(p => (
+            {programs.map(p => (
               <Link key={p.slug} href={`/learn/${p.slug}`} className={styles.card}>
                 <span className={styles.emoji} aria-hidden="true">{p.emoji}</span>
                 <h2 className={styles.cardTitle}>{p.title}</h2>

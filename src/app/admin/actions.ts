@@ -1,34 +1,40 @@
 "use server";
 
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
+import { sendApplicationApproved } from "@/lib/email";
 import { revalidatePath } from "next/cache";
 
-export async function approveTutor(tutorId: string) {
+export async function approveApplication(tutorId: string) {
   const session = await auth();
-  if (!session?.user || session.user.role !== "ADMIN") {
+  if (session?.user?.role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
-  await prisma.tutorProfile.update({
+  const profile = await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "APPROVED" },
+    include: { user: true }
   });
 
-  const profile = await prisma.tutorProfile.findUnique({ where: { id: tutorId }});
-  if (profile) {
+  // Update user role to TUTOR if they were a STUDENT
+  if (profile.user.role === "STUDENT") {
     await prisma.user.update({
-      where: { id: profile.userId },
+      where: { id: profile.user.id },
       data: { role: "TUTOR" }
     });
   }
 
-  revalidatePath("/admin");
+  if (profile.user.email) {
+    await sendApplicationApproved(profile.user.email, profile.user.name || "Tutor");
+  }
+
+  revalidatePath("/admin/applications");
 }
 
-export async function rejectTutor(tutorId: string) {
+export async function rejectApplication(tutorId: string) {
   const session = await auth();
-  if (!session?.user || session.user.role !== "ADMIN") {
+  if (session?.user?.role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -37,5 +43,5 @@ export async function rejectTutor(tutorId: string) {
     data: { status: "REJECTED" },
   });
 
-  revalidatePath("/admin");
+  revalidatePath("/admin/applications");
 }

@@ -37,6 +37,12 @@ export default auth((req) => {
   const isOnboardingPath = onboardingPaths.some(path => nextUrl.pathname.startsWith(path))
 
   if (isLoggedIn) {
+    // Admin check
+    // @ts-ignore
+    if (nextUrl.pathname.startsWith("/admin") && req.auth?.user?.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/dashboard", req.url))
+    }
+
     if (!isOnboardingCompleted && !isOnboardingPath && nextUrl.pathname !== "/api/auth/signout") {
       return NextResponse.redirect(new URL("/onboarding", req.url))
     }

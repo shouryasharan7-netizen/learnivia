@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { sendApplicationReceived } from "@/lib/email";
 
 export async function submitApplication(formData: FormData) {
   const session = await auth();
@@ -37,6 +38,13 @@ export async function submitApplication(formData: FormData) {
       status: "PENDING",
     },
   });
+
+  if (session.user.email) {
+    await sendApplicationReceived(
+      session.user.email,
+      session.user.name || "Tutor"
+    );
+  }
 
   // Redirect to success page or dashboard
   redirect("/dashboard");

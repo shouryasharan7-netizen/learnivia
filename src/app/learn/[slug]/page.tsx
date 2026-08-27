@@ -1,17 +1,15 @@
-import { PROGRAMS, getProgramBySlug } from "@/lib/programs";
+import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 
+export const dynamic = "force-dynamic";
+
 type Props = { params: { slug: string } };
 
-export async function generateStaticParams() {
-  return PROGRAMS.map(p => ({ slug: p.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const program = getProgramBySlug(params.slug);
+  const program = await prisma.program.findUnique({ where: { slug: params.slug } });
   if (!program) return { title: "Program not found" };
   return {
     title: program.title,
@@ -19,8 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProgramDetailPage({ params }: Props) {
-  const program = getProgramBySlug(params.slug);
+export default async function ProgramDetailPage({ params }: Props) {
+  const program = await prisma.program.findUnique({ 
+    where: { slug: params.slug },
+    include: { faqs: true } 
+  });
+  
   if (!program) notFound();
 
   return (
@@ -93,17 +95,19 @@ export default function ProgramDetailPage({ params }: Props) {
                 </ul>
               </div>
 
-              <div className={styles.detailCard}>
-                <h2 className={styles.detailTitle}>Common questions</h2>
-                <div className={styles.faqList}>
-                  {program.faq.map(q => (
-                    <details key={q.question} className={styles.faqItem}>
-                      <summary className={styles.faqQuestion}>{q.question}</summary>
-                      <p className={styles.faqAnswer}>{q.answer}</p>
-                    </details>
-                  ))}
+              {program.faqs && program.faqs.length > 0 && (
+                <div className={styles.detailCard}>
+                  <h2 className={styles.detailTitle}>Common questions</h2>
+                  <div className={styles.faqList}>
+                    {program.faqs.map(q => (
+                      <details key={q.question} className={styles.faqItem}>
+                        <summary className={styles.faqQuestion}>{q.question}</summary>
+                        <p className={styles.faqAnswer}>{q.answer}</p>
+                      </details>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className={styles.ctaCard}>
                 <h3>Ready to get started?</h3>
