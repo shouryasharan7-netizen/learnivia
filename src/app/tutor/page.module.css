@@ -1,0 +1,184 @@
+.main {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.mascotImg {
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+
+.title {
+  color: var(--deep-navy);
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.125rem;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.cardTitle {
+  color: var(--deep-navy);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.helpText {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.addSlotForm {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.addSlotForm select,
+.addSlotForm input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.addBtn {
+  background-color: var(--fresh-teal);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.addBtn:hover {
+  opacity: 0.8;
+}
+
+.scheduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dayRow {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1.5rem;
+}
+
+.dayRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dayRow h3 {
+  font-size: 1.1rem;
+  color: var(--deep-navy);
+  margin-bottom: 0.75rem;
+}
+
+.noSlots {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.slotsGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.slotBadge {
+  background-color: var(--soft-sky-blue);
+  color: var(--deep-navy);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: var(--deep-navy);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.removeBtn:hover {
+  opacity: 1;
+  color: #ff4757;
+}
+
+.statsBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.statItem {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.statNum {
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--soft-gold);
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  color: #666;
+  font-weight: 500;
+}
