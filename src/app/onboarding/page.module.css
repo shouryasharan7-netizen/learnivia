@@ -246,3 +246,26 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (max-width: 768px) {
+  .main {
+    padding: 2rem 1rem;
+  }
+  .progressBar {
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+  .featuresBox, .guidelinesBox {
+    padding: 1.5rem;
+  }
+  .navButtons {
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+  .backBtn, .nextBtn {
+    width: 100%;
+  }
+}

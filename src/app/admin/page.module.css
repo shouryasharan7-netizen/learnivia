@@ -105,3 +105,25 @@
 .approveBtn:hover, .rejectBtn:hover {
   opacity: 0.8;
 }
+
+@media (max-width: 768px) {
+  .main {
+    padding: 2rem 1rem;
+  }
+  .title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  .applicationCard {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  .appActions {
+    width: 100%;
+    flex-direction: column;
+  }
+  .approveBtn, .rejectBtn {
+    width: 100%;
+  }
+}

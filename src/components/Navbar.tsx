@@ -12,7 +12,7 @@ const exploreLinks = [
   { href: "/learn/homework-help", label: "Homework Help" },
   { href: "/learn/math-foundations", label: "Math Foundations" },
   { href: "/learn/science-support", label: "Science Support" },
-  { href: "/learn/exam-prep", label: "Exam Prep" },
+  { href: "/learn/gcse-exam-prep", label: "Exam Prep" },
   { href: "/learn/writing-essays", label: "Writing & Essays" },
   { href: "/learn/study-skills", label: "Study Skills" },
 ];

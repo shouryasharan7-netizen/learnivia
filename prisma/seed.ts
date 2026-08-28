@@ -68,6 +68,70 @@ async function main() {
         "Confidence for university interviews",
         "Clearer understanding of university life"
       ],
+    },
+    {
+      slug: "homework-help",
+      title: "Homework Help",
+      emoji: "📚",
+      shortDescription: "Drop-in sessions for help with daily assignments.",
+      longDescription: "Stuck on a tricky math problem or need someone to review your essay? Our Homework Help program pairs you with a volunteer tutor for quick, effective assistance with your daily assignments across all major subjects.",
+      subjects: ["Math", "Science", "English", "History"],
+      gradeLevels: ["Year 5 to Year 13"],
+      format: "1-on-1 Sessions",
+      duration: "Flexible",
+      outcomes: [
+        "Completed assignments",
+        "Better understanding of current topics",
+        "Reduced homework stress"
+      ],
+    },
+    {
+      slug: "science-support",
+      title: "Science Support",
+      emoji: "🔬",
+      shortDescription: "Explore biology, chemistry, and physics with confidence.",
+      longDescription: "Science doesn't have to be intimidating! Our Science Support program breaks down complex concepts in Biology, Chemistry, and Physics, making them engaging and easy to understand through interactive learning.",
+      subjects: ["Biology", "Chemistry", "Physics"],
+      gradeLevels: ["Year 7 to Year 11"],
+      format: "Small Group or 1-on-1",
+      duration: "Ongoing",
+      outcomes: [
+        "Clear grasp of scientific principles",
+        "Improved lab report writing",
+        "Confidence in science exams"
+      ],
+    },
+    {
+      slug: "writing-essays",
+      title: "Writing & Essays",
+      emoji: "✍️",
+      shortDescription: "Learn to structure, draft, and polish essays.",
+      longDescription: "From creative writing to analytical essays, this program teaches students how to structure their thoughts, develop strong arguments, and improve their grammar and vocabulary for better grades in humanities subjects.",
+      subjects: ["English Literature", "History", "Creative Writing"],
+      gradeLevels: ["Year 8 to Year 13"],
+      format: "1-on-1 Sessions",
+      duration: "Ongoing",
+      outcomes: [
+        "Stronger essay structures",
+        "Improved vocabulary and grammar",
+        "Ability to construct persuasive arguments"
+      ],
+    },
+    {
+      slug: "study-skills",
+      title: "Study Skills",
+      emoji: "🧠",
+      shortDescription: "Learn how to learn effectively and manage your time.",
+      longDescription: "Good grades start with good habits. This program focuses on time management, effective note-taking, revision strategies, and overcoming procrastination to help students become independent, successful learners.",
+      subjects: ["Time Management", "Revision Techniques", "Organization"],
+      gradeLevels: ["All Ages"],
+      format: "Workshops or 1-on-1",
+      duration: "4-6 Weeks",
+      outcomes: [
+        "Personalized revision timetables",
+        "Effective note-taking strategies",
+        "Better focus and reduced procrastination"
+      ],
     }
   ];
 

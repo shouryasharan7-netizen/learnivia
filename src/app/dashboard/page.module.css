@@ -27,8 +27,23 @@
 }
 
 @media (max-width: 768px) {
+  .main {
+    padding: 2rem 1rem;
+  }
+  .title {
+    font-size: 2rem;
+  }
   .dashboardGrid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .bookingCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .joinBtn {
+    width: 100%;
   }
 }
 

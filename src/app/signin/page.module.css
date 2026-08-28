@@ -232,3 +232,19 @@
   color: var(--color-teal);
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .main {
+    padding: 2rem 1rem;
+  }
+  .card {
+    padding: 2rem 1.5rem;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+  .bgShape1 {
+    width: 300px;
+    height: 300px;
+  }
+}

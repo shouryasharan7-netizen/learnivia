@@ -133,3 +133,26 @@
 .secondaryBtn:hover {
   opacity: 0.9;
 }
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1.5rem;
+  }
+  .title {
+    font-size: 2.25rem;
+  }
+  .stepsSection {
+    padding: 3rem 1.5rem;
+  }
+  .altSection {
+    padding: 3rem 1.5rem;
+  }
+  .stepsGrid {
+    grid-template-columns: 1fr;
+  }
+  .primaryBtn, .secondaryBtn {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
