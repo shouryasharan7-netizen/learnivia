@@ -13,6 +13,13 @@ export const authConfig = {
   ],
   callbacks: {
     async jwt({ token, user, trigger, session }) {
+      // Handle session updates from the client
+      if (trigger === "update" && session) {
+        if (session.onboardingCompleted !== undefined) {
+          token.onboardingCompleted = session.onboardingCompleted;
+        }
+      }
+
       if (user) {
         token.id = user.id
         // @ts-ignore

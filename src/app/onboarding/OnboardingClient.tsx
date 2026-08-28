@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import styles from "./page.module.css";
 import { completeOnboarding } from "./actions";
 
@@ -10,8 +11,10 @@ export default function OnboardingClient() {
   const [goal, setGoal] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const router = useRouter();
+  const { update } = useSession();
 
   const handleNext = () => {
     if (step < 3) setStep(step + 1);
@@ -26,16 +29,23 @@ export default function OnboardingClient() {
     if (!agreed) return;
     
     setLoading(true);
+    setErrorMsg("");
     try {
       const formData = new FormData();
       formData.append("primaryGoal", goal);
       
       const res = await completeOnboarding(formData);
       if (res?.success) {
+        await update({ onboardingCompleted: true });
         router.push("/dashboard");
+        router.refresh(); // Force a hard refresh of Server Components
+      } else {
+        setErrorMsg(res?.error || "Unknown server error");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Onboarding failed", error);
+      setErrorMsg("An unexpected error occurred.");
       setLoading(false);
     }
   };
@@ -134,6 +144,12 @@ export default function OnboardingClient() {
                 <span className={styles.checkboxText}>Do you agree to uphold the community guidelines? <span className={styles.required}>*</span></span>
               </label>
             </div>
+          </div>
+        )}
+
+        {errorMsg && (
+          <div style={{ color: "var(--color-error)", background: "var(--color-error-bg)", padding: "1rem", borderRadius: "0.5rem", marginBottom: "1.5rem", textAlign: "center", fontSize: "0.875rem", fontWeight: 600 }}>
+            {errorMsg}
           </div>
         )}
 
