@@ -6,10 +6,11 @@ import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const program = await prisma.program.findUnique({ where: { slug: params.slug } });
+  const { slug } = await params;
+  const program = await prisma.program.findUnique({ where: { slug } });
   if (!program) return { title: "Program not found" };
   return {
     title: program.title,
@@ -18,8 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProgramDetailPage({ params }: Props) {
+  const { slug } = await params;
   const program = await prisma.program.findUnique({ 
-    where: { slug: params.slug },
+    where: { slug },
     include: { faqs: true } 
   });
   

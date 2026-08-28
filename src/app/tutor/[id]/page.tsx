@@ -10,11 +10,12 @@ const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "F
 
 export const dynamic = "force-dynamic";
 
-export default async function TutorProfilePage({ params }: { params: { id: string } }) {
+export default async function TutorProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
+  const { id } = await params;
   
   const tutorProfile = await prisma.tutorProfile.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { availabilities: true, user: true }
   });
 
