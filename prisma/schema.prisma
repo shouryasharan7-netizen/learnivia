@@ -89,6 +89,7 @@ model TutorProfile {
   
   bio             String?     @db.Text
   school          String?
+  experience      String?     @db.Text
   currentGrade    String?
   languages       String?     // Comma separated list for now
   teachingStyles  String?     // Comma separated tags
@@ -164,6 +165,8 @@ model Booking {
   
   status          BookingStatus @default(CONFIRMED)
   zoomLink        String?       @db.Text
+  cancelReason    String?       @db.Text
+  maxParticipants Int           @default(1)
   
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -214,6 +217,7 @@ model Review {
   tutor       TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
   studentId   String
   student     User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  bookingId   String?
   
   rating      Int          // e.g. 1-5
   comment     String?      @db.Text

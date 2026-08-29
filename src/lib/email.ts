@@ -87,11 +87,48 @@ export async function sendApplicationApproved(tutorEmail: string, tutorName: str
         <p>Hi ${tutorName},</p>
         <p>Great news! Your volunteer tutor application has been approved.</p>
         <p>Your profile is now live. Please log in to your dashboard to set your availability so students can start booking sessions with you.</p>
-        <p><a href="https://learnivia.app/dashboard">Go to Dashboard</a></p>
+        <p><a href="https://learnivia-green.vercel.app/tutor">Go to Tutor Dashboard</a></p>
         <p>Thank you for volunteering!</p>
       `,
     });
   } catch (error) {
     console.error("Failed to send application approved email:", error);
+  }
+}
+
+export async function sendBookingCancellation(
+  recipientEmail: string,
+  details: {
+    recipientName: string;
+    otherPartyName: string;
+    subject: string;
+    startTime: string;
+    reason?: string;
+  }
+) {
+  const date = new Date(details.startTime).toLocaleString("en-GB", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: recipientEmail,
+      subject: `Session Canceled: ${details.subject} with ${details.otherPartyName}`,
+      html: `
+        <h2>Tutoring Session Canceled</h2>
+        <p>Hi ${details.recipientName},</p>
+        <p>The session for <strong>${details.subject}</strong> scheduled with <strong>${details.otherPartyName}</strong> on <strong>${date}</strong> has been canceled.</p>
+        ${details.reason ? `<p><strong>Reason:</strong> ${details.reason}</p>` : ""}
+        <p>You can visit your dashboard to view your schedule or book another session.</p>
+        <p><a href="https://learnivia-green.vercel.app/dashboard">Go to Dashboard</a></p>
+      `,
+    });
+  } catch (error) {
+    console.error("Failed to send cancellation email:", error);
   }
 }

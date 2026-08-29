@@ -14,6 +14,10 @@ export async function bookSession(formData: FormData) {
 
   const tutorId = formData.get("tutorId") as string;
   const slotId = formData.get("slotId") as string;
+  const subject = (formData.get("subject") as string) || "General Tutoring";
+  const topic = (formData.get("topic") as string) || "Homework Help";
+  const grade = (formData.get("grade") as string) || "All Levels";
+  const helpNeeded = (formData.get("helpNeeded") as string) || null;
 
   if (!tutorId || !slotId) {
     throw new Error("Missing required fields.");
@@ -45,23 +49,41 @@ export async function bookSession(formData: FormData) {
   const [hours, minutes] = slot.startTime.split(':').map(Number);
   targetDate.setHours(hours, minutes, 0, 0);
 
+  // If slot is today but is in the past or within the next 30 mins, push to next week!
+  if (targetDate.getTime() <= today.getTime() + 30 * 60 * 1000) {
+    targetDate.setDate(targetDate.getDate() + 7);
+  }
+
   // Calculate end time
   const endDate = new Date(targetDate);
   const [endHours, endMinutes] = slot.endTime.split(':').map(Number);
   endDate.setHours(endHours, endMinutes, 0, 0);
+
+  // Check for conflicts: is this tutor already booked at this time?
+  const existingBooking = await prisma.booking.findFirst({
+    where: {
+      tutorId,
+      startTime: targetDate,
+      status: "CONFIRMED",
+    },
+  });
+
+  if (existingBooking) {
+    throw new Error("This time slot is already booked. Please choose another available slot.");
+  }
 
   const durationMinutes = (endDate.getTime() - targetDate.getTime()) / 60000;
   
   let meetingUrl = "";
   try {
     const zoomMeeting = await createZoomMeeting(
-      "Learnivia Tutoring Session",
+      `Learnivia: ${subject} with ${session.user.name || "Student"}`,
       targetDate.toISOString(),
       durationMinutes
     );
     meetingUrl = zoomMeeting.join_url;
   } catch (err) {
-    console.error("Zoom meeting creation failed, falling back to mock or error out", err);
+    console.error("Zoom meeting creation failed, falling back to mock link:", err);
     meetingUrl = `https://zoom.us/j/${Math.floor(Math.random() * 10000000000)}`;
   }
 
@@ -69,9 +91,10 @@ export async function bookSession(formData: FormData) {
     data: {
       studentId: session.user.id,
       tutorId,
-      subject: "General Tutoring", // Hardcoded for MVP since form doesn't capture it yet
-      grade: "High School",
-      topic: "Homework Help",
+      subject,
+      grade,
+      topic,
+      helpNeeded,
       startTime: targetDate,
       endTime: endDate,
       status: "CONFIRMED",
@@ -92,13 +115,13 @@ export async function bookSession(formData: FormData) {
       {
         studentName: session.user.name || "Student",
         tutorName: tutorProfile.user.name || "Tutor",
-        subject: "General Tutoring",
+        subject,
         startTime: targetDate.toISOString(),
         zoomLink: meetingUrl,
       }
     );
   }
 
-  // Redirect to success page or student dashboard
+  // Redirect to student dashboard
   redirect("/dashboard");
 }

@@ -32,6 +32,7 @@ export default auth((req) => {
   const isPublicPath =
     publicPaths.some(path => nextUrl.pathname === path || nextUrl.pathname.startsWith(path + "/")) ||
     nextUrl.pathname.startsWith("/api/auth") ||
+    nextUrl.pathname.startsWith("/tutor/") ||
     nextUrl.pathname.startsWith("/tutors/")  // public tutor profiles
 
   const isOnboardingPath = onboardingPaths.some(path => nextUrl.pathname.startsWith(path))
