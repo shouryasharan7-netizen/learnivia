@@ -179,6 +179,216 @@ async function main() {
   }
 
   console.log("Seeded Stories");
+
+  // Elevate Shourya Sharan to ADMIN and approve tutor profile if present
+  const adminUser = await prisma.user.findFirst({
+    where: { email: "shouryasharan7@gmail.com" },
+    include: { tutorProfile: true }
+  });
+
+  if (adminUser) {
+    await prisma.user.update({
+      where: { id: adminUser.id },
+      data: { role: "ADMIN" }
+    });
+
+    if (adminUser.tutorProfile) {
+      await prisma.tutorProfile.update({
+        where: { id: adminUser.tutorProfile.id },
+        data: {
+          status: "APPROVED",
+          school: adminUser.tutorProfile.school || "Imperial College London",
+          volunteerHours: Math.max(adminUser.tutorProfile.volunteerHours, 14.5),
+          subjects: {
+            connectOrCreate: [
+              { where: { name: "Mathematics" }, create: { name: "Mathematics" } },
+              { where: { name: "Computer Science" }, create: { name: "Computer Science" } },
+            ]
+          },
+          gradeLevels: {
+            connectOrCreate: [
+              { where: { name: "GCSE" }, create: { name: "GCSE" } },
+              { where: { name: "A-Level" }, create: { name: "A-Level" } },
+            ]
+          }
+        }
+      });
+
+      // Ensure availability slot
+      const existingSlot = await prisma.availability.findFirst({
+        where: { tutorId: adminUser.tutorProfile.id }
+      });
+      if (!existingSlot) {
+        await prisma.availability.createMany({
+          data: [
+            { tutorId: adminUser.tutorProfile.id, dayOfWeek: 2, startTime: "16:00", endTime: "17:00", timezone: "Europe/London" },
+            { tutorId: adminUser.tutorProfile.id, dayOfWeek: 4, startTime: "17:00", endTime: "18:00", timezone: "Europe/London" },
+            { tutorId: adminUser.tutorProfile.id, dayOfWeek: 6, startTime: "11:00", endTime: "12:00", timezone: "Europe/London" },
+          ]
+        });
+      }
+    }
+    console.log("Elevated shouryasharan7@gmail.com to ADMIN and APPROVED tutor status");
+  }
+
+  // Seed 2 Exemplar Approved Tutors for Live Public Launch
+  const sampleTutors = [
+    {
+      email: "maya.lin@learnivia.demo",
+      name: "Maya Lin",
+      school: "University of Oxford",
+      bio: "Biochemistry undergraduate at Oxford. Passionate about making chemistry and biology intuitive, fun, and accessible for everyone. 50+ hours of peer mentoring.",
+      experience: "Top 1% in A-Level Chemistry & Biology. Former president of the STEM Peer Tutoring society.",
+      volunteerHours: 32.5,
+      subjects: ["Biology", "Chemistry", "Science Support"],
+      gradeLevels: ["GCSE", "A-Level", "Secondary"],
+      slots: [
+        { dayOfWeek: 1, startTime: "17:00", endTime: "18:00" },
+        { dayOfWeek: 3, startTime: "16:30", endTime: "17:30" },
+        { dayOfWeek: 5, startTime: "15:00", endTime: "16:00" },
+      ]
+    },
+    {
+      email: "liam.davies@learnivia.demo",
+      name: "Liam Davies",
+      school: "University of Cambridge",
+      bio: "Mathematics Tripos student at Cambridge. I specialize in breaking down calculus, algebra, and exam technique so students feel confident and prepared.",
+      experience: "Gold award in UKMT Senior Mathematical Challenge. 2 years of volunteer tutoring experience.",
+      volunteerHours: 48.0,
+      subjects: ["Mathematics", "Math Foundations", "GCSE Exam Prep"],
+      gradeLevels: ["Primary", "Secondary", "GCSE", "A-Level"],
+      slots: [
+        { dayOfWeek: 2, startTime: "18:00", endTime: "19:00" },
+        { dayOfWeek: 4, startTime: "18:00", endTime: "19:00" },
+        { dayOfWeek: 6, startTime: "10:00", endTime: "11:00" },
+      ]
+    }
+  ];
+
+  for (const st of sampleTutors) {
+    const user = await prisma.user.upsert({
+      where: { email: st.email },
+      update: { name: st.name, role: "TUTOR" },
+      create: {
+        email: st.email,
+        name: st.name,
+        role: "TUTOR",
+        timezone: "Europe/London",
+        onboardingCompleted: true,
+      }
+    });
+
+    const profile = await prisma.tutorProfile.upsert({
+      where: { userId: user.id },
+      update: {
+        status: "APPROVED",
+        school: st.school,
+        bio: st.bio,
+        experience: st.experience,
+        volunteerHours: st.volunteerHours,
+      },
+      create: {
+        userId: user.id,
+        status: "APPROVED",
+        school: st.school,
+        bio: st.bio,
+        experience: st.experience,
+        volunteerHours: st.volunteerHours,
+      }
+    });
+
+    // Connect subjects
+    for (const sub of st.subjects) {
+      await prisma.tutorProfile.update({
+        where: { id: profile.id },
+        data: {
+          subjects: {
+            connectOrCreate: {
+              where: { name: sub },
+              create: { name: sub }
+            }
+          }
+        }
+      });
+    }
+
+    // Connect grade levels
+    for (const gr of st.gradeLevels) {
+      await prisma.tutorProfile.update({
+        where: { id: profile.id },
+        data: {
+          gradeLevels: {
+            connectOrCreate: {
+              where: { name: gr },
+              create: { name: gr }
+            }
+          }
+        }
+      });
+    }
+
+    // Seed slots
+    const slotsCount = await prisma.availability.count({ where: { tutorId: profile.id } });
+    if (slotsCount === 0) {
+      await prisma.availability.createMany({
+        data: st.slots.map(s => ({
+          tutorId: profile.id,
+          dayOfWeek: s.dayOfWeek,
+          startTime: s.startTime,
+          endTime: s.endTime,
+          timezone: "Europe/London",
+        }))
+      });
+    }
+
+    // Seed sample review
+    const reviewCount = await prisma.review.count({ where: { tutorId: profile.id } });
+    if (reviewCount === 0 && adminUser) {
+      await prisma.review.create({
+        data: {
+          tutorId: profile.id,
+          studentId: adminUser.id,
+          rating: 5,
+          comment: "Incredible session! Explained everything so clearly and patiently. Really boosted my confidence.",
+        }
+      });
+    }
+  }
+
+  console.log("Seeded Sample Approved Tutors");
+
+  // Seed sample upcoming workshop
+  const cambridgeTutor = await prisma.tutorProfile.findFirst({
+    where: { school: "University of Cambridge" }
+  });
+
+  if (cambridgeTutor) {
+    const nextSaturday = new Date();
+    nextSaturday.setDate(nextSaturday.getDate() + ((6 - nextSaturday.getDay() + 7) % 7 || 7));
+    nextSaturday.setHours(11, 0, 0, 0);
+
+    const endWorkshop = new Date(nextSaturday);
+    endWorkshop.setHours(12, 30, 0, 0);
+
+    await prisma.workshop.upsert({
+      where: { id: "sample-workshop-math" },
+      update: {},
+      create: {
+        id: "sample-workshop-math",
+        tutorId: cambridgeTutor.id,
+        title: "Mastering Quadratic Equations & Algebra",
+        description: "Interactive small-group study room covering factoring, the quadratic formula, and completing the square with practice exam questions.",
+        subject: "Mathematics",
+        grade: "GCSE / Secondary",
+        startTime: nextSaturday,
+        endTime: endWorkshop,
+        maxCapacity: 10,
+        zoomLink: "https://zoom.us/j/9876543210",
+        status: "UPCOMING",
+      }
+    });
+    console.log("Seeded Upcoming Live Group Workshop");
+  }
 }
 
 main()
