@@ -62,6 +62,22 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
               <strong>⭐ {avgRating} ({tutorProfile.reviews.length})</strong>
             </div>
           )}
+          <div className={styles.metaItem}>
+            <Link
+              href={`/tutor/${tutorProfile.id}/transcript`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.35rem",
+                color: "var(--color-primary)",
+                fontWeight: 700,
+                textDecoration: "underline",
+                fontSize: "0.85rem",
+              }}
+            >
+              📜 Official Transcript →
+            </Link>
+          </div>
         </div>
       </header>
 

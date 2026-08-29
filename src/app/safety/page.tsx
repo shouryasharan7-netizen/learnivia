@@ -84,10 +84,13 @@ export default function SafetyPage() {
               </p>
             </div>
             <div className={styles.reportActions}>
-              <a href="mailto:safety@learnivia.app" className={styles.reportBtn}>
-                📧 Email our safety team
+              <Link href="/safety/report" className={styles.reportBtn}>
+                🛡️ Submit an In-App Safety Report
+              </Link>
+              <a href="mailto:safety@learnivia.app" style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", textDecoration: "underline" }}>
+                Or email safety@learnivia.app
               </a>
-              <p className={styles.reportSubnote}>We aim to respond to all reports within 24 hours.</p>
+              <p className={styles.reportSubnote}>All reports are investigated by moderation staff within 24 hours.</p>
             </div>
           </div>
         </section>

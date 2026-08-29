@@ -44,4 +44,33 @@ export async function rejectApplication(tutorId: string) {
   });
 
   revalidatePath("/admin/applications");
+  revalidatePath("/admin/tutors");
+}
+
+export async function suspendTutor(tutorId: string) {
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.tutorProfile.update({
+    where: { id: tutorId },
+    data: { status: "REJECTED" },
+  });
+
+  revalidatePath("/admin/tutors");
+}
+
+export async function reactivateTutor(tutorId: string) {
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.tutorProfile.update({
+    where: { id: tutorId },
+    data: { status: "APPROVED" },
+  });
+
+  revalidatePath("/admin/tutors");
 }

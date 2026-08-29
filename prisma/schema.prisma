@@ -80,6 +80,13 @@ model User {
   
   // Reviews given by this user (as a student)
   reviewsGiven    Review[]
+  
+  // Workshops enrolled
+  workshopEnrollments WorkshopEnrollment[] @relation("WorkshopEnrollments")
+  
+  // Incident reports
+  reportsFiled    IncidentReport[] @relation("ReportsFiled")
+  reportsReceived IncidentReport[] @relation("ReportsReceived")
 }
 
 model TutorProfile {
@@ -103,6 +110,9 @@ model TutorProfile {
   
   // Bookings where this user is the tutor
   tutorBookings   Booking[] @relation("TutorBookings")
+  
+  // Group workshops hosted by this tutor
+  workshops       Workshop[] @relation("TutorWorkshops")
   
   // Reviews received by this tutor
   reviews         Review[]
@@ -223,4 +233,71 @@ model Review {
   comment     String?      @db.Text
   
   createdAt   DateTime     @default(now())
+}
+
+enum WorkshopStatus {
+  UPCOMING
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+model Workshop {
+  id          String         @id @default(cuid())
+  tutorId     String
+  tutor       TutorProfile   @relation("TutorWorkshops", fields: [tutorId], references: [id], onDelete: Cascade)
+  
+  title       String
+  description String         @db.Text
+  subject     String
+  grade       String
+  
+  startTime   DateTime
+  endTime     DateTime
+  
+  zoomLink    String?        @db.Text
+  maxCapacity Int            @default(10)
+  status      WorkshopStatus @default(UPCOMING)
+  
+  enrollments WorkshopEnrollment[]
+  
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model WorkshopEnrollment {
+  id          String       @id @default(cuid())
+  workshopId  String
+  workshop    Workshop     @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  studentId   String
+  student     User         @relation("WorkshopEnrollments", fields: [studentId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime     @default(now())
+  
+  @@unique([workshopId, studentId])
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+model IncidentReport {
+  id             String       @id @default(cuid())
+  reporterId     String?
+  reporter       User?        @relation("ReportsFiled", fields: [reporterId], references: [id], onDelete: SetNull)
+  
+  reportedUserId String?
+  reportedUser   User?        @relation("ReportsReceived", fields: [reportedUserId], references: [id], onDelete: SetNull)
+  
+  bookingId      String?
+  category       String       // e.g. "Inappropriate Behavior", "No-show", "Harassment", "Safety Concern"
+  description    String       @db.Text
+  status         ReportStatus @default(PENDING)
+  adminNotes     String?      @db.Text
+  
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }

@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
 import { cancelBooking } from "@/app/actions/sessions";
+import { cancelWorkshopEnrollment } from "@/app/actions/workshops";
 
 export default async function StudentDashboard() {
   const session = await auth();
@@ -17,28 +18,40 @@ export default async function StudentDashboard() {
     );
   }
 
-  const upcomingBookings = await prisma.booking.findMany({
-    where: { 
-      studentId: session.user.id,
-      status: "CONFIRMED"
-    },
-    include: {
-      tutor: { include: { user: true } }
-    },
-    orderBy: { startTime: "asc" }
-  });
-
-  const completedBookings = await prisma.booking.findMany({
-    where: { 
-      studentId: session.user.id,
-      status: "COMPLETED"
-    },
-    include: {
-      tutor: { include: { user: true } }
-    },
-    orderBy: { startTime: "desc" },
-    take: 5,
-  });
+  const [upcomingBookings, completedBookings, enrolledWorkshops] = await Promise.all([
+    prisma.booking.findMany({
+      where: { 
+        studentId: session.user.id,
+        status: "CONFIRMED"
+      },
+      include: {
+        tutor: { include: { user: true } }
+      },
+      orderBy: { startTime: "asc" }
+    }),
+    prisma.booking.findMany({
+      where: { 
+        studentId: session.user.id,
+        status: "COMPLETED"
+      },
+      include: {
+        tutor: { include: { user: true } }
+      },
+      orderBy: { startTime: "desc" },
+      take: 5,
+    }),
+    prisma.workshopEnrollment.findMany({
+      where: { studentId: session.user.id },
+      include: {
+        workshop: {
+          include: {
+            tutor: { include: { user: true } },
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
 
   return (
     <main className={styles.main}>
@@ -88,6 +101,42 @@ export default async function StudentDashboard() {
             </div>
           )}
 
+          {/* Enrolled Live Group Workshops */}
+          {enrolledWorkshops.length > 0 && (
+            <div style={{ marginTop: "3rem" }}>
+              <h2 className={styles.sectionTitle}>My Enrolled Group Workshops</h2>
+              <div className={styles.bookingsList}>
+                {enrolledWorkshops.map((e) => (
+                  <div key={e.id} className={styles.bookingCard}>
+                    <div className={styles.bookingInfo}>
+                      <h3>{e.workshop.title}</h3>
+                      <p className={styles.timeInfo}>
+                        Host: {e.workshop.tutor.user.name} • 📅 {new Date(e.workshop.startTime).toLocaleDateString()} at{" "}
+                        {new Date(e.workshop.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      </p>
+                      <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
+                        {e.workshop.description}
+                      </p>
+                    </div>
+                    <div className={styles.bookingActions}>
+                      {e.workshop.zoomLink && (
+                        <a href={e.workshop.zoomLink} target="_blank" rel="noopener noreferrer" className={styles.joinBtn}>
+                          🎥 Join Zoom
+                        </a>
+                      )}
+                      <form action={cancelWorkshopEnrollment}>
+                        <input type="hidden" name="workshopId" value={e.workshop.id} />
+                        <button type="submit" className={styles.cancelBtn}>
+                          Leave
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Past / Completed Sessions */}
           {completedBookings.length > 0 && (
             <div style={{ marginTop: "3rem" }}>
@@ -115,18 +164,23 @@ export default async function StudentDashboard() {
 
         <section className={styles.sidebar}>
           <div className={styles.card}>
-            <h3>Need Help?</h3>
-            <p>If you have any questions or concerns about a session, check our safety resources or report an issue directly.</p>
-            <Link href="/safety" style={{ color: "var(--color-primary)", fontWeight: 700, fontSize: "0.95rem" }}>
-              Safety &amp; Trust Guidelines →
-            </Link>
+            <h3>Need Help or Have a Concern?</h3>
+            <p>If you experience any issues, no-shows, or safety concerns during a session, our moderation team is here for you.</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <Link href="/safety/report" style={{ color: "var(--color-error)", fontWeight: 700, fontSize: "0.9rem" }}>
+                🛡️ Report an Issue or Concern →
+              </Link>
+              <Link href="/safety" style={{ color: "var(--color-primary)", fontWeight: 600, fontSize: "0.9rem" }}>
+                Safety Guidelines →
+              </Link>
+            </div>
           </div>
           
           {/* @ts-ignore */}
           {session.user.role === "TUTOR" && (
             <div className={styles.tutorCard}>
               <h3>You are a Volunteer Tutor!</h3>
-              <p>Manage your availability, launch your meetings, and verify volunteer hours.</p>
+              <p>Manage your availability, host workshops, and verify volunteer hours.</p>
               <Link href="/tutor" className={styles.secondaryBtn}>Go to Tutor Dashboard</Link>
             </div>
           )}

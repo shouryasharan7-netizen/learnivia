@@ -12,6 +12,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/applications" style={{ padding: "0.75rem 1rem", borderRadius: "0.5rem", color: "var(--color-text)", textDecoration: "none", fontWeight: 600, fontSize: "0.875rem" }}>
             Applications
           </Link>
+          <Link href="/admin/sessions" style={{ padding: "0.75rem 1rem", borderRadius: "0.5rem", color: "var(--color-text)", textDecoration: "none", fontWeight: 600, fontSize: "0.875rem" }}>
+            All Sessions &amp; Workshops
+          </Link>
+          <Link href="/admin/tutors" style={{ padding: "0.75rem 1rem", borderRadius: "0.5rem", color: "var(--color-text)", textDecoration: "none", fontWeight: 600, fontSize: "0.875rem" }}>
+            Tutors &amp; Transcripts
+          </Link>
+          <Link href="/admin/reports" style={{ padding: "0.75rem 1rem", borderRadius: "0.5rem", color: "var(--color-text)", textDecoration: "none", fontWeight: 600, fontSize: "0.875rem" }}>
+            🛡️ Safety Reports
+          </Link>
           <Link href="/admin/stories" style={{ padding: "0.75rem 1rem", borderRadius: "0.5rem", color: "var(--color-text)", textDecoration: "none", fontWeight: 600, fontSize: "0.875rem" }}>
             Stories
           </Link>
