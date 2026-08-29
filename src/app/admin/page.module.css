@@ -21,29 +21,29 @@
 .statCard {
   background: white;
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   text-align: center;
 }
 
 .statCard h3 {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 1.125rem;
   margin-bottom: 1rem;
 }
 
 .statValue {
-  color: var(--fresh-teal);
+  color: var(--color-primary);
   font-size: 3rem;
   font-weight: bold;
 }
 
 .sectionTitle {
-  color: var(--deep-navy);
+  color: var(--color-navy);
   font-size: 1.75rem;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid var(--soft-sky-blue);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .applicationsList {
@@ -55,8 +55,8 @@
 .applicationCard {
   background: white;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -67,13 +67,13 @@
 }
 
 .appInfo h3 {
-  color: var(--deep-navy);
+  color: var(--color-navy);
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
 .appInfo p {
-  color: #444;
+  color: var(--color-text);
   margin-bottom: 0.5rem;
   line-height: 1.5;
 }
@@ -85,25 +85,31 @@
 
 .approveBtn, .rejectBtn {
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: var(--radius-full);
+  font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: opacity 0.2s;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
 }
 
 .approveBtn {
-  background-color: var(--fresh-teal);
+  background-color: var(--color-primary);
   color: white;
 }
 
 .rejectBtn {
-  background-color: #ff4757;
+  background-color: var(--color-error);
   color: white;
 }
 
-.approveBtn:hover, .rejectBtn:hover {
-  opacity: 0.8;
+.approveBtn:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.rejectBtn:hover {
+  background-color: #DC2626; /* Error dark */
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {

@@ -9,37 +9,7 @@
   padding: var(--space-8) var(--space-4);
 }
 
-/* Background Shapes */
-.bgShape1, .bgShape2, .bgShape3 {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.45);
-  border-radius: var(--radius-full);
-  pointer-events: none;
-}
-
-.bgShape1 {
-  width: 480px;
-  height: 480px;
-  top: -140px;
-  left: -120px;
-}
-
-.bgShape2 {
-  width: 280px;
-  height: 280px;
-  bottom: -60px;
-  right: -60px;
-  background-color: rgb(57 166 163 / 0.12);
-}
-
-.bgShape3 {
-  width: 180px;
-  height: 180px;
-  top: 25%;
-  right: 12%;
-  background-color: var(--color-navy);
-  opacity: 0.04;
-}
+/* Background Shapes Removed for clean UI */
 
 .container {
   position: relative;

@@ -48,19 +48,19 @@
 }
 
 .sectionTitle {
-  color: var(--deep-navy);
+  color: var(--color-navy);
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #eee;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .emptyState {
   background: white;
   padding: 4rem 2rem;
-  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,7 +68,7 @@
 }
 
 .emptyState p {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
@@ -81,32 +81,32 @@
 .primaryBtn, .secondaryBtn, .joinBtn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-full);
   text-decoration: none;
-  font-weight: bold;
-  transition: opacity 0.2s;
+  font-weight: 700;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
   text-align: center;
 }
 
 .primaryBtn {
-  background-color: var(--fresh-teal);
+  background-color: var(--color-primary);
   color: white;
 }
 
 .secondaryBtn {
-  background-color: var(--deep-navy);
+  background-color: var(--color-navy);
   color: white;
   width: 100%;
 }
 
 .joinBtn {
-  background-color: var(--soft-sky-blue);
-  color: var(--deep-navy);
+  background-color: var(--color-info-bg);
+  color: var(--color-primary-hover);
 }
 
-.primaryBtn:hover, .secondaryBtn:hover, .joinBtn:hover {
-  opacity: 0.9;
-}
+.primaryBtn:hover { background-color: var(--color-primary-hover); transform: translateY(-1px); }
+.secondaryBtn:hover { background-color: var(--color-navy-dark); transform: translateY(-1px); }
+.joinBtn:hover { background-color: var(--color-sky-dark); transform: translateY(-1px); }
 
 .bookingsList {
   display: flex;
@@ -117,21 +117,26 @@
 .bookingCard {
   background: white;
   padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+.bookingCard:hover {
+  box-shadow: var(--shadow-sm);
+  border-color: var(--color-primary);
 }
 
 .bookingInfo h3 {
-  color: var(--deep-navy);
+  color: var(--color-navy);
   margin-bottom: 0.5rem;
   font-size: 1.25rem;
 }
 
 .timeInfo {
-  color: #555;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
@@ -144,22 +149,23 @@
 .card, .tutorCard {
   background: white;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
 }
 
 .tutorCard {
-  background-color: var(--soft-gold);
+  background-color: var(--color-warning-bg);
+  border-color: var(--color-warning);
 }
 
 .card h3, .tutorCard h3 {
-  color: var(--deep-navy);
+  color: var(--color-navy);
   margin-bottom: 1rem;
   font-size: 1.25rem;
 }
 
 .card p, .tutorCard p {
-  color: #555;
+  color: var(--color-text);
   line-height: 1.5;
   margin-bottom: 1.5rem;
 }

@@ -97,9 +97,6 @@ export default function Home() {
             <span>🛡️ Safeguarded sessions</span>
           </div>
         </div>
-        <div className={styles.heroVisual} aria-hidden="true">
-          <Image src="/images/become-a-tutor.png" alt="" width={380} height={460} priority />
-        </div>
       </section>
 
       {/* ========== PROGRAM CATALOG ========== */}

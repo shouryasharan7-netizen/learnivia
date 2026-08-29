@@ -36,16 +36,19 @@
 
 .searchInput, .filterSelect {
   padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
   font-size: 1rem;
   font-family: inherit;
   min-width: 250px;
+  background-color: white;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .searchInput:focus, .filterSelect:focus {
   outline: none;
-  border-color: var(--fresh-teal);
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
 }
 
 .tutorGrid {
@@ -56,27 +59,28 @@
 
 .noTutors {
   text-align: center;
-  color: #666;
+  color: var(--color-text-muted);
   grid-column: 1 / -1;
   font-size: 1.25rem;
   padding: 4rem;
   background: white;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
 }
 
 .tutorCard {
   background: white;
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .tutorCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
 }
 
 .tutorHeader {
@@ -89,8 +93,8 @@
 .avatarPlaceholder {
   width: 60px;
   height: 60px;
-  background-color: var(--soft-sky-blue);
-  color: var(--deep-navy);
+  background-color: var(--color-sky-dark);
+  color: var(--color-primary-hover);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -101,17 +105,18 @@
 
 .tutorName {
   font-size: 1.25rem;
-  color: var(--deep-navy);
+  font-weight: 700;
+  color: var(--color-navy);
   margin-bottom: 0.25rem;
 }
 
 .tutorTimezone {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text-light);
 }
 
 .tutorBio {
-  color: #555;
+  color: var(--color-text);
   line-height: 1.5;
   margin-bottom: 1.5rem;
   flex: 1;
@@ -125,28 +130,29 @@
 }
 
 .tag {
-  background-color: var(--soft-gold);
-  color: var(--deep-navy);
+  background-color: var(--color-info-bg);
+  color: var(--color-primary-hover);
   padding: 0.25rem 0.75rem;
   border-radius: 99px;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .viewProfileBtn {
   display: block;
   text-align: center;
-  background-color: var(--fresh-teal);
+  background-color: var(--color-primary);
   color: white;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius-full);
   text-decoration: none;
   font-weight: bold;
-  transition: opacity 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .viewProfileBtn:hover {
-  opacity: 0.9;
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {

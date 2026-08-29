@@ -34,7 +34,7 @@
 .progressLine:nth-child(2) { left: 50%; right: 2rem; }
 
 .activeLine {
-  background-color: var(--fresh-teal);
+  background-color: var(--color-primary);
 }
 
 .stepCircle {
@@ -42,13 +42,13 @@
   height: 24px;
   border-radius: 50%;
   background-color: white;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border);
   position: relative;
   z-index: 2;
 }
 
 .activeCircle {
-  border-color: var(--fresh-teal);
+  border-color: var(--color-primary);
   background-color: white;
 }
 .activeCircle::after {
@@ -58,7 +58,7 @@
   left: 4px;
   right: 4px;
   bottom: 4px;
-  background-color: var(--fresh-teal);
+  background-color: var(--color-primary);
   border-radius: 50%;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .title {
-  color: #111;
+  color: var(--color-navy);
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 1rem;
@@ -81,7 +81,7 @@
 }
 
 .subtitle {
-  color: #444;
+  color: var(--color-text-muted);
   font-size: 1.05rem;
   line-height: 1.5;
   margin-bottom: 2rem;
@@ -89,7 +89,7 @@
 }
 
 .required {
-  color: #d63031;
+  color: var(--color-error);
 }
 
 /* Step 1 */
@@ -104,22 +104,30 @@
 .formGroup label {
   font-weight: 700;
   font-size: 0.95rem;
-  color: var(--deep-navy);
+  color: var(--color-navy);
 }
 
 .formGroup select {
   padding: 0.875rem;
-  border: 1px solid var(--fresh-teal);
-  border-radius: 6px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
   font-family: inherit;
   font-size: 1rem;
   background-color: white;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.formGroup select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
 }
 
 /* Step 2 */
 .featuresBox {
-  background-color: #f1f8fc;
-  border-radius: 12px;
+  background-color: var(--color-info-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
   padding: 2rem;
   margin-bottom: 2rem;
   display: flex;
@@ -138,22 +146,23 @@
 }
 
 .featureItem p {
-  color: var(--deep-navy);
-  font-weight: 500;
+  color: var(--color-navy);
+  font-weight: 600;
   line-height: 1.4;
   margin: 0;
 }
 
 .guidelinesIntro {
-  color: #555;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
 /* Step 3 */
 .guidelinesBox {
-  background-color: #f8f6fb;
-  border-radius: 12px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
   padding: 2rem;
   margin-bottom: 2rem;
   display: flex;
@@ -167,18 +176,19 @@
   align-items: flex-start;
 }
 
-.iconPink { font-size: 1.5rem; color: #ff6b81; }
-.iconGreen { font-size: 1.5rem; color: #2ed573; }
-.iconBlue { font-size: 1.5rem; color: #1e90ff; }
+.iconPink { font-size: 1.5rem; }
+.iconGreen { font-size: 1.5rem; }
+.iconBlue { font-size: 1.5rem; }
 
 .guideItem h3 {
   font-size: 1.1rem;
-  color: #111;
+  color: var(--color-navy);
+  font-weight: 700;
   margin-bottom: 0.25rem;
 }
 
 .guideItem p {
-  color: #555;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.4;
 }
@@ -193,13 +203,14 @@
   gap: 0.75rem;
   cursor: pointer;
   font-weight: 700;
-  color: var(--deep-navy);
+  color: var(--color-navy);
 }
 
 .checkboxGroup input[type="checkbox"] {
   width: 20px;
   height: 20px;
   cursor: pointer;
+  accent-color: var(--color-primary);
 }
 
 /* Navigation */
@@ -208,43 +219,49 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 3rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
 }
 
 .backBtn {
   background: white;
-  border: 1px solid #ccc;
-  color: #555;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
   padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
+  border-radius: var(--radius-full);
+  font-weight: 700;
   cursor: pointer;
   font-size: 1rem;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
 }
 
 .backBtn:hover {
-  background: #f9f9f9;
+  background: var(--color-bg);
+  border-color: var(--color-navy);
+  transform: translateY(-1px);
 }
 
 .nextBtn {
-  background-color: var(--fresh-teal);
+  background-color: var(--color-primary);
   color: white;
   border: none;
   padding: 0.75rem 2rem;
-  border-radius: 6px;
-  font-weight: 600;
+  border-radius: var(--radius-full);
+  font-weight: 700;
   cursor: pointer;
   font-size: 1rem;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
 }
 
 .nextBtn:hover {
-  opacity: 0.9;
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
 }
 
 .nextBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 @media (max-width: 768px) {

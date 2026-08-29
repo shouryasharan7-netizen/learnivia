@@ -51,9 +51,6 @@ function SignInClientInner() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.bgShape1} aria-hidden="true" />
-      <div className={styles.bgShape2} aria-hidden="true" />
-      <div className={styles.bgShape3} aria-hidden="true" />
 
       <div className={styles.container}>
         <Image src="/images/logo.png" alt="Learnivia" width={52} height={52} className={styles.logoImg} />

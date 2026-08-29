@@ -1,7 +1,8 @@
 .footer {
-  background-color: var(--color-navy);
-  color: white;
+  background-color: var(--color-bg-card); /* White */
+  color: var(--color-text);
   margin-top: auto;
+  border-top: 1px solid var(--color-border);
 }
 
 .container {
@@ -15,7 +16,7 @@
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   gap: var(--space-12);
   padding-bottom: var(--space-12);
-  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* Brand Column */
@@ -35,13 +36,13 @@
 .logoText {
   font-size: var(--text-lg);
   font-weight: 800;
-  color: white;
+  color: var(--color-navy);
   letter-spacing: -0.02em;
 }
 
 .tagline {
   font-size: var(--text-sm);
-  color: rgb(255 255 255 / 0.65);
+  color: var(--color-text-muted);
   line-height: var(--leading-relaxed);
   max-width: 280px;
 }
@@ -52,14 +53,14 @@
   gap: var(--space-2);
   font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--color-teal-light);
+  color: var(--color-primary);
   text-decoration: none;
   width: fit-content;
   transition: color var(--transition-fast);
 }
 
 .safetyBadge:hover {
-  color: white;
+  color: var(--color-primary-hover);
 }
 
 /* Link Groups */
@@ -74,7 +75,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgb(255 255 255 / 0.5);
+  color: var(--color-text-light);
 }
 
 .linkList {
@@ -86,13 +87,13 @@
 
 .footerLink {
   font-size: var(--text-sm);
-  color: rgb(255 255 255 / 0.7);
+  color: var(--color-text-muted);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .footerLink:hover {
-  color: white;
+  color: var(--color-navy);
 }
 
 /* Bottom Bar */
@@ -107,25 +108,25 @@
 
 .copyright {
   font-size: var(--text-sm);
-  color: rgb(255 255 255 / 0.5);
+  color: var(--color-text-light);
 }
 
 .disclaimer {
   font-size: var(--text-xs);
-  color: rgb(255 255 255 / 0.4);
+  color: var(--color-text-light);
   max-width: 600px;
   text-align: right;
   line-height: var(--leading-relaxed);
 }
 
 .safetyLink {
-  color: rgb(255 255 255 / 0.6);
+  color: var(--color-text-muted);
   text-decoration: underline;
   transition: color var(--transition-fast);
 }
 
 .safetyLink:hover {
-  color: white;
+  color: var(--color-navy);
 }
 
 /* Responsive */

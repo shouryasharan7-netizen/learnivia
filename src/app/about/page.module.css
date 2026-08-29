@@ -1,6 +1,6 @@
 .main {
   min-height: calc(100vh - 80px);
-  background-color: var(--warm-cream);
+  background-color: var(--color-bg);
   padding-bottom: 4rem;
 }
 
@@ -8,11 +8,11 @@
   background-color: white;
   padding: 5rem 2rem;
   text-align: center;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .heroContent {
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -24,15 +24,16 @@
 }
 
 .title {
-  color: var(--deep-navy);
-  font-size: 3rem;
-  font-weight: 800;
+  color: var(--color-navy);
+  font-size: 3.5rem;
+  font-weight: 900;
   margin-bottom: 1rem;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  color: #555;
-  font-size: 1.2rem;
+  color: var(--color-text-muted);
+  font-size: 1.25rem;
   line-height: 1.6;
 }
 
@@ -42,18 +43,19 @@
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 .textBlock h2 {
-  color: var(--deep-navy);
-  font-size: 2rem;
+  color: var(--color-navy);
+  font-size: 2.25rem;
   margin-bottom: 1rem;
+  font-weight: 800;
 }
 
 .textBlock p {
-  color: #444;
-  font-size: 1.1rem;
+  color: var(--color-text);
+  font-size: 1.125rem;
   line-height: 1.7;
 }
 
@@ -62,33 +64,35 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .featureList li {
-  color: var(--fresh-teal);
-  font-weight: 600;
-  font-size: 1.1rem;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.125rem;
 }
 
 .ctaBox {
-  background-color: var(--soft-sky-blue);
-  padding: 3rem;
-  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-alt);
+  padding: 4rem 3rem;
+  border-radius: var(--radius-2xl);
   text-align: center;
   margin-top: 2rem;
+  border: 1px solid var(--color-border);
 }
 
 .ctaBox h3 {
-  color: var(--deep-navy);
-  font-size: 1.8rem;
+  color: var(--color-navy);
+  font-size: 2rem;
+  font-weight: 800;
   margin-bottom: 0.5rem;
 }
 
 .ctaBox p {
-  color: #555;
+  color: var(--color-text-muted);
   margin-bottom: 2rem;
-  font-size: 1.1rem;
+  font-size: 1.125rem;
 }
 
 .btnGroup {
@@ -99,32 +103,34 @@
 }
 
 .primaryBtn {
-  background-color: var(--fresh-teal);
+  background-color: var(--color-primary);
   color: white;
   padding: 0.875rem 2rem;
-  border-radius: 99px;
-  font-size: 1.1rem;
+  border-radius: var(--radius-full);
+  font-size: 1.125rem;
   font-weight: 700;
-  transition: opacity 0.2s;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
 }
 
 .primaryBtn:hover {
-  opacity: 0.9;
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
 }
 
 .secondaryBtn {
   background-color: white;
-  color: var(--deep-navy);
-  border: 2px solid var(--deep-navy);
+  color: var(--color-navy);
+  border: 2px solid var(--color-border-strong);
   padding: 0.875rem 2rem;
-  border-radius: 99px;
-  font-size: 1.1rem;
+  border-radius: var(--radius-full);
+  font-size: 1.125rem;
   font-weight: 700;
-  transition: background-color 0.2s;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
 }
 
 .secondaryBtn:hover {
-  background-color: #f5f5f5;
+  border-color: var(--color-navy);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
