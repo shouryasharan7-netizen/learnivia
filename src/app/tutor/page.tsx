@@ -6,6 +6,9 @@ import { addAvailability, removeAvailability } from "./actions";
 import { completeSession, cancelBooking } from "@/app/actions/sessions";
 import { createWorkshop, completeWorkshop } from "@/app/actions/workshops";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   title: "Tutor Dashboard — Learnivia",
   description: "Manage volunteer tutoring sessions, host live workshops, and view verified hours.",
@@ -118,7 +121,10 @@ export default async function TutorDashboard() {
             <p className={styles.subtitle}>Manage your 1-on-1 tutoring sessions, group bootcamps, and volunteer record.</p>
           </div>
 
-          <div className={styles.headerActions}>
+          <div className={styles.headerActions} style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            <a href="#schedule-session" className={styles.primaryBtn} style={{ textDecoration: "none" }}>
+              ➕ Schedule a Session
+            </a>
             <Link href={`/tutor/${tutor.id}/transcript`} className={styles.transcriptBtn}>
               📜 Official Transcript →
             </Link>
@@ -226,67 +232,91 @@ export default async function TutorDashboard() {
             </section>
 
             {/* Live Group Workshops */}
+            {/* Schedule a New Session / Workshop */}
+            <section id="schedule-session" className={styles.card} style={{ border: "1.5px solid #0E8345", background: "#FFFFFF" }}>
+              <div className={styles.cardHeader}>
+                <div>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontSize: "0.75rem", fontWeight: 700, color: "#0E8345", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
+                    <span>⚡</span> Instant Tutor Publishing
+                  </div>
+                  <h2 className={styles.cardTitle}>➕ Schedule a New Live Session / Workshop</h2>
+                  <p className={styles.cardSub}>Publish a session to the directory. When published, it will immediately appear on Find a Session for learners to join.</p>
+                </div>
+              </div>
+
+              <form action={createWorkshop} className={styles.workshopForm} style={{ borderTop: "none", padding: "0.5rem 0 0" }}>
+                <div className={styles.formRow}>
+                  <div style={{ flex: 2 }}>
+                    <label className={styles.inputLabel}>Workshop Title *</label>
+                    <input type="text" name="title" placeholder="e.g. SAT Math: Geometry & Circles Bootcamp" required className={styles.textInput} />
+                  </div>
+                  <div style={{ flex: 1.2 }}>
+                    <label className={styles.inputLabel}>Subject *</label>
+                    <select name="subject" required className={styles.selectInput}>
+                      <option value="SAT Prep">SAT Prep</option>
+                      <option value="Mathematics">Mathematics</option>
+                      <option value="Science">Science (Bio / Chem / Physics)</option>
+                      <option value="College Admissions">College Admissions</option>
+                      <option value="Reading and Writing">Reading and Writing</option>
+                      <option value="Computer Science">Computer Science</option>
+                      <option value="Homework Help">Homework Help</option>
+                    </select>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <label className={styles.inputLabel}>Grade Level *</label>
+                    <select name="grade" required className={styles.selectInput}>
+                      <option value="High School">High School</option>
+                      <option value="Middle School">Middle School</option>
+                      <option value="College Prep">College Prep</option>
+                      <option value="All Levels">All Levels</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className={styles.inputLabel}>Session Description &amp; Objectives *</label>
+                  <textarea name="description" rows={2} placeholder="What topics will you cover? (e.g. We will walk through 10 practice problems and answer live questions)" required className={styles.textareaInput} />
+                </div>
+
+                <div className={styles.formRow}>
+                  <div>
+                    <label className={styles.inputLabel}>Date *</label>
+                    <input type="date" name="date" required className={styles.textInput} />
+                  </div>
+                  <div>
+                    <label className={styles.inputLabel}>Start Time *</label>
+                    <input type="time" name="startTime" required className={styles.textInput} />
+                  </div>
+                  <div>
+                    <label className={styles.inputLabel}>End Time *</label>
+                    <input type="time" name="endTime" required className={styles.textInput} />
+                  </div>
+                  <div>
+                    <label className={styles.inputLabel}>Max Capacity</label>
+                    <input type="number" name="maxCapacity" defaultValue={12} min={2} max={30} className={styles.textInput} />
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "0.5rem", flexWrap: "wrap", gap: "1rem" }}>
+                  <span style={{ fontSize: "0.8125rem", color: "#64748B" }}>
+                    ✓ Automatic Zoom link generated upon publish. Appears live across all learner directories immediately.
+                  </span>
+                  <button type="submit" className={styles.primaryBtn}>
+                    Publish Session to Directory 🚀
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            {/* Live Group Workshops List */}
             <section className={styles.card}>
               <div className={styles.cardHeader}>
                 <div>
-                  <h2 className={styles.cardTitle}>Live Group Workshops &amp; Bootcamps</h2>
-                  <p className={styles.cardSub}>Host small-group study sessions over Zoom with up to 20 students.</p>
+                  <h2 className={styles.cardTitle}>My Active Group Workshops &amp; Bootcamps</h2>
+                  <p className={styles.cardSub}>Scheduled group sessions hosted by you.</p>
                 </div>
                 <span className={styles.countTag}>{upcomingWorkshops.length} Active</span>
               </div>
-
-              {/* Host Workshop Collapsible Form */}
-              <details className={styles.workshopDetails}>
-                <summary className={styles.workshopSummary}>
-                  <span>+ Host a New Group Workshop</span>
-                  <span className={styles.expandHint}>Click to configure</span>
-                </summary>
-
-                <form action={createWorkshop} className={styles.workshopForm}>
-                  <div className={styles.formRow}>
-                    <div style={{ flex: 2 }}>
-                      <label className={styles.inputLabel}>Workshop Title *</label>
-                      <input type="text" name="title" placeholder="e.g. SAT Math: Geometry & Circles Bootcamp" required className={styles.textInput} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <label className={styles.inputLabel}>Subject *</label>
-                      <input type="text" name="subject" placeholder="e.g. Mathematics" required className={styles.textInput} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <label className={styles.inputLabel}>Grade Level *</label>
-                      <input type="text" name="grade" placeholder="e.g. High School" required className={styles.textInput} />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className={styles.inputLabel}>Session Description *</label>
-                    <textarea name="description" rows={2} placeholder="What concepts and practice problems will be covered?" required className={styles.textareaInput} />
-                  </div>
-
-                  <div className={styles.formRow}>
-                    <div>
-                      <label className={styles.inputLabel}>Date *</label>
-                      <input type="date" name="date" required className={styles.textInput} />
-                    </div>
-                    <div>
-                      <label className={styles.inputLabel}>Start Time *</label>
-                      <input type="time" name="startTime" required className={styles.textInput} />
-                    </div>
-                    <div>
-                      <label className={styles.inputLabel}>End Time *</label>
-                      <input type="time" name="endTime" required className={styles.textInput} />
-                    </div>
-                    <div>
-                      <label className={styles.inputLabel}>Capacity</label>
-                      <input type="number" name="maxCapacity" defaultValue={12} min={2} max={30} className={styles.textInput} />
-                    </div>
-                  </div>
-
-                  <button type="submit" className={styles.primaryBtn} style={{ alignSelf: "flex-start", marginTop: "0.5rem" }}>
-                    Publish Workshop to Directory 🚀
-                  </button>
-                </form>
-              </details>
 
               {/* Workshops list */}
               {upcomingWorkshops.length === 0 ? (

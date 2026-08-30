@@ -8,6 +8,7 @@ const { auth } = NextAuth(authConfig)
 const publicPaths = [
   "/",
   "/signin",
+  "/signup",
   "/find",
   "/how-it-works",
   "/about",
@@ -20,6 +21,10 @@ const publicPaths = [
   "/terms",
   "/cookies",
   "/learn",
+  "/sessions",
+  "/homework-help",
+  "/community",
+  "/resources",
 ]
 
 const onboardingPaths = ["/onboarding"]
@@ -38,6 +43,11 @@ export default auth((req) => {
   const isOnboardingPath = onboardingPaths.some(path => nextUrl.pathname.startsWith(path))
 
   if (isLoggedIn) {
+    // If logged in and visiting signin or signup, redirect immediately to dashboard
+    if (nextUrl.pathname === "/signin" || nextUrl.pathname === "/signup") {
+      return NextResponse.redirect(new URL("/dashboard", req.url))
+    }
+
     // Admin check
     // @ts-ignore
     if (nextUrl.pathname.startsWith("/admin") && req.auth?.user?.role !== "ADMIN") {

@@ -79,8 +79,11 @@ export async function createWorkshop(formData: FormData) {
     },
   });
 
+  revalidatePath("/sessions");
+  revalidatePath("/dashboard");
   revalidatePath("/tutor");
   revalidatePath("/learn");
+  revalidatePath("/");
 }
 
 export async function enrollInWorkshop(formData: FormData) {
@@ -127,8 +130,10 @@ export async function enrollInWorkshop(formData: FormData) {
     },
   });
 
-  revalidatePath("/learn");
+  revalidatePath("/sessions");
   revalidatePath("/dashboard");
+  revalidatePath("/tutor");
+  revalidatePath("/learn");
 }
 
 export async function cancelWorkshopEnrollment(formData: FormData) {
@@ -149,7 +154,9 @@ export async function cancelWorkshopEnrollment(formData: FormData) {
     },
   });
 
+  revalidatePath("/sessions");
   revalidatePath("/dashboard");
+  revalidatePath("/tutor");
   revalidatePath("/learn");
 }
 
@@ -195,6 +202,8 @@ export async function completeWorkshop(formData: FormData) {
     }),
   ]);
 
+  revalidatePath("/sessions");
+  revalidatePath("/dashboard");
   revalidatePath("/tutor");
   revalidatePath("/learn");
 }

@@ -220,6 +220,9 @@ export function Navbar() {
                     <Link href="/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
                       🔍 Find a Session
                     </Link>
+                    <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 700 }}>
+                      ➕ Host / Add a Session
+                    </Link>
                     <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
                       💻 Tutor Dashboard
                     </Link>

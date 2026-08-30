@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import styles from "./page.module.css";
+import { auth } from "@/auth";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata = {
   title: "Find a Session — Learnivia",
@@ -49,8 +53,19 @@ type Props = {
 };
 
 export default async function SessionsPage({ searchParams }: Props) {
+  const session = await auth();
   const { q, subject } = await searchParams;
   const activeSubject = subject || "All";
+
+  let isTutor = false;
+  if (session?.user?.id) {
+    const profile = await prisma.tutorProfile.findUnique({
+      where: { userId: session.user.id },
+    });
+    if (profile && profile.status === "APPROVED") {
+      isTutor = true;
+    }
+  }
 
   // Build where clause for workshops
   const workshopWhere: any = { status: "UPCOMING" };
@@ -111,11 +126,54 @@ export default async function SessionsPage({ searchParams }: Props) {
     <main className={styles.main}>
       <div className={styles.container}>
         {/* Page header */}
-        <div className={styles.pageHeader}>
-          <h1 className={styles.pageTitle}>All Sessions</h1>
-          <p className={styles.pageSubtitle}>
-            These are small-group sessions run by Learnivia tutors on topics of their choosing! They are typically shorter and more focused than programs, and you can join them at any time.
-          </p>
+        <div className={styles.pageHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap" }}>
+          <div>
+            <h1 className={styles.pageTitle}>All Sessions</h1>
+            <p className={styles.pageSubtitle}>
+              These are small-group sessions run by Learnivia tutors on topics of their choosing! They are typically shorter and more focused than programs, and you can join them at any time.
+            </p>
+          </div>
+          <div>
+            {isTutor ? (
+              <Link
+                href="/tutor#schedule-session"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  background: "#0E8345",
+                  color: "#FFFFFF",
+                  padding: "0.65rem 1.25rem",
+                  borderRadius: "9999px",
+                  fontSize: "0.9rem",
+                  fontWeight: 700,
+                  textDecoration: "none",
+                  boxShadow: "0 2px 8px rgba(14, 131, 69, 0.25)",
+                }}
+              >
+                <span>➕</span> Host a New Session
+              </Link>
+            ) : (
+              <Link
+                href="/apply"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  background: "#FFFFFF",
+                  border: "1.5px solid #0E8345",
+                  color: "#0E8345",
+                  padding: "0.65rem 1.25rem",
+                  borderRadius: "9999px",
+                  fontSize: "0.9rem",
+                  fontWeight: 700,
+                  textDecoration: "none",
+                }}
+              >
+                <span>🎓</span> Become a Tutor to Host
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* Search + Sort bar */}

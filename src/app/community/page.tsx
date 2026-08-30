@@ -2,6 +2,9 @@ import { auth } from "@/auth";
 import { getMessages } from "@/lib/community-store";
 import CommunityClient from "./CommunityClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   title: "Community — Learnivia",
   description: "Connect with the Learnivia learning community. Ask questions, share resources, and join live study channels.",

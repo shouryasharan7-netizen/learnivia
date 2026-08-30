@@ -33,6 +33,9 @@ export async function addAvailability(formData: FormData) {
     }
   });
 
+  revalidatePath("/sessions");
+  revalidatePath("/dashboard");
+  revalidatePath("/find");
   revalidatePath("/tutor");
 }
 
@@ -61,5 +64,8 @@ export async function removeAvailability(id: string) {
     });
   }
 
+  revalidatePath("/sessions");
+  revalidatePath("/dashboard");
+  revalidatePath("/find");
   revalidatePath("/tutor");
 }

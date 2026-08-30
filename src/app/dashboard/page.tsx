@@ -5,6 +5,9 @@ import Link from "next/link";
 import { cancelBooking } from "@/app/actions/sessions";
 import { cancelWorkshopEnrollment } from "@/app/actions/workshops";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   title: "Dashboard — Learnivia",
   description: "Your personalized Learnivia peer learning dashboard.",
