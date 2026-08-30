@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -62,7 +64,13 @@ const STORIES = [
   { name: "Priya M.", initials: "PM", color: "#D97706", quote: "I was skeptical at first, but after seeing how patient my daughter's tutor was, I'm completely convinced." },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  if (session?.user) {
+    redirect("/dashboard");
+  }
+
   return (
     <main className={styles.main}>
       {/* ============ HERO ============ */}

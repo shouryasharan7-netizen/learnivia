@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { auth } from "@/auth";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -18,7 +19,8 @@ const COMMUNITY_CHANNELS = [
   { label: "Study Circles", icon: "💬" },
 ];
 
-export default function CommunityPage() {
+export default async function CommunityPage() {
+  const session = await auth();
   return (
     <main className={styles.main}>
       <div className={styles.layout}>
@@ -104,11 +106,26 @@ export default function CommunityPage() {
           <div className={styles.feed}>
             <div className={styles.feedEmpty}>
               <div className={styles.feedEmptyIcon} aria-hidden="true">💬</div>
-              <h2 className={styles.feedEmptyTitle}>Welcome to the Learnivia Community!</h2>
+              <h2 className={styles.feedEmptyTitle}>
+                {session?.user ? `Welcome, ${session.user.name?.split(" ")[0]}!` : "Welcome to the Learnivia Community!"}
+              </h2>
               <p className={styles.feedEmptyDesc}>
                 This is your space to connect with tutors and students, share updates, and celebrate learning milestones.
               </p>
-              <Link href="/signup" className={styles.joinBtn}>Join the Community</Link>
+              {session?.user ? (
+                <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
+                  <Link href="/sessions" className={styles.joinBtn}>
+                    Explore Live Sessions →
+                  </Link>
+                  <Link href="/stories" className={styles.joinBtn} style={{ background: "#F1F5F9", color: "#1A1F2E" }}>
+                    Read Stories
+                  </Link>
+                </div>
+              ) : (
+                <Link href="/signin" className={styles.joinBtn}>
+                  Sign in to Join Community
+                </Link>
+              )}
             </div>
           </div>
         </div>

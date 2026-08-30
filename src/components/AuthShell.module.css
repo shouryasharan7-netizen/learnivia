@@ -1,18 +1,13 @@
 .shell {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 56px);
   background: #F8FAFC;
+  width: 100%;
 }
 
 .content {
   flex: 1;
   min-width: 0;
-  /* Offset to account for sidebar width */
-  margin-left: 220px;
-}
-
-@media (max-width: 899px) {
-  .content {
-    margin-left: 0;
-  }
+  display: flex;
+  flex-direction: column;
 }

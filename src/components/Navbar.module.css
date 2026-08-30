@@ -326,6 +326,184 @@
 }
 
 /* ====================
+   Interactive Popovers
+   ==================== */
+.actionWrapper {
+  position: relative;
+}
+
+.popoverMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 320px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  z-index: 300;
+  overflow: hidden;
+  animation: popoverFadeIn 150ms ease;
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.popoverHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #1A1F2E;
+}
+
+.popoverCount {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.popoverEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.popoverEmptyIcon {
+  font-size: 2rem;
+}
+
+.popoverEmptyTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #1A1F2E;
+}
+
+.popoverEmptyText {
+  font-size: 0.8125rem;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+.popoverFooterLink {
+  display: block;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #F1F5F9;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #0E8345;
+  text-decoration: none;
+  background: #FAFDFB;
+  transition: background-color 120ms ease;
+}
+.popoverFooterLink:hover {
+  background: #F0FDF4;
+}
+
+/* User Profile Menu */
+.userProfileMenu {
+  width: 260px;
+}
+
+.userInfoBlock {
+  padding: 1rem;
+  border-bottom: 1px solid #F1F5F9;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.userFullName {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #1A1F2E;
+}
+
+.userEmail {
+  font-size: 0.8125rem;
+  color: #64748B;
+  word-break: break-all;
+}
+
+.roleTag {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #E6F4EA;
+  color: #0E8345;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  width: fit-content;
+  margin-top: 0.25rem;
+}
+
+.userMenuList {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+  text-decoration: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.userMenuItem:hover {
+  background: #F8FAFC;
+  color: #0E8345;
+}
+
+.userMenuDivider {
+  height: 1px;
+  background: #F1F5F9;
+  margin: 0.25rem 0;
+}
+
+.signOutMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #DC2626;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background-color 120ms ease;
+}
+.signOutMenuItem:hover {
+  background: #FEF2F2;
+}
+
+/* ====================
    Hamburger (mobile)
    ==================== */
 

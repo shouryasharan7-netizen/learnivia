@@ -30,12 +30,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <NoticeBanner />
           <Navbar />
           <AuthShell>
             {children}
           </AuthShell>
-          <Footer />
         </Providers>
       </body>
     </html>

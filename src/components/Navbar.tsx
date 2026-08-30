@@ -40,11 +40,15 @@ export function Navbar() {
   const exploreRef = useRef<HTMLDivElement>(null);
   const involvedRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdowns on outside click
+  const [activePopover, setActivePopover] = useState<"messages" | "notifications" | "calendar" | "user" | null>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns and popovers on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (exploreRef.current && !exploreRef.current.contains(e.target as Node)) setExploreOpen(false);
       if (involvedRef.current && !involvedRef.current.contains(e.target as Node)) setInvolvedOpen(false);
+      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) setActivePopover(null);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -54,6 +58,7 @@ export function Navbar() {
     setMobileOpen(false);
     setExploreOpen(false);
     setInvolvedOpen(false);
+    setActivePopover(null);
   }, [pathname]);
 
   useEffect(() => {
@@ -62,58 +67,186 @@ export function Navbar() {
   }, [mobileOpen]);
 
   // If logged in, render the compact top bar for the authenticated shell
-  // (the left SidebarNav will be rendered separately in layout for authenticated users)
   if (session) {
+    const userName = session.user?.name || "Learner";
+    const userInitials = session.user?.name
+      ? session.user.name.split(" ").map(n => n[0]).slice(0, 2).join("").toUpperCase()
+      : "U";
+    // @ts-ignore
+    const userRole = session.user?.role || "STUDENT";
+
     return (
       <header className={styles.authHeader} role="banner">
         <div className={styles.authContainer}>
-          {/* Left: Logo (small) */}
-          <Link href="/" className={styles.authLogo} aria-label="Learnivia Home">
+          {/* Left: Logo */}
+          <Link href="/dashboard" className={styles.authLogo} aria-label="Learnivia Home">
             <Image src="/images/logo.png" alt="Learnivia" width={28} height={28} priority />
           </Link>
 
           {/* Spacer */}
           <div className={styles.authSpacer} />
 
-          {/* Right: action icons */}
-          <div className={styles.authActions}>
-            {/* Chat icon with badge */}
-            <button className={styles.iconBtn} aria-label="Messages (2 new)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-              </svg>
-              <span className={styles.badge} aria-hidden="true">2</span>
-            </button>
+          {/* Right: action icons with working dropdowns */}
+          <div className={styles.authActions} ref={popoverRef}>
+            {/* Messages button */}
+            <div className={styles.actionWrapper}>
+              <button
+                className={styles.iconBtn}
+                aria-label="Messages (0 new)"
+                aria-expanded={activePopover === "messages"}
+                onClick={() => setActivePopover(activePopover === "messages" ? null : "messages")}
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+              </button>
 
-            {/* Bell with badge */}
-            <button className={styles.iconBtn} aria-label="Notifications (5 new)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/>
-              </svg>
-              <span className={styles.badge} aria-hidden="true">5</span>
-            </button>
+              {activePopover === "messages" && (
+                <div className={styles.popoverMenu} role="dialog" aria-label="Messages">
+                  <div className={styles.popoverHeader}>
+                    <span>Messages</span>
+                    <span className={styles.popoverCount}>0 new</span>
+                  </div>
+                  <div className={styles.popoverEmpty}>
+                    <div className={styles.popoverEmptyIcon} aria-hidden="true">💬</div>
+                    <p className={styles.popoverEmptyTitle}>No new messages</p>
+                    <p className={styles.popoverEmptyText}>
+                      When you connect with tutors or attend group sessions, direct conversations will appear here.
+                    </p>
+                  </div>
+                  <Link href="/sessions" className={styles.popoverFooterLink} onClick={() => setActivePopover(null)}>
+                    Browse Sessions & Tutors →
+                  </Link>
+                </div>
+              )}
+            </div>
 
-            {/* Calendar */}
-            <button className={styles.iconBtn} aria-label="Calendar">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-              </svg>
-            </button>
+            {/* Notifications button */}
+            <div className={styles.actionWrapper}>
+              <button
+                className={styles.iconBtn}
+                aria-label="Notifications (0 new)"
+                aria-expanded={activePopover === "notifications"}
+                onClick={() => setActivePopover(activePopover === "notifications" ? null : "notifications")}
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/>
+                </svg>
+              </button>
 
-            {/* User avatar capsule */}
-            <div className={styles.userCapsule}>
-              <div className={styles.userAvatar} aria-hidden="true">
-                {session.user?.name
-                  ? session.user.name.split(" ").map(n => n[0]).slice(0, 2).join("").toUpperCase()
-                  : "U"}
-              </div>
-              <span className={styles.userName}>{session.user?.name?.split(" ")[0] || "User"}</span>
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {activePopover === "notifications" && (
+                <div className={styles.popoverMenu} role="dialog" aria-label="Notifications">
+                  <div className={styles.popoverHeader}>
+                    <span>Notifications</span>
+                    <span className={styles.popoverCount}>0 unread</span>
+                  </div>
+                  <div className={styles.popoverEmpty}>
+                    <div className={styles.popoverEmptyIcon} aria-hidden="true">🔔</div>
+                    <p className={styles.popoverEmptyTitle}>You&apos;re all caught up!</p>
+                    <p className={styles.popoverEmptyText}>
+                      Session reminders, enrollment confirmations, and community updates will appear here.
+                    </p>
+                  </div>
+                  <Link href="/dashboard" className={styles.popoverFooterLink} onClick={() => setActivePopover(null)}>
+                    View My Dashboard →
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Calendar button */}
+            <div className={styles.actionWrapper}>
+              <button
+                className={styles.iconBtn}
+                aria-label="Calendar schedule"
+                aria-expanded={activePopover === "calendar"}
+                onClick={() => setActivePopover(activePopover === "calendar" ? null : "calendar")}
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </button>
+
+              {activePopover === "calendar" && (
+                <div className={styles.popoverMenu} role="dialog" aria-label="Calendar">
+                  <div className={styles.popoverHeader}>
+                    <span>Upcoming Schedule</span>
+                  </div>
+                  <div className={styles.popoverEmpty}>
+                    <div className={styles.popoverEmptyIcon} aria-hidden="true">📅</div>
+                    <p className={styles.popoverEmptyTitle}>No sessions scheduled today</p>
+                    <p className={styles.popoverEmptyText}>
+                      Check your upcoming bookings or register for a live study session.
+                    </p>
+                  </div>
+                  <Link href="/dashboard" className={styles.popoverFooterLink} onClick={() => setActivePopover(null)}>
+                    Go to Full Calendar & Sessions →
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* User profile capsule with dropdown */}
+            <div className={styles.actionWrapper}>
+              <button
+                className={styles.userCapsule}
+                aria-expanded={activePopover === "user"}
+                onClick={() => setActivePopover(activePopover === "user" ? null : "user")}
+              >
+                <div className={styles.userAvatar} aria-hidden="true">
+                  {userInitials}
+                </div>
+                <span className={styles.userName}>{userName.split(" ")[0]}</span>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              {activePopover === "user" && (
+                <div className={`${styles.popoverMenu} ${styles.userProfileMenu}`} role="menu">
+                  <div className={styles.userInfoBlock}>
+                    <p className={styles.userFullName}>{userName}</p>
+                    <p className={styles.userEmail}>{session.user?.email}</p>
+                    <span className={styles.roleTag}>{userRole}</span>
+                  </div>
+
+                  <div className={styles.userMenuList}>
+                    <Link href="/dashboard" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                      🏠 My Dashboard
+                    </Link>
+                    <Link href="/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                      🔍 Find a Session
+                    </Link>
+                    <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                      💻 Tutor Dashboard
+                    </Link>
+                    <Link href="/tutor/transcript" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                      📜 Volunteer Transcript
+                    </Link>
+                    <Link href="/resources" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                      📖 Tutoring Resources
+                    </Link>
+                    {userRole === "ADMIN" && (
+                      <Link href="/admin/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 600 }}>
+                        🛡️ Admin Center
+                      </Link>
+                    )}
+
+                    <div className={styles.userMenuDivider} />
+
+                    <button
+                      className={styles.signOutMenuItem}
+                      role="menuitem"
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                    >
+                      🚪 Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

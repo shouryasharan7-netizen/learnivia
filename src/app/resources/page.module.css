@@ -1,0 +1,154 @@
+.main {
+  padding: 2.5rem 0 4rem;
+  background: #F8FAFC;
+  min-height: calc(100vh - 56px);
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-inline: 2rem;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.categoryBadge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #E6F4EA;
+  color: #0E8345;
+  padding: 0.2rem 0.625rem;
+  border-radius: 9999px;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #1A1F2E;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #64748B;
+  line-height: 1.6;
+  max-width: 650px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 3.5rem;
+}
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1.75rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+.tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1A1F2E;
+}
+
+.cardDesc {
+  font-size: 0.875rem;
+  color: #64748B;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.cardArrow {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0E8345;
+  margin-top: 0.5rem;
+}
+
+/* Tips Section */
+.tipsSection {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.tipsHeading {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1A1F2E;
+  margin-bottom: 1.5rem;
+}
+
+.tipsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.tipCard {
+  background: #F8FAFC;
+  border: 1px solid #F1F5F9;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tipTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1A1F2E;
+}
+
+.tipDesc {
+  font-size: 0.875rem;
+  color: #64748B;
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+  .tipsGrid { grid-template-columns: 1fr; }
+}
