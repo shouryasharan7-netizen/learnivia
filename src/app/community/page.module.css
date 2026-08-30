@@ -1,0 +1,220 @@
+.main {
+  background: #F8FAFC;
+  min-height: 100vh;
+}
+
+/* Two-column layout: sub-nav + content */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ==================
+   Channel Sub-nav
+   ================== */
+
+.channelNav {
+  width: 240px;
+  flex-shrink: 0;
+  background: #FFFFFF;
+  border-right: 1px solid #E2E8F0;
+  padding: 1.25rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: sticky;
+  top: 96px; /* below header + notice */
+  height: calc(100vh - 96px);
+  overflow-y: auto;
+}
+
+/* Active Home link */
+.channelHome {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #374151;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.channelHome:hover { background: #F4F6F8; color: #1A1F2E; }
+
+.channelHomeActive {
+  background: #E6F4EA;
+  color: #0E8345;
+  font-weight: 600;
+  border: 1.5px solid #0E8345;
+}
+.channelHomeActive:hover { background: #D4EDDA; }
+
+/* Group */
+.channelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 0.5rem;
+}
+
+.channelGroupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9CA3AF;
+  padding: 0.5rem 0.75rem 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+
+.channelItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #374151;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.channelItem:hover { background: #F4F6F8; color: #1A1F2E; }
+
+.channelIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9CA3AF;
+  flex-shrink: 0;
+}
+
+/* ==================
+   Main Content
+   ================== */
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  min-width: 0;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1A1F2E;
+  margin-bottom: 1.5rem;
+}
+
+/* Top 3 quick cards */
+.topCards {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.topCard {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #1A1F2E;
+  text-decoration: none;
+  transition: box-shadow 150ms ease, transform 150ms ease;
+}
+.topCard:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+.topCardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Feed */
+.feed {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedEmpty {
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.feedEmptyIcon {
+  font-size: 3rem;
+}
+
+.feedEmptyTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1A1F2E;
+}
+
+.feedEmptyDesc {
+  font-size: 0.9375rem;
+  color: #6B7280;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.joinBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0E8345;
+  color: #ffffff;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 0.6875rem 1.5rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background-color 150ms ease;
+  margin-top: 0.5rem;
+}
+.joinBtn:hover { background: #0B6635; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .channelNav {
+    width: 100%;
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .topCards { flex-direction: column; }
+}

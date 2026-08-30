@@ -1,0 +1,18 @@
+.shell {
+  display: flex;
+  min-height: 100vh;
+  background: #F8FAFC;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  /* Offset to account for sidebar width */
+  margin-left: 220px;
+}
+
+@media (max-width: 899px) {
+  .content {
+    margin-left: 0;
+  }
+}

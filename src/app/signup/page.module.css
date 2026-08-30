@@ -1,0 +1,108 @@
+.main {
+  min-height: 100vh;
+  background: #F8FAFC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.logoMark {
+  font-size: 2.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1A1F2E;
+}
+
+.subtitle {
+  font-size: 0.9375rem;
+  color: #6B7280;
+  line-height: 1.5;
+}
+
+/* Google button */
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.8125rem 1.25rem;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1A1F2E;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.googleBtn:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #9CA3AF;
+  font-size: 0.875rem;
+}
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #E2E8F0;
+}
+
+.signinLink {
+  text-align: center;
+  font-size: 0.9375rem;
+  color: #6B7280;
+}
+.signinLink a {
+  color: #0E8345;
+  font-weight: 600;
+  text-decoration: none;
+}
+.signinLink a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.terms {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #9CA3AF;
+  line-height: 1.5;
+}
+.terms a {
+  color: #6B7280;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

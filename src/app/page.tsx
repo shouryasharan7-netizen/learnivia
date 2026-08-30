@@ -2,236 +2,242 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
 
-// Demo program data — clearly marked, replace with DB when ready
+export const metadata = {
+  title: "Learnivia — Free Online Peer Tutoring",
+  description: "Join over 205k students. Free peer-led tutoring, SAT prep, college admissions mentorship, homework help, and meaningful conversations with students around the globe.",
+};
+
 const PROGRAMS = [
   {
-    slug: "homework-help",
-    emoji: "📚",
-    title: "Homework Help",
-    description: "Get one-on-one support with any assignment, any subject. Volunteer tutors available across grade levels.",
-    tags: ["All grades", "Any subject"],
+    id: "sat",
+    badge: "SAT",
+    badgeColor: "#7C3AED",
+    badgeBg: "#7C3AED",
+    label: "SAT",
+    description: "Join intensive SAT prep sessions",
+    href: "/learn/exam-prep",
   },
   {
-    slug: "math-foundations",
-    emoji: "🔢",
-    title: "Math Foundations",
-    description: "Build confidence in arithmetic, algebra, geometry, and beyond with patient, knowledgeable volunteers.",
-    tags: ["K–12", "Algebra", "Geometry"],
+    id: "caw",
+    badge: "CAW",
+    badgeColor: "#2563EB",
+    badgeBg: "#2563EB",
+    label: "College Admissions Workshops",
+    description: "Get advice from college students",
+    href: "/learn/college-admissions",
+    isNew: true,
   },
   {
-    slug: "science-support",
-    emoji: "🔬",
-    title: "Science Support",
-    description: "Explore biology, chemistry, physics, and earth science with tutors who love the subject.",
-    tags: ["Biology", "Chemistry", "Physics"],
+    id: "dia",
+    badge: "DIA",
+    badgeColor: "#D97706",
+    badgeBg: "#D97706",
+    label: "Dialogues",
+    description: "Discuss interesting topics with peers",
+    href: "/learn/dialogues",
   },
   {
-    slug: "exam-prep",
-    emoji: "✏️",
-    title: "Exam Prep",
-    description: "Focused preparation for standardised and school exams. Build test strategies and fill knowledge gaps.",
-    tags: ["Test strategy", "Practice"],
+    id: "community",
+    icon: "search",
+    label: "Community Sessions",
+    description: "Choose a subject to learn",
+    href: "/sessions",
+    iconColor: "#0E8345",
+    iconBg: "#E6F4EA",
   },
   {
-    slug: "writing-essays",
-    emoji: "📝",
-    title: "Writing & Essays",
-    description: "From brainstorming to final draft. Get feedback on structure, clarity, argument, and grammar.",
-    tags: ["Essays", "College apps", "Creative"],
-  },
-  {
-    slug: "study-skills",
-    emoji: "🧠",
-    title: "Study Skills",
-    description: "Learn how to learn. Build note-taking systems, time management, and revision strategies that stick.",
-    tags: ["Organisation", "Focus", "Revision"],
+    id: "homework",
+    icon: "chat",
+    label: "Homework Help",
+    description: "Get instant help with your work",
+    href: "/homework-help",
+    iconColor: "#6B7280",
+    iconBg: "#F3F4F6",
   },
 ];
 
-const STUDENT_STEPS = [
-  { icon: "/images/find-a-tutor.png", step: "1", title: "Choose what you need", description: "Browse programs or search by subject and grade level. No account needed to explore." },
-  { icon: "/images/book-a-session.png", step: "2", title: "Compare & select a tutor", description: "Read tutor bios, see availability, and pick someone who feels like a great fit." },
-  { icon: "/images/join-zoom.png", step: "3", title: "Book a free time slot", description: "Pick a date and time that works for you. Sessions are free and held online over Zoom." },
-  { icon: "/images/session-complete.png", step: "4", title: "Meet, learn & reflect", description: "Have your session and share feedback so our community keeps improving." },
-];
-
-const TUTOR_STEPS = [
-  { num: "1", title: "Apply online", description: "Fill out a short application about your subjects, experience, and availability." },
-  { num: "2", title: "Review & safeguarding", description: "Our team reviews every application and provides community guidelines training." },
-  { num: "3", title: "Set your schedule", description: "Choose when you're available each week. You're in full control." },
-  { num: "4", title: "Teach & earn verified hours", description: "Run sessions and receive a verified record of your volunteer contribution." },
-];
-
-// Demo tutor spotlights — clearly labelled as demo content
-const DEMO_TUTORS = [
-  { name: "Aanya S.", subject: "Maths & Physics", grade: "High School & GCSE", hours: 42, initials: "AS", color: "#39A6A3" },
-  { name: "Marcus O.", subject: "English & Writing", grade: "Middle & High School", hours: 28, initials: "MO", color: "#17324D" },
-  { name: "Priya L.", subject: "Biology & Chemistry", grade: "A-Level & AP", hours: 65, initials: "PL", color: "#F4C95D" },
+const STORIES = [
+  { name: "Anya R.", initials: "AR", color: "#0E8345", quote: "Learnivia helped me raise my SAT score by 180 points. My tutor was incredible!" },
+  { name: "James K.", initials: "JK", color: "#7C3AED", quote: "As a volunteer tutor I've logged 60+ hours. I've learned as much from my students as they have from me." },
+  { name: "Priya M.", initials: "PM", color: "#D97706", quote: "I was skeptical at first, but after seeing how patient my daughter's tutor was, I'm completely convinced." },
 ];
 
 export default function Home() {
   return (
-    <main>
-      {/* ========== HERO ========== */}
+    <main className={styles.main}>
+      {/* ============ HERO ============ */}
       <section className={styles.hero}>
-        <div className={styles.heroInner}>
-          <div className={styles.heroBadge}>
-            <span className={styles.heroBadgeDot} aria-hidden="true" />
-            Free for everyone, always
+        {/* Floating avatar decorations */}
+        <div className={styles.floatingAvatars} aria-hidden="true">
+          <div className={`${styles.avatar} ${styles.avatarTL}`} style={{ background: "#1A1F2E" }}>
+            <span>😎</span>
           </div>
-          <h1 className={styles.heroTitle}>
-            Real learning support,<br />from people who care.
-          </h1>
-          <p className={styles.heroSubtitle}>
-            Learnivia connects students with volunteer peer tutors for free, one-on-one online sessions — no subscriptions, no catch.
+          <div className={`${styles.avatar} ${styles.avatarTR}`} style={{ background: "#0E8345" }}>
+            <span>🕶️</span>
+          </div>
+          <div className={`${styles.avatar} ${styles.avatarML}`} style={{ background: "#7C3AED" }}>
+            <span>👩‍💻</span>
+          </div>
+          <div className={`${styles.avatar} ${styles.avatarMR}`} style={{ background: "#2563EB" }}>
+            <span>👩‍🎓</span>
+          </div>
+          <div className={`${styles.avatar} ${styles.avatarBL}`} style={{ background: "#D97706" }}>
+            <span>🧑‍🏫</span>
+          </div>
+          <div className={`${styles.avatar} ${styles.avatarBR}`} style={{ background: "#DC2626" }}>
+            <span>👨‍🎓</span>
+          </div>
+          <div className={`${styles.avatar} ${styles.avatarBR2}`} style={{ background: "#0D9488" }}>
+            <span>👩‍🔬</span>
+          </div>
+        </div>
+
+        <div className={styles.heroContent}>
+          {/* Left: Big headline */}
+          <div className={styles.heroLeft}>
+            <h1 className={styles.heroTitle}>
+              Free<br />
+              Online<br />
+              Tutoring.<br />
+              <span className={styles.heroSubline}>Real Human<br />Connection.</span>
+            </h1>
+          </div>
+
+          {/* Right: CTA block */}
+          <div className={styles.heroRight}>
+            {/* 205k social proof */}
+            <div className={styles.socialProof}>
+              <div className={styles.avatarStack} aria-hidden="true">
+                {["#0E8345","#7C3AED","#D97706"].map((c, i) => (
+                  <div key={i} className={styles.stackAvatar} style={{ background: c, zIndex: 3 - i }} />
+                ))}
+              </div>
+              <span className={styles.socialText}>Join over <strong>205k students</strong></span>
+            </div>
+
+            <p className={styles.heroDesc}>
+              Join our peer-led community for free SAT® tutoring, college admissions mentorship, homework help, and meaningful conversations with students around the globe.
+            </p>
+
+            <Link href="/signup" className={styles.startBtn}>Start Learning!</Link>
+
+            <div className={styles.secondaryCtas}>
+              <Link href="/parents" className={styles.outlineBtn}>For Parents</Link>
+              <Link href="/educators" className={styles.outlineBtn}>For Educators</Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Summer Camp promo banner */}
+        <div className={styles.promoBanner}>
+          <div className={styles.promoIllustration} aria-hidden="true">
+            <span className={styles.promoFlag}>🏕️</span>
+          </div>
+          <div className={styles.promoText}>
+            <strong>Summer Camp &apos;26</strong>
+            <span>In session July 1 to August 31, 2026.</span>
+          </div>
+          <div className={styles.promoDivider} aria-hidden="true" />
+          <p className={styles.promoDesc}>
+            Join Learnivia Summer Camp to learn with and from other students across the world—100% free.
           </p>
-          <div className={styles.heroCtas}>
-            <Link href="/find" className={styles.primaryBtn}>Find learning support</Link>
-            <Link href="/apply" className={styles.secondaryBtn}>Become a volunteer tutor</Link>
-          </div>
-          <div className={styles.heroProof}>
-            <span>🎓 Volunteer-powered</span>
-            <span aria-hidden="true">·</span>
-            <span>📅 Flexible scheduling</span>
-            <span aria-hidden="true">·</span>
-            <span>🛡️ Safeguarded sessions</span>
-          </div>
+          <Link href="/learn" className={styles.promoLink}>Learn more →</Link>
         </div>
       </section>
 
-      {/* ========== PROGRAM CATALOG ========== */}
+      {/* ============ PROGRAMS QUICK ACCESS ============ */}
       <section className={styles.programs}>
-        <div className={styles.sectionInner}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>What do you need help with?</h2>
-            <p className={styles.sectionSubtitle}>Choose a program, or browse all tutors to find your fit.</p>
-          </div>
-          <div className={styles.programGrid}>
-            {PROGRAMS.map(p => (
-              <Link key={p.slug} href={`/learn/${p.slug}`} className={styles.programCard}>
-                <span className={styles.programEmoji} aria-hidden="true">{p.emoji}</span>
-                <h3 className={styles.programTitle}>{p.title}</h3>
-                <p className={styles.programDesc}>{p.description}</p>
-                <div className={styles.programTags}>
-                  {p.tags.map(t => <span key={t} className={styles.tag}>{t}</span>)}
+        <div className={styles.container}>
+          <div className={styles.programsGrid}>
+            {PROGRAMS.map((p) => (
+              <Link key={p.id} href={p.href} className={styles.programCard}>
+                {p.isNew && <span className={styles.newDot} aria-hidden="true" />}
+                {/* Icon / Badge */}
+                <div
+                  className={styles.programBadge}
+                  style={p.badge ? { background: p.badgeBg, color: "#fff" } : { background: p.iconBg, color: p.iconColor }}
+                >
+                  {p.badge ? (
+                    <span className={styles.programBadgeText}>{p.badge}</span>
+                  ) : p.icon === "search" ? (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                  ) : (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                    </svg>
+                  )}
                 </div>
+
+                <h3 className={styles.programLabel}>{p.label}</h3>
+                <p className={styles.programDesc}>{p.description}</p>
               </Link>
             ))}
           </div>
-          <div className={styles.sectionCta}>
-            <Link href="/find" className={styles.outlineBtn}>Browse all tutors →</Link>
-          </div>
         </div>
       </section>
 
-      {/* ========== HOW IT WORKS — STUDENTS ========== */}
-      <section className={styles.howItWorks}>
-        <div className={styles.sectionInner}>
+      {/* ============ HOW IT WORKS ============ */}
+      <section className={styles.howSection}>
+        <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>How it works for learners</h2>
-            <p className={styles.sectionSubtitle}>Four simple steps from your first visit to your first session.</p>
+            <h2 className={styles.sectionTitle}>How it works</h2>
+            <p className={styles.sectionSub}>Four simple steps from your first visit to your first session.</p>
           </div>
           <div className={styles.stepsGrid}>
-            {STUDENT_STEPS.map((s, i) => (
-              <div key={i} className={styles.stepCard}>
-                <Image src={s.icon} alt="" width={80} height={100} className={styles.stepMascot} />
-                <div className={styles.stepNum}>{s.step}</div>
+            {[
+              { num: "1", title: "Choose what you need", desc: "Browse programs or search by subject. No account needed to explore.", emoji: "🔍" },
+              { num: "2", title: "Sign up for free", desc: "Create your account in seconds using Google sign-in.", emoji: "✍️" },
+              { num: "3", title: "Book a session", desc: "Pick a tutor, choose a time slot, and confirm. Sessions are held on Zoom.", emoji: "📅" },
+              { num: "4", title: "Learn & grow", desc: "Have your session and share feedback to help our community keep improving.", emoji: "🚀" },
+            ].map((s) => (
+              <div key={s.num} className={styles.stepCard}>
+                <div className={styles.stepEmoji} aria-hidden="true">{s.emoji}</div>
+                <div className={styles.stepNum}>{s.num}</div>
                 <h3 className={styles.stepTitle}>{s.title}</h3>
-                <p className={styles.stepDesc}>{s.description}</p>
+                <p className={styles.stepDesc}>{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ========== HOW IT WORKS — TUTORS ========== */}
-      <section className={styles.howItWorksTutor}>
-        <div className={styles.sectionInner}>
+      {/* ============ COMMUNITY STORIES ============ */}
+      <section className={styles.storiesSection}>
+        <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>How it works for volunteer tutors</h2>
-            <p className={styles.sectionSubtitle}>Make a genuine impact while building your own skills and record.</p>
+            <h2 className={styles.sectionTitle}>What our community says</h2>
           </div>
-          <div className={styles.tutorStepsGrid}>
-            {TUTOR_STEPS.map((s, i) => (
-              <div key={i} className={styles.tutorStepCard}>
-                <div className={styles.tutorStepNum}>{s.num}</div>
-                <h3 className={styles.tutorStepTitle}>{s.title}</h3>
-                <p className={styles.tutorStepDesc}>{s.description}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.sectionCta}>
-            <Link href="/apply" className={styles.primaryBtn}>Apply to become a tutor</Link>
-            <Link href="/how-it-works" className={styles.textLink}>Learn more →</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ========== TUTOR SPOTLIGHT ========== */}
-      <section className={styles.spotlight}>
-        <div className={styles.sectionInner}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Meet some of our volunteer tutors</h2>
-            <p className={styles.sectionSubtitle}>
-              <span className={styles.demoLabel}>Demo profiles</span> — real tutor cards will appear here as volunteers join.
-            </p>
-          </div>
-          <div className={styles.tutorGrid}>
-            {DEMO_TUTORS.map(t => (
-              <div key={t.name} className={styles.tutorCard}>
-                <div className={styles.tutorAvatar} style={{ background: t.color }}>{t.initials}</div>
-                <div className={styles.tutorInfo}>
-                  <h3 className={styles.tutorName}>{t.name}</h3>
-                  <p className={styles.tutorSubject}>{t.subject}</p>
-                  <p className={styles.tutorGrade}>{t.grade}</p>
-                  <p className={styles.tutorHours}>{t.hours} volunteer hours</p>
+          <div className={styles.storiesGrid}>
+            {STORIES.map((s) => (
+              <div key={s.name} className={styles.storyCard}>
+                <p className={styles.storyQuote}>&ldquo;{s.quote}&rdquo;</p>
+                <div className={styles.storyAuthor}>
+                  <div className={styles.storyAvatar} style={{ background: s.color }}>{s.initials}</div>
+                  <span className={styles.storyName}>{s.name}</span>
                 </div>
-                <span className={styles.demoChip} aria-label="Demo profile">Demo</span>
               </div>
             ))}
           </div>
-          <div className={styles.sectionCta}>
-            <Link href="/find" className={styles.outlineBtn}>Browse real tutors →</Link>
-          </div>
         </div>
       </section>
 
-      {/* ========== SAFETY PROMISE ========== */}
-      <section className={styles.safety}>
-        <div className={styles.sectionInner}>
-          <div className={styles.safetyCard}>
-            <div className={styles.safetyIcon} aria-hidden="true">🛡️</div>
-            <div className={styles.safetyContent}>
-              <h2 className={styles.safetyTitle}>Your safety is our priority</h2>
-              <p className={styles.safetyText}>
-                All sessions are online-only. Tutors agree to our community guidelines before their first session. We maintain a clear reporting path for any concern.
-              </p>
-              <div className={styles.safetyLinks}>
-                <Link href="/safety" className={styles.safetyLink}>Safety &amp; Trust Centre</Link>
-                <Link href="/parents" className={styles.safetyLink}>For Parents &amp; Guardians</Link>
-                <Link href="/safety#report" className={styles.safetyLink}>Report a concern</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========== DUAL CTA ========== */}
+      {/* ============ DUAL CTA ============ */}
       <section className={styles.dualCta}>
-        <div className={styles.sectionInner}>
+        <div className={styles.container}>
           <div className={styles.dualCtaGrid}>
-            <div className={styles.ctaBlock}>
-              <Image src="/images/find-a-tutor.png" alt="" width={100} height={120} className={styles.ctaMascot} />
+            <div className={styles.ctaCard}>
+              <div className={styles.ctaEmoji} aria-hidden="true">📚</div>
               <h2 className={styles.ctaTitle}>Need learning support?</h2>
-              <p className={styles.ctaText}>Find a free volunteer tutor who knows your subject and matches your schedule.</p>
-              <Link href="/find" className={styles.primaryBtn}>Find a tutor</Link>
+              <p className={styles.ctaDesc}>Find a free volunteer tutor who knows your subject and matches your schedule.</p>
+              <Link href="/signup" className={styles.ctaPrimary}>Find a tutor</Link>
             </div>
-            <div className={styles.ctaDivider} aria-hidden="true" />
-            <div className={styles.ctaBlock}>
-              <Image src="/images/volunteer-hours.png" alt="" width={100} height={120} className={styles.ctaMascot} />
+            <div className={styles.ctaCard}>
+              <div className={styles.ctaEmoji} aria-hidden="true">🎓</div>
               <h2 className={styles.ctaTitle}>Want to make a difference?</h2>
-              <p className={styles.ctaText}>Join as a volunteer tutor. Earn verified hours, sharpen your skills, and help someone succeed.</p>
-              <Link href="/apply" className={styles.tealOutlineBtn}>Apply to volunteer</Link>
+              <p className={styles.ctaDesc}>Join as a volunteer tutor. Earn verified hours, sharpen your skills, and help someone succeed.</p>
+              <Link href="/apply" className={styles.ctaOutline}>Apply to volunteer</Link>
             </div>
           </div>
         </div>
