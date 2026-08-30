@@ -44,10 +44,38 @@ function formatStartTime(date: Date) {
   }).format(new Date(date));
 }
 
-export default async function SessionsPage() {
+type Props = {
+  searchParams: Promise<{ q?: string; subject?: string; sort?: string }>;
+};
+
+export default async function SessionsPage({ searchParams }: Props) {
+  const { q, subject } = await searchParams;
+  const activeSubject = subject || "All";
+
+  // Build where clause for workshops
+  const workshopWhere: any = { status: "UPCOMING" };
+  if (activeSubject && activeSubject !== "All") {
+    workshopWhere.OR = [
+      { subject: { contains: activeSubject, mode: "insensitive" } },
+      { title: { contains: activeSubject, mode: "insensitive" } },
+    ];
+  }
+  if (q && q.trim()) {
+    const term = q.trim();
+    workshopWhere.AND = [
+      {
+        OR: [
+          { title: { contains: term, mode: "insensitive" } },
+          { description: { contains: term, mode: "insensitive" } },
+          { subject: { contains: term, mode: "insensitive" } },
+        ],
+      },
+    ];
+  }
+
   // Fetch upcoming workshops as "sessions"
   const workshops = await prisma.workshop.findMany({
-    where: { status: "UPCOMING" },
+    where: workshopWhere,
     include: {
       tutor: { include: { user: true } },
       enrollments: true,
@@ -56,9 +84,25 @@ export default async function SessionsPage() {
     take: 20,
   });
 
+  // Build where clause for tutors
+  const tutorWhere: any = { status: "APPROVED" };
+  if (activeSubject && activeSubject !== "All") {
+    tutorWhere.subjects = {
+      some: { name: { contains: activeSubject, mode: "insensitive" } },
+    };
+  }
+  if (q && q.trim()) {
+    const term = q.trim();
+    tutorWhere.OR = [
+      { user: { name: { contains: term, mode: "insensitive" } } },
+      { bio: { contains: term, mode: "insensitive" } },
+      { subjects: { some: { name: { contains: term, mode: "insensitive" } } } },
+    ];
+  }
+
   // Also fetch approved tutors as individual session cards
   const tutors = await prisma.tutorProfile.findMany({
-    where: { status: "APPROVED" },
+    where: tutorWhere,
     include: { user: true, subjects: true, availabilities: true },
     take: 12,
   });
@@ -75,42 +119,43 @@ export default async function SessionsPage() {
         </div>
 
         {/* Search + Sort bar */}
-        <div className={styles.searchBar}>
+        <form method="GET" action="/sessions" className={styles.searchBar}>
+          {activeSubject !== "All" && (
+            <input type="hidden" name="subject" value={activeSubject} />
+          )}
           <div className={styles.searchInputWrap}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={styles.searchIcon}>
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             <input
               type="search"
-              placeholder="Search sessions"
+              name="q"
+              defaultValue={q || ""}
+              placeholder="Search sessions by topic or tutor name..."
               className={styles.searchInput}
               aria-label="Search sessions"
             />
           </div>
-          <div className={styles.sortSelect}>
-            <select aria-label="Sort sessions" className={styles.select}>
-              <option>Starting Soon</option>
-              <option>Most Popular</option>
-              <option>Newest</option>
-            </select>
-          </div>
-        </div>
+          <button type="submit" className={styles.addSubjectBtn} style={{ background: "#0E8345", color: "#fff", border: "none" }}>
+            Search
+          </button>
+        </form>
 
         {/* Subject filter pills */}
         <div className={styles.filterRow} role="tablist" aria-label="Filter by subject">
-          {SUBJECT_FILTERS.map((f, i) => (
-            <button
-              key={f}
-              role="tab"
-              aria-selected={i === 0}
-              className={`${styles.filterPill} ${i === 0 ? styles.filterPillActive : ""}`}
-            >
-              {f}
-            </button>
-          ))}
-          <button className={styles.addSubjectBtn}>
-            <span>+</span> Add a Subject
-          </button>
+          {SUBJECT_FILTERS.map((f) => {
+            const isCurrent = activeSubject.toLowerCase() === f.toLowerCase();
+            const href = f === "All" ? "/sessions" : `/sessions?subject=${encodeURIComponent(f)}${q ? `&q=${encodeURIComponent(q)}` : ""}`;
+            return (
+              <Link
+                key={f}
+                href={href}
+                className={`${styles.filterPill} ${isCurrent ? styles.filterPillActive : ""}`}
+              >
+                {f}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Workshop / Session cards grid */}
