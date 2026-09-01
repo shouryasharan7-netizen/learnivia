@@ -79,7 +79,7 @@ export default async function StudentDashboard() {
     );
   }
 
-  const [upcomingBookings, completedBookings, enrolledWorkshops] = await Promise.all([
+  const [upcomingBookings, completedBookings, enrolledWorkshops, tutorProfile] = await Promise.all([
     prisma.booking.findMany({
       where: { 
         studentId: session.user.id,
@@ -112,7 +112,13 @@ export default async function StudentDashboard() {
       },
       orderBy: { createdAt: "desc" },
     }),
+    prisma.tutorProfile.findUnique({
+      where: { userId: session.user.id },
+    }),
   ]);
+
+  const userRole = session.user.role || "STUDENT";
+  const isTutor = userRole === "TUTOR" || userRole === "ADMIN" || tutorProfile?.status === "APPROVED";
 
   const userName = session.user.name || "Learner";
   const userInitials = session.user.name
@@ -182,10 +188,38 @@ export default async function StudentDashboard() {
           <div className={styles.userProfileBlock}>
             <div className={styles.avatarCircle}>{userInitials}</div>
             <div className={styles.userMeta}>
-              <h2 className={styles.userDisplayName}>{userName}</h2>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <h2 className={styles.userDisplayName}>{userName}</h2>
+                {isTutor ? (
+                  <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#0E8345", background: "#E6F4EA", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
+                    ✓ Verified Tutor
+                  </span>
+                ) : (
+                  <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#2563EB", background: "#EFF6FF", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
+                    🎓 Student
+                  </span>
+                )}
+              </div>
               <div className={styles.userLinks}>
-                <Link href="/tutor/transcript" className={styles.metaLink}>Portfolio</Link>
-                <Link href="/tutor/transcript" className={styles.metaLink}>Certifications</Link>
+                {isTutor ? (
+                  <>
+                    <Link href="/tutor" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700 }}>
+                      💻 Tutor Dashboard
+                    </Link>
+                    <Link href="/tutor/transcript" className={styles.metaLink}>
+                      📜 Verified Hours
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/resources" className={styles.metaLink}>
+                      📚 Study Guides
+                    </Link>
+                    <Link href="/apply" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700 }}>
+                      🌱 Become a Tutor
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -355,6 +389,39 @@ export default async function StudentDashboard() {
               </ul>
             </div>
 
+            {/* Role-Specific Action Card */}
+            {isTutor ? (
+              <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #E6F4EA 100%)", borderColor: "#DCFCE7" }}>
+                <h3 className={styles.sideCardTitle} style={{ color: "#0E8345" }}>⚡ Tutor Quick Portal</h3>
+                <p className={styles.sideCardText}>
+                  You have verified tutor privileges. Host small-group workshops, manage 1-on-1 time slots, and track your volunteer service ledger.
+                </p>
+                <div className={styles.sideCardLinks}>
+                  <Link href="/tutor#schedule-session" className={styles.reportLink} style={{ background: "#0E8345", color: "#FFFFFF" }}>
+                    ➕ Host a New Session →
+                  </Link>
+                  <Link href="/tutor" className={styles.resourcesLink} style={{ color: "#0E8345", fontWeight: 700 }}>
+                    💻 Open Tutor Dashboard
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%)", borderColor: "#DBEAFE" }}>
+                <h3 className={styles.sideCardTitle} style={{ color: "#1D4ED8" }}>🌱 Become a Volunteer Tutor</h3>
+                <p className={styles.sideCardText}>
+                  Passionate about helping other students? Apply to become an approved peer tutor and receive official volunteer transcripts for your applications.
+                </p>
+                <div className={styles.sideCardLinks}>
+                  <Link href="/apply" className={styles.reportLink} style={{ background: "#2563EB", color: "#FFFFFF" }}>
+                    Apply to Tutor →
+                  </Link>
+                  <Link href="/how-it-works" className={styles.resourcesLink} style={{ color: "#2563EB", fontWeight: 600 }}>
+                    How it works →
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {/* Quick Links Card */}
             <div className={styles.sideCard}>
               <h3 className={styles.sideCardTitle}>Need Help or Safety Support?</h3>
@@ -366,7 +433,7 @@ export default async function StudentDashboard() {
                   🛡️ Report an Issue →
                 </Link>
                 <Link href="/resources" className={styles.resourcesLink}>
-                  📖 Tutoring Resources →
+                  📖 Learning Resources →
                 </Link>
               </div>
             </div>

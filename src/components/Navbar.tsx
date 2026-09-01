@@ -243,18 +243,31 @@ export function Navbar() {
                     <Link href="/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
                       🔍 Find a Session
                     </Link>
-                    <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 700 }}>
-                      ➕ Host / Add a Session
-                    </Link>
-                    <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      💻 Tutor Dashboard
-                    </Link>
-                    <Link href="/tutor/transcript" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      📜 Volunteer Transcript
+                    <Link href="/community" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                      👥 Community Discussions
                     </Link>
                     <Link href="/resources" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      📖 Tutoring Resources
+                      📖 {userRole === "TUTOR" || userRole === "ADMIN" ? "Tutoring Resources" : "Learning Resources"}
                     </Link>
+
+                    {userRole === "TUTOR" || userRole === "ADMIN" ? (
+                      <>
+                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 700 }}>
+                          ➕ Host / Add a Session
+                        </Link>
+                        <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                          💻 Tutor Dashboard
+                        </Link>
+                        <Link href="/tutor/transcript" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
+                          📜 Volunteer Transcript
+                        </Link>
+                      </>
+                    ) : (
+                      <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 600 }}>
+                        🌱 Become a Volunteer Tutor
+                      </Link>
+                    )}
+
                     {userRole === "ADMIN" && (
                       <Link href="/admin/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 600 }}>
                         🛡️ Admin Center
