@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+
 
 export const metadata: Metadata = {
   title: "Support & FAQ",
@@ -51,7 +51,7 @@ export default function SupportPage() {
             Support & FAQ
           </h1>
           <p style={{ fontSize: "1.125rem", color: "var(--color-text-muted)", lineHeight: 1.7 }}>
-            Common questions answered. If you can't find what you're looking for, email us.
+            Common questions answered. If you can&apos;t find what you&apos;re looking for, email us.
           </p>
         </div>
       </section>
@@ -78,7 +78,7 @@ export default function SupportPage() {
 
         <div style={{ background: "var(--color-navy)", borderRadius: "1.5rem", padding: "2.5rem", textAlign: "center", marginTop: "2rem" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "white", marginBottom: "0.75rem" }}>Still have questions?</h2>
-          <p style={{ color: "rgb(255 255 255 / 0.7)", marginBottom: "1.5rem" }}>We'll reply to every message, usually within 24 hours.</p>
+          <p style={{ color: "rgb(255 255 255 / 0.7)", marginBottom: "1.5rem" }}>We&apos;ll reply to every message, usually within 24 hours.</p>
           <a href="mailto:support@learnivia.app" style={{ display: "inline-flex", background: "var(--color-teal)", color: "white", fontWeight: 700, padding: "0.875rem 2rem", borderRadius: "999px", textDecoration: "none" }}>
             Email support →
           </a>

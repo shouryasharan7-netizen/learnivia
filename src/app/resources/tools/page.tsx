@@ -27,17 +27,21 @@ export default function TutorToolsPage() {
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
-    if (timerRunning && secondsLeft > 0) {
+    if (timerRunning) {
       interval = setInterval(() => {
-        setSecondsLeft((prev) => prev - 1);
+        setSecondsLeft((prev) => {
+          if (prev <= 1) {
+            setTimerRunning(false);
+            return 0;
+          }
+          return prev - 1;
+        });
       }, 1000);
-    } else if (secondsLeft === 0) {
-      setTimerRunning(false);
     }
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [timerRunning, secondsLeft]);
+  }, [timerRunning]);
 
   function setTimerPreset(minutes: number) {
     setTimerRunning(false);

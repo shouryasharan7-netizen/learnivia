@@ -37,7 +37,6 @@ export default auth((req) => {
   const isPublicPath =
     publicPaths.some(path => nextUrl.pathname === path || nextUrl.pathname.startsWith(path + "/")) ||
     nextUrl.pathname.startsWith("/api/auth") ||
-    nextUrl.pathname.startsWith("/tutor/") ||
     nextUrl.pathname.startsWith("/tutors/")  // public tutor profiles
 
   const isOnboardingPath = onboardingPaths.some(path => nextUrl.pathname.startsWith(path))
@@ -49,7 +48,6 @@ export default auth((req) => {
     }
 
     // Admin check
-    // @ts-ignore
     if (nextUrl.pathname.startsWith("/admin") && req.auth?.user?.role !== "ADMIN") {
       return NextResponse.redirect(new URL("/dashboard", req.url))
     }

@@ -17,7 +17,7 @@ export interface CommunityMessage {
 }
 
 // In-memory persistent store with realistic initial community discussions
-let messagesStore: CommunityMessage[] = [
+const messagesStore: CommunityMessage[] = [
   {
     id: "msg-1",
     channel: "Announcements",

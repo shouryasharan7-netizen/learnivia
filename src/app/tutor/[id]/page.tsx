@@ -140,7 +140,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                       <span className={styles.reviewAuthor}>{r.student.name || "Learner"}</span>
                       <span className={styles.reviewStars}>{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
                     </div>
-                    {r.comment && <p className={styles.reviewComment}>"{r.comment}"</p>}
+                    {r.comment && <p className={styles.reviewComment}>&quot;{r.comment}&quot;</p>}
                   </div>
                 ))}
               </div>
@@ -162,7 +162,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                 </Link>
               </div>
             ) : tutorProfile.availabilities.length === 0 ? (
-              <p className={styles.noAvailability}>This tutor hasn't posted their availability yet. Check back soon!</p>
+              <p className={styles.noAvailability}>This tutor hasn&apos;t posted their availability yet. Check back soon!</p>
             ) : (
               <form action={bookSession} className={styles.bookingForm}>
                 <input type="hidden" name="tutorId" value={tutorProfile.id} />
@@ -195,7 +195,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                   <label htmlFor="slotSelect">Available Time Slot *</label>
                   <select id="slotSelect" name="slotId" required>
                     <option value="">Choose an available time...</option>
-                    {tutorProfile.availabilities.map((slot: any) => (
+                    {tutorProfile.availabilities.map((slot: { id: string; dayOfWeek: number; startTime: string; endTime: string }) => (
                       <option key={slot.id} value={slot.id}>
                         {DAYS_OF_WEEK[slot.dayOfWeek]} {slot.startTime} - {slot.endTime} ({tutorProfile.user.timezone || "Local"})
                       </option>

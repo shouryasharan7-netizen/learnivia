@@ -87,7 +87,7 @@ export default async function ProgramDetailPage({ params }: Props) {
             {/* Right: outcomes + FAQ */}
             <div>
               <div className={styles.detailCard}>
-                <h2 className={styles.detailTitle}>What you'll get</h2>
+                <h2 className={styles.detailTitle}>What you&apos;ll get</h2>
                 <ul className={styles.outcomeList}>
                   {program.outcomes.map(o => (
                     <li key={o} className={styles.outcomeItem}>

@@ -213,7 +213,7 @@ export default async function TutorTranscriptPage({ params }: Props) {
               <div className={styles.reviewsGrid}>
                 {tutor.reviews.slice(0, 4).map((r) => (
                   <div key={r.id} className={styles.reviewQuote}>
-                    <p className={styles.quoteText}>"{r.comment || "Great session, really helpful!"}"</p>
+                    <p className={styles.quoteText}>&quot;{r.comment || "Great session, really helpful!"}&quot;</p>
                     <div className={styles.quoteAuthor}>
                       — {r.student.name || "Verified Student"} • {"★".repeat(r.rating)}
                     </div>

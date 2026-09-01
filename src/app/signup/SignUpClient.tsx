@@ -11,11 +11,13 @@ export default function SignUpClient() {
   const router = useRouter();
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (status === "authenticated" || (session as any)?.user) {
       router.replace("/dashboard");
     }
   }, [session, status, router]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (status === "authenticated" || (session as any)?.user) {
     return null;
   }

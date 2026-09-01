@@ -22,11 +22,11 @@ export const authConfig = {
 
       if (user) {
         token.id = user.id
-        // @ts-ignore
+
         token.role = user.role
-        // @ts-ignore
+
         token.onboardingCompleted = user.onboardingCompleted
-        // @ts-ignore
+
         token.timezone = user.timezone
       }
       return token
@@ -34,12 +34,9 @@ export const authConfig = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string
-        // @ts-ignore
-        session.user.role = token.role
-        // @ts-ignore
-        session.user.onboardingCompleted = token.onboardingCompleted
-        // @ts-ignore
-        session.user.timezone = token.timezone
+        session.user.role = token.role as "STUDENT" | "TUTOR" | "ADMIN"
+        session.user.onboardingCompleted = token.onboardingCompleted as boolean
+        session.user.timezone = token.timezone as string | null
       }
       return session
     },

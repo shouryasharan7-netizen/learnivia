@@ -1,5 +1,4 @@
 import styles from "./page.module.css";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function HowItWorksPage() {
@@ -20,7 +19,7 @@ export default function HowItWorksPage() {
           <div className={styles.stepCard}>
             <div className={styles.stepNumber}>1</div>
             <h3>Create an Account</h3>
-            <p>Sign up and tell us what you need help with. It's completely free, forever.</p>
+            <p>Sign up and tell us what you need help with. It&apos;s completely free, forever.</p>
           </div>
           <div className={styles.stepCard}>
             <div className={styles.stepNumber}>2</div>

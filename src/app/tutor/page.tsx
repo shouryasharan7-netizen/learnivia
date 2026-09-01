@@ -101,8 +101,8 @@ export default async function TutorDashboard() {
     name,
     index,
     slots: tutor.availabilities
-      .filter((a: any) => a.dayOfWeek === index)
-      .sort((a: any, b: any) => a.startTime.localeCompare(b.startTime)),
+      .filter((a: { dayOfWeek: number }) => a.dayOfWeek === index)
+      .sort((a: { startTime: string }, b: { startTime: string }) => a.startTime.localeCompare(b.startTime)),
   }));
 
   const tutorName = session.user.name || "Volunteer Tutor";
@@ -399,7 +399,7 @@ export default async function TutorDashboard() {
                       {day.slots.length === 0 ? (
                         <span className={styles.noSlotsText}>No slots</span>
                       ) : (
-                        day.slots.map((slot: any) => (
+                        day.slots.map((slot: { id: string; startTime: string; endTime: string }) => (
                           <span key={slot.id} className={styles.slotBadge}>
                             {slot.startTime}–{slot.endTime}
                             <form action={removeAvailability.bind(null, slot.id)}>

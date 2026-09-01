@@ -1,0 +1,156 @@
+/* ==========================================================================
+   LOGO SPLASH ANIMATION (Website Opening Overlay - Matching Image 5)
+   ========================================================================== */
+
+.splashOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #B5B7D7 0%, #C4C6E2 50%, #A8AAD0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.fadeOut {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+.splashCard {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 24px 60px -12px rgba(30, 41, 59, 0.25),
+              0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  border-radius: 28px;
+  padding: 3rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 320px;
+  max-width: 90vw;
+  animation: splashEntrance 700ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes splashEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.82) translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.logoContainer {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  filter: drop-shadow(0 12px 20px rgba(14, 131, 69, 0.15));
+  animation: floatBob 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatBob {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.mascotImage {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.brandTitle {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #14243B;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.1;
+}
+
+.tagline {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0E8345;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.progressTrack {
+  width: 140px;
+  height: 4px;
+  background: rgba(20, 36, 59, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0E8345 0%, #1EB589 100%);
+  border-radius: 999px;
+  animation: loadFill 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes loadFill {
+  0% {
+    width: 0%;
+  }
+  60% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .splashCard {
+    padding: 2.25rem 2rem;
+    min-width: 280px;
+    border-radius: 22px;
+  }
+  .logoContainer {
+    width: 96px;
+    height: 96px;
+  }
+  .brandTitle {
+    font-size: 1.875rem;
+  }
+  .tagline {
+    font-size: 0.85rem;
+  }
+}

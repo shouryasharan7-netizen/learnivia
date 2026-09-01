@@ -21,7 +21,7 @@ export default function FindError({
     <main style={{ maxWidth: 600, margin: "6rem auto", padding: "0 1.5rem", textAlign: "center" }}>
       <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>⚠️</div>
       <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#17324D", marginBottom: "0.75rem" }}>
-        We couldn't load the tutor list
+        We couldn&apos;t load the tutor list
       </h1>
       <p style={{ color: "#5a6a7a", marginBottom: "2rem", lineHeight: 1.6 }}>
         Something went wrong connecting to our database. This is likely temporary — please try again.

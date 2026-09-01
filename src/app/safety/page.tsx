@@ -22,7 +22,7 @@ export default function SafetyPage() {
           <div className={styles.heroIcon} aria-hidden="true">🛡️</div>
           <h1 className={styles.title}>Safety & Trust</h1>
           <p className={styles.subtitle}>
-            Learnivia is built on the principle that safe learning is effective learning. Here's exactly how we protect every member of our community.
+            Learnivia is built on the principle that safe learning is effective learning. Here&apos;s exactly how we protect every member of our community.
           </p>
         </div>
       </section>
@@ -77,7 +77,7 @@ export default function SafetyPage() {
           <h2 className={styles.sectionTitle}>Report a concern</h2>
           <div className={styles.reportCard}>
             <div>
-              <h3>Something didn't feel right?</h3>
+              <h3>Something didn&apos;t feel right?</h3>
               <p>If you experienced or witnessed anything that violated our community guidelines — including during a session, on a tutor profile, or in a booking — please let us know immediately.</p>
               <p className={styles.reportNote}>
                 <strong>Urgent safeguarding concern?</strong> If you believe someone is in immediate danger, contact your local emergency services first.

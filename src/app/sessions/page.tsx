@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
 import styles from "./page.module.css";
 import { auth } from "@/auth";
 
@@ -68,7 +69,7 @@ export default async function SessionsPage({ searchParams }: Props) {
   }
 
   // Build where clause for workshops
-  const workshopWhere: any = { status: "UPCOMING" };
+  const workshopWhere: Prisma.WorkshopWhereInput = { status: "UPCOMING" };
   if (activeSubject && activeSubject !== "All") {
     workshopWhere.OR = [
       { subject: { contains: activeSubject, mode: "insensitive" } },
@@ -100,7 +101,7 @@ export default async function SessionsPage({ searchParams }: Props) {
   });
 
   // Build where clause for tutors
-  const tutorWhere: any = { status: "APPROVED" };
+  const tutorWhere: Prisma.TutorProfileWhereInput = { status: "APPROVED" };
   if (activeSubject && activeSubject !== "All") {
     tutorWhere.subjects = {
       some: { name: { contains: activeSubject, mode: "insensitive" } },
@@ -220,7 +221,6 @@ export default async function SessionsPage({ searchParams }: Props) {
         {workshops.length > 0 ? (
           <div className={styles.sessionsGrid}>
             {workshops.map((w) => {
-              const seatsLeft = w.maxCapacity - w.enrollments.length;
               const ratio = `${w.enrollments.length}/${w.maxCapacity}`;
               const tutorName = w.tutor.user.name || "Tutor";
               return (

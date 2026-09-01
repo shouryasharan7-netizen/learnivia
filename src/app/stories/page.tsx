@@ -32,7 +32,7 @@ export default async function StoriesPage() {
           {stories.map(s => (
             <div key={s.id} style={{ background: "white", border: "1px solid var(--color-border)", borderRadius: "1rem", padding: "2rem", position: "relative", boxShadow: "var(--shadow-sm)" }}>
               <p style={{ fontSize: "1rem", color: "var(--color-navy)", lineHeight: 1.7, fontStyle: "italic", marginBottom: "1.5rem" }}>
-                "{s.quote}"
+                &quot;{s.quote}&quot;
               </p>
               <div style={{ borderTop: "1px solid var(--color-border)", paddingTop: "1rem" }}>
                 <p style={{ fontWeight: 700, fontSize: "0.875rem", color: "var(--color-navy)" }}>{s.name}</p>
@@ -46,7 +46,7 @@ export default async function StoriesPage() {
         <div style={{ background: "var(--color-navy)", borderRadius: "1.5rem", padding: "3rem", textAlign: "center" }}>
           <h2 style={{ fontSize: "1.75rem", fontWeight: 800, color: "white", marginBottom: "0.75rem" }}>Share your story</h2>
           <p style={{ color: "rgb(255 255 255 / 0.7)", marginBottom: "2rem", lineHeight: 1.6 }}>
-            Has Learnivia made a difference for you? We'd love to hear about it. All submissions are reviewed and only published with your explicit consent.
+            Has Learnivia made a difference for you? We&apos;d love to hear about it. All submissions are reviewed and only published with your explicit consent.
           </p>
           <a href="mailto:stories@learnivia.app" style={{ display: "inline-flex", background: "var(--color-teal)", color: "white", fontWeight: 700, padding: "0.875rem 2rem", borderRadius: "999px", textDecoration: "none" }}>
             Share your experience →

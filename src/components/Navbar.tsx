@@ -7,27 +7,48 @@ import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 
-const exploreProgramsLinks = [
-  { href: "/learn", label: "All Programs" },
-  { href: "/learn/homework-help", label: "Homework Help" },
-  { href: "/learn/math-foundations", label: "Math Foundations" },
-  { href: "/learn/science-support", label: "Science Support" },
-  { href: "/learn/exam-prep", label: "Exam Prep (SAT / GCSE)" },
-  { href: "/learn/writing-essays", label: "Writing & Essays" },
-  { href: "/learn/study-skills", label: "Study Skills" },
+const megaMenuPrograms = [
+  {
+    title: "SAT Tutoring",
+    description: "Practice and improve your SAT skills with peer-led tutoring.",
+    href: "/sessions?subject=SAT+Prep",
+    icon: "🎯",
+    badge: "Most Popular",
+  },
+  {
+    title: "College Admissions",
+    description: "Get help preparing your college application.",
+    href: "/learn/writing-essays",
+    icon: "🎓",
+    badge: "Mentorship",
+  },
+  {
+    title: "Workshops",
+    description: "Join interactive workshops and learn new skills.",
+    href: "/sessions",
+    icon: "💡",
+    badge: "Live Group",
+  },
+  {
+    title: "Peer Tutoring",
+    description: "Learn directly from other students in a collaborative environment.",
+    href: "/find",
+    icon: "🤝",
+    badge: "1-on-1 Free",
+  },
 ];
 
 const getInvolvedLinks = [
-  { href: "/apply", label: "Become a Volunteer Tutor" },
-  { href: "/how-it-works", label: "How It Works" },
-  { href: "/parents", label: "For Parents" },
-  { href: "/educators", label: "For Educators" },
+  { href: "/apply", label: "Become a Volunteer Tutor", desc: "Share your knowledge and earn verified hours" },
+  { href: "/how-it-works", label: "How It Works", desc: "Learn about our peer-learning model" },
+  { href: "/parents", label: "For Parents", desc: "Safeguarding and guardian guidelines" },
+  { href: "/educators", label: "For Educators", desc: "Bring Learnivia to your classroom" },
 ];
 
 const mainLinks = [
   { href: "/about", label: "About" },
   { href: "/about#faq", label: "FAQ" },
-  { href: "/stories", label: "Stories" },
+  { href: "/stories", label: "Story" },
 ];
 
 export function Navbar() {
@@ -36,7 +57,6 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
   const [involvedOpen, setInvolvedOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const exploreRef = useRef<HTMLDivElement>(null);
   const involvedRef = useRef<HTMLDivElement>(null);
 
@@ -54,12 +74,14 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setMobileOpen(false);
     setExploreOpen(false);
     setInvolvedOpen(false);
     setActivePopover(null);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -72,7 +94,7 @@ export function Navbar() {
     const userInitials = session.user?.name
       ? session.user.name.split(" ").map(n => n[0]).slice(0, 2).join("").toUpperCase()
       : "U";
-    // @ts-ignore
+
     const userRole = session.user?.role || "STUDENT";
 
     return (
@@ -80,7 +102,8 @@ export function Navbar() {
         <div className={styles.authContainer}>
           {/* Left: Logo */}
           <Link href="/dashboard" className={styles.authLogo} aria-label="Learnivia Home">
-            <Image src="/images/logo.png" alt="Learnivia" width={28} height={28} priority />
+            <Image src="/images/logo.png" alt="Learnivia" width={32} height={32} priority className={styles.authLogoImg} />
+            <span className={styles.authLogoText}>Learnivia</span>
           </Link>
 
           {/* Spacer */}
@@ -115,7 +138,7 @@ export function Navbar() {
                     </p>
                   </div>
                   <Link href="/sessions" className={styles.popoverFooterLink} onClick={() => setActivePopover(null)}>
-                    Browse Sessions & Tutors →
+                    Browse Sessions &amp; Tutors →
                   </Link>
                 </div>
               )}
@@ -183,7 +206,7 @@ export function Navbar() {
                     </p>
                   </div>
                   <Link href="/dashboard" className={styles.popoverFooterLink} onClick={() => setActivePopover(null)}>
-                    Go to Full Calendar & Sessions →
+                    Go to Full Calendar &amp; Sessions →
                   </Link>
                 </div>
               )}
@@ -257,45 +280,78 @@ export function Navbar() {
     );
   }
 
-  // Pre-login Schoolhouse-style dark navbar
+  // Pre-login High-Fidelity Navbar (Matching Image 1 & 4)
   return (
     <>
       <header className={styles.header} role="banner">
         <div className={styles.container}>
-          {/* Logo */}
+          {/* Logo & Name */}
           <Link href="/" className={styles.logoLink} aria-label="Learnivia Home">
-            <Image src="/images/logo.png" alt="" width={32} height={32} priority className={styles.logoImg} />
-            <span className={styles.logoText}>learnivia</span>
+            <Image 
+              src="/images/logo.png" 
+              alt="Learnivia Fox Mascot" 
+              width={38} 
+              height={38} 
+              priority 
+              className={styles.logoImg} 
+            />
+            <span className={styles.logoText}>Learnivia</span>
           </Link>
 
-          {/* Desktop Nav */}
+          {/* Desktop Navigation */}
           <nav className={styles.nav} aria-label="Main navigation">
-            {/* Explore Programs dropdown */}
+            {/* Explore Programs Mega-Menu Trigger */}
             <div className={styles.dropdownWrapper} ref={exploreRef}>
               <button
-                className={styles.navBtn}
+                className={`${styles.exploreBtn} ${exploreOpen ? styles.exploreBtnActive : ""}`}
                 aria-expanded={exploreOpen}
                 aria-haspopup="true"
                 onClick={() => { setExploreOpen(!exploreOpen); setInvolvedOpen(false); }}
               >
-                Explore Programs
-                <svg className={`${styles.chevron} ${exploreOpen ? styles.chevronOpen : ""}`} width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <span>explore programs</span>
+                <span className={`${styles.chevron} ${exploreOpen ? styles.chevronOpen : ""}`} aria-hidden="true">
+                  {exploreOpen ? "▲" : "▼"}
+                </span>
               </button>
+
+              {/* Full Featured Mega Menu matching Screenshot 1 */}
               {exploreOpen && (
-                <div className={styles.dropdown} role="menu">
-                  {exploreProgramsLinks.map(link => (
-                    <Link key={link.href} href={link.href} className={styles.dropdownItem} role="menuitem">
-                      {link.label}
+                <div className={styles.megaMenu} role="dialog" aria-label="Explore programs">
+                  <div className={styles.megaMenuHeader}>
+                    <h2 className={styles.megaMenuTitle}>Explore programs</h2>
+                    <p className={styles.megaMenuSubtitle}>Find the program that&apos;s right for you.</p>
+                  </div>
+
+                  <div className={styles.megaMenuGrid}>
+                    {megaMenuPrograms.map((prog) => (
+                      <Link 
+                        key={prog.title} 
+                        href={prog.href} 
+                        className={styles.megaCard}
+                        onClick={() => setExploreOpen(false)}
+                      >
+                        <div className={styles.megaCardTop}>
+                          <span className={styles.megaCardIcon}>{prog.icon}</span>
+                          <span className={styles.megaCardBadge}>{prog.badge}</span>
+                        </div>
+                        <h3 className={styles.megaCardHeading}>{prog.title}</h3>
+                        <p className={styles.megaCardDesc}>{prog.description}</p>
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className={styles.megaMenuFooter}>
+                    <span>Need personalized recommendations?</span>
+                    <Link href="/find" className={styles.megaFooterLink} onClick={() => setExploreOpen(false)}>
+                      Browse all 50+ subjects &amp; tutors →
                     </Link>
-                  ))}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Main links */}
-            {mainLinks.map(link => (
+            {/* Main Links */}
+            {mainLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -305,7 +361,7 @@ export function Navbar() {
               </Link>
             ))}
 
-            {/* Get Involved dropdown */}
+            {/* Get Involved Dropdown */}
             <div className={styles.dropdownWrapper} ref={involvedRef}>
               <button
                 className={styles.navBtn}
@@ -313,24 +369,34 @@ export function Navbar() {
                 aria-haspopup="true"
                 onClick={() => { setInvolvedOpen(!involvedOpen); setExploreOpen(false); }}
               >
-                Get Involved
-                <svg className={`${styles.chevron} ${involvedOpen ? styles.chevronOpen : ""}`} width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <span>Get involved</span>
+                <span className={`${styles.chevron} ${involvedOpen ? styles.chevronOpen : ""}`} aria-hidden="true">
+                  {involvedOpen ? "▲" : "▼"}
+                </span>
               </button>
+
               {involvedOpen && (
-                <div className={styles.dropdown} role="menu">
-                  {getInvolvedLinks.map(link => (
-                    <Link key={link.href} href={link.href} className={styles.dropdownItem} role="menuitem">
-                      {link.label}
+                <div className={styles.involvedDropdown} role="menu">
+                  {getInvolvedLinks.map((link) => (
+                    <Link 
+                      key={link.href} 
+                      href={link.href} 
+                      className={styles.dropdownItem} 
+                      role="menuitem"
+                      onClick={() => setInvolvedOpen(false)}
+                    >
+                      <div className={styles.dropdownItemTitle}>{link.label}</div>
+                      <div className={styles.dropdownItemDesc}>{link.desc}</div>
                     </Link>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Donate button */}
-            <Link href="/donate" className={styles.donateBtn}>Donate</Link>
+            {/* Donate Pill Outline Button */}
+            <Link href="/about" className={styles.donateBtn}>
+              Donate
+            </Link>
           </nav>
 
           {/* Auth Controls */}
@@ -339,32 +405,12 @@ export function Navbar() {
               <div className={styles.authSkeleton} aria-hidden="true" />
             ) : (
               <>
-                <Link href="/signin" className={styles.signInBtn}>Sign In</Link>
-                <Link href="/signup" className={styles.signUpBtn}>Sign Up</Link>
-                {/* Dark mode toggle */}
-                <button
-                  className={styles.darkToggle}
-                  aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-                  onClick={() => setDarkMode(!darkMode)}
-                >
-                  {darkMode ? (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <circle cx="12" cy="12" r="5"/>
-                      <line x1="12" y1="1" x2="12" y2="3"/>
-                      <line x1="12" y1="21" x2="12" y2="23"/>
-                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                      <line x1="1" y1="12" x2="3" y2="12"/>
-                      <line x1="21" y1="12" x2="23" y2="12"/>
-                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                  ) : (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-                    </svg>
-                  )}
-                </button>
+                <Link href="/signin" className={styles.signInBtn}>
+                  Sign in
+                </Link>
+                <Link href="/signup" className={styles.signUpBtn}>
+                  Sign up
+                </Link>
               </>
             )}
           </div>
@@ -372,7 +418,7 @@ export function Navbar() {
           {/* Mobile Hamburger */}
           <button
             className={styles.hamburger}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -396,27 +442,60 @@ export function Navbar() {
         aria-label="Navigation menu"
       >
         <div className={styles.mobileMenuInner}>
+          <div className={styles.mobileBrandRow}>
+            <Image src="/images/logo.png" alt="Learnivia" width={32} height={32} />
+            <span className={styles.mobileBrandText}>Learnivia</span>
+          </div>
+
           <p className={styles.mobileSection}>Explore Programs</p>
-          {exploreProgramsLinks.map(link => (
-            <Link key={link.href} href={link.href} className={styles.mobileLink}>{link.label}</Link>
+          {megaMenuPrograms.map((prog) => (
+            <Link 
+              key={prog.title} 
+              href={prog.href} 
+              className={styles.mobileLink}
+              onClick={() => setMobileOpen(false)}
+            >
+              <span>{prog.icon} {prog.title}</span>
+              <span className={styles.mobileSubtext}>{prog.description}</span>
+            </Link>
           ))}
 
           <div className={styles.mobileDivider} />
 
-          {mainLinks.map(link => (
-            <Link key={link.href} href={link.href} className={styles.mobileLink}>{link.label}</Link>
+          <p className={styles.mobileSection}>Company &amp; Community</p>
+          {mainLinks.map((link) => (
+            <Link 
+              key={link.href} 
+              href={link.href} 
+              className={styles.mobileLink}
+              onClick={() => setMobileOpen(false)}
+            >
+              {link.label}
+            </Link>
           ))}
 
           <p className={styles.mobileSection}>Get Involved</p>
-          {getInvolvedLinks.map(link => (
-            <Link key={link.href} href={link.href} className={styles.mobileLink}>{link.label}</Link>
+          {getInvolvedLinks.map((link) => (
+            <Link 
+              key={link.href} 
+              href={link.href} 
+              className={styles.mobileLink}
+              onClick={() => setMobileOpen(false)}
+            >
+              {link.label}
+            </Link>
           ))}
 
           <div className={styles.mobileDivider} />
 
-          <Link href="/signin" className={styles.mobileLink}>Sign In</Link>
-          <Link href="/signup" className={styles.mobileCta}>Sign Up — It's Free</Link>
-          <Link href="/donate" className={styles.mobileCta2}>Donate</Link>
+          <div className={styles.mobileAuthRow}>
+            <Link href="/signin" className={styles.mobileSignIn} onClick={() => setMobileOpen(false)}>
+              Sign in
+            </Link>
+            <Link href="/signup" className={styles.mobileSignUp} onClick={() => setMobileOpen(false)}>
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
     </>

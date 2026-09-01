@@ -15,7 +15,7 @@ export default function ParentsPage() {
             Information for parents & guardians
           </h1>
           <p style={{ fontSize: "1.125rem", color: "var(--color-text-muted)", lineHeight: 1.7 }}>
-            We know that trusting an online platform with your child's learning takes confidence. Here's a clear, honest overview of how Learnivia works.
+            We know that trusting an online platform with your child&apos;s learning takes confidence. Here&apos;s a clear, honest overview of how Learnivia works.
           </p>
         </div>
       </section>
