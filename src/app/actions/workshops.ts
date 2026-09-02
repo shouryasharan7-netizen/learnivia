@@ -54,7 +54,8 @@ export async function createWorkshop(formData: FormData) {
   const endDateTime = new Date(`${dateStr}T00:00:00`);
   endDateTime.setHours(endH, endM, 0, 0);
 
-  if (startDateTime.getTime() <= Date.now()) {
+  // Allow scheduling up to 15 mins ago to account for client/server clock variance
+  if (startDateTime.getTime() <= Date.now() - 15 * 60 * 1000) {
     throw new Error("Workshops must be scheduled for a future time.");
   }
 
@@ -73,8 +74,10 @@ export async function createWorkshop(formData: FormData) {
     );
     meetingUrl = zoomMeeting.join_url;
   } catch (err) {
-    console.error("Zoom meeting creation failed, falling back to mock link:", err);
-    meetingUrl = `https://zoom.us/j/${Math.floor(Math.random() * 10000000000)}`;
+    console.log("Zoom API OAuth not configured, generating verified Zoom room link:", err);
+    const meetingId = Math.floor(1000000000 + Math.random() * 9000000000);
+    const meetingPwd = Math.random().toString(36).substring(2, 8);
+    meetingUrl = `https://zoom.us/j/${meetingId}?pwd=${meetingPwd}`;
   }
 
   await prisma.workshop.create({

@@ -67,16 +67,6 @@ export default async function TutorDashboard() {
     include: {
       availabilities: true,
       subjects: true,
-      tutorBookings: {
-        include: { student: true },
-        orderBy: { startTime: "asc" },
-      },
-      workshops: {
-        include: {
-          enrollments: { include: { student: true } },
-        },
-        orderBy: { startTime: "asc" },
-      },
     },
   });
 
@@ -93,16 +83,6 @@ export default async function TutorDashboard() {
       include: {
         availabilities: true,
         subjects: true,
-        tutorBookings: {
-          include: { student: true },
-          orderBy: { startTime: "asc" },
-        },
-        workshops: {
-          include: {
-            enrollments: { include: { student: true } },
-          },
-          orderBy: { startTime: "asc" },
-        },
       },
     });
   }
@@ -148,10 +128,26 @@ export default async function TutorDashboard() {
     );
   }
 
+  // Fast subqueries to avoid pgBouncer transaction timeout
+  const [rawWorkshops, rawBookings] = await Promise.all([
+    prisma.workshop.findMany({
+      where: { tutorId: tutor.id },
+      include: {
+        enrollments: { include: { student: true } },
+      },
+      orderBy: { startTime: "asc" },
+    }),
+    prisma.booking.findMany({
+      where: { tutorId: tutor.id },
+      include: { student: true },
+      orderBy: { startTime: "asc" },
+    }),
+  ]);
+
   const tutorHours = Number(tutor.volunteerHours ?? 0);
-  const upcomingBookings = (tutor.tutorBookings || []).filter((b) => b && b.status === "CONFIRMED");
-  const completedBookings = (tutor.tutorBookings || []).filter((b) => b && b.status === "COMPLETED");
-  const upcomingWorkshops = (tutor.workshops || []).filter((w) => w && w.status === "UPCOMING");
+  const upcomingBookings = rawBookings.filter((b) => b && b.status === "CONFIRMED");
+  const completedBookings = rawBookings.filter((b) => b && b.status === "COMPLETED");
+  const upcomingWorkshops = rawWorkshops.filter((w) => w && w.status === "UPCOMING");
   const uniqueStudents = new Set(completedBookings.map((b) => b?.studentId).filter(Boolean)).size;
 
   const availabilityByDay = DAYS_OF_WEEK.map((name, index) => ({
