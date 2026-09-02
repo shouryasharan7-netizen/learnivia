@@ -4,7 +4,10 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { addAvailability, removeAvailability } from "./actions";
 import { completeSession, cancelBooking } from "@/app/actions/sessions";
-import { createWorkshop, completeWorkshop } from "@/app/actions/workshops";
+import { completeWorkshop } from "@/app/actions/workshops";
+import { ScheduleWorkshopForm } from "./ScheduleWorkshopForm";
+import { FormattedDateTime } from "@/components/FormattedDateTime";
+import { getMeetingUrls } from "@/lib/meetingUrl";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -247,8 +250,7 @@ export default async function TutorDashboard() {
                           <span className={styles.sessionType}>1-on-1 Tutoring</span>
                           <h3 className={styles.sessionTitle}>{b.subject} with {b.student.name || "Student"}</h3>
                           <span className={styles.sessionTime}>
-                            📅 {new Date(b.startTime).toLocaleDateString()} at{" "}
-                            {new Date(b.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                            <FormattedDateTime date={b.startTime} />
                           </span>
                         </div>
                       </div>
@@ -256,13 +258,16 @@ export default async function TutorDashboard() {
                       {b.topic && <p className={styles.sessionTopic}>Topic: {b.topic}</p>}
 
                       <div className={styles.sessionActions}>
-                        {b.zoomLink ? (
-                          <a href={b.zoomLink} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
-                            🎥 Launch Zoom Call
-                          </a>
-                        ) : (
-                          <span style={{ fontSize: "0.8rem", color: "#64748B" }}>Zoom link provided to student</span>
-                        )}
+                        {(() => {
+                          const { hostUrl } = getMeetingUrls(b.zoomLink);
+                          return hostUrl ? (
+                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
+                              🎥 Launch Zoom Call
+                            </a>
+                          ) : (
+                            <span style={{ fontSize: "0.8rem", color: "#64748B" }}>Zoom link provided to student</span>
+                          );
+                        })()}
 
                         <form action={completeSession}>
                           <input type="hidden" name="bookingId" value={b.id} />
@@ -297,68 +302,7 @@ export default async function TutorDashboard() {
                 </div>
               </div>
 
-              <form action={createWorkshop} className={styles.workshopForm} style={{ borderTop: "none", padding: "0.5rem 0 0" }}>
-                <div className={styles.formRow}>
-                  <div style={{ flex: 2 }}>
-                    <label className={styles.inputLabel}>Workshop Title *</label>
-                    <input type="text" name="title" placeholder="e.g. SAT Math: Geometry & Circles Bootcamp" required className={styles.textInput} />
-                  </div>
-                  <div style={{ flex: 1.2 }}>
-                    <label className={styles.inputLabel}>Subject *</label>
-                    <select name="subject" required className={styles.selectInput}>
-                      <option value="SAT Prep">SAT Prep</option>
-                      <option value="Mathematics">Mathematics</option>
-                      <option value="Science">Science (Bio / Chem / Physics)</option>
-                      <option value="College Admissions">College Admissions</option>
-                      <option value="Reading and Writing">Reading and Writing</option>
-                      <option value="Computer Science">Computer Science</option>
-                      <option value="Homework Help">Homework Help</option>
-                    </select>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <label className={styles.inputLabel}>Grade Level *</label>
-                    <select name="grade" required className={styles.selectInput}>
-                      <option value="High School">High School</option>
-                      <option value="Middle School">Middle School</option>
-                      <option value="College Prep">College Prep</option>
-                      <option value="All Levels">All Levels</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className={styles.inputLabel}>Session Description &amp; Objectives *</label>
-                  <textarea name="description" rows={2} placeholder="What topics will you cover? (e.g. We will walk through 10 practice problems and answer live questions)" required className={styles.textareaInput} />
-                </div>
-
-                <div className={styles.formRow}>
-                  <div>
-                    <label className={styles.inputLabel}>Date *</label>
-                    <input type="date" name="date" required className={styles.textInput} />
-                  </div>
-                  <div>
-                    <label className={styles.inputLabel}>Start Time *</label>
-                    <input type="time" name="startTime" required className={styles.textInput} />
-                  </div>
-                  <div>
-                    <label className={styles.inputLabel}>End Time *</label>
-                    <input type="time" name="endTime" required className={styles.textInput} />
-                  </div>
-                  <div>
-                    <label className={styles.inputLabel}>Max Capacity</label>
-                    <input type="number" name="maxCapacity" defaultValue={12} min={2} max={30} className={styles.textInput} />
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "0.5rem", flexWrap: "wrap", gap: "1rem" }}>
-                  <span style={{ fontSize: "0.8125rem", color: "#64748B" }}>
-                    ✓ Automatic Zoom link generated upon publish. Appears live across all learner directories immediately.
-                  </span>
-                  <button type="submit" className={styles.primaryBtn}>
-                    Publish Session to Directory 🚀
-                  </button>
-                </div>
-              </form>
+              <ScheduleWorkshopForm />
             </section>
 
             {/* Live Group Workshops List */}
@@ -373,42 +317,44 @@ export default async function TutorDashboard() {
 
               {/* Workshops list */}
               {upcomingWorkshops.length === 0 ? (
-                <p className={styles.emptyNotice}>You haven&apos;t scheduled any upcoming workshops yet.</p>
+                 <p className={styles.emptyNotice}>You haven&apos;t scheduled any upcoming workshops yet.</p>
               ) : (
                 <div className={styles.sessionsList} style={{ marginTop: "1rem" }}>
-                  {upcomingWorkshops.map((w) => (
-                    <div key={w.id} className={styles.sessionCard}>
-                      <div className={styles.sessionHeader}>
-                        <div>
-                          <span className={styles.workshopTag}>Group Workshop</span>
-                          <h3 className={styles.sessionTitle}>{w.title}</h3>
-                          <p style={{ fontSize: "0.8125rem", color: "#64748B" }}>
-                            {w.subject} • {w.enrollments.length} / {w.maxCapacity} Seats Booked
-                          </p>
+                  {upcomingWorkshops.map((w) => {
+                    const { hostUrl } = getMeetingUrls(w.zoomLink);
+                    return (
+                      <div key={w.id} className={styles.sessionCard}>
+                        <div className={styles.sessionHeader}>
+                          <div>
+                            <span className={styles.workshopTag}>Group Workshop</span>
+                            <h3 className={styles.sessionTitle}>{w.title}</h3>
+                            <p style={{ fontSize: "0.8125rem", color: "#64748B" }}>
+                              {w.subject} • {w.enrollments.length} / {w.maxCapacity} Seats Booked
+                            </p>
+                          </div>
+                          <span className={styles.sessionTime}>
+                            <FormattedDateTime date={w.startTime} />
+                          </span>
                         </div>
-                        <span className={styles.sessionTime}>
-                          📅 {new Date(w.startTime).toLocaleDateString()} at{" "}
-                          {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        </span>
-                      </div>
 
-                      <p style={{ fontSize: "0.875rem", color: "#334155" }}>{w.description}</p>
+                        <p style={{ fontSize: "0.875rem", color: "#334155" }}>{w.description}</p>
 
-                      <div className={styles.sessionActions}>
-                        {w.zoomLink && (
-                          <a href={w.zoomLink} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
-                            🎥 Host Zoom Call
-                          </a>
-                        )}
-                        <form action={completeWorkshop}>
-                          <input type="hidden" name="workshopId" value={w.id} />
-                          <button type="submit" className={styles.completeBtn}>
-                            ✓ Mark Completed
-                          </button>
-                        </form>
+                        <div className={styles.sessionActions}>
+                          {hostUrl && (
+                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
+                              🎥 Host Zoom Call
+                            </a>
+                          )}
+                          <form action={completeWorkshop}>
+                            <input type="hidden" name="workshopId" value={w.id} />
+                            <button type="submit" className={styles.completeBtn}>
+                              ✓ Mark Completed
+                            </button>
+                          </form>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </section>

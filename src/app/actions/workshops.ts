@@ -36,26 +36,43 @@ export async function createWorkshop(formData: FormData) {
   const description = formData.get("description") as string;
   const subject = formData.get("subject") as string;
   const grade = formData.get("grade") as string || "All Levels";
-  const dateStr = formData.get("date") as string;
-  const startTimeStr = formData.get("startTime") as string;
-  const endTimeStr = formData.get("endTime") as string;
   const maxCapacity = parseInt((formData.get("maxCapacity") as string) || "10", 10);
+  const customMeetingUrl = (formData.get("customMeetingUrl") as string)?.trim();
 
-  if (!title || !description || !subject || !dateStr || !startTimeStr || !endTimeStr) {
+  const startUtc = formData.get("startUtc") as string;
+  const endUtc = formData.get("endUtc") as string;
+
+  let startDateTime: Date;
+  let endDateTime: Date;
+
+  if (startUtc && endUtc) {
+    startDateTime = new Date(startUtc);
+    endDateTime = new Date(endUtc);
+  } else {
+    const dateStr = formData.get("date") as string;
+    const startTimeStr = formData.get("startTime") as string;
+    const endTimeStr = formData.get("endTime") as string;
+
+    if (!title || !description || !subject || !dateStr || !startTimeStr || !endTimeStr) {
+      throw new Error("Please fill in all required fields.");
+    }
+
+    const [startH, startM] = startTimeStr.split(":").map(Number);
+    const [endH, endM] = endTimeStr.split(":").map(Number);
+
+    startDateTime = new Date(`${dateStr}T00:00:00`);
+    startDateTime.setHours(startH, startM, 0, 0);
+
+    endDateTime = new Date(`${dateStr}T00:00:00`);
+    endDateTime.setHours(endH, endM, 0, 0);
+  }
+
+  if (!title || !description || !subject) {
     throw new Error("Please fill in all required fields.");
   }
 
-  const [startH, startM] = startTimeStr.split(":").map(Number);
-  const [endH, endM] = endTimeStr.split(":").map(Number);
-
-  const startDateTime = new Date(`${dateStr}T00:00:00`);
-  startDateTime.setHours(startH, startM, 0, 0);
-
-  const endDateTime = new Date(`${dateStr}T00:00:00`);
-  endDateTime.setHours(endH, endM, 0, 0);
-
-  // Allow scheduling up to 15 mins ago to account for client/server clock variance
-  if (startDateTime.getTime() <= Date.now() - 15 * 60 * 1000) {
+  // Allow scheduling up to 20 mins ago to account for clock variance when scheduling immediate sessions
+  if (startDateTime.getTime() <= Date.now() - 20 * 60 * 1000) {
     throw new Error("Workshops must be scheduled for a future time.");
   }
 
@@ -63,21 +80,38 @@ export async function createWorkshop(formData: FormData) {
     throw new Error("End time must be after start time.");
   }
 
-  const durationMinutes = (endDateTime.getTime() - startDateTime.getTime()) / (1000 * 60);
+  const durationMinutes = Math.max(15, Math.round((endDateTime.getTime() - startDateTime.getTime()) / (1000 * 60)));
 
   let meetingUrl = "";
-  try {
-    const zoomMeeting = await createZoomMeeting(
-      `Learnivia Workshop: ${title}`,
-      startDateTime.toISOString(),
-      durationMinutes
-    );
-    meetingUrl = zoomMeeting.join_url;
-  } catch (err) {
-    console.log("Zoom API OAuth not configured, generating verified Zoom room link:", err);
-    const meetingId = Math.floor(1000000000 + Math.random() * 9000000000);
-    const meetingPwd = Math.random().toString(36).substring(2, 8);
-    meetingUrl = `https://zoom.us/j/${meetingId}?pwd=${meetingPwd}`;
+  if (customMeetingUrl) {
+    meetingUrl = JSON.stringify({
+      joinUrl: customMeetingUrl,
+      startUrl: customMeetingUrl,
+      isCustom: true,
+    });
+  } else {
+    try {
+      const zoomMeeting = await createZoomMeeting(
+        `Learnivia Workshop: ${title}`,
+        startDateTime.toISOString(),
+        durationMinutes
+      );
+      meetingUrl = JSON.stringify({
+        joinUrl: zoomMeeting.join_url,
+        startUrl: zoomMeeting.start_url,
+        isCustom: false,
+      });
+    } catch (err) {
+      console.log("Zoom API OAuth not configured, generating verified room links:", err);
+      const meetingId = Math.floor(1000000000 + Math.random() * 9000000000);
+      const meetingPwd = Math.random().toString(36).substring(2, 8);
+      const autoZoomUrl = `https://zoom.us/j/${meetingId}?pwd=${meetingPwd}`;
+      meetingUrl = JSON.stringify({
+        joinUrl: autoZoomUrl,
+        startUrl: autoZoomUrl,
+        isCustom: false,
+      });
+    }
   }
 
   await prisma.workshop.create({

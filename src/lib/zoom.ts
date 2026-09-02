@@ -50,12 +50,13 @@ export async function createZoomMeeting(
         settings: {
           host_video: true,
           participant_video: true,
-          join_before_host: false,
+          join_before_host: true, // Allow meeting to start instantly when tutor or students join
+          jbh_time: 0, // 0 = anytime
           mute_upon_entry: true,
           watermark: false,
           use_pmi: false,
           approval_type: 0, // Automatically approve
-          waiting_room: true, // Crucial for safety!
+          waiting_room: false, // Turn off waiting room so no one is stuck waiting for host
         },
       }),
     });

@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
 import styles from "./page.module.css";
 import { auth } from "@/auth";
+import { FormattedDateTime } from "@/components/FormattedDateTime";
+import { getMeetingUrls } from "@/lib/meetingUrl";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -223,34 +225,62 @@ export default async function SessionsPage({ searchParams }: Props) {
             {workshops.map((w) => {
               const ratio = `${w.enrollments.length}/${w.maxCapacity}`;
               const tutorName = w.tutor.user.name || "Tutor";
+              const { joinUrl } = getMeetingUrls(w.zoomLink);
               return (
-                <Link key={w.id} href={`/learn`} className={styles.sessionCard}>
-                  <h3 className={styles.cardTitle}>{w.title}</h3>
-                  <p className={styles.cardTime}>
-                    Starts {formatStartTime(w.startTime)}
-                  </p>
-                  <p className={styles.cardDesc}>{w.description}</p>
-                  <div className={styles.cardFooter}>
-                    <div className={styles.cardTutor}>
-                      <div
-                        className={styles.tutorAvatar}
-                        style={{ background: getAvatarColor(tutorName) }}
-                        aria-hidden="true"
-                      >
-                        {getInitials(tutorName)}
+                <div key={w.id} className={styles.sessionCard}>
+                  <Link href={`/learn`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+                    <h3 className={styles.cardTitle}>{w.title}</h3>
+                    <p className={styles.cardTime}>
+                      <FormattedDateTime date={w.startTime} />
+                    </p>
+                    <p className={styles.cardDesc}>{w.description}</p>
+                    <div className={styles.cardFooter}>
+                      <div className={styles.cardTutor}>
+                        <div
+                          className={styles.tutorAvatar}
+                          style={{ background: getAvatarColor(tutorName) }}
+                          aria-hidden="true"
+                        >
+                          {getInitials(tutorName)}
+                        </div>
+                        <span>{tutorName}</span>
                       </div>
-                      <span>{tutorName}</span>
+                      <div className={styles.cardAttendees}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                          <circle cx="9" cy="7" r="4"/>
+                          <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                        </svg>
+                        <span>{ratio}</span>
+                      </div>
                     </div>
-                    <div className={styles.cardAttendees}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                      </svg>
-                      <span>{ratio}</span>
+                  </Link>
+
+                  {joinUrl && (
+                    <div style={{ marginTop: "0.75rem", borderTop: "1px solid #F1F5F9", paddingTop: "0.75rem" }}>
+                      <a
+                        href={joinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "100%",
+                          padding: "0.5rem 1rem",
+                          background: "#0E8345",
+                          color: "#FFFFFF",
+                          borderRadius: 8,
+                          fontSize: "0.85rem",
+                          fontWeight: 700,
+                          textDecoration: "none",
+                        }}
+                      >
+                        🎥 Join Live Session
+                      </a>
                     </div>
-                  </div>
-                </Link>
+                  )}
+                </div>
               );
             })}
           </div>
