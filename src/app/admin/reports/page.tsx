@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 
 export default async function AdminReportsPage() {
   const session = await auth();
-  // @ts-ignore
   if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/");
   }

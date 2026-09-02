@@ -194,6 +194,10 @@ export default async function StudentDashboard() {
                   <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#0E8345", background: "#E6F4EA", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
                     ✓ Verified Tutor
                   </span>
+                ) : tutorProfile?.status === "PENDING" ? (
+                  <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#B45309", background: "#FEF3C7", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
+                    ⏳ Tutor Review Pending
+                  </span>
                 ) : (
                   <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#2563EB", background: "#EFF6FF", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
                     🎓 Student
@@ -208,6 +212,15 @@ export default async function StudentDashboard() {
                     </Link>
                     <Link href="/tutor/transcript" className={styles.metaLink}>
                       📜 Verified Hours
+                    </Link>
+                  </>
+                ) : tutorProfile?.status === "PENDING" ? (
+                  <>
+                    <Link href="/tutor" className={styles.metaLink} style={{ color: "#D97706", fontWeight: 700 }}>
+                      ⏳ Application Status
+                    </Link>
+                    <Link href="/resources" className={styles.metaLink}>
+                      📚 Study Guides
                     </Link>
                   </>
                 ) : (
@@ -402,6 +415,21 @@ export default async function StudentDashboard() {
                   </Link>
                   <Link href="/tutor" className={styles.resourcesLink} style={{ color: "#0E8345", fontWeight: 700 }}>
                     💻 Open Tutor Dashboard
+                  </Link>
+                </div>
+              </div>
+            ) : tutorProfile?.status === "PENDING" ? (
+              <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)", borderColor: "#FDE68A" }}>
+                <h3 className={styles.sideCardTitle} style={{ color: "#B45309" }}>⏳ Tutor Application Pending</h3>
+                <p className={styles.sideCardText}>
+                  Your application is currently being reviewed by our moderation team. You&apos;ll be notified by email once approved!
+                </p>
+                <div className={styles.sideCardLinks}>
+                  <Link href="/tutor" className={styles.reportLink} style={{ background: "#D97706", color: "#FFFFFF" }}>
+                    Check Status →
+                  </Link>
+                  <Link href="/support" className={styles.resourcesLink} style={{ color: "#B45309", fontWeight: 600 }}>
+                    Support FAQ
                   </Link>
                 </div>
               </div>

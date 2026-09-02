@@ -35,7 +35,6 @@ export async function submitIncidentReport(formData: FormData) {
 
 export async function updateReportStatus(formData: FormData) {
   const session = await auth();
-  // @ts-ignore
   if (!session?.user || session.user.role !== "ADMIN") {
     throw new Error("Unauthorized. Admin access required.");
   }

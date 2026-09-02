@@ -177,9 +177,7 @@ export async function completeWorkshop(formData: FormData) {
     throw new Error("Workshop not found.");
   }
 
-  // @ts-ignore
   const isTutor = workshop.tutor.userId === session.user.id;
-  // @ts-ignore
   const isAdmin = session.user.role === "ADMIN";
 
   if (!isTutor && !isAdmin) {

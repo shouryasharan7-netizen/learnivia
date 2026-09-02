@@ -33,7 +33,6 @@ export async function cancelBooking(formData: FormData) {
   // User must be the student, the tutor, or an admin
   const isStudent = booking.studentId === session.user.id;
   const isTutor = booking.tutor.userId === session.user.id;
-  // @ts-ignore
   const isAdmin = session.user.role === "ADMIN";
 
   if (!isStudent && !isTutor && !isAdmin) {
@@ -97,9 +96,7 @@ export async function completeSession(formData: FormData) {
   }
 
   // Must be the tutor or an admin
-  // @ts-ignore
   const isTutor = booking.tutor.userId === session.user.id;
-  // @ts-ignore
   const isAdmin = session.user.role === "ADMIN";
 
   if (!isTutor && !isAdmin) {

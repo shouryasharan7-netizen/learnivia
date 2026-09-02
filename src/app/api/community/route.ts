@@ -31,7 +31,6 @@ export async function POST(request: Request) {
     .join("")
     .toUpperCase();
 
-  // @ts-ignore
   const userRole = session.user.role === "TUTOR" ? "TUTOR" : session.user.role === "ADMIN" ? "COMMUNITY LEAD" : "STUDENT";
   const colors = ["#0E8345", "#7C3AED", "#2563EB", "#D97706", "#DC2626", "#0D9488"];
   const color = colors[userName.charCodeAt(0) % colors.length];
