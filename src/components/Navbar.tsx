@@ -48,7 +48,7 @@ const getInvolvedLinks = [
 const mainLinks = [
   { href: "/about", label: "About" },
   { href: "/about#faq", label: "FAQ" },
-  { href: "/stories", label: "Story" },
+  { href: "/stories", label: "Stories & Blog" },
 ];
 
 export function Navbar() {
