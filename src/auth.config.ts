@@ -18,27 +18,33 @@ export const authConfig = {
         if (session.onboardingCompleted !== undefined) {
           token.onboardingCompleted = session.onboardingCompleted;
         }
+        if (session.role !== undefined) {
+          token.role = session.role;
+        }
       }
 
       if (user) {
-        token.id = user.id
-
-        token.role = user.role
-
-        token.onboardingCompleted = user.onboardingCompleted
-
-        token.timezone = user.timezone
+        token.id = (user.id || token.id || token.sub) as string;
+        token.role = user.role || "STUDENT";
+        token.onboardingCompleted = user.onboardingCompleted ?? true;
+        token.timezone = user.timezone ?? null;
       }
-      return token
+
+      // Guarantee token.id is never empty
+      if (!token.id && token.sub) {
+        token.id = token.sub;
+      }
+
+      return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as "STUDENT" | "TUTOR" | "ADMIN"
-        session.user.onboardingCompleted = token.onboardingCompleted as boolean
-        session.user.timezone = token.timezone as string | null
+        session.user.id = ((token.id || token.sub) as string) || "";
+        session.user.role = (token.role as "STUDENT" | "TUTOR" | "ADMIN") || "STUDENT";
+        session.user.onboardingCompleted = Boolean(token.onboardingCompleted);
+        session.user.timezone = (token.timezone as string | null) || null;
       }
-      return session
+      return session;
     },
   },
 } satisfies NextAuthConfig

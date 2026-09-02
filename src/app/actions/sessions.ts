@@ -7,7 +7,20 @@ import { sendBookingCancellation } from "@/lib/email";
 
 export async function cancelBooking(formData: FormData) {
   const session = await auth();
-  if (!session?.user?.id) {
+  if (!session?.user) {
+    throw new Error("You must be logged in to cancel a session.");
+  }
+
+  let userId = session.user.id;
+  if (!userId && session.user.email) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { id: true },
+    });
+    if (dbUser) userId = dbUser.id;
+  }
+
+  if (!userId) {
     throw new Error("You must be logged in to cancel a session.");
   }
 
@@ -31,8 +44,8 @@ export async function cancelBooking(formData: FormData) {
   }
 
   // User must be the student, the tutor, or an admin
-  const isStudent = booking.studentId === session.user.id;
-  const isTutor = booking.tutor.userId === session.user.id;
+  const isStudent = booking.studentId === userId;
+  const isTutor = booking.tutor.userId === userId;
   const isAdmin = session.user.role === "ADMIN";
 
   if (!isStudent && !isTutor && !isAdmin) {
@@ -74,7 +87,20 @@ export async function cancelBooking(formData: FormData) {
 
 export async function completeSession(formData: FormData) {
   const session = await auth();
-  if (!session?.user?.id) {
+  if (!session?.user) {
+    throw new Error("You must be logged in to complete a session.");
+  }
+
+  let userId = session.user.id;
+  if (!userId && session.user.email) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { id: true },
+    });
+    if (dbUser) userId = dbUser.id;
+  }
+
+  if (!userId) {
     throw new Error("You must be logged in to complete a session.");
   }
 
@@ -96,7 +122,7 @@ export async function completeSession(formData: FormData) {
   }
 
   // Must be the tutor or an admin
-  const isTutor = booking.tutor.userId === session.user.id;
+  const isTutor = booking.tutor.userId === userId;
   const isAdmin = session.user.role === "ADMIN";
 
   if (!isTutor && !isAdmin) {

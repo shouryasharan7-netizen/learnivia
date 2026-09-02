@@ -7,12 +7,25 @@ import { createZoomMeeting } from "@/lib/zoom";
 
 export async function createWorkshop(formData: FormData) {
   const session = await auth();
-  if (!session?.user?.id) {
+  if (!session?.user) {
+    throw new Error("You must be logged in to host a workshop.");
+  }
+
+  let userId = session.user.id;
+  if (!userId && session.user.email) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { id: true },
+    });
+    if (dbUser) userId = dbUser.id;
+  }
+
+  if (!userId) {
     throw new Error("You must be logged in to host a workshop.");
   }
 
   const tutor = await prisma.tutorProfile.findUnique({
-    where: { userId: session.user.id },
+    where: { userId },
   });
 
   if (!tutor || tutor.status !== "APPROVED") {

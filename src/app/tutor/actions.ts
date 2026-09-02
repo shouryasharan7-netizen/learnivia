@@ -10,9 +10,22 @@ export async function addAvailability(formData: FormData) {
     throw new Error("Unauthorized");
   }
 
+  let userId = session.user.id;
+  if (!userId && session.user.email) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { id: true },
+    });
+    if (dbUser) userId = dbUser.id;
+  }
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
   // Verify tutor profile
   const tutor = await prisma.tutorProfile.findUnique({
-    where: { userId: session.user.id }
+    where: { userId }
   });
 
   if (!tutor || tutor.status !== "APPROVED") {
@@ -45,8 +58,21 @@ export async function removeAvailability(id: string) {
     throw new Error("Unauthorized");
   }
 
+  let userId = session.user.id;
+  if (!userId && session.user.email) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { id: true },
+    });
+    if (dbUser) userId = dbUser.id;
+  }
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
   const tutor = await prisma.tutorProfile.findUnique({
-    where: { userId: session.user.id }
+    where: { userId }
   });
 
   if (!tutor) {
