@@ -14,6 +14,7 @@ const publicPaths = [
   "/about",
   "/safety",
   "/stories",
+  "/blog",
   "/parents",
   "/educators",
   "/support",
