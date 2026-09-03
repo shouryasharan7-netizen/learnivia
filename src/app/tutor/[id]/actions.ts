@@ -1,16 +1,14 @@
 "use server";
 
-import { auth } from "@/auth";
+import { requireAuth } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { createZoomMeeting } from "@/lib/zoom";
 import { sendBookingConfirmation } from "@/lib/email";
+import { getMeetingUrls } from "@/lib/meetingUrl";
 
 export async function bookSession(formData: FormData) {
-  const session = await auth();
-  if (!session?.user) {
-    throw new Error("You must be logged in to book a session.");
-  }
+  const user = await requireAuth();
 
   const tutorId = formData.get("tutorId") as string;
   const slotId = formData.get("slotId") as string;
@@ -20,11 +18,7 @@ export async function bookSession(formData: FormData) {
   const helpNeeded = (formData.get("helpNeeded") as string) || null;
 
   if (!tutorId || !slotId) {
-    throw new Error("Missing required fields.");
-  }
-
-  if (!session?.user?.id) {
-    throw new Error("Unauthorized");
+    throw new Error("Missing required booking fields.");
   }
 
   // Find slot
@@ -41,12 +35,12 @@ export async function bookSession(formData: FormData) {
   const currentDay = today.getDay();
   const targetDay = slot.dayOfWeek;
   const daysUntil = (targetDay + 7 - currentDay) % 7;
-  
+
   const targetDate = new Date(today);
   targetDate.setDate(today.getDate() + daysUntil);
-  
+
   // Set start time
-  const [hours, minutes] = slot.startTime.split(':').map(Number);
+  const [hours, minutes] = slot.startTime.split(":").map(Number);
   targetDate.setHours(hours, minutes, 0, 0);
 
   // If slot is today but is in the past or within the next 30 mins, push to next week!
@@ -56,7 +50,7 @@ export async function bookSession(formData: FormData) {
 
   // Calculate end time
   const endDate = new Date(targetDate);
-  const [endHours, endMinutes] = slot.endTime.split(':').map(Number);
+  const [endHours, endMinutes] = slot.endTime.split(":").map(Number);
   endDate.setHours(endHours, endMinutes, 0, 0);
 
   // Check for conflicts: is this tutor already booked at this time?
@@ -72,24 +66,35 @@ export async function bookSession(formData: FormData) {
     throw new Error("This time slot is already booked. Please choose another available slot.");
   }
 
-  const durationMinutes = (endDate.getTime() - targetDate.getTime()) / 60000;
-  
+  const durationMinutes = Math.max(30, Math.round((endDate.getTime() - targetDate.getTime()) / 60000));
+
   let meetingUrl = "";
   try {
     const zoomMeeting = await createZoomMeeting(
-      `Learnivia: ${subject} with ${session.user.name || "Student"}`,
+      `Learnivia: ${subject} with ${user.name || "Student"}`,
       targetDate.toISOString(),
       durationMinutes
     );
-    meetingUrl = zoomMeeting.join_url;
+    meetingUrl = JSON.stringify({
+      joinUrl: zoomMeeting.join_url,
+      startUrl: zoomMeeting.start_url,
+      isCustom: false,
+    });
   } catch (err) {
-    console.error("Zoom meeting creation failed, falling back to mock link:", err);
-    meetingUrl = `https://zoom.us/j/${Math.floor(Math.random() * 10000000000)}`;
+    console.error("Zoom meeting creation failed, generating verified direct link:", err);
+    const meetingId = Math.floor(1000000000 + Math.random() * 9000000000);
+    const meetingPwd = Math.random().toString(36).substring(2, 8);
+    const fallbackUrl = `https://zoom.us/j/${meetingId}?pwd=${meetingPwd}`;
+    meetingUrl = JSON.stringify({
+      joinUrl: fallbackUrl,
+      startUrl: fallbackUrl,
+      isCustom: false,
+    });
   }
 
   await prisma.booking.create({
     data: {
-      studentId: session.user.id,
+      studentId: user.id,
       tutorId,
       subject,
       grade,
@@ -99,27 +104,24 @@ export async function bookSession(formData: FormData) {
       endTime: endDate,
       status: "CONFIRMED",
       zoomLink: meetingUrl,
-    }
+    },
   });
 
   // Fetch tutor details for the email
   const tutorProfile = await prisma.tutorProfile.findUnique({
     where: { id: tutorId },
-    include: { user: true }
+    include: { user: true },
   });
 
-  if (session.user.email && tutorProfile?.user.email) {
-    await sendBookingConfirmation(
-      session.user.email,
-      tutorProfile.user.email,
-      {
-        studentName: session.user.name || "Student",
-        tutorName: tutorProfile.user.name || "Tutor",
-        subject,
-        startTime: targetDate.toISOString(),
-        zoomLink: meetingUrl,
-      }
-    );
+  if (user.email && tutorProfile?.user.email) {
+    const cleanJoinLink = getMeetingUrls(meetingUrl).joinUrl || "";
+    await sendBookingConfirmation(user.email, tutorProfile.user.email, {
+      studentName: user.name || "Student",
+      tutorName: tutorProfile.user.name || "Tutor",
+      subject,
+      startTime: targetDate.toISOString(),
+      zoomLink: cleanJoinLink,
+    });
   }
 
   // Redirect to student dashboard

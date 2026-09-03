@@ -1,8 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getMeetingUrls } from "@/lib/meetingUrl";
 
 export const dynamic = "force-dynamic";
 
@@ -11,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminSessionsPage() {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "ADMIN") {
-    redirect("/");
+  const user = await getCurrentUser();
+  if (!user || !user.isAdmin) {
+    redirect("/dashboard");
   }
 
   const [bookings, workshops] = await Promise.all([
@@ -103,13 +104,16 @@ export default async function AdminSessionsPage() {
                       </span>
                     </td>
                     <td style={{ padding: "0.75rem" }}>
-                      {b.zoomLink ? (
-                        <a href={b.zoomLink} target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
-                          Open Zoom
-                        </a>
-                      ) : (
-                        "—"
-                      )}
+                      {(() => {
+                        const { joinUrl } = getMeetingUrls(b.zoomLink);
+                        return joinUrl ? (
+                          <a href={joinUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
+                            Open Zoom
+                          </a>
+                        ) : (
+                          "—"
+                        );
+                      })()}
                     </td>
                   </tr>
                 ))}
@@ -141,55 +145,59 @@ export default async function AdminSessionsPage() {
                 </tr>
               </thead>
               <tbody>
-                {workshops.map((w) => (
-                  <tr key={w.id} style={{ borderBottom: "1px solid var(--color-border)" }}>
-                    <td style={{ padding: "0.75rem", whiteSpace: "nowrap" }}>
-                      {new Date(w.startTime).toLocaleDateString()} {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                    </td>
-                    <td style={{ padding: "0.75rem", fontWeight: 600 }}>{w.title}</td>
-                    <td style={{ padding: "0.75rem" }}>
-                      <Link href={`/tutor/${w.tutorId}`} style={{ color: "var(--color-primary)", fontWeight: 600 }}>
-                        {w.tutor.user.name || "Tutor"}
-                      </Link>
-                    </td>
-                    <td style={{ padding: "0.75rem" }}>
-                      {w.enrollments.length} / {w.maxCapacity} seats
-                    </td>
-                    <td style={{ padding: "0.75rem" }}>
-                      <span
-                        style={{
-                          padding: "0.25rem 0.6rem",
-                          borderRadius: "99px",
-                          fontSize: "0.75rem",
-                          fontWeight: 700,
-                          backgroundColor:
-                            w.status === "COMPLETED"
-                              ? "var(--color-success-bg)"
-                              : w.status === "UPCOMING"
-                              ? "var(--color-info-bg)"
-                              : "var(--color-error-bg)",
-                          color:
-                            w.status === "COMPLETED"
-                              ? "var(--color-success)"
-                              : w.status === "UPCOMING"
-                              ? "var(--color-primary)"
-                              : "var(--color-error)",
-                        }}
-                      >
-                        {w.status}
-                      </span>
-                    </td>
-                    <td style={{ padding: "0.75rem" }}>
-                      {w.zoomLink ? (
-                        <a href={w.zoomLink} target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
-                          Open Zoom
-                        </a>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                {workshops.map((w) => {
+                  const { joinUrl, hostUrl } = getMeetingUrls(w.zoomLink);
+                  const activeUrl = hostUrl || joinUrl;
+                  return (
+                    <tr key={w.id} style={{ borderBottom: "1px solid var(--color-border)" }}>
+                      <td style={{ padding: "0.75rem", whiteSpace: "nowrap" }}>
+                        {new Date(w.startTime).toLocaleDateString()} {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      </td>
+                      <td style={{ padding: "0.75rem", fontWeight: 600 }}>{w.title}</td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <Link href={`/tutor/${w.tutorId}`} style={{ color: "var(--color-primary)", fontWeight: 600 }}>
+                          {w.tutor.user.name || "Tutor"}
+                        </Link>
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        {w.enrollments.length} / {w.maxCapacity} seats
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        <span
+                          style={{
+                            padding: "0.25rem 0.6rem",
+                            borderRadius: "99px",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            backgroundColor:
+                              w.status === "COMPLETED"
+                                ? "var(--color-success-bg)"
+                                : w.status === "UPCOMING"
+                                ? "var(--color-info-bg)"
+                                : "var(--color-error-bg)",
+                            color:
+                              w.status === "COMPLETED"
+                                ? "var(--color-success)"
+                                : w.status === "UPCOMING"
+                                ? "var(--color-primary)"
+                                : "var(--color-error)",
+                          }}
+                        >
+                          {w.status}
+                        </span>
+                      </td>
+                      <td style={{ padding: "0.75rem" }}>
+                        {activeUrl ? (
+                          <a href={activeUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
+                            Open Zoom
+                          </a>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

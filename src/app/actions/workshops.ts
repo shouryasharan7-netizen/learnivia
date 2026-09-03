@@ -1,42 +1,18 @@
 "use server";
 
-import { auth } from "@/auth";
+import { requireAuth, requireTutor } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { createZoomMeeting } from "@/lib/zoom";
 
 export async function createWorkshop(formData: FormData) {
-  const session = await auth();
-  if (!session?.user) {
-    throw new Error("You must be logged in to host a workshop.");
-  }
+  const { tutor } = await requireTutor();
 
-  let userId = session.user.id;
-  if (!userId && session.user.email) {
-    const dbUser = await prisma.user.findUnique({
-      where: { email: session.user.email },
-      select: { id: true },
-    });
-    if (dbUser) userId = dbUser.id;
-  }
-
-  if (!userId) {
-    throw new Error("You must be logged in to host a workshop.");
-  }
-
-  const tutor = await prisma.tutorProfile.findUnique({
-    where: { userId },
-  });
-
-  if (!tutor || tutor.status !== "APPROVED") {
-    throw new Error("Only approved tutors can host group workshops.");
-  }
-
-  const title = formData.get("title") as string;
-  const description = formData.get("description") as string;
-  const subject = formData.get("subject") as string;
-  const grade = formData.get("grade") as string || "All Levels";
-  const maxCapacity = parseInt((formData.get("maxCapacity") as string) || "10", 10);
+  const title = (formData.get("title") as string)?.trim();
+  const description = (formData.get("description") as string)?.trim();
+  const subject = (formData.get("subject") as string)?.trim();
+  const grade = ((formData.get("grade") as string) || "All Levels").trim();
+  const maxCapacity = Math.max(1, parseInt((formData.get("maxCapacity") as string) || "10", 10));
   const customMeetingUrl = (formData.get("customMeetingUrl") as string)?.trim();
 
   const startUtc = formData.get("startUtc") as string;
@@ -102,7 +78,7 @@ export async function createWorkshop(formData: FormData) {
         isCustom: false,
       });
     } catch (err) {
-      console.log("Zoom API OAuth not configured, generating verified room links:", err);
+      console.log("Zoom API not configured, generating verified room link:", err);
       const meetingId = Math.floor(1000000000 + Math.random() * 9000000000);
       const meetingPwd = Math.random().toString(36).substring(2, 8);
       const autoZoomUrl = `https://zoom.us/j/${meetingId}?pwd=${meetingPwd}`;
@@ -137,10 +113,7 @@ export async function createWorkshop(formData: FormData) {
 }
 
 export async function enrollInWorkshop(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    throw new Error("You must be logged in to enroll in a workshop.");
-  }
+  const user = await requireAuth();
 
   const workshopId = formData.get("workshopId") as string;
   if (!workshopId) {
@@ -166,7 +139,7 @@ export async function enrollInWorkshop(formData: FormData) {
 
   // Check if already enrolled
   const existingEnrollment = workshop.enrollments.find(
-    (e) => e.studentId === session.user.id
+    (e) => e.studentId === user.id
   );
 
   if (existingEnrollment) {
@@ -176,7 +149,7 @@ export async function enrollInWorkshop(formData: FormData) {
   await prisma.workshopEnrollment.create({
     data: {
       workshopId,
-      studentId: session.user.id,
+      studentId: user.id,
     },
   });
 
@@ -187,10 +160,7 @@ export async function enrollInWorkshop(formData: FormData) {
 }
 
 export async function cancelWorkshopEnrollment(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    throw new Error("You must be logged in to cancel enrollment.");
-  }
+  const user = await requireAuth();
 
   const workshopId = formData.get("workshopId") as string;
   if (!workshopId) {
@@ -200,7 +170,7 @@ export async function cancelWorkshopEnrollment(formData: FormData) {
   await prisma.workshopEnrollment.deleteMany({
     where: {
       workshopId,
-      studentId: session.user.id,
+      studentId: user.id,
     },
   });
 
@@ -211,10 +181,7 @@ export async function cancelWorkshopEnrollment(formData: FormData) {
 }
 
 export async function completeWorkshop(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    throw new Error("Unauthorized");
-  }
+  const user = await requireAuth();
 
   const workshopId = formData.get("workshopId") as string;
 
@@ -227,10 +194,10 @@ export async function completeWorkshop(formData: FormData) {
     throw new Error("Workshop not found.");
   }
 
-  const isTutor = workshop.tutor.userId === session.user.id;
-  const isAdmin = session.user.role === "ADMIN";
+  const isHostTutor = workshop.tutor.userId === user.id;
+  const isAdmin = user.isAdmin;
 
-  if (!isTutor && !isAdmin) {
+  if (!isHostTutor && !isAdmin) {
     throw new Error("Only the host tutor or admin can complete a workshop.");
   }
 

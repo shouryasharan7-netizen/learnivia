@@ -1,28 +1,12 @@
 "use server";
 
-import { auth } from "@/auth";
+import { requireAuth } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { sendBookingCancellation } from "@/lib/email";
 
 export async function cancelBooking(formData: FormData) {
-  const session = await auth();
-  if (!session?.user) {
-    throw new Error("You must be logged in to cancel a session.");
-  }
-
-  let userId = session.user.id;
-  if (!userId && session.user.email) {
-    const dbUser = await prisma.user.findUnique({
-      where: { email: session.user.email },
-      select: { id: true },
-    });
-    if (dbUser) userId = dbUser.id;
-  }
-
-  if (!userId) {
-    throw new Error("You must be logged in to cancel a session.");
-  }
+  const user = await requireAuth();
 
   const bookingId = formData.get("bookingId") as string;
   const cancelReason = (formData.get("cancelReason") as string) || "No reason specified";
@@ -44,9 +28,9 @@ export async function cancelBooking(formData: FormData) {
   }
 
   // User must be the student, the tutor, or an admin
-  const isStudent = booking.studentId === userId;
-  const isTutor = booking.tutor.userId === userId;
-  const isAdmin = session.user.role === "ADMIN";
+  const isStudent = booking.studentId === user.id;
+  const isTutor = booking.tutor.userId === user.id;
+  const isAdmin = user.isAdmin;
 
   if (!isStudent && !isTutor && !isAdmin) {
     throw new Error("You do not have permission to cancel this booking.");
@@ -86,23 +70,7 @@ export async function cancelBooking(formData: FormData) {
 }
 
 export async function completeSession(formData: FormData) {
-  const session = await auth();
-  if (!session?.user) {
-    throw new Error("You must be logged in to complete a session.");
-  }
-
-  let userId = session.user.id;
-  if (!userId && session.user.email) {
-    const dbUser = await prisma.user.findUnique({
-      where: { email: session.user.email },
-      select: { id: true },
-    });
-    if (dbUser) userId = dbUser.id;
-  }
-
-  if (!userId) {
-    throw new Error("You must be logged in to complete a session.");
-  }
+  const user = await requireAuth();
 
   const bookingId = formData.get("bookingId") as string;
 
@@ -122,8 +90,8 @@ export async function completeSession(formData: FormData) {
   }
 
   // Must be the tutor or an admin
-  const isTutor = booking.tutor.userId === userId;
-  const isAdmin = session.user.role === "ADMIN";
+  const isTutor = booking.tutor.userId === user.id;
+  const isAdmin = user.isAdmin;
 
   if (!isTutor && !isAdmin) {
     throw new Error("Only the tutor or an admin can mark a session as completed.");
@@ -156,10 +124,7 @@ export async function completeSession(formData: FormData) {
 }
 
 export async function submitReview(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    throw new Error("You must be logged in to leave a review.");
-  }
+  const user = await requireAuth();
 
   const bookingId = formData.get("bookingId") as string;
   const ratingStr = formData.get("rating") as string;
@@ -178,7 +143,7 @@ export async function submitReview(formData: FormData) {
     where: { id: bookingId },
   });
 
-  if (!booking || booking.studentId !== session.user.id) {
+  if (!booking || booking.studentId !== user.id) {
     throw new Error("You can only review sessions you attended.");
   }
 
@@ -197,7 +162,7 @@ export async function submitReview(formData: FormData) {
       data: {
         bookingId,
         tutorId: booking.tutorId,
-        studentId: session.user.id,
+        studentId: user.id,
         rating,
         comment,
       },

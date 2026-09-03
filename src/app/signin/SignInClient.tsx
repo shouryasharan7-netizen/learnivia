@@ -16,8 +16,12 @@ const GoogleIcon = () => (
   </svg>
 );
 
-function SignInClientInner() {
-  const [isRegister, setIsRegister] = useState(false);
+interface SignInClientProps {
+  initialIsRegister?: boolean;
+}
+
+function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
+  const [isRegister, setIsRegister] = useState(initialIsRegister);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
@@ -51,11 +55,10 @@ function SignInClientInner() {
 
   return (
     <main className={styles.main}>
-
       <div className={styles.container}>
         <Image src="/images/logo.png" alt="Learnivia" width={52} height={52} className={styles.logoImg} />
         <h1 className={styles.title}>{isRegister ? "Create your account" : "Sign in to Learnivia"}</h1>
-        <p className={styles.lead}>Free peer-to-peer tutoring, for everyone.</p>
+        <p className={styles.lead}>Free peer-to-peer tutoring and learning for all students.</p>
 
         <div className={styles.card}>
           {/* Google Sign In */}
@@ -79,6 +82,20 @@ function SignInClientInner() {
               </div>
             )}
 
+            {isRegister && (
+              <div className={styles.inputGroup}>
+                <label htmlFor="name">Full Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="e.g. Maya Lin"
+                  required={isRegister}
+                  autoComplete="name"
+                />
+              </div>
+            )}
+
             <div className={styles.inputGroup}>
               <label htmlFor="email">Email address</label>
               <input
@@ -97,22 +114,29 @@ function SignInClientInner() {
                 id="password"
                 type="password"
                 name="password"
-                placeholder={isRegister ? "Choose a strong password" : "Your password"}
+                placeholder={isRegister ? "Minimum 8 characters" : "Your password"}
                 required
                 autoComplete={isRegister ? "new-password" : "current-password"}
-                minLength={isRegister ? 8 : undefined}
+                minLength={8}
               />
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading} aria-busy={loading}>
-              {loading ? "Please wait…" : (isRegister ? "Create account" : "Sign in")}
+              {loading ? "Please wait…" : (isRegister ? "Create Free Account" : "Sign In")}
             </button>
           </form>
 
           <div className={styles.footerLinks}>
             <p className={styles.toggleText}>
               {isRegister ? "Already have an account?" : "New to Learnivia?"}
-              <button className={styles.toggleBtn} type="button" onClick={() => { setIsRegister(!isRegister); setError(""); }}>
+              <button
+                className={styles.toggleBtn}
+                type="button"
+                onClick={() => {
+                  setIsRegister(!isRegister);
+                  setError("");
+                }}
+              >
                 {isRegister ? "Sign in" : "Create a free account"}
               </button>
             </p>
@@ -129,10 +153,10 @@ function SignInClientInner() {
   );
 }
 
-export default function SignInClient() {
+export default function SignInClient({ initialIsRegister = false }: SignInClientProps) {
   return (
     <Suspense>
-      <SignInClientInner />
+      <SignInClientInner initialIsRegister={initialIsRegister} />
     </Suspense>
   );
 }

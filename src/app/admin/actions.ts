@@ -1,15 +1,12 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/auth-user";
 import { sendApplicationApproved } from "@/lib/email";
 import { revalidatePath } from "next/cache";
 
 export async function approveApplication(tutorId: string) {
-  const session = await auth();
-  if (session?.user?.role !== "ADMIN") {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin();
 
   const profile = await prisma.tutorProfile.update({
     where: { id: tutorId },
@@ -33,10 +30,7 @@ export async function approveApplication(tutorId: string) {
 }
 
 export async function rejectApplication(tutorId: string) {
-  const session = await auth();
-  if (session?.user?.role !== "ADMIN") {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin();
 
   await prisma.tutorProfile.update({
     where: { id: tutorId },
@@ -48,10 +42,7 @@ export async function rejectApplication(tutorId: string) {
 }
 
 export async function suspendTutor(tutorId: string) {
-  const session = await auth();
-  if (session?.user?.role !== "ADMIN") {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin();
 
   await prisma.tutorProfile.update({
     where: { id: tutorId },
@@ -62,10 +53,7 @@ export async function suspendTutor(tutorId: string) {
 }
 
 export async function reactivateTutor(tutorId: string) {
-  const session = await auth();
-  if (session?.user?.role !== "ADMIN") {
-    throw new Error("Unauthorized");
-  }
+  await requireAdmin();
 
   await prisma.tutorProfile.update({
     where: { id: tutorId },

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/lib/auth-user";
 import { getMessages, addMessage, toggleReaction } from "@/lib/community-store";
 
 export async function GET(request: Request) {
@@ -10,9 +10,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const session = await auth();
+  const user = await getCurrentUser();
 
-  if (!session?.user) {
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized. Please sign in to post in the community." }, { status: 401 });
   }
 
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Message content cannot be empty." }, { status: 400 });
   }
 
-  const userName = session.user.name || "Community Member";
+  const userName = user.name || "Community Member";
   const initials = userName
     .split(" ")
     .map((n) => n[0])
@@ -31,14 +31,14 @@ export async function POST(request: Request) {
     .join("")
     .toUpperCase();
 
-  const userRole = session.user.role === "TUTOR" ? "TUTOR" : session.user.role === "ADMIN" ? "COMMUNITY LEAD" : "STUDENT";
+  const userRole = user.isAdmin ? "COMMUNITY LEAD" : user.isTutor ? "TUTOR" : "STUDENT";
   const colors = ["#0E8345", "#7C3AED", "#2563EB", "#D97706", "#DC2626", "#0D9488"];
   const color = colors[userName.charCodeAt(0) % colors.length];
 
   const newMsg = addMessage({
     channel: channel || "Random",
     authorName: userName,
-    authorEmail: session.user.email || "",
+    authorEmail: user.email || "",
     authorRole: userRole,
     authorInitials: initials,
     authorColor: color,

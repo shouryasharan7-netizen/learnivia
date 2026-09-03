@@ -1,9 +1,11 @@
 import styles from "./page.module.css";
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { cancelBooking } from "@/app/actions/sessions";
 import { cancelWorkshopEnrollment } from "@/app/actions/workshops";
+import { getMeetingUrls } from "@/lib/meetingUrl";
+import { FormattedDateTime } from "@/components/FormattedDateTime";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -65,9 +67,9 @@ const FAST_CARDS = [
 ];
 
 export default async function StudentDashboard() {
-  const session = await auth();
+  const user = await getCurrentUser();
 
-  if (!session?.user?.id) {
+  if (!user) {
     return (
       <main className={styles.main}>
         <div className={styles.unauthCard}>
@@ -82,7 +84,7 @@ export default async function StudentDashboard() {
   const [upcomingBookings, completedBookings, enrolledWorkshops, tutorProfile] = await Promise.all([
     prisma.booking.findMany({
       where: { 
-        studentId: session.user.id,
+        studentId: user.id,
         status: "CONFIRMED"
       },
       include: {
@@ -92,7 +94,7 @@ export default async function StudentDashboard() {
     }),
     prisma.booking.findMany({
       where: { 
-        studentId: session.user.id,
+        studentId: user.id,
         status: "COMPLETED"
       },
       include: {
@@ -102,7 +104,7 @@ export default async function StudentDashboard() {
       take: 5,
     }),
     prisma.workshopEnrollment.findMany({
-      where: { studentId: session.user.id },
+      where: { studentId: user.id },
       include: {
         workshop: {
           include: {
@@ -113,16 +115,16 @@ export default async function StudentDashboard() {
       orderBy: { createdAt: "desc" },
     }),
     prisma.tutorProfile.findUnique({
-      where: { userId: session.user.id },
+      where: { userId: user.id },
     }),
   ]);
 
-  const userRole = session.user.role || "STUDENT";
-  const isTutor = userRole === "TUTOR" || userRole === "ADMIN" || tutorProfile?.status === "APPROVED";
+  const isTutor = user.isTutor;
+  const userRole = user.role;
 
-  const userName = session.user.name || "Learner";
-  const userInitials = session.user.name
-    ? session.user.name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
+  const userName = user.name || "Learner";
+  const userInitials = user.name
+    ? user.name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
     : "U";
 
   return (
@@ -289,55 +291,59 @@ export default async function StudentDashboard() {
             ) : (
               <div className={styles.sessionsList}>
                 {/* 1-on-1 bookings */}
-                {upcomingBookings.map((b) => (
-                  <div key={b.id} className={styles.bookingCard}>
-                    <div className={styles.bookingDetails}>
-                      <span className={styles.sessionTypeBadge}>1-on-1 Tutoring</span>
-                      <h3 className={styles.bookingTitle}>{b.subject} with {b.tutor.user.name}</h3>
-                      <p className={styles.bookingTime}>
-                        📅 {new Date(b.startTime).toLocaleDateString()} at{" "}
-                        {new Date(b.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </p>
-                      {b.topic && <p className={styles.bookingTopic}>Topic: {b.topic}</p>}
-                    </div>
+                {upcomingBookings.map((b) => {
+                  const { joinUrl } = getMeetingUrls(b.zoomLink);
+                  return (
+                    <div key={b.id} className={styles.bookingCard}>
+                      <div className={styles.bookingDetails}>
+                        <span className={styles.sessionTypeBadge}>1-on-1 Tutoring</span>
+                        <h3 className={styles.bookingTitle}>{b.subject} with {b.tutor.user.name}</h3>
+                        <p className={styles.bookingTime}>
+                          <FormattedDateTime date={b.startTime} />
+                        </p>
+                        {b.topic && <p className={styles.bookingTopic}>Topic: {b.topic}</p>}
+                      </div>
 
-                    <div className={styles.bookingActions}>
-                      <a href={b.zoomLink || "#"} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
-                        🎥 Join Zoom
-                      </a>
-                      <form action={cancelBooking}>
-                        <input type="hidden" name="bookingId" value={b.id} />
-                        <button type="submit" className={styles.cancelLink}>Cancel</button>
-                      </form>
-                    </div>
-                  </div>
-                ))}
-
-                {/* Enrolled workshops */}
-                {enrolledWorkshops.map((e) => (
-                  <div key={e.id} className={styles.bookingCard}>
-                    <div className={styles.bookingDetails}>
-                      <span className={styles.workshopBadge}>Group Workshop</span>
-                      <h3 className={styles.bookingTitle}>{e.workshop.title}</h3>
-                      <p className={styles.bookingTime}>
-                        Host: {e.workshop.tutor.user.name} • 📅 {new Date(e.workshop.startTime).toLocaleDateString()} at{" "}
-                        {new Date(e.workshop.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </p>
-                    </div>
-
-                    <div className={styles.bookingActions}>
-                      {e.workshop.zoomLink && (
-                        <a href={e.workshop.zoomLink} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
+                      <div className={styles.bookingActions}>
+                        <a href={joinUrl || "#"} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
                           🎥 Join Zoom
                         </a>
-                      )}
-                      <form action={cancelWorkshopEnrollment}>
-                        <input type="hidden" name="workshopId" value={e.workshop.id} />
-                        <button type="submit" className={styles.cancelLink}>Leave</button>
-                      </form>
+                        <form action={cancelBooking}>
+                          <input type="hidden" name="bookingId" value={b.id} />
+                          <button type="submit" className={styles.cancelLink}>Cancel</button>
+                        </form>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
+
+                {/* Enrolled workshops */}
+                {enrolledWorkshops.map((e) => {
+                  const { joinUrl } = getMeetingUrls(e.workshop.zoomLink);
+                  return (
+                    <div key={e.id} className={styles.bookingCard}>
+                      <div className={styles.bookingDetails}>
+                        <span className={styles.workshopBadge}>Group Workshop</span>
+                        <h3 className={styles.bookingTitle}>{e.workshop.title}</h3>
+                        <p className={styles.bookingTime}>
+                          Host: {e.workshop.tutor.user.name} • <FormattedDateTime date={e.workshop.startTime} />
+                        </p>
+                      </div>
+
+                      <div className={styles.bookingActions}>
+                        {joinUrl && (
+                          <a href={joinUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
+                            🎥 Join Zoom
+                          </a>
+                        )}
+                        <form action={cancelWorkshopEnrollment}>
+                          <input type="hidden" name="workshopId" value={e.workshop.id} />
+                          <button type="submit" className={styles.cancelLink}>Leave</button>
+                        </form>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
 

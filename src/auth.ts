@@ -18,19 +18,54 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null
+        if (!credentials?.email || !credentials?.password) return null;
         
+        const email = (credentials.email as string).trim().toLowerCase();
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string }
-        })
+          where: { email },
+          include: { tutorProfile: true },
+        });
 
-        if (!user || !user.password) return null
+        if (!user || !user.password) return null;
 
-        const isValid = await bcrypt.compare(credentials.password as string, user.password)
-        if (!isValid) return null
+        const isValid = await bcrypt.compare(credentials.password as string, user.password);
+        if (!isValid) return null;
 
-        return user
+        // Auto-elevate designated admin if needed
+        const isAdminEmail =
+          email === "shouryasharan7@gmail.com" ||
+          (process.env.ADMIN_EMAILS?.split(",").map((e) => e.trim().toLowerCase()).includes(email) ?? false);
+
+        if (isAdminEmail && user.role !== "ADMIN") {
+          return await prisma.user.update({
+            where: { id: user.id },
+            data: { role: "ADMIN" },
+          });
+        }
+
+        return user;
+      },
+    }),
+  ],
+  events: {
+    async signIn({ user }) {
+      if (user.email) {
+        const normalizedEmail = user.email.trim().toLowerCase();
+        const isAdminEmail =
+          normalizedEmail === "shouryasharan7@gmail.com" ||
+          (process.env.ADMIN_EMAILS?.split(",").map((e) => e.trim().toLowerCase()).includes(normalizedEmail) ?? false);
+
+        if (isAdminEmail) {
+          try {
+            await prisma.user.updateMany({
+              where: { email: normalizedEmail },
+              data: { role: "ADMIN" },
+            });
+          } catch (e) {
+            console.error("Failed to elevate admin role on sign in:", e);
+          }
+        }
       }
-    })
-  ]
-})
+    },
+  },
+});

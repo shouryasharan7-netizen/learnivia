@@ -1,7 +1,8 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM_EMAIL = "Learnivia <onboarding@resend.dev>"; // Use resend test domain for now, upgrade to custom domain later
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
+const FROM_EMAIL = process.env.FROM_EMAIL || "Learnivia <onboarding@resend.dev>";
 
 export async function sendBookingConfirmation(
   studentEmail: string,
@@ -14,6 +15,11 @@ export async function sendBookingConfirmation(
     zoomLink: string;
   }
 ) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping booking confirmation email.");
+    return;
+  }
+
   const date = new Date(details.startTime).toLocaleString("en-GB", {
     weekday: "long",
     month: "long",
@@ -58,6 +64,10 @@ export async function sendBookingConfirmation(
 }
 
 export async function sendApplicationReceived(tutorEmail: string, tutorName: string) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping application received email.");
+    return;
+  }
   try {
     await resend.emails.send({
       from: FROM_EMAIL,
@@ -77,6 +87,10 @@ export async function sendApplicationReceived(tutorEmail: string, tutorName: str
 }
 
 export async function sendApplicationApproved(tutorEmail: string, tutorName: string) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping application approved email.");
+    return;
+  }
   try {
     await resend.emails.send({
       from: FROM_EMAIL,
@@ -106,6 +120,10 @@ export async function sendBookingCancellation(
     reason?: string;
   }
 ) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping booking cancellation email.");
+    return;
+  }
   const date = new Date(details.startTime).toLocaleString("en-GB", {
     weekday: "long",
     month: "long",

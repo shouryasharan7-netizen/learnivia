@@ -1,6 +1,11 @@
 import type { NextAuthConfig } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 
+const ADMIN_EMAILS = new Set([
+  "shouryasharan7@gmail.com",
+  ...(process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase()) : []),
+]);
+
 export const authConfig = {
   pages: {
     signIn: "/signin",
@@ -25,9 +30,18 @@ export const authConfig = {
 
       if (user) {
         token.id = (user.id || token.id || token.sub) as string;
-        token.role = user.role || "STUDENT";
+        const normalizedEmail = (user.email || token.email || "").trim().toLowerCase();
+        if (normalizedEmail) token.email = normalizedEmail;
+
+        const isUserAdmin = normalizedEmail ? ADMIN_EMAILS.has(normalizedEmail) : false;
+        token.role = isUserAdmin ? "ADMIN" : (user.role || token.role || "STUDENT");
         token.onboardingCompleted = user.onboardingCompleted ?? true;
         token.timezone = user.timezone ?? null;
+      }
+
+      // If token has an admin email, ensure role is always ADMIN
+      if (token.email && ADMIN_EMAILS.has((token.email as string).trim().toLowerCase())) {
+        token.role = "ADMIN";
       }
 
       // Guarantee token.id is never empty
@@ -43,6 +57,9 @@ export const authConfig = {
         session.user.role = (token.role as "STUDENT" | "TUTOR" | "ADMIN") || "STUDENT";
         session.user.onboardingCompleted = Boolean(token.onboardingCompleted);
         session.user.timezone = (token.timezone as string | null) || null;
+        if (token.email) {
+          session.user.email = token.email as string;
+        }
       }
       return session;
     },

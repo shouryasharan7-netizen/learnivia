@@ -1,11 +1,13 @@
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/auth-user";
 import { revalidatePath } from "next/cache";
 
 async function togglePublishStory(id: string, currentStatus: boolean) {
   "use server";
+  await requireAdmin();
   await prisma.story.update({
     where: { id },
-    data: { isPublished: !currentStatus }
+    data: { isPublished: !currentStatus },
   });
   revalidatePath("/admin/stories");
 }
