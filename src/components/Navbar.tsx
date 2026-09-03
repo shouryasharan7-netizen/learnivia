@@ -12,29 +12,45 @@ const megaMenuPrograms = [
     title: "SAT Tutoring",
     description: "Practice and improve your SAT skills with peer-led tutoring.",
     href: "/sessions?subject=SAT+Prep",
-    icon: "🎯",
-    badge: "Most Popular",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+      </svg>
+    ),
+    badge: "Bootcamps",
   },
   {
     title: "College Admissions",
-    description: "Get help preparing your college application.",
-    href: "/learn/writing-essays",
-    icon: "🎓",
+    description: "Get help preparing your college applications & personal essays.",
+    href: "/sessions?subject=College+Admissions",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+    ),
     badge: "Mentorship",
   },
   {
-    title: "Workshops",
-    description: "Join interactive workshops and learn new skills.",
+    title: "Live Workshops",
+    description: "Join interactive study sessions in calculus, physics & literature.",
     href: "/sessions",
-    icon: "💡",
-    badge: "Live Group",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>
+      </svg>
+    ),
+    badge: "Small Group",
   },
   {
-    title: "Peer Tutoring",
-    description: "Learn directly from other students in a collaborative environment.",
+    title: "1-on-1 Peer Tutoring",
+    description: "Meet directly with a verified volunteer tutor for personal help.",
     href: "/find",
-    icon: "🤝",
-    badge: "1-on-1 Free",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    ),
+    badge: "100% Free",
   },
 ];
 

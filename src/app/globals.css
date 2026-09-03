@@ -1,61 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
-
 /* =========================================
-   LEARNIVIA × SCHOOLHOUSE DESIGN TOKENS
+   LEARNIVIA SCHOLASTIC & EDITORIAL DESIGN SYSTEM
    ========================================= */
 
 :root {
-  /* --- Brand: Schoolhouse Mint Green --- */
-  --sh-green: #0E8345;
-  --sh-green-hover: #0B6635;
-  --sh-green-light: #E6F4EA;
-  --sh-green-mid: #34A85A;
-  --sh-green-muted: #D4EDDA;
+  /* --- Brand: Oxford Forest Green --- */
+  --sh-green: #0D683B;
+  --sh-green-hover: #094F2B;
+  --sh-green-light: #F0FDF4;
+  --sh-green-mid: #15803D;
+  --sh-green-muted: #DCFCE7;
 
-  /* --- App Background & Surfaces --- */
-  --sh-bg: #F8FAFC;
+  /* --- App Background & Surfaces (Warm Paper/Parchment) --- */
+  --sh-bg: #FBF9F4;
   --sh-surface: #FFFFFF;
-  --sh-surface-2: #F4F6F8;
-  --sh-border: #E2E8F0;
-  --sh-border-strong: #CBD5E1;
+  --sh-surface-2: #F5F1E8;
+  --sh-border: #E8E3D9;
+  --sh-border-strong: #D5CEC2;
 
-  /* --- Text --- */
-  --sh-navy: #1A1F2E;
-  --sh-text: #374151;
-  --sh-text-muted: #6B7280;
-  --sh-text-light: #9CA3AF;
+  /* --- Typography Colors --- */
+  --sh-navy: #0F172A;
+  --sh-text: #334155;
+  --sh-text-muted: #64748B;
+  --sh-text-light: #94A3B8;
 
-  /* --- Navbar (Dark) --- */
-  --sh-nav-bg: #1A1F2E;
-  --sh-nav-text: #F9FAFB;
-  --sh-nav-muted: #9CA3AF;
+  /* --- Navbar --- */
+  --sh-nav-bg: #0F172A;
+  --sh-nav-text: #F8FAFC;
+  --sh-nav-muted: #94A3B8;
 
   /* --- Notice Banner --- */
-  --sh-notice-bg: #FFE600;
-  --sh-notice-text: #1A1F2E;
-  --sh-notice-link: #0E8345;
+  --sh-notice-bg: #FEF3C7;
+  --sh-notice-text: #78350F;
+  --sh-notice-link: #0D683B;
 
-  /* --- Hero (Mint gradient background) --- */
-  --sh-hero-bg: #B2EEDF;
-  --sh-hero-pattern: #A8E6D8;
+  /* --- Hero Background --- */
+  --sh-hero-bg: #FBF9F4;
+  --sh-hero-pattern: #F5F1E8;
 
-  /* --- Program badge colors --- */
-  --sh-purple: #7C3AED;
-  --sh-blue: #2563EB;
-  --sh-amber: #D97706;
-  --sh-teal: #0D9488;
-  --sh-indigo: #4F46E5;
+  /* --- Program Badge Accents --- */
+  --sh-purple: #6D28D9;
+  --sh-blue: #1D4ED8;
+  --sh-amber: #B45309;
+  --sh-teal: #0F766E;
+  --sh-indigo: #4338CA;
 
   /* --- Sidebar Dock --- */
   --sh-dock-width: 64px;
   --sh-sidebar-width: 220px;
   --sh-dock-bg: #FFFFFF;
-  --sh-dock-active-bg: #E6F4EA;
-  --sh-dock-active-text: #0E8345;
-  --sh-dock-text: #6B7280;
+  --sh-dock-active-bg: #F0FDF4;
+  --sh-dock-active-text: #0D683B;
+  --sh-dock-text: #64748B;
 
-  /* --- Typography --- */
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* --- Typography Families --- */
+  --font-sans: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: var(--font-serif), 'Newsreader', 'Georgia', serif;
+  --font-body: var(--font-sans);
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;

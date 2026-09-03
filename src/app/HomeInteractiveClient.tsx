@@ -6,169 +6,259 @@ import Image from "next/image";
 import LogoSplash from "@/components/LogoSplash";
 import styles from "./page.module.css";
 
-// Programs data for the Interactive Tablet Mockup (Image 2)
-const TABLET_PROGRAMS = [
+// Crisp SVG Icons (Replacing all raw emojis)
+const Icons = {
+  ArrowRight: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    </svg>
+  ),
+  CheckCircle: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+  ),
+  Clock: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </svg>
+  ),
+  Calendar: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+  ),
+  Users: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+  ),
+  ShieldCheck: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+    </svg>
+  ),
+  Certificate: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+    </svg>
+  ),
+  Video: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+    </svg>
+  ),
+  Math: () => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="4" y1="12" x2="20" y2="12"/><line x1="12" y1="4" x2="12" y2="20"/>
+    </svg>
+  ),
+  Science: () => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 3v6l-5 9a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-5-9V3"/><line x1="9" y1="3" x2="15" y2="3"/>
+    </svg>
+  ),
+  Code: () => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+    </svg>
+  ),
+  Book: () => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </svg>
+  ),
+  Globe: () => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
+  ),
+  Target: () => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+    </svg>
+  ),
+};
+
+const PROGRAMS = [
   {
     id: "sat",
-    tabTitle: "SAT Bootcamp",
-    tabBadge: "SAT",
-    tabDesc: "A four-week bootcamp to prepare for the upcoming SAT",
-    tabColor: "#8B5CF6",
-    tabBg: "#F5F3FF",
-    tabBorder: "#DDD6FE",
-    tabIcon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 3v18h18"/>
-        <path d="m19 9-5 5-4-4-3 3"/>
-      </svg>
-    ),
-    headline: "peer to peer Sat tutoring",
-    subheadline: "Find the program that works best with your busy schedule. Our tutors are here to help!",
-    ctaText: "Join Bootcamp",
-    ctaLink: "/sessions?subject=SAT+Prep",
-    contentTitle: "SAT Bootcamp",
-    contentSubtitle: "Programs offered daily. Choose the time that works best for you.",
+    badge: "SAT® Bootcamps",
+    title: "Master the Digital SAT with top-percentile scorers",
+    description: "Intensive 4-week cohort bootcamps working through real College Board questions, pacing tactics, and hard math modules.",
     sessions: [
       {
-        id: "sat-math",
-        title: "SAT® Math Bootcamp",
-        description: "In interactive sessions with your tutor and other students, you'll complete multiple SAT Math practice tests and work through problems from previous SATs.",
-        duration: "4 weeks",
-        frequency: "2 times / week",
-        sessionLength: "75 mins",
-        icon: "📈",
-        link: "/sessions?subject=SAT+Math",
+        id: "sat-m",
+        subject: "SAT® Math Intensive",
+        mentor: "Alex Chen • Stanford '28 (1580 SAT)",
+        duration: "4 Weeks",
+        schedule: "Tues & Thurs • 6:00 PM EST",
+        seats: "4 seats left",
+        tags: ["Advanced Algebra", "Desmos Strategies", "Practice Exams"],
+        href: "/sessions?subject=SAT+Prep",
       },
       {
         id: "sat-rw",
-        title: "SAT® Reading & Writing Bootcamp",
-        description: "In interactive sessions with your tutor and other students, you'll complete multiple SAT Reading & Writing practice tests and work through problems from previous SATs.",
-        duration: "4 weeks",
-        frequency: "2 times / week",
-        sessionLength: "75 mins",
-        icon: "📝",
-        link: "/sessions?subject=SAT+Reading",
+        subject: "Reading & Writing Strategy",
+        mentor: "Elena Rostova • Harvard '27 (790 RW)",
+        duration: "4 Weeks",
+        schedule: "Mon & Weds • 5:30 PM EST",
+        seats: "2 seats left",
+        tags: ["Evidence Inference", "Grammar Rules", "Rhetorical Synthesis"],
+        href: "/sessions?subject=SAT+Prep",
       },
     ],
   },
   {
     id: "college",
-    tabTitle: "College Admissions Workshops",
-    tabBadge: "CAW",
-    tabDesc: "Navigate your college prep journey with confidence",
-    tabColor: "#3B82F6",
-    tabBg: "#EFF6FF",
-    tabBorder: "#BFDBFE",
-    tabIcon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-        <polyline points="10 9 9 9 8 9"/>
-      </svg>
-    ),
-    headline: "college prep with top mentors",
-    subheadline: "Get advice directly from students at Harvard, MIT, Stanford, Oxford, and more.",
-    ctaText: "Explore Workshops",
-    ctaLink: "/sessions?subject=College+Admissions",
-    contentTitle: "College Admissions Workshops",
-    contentSubtitle: "Interactive masterclasses covering personal statements, essays, and interviews.",
+    badge: "College Admissions",
+    title: "Honest, student-to-student guidance for higher ed",
+    description: "Get real feedback on personal essays, extracurricular narratives, and interview prep from students who recently went through the process.",
     sessions: [
       {
         id: "caw-essay",
-        title: "Common App & Personal Essay Masterclass",
-        description: "Brainstorm high-impact topics, outline powerful narratives, and receive live line-by-line feedback from university students.",
-        duration: "3 weeks",
-        frequency: "1 time / week",
-        sessionLength: "90 mins",
-        icon: "✍️",
-        link: "/sessions?subject=College+Admissions",
+        subject: "Common App Essay Workshop",
+        mentor: "Maya Lin • Yale '28",
+        duration: "3 Weeks",
+        schedule: "Saturdays • 2:00 PM EST",
+        seats: "3 seats left",
+        tags: ["Brainstorming", "Line-by-Line Edits", "Hook & Structure"],
+        href: "/sessions?subject=College+Admissions",
       },
       {
         id: "caw-interview",
-        title: "Alumni Interview & Strategy Bootcamp",
-        description: "Mock interviews, answering tricky behavioral questions, and building a cohesive extracurricular application spike.",
-        duration: "2 weeks",
-        frequency: "2 times / week",
-        sessionLength: "60 mins",
-        icon: "🎓",
-        link: "/sessions?subject=College+Admissions",
+        subject: "Alumni Mock Interviews & Spike Strategy",
+        mentor: "David Kim • MIT '27",
+        duration: "2 Weeks",
+        schedule: "Sundays • 4:00 PM EST",
+        seats: "5 seats left",
+        tags: ["Mock Practice", "Extracurricular Spike", "Supplements"],
+        href: "/sessions?subject=College+Admissions",
+      },
+    ],
+  },
+  {
+    id: "stem",
+    badge: "AP & STEM Mastery",
+    title: "Conquer Calculus, Chemistry, and Computer Science",
+    description: "Collaborative problem sets and conceptual breakdowns with students who scored 5s on their AP exams.",
+    sessions: [
+      {
+        id: "ap-calc",
+        subject: "AP Calculus BC Problem Solving",
+        mentor: "Priya Nair • Princeton '27 (5 on AP BC)",
+        duration: "Ongoing",
+        schedule: "Fridays • 7:00 PM EST",
+        seats: "6 seats left",
+        tags: ["Integration By Parts", "Series Convergence", "FRQ Practice"],
+        href: "/sessions?subject=Calculus",
+      },
+      {
+        id: "ap-chem",
+        subject: "AP Chemistry Conceptual Clinic",
+        mentor: "Lucas Vance • Columbia '28 (5 on AP Chem)",
+        duration: "Ongoing",
+        schedule: "Thursdays • 6:30 PM EST",
+        seats: "4 seats left",
+        tags: ["Thermodynamics", "Equilibrium", "Rate Laws"],
+        href: "/sessions?subject=Chemistry",
       },
     ],
   },
   {
     id: "dialogues",
-    tabTitle: "Dialogues",
-    tabBadge: "Dialogues",
-    tabDesc: "Join 1-on-1 conversations with students from across the globe",
-    tabColor: "#F59E0B",
-    tabBg: "#FFFBEB",
-    tabBorder: "#FDE68A",
-    tabIcon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="2" y1="12" x2="22" y2="12"/>
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      </svg>
-    ),
-    headline: "global student dialogues",
-    subheadline: "Practice conversational fluency, exchange cultural perspectives, and discuss big ideas.",
-    ctaText: "Join a Dialogue",
-    ctaLink: "/sessions?subject=Dialogues",
-    contentTitle: "Global Dialogues & Roundtables",
-    contentSubtitle: "Small-group guided discussions on philosophy, science, and global issues.",
+    badge: "Global Dialogues",
+    title: "Thoughtful discussions on philosophy and current issues",
+    description: "Connect 1-on-1 and in roundtables with high school peers across 30+ countries to practice civil discourse and cross-cultural communication.",
     sessions: [
       {
-        id: "dlg-global",
-        title: "Cross-Cultural Perspectives & Current Events",
-        description: "Explore diverse viewpoints on technology, climate solutions, and history with high school peers worldwide.",
-        duration: "Ongoing",
-        frequency: "Weekly",
-        sessionLength: "45 mins",
-        icon: "🌐",
-        link: "/sessions?subject=Dialogues",
-      },
-      {
-        id: "dlg-philosophy",
-        title: "Ethics, Science & AI Roundtable",
-        description: "Engage in friendly debates, philosophical thought experiments, and collaborative problem-solving.",
-        duration: "Ongoing",
-        frequency: "Bi-weekly",
-        sessionLength: "60 mins",
-        icon: "💡",
-        link: "/sessions?subject=Dialogues",
+        id: "dlg-ethics",
+        subject: "AI, Technology & Modern Ethics",
+        mentor: "Sophia Moreno • Oxford '27",
+        duration: "Bi-weekly",
+        schedule: "Saturdays • 11:00 AM EST",
+        seats: "Open",
+        tags: ["Philosophy", "Debate", "Global Perspectives"],
+        href: "/sessions?subject=Dialogues",
       },
     ],
   },
 ];
 
-// Interactive Subject matcher
-const POPULAR_SUBJECTS = [
-  { id: "sat", name: "SAT® Prep", count: 42, icon: "🎯", color: "#8B5CF6" },
-  { id: "math", name: "Calculus & Algebra", count: 68, icon: "📐", color: "#2563EB" },
-  { id: "chem", name: "Chemistry & AP Bio", count: 34, icon: "🔬", color: "#059669" },
-  { id: "cs", name: "Computer Science (Python / Java)", count: 29, icon: "💻", color: "#D97706" },
-  { id: "history", name: "AP World & US History", count: 18, icon: "📜", color: "#7C3AED" },
-  { id: "languages", name: "Spanish & French", count: 22, icon: "🗣️", color: "#DC2626" },
+const HOW_IT_WORKS_STEPS = [
+  {
+    step: "01",
+    title: "Browse & Find Help",
+    desc: "Search by subject, level, or upcoming test date. All peer tutors are reviewed and identity-verified.",
+    img: "/images/find-a-tutor.png",
+  },
+  {
+    step: "02",
+    title: "Book a Free Slot",
+    desc: "Pick a time that fits your life. No credit cards, no subscriptions, and zero paywalls.",
+    img: "/images/book-a-session.png",
+  },
+  {
+    step: "03",
+    title: "Meet Live on Zoom",
+    desc: "Jump into a private, small-group or 1-on-1 Zoom room. Share work, talk through problems, and take notes.",
+    img: "/images/join-zoom.png",
+  },
+  {
+    step: "04",
+    title: "Master & Give Back",
+    desc: "Students build real academic confidence; tutors log verified volunteer hours for college apps.",
+    img: "/images/session-complete.png",
+  },
+];
+
+const SUBJECTS = [
+  { name: "SAT® Prep", desc: "Digital SAT math & verbal cohorts", icon: Icons.Target, color: "#6D28D9", bg: "#F5F3FF" },
+  { name: "Calculus & Algebra", desc: "From Algebra I to Multivariable", icon: Icons.Math, color: "#0D683B", bg: "#F0FDF4" },
+  { name: "Chemistry & AP Bio", desc: "Lab concepts, kinetics, organic basics", icon: Icons.Science, color: "#1D4ED8", bg: "#EFF6FF" },
+  { name: "Computer Science", desc: "Python, Java, AP CSA, and web logic", icon: Icons.Code, color: "#B45309", bg: "#FFFBEB" },
+  { name: "College Admissions", desc: "Personal statements & mock interviews", icon: Icons.Book, color: "#0F766E", bg: "#F0FDFA" },
+  { name: "Global Dialogues", desc: "Philosophy, debate & world topics", icon: Icons.Globe, color: "#4338CA", bg: "#EEF2FF" },
+];
+
+const TESTIMONIALS = [
+  {
+    quote: "My tutor Elena broke down digital SAT reading inferences in three sessions better than any prep book I bought. She went through questions step-by-step without making me feel rushed.",
+    author: "Sarah M.",
+    role: "High School Junior • 1510 SAT (+140 pts)",
+  },
+  {
+    quote: "Tutoring AP Calculus on Learnivia gave me 42 certified service hours that counted directly toward my NHS requirements. Being able to download an auditable transcript made college submission seamless.",
+    author: "Jason K.",
+    role: "Volunteer Tutor • Princeton '28",
+  },
+  {
+    quote: "Finding a free platform where high schoolers can get quality homework help from college students without any hidden fees or credit cards is incredible.",
+    author: "David R.",
+    role: "Parent of 10th Grader",
+  },
 ];
 
 const FAQS = [
   {
     q: "Is Learnivia really 100% free?",
-    a: "Yes! Learnivia is completely free for all learners and tutors. There are no subscriptions, hidden paywalls, or credit card requirements. We believe high-quality peer learning should be accessible to every student everywhere.",
+    a: "Yes, completely. There are no trial periods, no premium tiers, and no credit card required. Learnivia operates on an open peer-volunteering model where students help students, earning certified community service hours in return.",
   },
   {
-    q: "Who are the volunteer tutors?",
-    a: "Our tutors are high-achieving high school and university students from institutions like MIT, Stanford, Harvard, and Oxford. Every tutor undergoes application review, identity verification, and safeguarding training before hosting sessions.",
+    q: "Who are the peer tutors?",
+    a: "Our tutors are high-achieving high school and university students. Every applicant submits proof of academic standing, completes our safeguarding guidelines, and is reviewed by our team before being allowed to host sessions.",
   },
   {
     q: "How do live sessions work?",
-    a: "Sessions take place in secure, small-group or 1-on-1 Zoom rooms. You can ask questions, work through practice tests together, and receive real-time explanations.",
+    a: "Sessions take place in secure, small-group or 1-on-1 Zoom rooms. When you book a slot or enroll in a workshop, a direct Zoom link appears in your dashboard with calendar reminders.",
   },
   {
-    q: "Can I earn verified volunteer service hours as a tutor?",
-    a: "Yes! Learnivia provides tutors with official, digitally auditable Volunteer Service Transcripts complete with verification IDs, subject certifications, and logged hours for college and scholarship applications.",
+    q: "How do tutors receive verified volunteer hours?",
+    a: "Whenever a session or workshop concludes, the duration is recorded in the platform's auditable ledger. Tutors can generate an official Volunteer Service Transcript with unique verification IDs for National Honor Society, school advisors, and college admissions.",
+  },
+  {
+    q: "Can I be both a student and a tutor?",
+    a: "Yes! Many members tutor subjects they excel in (like Algebra or Physics) while attending SAT workshops or college essay sessions for their own preparation.",
   },
 ];
 
@@ -176,253 +266,349 @@ export default function HomeInteractiveClient() {
   const [activeTab, setActiveTab] = useState<string>("sat");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const currentProgram = TABLET_PROGRAMS.find((p) => p.id === activeTab) || TABLET_PROGRAMS[0];
+  const currentProgram = PROGRAMS.find((p) => p.id === activeTab) || PROGRAMS[0];
 
   return (
     <div className={styles.homeWrapper}>
-      {/* 1. Opening Logo Splash Screen Animation (Image 5) */}
+      {/* 1. Opening Brand Splash Animation */}
       <LogoSplash />
 
-      {/* 2. Main Hero Section with Wave Contours (Matching Image 4) */}
-      <section className={styles.heroSection} aria-label="Free online peer tutoring">
+      {/* 2. Hero Section: Scholastic Editorial Elegance */}
+      <section className={styles.heroSection}>
         <div className={styles.heroContainer}>
-          {/* Left Column: Big Headline */}
           <div className={styles.heroLeftCol}>
-            <h1 className={styles.heroTitle}>
-              Free <br />
-              online <br />
-              tutoring.
-            </h1>
-            <div className={styles.heroSubtitle}>Real Human</div>
-          </div>
-
-          {/* Right Column: Community Social Proof & CTAs */}
-          <div className={styles.heroRightCol}>
-            {/* Student Avatar Stack */}
-            <div className={styles.socialProofRow}>
-              <span className={styles.socialProofText}>Join over 205k students</span>
-              <div className={styles.avatarStack}>
-                <span className={`${styles.stackedAvatar} ${styles.avatar1}`}>👩‍🎓</span>
-                <span className={`${styles.stackedAvatar} ${styles.avatar2}`}>🧑‍🏫</span>
-                <span className={`${styles.stackedAvatar} ${styles.avatar3}`}>👨‍💻</span>
-              </div>
+            {/* Editorial Eyebrow Badge */}
+            <div className={styles.eyebrowBadge}>
+              <span className={styles.pulseDot} />
+              <span className={styles.eyebrowText}>Peer Learning • 100% Free For All Students</span>
             </div>
 
-            {/* Description */}
+            {/* Editorial Headline */}
+            <h1 className={styles.heroTitle}>
+              Real learning happens <br />
+              <span className={styles.heroTitleItalic}>when peers teach peers.</span>
+            </h1>
+
+            {/* Direct, Honest Subheadline */}
             <p className={styles.heroParagraph}>
-              Join our peer-led community for free SAT® tutoring, college admissions mentorship, homework help, and meaningful conversations with students around the globe.
+              Connect with high-achieving high school and university students for free 1-on-1 tutoring,
+              SAT® bootcamps, college essay workshops, and collaborative study rooms. No subscriptions, no paywalls.
             </p>
 
-            {/* CTA Buttons */}
+            {/* Action CTAs */}
             <div className={styles.heroActions}>
-              <Link href="/signup" className={styles.primaryHeroBtn}>
-                Start learning
+              <Link href="/sessions" className={styles.primaryHeroBtn}>
+                <span>Explore Live Sessions</span>
+                <Icons.ArrowRight />
               </Link>
-              <div className={styles.secondaryBtnRow}>
-                <Link href="/parents" className={styles.outlineHeroBtn}>
-                  For parents
-                </Link>
-                <Link href="/educators" className={styles.outlineHeroBtn}>
-                  For educator
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Background Wave Graphic Overlay */}
-        <div className={styles.waveOverlay} aria-hidden="true">
-          <svg viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.waveSvg}>
-            <path d="M0,160 C320,300 420,40 720,160 C1020,280 1120,40 1440,160 L1440,320 L0,320 Z" fill="rgba(255, 255, 255, 0.08)" />
-            <path d="M0,220 C240,120 480,260 720,200 C960,140 1200,240 1440,180 L1440,320 L0,320 Z" fill="rgba(255, 255, 255, 0.05)" />
-          </svg>
-        </div>
-      </section>
-
-      {/* 3. Founder / Trust Quote Card (Matching Images 3 & 4 Bottom) */}
-      <section className={styles.quoteSection} aria-label="Founder quote">
-        <div className={styles.quoteCardContainer}>
-          <div className={styles.quoteCard}>
-            {/* Top Right Decorative Sticker Badge: Graduation Cap + Certificate Ribbon */}
-            <div className={styles.diplomaBadge} aria-hidden="true">
-              <div className={styles.gradCap}>🎓</div>
-              <div className={styles.certificate}>
-                <span className={styles.certSeal}>⭐</span>
-                <span className={styles.certText}>Official Verified</span>
-              </div>
-            </div>
-
-            {/* Left side: Founder Profile */}
-            <div className={styles.founderBlock}>
-              <div className={styles.founderAvatarCircle}>
-                <Image
-                  src="/images/logo.png"
-                  alt="Learnivia Fox Mascot"
-                  width={48}
-                  height={48}
-                  className={styles.founderLogoImg}
-                />
-              </div>
-              <div className={styles.founderMeta}>
-                <h3 className={styles.founderName}>Founded by Rendus</h3>
-                <p className={styles.founderRole}>CEO of Learnivia</p>
-              </div>
-            </div>
-
-            {/* Vertical Divider */}
-            <div className={styles.quoteDivider} />
-
-            {/* Right side: Mission Quote */}
-            <div className={styles.quoteContent}>
-              <blockquote className={styles.quoteText}>
-                &ldquo;We believe every student deserves access to great learning opportunities.&rdquo;
-              </blockquote>
-              <div className={styles.quoteAuthor}>— Learnivia</div>
-            </div>
-
-            {/* Bottom watermark */}
-            <div className={styles.cardWatermark}>Learnivia</div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Interactive Tablet Mockup Section (Matching Image 2: "peer to peer Sat tutoring") */}
-      <section className={styles.showcaseSection} aria-label="Programs Showcase">
-        <div className={styles.showcaseContainer}>
-          {/* Left Mascot Character pointing with "Book a Session" badge */}
-          <div className={styles.mascotCol}>
-            <div className={styles.mascotWrap}>
-              <Image
-                src="/images/book-a-session.png"
-                alt="Cute Fox Mascot with Backpack"
-                width={150}
-                height={170}
-                className={styles.mascotImage}
-                priority
-              />
-              <div className={styles.mascotBadge}>Book a Session</div>
-            </div>
-          </div>
-
-          {/* Central Tablet/Device Frame */}
-          <div className={styles.tabletCol}>
-            <div className={styles.tabletMockup}>
-              {/* Tablet Screen Interior */}
-              <div className={styles.tabletScreen}>
-                {/* Tablet Left Navigation Bar */}
-                <div className={styles.tabletSidebar}>
-                  <div className={styles.tabletSidebarHeader}>
-                    <h4 className={styles.tabletSidebarTitle}>Programs</h4>
-                    <p className={styles.tabletSidebarSubtitle}>Join structured classes curated by Learnivia</p>
-                  </div>
-
-                  <div className={styles.tabletNavList}>
-                    {TABLET_PROGRAMS.map((prog) => (
-                      <button
-                        key={prog.id}
-                        onClick={() => setActiveTab(prog.id)}
-                        className={`${styles.tabletTabBtn} ${activeTab === prog.id ? styles.tabletTabActive : ""}`}
-                        style={{
-                          borderColor: activeTab === prog.id ? prog.tabColor : "transparent",
-                          backgroundColor: activeTab === prog.id ? prog.tabBg : "#FFFFFF",
-                        }}
-                      >
-                        <div className={styles.tabletTabHeader}>
-                          <span className={styles.tabletTabIcon} style={{ color: prog.tabColor }}>
-                            {prog.tabIcon}
-                          </span>
-                          <span className={styles.tabletTabBadge} style={{ backgroundColor: prog.tabBg, color: prog.tabColor }}>
-                            {prog.tabBadge}
-                          </span>
-                        </div>
-                        <h5 className={styles.tabletTabName}>{prog.tabTitle}</h5>
-                        <p className={styles.tabletTabDesc}>{prog.tabDesc}</p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tablet Right Content Area (Dynamic per selected tab) */}
-                <div className={styles.tabletMainContent}>
-                  <div className={styles.tabletContentHeader}>
-                    <h3 className={styles.tabletContentTitle}>{currentProgram.contentTitle}</h3>
-                    <p className={styles.tabletContentSubtitle}>{currentProgram.contentSubtitle}</p>
-                  </div>
-
-                  <div className={styles.tabletCardsList}>
-                    {currentProgram.sessions.map((sess) => (
-                      <div key={sess.id} className={styles.programCard}>
-                        <div className={styles.cardHeaderRow}>
-                          <div className={styles.cardIconBox}>{sess.icon}</div>
-                          <div className={styles.cardTitleBox}>
-                            <h4 className={styles.cardTitle}>{sess.title}</h4>
-                          </div>
-                        </div>
-
-                        <p className={styles.cardDescription}>{sess.description}</p>
-
-                        <div className={styles.cardFooterRow}>
-                          <div className={styles.cardMetaTags}>
-                            <span className={styles.metaTag}>🗓️ {sess.duration}</span>
-                            <span className={styles.metaTag}>🔄 {sess.frequency}</span>
-                            <span className={styles.metaTag}>⏱️ {sess.sessionLength}</span>
-                          </div>
-                          <Link href={sess.link} className={styles.cardRegisterBtn}>
-                            Register
-                          </Link>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Title, Subtitle, and CTA Button */}
-          <div className={styles.showcaseRightCol}>
-            <h2 className={styles.showcaseTitle}>{currentProgram.headline}</h2>
-            <p className={styles.showcaseDesc}>{currentProgram.subheadline}</p>
-            <Link href={currentProgram.ctaLink} className={styles.showcaseBtn}>
-              {currentProgram.ctaText}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Popular Subjects Discovery Strip */}
-      <section className={styles.subjectsSection} aria-label="Browse subjects">
-        <div className={styles.subjectsContainer}>
-          <div className={styles.subjectsHeader}>
-            <span className={styles.sectionBadge}>EXPLORE TOPICS</span>
-            <h2 className={styles.sectionTitle}>Learn anything with a peer tutor</h2>
-            <p className={styles.sectionSubtitle}>Choose from over 50+ academic subjects with active daily study rooms.</p>
-          </div>
-
-          <div className={styles.subjectsGrid}>
-            {POPULAR_SUBJECTS.map((sub) => (
-              <Link key={sub.id} href={`/sessions?subject=${encodeURIComponent(sub.name)}`} className={styles.subjectCard}>
-                <div className={styles.subjectIconWrap} style={{ background: `${sub.color}15`, color: sub.color }}>
-                  {sub.icon}
-                </div>
-                <div className={styles.subjectInfo}>
-                  <h3 className={styles.subjectName}>{sub.name}</h3>
-                  <span className={styles.subjectCount}>{sub.count} Tutors Available</span>
-                </div>
-                <span className={styles.subjectArrow}>→</span>
+              <Link href="/apply" className={styles.secondaryHeroBtn}>
+                <span>Volunteer to Tutor</span>
               </Link>
+            </div>
+
+            {/* Trust & Safeguarding Micro-Bar */}
+            <div className={styles.trustRow}>
+              <div className={styles.trustItem}>
+                <span className={styles.trustIcon}><Icons.CheckCircle /></span>
+                <span>Zero cost, ever</span>
+              </div>
+              <div className={styles.trustItem}>
+                <span className={styles.trustIcon}><Icons.ShieldCheck /></span>
+                <span>Verified peer tutors</span>
+              </div>
+              <div className={styles.trustItem}>
+                <span className={styles.trustIcon}><Icons.Certificate /></span>
+                <span>Official volunteer hours</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Hero Graphic: Live Interactive Preview Card */}
+          <div className={styles.heroRightCol}>
+            <div className={styles.liveCardDeck}>
+              <div className={styles.heroPreviewCard}>
+                <div className={styles.previewHeader}>
+                  <div className={styles.previewMascotMini}>
+                    <Image
+                      src="/images/logo.png"
+                      alt="Learnivia Fox"
+                      width={36}
+                      height={36}
+                      className={styles.mascotImg}
+                    />
+                  </div>
+                  <div>
+                    <span className={styles.liveIndicator}>Live Study Room</span>
+                    <h3 className={styles.previewTitle}>Digital SAT® Math: Module 2 Hard Problems</h3>
+                  </div>
+                </div>
+
+                <p className={styles.previewDesc}>
+                  Live review of non-linear functions, circle equations, and Desmos shortcuts with small-group Q&amp;A.
+                </p>
+
+                <div className={styles.previewMeta}>
+                  <div className={styles.metaChip}>
+                    <Icons.Clock />
+                    <span>Today at 6:00 PM EST</span>
+                  </div>
+                  <div className={styles.metaChip}>
+                    <Icons.Users />
+                    <span>3 of 8 seats open</span>
+                  </div>
+                </div>
+
+                <div className={styles.previewHostRow}>
+                  <div className={styles.hostAvatar}>AC</div>
+                  <div className={styles.hostInfo}>
+                    <div className={styles.hostName}>Alex Chen</div>
+                    <div className={styles.hostCred}>Stanford &apos;28 • 1580 SAT</div>
+                  </div>
+                  <Link href="/sessions?subject=SAT+Prep" className={styles.previewJoinBtn}>
+                    Join Free
+                  </Link>
+                </div>
+              </div>
+
+              {/* Behind Subtle Card */}
+              <div className={styles.heroCardBackdrop} aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. The 4-Step Learning Journey (Featuring Custom Fox Illustrations) */}
+      <section className={styles.journeySection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionKicker}>HOW IT WORKS</span>
+            <h2 className={styles.sectionHeading}>A simple, humane way to learn and give back.</h2>
+            <p className={styles.sectionLead}>
+              We replaced complicated tutoring agencies with transparent peer collaboration.
+            </p>
+          </div>
+
+          <div className={styles.journeyGrid}>
+            {HOW_IT_WORKS_STEPS.map((step) => (
+              <div key={step.step} className={styles.journeyCard}>
+                <div className={styles.stepNumBadge}>{step.step}</div>
+                <div className={styles.journeyImgWrap}>
+                  <Image
+                    src={step.img}
+                    alt={step.title}
+                    width={180}
+                    height={180}
+                    className={styles.journeyIllustration}
+                  />
+                </div>
+                <h3 className={styles.journeyTitle}>{step.title}</h3>
+                <p className={styles.journeyDesc}>{step.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. FAQ Accordion Section */}
-      <section className={styles.faqSection} aria-label="Frequently Asked Questions">
-        <div className={styles.faqContainer}>
-          <div className={styles.faqHeader}>
-            <span className={styles.sectionBadge}>FAQ</span>
-            <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
-            <p className={styles.sectionSubtitle}>Everything you need to know about peer-learning on Learnivia.</p>
+      {/* 4. Interactive Programs & Bootcamps Showcase (Bento Grid) */}
+      <section className={styles.programsSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionKicker}>CURRICULA &amp; SESSIONS</span>
+            <h2 className={styles.sectionHeading}>Cohort bootcamps &amp; drop-in help.</h2>
+            <p className={styles.sectionLead}>
+              Join a multi-week intensive or book a quick 1-on-1 session before your next midterm.
+            </p>
+          </div>
+
+          {/* Program Tabs */}
+          <div className={styles.programTabsBar} role="tablist">
+            {PROGRAMS.map((prog) => (
+              <button
+                key={prog.id}
+                role="tab"
+                aria-selected={activeTab === prog.id}
+                onClick={() => setActiveTab(prog.id)}
+                className={`${styles.programTabBtn} ${activeTab === prog.id ? styles.programTabActive : ""}`}
+              >
+                {prog.badge}
+              </button>
+            ))}
+          </div>
+
+          {/* Program Content Stage */}
+          <div className={styles.programStage}>
+            <div className={styles.programStageHeader}>
+              <div>
+                <h3 className={styles.stageTitle}>{currentProgram.title}</h3>
+                <p className={styles.stageDesc}>{currentProgram.description}</p>
+              </div>
+              <Link href="/sessions" className={styles.stageBrowseLink}>
+                <span>View Full Schedule</span>
+                <Icons.ArrowRight />
+              </Link>
+            </div>
+
+            <div className={styles.sessionCardsGrid}>
+              {currentProgram.sessions.map((sess) => (
+                <div key={sess.id} className={styles.sessionCard}>
+                  <div className={styles.sessionCardTop}>
+                    <span className={styles.sessionSubjectBadge}>{sess.subject}</span>
+                    <span className={styles.sessionSeatsBadge}>{sess.seats}</span>
+                  </div>
+
+                  <div className={styles.sessionMentorRow}>
+                    <div className={styles.mentorAvatarMini}>
+                      {sess.mentor.split(" ")[0][0]}
+                    </div>
+                    <span className={styles.sessionMentorText}>{sess.mentor}</span>
+                  </div>
+
+                  <div className={styles.sessionScheduleList}>
+                    <div className={styles.scheduleItem}>
+                      <Icons.Calendar />
+                      <span>{sess.schedule}</span>
+                    </div>
+                    <div className={styles.scheduleItem}>
+                      <Icons.Clock />
+                      <span>{sess.duration}</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.sessionTagsRow}>
+                    {sess.tags.map((t) => (
+                      <span key={t} className={styles.tagPill}>{t}</span>
+                    ))}
+                  </div>
+
+                  <div className={styles.sessionCardFooter}>
+                    <Link href={sess.href} className={styles.sessionJoinBtn}>
+                      <span>Enroll in Session</span>
+                      <Icons.ArrowRight />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Volunteer Tutor Impact Card */}
+      <section className={styles.volunteerSection}>
+        <div className={styles.container}>
+          <div className={styles.volunteerCard}>
+            <div className={styles.volunteerLeft}>
+              <span className={styles.volunteerKicker}>FOR VOLUNTEER TUTORS</span>
+              <h2 className={styles.volunteerHeading}>
+                Turn your academic strengths into verified community impact.
+              </h2>
+              <p className={styles.volunteerText}>
+                Share your expertise in subjects you love. Every session you host is recorded and certified with an official Volunteer Service Transcript for college admissions, NHS, and honor society requirements.
+              </p>
+
+              <div className={styles.volunteerBenefits}>
+                <div className={styles.benefitItem}>
+                  <Icons.CheckCircle />
+                  <span>Official, verifiable service hours transcripts</span>
+                </div>
+                <div className={styles.benefitItem}>
+                  <Icons.CheckCircle />
+                  <span>Choose your own hours and subjects</span>
+                </div>
+                <div className={styles.benefitItem}>
+                  <Icons.CheckCircle />
+                  <span>Join a community of top students from around the world</span>
+                </div>
+              </div>
+
+              <div className={styles.volunteerActions}>
+                <Link href="/apply" className={styles.volunteerPrimaryBtn}>
+                  Apply to Volunteer
+                </Link>
+                <Link href="/how-it-works" className={styles.volunteerSecondaryBtn}>
+                  Learn How Hours Work
+                </Link>
+              </div>
+            </div>
+
+            <div className={styles.volunteerRight}>
+              <div className={styles.volunteerMascotWrap}>
+                <Image
+                  src="/images/become-a-tutor.png"
+                  alt="Learnivia Volunteer Tutor Mascot with ID Badge"
+                  width={240}
+                  height={280}
+                  className={styles.volunteerMascotImg}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Subjects Directory */}
+      <section className={styles.subjectsSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionKicker}>SUBJECT DIRECTORY</span>
+            <h2 className={styles.sectionHeading}>What do you want to learn?</h2>
+            <p className={styles.sectionLead}>
+              Browse our most active subjects with verified volunteer peer tutors.
+            </p>
+          </div>
+
+          <div className={styles.subjectsGrid}>
+            {SUBJECTS.map((sub) => {
+              const IconComponent = sub.icon;
+              return (
+                <Link key={sub.name} href={`/sessions?subject=${encodeURIComponent(sub.name)}`} className={styles.subjectCard}>
+                  <div className={styles.subjectIconBox} style={{ background: sub.bg, color: sub.color }}>
+                    <IconComponent />
+                  </div>
+                  <div>
+                    <h3 className={styles.subjectName}>{sub.name}</h3>
+                    <p className={styles.subjectDesc}>{sub.desc}</p>
+                  </div>
+                  <span className={styles.subjectArrow}><Icons.ArrowRight /></span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Student & Parent Testimonials */}
+      <section className={styles.testimonialsSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionKicker}>COMMUNITY EXPERIENCES</span>
+            <h2 className={styles.sectionHeading}>Real words from real learners.</h2>
+          </div>
+
+          <div className={styles.testimonialsGrid}>
+            {TESTIMONIALS.map((t, idx) => (
+              <div key={idx} className={styles.testimonialCard}>
+                <blockquote className={styles.testimonialQuote}>
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <div className={styles.testimonialAuthorRow}>
+                  <div>
+                    <div className={styles.testimonialName}>{t.author}</div>
+                    <div className={styles.testimonialRole}>{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Frequently Asked Questions */}
+      <section className={styles.faqSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionKicker}>FAQ</span>
+            <h2 className={styles.sectionHeading}>Answers to common questions.</h2>
           </div>
 
           <div className={styles.faqList}>
@@ -434,7 +620,7 @@ export default function HomeInteractiveClient() {
                   aria-expanded={openFaq === index}
                 >
                   <span className={styles.faqQuestionText}>{faq.q}</span>
-                  <span className={styles.faqIcon}>{openFaq === index ? "−" : "+"}</span>
+                  <span className={styles.faqToggleIcon}>{openFaq === index ? "−" : "+"}</span>
                 </button>
                 {openFaq === index && (
                   <div className={styles.faqAnswer}>
@@ -447,24 +633,24 @@ export default function HomeInteractiveClient() {
         </div>
       </section>
 
-      {/* 7. Bottom Call to Action */}
-      <section className={styles.bottomCtaSection} aria-label="Join Learnivia today">
-        <div className={styles.bottomCtaContainer}>
+      {/* 9. Final Call to Action */}
+      <section className={styles.bottomCtaSection}>
+        <div className={styles.container}>
           <div className={styles.bottomCtaCard}>
-            <div className={styles.bottomCtaContent}>
-              <span className={styles.bottomBadge}>100% FREE FOR EVERYONE</span>
-              <h2 className={styles.bottomTitle}>Ready to start your peer learning journey?</h2>
-              <p className={styles.bottomSubtitle}>
-                Join 205,000+ students in structured bootcamps, homework help, and 1-on-1 tutoring today.
-              </p>
-              <div className={styles.bottomBtnGroup}>
-                <Link href="/signup" className={styles.bottomPrimaryBtn}>
-                  Join Learnivia — It&apos;s Free
-                </Link>
-                <Link href="/sessions" className={styles.bottomSecondaryBtn}>
-                  Browse Live Sessions →
-                </Link>
-              </div>
+            <span className={styles.bottomKicker}>GET STARTED TODAY</span>
+            <h2 className={styles.bottomHeading}>
+              Great education belongs to everyone.
+            </h2>
+            <p className={styles.bottomSubtitle}>
+              Whether you need help prepping for tomorrow&apos;s exam or want to share what you know, your seat is ready.
+            </p>
+            <div className={styles.bottomBtnGroup}>
+              <Link href="/signup" className={styles.bottomPrimaryBtn}>
+                Join Learnivia — Free Forever
+              </Link>
+              <Link href="/sessions" className={styles.bottomSecondaryBtn}>
+                Browse Live Sessions
+              </Link>
             </div>
           </div>
         </div>
