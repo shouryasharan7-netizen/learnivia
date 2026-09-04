@@ -151,6 +151,77 @@ export default async function StudentDashboard() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
+        {/* Administrator Quick Control Access Banner */}
+        {user.isAdmin && (
+          <div
+            style={{
+              background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
+              borderRadius: "14px",
+              padding: "1.25rem 1.75rem",
+              color: "#FFFFFF",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "1rem",
+              marginBottom: "1.5rem",
+              boxShadow: "0 4px 12px rgba(15, 23, 42, 0.08)",
+            }}
+          >
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
+                <span style={{ fontSize: "1.25rem" }}>🛡️</span>
+                <span style={{ fontSize: "1rem", fontWeight: 800 }}>Master Administrator Authority Active</span>
+                <span
+                  style={{
+                    background: "#F59E0B",
+                    color: "#78350F",
+                    fontSize: "0.7rem",
+                    fontWeight: 800,
+                    padding: "0.15rem 0.5rem",
+                    borderRadius: "999px",
+                  }}
+                >
+                  FULL SYSTEM CONTROL
+                </span>
+              </div>
+              <p style={{ color: "#94A3B8", fontSize: "0.85rem", margin: 0 }}>
+                You have unrestricted administrative oversight over all learners, tutors, sessions, community channels, and child safety reports.
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+              <Link
+                href="/admin"
+                style={{
+                  background: "#0E8345",
+                  color: "#FFFFFF",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "8px",
+                  fontWeight: 700,
+                  fontSize: "0.85rem",
+                  textDecoration: "none",
+                }}
+              >
+                Enter Admin Center →
+              </Link>
+              <Link
+                href="/admin/users"
+                style={{
+                  background: "#334155",
+                  color: "#FFFFFF",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "8px",
+                  fontWeight: 600,
+                  fontSize: "0.85rem",
+                  textDecoration: "none",
+                }}
+              >
+                Manage Users
+              </Link>
+            </div>
+          </div>
+        )}
+
         {/* 1. Hero Promo Banner */}
         <section className={styles.promoBanner}>
           <div className={styles.promoContent}>
@@ -209,7 +280,11 @@ export default async function StudentDashboard() {
             <div className={styles.userMeta}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <h2 className={styles.userDisplayName}>{userName}</h2>
-                {isTutor ? (
+                {user.isAdmin ? (
+                  <span style={{ fontSize: "0.7rem", fontWeight: 800, color: "#92400E", background: "#FEF3C7", padding: "0.15rem 0.6rem", borderRadius: "999px" }}>
+                    🛡️ Administrator
+                  </span>
+                ) : isTutor ? (
                   <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#0E8345", background: "#E6F4EA", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
                     ✓ Verified Tutor
                   </span>

@@ -28,6 +28,12 @@ const publicPaths = [
   "/resources",
 ]
 
+const ADMIN_EMAILS = new Set([
+  "shouryasharan7@gmail.com",
+  "ahmedashfaqfarooqui@gmail.com",
+  ...(process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase()) : []),
+]);
+
 const onboardingPaths = ["/onboarding"]
 
 export default auth((req) => {
@@ -49,7 +55,9 @@ export default auth((req) => {
     }
 
     // Admin check
-    if (nextUrl.pathname.startsWith("/admin") && req.auth?.user?.role !== "ADMIN") {
+    const userEmail = req.auth?.user?.email?.trim().toLowerCase();
+    const isUserAdmin = req.auth?.user?.role === "ADMIN" || (userEmail ? ADMIN_EMAILS.has(userEmail) : false);
+    if (nextUrl.pathname.startsWith("/admin") && !isUserAdmin) {
       return NextResponse.redirect(new URL("/dashboard", req.url))
     }
 

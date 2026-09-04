@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import { updateReportStatus } from "@/app/actions/reports";
 import type { Metadata } from "next";
@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminReportsPage() {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "ADMIN") {
-    redirect("/");
+  const user = await getCurrentUser();
+  if (!user || !user.isAdmin) {
+    redirect("/dashboard");
   }
 
   const reports = await prisma.incidentReport.findMany({

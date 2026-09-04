@@ -112,6 +112,11 @@ export function Navbar() {
       : "U";
 
     const userRole = session.user?.role || "STUDENT";
+    const userEmail = session.user?.email?.trim().toLowerCase();
+    const isAdmin =
+      userRole === "ADMIN" ||
+      userEmail === "shouryasharan7@gmail.com" ||
+      userEmail === "ahmedashfaqfarooqui@gmail.com";
 
     return (
       <header className={styles.authHeader} role="banner">
@@ -127,6 +132,30 @@ export function Navbar() {
 
           {/* Right: action icons with working dropdowns */}
           <div className={styles.authActions} ref={popoverRef}>
+            {/* Admin Fast Button */}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  background: "#FFFBEB",
+                  border: "1px solid #F59E0B",
+                  color: "#92400E",
+                  padding: "0.35rem 0.85rem",
+                  borderRadius: "9999px",
+                  fontSize: "0.8125rem",
+                  fontWeight: 800,
+                  textDecoration: "none",
+                  boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+                }}
+              >
+                <span>🛡️</span>
+                <span>Admin Center</span>
+              </Link>
+            )}
+
             {/* Messages button */}
             <div className={styles.actionWrapper}>
               <button
@@ -284,9 +313,9 @@ export function Navbar() {
                       </Link>
                     )}
 
-                    {userRole === "ADMIN" && (
-                      <Link href="/admin/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 600 }}>
-                        🛡️ Admin Center
+                    {isAdmin && (
+                      <Link href="/admin" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#92400E", fontWeight: 700, background: "#FFFBEB" }}>
+                        🛡️ Master Admin Center
                       </Link>
                     )}
 

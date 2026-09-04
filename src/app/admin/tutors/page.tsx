@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { suspendTutor, reactivateTutor } from "../actions";
@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminTutorsPage() {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "ADMIN") {
-    redirect("/");
+  const user = await getCurrentUser();
+  if (!user || !user.isAdmin) {
+    redirect("/dashboard");
   }
 
   const tutors = await prisma.tutorProfile.findMany({
