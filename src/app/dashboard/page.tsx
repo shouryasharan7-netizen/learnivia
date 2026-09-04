@@ -22,7 +22,6 @@ const FAST_CARDS = [
     badge: "SAT",
     badgeBg: "#7C3AED",
     badgeText: "SAT",
-    hasDot: true,
     title: "SAT Prep",
     desc: "Join live SAT practice & strategy rooms",
     href: "/sessions?subject=SAT+Prep",
@@ -32,7 +31,6 @@ const FAST_CARDS = [
     badge: "CAW",
     badgeBg: "#2563EB",
     badgeText: "CAW",
-    hasDot: true,
     title: "College Mentorship",
     desc: "Workshops led by university students",
     href: "/sessions?subject=College+Prep",
@@ -42,7 +40,6 @@ const FAST_CARDS = [
     badge: "DIA",
     badgeBg: "#D97706",
     badgeText: "DIA",
-    hasDot: true,
     title: "Dialogues",
     desc: "Global peer discussions and circles",
     href: "/community",
@@ -85,12 +82,12 @@ export default async function StudentDashboard() {
   const now = new Date();
 
   // Run database queries and real-time stats calculation concurrently
+  const tutorProfile = user.tutorProfile;
   const [
     stats,
     upcomingBookings,
     completedBookings,
     enrolledWorkshops,
-    tutorProfile,
   ] = await Promise.all([
     calculateUserStats(user.id),
     prisma.booking.findMany({
@@ -128,9 +125,6 @@ export default async function StudentDashboard() {
         },
       },
       orderBy: { createdAt: "desc" },
-    }),
-    prisma.tutorProfile.findUnique({
-      where: { userId: user.id },
     }),
   ]);
 
@@ -311,7 +305,6 @@ export default async function StudentDashboard() {
         <section className={styles.fastCardsGrid} aria-label="Learning pathways">
           {FAST_CARDS.map((card) => (
             <Link key={card.id} href={card.href} className={styles.fastCard}>
-              {card.hasDot && <span className={styles.blueDot} aria-hidden="true" />}
               {card.badge ? (
                 <div className={styles.squareBadge} style={{ background: card.badgeBg }}>
                   <span>{card.badgeText}</span>

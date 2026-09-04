@@ -15,7 +15,8 @@ const pool =
     ssl: connectionString?.includes("supabase.com") ? { rejectUnauthorized: false } : undefined,
     max: 10,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 10000,
+    connectionTimeoutMillis: 5000,
+    keepAlive: true,
   })
 
 const adapter = new PrismaPg(pool)
@@ -28,7 +29,7 @@ export const prisma =
       process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
   })
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma
-  globalForPrisma.pool = pool
-}
+// Retain on globalThis across requests in both development and production
+// to prevent connection exhaustion and avoid repeated SSL roundtrips in serverless.
+globalForPrisma.prisma = prisma
+globalForPrisma.pool = pool

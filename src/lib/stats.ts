@@ -28,6 +28,15 @@ export interface LeaderboardEntry {
   completedSessions: number;
 }
 
+// Fast memory cache for ranking and leaderboard to eliminate heavy relational DB scans
+let cachedUserScores: { id: string; points: number }[] | null = null;
+let lastUserScoresFetch = 0;
+const SCORES_CACHE_TTL = 30000; // 30 seconds
+
+let cachedLeaderboard: LeaderboardEntry[] | null = null;
+let lastLeaderboardFetch = 0;
+const LEADERBOARD_CACHE_TTL = 30000; // 30 seconds
+
 /**
  * Calculates genuine real-time statistics for any user without any mock/fabricated data.
  */
@@ -160,86 +169,101 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
 
   const totalPoints = basePoints + learningPoints + sessionPoints + reviewPoints + homeworkPoints + tutorPoints;
 
-  // 5. Calculate Real-Time Rank across all registered users in DB
-  const allUsers = await prisma.user.findMany({
-    select: {
-      id: true,
-      points: true,
-      studentBookings: {
-        where: {
-          OR: [
-            { status: "COMPLETED" },
-            { status: "CONFIRMED", endTime: { lt: now } },
-          ],
-        },
-        select: { startTime: true, endTime: true },
-      },
-      workshopEnrollments: {
-        where: {
-          workshop: {
+  // 5. Calculate Real-Time Rank across all registered users in DB (cached 30s for performance)
+  const isScoresCacheStale = !cachedUserScores || (Date.now() - lastUserScoresFetch > SCORES_CACHE_TTL);
+
+  if (isScoresCacheStale) {
+    const allUsers = await prisma.user.findMany({
+      select: {
+        id: true,
+        points: true,
+        studentBookings: {
+          where: {
             OR: [
               { status: "COMPLETED" },
-              { status: "UPCOMING", endTime: { lt: now } },
+              { status: "CONFIRMED", endTime: { lt: now } },
             ],
           },
+          select: { startTime: true, endTime: true },
         },
-        select: {
-          workshop: { select: { startTime: true, endTime: true } },
-        },
-      },
-      tutorProfile: {
-        select: {
-          tutorBookings: {
-            where: {
-              OR: [
-                { status: "COMPLETED" },
-                { status: "CONFIRMED", endTime: { lt: now } },
-              ],
-            },
-            select: { startTime: true, endTime: true },
-          },
-          workshops: {
-            where: {
+        workshopEnrollments: {
+          where: {
+            workshop: {
               OR: [
                 { status: "COMPLETED" },
                 { status: "UPCOMING", endTime: { lt: now } },
               ],
             },
-            select: { startTime: true, endTime: true },
+          },
+          select: {
+            workshop: { select: { startTime: true, endTime: true } },
+          },
+        },
+        tutorProfile: {
+          select: {
+            tutorBookings: {
+              where: {
+                OR: [
+                  { status: "COMPLETED" },
+                  { status: "CONFIRMED", endTime: { lt: now } },
+                ],
+              },
+              select: { startTime: true, endTime: true },
+            },
+            workshops: {
+              where: {
+                OR: [
+                  { status: "COMPLETED" },
+                  { status: "UPCOMING", endTime: { lt: now } },
+                ],
+              },
+              select: { startTime: true, endTime: true },
+            },
           },
         },
       },
-    },
-  });
+    });
 
-  const scores: { id: string; points: number }[] = allUsers.map((u) => {
-    let mins = 0;
-    let sessions = 0;
+    cachedUserScores = allUsers.map((u) => {
+      let mins = 0;
+      let sessions = 0;
 
-    for (const b of u.studentBookings) {
-      mins += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
-      sessions += 1;
-    }
-    for (const e of u.workshopEnrollments) {
-      mins += Math.max(15, Math.round((new Date(e.workshop.endTime).getTime() - new Date(e.workshop.startTime).getTime()) / 60000));
-      sessions += 1;
-    }
-
-    let tutorMins = 0;
-    let tutorWorkshops = 0;
-    if (u.tutorProfile) {
-      for (const b of u.tutorProfile.tutorBookings) {
-        tutorMins += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+      for (const b of u.studentBookings) {
+        mins += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+        sessions += 1;
       }
-      for (const w of u.tutorProfile.workshops) {
-        tutorMins += Math.max(15, Math.round((new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / 60000));
-        tutorWorkshops += 1;
+      for (const e of u.workshopEnrollments) {
+        mins += Math.max(15, Math.round((new Date(e.workshop.endTime).getTime() - new Date(e.workshop.startTime).getTime()) / 60000));
+        sessions += 1;
       }
-    }
 
-    const pts = (u.points || 0) + Math.floor(mins / 2) + (sessions * 20) + (tutorWorkshops * 50) + Math.floor(tutorMins / 2);
-    return { id: u.id, points: pts };
-  });
+      let tutorMins = 0;
+      let tutorWorkshops = 0;
+      if (u.tutorProfile) {
+        for (const b of u.tutorProfile.tutorBookings) {
+          tutorMins += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+        }
+        for (const w of u.tutorProfile.workshops) {
+          tutorMins += Math.max(15, Math.round((new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / 60000));
+          tutorWorkshops += 1;
+        }
+      }
+
+      const pts = (u.points || 0) + Math.floor(mins / 2) + (sessions * 20) + (tutorWorkshops * 50) + Math.floor(tutorMins / 2);
+      return { id: u.id, points: pts };
+    });
+
+    lastUserScoresFetch = Date.now();
+  }
+
+  // Clone cached list and update current user's exact live points
+  const scores = (cachedUserScores || []).map((s) => ({ ...s }));
+  const currentUserEntry = scores.find((s) => s.id === userId);
+  if (currentUserEntry) {
+    currentUserEntry.points = totalPoints;
+  } else {
+    scores.push({ id: userId, points: totalPoints });
+  }
 
   scores.sort((a, b) => b.points - a.points);
   const userRankIndex = scores.findIndex((s) => s.id === userId);
@@ -253,7 +277,7 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
     upcomingSessions,
     points: totalPoints,
     rank,
-    totalUsers: allUsers.length || 1,
+    totalUsers: scores.length || 1,
     grade: user.grade,
     age: user.age,
     curriculum: user.curriculum,
@@ -264,6 +288,11 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
  * Returns the verified real-time platform leaderboard.
  */
 export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
+  const isStale = !cachedLeaderboard || (Date.now() - lastLeaderboardFetch > LEADERBOARD_CACHE_TTL);
+  if (!isStale && cachedLeaderboard) {
+    return cachedLeaderboard.slice(0, limit);
+  }
+
   const now = new Date();
 
   const users = await prisma.user.findMany({
@@ -377,6 +406,9 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
   entries.forEach((entry, idx) => {
     entry.rank = idx + 1;
   });
+
+  cachedLeaderboard = entries;
+  lastLeaderboardFetch = Date.now();
 
   return entries.slice(0, limit);
 }
