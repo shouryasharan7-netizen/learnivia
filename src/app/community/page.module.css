@@ -570,6 +570,89 @@
 }
 
 /* ==================================
+   Moderation Controls & Banners
+   ================================== */
+.adminModerationBanner {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: #92400E;
+}
+
+.modBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+}
+
+.modLink {
+  background: #D97706;
+  color: #FFFFFF;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.readOnlyNotice {
+  background: #F8FAFC;
+  border: 1.5px dashed #CBD5E1;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  color: #64748B;
+  font-size: 0.875rem;
+}
+
+.modActionsRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.deletePostBtn {
+  background: #FEE2E2;
+  border: 1px solid #FCA5A5;
+  color: #B91C1C;
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.deletePostBtn:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+.reportPostBtn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 0.725rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.reportPostBtn:hover {
+  color: #DC2626;
+  background: #FEF2F2;
+}
+
+/* ==================================
    Responsive
    ================================== */
 @media (max-width: 800px) {

@@ -25,6 +25,7 @@ export default async function CommunityPage({ searchParams }: Props) {
         name: session.user.name,
         email: session.user.email,
         role: (session.user.role as "STUDENT" | "TUTOR" | "COMMUNITY LEAD") || "STUDENT",
+        isAdmin: (session.user as any).role === "ADMIN" || session.user.email === "shouryasharan7@gmail.com" || session.user.email === "ahmedashfaqfarooqui@gmail.com",
       }
     : null;
 

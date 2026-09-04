@@ -168,3 +168,56 @@ export async function toggleReaction(
     return null;
   }
 }
+
+export async function deleteMessage(messageId: string): Promise<boolean> {
+  try {
+    await prisma.communityMessage.delete({
+      where: { id: messageId },
+    });
+    return true;
+  } catch (err) {
+    console.error("Failed to delete message:", err);
+    return false;
+  }
+}
+
+export function checkContentSafety(content: string): { safe: boolean; reason?: string } {
+  // Check for common phone number patterns
+  const phonePattern = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/;
+  if (phonePattern.test(content)) {
+    return {
+      safe: false,
+      reason: "For member safeguarding, sharing phone numbers or personal contact info is not permitted.",
+    };
+  }
+
+  // Check for toxic or profanity words
+  const prohibited = [
+    "whatsapp me",
+    "dm me on ig",
+    "add my snap",
+    "send nudes",
+    "fuck",
+    "shit",
+    "bitch",
+    "asshole",
+    "dick",
+    "pussy",
+    "retard",
+    "faggot",
+    "nigger",
+    "nigga",
+  ];
+  const lower = content.toLowerCase();
+  for (const word of prohibited) {
+    if (lower.includes(word)) {
+      return {
+        safe: false,
+        reason: "Message contains language that violates classroom-safe community standards.",
+      };
+    }
+  }
+
+  return { safe: true };
+}
+
