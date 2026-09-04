@@ -7,6 +7,7 @@ import { AuthError } from "next-auth";
 
 const ADMIN_EMAILS = new Set([
   "shouryasharan7@gmail.com",
+  "ahmedashfaqfarooqui@gmail.com",
   ...(process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase()) : []),
 ]);
 

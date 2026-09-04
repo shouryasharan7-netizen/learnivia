@@ -34,6 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // Auto-elevate designated admin if needed
         const isAdminEmail =
           email === "shouryasharan7@gmail.com" ||
+          email === "ahmedashfaqfarooqui@gmail.com" ||
           (process.env.ADMIN_EMAILS?.split(",").map((e) => e.trim().toLowerCase()).includes(email) ?? false);
 
         if (isAdminEmail && user.role !== "ADMIN") {
@@ -53,6 +54,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const normalizedEmail = user.email.trim().toLowerCase();
         const isAdminEmail =
           normalizedEmail === "shouryasharan7@gmail.com" ||
+          normalizedEmail === "ahmedashfaqfarooqui@gmail.com" ||
           (process.env.ADMIN_EMAILS?.split(",").map((e) => e.trim().toLowerCase()).includes(normalizedEmail) ?? false);
 
         if (isAdminEmail) {
