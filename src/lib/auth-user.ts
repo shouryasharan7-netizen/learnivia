@@ -104,7 +104,7 @@ export async function requireTutor(): Promise<{
         status: "APPROVED",
         bio: "Administrator & Volunteer Educator",
         school: "Learnivia Core Team",
-        volunteerHours: 25.0,
+        volunteerHours: 0.0,
       },
     });
   }

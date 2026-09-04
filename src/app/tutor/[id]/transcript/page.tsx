@@ -41,6 +41,9 @@ export default async function TutorTranscriptPage({ params }: Props) {
         include: { student: true },
         orderBy: { startTime: "desc" },
       },
+      workshops: {
+        where: { status: "COMPLETED" },
+      },
       reviews: {
         include: { student: true },
         orderBy: { createdAt: "desc" },
@@ -53,6 +56,18 @@ export default async function TutorTranscriptPage({ params }: Props) {
   }
 
   const completedSessions = tutor.tutorBookings;
+  const completedWorkshops = tutor.workshops || [];
+  const bookingMinutes = completedSessions.reduce((acc, b) => {
+    const dur = Math.max(15, (new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / (1000 * 60));
+    return acc + dur;
+  }, 0);
+  const workshopMinutes = completedWorkshops.reduce((acc, w) => {
+    const dur = Math.max(15, (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / (1000 * 60));
+    return acc + dur;
+  }, 0);
+  const realVolunteerHours = Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
+  const totalSessionsCount = completedSessions.length + completedWorkshops.length;
+
   const uniqueLearners = new Set(completedSessions.map((s) => s.studentId)).size;
   const avgRating =
     tutor.reviews.length > 0
@@ -105,21 +120,29 @@ export default async function TutorTranscriptPage({ params }: Props) {
               This official transcript certifies that the individual named below has actively volunteered as an approved peer tutor on Learnivia, delivering free, interactive academic support to learners worldwide.
             </p>
             <div className={styles.tutorHighlight}>{tutor.user.name}</div>
-            {tutor.school && (
-              <div className={styles.schoolTag}>
-                Affiliation: <strong>{tutor.school}</strong>
-              </div>
-            )}
+            <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+              {tutor.school && (
+                <div className={styles.schoolTag}>
+                  Affiliation: <strong>{tutor.school}</strong>
+                </div>
+              )}
+              {(tutor.user.grade || tutor.currentGrade || tutor.user.curriculum) && (
+                <div className={styles.schoolTag}>
+                  Academic Grade: <strong>{tutor.user.grade || tutor.currentGrade || "Senior Secondary"}</strong>
+                  {tutor.user.curriculum ? ` (${tutor.user.curriculum})` : ""}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Impact Metrics Grid */}
           <div className={styles.statsGrid}>
             <div className={styles.statCard}>
-              <span className={styles.statValue}>{tutor.volunteerHours.toFixed(1)}</span>
+              <span className={styles.statValue}>{realVolunteerHours.toFixed(1)}</span>
               <span className={styles.statLabel}>Verified Hours</span>
             </div>
             <div className={styles.statCard}>
-              <span className={styles.statValue}>{completedSessions.length}</span>
+              <span className={styles.statValue}>{totalSessionsCount}</span>
               <span className={styles.statLabel}>Sessions Completed</span>
             </div>
             <div className={styles.statCard}>

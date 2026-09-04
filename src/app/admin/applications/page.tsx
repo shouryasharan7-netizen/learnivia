@@ -32,6 +32,7 @@ export default async function AdminApplicationsPage() {
                   <p style={{ color: "var(--color-text-muted)", fontSize: "0.875rem" }}>
                     {tutor.user.email} • Applied {new Date(tutor.createdAt).toLocaleDateString()}
                     {tutor.school ? ` • ${tutor.school}` : ""}
+                    {tutor.user.grade ? ` • Academic Standing: ${tutor.user.grade}${tutor.user.curriculum ? ` (${tutor.user.curriculum})` : ""}` : ""}
                   </p>
                 </div>
                 <span style={{ background: "var(--color-warning-bg)", color: "var(--color-warning)", padding: "0.25rem 0.75rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" }}>

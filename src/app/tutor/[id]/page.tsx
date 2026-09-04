@@ -21,6 +21,12 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
       user: true,
       subjects: true,
       gradeLevels: true,
+      tutorBookings: {
+        where: { status: "COMPLETED" },
+      },
+      workshops: {
+        where: { status: "COMPLETED" },
+      },
       reviews: {
         include: { student: true },
         orderBy: { createdAt: "desc" },
@@ -31,6 +37,16 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
   if (!tutorProfile || tutorProfile.status !== "APPROVED") {
     notFound();
   }
+
+  const bookingMinutes = (tutorProfile.tutorBookings || []).reduce((sum, b) => {
+    const dur = Math.max(15, (new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / (1000 * 60));
+    return sum + dur;
+  }, 0);
+  const workshopMinutes = (tutorProfile.workshops || []).reduce((sum, w) => {
+    const dur = Math.max(15, (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / (1000 * 60));
+    return sum + dur;
+  }, 0);
+  const realVolunteerHours = Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
 
   const avgRating =
     tutorProfile.reviews.length > 0
@@ -54,7 +70,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
         <div className={styles.metaInfo}>
           <div className={styles.metaItem}>
             <span>Volunteer Impact</span>
-            <strong>{tutorProfile.volunteerHours.toFixed(1)} hrs</strong>
+            <strong>{realVolunteerHours.toFixed(1)} hrs</strong>
           </div>
           {avgRating && (
             <div className={styles.metaItem}>
