@@ -83,17 +83,72 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
             )}
 
             {isRegister && (
-              <div className={styles.inputGroup}>
-                <label htmlFor="name">Full Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  placeholder="e.g. Maya Lin"
-                  required={isRegister}
-                  autoComplete="name"
-                />
-              </div>
+              <>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="name">Full Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    placeholder="e.g. Maya Lin"
+                    required={isRegister}
+                    autoComplete="name"
+                  />
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                  <div className={styles.inputGroup}>
+                    <label htmlFor="age">Age</label>
+                    <input
+                      id="age"
+                      type="number"
+                      name="age"
+                      min="6"
+                      max="30"
+                      placeholder="e.g. 15"
+                      required={isRegister}
+                    />
+                  </div>
+                  <div className={styles.inputGroup}>
+                    <label htmlFor="grade">Grade / Level</label>
+                    <select
+                      id="grade"
+                      name="grade"
+                      required={isRegister}
+                      style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
+                    >
+                      <option value="">Select...</option>
+                      <option value="Primary (Years 1-6)">Primary (Years 1–6)</option>
+                      <option value="Middle School (Grades 6-8)">Middle School (Grades 6–8)</option>
+                      <option value="Grade 9">Grade 9 / Freshman</option>
+                      <option value="Grade 10">Grade 10 / Sophomore</option>
+                      <option value="Grade 11">Grade 11 / Junior</option>
+                      <option value="Grade 12">Grade 12 / Senior</option>
+                      <option value="University">University / College</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label htmlFor="curriculum">Curriculum</label>
+                  <select
+                    id="curriculum"
+                    name="curriculum"
+                    required={isRegister}
+                    style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
+                  >
+                    <option value="">Select curriculum...</option>
+                    <option value="IB">IB (International Baccalaureate)</option>
+                    <option value="AP">AP (Advanced Placement)</option>
+                    <option value="US Common Core">US Common Core</option>
+                    <option value="CBSE">CBSE</option>
+                    <option value="ICSE">ICSE</option>
+                    <option value="IGCSE">IGCSE / GCSE</option>
+                    <option value="A-Level">A-Levels</option>
+                    <option value="Other">Other National Curriculum</option>
+                  </select>
+                </div>
+              </>
             )}
 
             <div className={styles.inputGroup}>

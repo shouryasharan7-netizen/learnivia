@@ -17,7 +17,7 @@ type Props = {
 export default async function CommunityPage({ searchParams }: Props) {
   const session = await auth();
   const { channel } = await searchParams;
-  const initialMessages = getMessages(channel);
+  const initialMessages = await getMessages(channel);
 
   const currentUser = session?.user
     ? {

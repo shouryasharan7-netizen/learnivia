@@ -40,6 +40,11 @@ export async function loginWithEmail(formData: FormData) {
       return { error: "An account with this email already exists. Please sign in instead." };
     }
 
+    const rawAge = formData.get("age") as string;
+    const age = rawAge ? parseInt(rawAge, 10) : undefined;
+    const grade = ((formData.get("grade") as string) || "").trim() || undefined;
+    const curriculum = ((formData.get("curriculum") as string) || "").trim() || undefined;
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const isAdmin = ADMIN_EMAILS.has(email);
 
@@ -50,6 +55,9 @@ export async function loginWithEmail(formData: FormData) {
         name: name || email.split("@")[0],
         role: isAdmin ? "ADMIN" : "STUDENT",
         onboardingCompleted: false,
+        age: isNaN(age as number) ? undefined : age,
+        grade,
+        curriculum,
       },
     });
 

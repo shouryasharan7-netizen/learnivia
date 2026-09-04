@@ -68,6 +68,10 @@ model User {
   password      String?
   onboardingCompleted Boolean @default(false)
   primaryGoal   String?
+  age           Int?
+  grade         String?
+  curriculum    String?
+  points        Int       @default(0)
   
   accounts      Account[]
   sessions      Session[]
@@ -87,6 +91,10 @@ model User {
   // Incident reports
   reportsFiled    IncidentReport[] @relation("ReportsFiled")
   reportsReceived IncidentReport[] @relation("ReportsReceived")
+
+  // Homework & Community relations
+  homeworkRequests  HomeworkRequest[]
+  communityMessages CommunityMessage[]
 }
 
 model TutorProfile {
@@ -104,6 +112,11 @@ model TutorProfile {
   status          TutorStatus @default(PENDING)
   volunteerHours  Float       @default(0.0)
 
+  curricula       String?     // Comma separated list e.g. "IB, AP, CBSE, IGCSE, US Common Core"
+  minAge          Int?
+  maxAge          Int?
+  targetGrades    String?
+
   gradeLevels     GradeLevel[]
   subjects        Subject[]
   availabilities  Availability[]
@@ -116,6 +129,9 @@ model TutorProfile {
   
   // Reviews received by this tutor
   reviews         Review[]
+
+  // Homework requests claimed/answered by this tutor
+  claimedHomeworks HomeworkRequest[]
   
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -175,6 +191,9 @@ model Booking {
   
   status          BookingStatus @default(CONFIRMED)
   zoomLink        String?       @db.Text
+  recordingUrl    String?       @db.Text
+  checkUpNote     String?       @db.Text
+  checkUpSent     Boolean       @default(false)
   cancelReason    String?       @db.Text
   maxParticipants Int           @default(1)
   
@@ -251,13 +270,16 @@ model Workshop {
   description String         @db.Text
   subject     String
   grade       String
+  curriculum  String?
   
   startTime   DateTime
   endTime     DateTime
   
-  zoomLink    String?        @db.Text
-  maxCapacity Int            @default(10)
-  status      WorkshopStatus @default(UPCOMING)
+  zoomLink     String?        @db.Text
+  recordingUrl String?        @db.Text
+  checkUpNote  String?        @db.Text
+  maxCapacity  Int            @default(10)
+  status       WorkshopStatus @default(UPCOMING)
   
   enrollments WorkshopEnrollment[]
   
@@ -301,3 +323,46 @@ model IncidentReport {
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 }
+
+model HomeworkRequest {
+  id              String        @id @default(cuid())
+  studentId       String
+  student         User          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  subject         String
+  question        String        @db.Text
+  preferredFormat String        @default("zoom") // "zoom" or "chat"
+  grade           String?
+  curriculum      String?
+  
+  status          String        @default("OPEN") // "OPEN", "ANSWERED", "RESOLVED"
+  answer          String?       @db.Text
+  
+  tutorId         String?
+  tutor           TutorProfile? @relation(fields: [tutorId], references: [id], onDelete: SetNull)
+  
+  zoomLink        String?       @db.Text
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model CommunityMessage {
+  id              String        @id @default(cuid())
+  channel         String        @default("General")
+  
+  authorId        String?
+  author          User?         @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorName      String
+  authorEmail     String?
+  authorRole      String
+  authorInitials  String
+  authorColor     String
+  
+  content         String        @db.Text
+  reactions       Json?
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+

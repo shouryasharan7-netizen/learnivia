@@ -6,13 +6,14 @@ import { cancelBooking } from "@/app/actions/sessions";
 import { cancelWorkshopEnrollment } from "@/app/actions/workshops";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
+import { calculateUserStats } from "@/lib/stats";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = {
   title: "Dashboard — Learnivia",
-  description: "Your personalized Learnivia peer learning dashboard.",
+  description: "Your personalized Learnivia peer learning dashboard with real-time tracked minutes and sessions.",
 };
 
 const FAST_CARDS = [
@@ -22,8 +23,8 @@ const FAST_CARDS = [
     badgeBg: "#7C3AED",
     badgeText: "SAT",
     hasDot: true,
-    title: "SAT",
-    desc: "Join intensive SAT prep sessions",
+    title: "SAT Prep",
+    desc: "Join live SAT practice & strategy rooms",
     href: "/sessions?subject=SAT+Prep",
   },
   {
@@ -32,9 +33,9 @@ const FAST_CARDS = [
     badgeBg: "#2563EB",
     badgeText: "CAW",
     hasDot: true,
-    title: "College Admissions Workshops",
-    desc: "Get advice from college students",
-    href: "/sessions?subject=College+Admissions",
+    title: "College Mentorship",
+    desc: "Workshops led by university students",
+    href: "/sessions?subject=College+Prep",
   },
   {
     id: "dia",
@@ -43,7 +44,7 @@ const FAST_CARDS = [
     badgeText: "DIA",
     hasDot: true,
     title: "Dialogues",
-    desc: "Discuss interesting topics with peers",
+    desc: "Global peer discussions and circles",
     href: "/community",
   },
   {
@@ -51,8 +52,8 @@ const FAST_CARDS = [
     icon: "search",
     iconBg: "#E6F4EA",
     iconColor: "#0E8345",
-    title: "Community Sessions",
-    desc: "Choose a subject to learn",
+    title: "Find a Session",
+    desc: "Filter by subject, grade, and curriculum",
     href: "/sessions",
   },
   {
@@ -61,7 +62,7 @@ const FAST_CARDS = [
     iconBg: "#F3E8FF",
     iconColor: "#7C3AED",
     title: "Homework Help",
-    desc: "Get instant help with your work",
+    desc: "Ask questions or get live Zoom solutions",
     href: "/homework-help",
   },
 ];
@@ -81,27 +82,41 @@ export default async function StudentDashboard() {
     );
   }
 
-  const [upcomingBookings, completedBookings, enrolledWorkshops, tutorProfile] = await Promise.all([
+  const now = new Date();
+
+  // Run database queries and real-time stats calculation concurrently
+  const [
+    stats,
+    upcomingBookings,
+    completedBookings,
+    enrolledWorkshops,
+    tutorProfile,
+  ] = await Promise.all([
+    calculateUserStats(user.id),
     prisma.booking.findMany({
       where: { 
         studentId: user.id,
-        status: "CONFIRMED"
+        status: "CONFIRMED",
+        endTime: { gte: now },
       },
       include: {
-        tutor: { include: { user: true } }
+        tutor: { include: { user: true } },
       },
-      orderBy: { startTime: "asc" }
+      orderBy: { startTime: "asc" },
     }),
     prisma.booking.findMany({
       where: { 
         studentId: user.id,
-        status: "COMPLETED"
+        OR: [
+          { status: "COMPLETED" },
+          { status: "CONFIRMED", endTime: { lt: now } },
+        ],
       },
       include: {
-        tutor: { include: { user: true } }
+        tutor: { include: { user: true } },
       },
       orderBy: { startTime: "desc" },
-      take: 5,
+      take: 8,
     }),
     prisma.workshopEnrollment.findMany({
       where: { studentId: user.id },
@@ -119,9 +134,15 @@ export default async function StudentDashboard() {
     }),
   ]);
 
-  const isTutor = user.isTutor;
-  const userRole = user.role;
+  const upcomingWorkshops = enrolledWorkshops.filter(
+    (e) => e.workshop.status === "UPCOMING" && new Date(e.workshop.endTime) >= now
+  );
 
+  const completedWorkshops = enrolledWorkshops.filter(
+    (e) => e.workshop.status === "COMPLETED" || new Date(e.workshop.endTime) < now
+  );
+
+  const isTutor = user.isTutor;
   const userName = user.name || "Learner";
   const userInitials = user.name
     ? user.name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
@@ -130,17 +151,17 @@ export default async function StudentDashboard() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {/* 1. Hero Promo Banner (Sky blue illustrated) */}
+        {/* 1. Hero Promo Banner */}
         <section className={styles.promoBanner}>
           <div className={styles.promoContent}>
             <h1 className={styles.promoTitle}>
-              Sign up for college admissions workshops
+              Connect with peer mentors around the globe
             </h1>
             <p className={styles.promoSubtitle}>
-              Work with a current college student to create your college list, fill out your college apps, and write your college essays!
+              Work with volunteer tutors for step-by-step homework help, AP/SAT prep, and small group masterclasses.
             </p>
             <Link href="/sessions" className={styles.promoBtn}>
-              See available workshops
+              Find sessions for your grade →
             </Link>
           </div>
 
@@ -150,14 +171,10 @@ export default async function StudentDashboard() {
               <span className={styles.deskLaptop}>💻</span>
               <span className={styles.deskBooks}>📚</span>
             </div>
-            <div className={styles.carouselDots}>
-              <span className={`${styles.dot} ${styles.dotActive}`} />
-              <span className={styles.dot} />
-            </div>
           </div>
         </section>
 
-        {/* 2. Fast-Access Feature Cards (Row of 5 cards) */}
+        {/* 2. Fast-Access Feature Cards */}
         <section className={styles.fastCardsGrid} aria-label="Learning pathways">
           {FAST_CARDS.map((card) => (
             <Link key={card.id} href={card.href} className={styles.fastCard}>
@@ -185,7 +202,7 @@ export default async function StudentDashboard() {
           ))}
         </section>
 
-        {/* 3. User Progress & Stats Strip */}
+        {/* 3. User Progress & Genuine Real-Time Stats Strip */}
         <section className={styles.userStrip} aria-label="Student progress">
           <div className={styles.userProfileBlock}>
             <div className={styles.avatarCircle}>{userInitials}</div>
@@ -207,28 +224,24 @@ export default async function StudentDashboard() {
                 )}
               </div>
               <div className={styles.userLinks}>
+                {stats.grade && (
+                  <span style={{ fontSize: "0.75rem", color: "#64748B", fontWeight: 600 }}>
+                    {stats.grade} {stats.curriculum ? `• ${stats.curriculum}` : ""}
+                  </span>
+                )}
                 {isTutor ? (
                   <>
                     <Link href="/tutor" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700 }}>
                       💻 Tutor Dashboard
                     </Link>
                     <Link href="/tutor/transcript" className={styles.metaLink}>
-                      📜 Verified Hours
-                    </Link>
-                  </>
-                ) : tutorProfile?.status === "PENDING" ? (
-                  <>
-                    <Link href="/tutor" className={styles.metaLink} style={{ color: "#D97706", fontWeight: 700 }}>
-                      ⏳ Application Status
-                    </Link>
-                    <Link href="/resources" className={styles.metaLink}>
-                      📚 Study Guides
+                      📜 Verified Hours ({stats.volunteerHours} hrs)
                     </Link>
                   </>
                 ) : (
                   <>
-                    <Link href="/resources" className={styles.metaLink}>
-                      📚 Study Guides
+                    <Link href="/sessions" className={styles.metaLink}>
+                      🗓️ Browse Sessions
                     </Link>
                     <Link href="/apply" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700 }}>
                       🌱 Become a Tutor
@@ -239,26 +252,41 @@ export default async function StudentDashboard() {
             </div>
           </div>
 
+          {/* Real-time Dynamic Stats Calculation */}
           <div className={styles.statsBlock}>
+            {/* Rank Pill */}
+            <div className={styles.rankPill}>
+              <span>🏅</span>
+              <div>
+                <span style={{ fontSize: "1.05rem", fontWeight: 800 }}>#{stats.rank}</span>
+                <span style={{ display: "block", fontSize: "0.68rem", opacity: 0.85 }}>
+                  of {stats.totalUsers} learners
+                </span>
+              </div>
+            </div>
+
+            {/* Study Points Pill */}
             <div className={styles.statPill}>
               <span className={styles.statIcon}>🏆</span>
               <div className={styles.statValueCol}>
-                <span className={styles.statNumber}>186</span>
+                <span className={styles.statNumber}>{stats.points.toLocaleString()}</span>
                 <span className={styles.statUnit}>SP</span>
               </div>
             </div>
 
+            {/* Real Learning Minutes Pill */}
             <div className={styles.statPill}>
               <span className={styles.statIcon}>⏱️</span>
               <div className={styles.statValueCol}>
-                <span className={styles.statNumber}>2,233</span>
+                <span className={styles.statNumber}>{stats.learningMinutes.toLocaleString()}</span>
                 <span className={styles.statUnit}>Learning minutes</span>
               </div>
             </div>
 
-            <Link href="/community" className={styles.leaderboardLink}>
+            {/* Real-time Leaderboard Link */}
+            <Link href="/leaderboard" className={styles.leaderboardLink}>
               <span className={styles.leaderboardIcons}>🥇 👥 🥈</span>
-              <span>Leaderboards</span>
+              <span>Leaderboard</span>
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -268,21 +296,21 @@ export default async function StudentDashboard() {
 
         {/* 4. Two Columns: Upcoming Sessions & Tasks */}
         <div className={styles.twoColGrid}>
-          {/* Left Column: Upcoming Sessions */}
+          {/* Left Column: Upcoming & Past Sessions */}
           <section className={styles.sessionsCol}>
             <div className={styles.colHeader}>
               <h2 className={styles.colTitle}>Upcoming Sessions</h2>
               <Link href="/sessions" className={styles.viewAllLink}>
-                View All &gt;
+                Find more &gt;
               </Link>
             </div>
 
-            {upcomingBookings.length === 0 && enrolledWorkshops.length === 0 ? (
+            {upcomingBookings.length === 0 && upcomingWorkshops.length === 0 ? (
               <div className={styles.emptyCard}>
                 <div className={styles.emptyIcon} aria-hidden="true">🗓️</div>
                 <h3 className={styles.emptyTitle}>No upcoming sessions</h3>
                 <p className={styles.emptyText}>
-                  Explore live sessions starting this week or book a 1-on-1 session with a volunteer tutor.
+                  Explore live small-group sessions or book a free 1-on-1 session with a peer tutor.
                 </p>
                 <Link href="/sessions" className={styles.browseBtn}>
                   Find a Session →
@@ -318,7 +346,7 @@ export default async function StudentDashboard() {
                 })}
 
                 {/* Enrolled workshops */}
-                {enrolledWorkshops.map((e) => {
+                {upcomingWorkshops.map((e) => {
                   const { joinUrl } = getMeetingUrls(e.workshop.zoomLink);
                   return (
                     <div key={e.id} className={styles.bookingCard}>
@@ -347,30 +375,145 @@ export default async function StudentDashboard() {
               </div>
             )}
 
-            {/* Completed sessions */}
-            {completedBookings.length > 0 && (
-              <div className={styles.completedBlock}>
-                <h3 className={styles.subHeading}>Past Completed Sessions</h3>
-                <div className={styles.completedList}>
-                  {completedBookings.map((b) => (
-                    <div key={b.id} className={styles.completedRow}>
-                      <div>
-                        <strong>{b.subject}</strong> with {b.tutor.user.name}
-                        <span className={styles.completedDate}>
-                          ✓ {new Date(b.startTime).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <Link href={`/tutor/${b.tutorId}`} className={styles.viewTutorBtn}>
-                        View Tutor
-                      </Link>
-                    </div>
-                  ))}
-                </div>
+            {/* Past Completed Sessions with Tracked Minutes, Recordings & Re-booking */}
+            <div className={styles.completedBlock}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                <h3 className={styles.subHeading} style={{ margin: 0 }}>
+                  Past Completed Sessions ({completedBookings.length + completedWorkshops.length})
+                </h3>
+                <span style={{ fontSize: "0.8rem", color: "#64748B", fontWeight: 600 }}>
+                  ⏱️ {stats.learningMinutes} total learning minutes
+                </span>
               </div>
-            )}
+
+              {completedBookings.length === 0 && completedWorkshops.length === 0 ? (
+                <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: 12, padding: "1.5rem", textAlign: "center", color: "#64748B", fontSize: "0.875rem" }}>
+                  No past sessions recorded yet. Completed tutoring sessions and class recordings will appear here automatically!
+                </div>
+              ) : (
+                <div className={styles.completedList}>
+                  {/* Past 1-on-1 Sessions */}
+                  {completedBookings.map((b) => {
+                    const durationMins = Math.max(
+                      15,
+                      Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000)
+                    );
+                    const tutorFirstName = b.tutor.user.name?.split(" ")[0] || "Tutor";
+
+                    return (
+                      <div key={b.id} className={styles.completedRow}>
+                        <div className={styles.completedRowHeader}>
+                          <div>
+                            <strong style={{ fontSize: "0.95rem", color: "#1E293B" }}>{b.subject}</strong>
+                            <span style={{ color: "#64748B" }}> with {b.tutor.user.name}</span>
+                            {b.topic && (
+                              <p style={{ margin: "0.2rem 0 0", fontSize: "0.8rem", color: "#475569" }}>
+                                Topic: {b.topic}
+                              </p>
+                            )}
+                            <span className={styles.completedDate}>
+                              ✓ Completed on {new Date(b.startTime).toLocaleDateString()}
+                            </span>
+                          </div>
+
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                            <span className={styles.durationBadge}>
+                              ⏱️ {durationMins} mins
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Follow-up / Tutor Check-up Note */}
+                        {b.checkUpNote && (
+                          <div className={styles.checkUpBox}>
+                            <strong>📝 Tutor Follow-up &amp; Notes:</strong>
+                            <p style={{ margin: "0.25rem 0 0" }}>{b.checkUpNote}</p>
+                          </div>
+                        )}
+
+                        {/* Action buttons: Re-book with Tutor, Zoom recording */}
+                        <div className={styles.completedActions}>
+                          <Link href={`/tutor/${b.tutorId}`} className={styles.bookAgainBtn}>
+                            <span>🔄</span> Book with {tutorFirstName} Again
+                          </Link>
+
+                          {b.recordingUrl ? (
+                            <a
+                              href={b.recordingUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.recordingBtn}
+                            >
+                              <span>🎥</span> Watch Class Recording
+                            </a>
+                          ) : (
+                            <span style={{ fontSize: "0.75rem", color: "#94A3B8" }}>
+                              🎥 Recording sent via email or direct link
+                            </span>
+                          )}
+
+                          <Link href={`/tutor/${b.tutorId}#reviews`} className={styles.viewTutorBtn}>
+                            ⭐ Review Tutor (+15 SP)
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* Past Group Workshops */}
+                  {completedWorkshops.map((e) => {
+                    const durationMins = Math.max(
+                      15,
+                      Math.round((new Date(e.workshop.endTime).getTime() - new Date(e.workshop.startTime).getTime()) / 60000)
+                    );
+                    const hostName = e.workshop.tutor.user.name || "Tutor";
+                    const hostFirstName = hostName.split(" ")[0];
+
+                    return (
+                      <div key={e.id} className={styles.completedRow}>
+                        <div className={styles.completedRowHeader}>
+                          <div>
+                            <strong style={{ fontSize: "0.95rem", color: "#1E293B" }}>
+                              [Workshop] {e.workshop.title}
+                            </strong>
+                            <span style={{ color: "#64748B" }}> • Host: {hostName}</span>
+                            <span className={styles.completedDate}>
+                              ✓ Completed on {new Date(e.workshop.startTime).toLocaleDateString()}
+                            </span>
+                          </div>
+
+                          <span className={styles.durationBadge}>
+                            ⏱️ {durationMins} mins
+                          </span>
+                        </div>
+
+                        {e.workshop.recordingUrl && (
+                          <div style={{ marginTop: "0.25rem" }}>
+                            <a
+                              href={e.workshop.recordingUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.recordingBtn}
+                            >
+                              <span>🎥</span> Watch Workshop Recording
+                            </a>
+                          </div>
+                        )}
+
+                        <div className={styles.completedActions}>
+                          <Link href={`/tutor/${e.workshop.tutorId}`} className={styles.bookAgainBtn}>
+                            <span>🔄</span> Book 1-on-1 with {hostFirstName} Again
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </section>
 
-          {/* Right Column: Tasks */}
+          {/* Right Column: Tasks & Profile */}
           <section className={styles.tasksCol}>
             <div className={styles.colHeader}>
               <h2 className={styles.colTitle}>Tasks</h2>
@@ -382,26 +525,34 @@ export default async function StudentDashboard() {
                   <span className={styles.checkCircle}>✓</span>
                   <div>
                     <strong className={styles.taskTitle}>Welcome to Learnivia!</strong>
-                    <p className={styles.taskDesc}>Your account is active and ready for peer learning.</p>
+                    <p className={styles.taskDesc}>Your account is active with real-time stats tracking.</p>
+                  </div>
+                </li>
+                <li className={styles.taskItem}>
+                  <span className={stats.completedSessions > 0 ? styles.checkCircle : styles.pendingCircle}>
+                    {stats.completedSessions > 0 ? "✓" : "○"}
+                  </span>
+                  <div>
+                    <strong className={styles.taskTitle}>Attend Your First Peer Session</strong>
+                    <p className={styles.taskDesc}>
+                      {stats.completedSessions > 0
+                        ? `Great job! You have attended ${stats.completedSessions} session(s).`
+                        : "Join a small group workshop or 1-on-1 session to start earning SP."}
+                    </p>
+                    {stats.completedSessions === 0 && (
+                      <Link href="/sessions" className={styles.taskActionLink}>
+                        Browse sessions →
+                      </Link>
+                    )}
                   </div>
                 </li>
                 <li className={styles.taskItem}>
                   <span className={styles.pendingCircle}>○</span>
                   <div>
-                    <strong className={styles.taskTitle}>RSVP for a Study Room</strong>
-                    <p className={styles.taskDesc}>Browse upcoming math and science workshops.</p>
-                    <Link href="/sessions" className={styles.taskActionLink}>
-                      Browse sessions →
-                    </Link>
-                  </div>
-                </li>
-                <li className={styles.taskItem}>
-                  <span className={styles.pendingCircle}>○</span>
-                  <div>
-                    <strong className={styles.taskTitle}>Explore Study Guides</strong>
-                    <p className={styles.taskDesc}>Review cheat sheets and problem sets in Tutoring Resources.</p>
-                    <Link href="/resources/study-guides" className={styles.taskActionLink}>
-                      Open guides →
+                    <strong className={styles.taskTitle}>Ask a Homework Question</strong>
+                    <p className={styles.taskDesc}>Get step-by-step assistance or live Zoom explanations.</p>
+                    <Link href="/homework-help" className={styles.taskActionLink}>
+                      Open Homework Help →
                     </Link>
                   </div>
                 </li>
@@ -413,7 +564,7 @@ export default async function StudentDashboard() {
               <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #E6F4EA 100%)", borderColor: "#DCFCE7" }}>
                 <h3 className={styles.sideCardTitle} style={{ color: "#0E8345" }}>⚡ Tutor Quick Portal</h3>
                 <p className={styles.sideCardText}>
-                  You have verified tutor privileges. Host small-group workshops, manage 1-on-1 time slots, and track your volunteer service ledger.
+                  Verified Tutor: You have logged {stats.volunteerHours} hours of tutoring. Host small-group workshops and answer live homework questions.
                 </p>
                 <div className={styles.sideCardLinks}>
                   <Link href="/tutor#schedule-session" className={styles.reportLink} style={{ background: "#0E8345", color: "#FFFFFF" }}>

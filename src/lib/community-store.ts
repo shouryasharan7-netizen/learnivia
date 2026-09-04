@@ -1,3 +1,5 @@
+import { prisma } from "./prisma";
+
 export interface CommunityMessage {
   id: string;
   channel: string;
@@ -16,10 +18,8 @@ export interface CommunityMessage {
   };
 }
 
-// In-memory persistent store with realistic initial community discussions
-const messagesStore: CommunityMessage[] = [
+const DEFAULT_ANNOUNCEMENTS = [
   {
-    id: "msg-1",
     channel: "Announcements",
     authorName: "Learnivia Team",
     authorEmail: "admin@learnivia.org",
@@ -27,111 +27,144 @@ const messagesStore: CommunityMessage[] = [
     authorInitials: "LT",
     authorColor: "#0E8345",
     content: "🎉 Welcome to the Learnivia Community! This is your space to connect with fellow learners and volunteer tutors around the globe. Join live sessions, ask questions in Homework Help, and start study circles in the channels below.",
-    timestamp: "Today at 9:00 AM",
-    reactions: { heart: 24, clap: 19, bulb: 8, fire: 15 },
-  },
-  {
-    id: "msg-2",
-    channel: "Announcements",
-    authorName: "Marcus Sterling",
-    authorEmail: "marcus@learnivia.org",
-    authorRole: "TUTOR",
-    authorInitials: "MS",
-    authorColor: "#7C3AED",
-    content: "📢 Hosting an AP Calculus & Precalculus interactive review session this Thursday at 5:00 PM EST. We'll be walking through integration techniques and chain rule tips. RSVP in the Sessions tab!",
-    timestamp: "Today at 1:30 PM",
-    reactions: { heart: 12, clap: 8, bulb: 14, fire: 5 },
-  },
-  {
-    id: "msg-3",
-    channel: "Introductions",
-    authorName: "Elena Vance",
-    authorEmail: "elena@school.edu",
-    authorRole: "STUDENT",
-    authorInitials: "EV",
-    authorColor: "#2563EB",
-    content: "Hi everyone! 👋 I'm a junior from Chicago studying for the October SAT. Looking forward to practicing with everyone in the SAT Bootcamp and getting help on AP Chemistry!",
-    timestamp: "Today at 2:15 PM",
-    reactions: { heart: 9, clap: 11, bulb: 3, fire: 4 },
-  },
-  {
-    id: "msg-4",
-    channel: "SAT Bootcamp Learners",
-    authorName: "David Chen",
-    authorEmail: "david@college.edu",
-    authorRole: "TUTOR",
-    authorInitials: "DC",
-    authorColor: "#0E8345",
-    content: "Quick tip for Digital SAT Reading: Pay close attention to transition words like 'Furthermore', 'Conversely', and 'Consequently'. They are your roadmap to predicting the author's next assertion before reading the choices!",
-    timestamp: "Today at 3:45 PM",
-    reactions: { heart: 18, clap: 14, bulb: 29, fire: 12 },
-  },
-  {
-    id: "msg-5",
-    channel: "College Admissions Workshop Learners",
-    authorName: "Priya Menon",
-    authorEmail: "priya@university.edu",
-    authorRole: "TUTOR",
-    authorInitials: "PM",
-    authorColor: "#D97706",
-    content: "For everyone finalizing their Common App personal statements: Remember to focus on reflection over narration. 70% of your essay should be about what your experience taught you and how your mindset shifted, not just describing the event.",
-    timestamp: "Today at 4:10 PM",
-    reactions: { heart: 16, clap: 22, bulb: 17, fire: 8 },
-  },
-  {
-    id: "msg-6",
-    channel: "Random",
-    authorName: "Alex Rivera",
-    authorEmail: "alex@learnivia.org",
-    authorRole: "STUDENT",
-    authorInitials: "AR",
-    authorColor: "#DC2626",
-    content: "What's everyone's favorite lo-fi playlist or background sound when grinding through late night problem sets? 🎧",
-    timestamp: "Today at 4:55 PM",
-    reactions: { heart: 7, clap: 4, bulb: 6, fire: 10 },
-  },
-  {
-    id: "msg-7",
-    channel: "Study Circles",
-    authorName: "Hannah Kim",
-    authorEmail: "hannah@hs.org",
-    authorRole: "STUDENT",
-    authorInitials: "HK",
-    authorColor: "#0D9488",
-    content: "Starting a weekend biology study circle for cell respiration and photosynthesis. Who wants to join a 45-min Zoom review session this Saturday?",
-    timestamp: "Today at 5:20 PM",
-    reactions: { heart: 11, clap: 7, bulb: 12, fire: 9 },
+    reactions: { heart: 1, clap: 1, bulb: 1, fire: 1 },
   },
 ];
 
-export function getMessages(channel?: string): CommunityMessage[] {
-  if (!channel || channel === "Home" || channel === "All") {
-    return messagesStore;
+export async function getMessages(channel?: string): Promise<CommunityMessage[]> {
+  try {
+    const where: any = {};
+    if (channel && channel !== "Home" && channel !== "All") {
+      where.channel = { equals: channel, mode: "insensitive" };
+    }
+
+    const count = await prisma.communityMessage.count();
+    if (count === 0) {
+      // Seed default announcement if completely empty
+      for (const item of DEFAULT_ANNOUNCEMENTS) {
+        await prisma.communityMessage.create({
+          data: {
+            channel: item.channel,
+            authorName: item.authorName,
+            authorEmail: item.authorEmail,
+            authorRole: item.authorRole,
+            authorInitials: item.authorInitials,
+            authorColor: item.authorColor,
+            content: item.content,
+            reactions: item.reactions,
+          },
+        });
+      }
+    }
+
+    const rows = await prisma.communityMessage.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      take: 50,
+    });
+
+    return rows.map((r) => {
+      const reactions = (r.reactions as any) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
+      const timeStr = new Date(r.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      const dateStr = new Date(r.createdAt).toLocaleDateString([], { month: "short", day: "numeric" });
+      return {
+        id: r.id,
+        channel: r.channel,
+        authorName: r.authorName,
+        authorEmail: r.authorEmail || "",
+        authorRole: (r.authorRole as any) || "STUDENT",
+        authorInitials: r.authorInitials,
+        authorColor: r.authorColor,
+        content: r.content,
+        timestamp: `${dateStr} at ${timeStr}`,
+        reactions: {
+          heart: Number(reactions.heart) || 0,
+          clap: Number(reactions.clap) || 0,
+          bulb: Number(reactions.bulb) || 0,
+          fire: Number(reactions.fire) || 0,
+        },
+      };
+    });
+  } catch (err) {
+    console.error("Error loading community messages from DB:", err);
+    return [];
   }
-  return messagesStore.filter(
-    (m) => m.channel.toLowerCase() === channel.toLowerCase()
-  );
 }
 
-export function addMessage(msg: Omit<CommunityMessage, "id" | "timestamp" | "reactions">): CommunityMessage {
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-  const dateStr = "Today at " + timeStr;
+export async function addMessage(msg: {
+  channel: string;
+  authorName: string;
+  authorEmail: string;
+  authorRole: "STUDENT" | "TUTOR" | "COMMUNITY LEAD";
+  authorInitials: string;
+  authorColor: string;
+  content: string;
+  authorId?: string;
+}): Promise<CommunityMessage> {
+  const defaultReactions = { heart: 0, clap: 0, bulb: 0, fire: 0 };
 
-  const newMessage: CommunityMessage = {
-    ...msg,
-    id: "msg-" + Date.now() + "-" + Math.random().toString(36).substring(2, 7),
-    timestamp: dateStr,
-    reactions: { heart: 0, clap: 0, bulb: 0, fire: 0 },
+  const created = await prisma.communityMessage.create({
+    data: {
+      channel: msg.channel,
+      authorId: msg.authorId,
+      authorName: msg.authorName,
+      authorEmail: msg.authorEmail,
+      authorRole: msg.authorRole,
+      authorInitials: msg.authorInitials,
+      authorColor: msg.authorColor,
+      content: msg.content,
+      reactions: defaultReactions,
+    },
+  });
+
+  const timeStr = new Date(created.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  return {
+    id: created.id,
+    channel: created.channel,
+    authorName: created.authorName,
+    authorEmail: created.authorEmail || "",
+    authorRole: created.authorRole as any,
+    authorInitials: created.authorInitials,
+    authorColor: created.authorColor,
+    content: created.content,
+    timestamp: `Today at ${timeStr}`,
+    reactions: defaultReactions,
   };
-
-  messagesStore.unshift(newMessage);
-  return newMessage;
 }
 
-export function toggleReaction(messageId: string, reactionType: "heart" | "clap" | "bulb" | "fire"): CommunityMessage | null {
-  const msg = messagesStore.find((m) => m.id === messageId);
-  if (!msg) return null;
-  msg.reactions[reactionType] = (msg.reactions[reactionType] || 0) + 1;
-  return msg;
+export async function toggleReaction(
+  messageId: string,
+  reactionType: "heart" | "clap" | "bulb" | "fire"
+): Promise<CommunityMessage | null> {
+  try {
+    const existing = await prisma.communityMessage.findUnique({
+      where: { id: messageId },
+    });
+    if (!existing) return null;
+
+    const currentReactions = (existing.reactions as any) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
+    currentReactions[reactionType] = (Number(currentReactions[reactionType]) || 0) + 1;
+
+    const updated = await prisma.communityMessage.update({
+      where: { id: messageId },
+      data: { reactions: currentReactions },
+    });
+
+    const timeStr = new Date(updated.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    return {
+      id: updated.id,
+      channel: updated.channel,
+      authorName: updated.authorName,
+      authorEmail: updated.authorEmail || "",
+      authorRole: updated.authorRole as any,
+      authorInitials: updated.authorInitials,
+      authorColor: updated.authorColor,
+      content: updated.content,
+      timestamp: `Today at ${timeStr}`,
+      reactions: currentReactions,
+    };
+  } catch (err) {
+    console.error("Failed to toggle reaction:", err);
+    return null;
+  }
 }

@@ -262,7 +262,27 @@ const FAQS = [
   },
 ];
 
-export default function HomeInteractiveClient() {
+interface HomeInteractiveClientProps {
+  liveSession?: {
+    id: string;
+    title: string;
+    subject: string;
+    description: string;
+    tutorName: string;
+    tutorSchool: string;
+    startTime: string;
+    openSeats: number;
+    maxCapacity: number;
+  } | null;
+  tutorsCount?: number;
+  completedCount?: number;
+}
+
+export default function HomeInteractiveClient({
+  liveSession,
+  tutorsCount = 0,
+  completedCount = 0,
+}: HomeInteractiveClientProps) {
   const [activeTab, setActiveTab] = useState<string>("sat");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -338,34 +358,56 @@ export default function HomeInteractiveClient() {
                     />
                   </div>
                   <div>
-                    <span className={styles.liveIndicator}>Live Study Room</span>
-                    <h3 className={styles.previewTitle}>Digital SAT® Math: Module 2 Hard Problems</h3>
+                    <span className={styles.liveIndicator}>
+                      {liveSession ? "Upcoming Session" : "Live Learning Community"}
+                    </span>
+                    <h3 className={styles.previewTitle}>
+                      {liveSession ? liveSession.title : "1-on-1 Peer Tutoring & Live Study Circles"}
+                    </h3>
                   </div>
                 </div>
 
                 <p className={styles.previewDesc}>
-                  Live review of non-linear functions, circle equations, and Desmos shortcuts with small-group Q&amp;A.
+                  {liveSession
+                    ? liveSession.description || "Interactive peer review with small-group Q&A."
+                    : "Connect directly with verified high-achieving peers for personalized homework help, SAT prep, and concept mastery."}
                 </p>
 
                 <div className={styles.previewMeta}>
                   <div className={styles.metaChip}>
                     <Icons.Clock />
-                    <span>Today at 6:00 PM EST</span>
+                    <span>
+                      {liveSession
+                        ? new Date(liveSession.startTime).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+                        : "Sessions starting daily"}
+                    </span>
                   </div>
                   <div className={styles.metaChip}>
                     <Icons.Users />
-                    <span>3 of 8 seats open</span>
+                    <span>
+                      {liveSession
+                        ? `${liveSession.openSeats} seats available`
+                        : `${tutorsCount > 0 ? `${tutorsCount} Verified Tutors` : "Volunteer Tutors"}`}
+                    </span>
                   </div>
                 </div>
 
                 <div className={styles.previewHostRow}>
-                  <div className={styles.hostAvatar}>AC</div>
-                  <div className={styles.hostInfo}>
-                    <div className={styles.hostName}>Alex Chen</div>
-                    <div className={styles.hostCred}>Stanford &apos;28 • 1580 SAT</div>
+                  <div className={styles.hostAvatar}>
+                    {liveSession
+                      ? liveSession.tutorName.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
+                      : "LV"}
                   </div>
-                  <Link href="/sessions?subject=SAT+Prep" className={styles.previewJoinBtn}>
-                    Join Free
+                  <div className={styles.hostInfo}>
+                    <div className={styles.hostName}>
+                      {liveSession ? liveSession.tutorName : "Learnivia Peer Tutors"}
+                    </div>
+                    <div className={styles.hostCred}>
+                      {liveSession ? liveSession.tutorSchool : "Certified Volunteer Network"}
+                    </div>
+                  </div>
+                  <Link href="/sessions" className={styles.previewJoinBtn}>
+                    {liveSession ? "Join Free" : "Find a Session"}
                   </Link>
                 </div>
               </div>

@@ -5,7 +5,7 @@ import { getMessages, addMessage, toggleReaction } from "@/lib/community-store";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const channel = searchParams.get("channel") || undefined;
-  const messages = getMessages(channel);
+  const messages = await getMessages(channel);
   return NextResponse.json({ messages });
 }
 
@@ -35,8 +35,9 @@ export async function POST(request: Request) {
   const colors = ["#0E8345", "#7C3AED", "#2563EB", "#D97706", "#DC2626", "#0D9488"];
   const color = colors[userName.charCodeAt(0) % colors.length];
 
-  const newMsg = addMessage({
+  const newMsg = await addMessage({
     channel: channel || "Random",
+    authorId: user.id,
     authorName: userName,
     authorEmail: user.email || "",
     authorRole: userRole,
@@ -56,7 +57,7 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: "Missing messageId or reactionType." }, { status: 400 });
   }
 
-  const updated = toggleReaction(messageId, reactionType);
+  const updated = await toggleReaction(messageId, reactionType);
   if (!updated) {
     return NextResponse.json({ error: "Message not found." }, { status: 404 });
   }

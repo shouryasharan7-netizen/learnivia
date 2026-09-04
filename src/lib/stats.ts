@@ -1,0 +1,382 @@
+import { prisma } from "./prisma";
+
+export interface UserStats {
+  learningMinutes: number;
+  tutoringMinutes: number;
+  volunteerHours: number;
+  completedSessions: number;
+  upcomingSessions: number;
+  points: number;
+  rank: number;
+  totalUsers: number;
+  grade?: string | null;
+  age?: number | null;
+  curriculum?: string | null;
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  userId: string;
+  name: string;
+  initials: string;
+  role: string;
+  grade?: string | null;
+  school?: string | null;
+  points: number;
+  learningMinutes: number;
+  volunteerHours: number;
+  completedSessions: number;
+}
+
+/**
+ * Calculates genuine real-time statistics for any user without any mock/fabricated data.
+ */
+export async function calculateUserStats(userId: string): Promise<UserStats> {
+  const now = new Date();
+
+  // Fetch the user with all learning activity relations
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      studentBookings: {
+        include: { tutor: { include: { user: true } } },
+      },
+      workshopEnrollments: {
+        include: { workshop: { include: { tutor: { include: { user: true } } } } },
+      },
+      reviewsGiven: true,
+      homeworkRequests: true,
+      tutorProfile: {
+        include: {
+          tutorBookings: true,
+          workshops: true,
+        },
+      },
+    },
+  });
+
+  if (!user) {
+    return {
+      learningMinutes: 0,
+      tutoringMinutes: 0,
+      volunteerHours: 0,
+      completedSessions: 0,
+      upcomingSessions: 0,
+      points: 0,
+      rank: 1,
+      totalUsers: 1,
+    };
+  }
+
+  // 1. Calculate Learning Minutes from 1-on-1 Student Bookings
+  let completed1on1 = 0;
+  let upcoming1on1 = 0;
+  let studentBookingMinutes = 0;
+
+  for (const b of user.studentBookings) {
+    if (b.status === "CANCELED") continue;
+
+    const start = new Date(b.startTime).getTime();
+    const end = new Date(b.endTime).getTime();
+    const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
+
+    if (b.status === "COMPLETED" || (b.status === "CONFIRMED" && new Date(b.endTime) < now)) {
+      completed1on1 += 1;
+      studentBookingMinutes += durationMins;
+    } else if (b.status === "CONFIRMED" && new Date(b.endTime) >= now) {
+      upcoming1on1 += 1;
+    }
+  }
+
+  // 2. Calculate Learning Minutes from Enrolled Workshops
+  let completedWorkshops = 0;
+  let upcomingWorkshops = 0;
+  let workshopMinutes = 0;
+
+  for (const e of user.workshopEnrollments) {
+    const w = e.workshop;
+    if (w.status === "CANCELED") continue;
+
+    const start = new Date(w.startTime).getTime();
+    const end = new Date(w.endTime).getTime();
+    const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
+
+    if (w.status === "COMPLETED" || (w.status === "UPCOMING" && new Date(w.endTime) < now)) {
+      completedWorkshops += 1;
+      workshopMinutes += durationMins;
+    } else if (w.status === "UPCOMING" && new Date(w.endTime) >= now) {
+      upcomingWorkshops += 1;
+    }
+  }
+
+  const learningMinutes = studentBookingMinutes + workshopMinutes;
+  const completedSessions = completed1on1 + completedWorkshops;
+  const upcomingSessions = upcoming1on1 + upcomingWorkshops;
+
+  // 3. Calculate Tutor Statistics (if applicable)
+  let tutoringMinutes = 0;
+  let completedTutorWorkshops = 0;
+
+  if (user.tutorProfile) {
+    for (const b of user.tutorProfile.tutorBookings) {
+      if (b.status === "CANCELED") continue;
+      const start = new Date(b.startTime).getTime();
+      const end = new Date(b.endTime).getTime();
+      const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
+
+      if (b.status === "COMPLETED" || (b.status === "CONFIRMED" && new Date(b.endTime) < now)) {
+        tutoringMinutes += durationMins;
+      }
+    }
+
+    for (const w of user.tutorProfile.workshops) {
+      if (w.status === "CANCELED") continue;
+      const start = new Date(w.startTime).getTime();
+      const end = new Date(w.endTime).getTime();
+      const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
+
+      if (w.status === "COMPLETED" || (w.status === "UPCOMING" && new Date(w.endTime) < now)) {
+        tutoringMinutes += durationMins;
+        completedTutorWorkshops += 1;
+      }
+    }
+  }
+
+  const volunteerHours = Math.round((tutoringMinutes / 60) * 10) / 10;
+
+  // 4. Calculate Real-Time Study Points (SP)
+  // - 1 SP per 2 minutes learned
+  // - 20 SP per attended completed session
+  // - 15 SP per review submitted
+  // - 10 SP per homework help interaction
+  // - 50 SP per workshop hosted (for tutors)
+  // - 1 SP per 2 minutes volunteered (for tutors)
+  const basePoints = user.points || 0;
+  const learningPoints = Math.floor(learningMinutes / 2);
+  const sessionPoints = completedSessions * 20;
+  const reviewPoints = user.reviewsGiven.length * 15;
+  const homeworkPoints = user.homeworkRequests.length * 10;
+  const tutorPoints = (completedTutorWorkshops * 50) + Math.floor(tutoringMinutes / 2);
+
+  const totalPoints = basePoints + learningPoints + sessionPoints + reviewPoints + homeworkPoints + tutorPoints;
+
+  // 5. Calculate Real-Time Rank across all registered users in DB
+  const allUsers = await prisma.user.findMany({
+    select: {
+      id: true,
+      points: true,
+      studentBookings: {
+        where: {
+          OR: [
+            { status: "COMPLETED" },
+            { status: "CONFIRMED", endTime: { lt: now } },
+          ],
+        },
+        select: { startTime: true, endTime: true },
+      },
+      workshopEnrollments: {
+        where: {
+          workshop: {
+            OR: [
+              { status: "COMPLETED" },
+              { status: "UPCOMING", endTime: { lt: now } },
+            ],
+          },
+        },
+        select: {
+          workshop: { select: { startTime: true, endTime: true } },
+        },
+      },
+      tutorProfile: {
+        select: {
+          tutorBookings: {
+            where: {
+              OR: [
+                { status: "COMPLETED" },
+                { status: "CONFIRMED", endTime: { lt: now } },
+              ],
+            },
+            select: { startTime: true, endTime: true },
+          },
+          workshops: {
+            where: {
+              OR: [
+                { status: "COMPLETED" },
+                { status: "UPCOMING", endTime: { lt: now } },
+              ],
+            },
+            select: { startTime: true, endTime: true },
+          },
+        },
+      },
+    },
+  });
+
+  const scores: { id: string; points: number }[] = allUsers.map((u) => {
+    let mins = 0;
+    let sessions = 0;
+
+    for (const b of u.studentBookings) {
+      mins += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+      sessions += 1;
+    }
+    for (const e of u.workshopEnrollments) {
+      mins += Math.max(15, Math.round((new Date(e.workshop.endTime).getTime() - new Date(e.workshop.startTime).getTime()) / 60000));
+      sessions += 1;
+    }
+
+    let tutorMins = 0;
+    let tutorWorkshops = 0;
+    if (u.tutorProfile) {
+      for (const b of u.tutorProfile.tutorBookings) {
+        tutorMins += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+      }
+      for (const w of u.tutorProfile.workshops) {
+        tutorMins += Math.max(15, Math.round((new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / 60000));
+        tutorWorkshops += 1;
+      }
+    }
+
+    const pts = (u.points || 0) + Math.floor(mins / 2) + (sessions * 20) + (tutorWorkshops * 50) + Math.floor(tutorMins / 2);
+    return { id: u.id, points: pts };
+  });
+
+  scores.sort((a, b) => b.points - a.points);
+  const userRankIndex = scores.findIndex((s) => s.id === userId);
+  const rank = userRankIndex >= 0 ? userRankIndex + 1 : 1;
+
+  return {
+    learningMinutes,
+    tutoringMinutes,
+    volunteerHours,
+    completedSessions,
+    upcomingSessions,
+    points: totalPoints,
+    rank,
+    totalUsers: allUsers.length || 1,
+    grade: user.grade,
+    age: user.age,
+    curriculum: user.curriculum,
+  };
+}
+
+/**
+ * Returns the verified real-time platform leaderboard.
+ */
+export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
+  const now = new Date();
+
+  const users = await prisma.user.findMany({
+    take: 100,
+    include: {
+      studentBookings: {
+        where: {
+          OR: [
+            { status: "COMPLETED" },
+            { status: "CONFIRMED", endTime: { lt: now } },
+          ],
+        },
+      },
+      workshopEnrollments: {
+        where: {
+          workshop: {
+            OR: [
+              { status: "COMPLETED" },
+              { status: "UPCOMING", endTime: { lt: now } },
+            ],
+          },
+        },
+        include: { workshop: true },
+      },
+      reviewsGiven: true,
+      homeworkRequests: true,
+      tutorProfile: {
+        include: {
+          tutorBookings: {
+            where: {
+              OR: [
+                { status: "COMPLETED" },
+                { status: "CONFIRMED", endTime: { lt: now } },
+              ],
+            },
+          },
+          workshops: {
+            where: {
+              OR: [
+                { status: "COMPLETED" },
+                { status: "UPCOMING", endTime: { lt: now } },
+              ],
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const entries: LeaderboardEntry[] = users.map((u) => {
+    let learningMinutes = 0;
+    let completedSessions = 0;
+
+    for (const b of u.studentBookings) {
+      learningMinutes += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+      completedSessions += 1;
+    }
+
+    for (const e of u.workshopEnrollments) {
+      learningMinutes += Math.max(15, Math.round((new Date(e.workshop.endTime).getTime() - new Date(e.workshop.startTime).getTime()) / 60000));
+      completedSessions += 1;
+    }
+
+    let tutoringMinutes = 0;
+    let tutorWorkshops = 0;
+
+    if (u.tutorProfile) {
+      for (const b of u.tutorProfile.tutorBookings) {
+        tutoringMinutes += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+      }
+      for (const w of u.tutorProfile.workshops) {
+        tutoringMinutes += Math.max(15, Math.round((new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / 60000));
+        tutorWorkshops += 1;
+      }
+    }
+
+    const volunteerHours = Math.round((tutoringMinutes / 60) * 10) / 10;
+    const pts = (u.points || 0) +
+      Math.floor(learningMinutes / 2) +
+      (completedSessions * 20) +
+      (u.reviewsGiven.length * 15) +
+      (u.homeworkRequests.length * 10) +
+      (tutorWorkshops * 50) +
+      Math.floor(tutoringMinutes / 2);
+
+    const displayName = u.name || (u.email ? u.email.split("@")[0] : "Learner");
+    const initials = displayName
+      .split(" ")
+      .map((n) => n[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+
+    return {
+      rank: 1,
+      userId: u.id,
+      name: displayName,
+      initials,
+      role: u.role === "TUTOR" || u.tutorProfile?.status === "APPROVED" ? "Verified Tutor" : "Student",
+      grade: u.grade || u.tutorProfile?.currentGrade || null,
+      school: u.tutorProfile?.school || null,
+      points: pts,
+      learningMinutes,
+      volunteerHours,
+      completedSessions,
+    };
+  });
+
+  entries.sort((a, b) => b.points - a.points || b.learningMinutes - a.learningMinutes);
+
+  entries.forEach((entry, idx) => {
+    entry.rank = idx + 1;
+  });
+
+  return entries.slice(0, limit);
+}

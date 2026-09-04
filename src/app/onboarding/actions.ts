@@ -12,12 +12,19 @@ export async function completeOnboarding(formData: FormData) {
     }
 
     const primaryGoal = formData.get("primaryGoal") as string;
+    const rawAge = formData.get("age") as string;
+    const age = rawAge ? parseInt(rawAge, 10) : undefined;
+    const grade = (formData.get("grade") as string) || undefined;
+    const curriculum = (formData.get("curriculum") as string) || undefined;
     
     await prisma.user.update({
       where: { id: session.user.id },
       data: {
         onboardingCompleted: true,
         primaryGoal,
+        age: isNaN(age as number) ? undefined : age,
+        grade,
+        curriculum,
       }
     });
 
