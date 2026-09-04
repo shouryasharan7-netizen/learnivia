@@ -50,7 +50,7 @@ export async function suspendTutor(tutorId: string) {
 
   await prisma.tutorProfile.update({
     where: { id: tutorId },
-    data: { status: "REJECTED" },
+    data: { status: "SUSPENDED" },
   });
 
   revalidatePath("/admin/tutors");
@@ -65,6 +65,43 @@ export async function reactivateTutor(tutorId: string) {
     data: { status: "APPROVED" },
   });
 
+  revalidatePath("/admin/tutors");
+  revalidatePath("/admin");
+}
+
+export async function adminUpdateReportCard(tutorId: string, formData: FormData) {
+  await requireAdmin();
+
+  const academicScores = ((formData.get("academicScores") as string) || "").trim() || null;
+  const reportCardLink = ((formData.get("reportCardLink") as string) || "").trim() || null;
+  const reportCardFile = formData.get("reportCardFile") as File | null;
+
+  let reportCardUrl: string | null = reportCardLink;
+  let reportCardName: string | null = reportCardLink ? "Academic Report Card Document" : null;
+
+  if (reportCardFile && reportCardFile.size > 0) {
+    const buffer = Buffer.from(await reportCardFile.arrayBuffer());
+    reportCardUrl = `data:${reportCardFile.type || "application/pdf"};base64,${buffer.toString("base64")}`;
+    reportCardName = reportCardFile.name;
+  }
+
+  const updateData: Record<string, unknown> = {};
+  if (academicScores !== null && academicScores !== "") {
+    updateData.academicScores = academicScores;
+  }
+  if (reportCardUrl) {
+    updateData.reportCardUrl = reportCardUrl;
+    updateData.reportCardName = reportCardName;
+  }
+
+  if (Object.keys(updateData).length > 0) {
+    await prisma.tutorProfile.update({
+      where: { id: tutorId },
+      data: updateData,
+    });
+  }
+
+  revalidatePath("/admin/applications");
   revalidatePath("/admin/tutors");
   revalidatePath("/admin");
 }

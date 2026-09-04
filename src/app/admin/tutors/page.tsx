@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { suspendTutor, reactivateTutor } from "../actions";
+import { suspendTutor, reactivateTutor, approveApplication, adminUpdateReportCard } from "../actions";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -141,13 +141,51 @@ export default async function AdminTutorsPage() {
                           </div>
                         )}
 
+                        {tutor.academicScores && (
+                          <div style={{ fontSize: "0.75rem", color: "#1E3A8A", background: "#EFF6FF", border: "1px solid #DBEAFE", padding: "0.2rem 0.45rem", borderRadius: "4px", marginTop: "0.25rem", fontWeight: 700 }}>
+                            📊 Scores: {tutor.academicScores}
+                          </div>
+                        )}
+
+                        {/* Official Report Card / Academic Transcript */}
+                        {tutor.reportCardUrl ? (
+                          <div style={{ marginTop: "0.3rem" }}>
+                            <a
+                              href={tutor.reportCardUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "0.3rem",
+                                color: "#065F46",
+                                background: "#D1FAE5",
+                                border: "1px solid #A7F3D0",
+                                padding: "0.25rem 0.55rem",
+                                borderRadius: "6px",
+                                fontWeight: 700,
+                                fontSize: "0.75rem",
+                                textDecoration: "none",
+                              }}
+                            >
+                              📄 View Report Card / Transcript ↗
+                            </a>
+                          </div>
+                        ) : (
+                          <div style={{ marginTop: "0.25rem" }}>
+                            <span style={{ fontSize: "0.7rem", color: "#B45309", background: "#FEF3C7", padding: "0.15rem 0.45rem", borderRadius: "4px", fontWeight: 600 }}>
+                              ⚠️ Report Card Pending
+                            </span>
+                          </div>
+                        )}
+
                         {tutor.gradeLevels.length > 0 && (
-                          <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", marginTop: "0.15rem" }}>
+                          <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
                             Teaching: {tutor.gradeLevels.map((g) => g.name).join(", ")}
                           </div>
                         )}
 
-                        {tutor.status === "APPROVED" ? (
+                        {tutor.status === "APPROVED" && (
                           <div style={{ marginTop: "0.35rem" }}>
                             <Link
                               href={`/tutor/${tutor.id}/transcript`}
@@ -159,58 +197,165 @@ export default async function AdminTutorsPage() {
                                 fontSize: "0.75rem",
                               }}
                             >
-                              📜 View Certified Transcript ({realVolunteerHours.toFixed(1)} hrs)
+                              📜 Service Hours Record ({realVolunteerHours.toFixed(1)} hrs)
                             </Link>
                           </div>
-                        ) : (
-                          <div style={{ marginTop: "0.25rem" }}>
-                            <span style={{ fontSize: "0.7rem", color: "#B45309", background: "#FEF3C7", padding: "0.1rem 0.4rem", borderRadius: "4px" }}>
-                              Pending Approval
-                            </span>
-                          </div>
                         )}
+
+                        {/* Admin Quick Report Card Attachment */}
+                        <details style={{ marginTop: "0.35rem" }}>
+                          <summary style={{ fontSize: "0.7rem", color: "var(--color-primary)", cursor: "pointer", fontWeight: 600 }}>
+                            ⚙️ Attach / Edit Report Card
+                          </summary>
+                          <form
+                            action={adminUpdateReportCard.bind(null, tutor.id)}
+                            style={{
+                              marginTop: "0.4rem",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "0.3rem",
+                              background: "#F8FAFC",
+                              padding: "0.5rem",
+                              borderRadius: "6px",
+                              border: "1px solid var(--color-border)",
+                            }}
+                          >
+                            <input
+                              type="text"
+                              name="academicScores"
+                              defaultValue={tutor.academicScores || ""}
+                              placeholder="Academic scores (e.g. CGPA 8.7)"
+                              style={{ padding: "0.3rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid var(--color-border)" }}
+                            />
+                            <input
+                              type="url"
+                              name="reportCardLink"
+                              defaultValue={tutor.reportCardUrl?.startsWith("http") ? tutor.reportCardUrl : ""}
+                              placeholder="Report Card Link (Drive URL)"
+                              style={{ padding: "0.3rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid var(--color-border)" }}
+                            />
+                            <button
+                              type="submit"
+                              style={{
+                                background: "var(--color-navy)",
+                                color: "white",
+                                border: "none",
+                                padding: "0.25rem 0.5rem",
+                                borderRadius: "4px",
+                                fontSize: "0.7rem",
+                                fontWeight: 700,
+                                cursor: "pointer",
+                                alignSelf: "flex-start",
+                              }}
+                            >
+                              Save
+                            </button>
+                          </form>
+                        </details>
                       </div>
                     </td>
-                  <td style={{ padding: "0.75rem" }}>
-                    {tutor.status === "APPROVED" ? (
-                      <form action={suspendTutor.bind(null, tutor.id)}>
-                        <button
-                          type="submit"
-                          style={{
-                            background: "none",
-                            border: "1px solid var(--color-error)",
-                            color: "var(--color-error)",
-                            padding: "0.3rem 0.6rem",
-                            borderRadius: "4px",
-                            fontSize: "0.75rem",
-                            cursor: "pointer",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Suspend
-                        </button>
-                      </form>
-                    ) : (
-                      <form action={reactivateTutor.bind(null, tutor.id)}>
-                        <button
-                          type="submit"
-                          style={{
-                            background: "var(--color-success)",
-                            border: "none",
-                            color: "white",
-                            padding: "0.3rem 0.6rem",
-                            borderRadius: "4px",
-                            fontSize: "0.75rem",
-                            cursor: "pointer",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Reactivate
-                        </button>
-                      </form>
-                    )}
-                  </td>
-                </tr>
+                    <td style={{ padding: "0.75rem" }}>
+                      {tutor.status === "APPROVED" && (
+                        <form action={suspendTutor.bind(null, tutor.id)}>
+                          <button
+                            type="submit"
+                            style={{
+                              background: "none",
+                              border: "1px solid var(--color-error)",
+                              color: "var(--color-error)",
+                              padding: "0.35rem 0.75rem",
+                              borderRadius: "6px",
+                              fontSize: "0.75rem",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                            }}
+                          >
+                            Suspend
+                          </button>
+                        </form>
+                      )}
+
+                      {tutor.status === "PENDING" && (
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                          <form action={approveApplication.bind(null, tutor.id)}>
+                            <button
+                              type="submit"
+                              style={{
+                                background: "var(--color-teal)",
+                                border: "none",
+                                color: "white",
+                                padding: "0.4rem 0.8rem",
+                                borderRadius: "6px",
+                                fontSize: "0.75rem",
+                                cursor: "pointer",
+                                fontWeight: 700,
+                                width: "100%",
+                              }}
+                            >
+                              ✓ Approve Tutor
+                            </button>
+                          </form>
+                          <Link
+                            href="/admin/applications"
+                            style={{
+                              display: "inline-block",
+                              textAlign: "center",
+                              border: "1px solid var(--color-border)",
+                              color: "var(--color-navy)",
+                              background: "white",
+                              padding: "0.25rem 0.5rem",
+                              borderRadius: "6px",
+                              fontSize: "0.7rem",
+                              fontWeight: 600,
+                              textDecoration: "none",
+                            }}
+                          >
+                            Review Details
+                          </Link>
+                        </div>
+                      )}
+
+                      {tutor.status === "SUSPENDED" && (
+                        <form action={reactivateTutor.bind(null, tutor.id)}>
+                          <button
+                            type="submit"
+                            style={{
+                              background: "var(--color-success)",
+                              border: "none",
+                              color: "white",
+                              padding: "0.35rem 0.75rem",
+                              borderRadius: "6px",
+                              fontSize: "0.75rem",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                            }}
+                          >
+                            Reactivate
+                          </button>
+                        </form>
+                      )}
+
+                      {tutor.status === "REJECTED" && (
+                        <form action={approveApplication.bind(null, tutor.id)}>
+                          <button
+                            type="submit"
+                            style={{
+                              background: "var(--color-navy)",
+                              border: "none",
+                              color: "white",
+                              padding: "0.35rem 0.75rem",
+                              borderRadius: "6px",
+                              fontSize: "0.75rem",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                            }}
+                          >
+                            Re-evaluate &amp; Approve
+                          </button>
+                        </form>
+                      )}
+                    </td>
+                  </tr>
               );
             })}
             </tbody>

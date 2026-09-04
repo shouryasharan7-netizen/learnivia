@@ -81,7 +81,7 @@ export default async function TutorDashboard() {
         status: "APPROVED",
         bio: "Administrator & Lead Volunteer Mentor",
         school: "Learnivia Core Team",
-        volunteerHours: 25.0,
+        volunteerHours: 0.0,
       },
       include: {
         availabilities: true,
@@ -111,10 +111,15 @@ export default async function TutorDashboard() {
         <div className={styles.authNoticeCard}>
           <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>⏳</div>
           <h1 className={styles.title}>Application Pending Review</h1>
-          <p>Your tutor application is currently being reviewed by our student safety and moderation team. We&apos;ll notify you via email shortly!</p>
-          <Link href="/dashboard" className={styles.primaryBtn} style={{ marginTop: "1rem" }}>
-            Go to Student Dashboard
-          </Link>
+          <p>Your tutor application is currently being reviewed by the Learnivia Academic Board. Please make sure your official academic report card and scores have been submitted!</p>
+          <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "1.25rem", flexWrap: "wrap" }}>
+            <Link href="/apply" className={styles.primaryBtn} style={{ background: "var(--color-teal)" }}>
+              📄 Upload / Manage Report Card →
+            </Link>
+            <Link href="/dashboard" className={styles.primaryBtn} style={{ background: "#F1F5F9", color: "var(--color-navy)", border: "1px solid var(--color-border)" }}>
+              Go to Dashboard
+            </Link>
+          </div>
         </div>
       </main>
     );

@@ -222,6 +222,68 @@ export default async function StudentDashboard() {
           </div>
         )}
 
+        {/* Tutor Application Status & Report Card Banner */}
+        {tutorProfile && tutorProfile.status === "PENDING" && (
+          <div
+            style={{
+              background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)",
+              border: "1.5px solid #FCD34D",
+              borderRadius: "14px",
+              padding: "1.25rem 1.75rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "1rem",
+              marginBottom: "1.5rem",
+              boxShadow: "0 2px 8px rgba(245, 158, 11, 0.08)",
+            }}
+          >
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
+                <span style={{ fontSize: "1.25rem" }}>📋</span>
+                <span style={{ fontSize: "1rem", fontWeight: 800, color: "#92400E" }}>
+                  Volunteer Tutor Application Under Review
+                </span>
+                <span
+                  style={{
+                    background: "#F59E0B",
+                    color: "#FFFFFF",
+                    fontSize: "0.7rem",
+                    fontWeight: 800,
+                    padding: "0.15rem 0.5rem",
+                    borderRadius: "999px",
+                  }}
+                >
+                  PENDING REVIEW
+                </span>
+              </div>
+              <p style={{ color: "#78350F", fontSize: "0.85rem", margin: 0 }}>
+                {tutorProfile.reportCardUrl
+                  ? "Your academic report card & scores have been submitted and are being reviewed by the Learnivia Academic Board."
+                  : "Action needed: Please upload your academic report card / mark sheet so our team can verify your scores and approve your tutor profile."}
+              </p>
+            </div>
+            <Link
+              href="/apply"
+              style={{
+                background: "#D97706",
+                color: "#FFFFFF",
+                padding: "0.6rem 1.25rem",
+                borderRadius: "8px",
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+              }}
+            >
+              {tutorProfile.reportCardUrl ? "📄 View / Update Report Card →" : "📄 Upload Report Card Now →"}
+            </Link>
+          </div>
+        )}
+
         {/* 1. Hero Promo Banner */}
         <section className={styles.promoBanner}>
           <div className={styles.promoContent}>

@@ -117,6 +117,10 @@ model TutorProfile {
   maxAge          Int?
   targetGrades    String?
 
+  academicScores  String?     @db.Text
+  reportCardUrl   String?     @db.Text
+  reportCardName  String?
+
   gradeLevels     GradeLevel[]
   subjects        Subject[]
   availabilities  Availability[]
