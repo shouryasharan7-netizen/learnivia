@@ -47,7 +47,7 @@ export async function submitApplication(formData: FormData) {
     primary: "Primary (Years 1–6)",
     "lower-secondary": "Lower Secondary (Years 7–9)",
     gcse: "GCSE / O-Level",
-    alevel: "A-Level / AP",
+    alevel: "Grade 9-10",
     university: "University (intro courses)",
   };
 

@@ -9,7 +9,7 @@ export const metadata = {
 const RESOURCE_SECTIONS = [
   {
     title: "Study Guides & Cheat Sheets",
-    description: "Subject summaries, formula sheets, and practice exam breakdowns across Mathematics, Sciences, SAT, and Writing.",
+    description: "Free K–10 study guides, formula sheets, and subject summaries across Mathematics, Sciences, Reading & Writing, and Social Studies.",
     href: "/resources/study-guides",
     icon: "📚",
     tag: "High Impact",

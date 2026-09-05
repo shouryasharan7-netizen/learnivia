@@ -31,17 +31,28 @@ export interface LeaderboardEntry {
 // Fast memory cache for ranking and leaderboard to eliminate heavy relational DB scans
 let cachedUserScores: { id: string; points: number }[] | null = null;
 let lastUserScoresFetch = 0;
-const SCORES_CACHE_TTL = 30000; // 30 seconds
+const SCORES_CACHE_TTL = 120_000; // 2 minutes — ranking barely changes within 30s
 
 let cachedLeaderboard: LeaderboardEntry[] | null = null;
 let lastLeaderboardFetch = 0;
-const LEADERBOARD_CACHE_TTL = 30000; // 30 seconds
+const LEADERBOARD_CACHE_TTL = 300_000; // 5 minutes — leaderboard is stable
+
+// Per-user stats cache: avoids re-querying the same user within a warm serverless instance
+const userStatsCache = new Map<string, { data: UserStats; fetchedAt: number }>();
+const USER_STATS_TTL = 60_000; // 1 minute per-user stats cache
 
 /**
  * Calculates genuine real-time statistics for any user without any mock/fabricated data.
+ * Results are cached per-user for USER_STATS_TTL ms within a warm serverless instance.
  */
 export async function calculateUserStats(userId: string): Promise<UserStats> {
   const now = new Date();
+
+  // Check per-user in-memory cache first
+  const cached = userStatsCache.get(userId);
+  if (cached && Date.now() - cached.fetchedAt < USER_STATS_TTL) {
+    return cached.data;
+  }
 
   // Fetch the user with all learning activity relations
   const user = await prisma.user.findUnique({
@@ -63,6 +74,7 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
       },
     },
   });
+
 
   if (!user) {
     return {
@@ -269,7 +281,7 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
   const userRankIndex = scores.findIndex((s) => s.id === userId);
   const rank = userRankIndex >= 0 ? userRankIndex + 1 : 1;
 
-  return {
+  const result: UserStats = {
     learningMinutes,
     tutoringMinutes,
     volunteerHours,
@@ -282,6 +294,11 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
     age: user.age,
     curriculum: user.curriculum,
   };
+
+  // Store in per-user cache
+  userStatsCache.set(userId, { data: result, fetchedAt: Date.now() });
+
+  return result;
 }
 
 /**

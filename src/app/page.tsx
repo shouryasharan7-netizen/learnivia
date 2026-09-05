@@ -4,11 +4,11 @@ import { prisma } from "@/lib/prisma";
 import HomeInteractiveClient from "./HomeInteractiveClient";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 30; // ISR: 30s cache for live stats
 
 export const metadata = {
-  title: "Learnivia — Free Online Peer Tutoring",
-  description: "Free peer-led tutoring, SAT prep, college admissions mentorship, homework help, and verified volunteer hours for students worldwide.",
+  title: "Learnivia — Free Online Peer Tutoring for K–10 Students",
+  description: "Free 1-on-1 peer tutoring for Kindergarten through Grade 10. Verified volunteer tutors, private Zoom sessions, every learning style supported. No cost, ever.",
 };
 
 export default async function Home() {

@@ -7,7 +7,7 @@ import styles from "./page.module.css";
 
 const SUBJECTS = [
   "Mathematics", "Science", "English", "History", "Biology",
-  "Chemistry", "Physics", "SAT Prep", "Writing", "Other",
+  "Chemistry", "Social Studies", "Learning Support", "Writing", "Other",
 ];
 
 interface HomeworkItem {

@@ -25,7 +25,7 @@ const LEARNIVIA_CHANNELS = [
 
 const COMMUNITY_CHANNELS = [
   { label: "General", desc: "Academic discussions, peer advice, study questions, and general community chat.", icon: "💬" },
-  { label: "SAT Bootcamp Learners", desc: "Strategies, practice question breakdowns, and test prep tips.", icon: "🎯" },
+  { label: "Ku201310 Homework Help", desc: "Ask questions, share solutions, and help fellow Ku201310 learners.", icon: "📚" },
   { label: "College Admissions Workshop Learners", desc: "College list curation, personal essay reviews, and admissions advice.", icon: "🎓" },
   { label: "Study Circles", desc: "Find study partners, group Zoom rooms, and accountability buddies.", icon: "📚" },
 ];

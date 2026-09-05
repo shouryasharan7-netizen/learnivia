@@ -398,7 +398,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Digital SAT or Peer Tutor"
+                    placeholder="e.g. K-10 Mathematics or Learning Support"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     className={styles.formInput}

@@ -95,6 +95,9 @@ model User {
   // Homework & Community relations
   homeworkRequests  HomeworkRequest[]
   communityMessages CommunityMessage[]
+
+  // Parent-managed child profiles (Phase 2)
+  childProfiles     ChildProfile[]      @relation("ParentChildProfiles")
 }
 
 model TutorProfile {
@@ -136,6 +139,12 @@ model TutorProfile {
 
   // Homework requests claimed/answered by this tutor
   claimedHomeworks HomeworkRequest[]
+
+  // Training module completions (Phase 4)
+  trainingModules  TutorTraining[]
+
+  // Volunteer hour audit log (Phase 5)
+  hourAudits       VolunteerHourAudit[]
   
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -369,4 +378,53 @@ model CommunityMessage {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
+
+// ─── Phase 2: Parent-Managed Child Profiles ───────────────────────────────────
+
+model ChildProfile {
+  id                  String   @id @default(cuid())
+  parentId            String
+  parent              User     @relation("ParentChildProfiles", fields: [parentId], references: [id], onDelete: Cascade)
+
+  firstName           String
+  lastInitial         String   // Privacy: Only store last initial for display (e.g. "Priya K.")
+  grade               String   // e.g. "Grade 4"
+  age                 Int?
+  learningPreferences String?  @db.Text // JSON array of preferences e.g. ["visual", "step-by-step"]
+  notes               String?  @db.Text // Parent notes for tutors (no diagnosis required)
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// ─── Phase 4: Tutor Training Module Completion ────────────────────────────────
+
+model TutorTraining {
+  id             String       @id @default(cuid())
+  tutorId        String
+  tutor          TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+
+  moduleId       Int          // 1-5 matching the training module IDs
+  moduleTitle    String
+  completedAt    DateTime     @default(now())
+  quizPassed     Boolean      @default(false)
+
+  @@unique([tutorId, moduleId])
+}
+
+// ─── Phase 5: Volunteer Hour Audit Trail ─────────────────────────────────────
+
+model VolunteerHourAudit {
+  id           String       @id @default(cuid())
+  tutorId      String
+  tutor        TutorProfile @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+
+  adjustedBy   String       // Admin user ID
+  oldHours     Float
+  newHours     Float
+  reason       String       @db.Text // Required reason for the adjustment
+
+  createdAt    DateTime     @default(now())
+}
+
 

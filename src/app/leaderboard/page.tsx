@@ -4,7 +4,7 @@ import Link from "next/link";
 import { auth } from "@/auth";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60; // ISR: 60s cache
 
 export const metadata = {
   title: "Leaderboard — Learnivia",

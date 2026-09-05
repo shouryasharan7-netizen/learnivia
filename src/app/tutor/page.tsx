@@ -193,7 +193,10 @@ export default async function TutorDashboard() {
             <p className={styles.subtitle}>Manage your 1-on-1 tutoring sessions, group bootcamps, and volunteer record.</p>
           </div>
 
-          <div className={styles.headerActions} style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+          <div className={styles.headerActions} style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+            <Link href="/tutor/training" className={styles.transcriptBtn} style={{ background: "rgba(16, 185, 129, 0.08)", borderColor: "rgba(16, 185, 129, 0.3)", color: "#059669", fontWeight: 700 }}>
+              🎓 Training Modules
+            </Link>
             <a href="#schedule-session" className={styles.primaryBtn} style={{ textDecoration: "none" }}>
               ➕ Schedule a Session
             </a>

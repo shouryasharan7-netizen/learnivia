@@ -123,7 +123,7 @@ export default async function FindTutorPage({ searchParams }: Props) {
       <div className={styles.header}>
         <Image src="/images/find-a-tutor.png" alt="Find a tutor mascot" width={120} height={150} className={styles.mascotImg} priority />
         <h1 className={styles.title}>Find a Volunteer Tutor</h1>
-        <p className={styles.subtitle}>Browse certified volunteer tutors and book a free, one-on-one session.</p>
+        <p className={styles.subtitle}>Browse verified volunteer tutors approved for your grade level — free 1-on-1 Zoom sessions.</p>
       </div>
 
       {/* Auto-matching Notification Banner */}
@@ -173,35 +173,38 @@ export default async function FindTutorPage({ searchParams }: Props) {
         <select name="subject" defaultValue={subject || ""} className={styles.filterSelect}>
           <option value="">All Subjects</option>
           <option value="Mathematics">Mathematics</option>
+          <option value="Reading &amp; Writing">Reading &amp; Writing</option>
+          <option value="English Language Arts">English Language Arts</option>
           <option value="Science">Science</option>
-          <option value="Physics">Physics</option>
-          <option value="Chemistry">Chemistry</option>
           <option value="Biology">Biology</option>
-          <option value="SAT Prep">SAT Prep</option>
-          <option value="Reading and Writing">Reading &amp; Writing</option>
-          <option value="History">History</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Social Studies">Social Studies</option>
+          <option value="Learning Support">Learning Support</option>
         </select>
 
         <select name="grade" defaultValue={activeGrade || ""} className={styles.filterSelect}>
-          <option value="">All Grade Levels</option>
-          <option value="Primary">Primary (Years 1–6)</option>
-          <option value="Middle School">Middle School (Grades 6–8)</option>
-          <option value="Grade 9">Grade 9 / Freshman</option>
-          <option value="Grade 10">Grade 10 / Sophomore</option>
-          <option value="Grade 11">Grade 11 / Junior</option>
-          <option value="Grade 12">Grade 12 / Senior</option>
-          <option value="University">University</option>
+          <option value="">All Grade Levels (K–10)</option>
+          <option value="Kindergarten">Kindergarten</option>
+          <option value="Grade 1">Grade 1</option>
+          <option value="Grade 2">Grade 2</option>
+          <option value="Grade 3">Grade 3</option>
+          <option value="Grade 4">Grade 4</option>
+          <option value="Grade 5">Grade 5</option>
+          <option value="Grade 6">Grade 6</option>
+          <option value="Grade 7">Grade 7</option>
+          <option value="Grade 8">Grade 8</option>
+          <option value="Grade 9">Grade 9</option>
+          <option value="Grade 10">Grade 10</option>
         </select>
 
         <select name="curriculum" defaultValue={activeCurriculum || ""} className={styles.filterSelect}>
           <option value="">All Curricula</option>
-          <option value="IB">IB</option>
-          <option value="AP">AP</option>
-          <option value="CBSE">CBSE</option>
-          <option value="ICSE">ICSE</option>
-          <option value="IGCSE">IGCSE / GCSE</option>
           <option value="US Common Core">US Common Core</option>
-          <option value="A-Level">A-Level</option>
+          <option value="CBSE">CBSE (India)</option>
+          <option value="ICSE">ICSE (India)</option>
+          <option value="IGCSE">IGCSE / GCSE (UK)</option>
+          <option value="IB">IB (K–10)</option>
+          <option value="Other">Other</option>
         </select>
 
         <button type="submit" className={styles.searchBtn}>Filter</button>

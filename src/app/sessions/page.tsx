@@ -7,7 +7,7 @@ import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 30; // ISR: 30s cache, avoids DB hit on every page load
 
 export const metadata = {
   title: "Find a Session — Learnivia",
@@ -17,25 +17,23 @@ export const metadata = {
 const SUBJECT_FILTERS = [
   "All",
   "Mathematics",
+  "Reading & Writing",
+  "English Language Arts",
   "Science",
-  "SAT Prep",
-  "College Prep",
-  "Reading and Writing",
-  "Physics",
-  "Chemistry",
   "Biology",
+  "Chemistry",
+  "Social Studies",
+  "Learning Support",
   "Homework Help",
 ];
 
 const CURRICULUM_OPTIONS = [
   "All",
-  "IB",
-  "AP",
+  "US Common Core",
   "CBSE",
   "ICSE",
   "IGCSE",
-  "US Common Core",
-  "A-Level",
+  "IB",
 ];
 
 function getInitials(name: string) {

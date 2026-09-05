@@ -123,12 +123,12 @@ export function ScheduleWorkshopForm() {
       <div className={styles.formRow}>
         <div style={{ flex: 2 }}>
           <label className={styles.inputLabel}>Workshop Title *</label>
-          <input type="text" name="title" placeholder="e.g. SAT Math: Geometry & Circles Bootcamp" required className={styles.textInput} />
+          <input type="text" name="title" placeholder="e.g. Grade 6 Algebra: Variables & Expressions" required className={styles.textInput} />
         </div>
         <div style={{ flex: 1.2 }}>
           <label className={styles.inputLabel}>Subject *</label>
           <select name="subject" required className={styles.selectInput}>
-            <option value="SAT Prep">SAT Prep</option>
+            <option value="Mathematics">Mathematics</option>
             <option value="Mathematics">Mathematics</option>
             <option value="Science">Science (Bio / Chem / Physics)</option>
             <option value="College Admissions">College Admissions</option>
@@ -142,7 +142,7 @@ export function ScheduleWorkshopForm() {
           <select name="grade" required className={styles.selectInput}>
             <option value="High School">High School</option>
             <option value="Middle School">Middle School</option>
-            <option value="College Prep">College Prep</option>
+            <option value="Social Studies">Social Studies</option>
             <option value="All Levels">All Levels</option>
           </select>
         </div>

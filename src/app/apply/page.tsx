@@ -389,11 +389,13 @@ export default async function ApplyPage() {
                 <label>Grade levels you can support *</label>
                 <div className={styles.checkboxGroup} role="group" aria-required="true">
                   {[
-                    { value: "primary", label: "Primary (Years 1–6)" },
-                    { value: "lower-secondary", label: "Lower Secondary (Years 7–9)" },
-                    { value: "gcse", label: "GCSE / O-Level" },
-                    { value: "alevel", label: "A-Level / AP" },
-                    { value: "university", label: "University (intro courses)" },
+                    { value: "kindergarten", label: "Kindergarten" },
+                    { value: "grade-1-2", label: "Grade 1–2" },
+                    { value: "grade-3-5", label: "Grade 3–5" },
+                    
+                    { value: "grade-6-8", label: "Grade 6–8" },
+                    { value: "grade-9-10", label: "Grade 9–10" },
+                    
                   ].map((g) => (
                     <label key={g.value} className={styles.checkboxLabel}>
                       <input

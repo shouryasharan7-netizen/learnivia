@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     default: "Learnivia — Free Peer-to-Peer Online Tutoring",
   },
   description: "Free 1-on-1 tutoring and interactive workshops led by high school and university peers. No subscriptions, zero fees.",
-  keywords: ["free tutoring", "volunteer tutor", "online tutoring", "peer learning", "homework help", "SAT prep"],
+  keywords: ["free tutoring", "volunteer tutor", "online tutoring", "peer learning", "homework help", "K-10 tutoring"],
   openGraph: {
     type: "website",
     siteName: "Learnivia",

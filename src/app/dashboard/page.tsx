@@ -18,40 +18,40 @@ export const metadata = {
 
 const FAST_CARDS = [
   {
-    id: "sat",
-    badge: "SAT",
-    badgeBg: "#7C3AED",
-    badgeText: "SAT",
-    title: "SAT Prep",
-    desc: "Join live SAT practice & strategy rooms",
-    href: "/sessions?subject=SAT+Prep",
+    id: "math",
+    badge: "MATH",
+    badgeBg: "#0E8345",
+    badgeText: "MATH",
+    title: "Mathematics",
+    desc: "1-on-1 maths help for your grade level",
+    href: "/find?subject=Mathematics",
   },
   {
-    id: "caw",
-    badge: "CAW",
+    id: "sci",
+    badge: "SCI",
     badgeBg: "#2563EB",
-    badgeText: "CAW",
-    title: "College Mentorship",
-    desc: "Workshops led by university students",
-    href: "/sessions?subject=College+Prep",
+    badgeText: "SCI",
+    title: "Science",
+    desc: "Earth, Life & Physical Science sessions",
+    href: "/find?subject=Science",
   },
   {
-    id: "dia",
-    badge: "DIA",
-    badgeBg: "#D97706",
-    badgeText: "DIA",
-    title: "Dialogues",
-    desc: "Global peer discussions and circles",
-    href: "/community",
+    id: "eng",
+    badge: "ELA",
+    badgeBg: "#7C3AED",
+    badgeText: "ELA",
+    title: "English & Reading",
+    desc: "Reading, writing, and language arts",
+    href: "/find?subject=Reading+%26+Writing",
   },
   {
     id: "comm",
     icon: "search",
     iconBg: "#E6F4EA",
     iconColor: "#0E8345",
-    title: "Find a Session",
-    desc: "Filter by subject, grade, and curriculum",
-    href: "/sessions",
+    title: "Find a Tutor",
+    desc: "Filter by grade (K–10), subject, and curriculum",
+    href: "/find",
   },
   {
     id: "hw",
@@ -285,7 +285,7 @@ export default async function StudentDashboard() {
               Connect with peer mentors around the globe
             </h1>
             <p className={styles.promoSubtitle}>
-              Work with volunteer tutors for step-by-step homework help, AP/SAT prep, and small group masterclasses.
+              Work with volunteer tutors for step-by-step Ku201310 homework help, exam prep, and personalized 1-on-1 sessions.
             </p>
             <Link href="/sessions" className={styles.promoBtn}>
               Find sessions for your grade →

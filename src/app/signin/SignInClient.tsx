@@ -144,7 +144,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                     <option value="CBSE">CBSE</option>
                     <option value="ICSE">ICSE</option>
                     <option value="IGCSE">IGCSE / GCSE</option>
-                    <option value="A-Level">A-Levels</option>
+                    <option value="Other">Other System</option>
                     <option value="Other">Other National Curriculum</option>
                   </select>
                 </div>

@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import StoriesClient from "./StoriesClient";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60; // ISR: 60s cache
 
 export const metadata: Metadata = {
   title: "Stories & Blog — Learnivia",
   description:
-    "Real breakthroughs from learners, volunteer tutor spotlights, Digital SAT masterclasses, and college admissions advice from peer mentors around the world.",
+    "Real breakthroughs from Ku201310 learners, volunteer tutor spotlights, and parent perspectives from our community around the world.",
   openGraph: {
     title: "Stories & Blog — Learnivia",
     description:
