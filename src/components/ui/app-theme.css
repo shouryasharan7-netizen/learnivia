@@ -1,0 +1,69 @@
+/* Authenticated Learnivia tokens. Public pages keep their existing palette. */
+.app-theme {
+  --app-bg: #f3f9fc;
+  --app-surface: #fff;
+  --app-subtle: #eaf1f5;
+  --app-text: #171b20;
+  --app-muted: #5e6d83;
+  --app-green: #157b60;
+  --app-green-hover: #10634d;
+  --app-active: #e5f7ef;
+  --app-border: #ced9e7;
+  --app-border-strong: #8b9db4;
+  --app-success: #176a42;
+  --app-success-bg: #e9f6ee;
+  --app-warning: #82520c;
+  --app-warning-bg: #fff5dc;
+  --app-error: #ae303b;
+  --app-error-bg: #fff0f1;
+  --app-info: #315f97;
+  --app-info-bg: #eaf2ff;
+  --app-radius: 10px;
+  --app-control-radius: 6px;
+  --app-shadow: 0 3px 8px rgb(46 68 94 / 10%);
+  --app-content-width: 1100px;
+  --app-wide-width: 1380px;
+  --app-space-1: 4px;
+  --app-space-2: 8px;
+  --app-space-3: 12px;
+  --app-space-4: 16px;
+  --app-space-6: 24px;
+  --app-space-8: 32px;
+  --sh-bg: var(--app-bg);
+  --sh-surface: var(--app-surface);
+  --sh-surface-2: var(--app-subtle);
+  --sh-border: var(--app-border);
+  --sh-border-strong: var(--app-border-strong);
+  --sh-green: var(--app-green);
+  --sh-green-hover: var(--app-green-hover);
+  --sh-green-light: var(--app-active);
+  --sh-navy: var(--app-text);
+  --sh-text: var(--app-text);
+  --sh-text-muted: var(--app-muted);
+  --color-bg: var(--app-bg);
+  --color-bg-card: var(--app-surface);
+  --color-bg-alt: var(--app-subtle);
+  --color-text: var(--app-text);
+  --color-navy: var(--app-text);
+  --color-text-muted: var(--app-muted);
+  --color-border: var(--app-border);
+  --color-primary: var(--app-green);
+  --color-primary-hover: var(--app-green-hover);
+  --focus-ring: 0 0 0 3px rgb(21 123 96 / 25%);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--app-text);
+  color-scheme: light;
+}
+.app-theme :where(button, input, select, textarea) { font: inherit; }
+.app-theme :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--app-green);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.app-theme :where(button:not(:disabled), select) { cursor: pointer; }
+.app-theme :where(button:disabled) { cursor: not-allowed; }
+.app-theme :where(h1) { font-size: clamp(1.5rem, 2.4vw, 2rem); letter-spacing: -.025em; }
+.app-theme :where(h2) { font-size: 1.25rem; letter-spacing: -.015em; }
+.app-theme :where(h3) { font-size: 1.0625rem; }

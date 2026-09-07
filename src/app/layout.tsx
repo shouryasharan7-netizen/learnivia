@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
 import { Providers } from "@/components/Providers";
 import { AuthShell } from "@/components/AuthShell";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
 const serif = Newsreader({
   subsets: ["latin"],
-  variable: "--font-serif",
+  variable: "--font-newsreader",
   display: "swap",
   style: ["normal", "italic"],
 });
@@ -42,7 +41,6 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${serif.variable}`}>
       <body className={sans.className}>
         <Providers>
-          <Navbar />
           <AuthShell>
             {children}
           </AuthShell>
