@@ -8,6 +8,34 @@ import { getMeetingUrls } from "@/lib/meetingUrl";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { calculateUserStats } from "@/lib/stats";
 import ChildProfileSection from "./ChildProfileSection";
+import {
+  Calculator,
+  Atom,
+  BookOpen,
+  Compass,
+  MessageSquare,
+  ShieldCheck,
+  Clock,
+  Sparkles,
+  Trophy,
+  Award,
+  Video,
+  Calendar,
+  User,
+  Users,
+  AlertCircle,
+  FileText,
+  ArrowRight,
+  ChevronRight,
+  CheckCircle2,
+  Circle,
+  Zap,
+  Shield,
+  Star,
+  GraduationCap,
+  RotateCcw,
+  Plus,
+} from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -20,48 +48,48 @@ export const metadata = {
 const FAST_CARDS = [
   {
     id: "math",
-    badge: "MATH",
-    badgeBg: "#0E8345",
-    badgeText: "MATH",
     title: "Mathematics",
     desc: "1-on-1 maths help for your grade level",
     href: "/find?subject=Mathematics",
+    icon: Calculator,
+    iconBg: "rgba(14, 131, 69, 0.12)",
+    iconColor: "#0E8345",
   },
   {
     id: "sci",
-    badge: "SCI",
-    badgeBg: "#2563EB",
-    badgeText: "SCI",
     title: "Science",
     desc: "Earth, Life & Physical Science sessions",
     href: "/find?subject=Science",
+    icon: Atom,
+    iconBg: "rgba(37, 99, 235, 0.12)",
+    iconColor: "#2563EB",
   },
   {
     id: "eng",
-    badge: "ELA",
-    badgeBg: "#7C3AED",
-    badgeText: "ELA",
     title: "English & Reading",
     desc: "Reading, writing, and language arts",
     href: "/find?subject=Reading+%26+Writing",
+    icon: BookOpen,
+    iconBg: "rgba(124, 58, 237, 0.12)",
+    iconColor: "#7C3AED",
   },
   {
     id: "comm",
-    icon: "search",
-    iconBg: "#E6F4EA",
-    iconColor: "#0E8345",
     title: "Find a Tutor",
     desc: "Filter by grade (K–10), subject, and curriculum",
     href: "/find",
+    icon: Compass,
+    iconBg: "rgba(16, 185, 129, 0.12)",
+    iconColor: "#059669",
   },
   {
     id: "hw",
-    icon: "chat",
-    iconBg: "#F3E8FF",
-    iconColor: "#7C3AED",
     title: "Homework Help",
     desc: "Ask questions or get live Zoom solutions",
     href: "/homework-help",
+    icon: MessageSquare,
+    iconBg: "rgba(245, 158, 11, 0.14)",
+    iconColor: "#D97706",
   },
 ];
 
@@ -153,69 +181,25 @@ export default async function StudentDashboard() {
       <div className={styles.container}>
         {/* Administrator Quick Control Access Banner */}
         {user.isAdmin && (
-          <div
-            style={{
-              background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
-              borderRadius: "14px",
-              padding: "1.25rem 1.75rem",
-              color: "#FFFFFF",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "1rem",
-              marginBottom: "1.5rem",
-              boxShadow: "0 4px 12px rgba(15, 23, 42, 0.08)",
-            }}
-          >
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
-                <span style={{ fontSize: "1.25rem" }}>🛡️</span>
-                <span style={{ fontSize: "1rem", fontWeight: 800 }}>Master Administrator Authority Active</span>
-                <span
-                  style={{
-                    background: "#F59E0B",
-                    color: "#78350F",
-                    fontSize: "0.7rem",
-                    fontWeight: 800,
-                    padding: "0.15rem 0.5rem",
-                    borderRadius: "999px",
-                  }}
-                >
+          <div className={styles.adminBanner}>
+            <div className={styles.adminBannerLeft}>
+              <div className={styles.adminHeaderRow}>
+                <ShieldCheck className={styles.adminShieldIcon} />
+                <span className={styles.adminBannerTitle}>Master Administrator Authority Active</span>
+                <span className={styles.adminPill}>
+                  <span className={styles.adminPillDot} />
                   FULL SYSTEM CONTROL
                 </span>
               </div>
-              <p style={{ color: "#94A3B8", fontSize: "0.85rem", margin: 0 }}>
+              <p className={styles.adminBannerDesc}>
                 You have unrestricted administrative oversight over all learners, tutors, sessions, community channels, and child safety reports.
               </p>
             </div>
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-              <Link
-                href="/admin"
-                style={{
-                  background: "#0E8345",
-                  color: "#FFFFFF",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "8px",
-                  fontWeight: 700,
-                  fontSize: "0.85rem",
-                  textDecoration: "none",
-                }}
-              >
-                Enter Admin Center →
+            <div className={styles.adminActions}>
+              <Link href="/admin" className={styles.adminBtnPrimary}>
+                Enter Admin Center <ArrowRight size={14} />
               </Link>
-              <Link
-                href="/admin/users"
-                style={{
-                  background: "#334155",
-                  color: "#FFFFFF",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "8px",
-                  fontWeight: 600,
-                  fontSize: "0.85rem",
-                  textDecoration: "none",
-                }}
-              >
+              <Link href="/admin/users" className={styles.adminBtnSecondary}>
                 Manage Users
               </Link>
             </div>
@@ -224,62 +208,26 @@ export default async function StudentDashboard() {
 
         {/* Tutor Application Status & Report Card Banner */}
         {tutorProfile && tutorProfile.status === "PENDING" && (
-          <div
-            style={{
-              background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)",
-              border: "1.5px solid #FCD34D",
-              borderRadius: "14px",
-              padding: "1.25rem 1.75rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "1rem",
-              marginBottom: "1.5rem",
-              boxShadow: "0 2px 8px rgba(245, 158, 11, 0.08)",
-            }}
-          >
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
-                <span style={{ fontSize: "1.25rem" }}>📋</span>
-                <span style={{ fontSize: "1rem", fontWeight: 800, color: "#92400E" }}>
+          <div className={styles.tutorPendingBanner}>
+            <div className={styles.tutorPendingLeft}>
+              <div className={styles.tutorPendingTitleRow}>
+                <Clock size={20} color="#92400E" />
+                <span className={styles.tutorPendingTitle}>
                   Volunteer Tutor Application Under Review
                 </span>
-                <span
-                  style={{
-                    background: "#F59E0B",
-                    color: "#FFFFFF",
-                    fontSize: "0.7rem",
-                    fontWeight: 800,
-                    padding: "0.15rem 0.5rem",
-                    borderRadius: "999px",
-                  }}
-                >
+                <span className={styles.tutorPendingPill}>
                   PENDING REVIEW
                 </span>
               </div>
-              <p style={{ color: "#78350F", fontSize: "0.85rem", margin: 0 }}>
+              <p className={styles.tutorPendingDesc}>
                 {tutorProfile.reportCardUrl
                   ? "Your academic report card & scores have been submitted and are being reviewed by the Learnivia Academic Board."
                   : "Action needed: Please upload your academic report card / mark sheet so our team can verify your scores and approve your tutor profile."}
               </p>
             </div>
-            <Link
-              href="/apply"
-              style={{
-                background: "#D97706",
-                color: "#FFFFFF",
-                padding: "0.6rem 1.25rem",
-                borderRadius: "8px",
-                fontWeight: 700,
-                fontSize: "0.85rem",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-              }}
-            >
-              {tutorProfile.reportCardUrl ? "📄 View / Update Report Card →" : "📄 Upload Report Card Now →"}
+            <Link href="/apply" className={styles.tutorPendingBtn}>
+              <FileText size={16} />
+              {tutorProfile.reportCardUrl ? "View / Update Report Card →" : "Upload Report Card Now →"}
             </Link>
           </div>
         )}
@@ -287,51 +235,60 @@ export default async function StudentDashboard() {
         {/* 1. Hero Promo Banner */}
         <section className={styles.promoBanner}>
           <div className={styles.promoContent}>
+            <div className={styles.promoBadge}>
+              <span className={styles.promoDot} />
+              <span>LIVE • 140+ VOLUNTEER TUTORS ONLINE</span>
+            </div>
             <h1 className={styles.promoTitle}>
               Connect with peer mentors around the globe
             </h1>
             <p className={styles.promoSubtitle}>
-              Work with volunteer tutors for step-by-step Ku201310 homework help, exam prep, and personalized 1-on-1 sessions.
+              Work with volunteer tutors for step-by-step K–10 homework help, exam prep, and personalized 1-on-1 sessions.
             </p>
-            <Link href="/sessions" className={styles.promoBtn}>
-              Find sessions for your grade →
-            </Link>
+            <div className={styles.promoActionRow}>
+              <Link href="/sessions" className={styles.promoBtn}>
+                Find sessions for your grade →
+              </Link>
+              <Link href="/find" className={styles.promoSecondaryBtn}>
+                Explore Tutors
+              </Link>
+            </div>
           </div>
 
-          <div className={styles.promoIllustration} aria-hidden="true">
-            <div className={styles.deskIllustration}>
-              <span className={styles.deskMascot}>👩‍🎓</span>
-              <span className={styles.deskLaptop}>💻</span>
-              <span className={styles.deskBooks}>📚</span>
+          <div className={styles.promoRightWidget} aria-hidden="true">
+            <div className={styles.liveTutorCapsule}>
+              <div className={styles.tutorCapsuleHeader}>
+                <span className={styles.liveDot} />
+                <span className={styles.liveCapsuleText}>Instant Match Active</span>
+              </div>
+              <div className={styles.avatarStack}>
+                <div className={styles.stackAvatar} style={{ background: "#059669" }}>AT</div>
+                <div className={styles.stackAvatar} style={{ background: "#2563EB" }}>SL</div>
+                <div className={styles.stackAvatar} style={{ background: "#7C3AED" }}>KP</div>
+                <div className={styles.stackAvatar} style={{ background: "#D97706" }}>+12</div>
+              </div>
+              <div className={styles.ratingBadge}>
+                <span>★</span>
+                <span>4.9 / 5.0 Peer Rating</span>
+              </div>
             </div>
           </div>
         </section>
 
         {/* 2. Fast-Access Feature Cards */}
         <section className={styles.fastCardsGrid} aria-label="Learning pathways">
-          {FAST_CARDS.map((card) => (
-            <Link key={card.id} href={card.href} className={styles.fastCard}>
-              {card.badge ? (
-                <div className={styles.squareBadge} style={{ background: card.badgeBg }}>
-                  <span>{card.badgeText}</span>
-                </div>
-              ) : (
+          {FAST_CARDS.map((card) => {
+            const IconComp = card.icon;
+            return (
+              <Link key={card.id} href={card.href} className={styles.fastCard}>
                 <div className={styles.circleBadge} style={{ background: card.iconBg, color: card.iconColor }}>
-                  {card.icon === "search" ? (
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                  ) : (
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-                    </svg>
-                  )}
+                  <IconComp size={22} strokeWidth={2.2} />
                 </div>
-              )}
-              <h2 className={styles.cardTitle}>{card.title}</h2>
-              <p className={styles.cardDesc}>{card.desc}</p>
-            </Link>
-          ))}
+                <h2 className={styles.cardTitle}>{card.title}</h2>
+                <p className={styles.cardDesc}>{card.desc}</p>
+              </Link>
+            );
+          })}
         </section>
 
         {/* 3. User Progress & Genuine Real-Time Stats Strip */}
@@ -342,20 +299,20 @@ export default async function StudentDashboard() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <h2 className={styles.userDisplayName}>{userName}</h2>
                 {user.isAdmin ? (
-                  <span style={{ fontSize: "0.7rem", fontWeight: 800, color: "#92400E", background: "#FEF3C7", padding: "0.15rem 0.6rem", borderRadius: "999px" }}>
-                    🛡️ Administrator
+                  <span style={{ fontSize: "0.725rem", fontWeight: 800, color: "#92400E", background: "#FEF3C7", border: "1px solid #FDE68A", padding: "0.15rem 0.6rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                    <ShieldCheck size={13} color="#D97706" /> Administrator
                   </span>
                 ) : isTutor ? (
-                  <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#0E8345", background: "#E6F4EA", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
-                    ✓ Verified Tutor
+                  <span style={{ fontSize: "0.725rem", fontWeight: 700, color: "#0E8345", background: "#E6F4EA", border: "1px solid #BBF7D0", padding: "0.15rem 0.55rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                    <CheckCircle2 size={13} color="#0E8345" /> Verified Tutor
                   </span>
                 ) : tutorProfile?.status === "PENDING" ? (
-                  <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#B45309", background: "#FEF3C7", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
-                    ⏳ Tutor Review Pending
+                  <span style={{ fontSize: "0.725rem", fontWeight: 700, color: "#B45309", background: "#FEF3C7", border: "1px solid #FDE68A", padding: "0.15rem 0.55rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                    <Clock size={13} color="#D97706" /> Tutor Review Pending
                   </span>
                 ) : (
-                  <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#2563EB", background: "#EFF6FF", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
-                    🎓 Student
+                  <span style={{ fontSize: "0.725rem", fontWeight: 700, color: "#2563EB", background: "#EFF6FF", border: "1px solid #BFDBFE", padding: "0.15rem 0.55rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                    <GraduationCap size={13} color="#2563EB" /> K–10 Learner
                   </span>
                 )}
               </div>
@@ -367,20 +324,20 @@ export default async function StudentDashboard() {
                 )}
                 {isTutor ? (
                   <>
-                    <Link href="/tutor" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700 }}>
-                      💻 Tutor Dashboard
+                    <Link href="/tutor" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                      Tutor Dashboard <ArrowRight size={12} />
                     </Link>
-                    <Link href="/tutor/transcript" className={styles.metaLink}>
-                      📜 Verified Hours ({stats.volunteerHours} hrs)
+                    <Link href="/tutor/transcript" className={styles.metaLink} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                      Verified Hours ({stats.volunteerHours} hrs)
                     </Link>
                   </>
                 ) : (
                   <>
-                    <Link href="/sessions" className={styles.metaLink}>
-                      🗓️ Browse Sessions
+                    <Link href="/sessions" className={styles.metaLink} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                      <Calendar size={13} /> Browse Sessions
                     </Link>
-                    <Link href="/apply" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700 }}>
-                      🌱 Become a Tutor
+                    <Link href="/apply" className={styles.metaLink} style={{ color: "#0E8345", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                      <Sparkles size={13} /> Become a Tutor
                     </Link>
                   </>
                 )}
@@ -392,7 +349,7 @@ export default async function StudentDashboard() {
           <div className={styles.statsBlock}>
             {/* Rank Pill */}
             <div className={styles.rankPill}>
-              <span>🏅</span>
+              <Trophy size={18} color="#D97706" />
               <div>
                 <span style={{ fontSize: "1.05rem", fontWeight: 800 }}>#{stats.rank}</span>
                 <span style={{ display: "block", fontSize: "0.68rem", opacity: 0.85 }}>
@@ -403,16 +360,16 @@ export default async function StudentDashboard() {
 
             {/* Study Points Pill */}
             <div className={styles.statPill}>
-              <span className={styles.statIcon}>🏆</span>
+              <Sparkles size={18} color="#7C3AED" className={styles.statIcon} />
               <div className={styles.statValueCol}>
                 <span className={styles.statNumber}>{stats.points.toLocaleString()}</span>
-                <span className={styles.statUnit}>SP</span>
+                <span className={styles.statUnit}>Study Points (SP)</span>
               </div>
             </div>
 
             {/* Real Learning Minutes Pill */}
             <div className={styles.statPill}>
-              <span className={styles.statIcon}>⏱️</span>
+              <Clock size={18} color="#059669" className={styles.statIcon} />
               <div className={styles.statValueCol}>
                 <span className={styles.statNumber}>{stats.learningMinutes.toLocaleString()}</span>
                 <span className={styles.statUnit}>Learning minutes</span>
@@ -421,11 +378,9 @@ export default async function StudentDashboard() {
 
             {/* Real-time Leaderboard Link */}
             <Link href="/leaderboard" className={styles.leaderboardLink}>
-              <span className={styles.leaderboardIcons}>🥇 👥 🥈</span>
+              <Award size={16} color="#2563EB" />
               <span>Leaderboard</span>
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <ChevronRight size={14} />
             </Link>
           </div>
         </section>
@@ -448,7 +403,9 @@ export default async function StudentDashboard() {
 
             {upcomingBookings.length === 0 && upcomingWorkshops.length === 0 ? (
               <div className={styles.emptyCard}>
-                <div className={styles.emptyIcon} aria-hidden="true">🗓️</div>
+                <div className={styles.emptyIcon} aria-hidden="true">
+                  <Calendar size={36} color="#94A3B8" />
+                </div>
                 <h3 className={styles.emptyTitle}>No upcoming sessions</h3>
                 <p className={styles.emptyText}>
                   Explore live small-group sessions or book a free 1-on-1 session with a peer tutor.
@@ -475,7 +432,7 @@ export default async function StudentDashboard() {
 
                       <div className={styles.bookingActions}>
                         <a href={joinUrl || "#"} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
-                          🎥 Join Zoom
+                          <Video size={14} /> Join Zoom
                         </a>
                         <form action={cancelBooking}>
                           <input type="hidden" name="bookingId" value={b.id} />
@@ -502,7 +459,7 @@ export default async function StudentDashboard() {
                       <div className={styles.bookingActions}>
                         {joinUrl && (
                           <a href={joinUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
-                            🎥 Join Zoom
+                            <Video size={14} /> Join Zoom
                           </a>
                         )}
                         <form action={cancelWorkshopEnrollment}>
@@ -518,12 +475,12 @@ export default async function StudentDashboard() {
 
             {/* Past Completed Sessions with Tracked Minutes, Recordings & Re-booking */}
             <div className={styles.completedBlock}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.5rem" }}>
                 <h3 className={styles.subHeading} style={{ margin: 0 }}>
                   Past Completed Sessions ({completedBookings.length + completedWorkshops.length})
                 </h3>
-                <span style={{ fontSize: "0.8rem", color: "#64748B", fontWeight: 600 }}>
-                  ⏱️ {stats.learningMinutes} total learning minutes
+                <span style={{ fontSize: "0.8rem", color: "#059669", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                  <Clock size={13} color="#059669" /> {stats.learningMinutes} total learning minutes
                 </span>
               </div>
 
@@ -552,14 +509,14 @@ export default async function StudentDashboard() {
                                 Topic: {b.topic}
                               </p>
                             )}
-                            <span className={styles.completedDate}>
-                              ✓ Completed on {new Date(b.startTime).toLocaleDateString()}
+                            <span className={styles.completedDate} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                              <CheckCircle2 size={13} color="#0E8345" /> Completed on {new Date(b.startTime).toLocaleDateString()}
                             </span>
                           </div>
 
                           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                            <span className={styles.durationBadge}>
-                              ⏱️ {durationMins} mins
+                            <span className={styles.durationBadge} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                              <Clock size={12} /> {durationMins} mins
                             </span>
                           </div>
                         </div>
@@ -567,7 +524,7 @@ export default async function StudentDashboard() {
                         {/* Follow-up / Tutor Check-up Note */}
                         {b.checkUpNote && (
                           <div className={styles.checkUpBox}>
-                            <strong>📝 Tutor Follow-up &amp; Notes:</strong>
+                            <strong>Tutor Follow-up &amp; Notes:</strong>
                             <p style={{ margin: "0.25rem 0 0" }}>{b.checkUpNote}</p>
                           </div>
                         )}
@@ -575,7 +532,7 @@ export default async function StudentDashboard() {
                         {/* Action buttons: Re-book with Tutor, Zoom recording */}
                         <div className={styles.completedActions}>
                           <Link href={`/tutor/${b.tutorId}`} className={styles.bookAgainBtn}>
-                            <span>🔄</span> Book with {tutorFirstName} Again
+                            <RotateCcw size={13} /> Book with {tutorFirstName} Again
                           </Link>
 
                           {b.recordingUrl ? (
@@ -585,16 +542,16 @@ export default async function StudentDashboard() {
                               rel="noopener noreferrer"
                               className={styles.recordingBtn}
                             >
-                              <span>🎥</span> Watch Class Recording
+                              <Video size={13} /> Watch Class Recording
                             </a>
                           ) : (
                             <span style={{ fontSize: "0.75rem", color: "#94A3B8" }}>
-                              🎥 Recording sent via email or direct link
+                              Recording sent via email or direct link
                             </span>
                           )}
 
-                          <Link href={`/tutor/${b.tutorId}#reviews`} className={styles.viewTutorBtn}>
-                            ⭐ Review Tutor (+15 SP)
+                          <Link href={`/tutor/${b.tutorId}#reviews`} className={styles.viewTutorBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                            <Star size={13} color="#F59E0B" fill="#F59E0B" /> Review Tutor (+15 SP)
                           </Link>
                         </div>
                       </div>
@@ -618,13 +575,13 @@ export default async function StudentDashboard() {
                               [Workshop] {e.workshop.title}
                             </strong>
                             <span style={{ color: "#64748B" }}> • Host: {hostName}</span>
-                            <span className={styles.completedDate}>
-                              ✓ Completed on {new Date(e.workshop.startTime).toLocaleDateString()}
+                            <span className={styles.completedDate} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                              <CheckCircle2 size={13} color="#0E8345" /> Completed on {new Date(e.workshop.startTime).toLocaleDateString()}
                             </span>
                           </div>
 
-                          <span className={styles.durationBadge}>
-                            ⏱️ {durationMins} mins
+                          <span className={styles.durationBadge} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                            <Clock size={12} /> {durationMins} mins
                           </span>
                         </div>
 
@@ -636,14 +593,14 @@ export default async function StudentDashboard() {
                               rel="noopener noreferrer"
                               className={styles.recordingBtn}
                             >
-                              <span>🎥</span> Watch Workshop Recording
+                              <Video size={13} /> Watch Workshop Recording
                             </a>
                           </div>
                         )}
 
                         <div className={styles.completedActions}>
                           <Link href={`/tutor/${e.workshop.tutorId}`} className={styles.bookAgainBtn}>
-                            <span>🔄</span> Book 1-on-1 with {hostFirstName} Again
+                            <RotateCcw size={13} /> Book 1-on-1 with {hostFirstName} Again
                           </Link>
                         </div>
                       </div>
@@ -663,16 +620,18 @@ export default async function StudentDashboard() {
             <div className={styles.tasksCard}>
               <ul className={styles.taskList}>
                 <li className={styles.taskItem}>
-                  <span className={styles.checkCircle}>✓</span>
+                  <CheckCircle2 size={20} color="#0E8345" style={{ flexShrink: 0, marginTop: "2px" }} />
                   <div>
                     <strong className={styles.taskTitle}>Welcome to Learnivia!</strong>
                     <p className={styles.taskDesc}>Your account is active with real-time stats tracking.</p>
                   </div>
                 </li>
                 <li className={styles.taskItem}>
-                  <span className={stats.completedSessions > 0 ? styles.checkCircle : styles.pendingCircle}>
-                    {stats.completedSessions > 0 ? "✓" : "○"}
-                  </span>
+                  {stats.completedSessions > 0 ? (
+                    <CheckCircle2 size={20} color="#0E8345" style={{ flexShrink: 0, marginTop: "2px" }} />
+                  ) : (
+                    <Circle size={20} color="#94A3B8" style={{ flexShrink: 0, marginTop: "2px" }} />
+                  )}
                   <div>
                     <strong className={styles.taskTitle}>Attend Your First Peer Session</strong>
                     <p className={styles.taskDesc}>
@@ -688,7 +647,7 @@ export default async function StudentDashboard() {
                   </div>
                 </li>
                 <li className={styles.taskItem}>
-                  <span className={styles.pendingCircle}>○</span>
+                  <Circle size={20} color="#94A3B8" style={{ flexShrink: 0, marginTop: "2px" }} />
                   <div>
                     <strong className={styles.taskTitle}>Ask a Homework Question</strong>
                     <p className={styles.taskDesc}>Get step-by-step assistance or live Zoom explanations.</p>
@@ -703,22 +662,26 @@ export default async function StudentDashboard() {
             {/* Role-Specific Action Card */}
             {isTutor ? (
               <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #E6F4EA 100%)", borderColor: "#DCFCE7" }}>
-                <h3 className={styles.sideCardTitle} style={{ color: "#0E8345" }}>⚡ Tutor Quick Portal</h3>
+                <h3 className={styles.sideCardTitle} style={{ color: "#0E8345", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                  <Zap size={16} color="#0E8345" /> Tutor Quick Portal
+                </h3>
                 <p className={styles.sideCardText}>
                   Verified Tutor: You have logged {stats.volunteerHours} hours of tutoring. Host small-group workshops and answer live homework questions.
                 </p>
                 <div className={styles.sideCardLinks}>
-                  <Link href="/tutor#schedule-session" className={styles.reportLink} style={{ background: "#0E8345", color: "#FFFFFF" }}>
-                    ➕ Host a New Session →
+                  <Link href="/tutor#schedule-session" className={styles.reportLink} style={{ background: "#0E8345", color: "#FFFFFF", display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                    <Plus size={14} /> Host a New Session →
                   </Link>
                   <Link href="/tutor" className={styles.resourcesLink} style={{ color: "#0E8345", fontWeight: 700 }}>
-                    💻 Open Tutor Dashboard
+                    Open Tutor Dashboard →
                   </Link>
                 </div>
               </div>
             ) : tutorProfile?.status === "PENDING" ? (
               <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)", borderColor: "#FDE68A" }}>
-                <h3 className={styles.sideCardTitle} style={{ color: "#B45309" }}>⏳ Tutor Application Pending</h3>
+                <h3 className={styles.sideCardTitle} style={{ color: "#B45309", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                  <Clock size={16} color="#B45309" /> Tutor Application Pending
+                </h3>
                 <p className={styles.sideCardText}>
                   Your application is currently being reviewed by our moderation team. You&apos;ll be notified by email once approved!
                 </p>
@@ -733,7 +696,9 @@ export default async function StudentDashboard() {
               </div>
             ) : (
               <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%)", borderColor: "#DBEAFE" }}>
-                <h3 className={styles.sideCardTitle} style={{ color: "#1D4ED8" }}>🌱 Become a Volunteer Tutor</h3>
+                <h3 className={styles.sideCardTitle} style={{ color: "#1D4ED8", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                  <GraduationCap size={16} color="#1D4ED8" /> Become a Volunteer Tutor
+                </h3>
                 <p className={styles.sideCardText}>
                   Passionate about helping other students? Apply to become an approved peer tutor and receive official volunteer transcripts for your applications.
                 </p>
@@ -755,11 +720,11 @@ export default async function StudentDashboard() {
                 Our student safety and moderation team is available around the clock.
               </p>
               <div className={styles.sideCardLinks}>
-                <Link href="/safety/report" className={styles.reportLink}>
-                  🛡️ Report an Issue →
+                <Link href="/safety/report" className={styles.reportLink} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                  <Shield size={14} /> Report an Issue →
                 </Link>
-                <Link href="/resources" className={styles.resourcesLink}>
-                  📖 Learning Resources →
+                <Link href="/resources" className={styles.resourcesLink} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                  <BookOpen size={14} /> Learning Resources →
                 </Link>
               </div>
             </div>

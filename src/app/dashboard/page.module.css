@@ -14,20 +14,223 @@
 }
 
 /* ============================
-   1. Sky Blue Promo Hero Banner
+   0. Administrative & Status Banners
    ============================ */
-.promoBanner {
-  background: linear-gradient(135deg, #BAE6FD 0%, #E0F2FE 60%, #F0F9FF 100%);
-  border-radius: 20px;
-  padding: 2.25rem 2.5rem;
+.adminBanner {
+  background: linear-gradient(135deg, #0B132B 0%, #1C2541 60%, #1E293B 100%);
+  border-radius: 18px;
+  padding: 1.25rem 1.75rem;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
-  border: 1px solid #BAE6FD;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 8px 24px -4px rgba(11, 19, 43, 0.45);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(186, 230, 253, 0.3);
+}
+
+.adminBanner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.6), transparent);
+}
+
+.adminBannerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.adminHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.adminShieldIcon {
+  width: 22px;
+  height: 22px;
+  color: #F59E0B;
+  flex-shrink: 0;
+}
+
+.adminBannerTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #F8FAFC;
+}
+
+.adminPill {
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #FBBF24;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.adminPillDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #F59E0B;
+  box-shadow: 0 0 6px #F59E0B;
+}
+
+.adminBannerDesc {
+  color: #94A3B8;
+  font-size: 0.835rem;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 620px;
+}
+
+.adminActions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.adminBtnPrimary {
+  background: #0E8345;
+  color: #FFFFFF;
+  padding: 0.55rem 1.15rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 12px rgba(14, 131, 69, 0.35);
+  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.adminBtnPrimary:hover {
+  background: #0b6635;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(14, 131, 69, 0.45);
+}
+
+.adminBtnSecondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #E2E8F0;
+  padding: 0.55rem 1.05rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 160ms ease;
+}
+
+.adminBtnSecondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+}
+
+/* Tutor Pending Banner */
+.tutorPendingBanner {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 1.5px solid #F59E0B;
+  border-radius: 18px;
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12);
+}
+
+.tutorPendingLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tutorPendingTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.tutorPendingTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #92400E;
+}
+
+.tutorPendingPill {
+  background: #F59E0B;
+  color: #FFFFFF;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.tutorPendingDesc {
+  color: #78350F;
+  font-size: 0.835rem;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 620px;
+}
+
+.tutorPendingBtn {
+  background: #D97706;
+  color: #FFFFFF;
+  padding: 0.6rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.28);
+  transition: all 160ms ease;
+}
+
+.tutorPendingBtn:hover {
+  background: #B45309;
+  transform: translateY(-1px);
+}
+
+/* ============================
+   1. Modern Hero Promo Banner
+   ============================ */
+.promoBanner {
+  background: linear-gradient(135deg, #0D683B 0%, #064E3B 55%, #082F1D 100%);
+  border-radius: 24px;
+  padding: 2.5rem 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 32px -4px rgba(13, 104, 59, 0.28);
+  color: #FFFFFF;
 }
 
 .promoContent {
@@ -35,143 +238,215 @@
   max-width: 580px;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
   z-index: 2;
 }
 
+.promoBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  width: fit-content;
+  color: #FFFFFF;
+}
+
+.promoDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #34D399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.3);
+}
+
 .promoTitle {
-  font-size: 1.75rem;
-  font-weight: 900;
-  color: #0F172A;
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #FFFFFF;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  margin: 0;
 }
 
 .promoSubtitle {
-  font-size: 0.9375rem;
-  color: #334155;
-  line-height: 1.55;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.promoActionRow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
 }
 
 .promoBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #0E8345;
-  color: #FFFFFF;
-  font-size: 0.9375rem;
+  background: #FFFFFF;
+  color: #0D683B;
+  font-size: 0.9rem;
   font-weight: 700;
-  padding: 0.65rem 1.35rem;
-  border-radius: 10px;
+  padding: 0.75rem 1.45rem;
+  border-radius: 12px;
   text-decoration: none;
-  width: fit-content;
-  margin-top: 0.5rem;
-  transition: background-color 150ms ease, transform 150ms ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .promoBtn:hover {
-  background: #0B6635;
+  background: #F0FDF4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.promoSecondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.75rem 1.35rem;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  transition: all 160ms ease;
+}
+.promoSecondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
-.promoIllustration {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+.promoRightWidget {
   flex-shrink: 0;
   z-index: 2;
 }
 
-.deskIllustration {
+.liveTutorCapsule {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 1.35rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+}
+
+.tutorCapsuleHeader {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 2.75rem;
 }
 
-.carouselDots {
-  display: flex;
-  gap: 6px;
-  margin-top: 0.5rem;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
+.liveDot {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #64748B;
-  opacity: 0.4;
+  background-color: #22C55E;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
 }
-.dotActive {
-  background: #0F172A;
-  opacity: 0.9;
+
+.liveCapsuleText {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+}
+
+.avatarStack {
+  display: flex;
+  align-items: center;
+  margin-inline: 0.5rem;
+}
+
+.stackAvatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2.5px solid #064E3B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-left: -10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.stackAvatar:first-child {
+  margin-left: 0;
+}
+
+.ratingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #FDE68A;
 }
 
 /* ============================
-   2. Fast-Access Feature Cards
+   2. Fast-Access Feature Cards (21st.dev Style)
    ============================ */
 .fastCardsGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.875rem;
+  gap: 1rem;
 }
 
 .fastCard {
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 1.125rem 1rem;
+  border-radius: 18px;
+  padding: 1.35rem 1.15rem;
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.65rem;
   position: relative;
-  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .fastCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
-  border-color: #CBD5E1;
-}
-
-.blueDot {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 8px;
-  height: 8px;
-  background: #2563EB;
-  border-radius: 50%;
-}
-
-.squareBadge {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-align: center;
-  line-height: 1;
+  transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), 0 12px 28px -4px rgba(13, 104, 59, 0.14);
+  border-color: rgba(13, 104, 59, 0.35);
 }
 
 .circleBadge {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .cardTitle {
-  font-size: 0.9375rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: #1A1F2E;
+  color: #0F172A;
   line-height: 1.3;
 }
 

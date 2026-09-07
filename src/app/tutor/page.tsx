@@ -8,6 +8,21 @@ import { completeWorkshop } from "@/app/actions/workshops";
 import { ScheduleWorkshopForm } from "./ScheduleWorkshopForm";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
+import {
+  Clock,
+  Users,
+  CheckCircle2,
+  BookOpen,
+  Plus,
+  FileText,
+  Video,
+  Calendar,
+  GraduationCap,
+  ArrowRight,
+  Zap,
+  X,
+  Sparkles,
+} from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -186,22 +201,26 @@ export default async function TutorDashboard() {
         <div className={styles.headerRow}>
           <div className={styles.headerTitleCol}>
             <div className={styles.badgeRow}>
-              <span className={styles.verifiedBadge}>✓ Verified Tutor</span>
-              <span className={styles.hoursBadge}>{tutorHours.toFixed(1)} Hours Verified</span>
+              <span className={styles.verifiedBadge}>
+                <CheckCircle2 size={13} color="#0E8345" /> Verified Tutor
+              </span>
+              <span className={styles.hoursBadge}>
+                <Clock size={13} color="#2563EB" /> {tutorHours.toFixed(1)} Hours Verified
+              </span>
             </div>
             <h1 className={styles.title}>{tutorName}&apos;s Tutor Portal</h1>
             <p className={styles.subtitle}>Manage your 1-on-1 tutoring sessions, group bootcamps, and volunteer record.</p>
           </div>
 
           <div className={styles.headerActions} style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-            <Link href="/tutor/training" className={styles.transcriptBtn} style={{ background: "rgba(16, 185, 129, 0.08)", borderColor: "rgba(16, 185, 129, 0.3)", color: "#059669", fontWeight: 700 }}>
-              🎓 Training Modules
+            <Link href="/tutor/training" className={styles.transcriptBtn} style={{ background: "rgba(16, 185, 129, 0.08)", borderColor: "rgba(16, 185, 129, 0.3)", color: "#059669", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+              <GraduationCap size={15} /> Training Modules
             </Link>
-            <a href="#schedule-session" className={styles.primaryBtn} style={{ textDecoration: "none" }}>
-              ➕ Schedule a Session
+            <a href="#schedule-session" className={styles.primaryBtn} style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+              <Plus size={15} /> Schedule a Session
             </a>
-            <Link href={`/tutor/${tutor.id}/transcript`} className={styles.transcriptBtn}>
-              📜 Official Transcript →
+            <Link href={`/tutor/${tutor.id}/transcript`} className={styles.transcriptBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+              <FileText size={15} /> Official Transcript →
             </Link>
           </div>
         </div>
@@ -209,7 +228,9 @@ export default async function TutorDashboard() {
         {/* 4-Metric Compact Impact Row */}
         <section className={styles.metricsGrid} aria-label="Tutor volunteer metrics">
           <div className={styles.metricCard}>
-            <span className={styles.metricIcon}>⏱️</span>
+            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Clock size={24} color="#0E8345" />
+            </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{tutorHours.toFixed(1)} hrs</span>
               <span className={styles.metricLabel}>Verified Volunteer Hours</span>
@@ -217,7 +238,9 @@ export default async function TutorDashboard() {
           </div>
 
           <div className={styles.metricCard}>
-            <span className={styles.metricIcon}>👥</span>
+            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Users size={24} color="#2563EB" />
+            </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{uniqueStudents}</span>
               <span className={styles.metricLabel}>Students Supported</span>
@@ -225,7 +248,9 @@ export default async function TutorDashboard() {
           </div>
 
           <div className={styles.metricCard}>
-            <span className={styles.metricIcon}>🎓</span>
+            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <CheckCircle2 size={24} color="#7C3AED" />
+            </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{completedBookings.length}</span>
               <span className={styles.metricLabel}>Sessions Completed</span>
@@ -233,7 +258,9 @@ export default async function TutorDashboard() {
           </div>
 
           <div className={styles.metricCard}>
-            <span className={styles.metricIcon}>📚</span>
+            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <BookOpen size={24} color="#D97706" />
+            </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{tutor.subjects?.length || 1}</span>
               <span className={styles.metricLabel}>Subjects Approved</span>
@@ -280,8 +307,8 @@ export default async function TutorDashboard() {
                         {(() => {
                           const { hostUrl } = getMeetingUrls(b.zoomLink);
                           return hostUrl ? (
-                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
-                              🎥 Launch Zoom Call
+                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                              <Video size={14} /> Launch Zoom Call
                             </a>
                           ) : (
                             <span style={{ fontSize: "0.8rem", color: "#64748B" }}>Zoom link provided to student</span>
@@ -290,8 +317,8 @@ export default async function TutorDashboard() {
 
                         <form action={completeSession}>
                           <input type="hidden" name="bookingId" value={b.id} />
-                          <button type="submit" className={styles.completeBtn}>
-                            ✓ Mark Completed
+                          <button type="submit" className={styles.completeBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                            <CheckCircle2 size={13} /> Mark Completed
                           </button>
                         </form>
 
@@ -314,9 +341,9 @@ export default async function TutorDashboard() {
               <div className={styles.cardHeader}>
                 <div>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontSize: "0.75rem", fontWeight: 700, color: "#0E8345", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
-                    <span>⚡</span> Instant Tutor Publishing
+                    <Zap size={14} color="#0E8345" /> Instant Tutor Publishing
                   </div>
-                  <h2 className={styles.cardTitle}>➕ Schedule a New Live Session / Workshop</h2>
+                  <h2 className={styles.cardTitle}>Schedule a New Live Session / Workshop</h2>
                   <p className={styles.cardSub}>Publish a session to the directory. When published, it will immediately appear on Find a Session for learners to join.</p>
                 </div>
               </div>
@@ -360,14 +387,14 @@ export default async function TutorDashboard() {
 
                         <div className={styles.sessionActions}>
                           {hostUrl && (
-                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn}>
-                              🎥 Host Zoom Call
+                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                              <Video size={14} /> Host Zoom Call
                             </a>
                           )}
                           <form action={completeWorkshop}>
                             <input type="hidden" name="workshopId" value={w.id} />
-                            <button type="submit" className={styles.completeBtn}>
-                              ✓ Mark Completed
+                            <button type="submit" className={styles.completeBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                              <CheckCircle2 size={13} /> Mark Completed
                             </button>
                           </form>
                         </div>
@@ -435,7 +462,9 @@ export default async function TutorDashboard() {
             {/* Official Transcript Quick Card */}
             <div className={styles.transcriptCard}>
               <div className={styles.transcriptTop}>
-                <span style={{ fontSize: "1.75rem" }}>📜</span>
+                <div style={{ background: "rgba(14, 131, 69, 0.12)", width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <FileText size={22} color="#0E8345" />
+                </div>
                 <div>
                   <h3 className={styles.transcriptTitle}>Official Service Transcript</h3>
                   <p className={styles.transcriptText}>
