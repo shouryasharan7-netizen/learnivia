@@ -142,17 +142,6 @@ export default async function SessionsPage({ searchParams }: Props) {
     workshopWhere.AND = workshopConditions;
   }
 
-  // Fetch upcoming workshops matching criteria
-  const workshops = await prisma.workshop.findMany({
-    where: workshopWhere,
-    include: {
-      tutor: { include: { user: true } },
-      enrollments: true,
-    },
-    orderBy: { startTime: "asc" },
-    take: 25,
-  });
-
   // 4. Build Tutor Where Clause for 1-on-1 Sessions Matching Student
   const tutorWhere: Prisma.TutorProfileWhereInput = { status: "APPROVED" };
   const tutorConditions: Prisma.TutorProfileWhereInput[] = [];
@@ -215,11 +204,42 @@ export default async function SessionsPage({ searchParams }: Props) {
     tutorWhere.AND = tutorConditions;
   }
 
-  const tutors = await prisma.tutorProfile.findMany({
-    where: tutorWhere,
-    include: { user: true, subjects: true, availabilities: true, gradeLevels: true },
-    take: 16,
-  });
+  // Concurrent resilient fetching
+  let workshops: Awaited<ReturnType<typeof prisma.workshop.findMany<{
+    where: typeof workshopWhere;
+    include: {
+      tutor: { include: { user: true } };
+      enrollments: true;
+    };
+  }>>> = [];
+
+  let tutors: Awaited<ReturnType<typeof prisma.tutorProfile.findMany<{
+    where: typeof tutorWhere;
+    include: { user: true; subjects: true; availabilities: true; gradeLevels: true };
+  }>>> = [];
+
+  try {
+    const [fetchedWorkshops, fetchedTutors] = await Promise.all([
+      prisma.workshop.findMany({
+        where: workshopWhere,
+        include: {
+          tutor: { include: { user: true } },
+          enrollments: true,
+        },
+        orderBy: { startTime: "asc" },
+        take: 25,
+      }),
+      prisma.tutorProfile.findMany({
+        where: tutorWhere,
+        include: { user: true, subjects: true, availabilities: true, gradeLevels: true },
+        take: 16,
+      }),
+    ]);
+    workshops = fetchedWorkshops;
+    tutors = fetchedTutors;
+  } catch (err) {
+    console.warn("Sessions page query fallback triggered:", (err as Error)?.message);
+  }
 
   const isAutoMatched = Boolean(dbUser && (activeGrade || activeCurriculum !== "All") && !isAllGradesExplicit);
 
