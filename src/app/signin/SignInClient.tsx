@@ -21,10 +21,15 @@ interface SignInClientProps {
 }
 
 function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
-  const [isRegister, setIsRegister] = useState(initialIsRegister);
+  const searchParams = useSearchParams();
+  const roleParam = searchParams.get("role")?.toLowerCase();
+
+  const [isRegister, setIsRegister] = useState(initialIsRegister || roleParam === "tutor");
+  const [selectedRole, setSelectedRole] = useState<"STUDENT" | "TUTOR">(
+    roleParam === "tutor" ? "TUTOR" : "STUDENT"
+  );
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -35,6 +40,9 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     const formData = new FormData(e.currentTarget);
     formData.append("action", isRegister ? "register" : "login");
     formData.append("callbackUrl", callbackUrl);
+    if (isRegister) {
+      formData.append("role", selectedRole);
+    }
 
     const result = await loginWithEmail(formData);
 
@@ -42,7 +50,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
       setError(result.error);
       setLoading(false);
     } else if (result?.success) {
-      window.location.href = callbackUrl;
+      window.location.href = result.redirectUrl || callbackUrl;
     }
   }
 
@@ -57,10 +65,58 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     <main className={styles.main}>
       <div className={styles.container}>
         <Image src="/images/logo.png" alt="Learnivia" width={52} height={52} className={styles.logoImg} />
-        <h1 className={styles.title}>{isRegister ? "Create your account" : "Sign in to Learnivia"}</h1>
-        <p className={styles.lead}>Free peer-to-peer tutoring and learning for all students.</p>
+        <h1 className={styles.title}>
+          {isRegister
+            ? (selectedRole === "TUTOR" ? "Join as Volunteer Tutor" : "Create Student Account")
+            : "Sign in to Learnivia"}
+        </h1>
+        <p className={styles.lead}>
+          {isRegister
+            ? (selectedRole === "TUTOR"
+                ? "Share your knowledge with K–10 students and earn certified service hours."
+                : "Free peer-to-peer tutoring and learning for all students.")
+            : "Welcome back! Continue learning and tutoring."}
+        </p>
 
         <div className={styles.card}>
+          {/* Role Selection Cards on Register */}
+          {isRegister && (
+            <div className={styles.roleSelectorContainer}>
+              <div className={styles.roleSelectorLabel}>I want to join Learnivia as:</div>
+              <div className={styles.roleCardsGrid} role="radiogroup" aria-label="Account type">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={selectedRole === "STUDENT"}
+                  className={`${styles.roleCard} ${selectedRole === "STUDENT" ? styles.roleCardActive : ""}`}
+                  onClick={() => setSelectedRole("STUDENT")}
+                >
+                  <span className={styles.roleIcon}>🎓</span>
+                  <div className={styles.roleInfo}>
+                    <span className={styles.roleTitle}>Student / Parent</span>
+                    <span className={styles.roleDesc}>Get free 1-on-1 tutoring, homework help & workshops (K–10)</span>
+                  </div>
+                  <span className={styles.roleCheck} aria-hidden="true">✓</span>
+                </button>
+
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={selectedRole === "TUTOR"}
+                  className={`${styles.roleCard} ${selectedRole === "TUTOR" ? styles.roleCardActive : ""}`}
+                  onClick={() => setSelectedRole("TUTOR")}
+                >
+                  <span className={styles.roleIcon}>🌱</span>
+                  <div className={styles.roleInfo}>
+                    <span className={styles.roleTitle}>Volunteer Tutor</span>
+                    <span className={styles.roleDesc}>Tutor K–10 students, earn certified service hours & lead</span>
+                  </div>
+                  <span className={styles.roleCheck} aria-hidden="true">✓</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Google Sign In */}
           <form onSubmit={handleGoogleSignIn}>
             <input type="hidden" name="callbackUrl" value={callbackUrl} />
@@ -84,69 +140,105 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
 
             {isRegister && (
               <>
+                <input type="hidden" name="role" value={selectedRole} />
+
                 <div className={styles.inputGroup}>
                   <label htmlFor="name">Full Name</label>
                   <input
                     id="name"
                     type="text"
                     name="name"
-                    placeholder="e.g. Maya Lin"
+                    placeholder={selectedRole === "TUTOR" ? "e.g. Alex Morgan" : "e.g. Maya Lin"}
                     required={isRegister}
                     autoComplete="name"
                   />
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-                  <div className={styles.inputGroup}>
-                    <label htmlFor="age">Age</label>
-                    <input
-                      id="age"
-                      type="number"
-                      name="age"
-                      min="6"
-                      max="30"
-                      placeholder="e.g. 15"
-                      required={isRegister}
-                    />
-                  </div>
-                  <div className={styles.inputGroup}>
-                    <label htmlFor="grade">Grade / Level</label>
-                    <select
-                      id="grade"
-                      name="grade"
-                      required={isRegister}
-                      style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
-                    >
-                      <option value="">Select...</option>
-                      <option value="Primary (Years 1-6)">Primary (Years 1–6)</option>
-                      <option value="Middle School (Grades 6-8)">Middle School (Grades 6–8)</option>
-                      <option value="Grade 9">Grade 9 / Freshman</option>
-                      <option value="Grade 10">Grade 10 / Sophomore</option>
-                      <option value="Grade 11">Grade 11 / Junior</option>
-                      <option value="Grade 12">Grade 12 / Senior</option>
-                      <option value="University">University / College</option>
-                    </select>
-                  </div>
-                </div>
+                {selectedRole === "STUDENT" ? (
+                  <>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                      <div className={styles.inputGroup}>
+                        <label htmlFor="age">Student Age</label>
+                        <input
+                          id="age"
+                          type="number"
+                          name="age"
+                          min="5"
+                          max="18"
+                          placeholder="e.g. 11"
+                          required={isRegister}
+                        />
+                      </div>
+                      <div className={styles.inputGroup}>
+                        <label htmlFor="grade">Grade Level (K–10)</label>
+                        <select
+                          id="grade"
+                          name="grade"
+                          required={isRegister}
+                          style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
+                        >
+                          <option value="">Select grade...</option>
+                          <option value="Kindergarten">Kindergarten</option>
+                          <option value="Grade 1-2">Grade 1–2 (Early Elementary)</option>
+                          <option value="Grade 3-5">Grade 3–5 (Upper Elementary)</option>
+                          <option value="Grade 6-8">Grade 6–8 (Middle School)</option>
+                          <option value="Grade 9">Grade 9 (High School Freshman)</option>
+                          <option value="Grade 10">Grade 10 (High School Sophomore)</option>
+                        </select>
+                      </div>
+                    </div>
 
-                <div className={styles.inputGroup}>
-                  <label htmlFor="curriculum">Curriculum</label>
-                  <select
-                    id="curriculum"
-                    name="curriculum"
-                    required={isRegister}
-                    style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
-                  >
-                    <option value="">Select curriculum...</option>
-                    <option value="US Common Core">US Common Core / State Standards</option>
-                    <option value="UK National Curriculum">UK National Curriculum</option>
-                    <option value="CBSE">CBSE</option>
-                    <option value="ICSE">ICSE</option>
-                    <option value="IB">IB (Primary / Middle Years Programme)</option>
-                    <option value="IGCSE">IGCSE / GCSE</option>
-                    <option value="Other">Other National Curriculum</option>
-                  </select>
-                </div>
+                    <div className={styles.inputGroup}>
+                      <label htmlFor="curriculum">Curriculum / Program</label>
+                      <select
+                        id="curriculum"
+                        name="curriculum"
+                        required={isRegister}
+                        style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
+                      >
+                        <option value="">Select curriculum...</option>
+                        <option value="US Common Core">US Common Core / State Standards</option>
+                        <option value="UK National Curriculum">UK National Curriculum / Key Stages</option>
+                        <option value="CBSE">CBSE (Central Board of Secondary Education)</option>
+                        <option value="ICSE">ICSE (Indian Certificate of Secondary Education)</option>
+                        <option value="IB">IB (Primary / Middle Years Programme)</option>
+                        <option value="IGCSE">IGCSE / Cambridge Secondary</option>
+                        <option value="Canadian">Canadian Provincial Curriculum</option>
+                        <option value="Australian">Australian National Curriculum</option>
+                        <option value="Other">Other National / State Curriculum</option>
+                      </select>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.inputGroup}>
+                      <label htmlFor="educationLevel">Current Education Standing</label>
+                      <select
+                        id="educationLevel"
+                        name="educationLevel"
+                        required={isRegister}
+                        style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
+                      >
+                        <option value="">Select your standing...</option>
+                        <option value="High School (Grades 11-12)">High School (Grades 11–12)</option>
+                        <option value="Undergraduate / College Student">Undergraduate / College Student</option>
+                        <option value="Graduate / Master's / PhD">Graduate / Master&apos;s / PhD Student</option>
+                        <option value="Certified Educator / Professional">Certified Educator / Professional</option>
+                      </select>
+                    </div>
+
+                    <div className={styles.inputGroup}>
+                      <label htmlFor="school">School / University / Organization</label>
+                      <input
+                        id="school"
+                        type="text"
+                        name="school"
+                        placeholder="e.g. University of Toronto or Lincoln High"
+                        required={isRegister}
+                      />
+                    </div>
+                  </>
+                )}
               </>
             )}
 
@@ -176,7 +268,11 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading} aria-busy={loading}>
-              {loading ? "Please wait…" : (isRegister ? "Create Free Account" : "Sign In")}
+              {loading
+                ? "Please wait…"
+                : isRegister
+                ? (selectedRole === "TUTOR" ? "Join as Volunteer Tutor →" : "Create Student Account →")
+                : "Sign In"}
             </button>
           </form>
 

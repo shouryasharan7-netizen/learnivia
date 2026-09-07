@@ -27,6 +27,7 @@ const publicPaths = [
   "/homework-help",
   "/community",
   "/resources",
+  "/apply",
 ]
 
 const ADMIN_EMAILS = new Set([
@@ -57,9 +58,11 @@ export default auth((req) => {
   const isOnboardingPath = onboardingPaths.some(path => nextUrl.pathname.startsWith(path))
 
   if (isLoggedIn) {
-    // If logged in and visiting signin or signup, redirect immediately to dashboard
+    // If logged in and visiting signin or signup, redirect immediately to their role interface
     if (nextUrl.pathname === "/signin" || nextUrl.pathname === "/signup") {
-      return NextResponse.redirect(new URL("/dashboard", req.url))
+      const userRole = req.auth?.user?.role;
+      const target = userRole === "TUTOR" ? "/tutor" : (userRole === "ADMIN" ? "/admin" : "/dashboard");
+      return NextResponse.redirect(new URL(target, req.url));
     }
 
     // Admin check

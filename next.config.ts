@@ -14,10 +14,10 @@ const nextConfig: NextConfig = {
     ],
     // Optimize CSS by inlining critical styles
     optimizeCss: true,
-    // Deduplicate identical fetch calls within a render
+    // Client-side router cache for blazing fast page transitions
     staleTimes: {
-      dynamic: 0,
-      static: 180, // 3 min ISR for static content
+      dynamic: 30, // 30s client router cache for instant back/forward & link navigations
+      static: 180, // 3 min cache for static content
     },
   },
 

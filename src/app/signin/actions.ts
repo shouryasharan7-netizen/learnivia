@@ -17,6 +17,9 @@ export async function loginWithEmail(formData: FormData) {
   const password = (formData.get("password") as string) || "";
   const name = ((formData.get("name") as string) || "").trim();
   const action = (formData.get("action") as string) || "login";
+  const callbackUrl = ((formData.get("callbackUrl") as string) || "").trim();
+  const rawRole = (formData.get("role") as string) || "STUDENT";
+  const role = rawRole.toUpperCase() === "TUTOR" ? "TUTOR" : "STUDENT";
 
   // Validate Email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,41 +44,79 @@ export async function loginWithEmail(formData: FormData) {
       return { error: "An account with this email already exists. Please sign in instead." };
     }
 
-    const rawAge = formData.get("age") as string;
-    const age = rawAge ? parseInt(rawAge, 10) : undefined;
-    const grade = ((formData.get("grade") as string) || "").trim() || undefined;
-    const curriculum = ((formData.get("curriculum") as string) || "").trim() || undefined;
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const isAdmin = ADMIN_EMAILS.has(email);
 
-    await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name: name || email.split("@")[0],
-        role: isAdmin ? "ADMIN" : "STUDENT",
-        onboardingCompleted: false,
-        age: isNaN(age as number) ? undefined : age,
-        grade,
-        curriculum,
-      },
-    });
+    if (role === "TUTOR") {
+      const school = ((formData.get("school") as string) || "").trim();
+      const educationLevel = ((formData.get("educationLevel") as string) || "").trim();
 
-    // Automatically sign them in after registering
-    try {
-      await signIn("credentials", { email, password, redirect: false });
-      return { success: true };
-    } catch (error) {
-      if (error instanceof AuthError) {
-        return { error: "Account created! Please enter your credentials to sign in." };
+      const newUser = await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          name: name || email.split("@")[0],
+          role: isAdmin ? "ADMIN" : "TUTOR",
+          onboardingCompleted: true,
+          tutorProfile: {
+            create: {
+              status: "PENDING",
+              school: school || undefined,
+              currentGrade: educationLevel || undefined,
+            },
+          },
+        },
+      });
+
+      try {
+        await signIn("credentials", { email, password, redirect: false });
+        const redirectUrl = (callbackUrl && callbackUrl !== "/dashboard") ? callbackUrl : "/apply";
+        return { success: true, redirectUrl };
+      } catch (error) {
+        if (error instanceof AuthError) {
+          return { error: "Tutor account created! Please sign in with your email and password." };
+        }
+        throw error;
       }
-      throw error;
+    } else {
+      // Student registration
+      const rawAge = formData.get("age") as string;
+      const age = rawAge ? parseInt(rawAge, 10) : undefined;
+      const grade = ((formData.get("grade") as string) || "").trim() || undefined;
+      const curriculum = ((formData.get("curriculum") as string) || "").trim() || undefined;
+
+      await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          name: name || email.split("@")[0],
+          role: isAdmin ? "ADMIN" : "STUDENT",
+          onboardingCompleted: true,
+          age: isNaN(age as number) ? undefined : age,
+          grade,
+          curriculum,
+        },
+      });
+
+      try {
+        await signIn("credentials", { email, password, redirect: false });
+        const redirectUrl = callbackUrl || "/dashboard";
+        return { success: true, redirectUrl };
+      } catch (error) {
+        if (error instanceof AuthError) {
+          return { error: "Student account created! Please sign in with your email and password." };
+        }
+        throw error;
+      }
     }
   }
 
   // Handle Login
-  const existingUser = await prisma.user.findUnique({ where: { email } });
+  const existingUser = await prisma.user.findUnique({
+    where: { email },
+    include: { tutorProfile: true },
+  });
+
   if (existingUser && !existingUser.password) {
     return {
       error: "This email is registered with Google. Please click 'Continue with Google'.",
@@ -84,7 +125,21 @@ export async function loginWithEmail(formData: FormData) {
 
   try {
     await signIn("credentials", { email, password, redirect: false });
-    return { success: true };
+
+    // Determine target redirect based on user role
+    const userRole = existingUser?.role || "STUDENT";
+    let redirectUrl = callbackUrl;
+    if (!redirectUrl || redirectUrl === "/dashboard") {
+      if (userRole === "TUTOR") {
+        redirectUrl = "/tutor";
+      } else if (userRole === "ADMIN") {
+        redirectUrl = "/admin";
+      } else {
+        redirectUrl = "/dashboard";
+      }
+    }
+
+    return { success: true, redirectUrl };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

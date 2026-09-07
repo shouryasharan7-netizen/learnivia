@@ -11,6 +11,8 @@ export default async function SignInPage() {
   const session = await auth();
 
   if (session?.user) {
+    if (session.user.role === "TUTOR") redirect("/tutor");
+    if (session.user.role === "ADMIN") redirect("/admin");
     redirect("/dashboard");
   }
 
