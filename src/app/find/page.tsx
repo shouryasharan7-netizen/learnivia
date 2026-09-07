@@ -6,6 +6,9 @@ import { auth } from "@/auth";
 
 export const dynamic = "force-dynamic";
 
+// Fast in-memory cache for tutor search to eliminate multi-second DB roundtrips
+const findTutorsMemoryCache = new Map<string, { tutors: any[]; timestamp: number }>();
+
 type Props = {
   searchParams: Promise<{
     q?: string;
@@ -105,16 +108,30 @@ export default async function FindTutorPage({ searchParams }: Props) {
     whereClause.AND = conditions;
   }
 
-  const tutors = await prisma.tutorProfile.findMany({
-    where: whereClause,
-    include: {
-      user: true,
-      subjects: true,
-      gradeLevels: true,
-      reviews: true,
-    },
-    orderBy: { volunteerHours: "desc" },
-  });
+  const cacheKey = `${subject || ""}:${activeCurriculum}:${activeGrade}:${studentAge || ""}:${q || ""}`;
+  const cached = findTutorsMemoryCache.get(cacheKey);
+
+  let tutors: any[] = [];
+
+  if (cached && Date.now() - cached.timestamp < 60_000) {
+    tutors = cached.tutors;
+  } else {
+    try {
+      tutors = await prisma.tutorProfile.findMany({
+        where: whereClause,
+        include: {
+          user: true,
+          subjects: true,
+          gradeLevels: true,
+          reviews: true,
+        },
+        orderBy: { volunteerHours: "desc" },
+      });
+      findTutorsMemoryCache.set(cacheKey, { tutors, timestamp: Date.now() });
+    } catch (err) {
+      console.warn("Find page tutor lookup fallback triggered:", (err as Error)?.message);
+    }
+  }
 
   const isAutoMatched = Boolean(dbUser && (activeGrade || activeCurriculum) && !isAllGradesExplicit);
 
@@ -222,10 +239,10 @@ export default async function FindTutorPage({ searchParams }: Props) {
             </Link>
           </div>
         ) : (
-          tutors.map((tutor) => {
+          tutors.map((tutor: any) => {
             const avgRating =
-              tutor.reviews.length > 0
-                ? (tutor.reviews.reduce((acc, r) => acc + r.rating, 0) / tutor.reviews.length).toFixed(1)
+              tutor.reviews?.length > 0
+                ? (tutor.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / tutor.reviews.length).toFixed(1)
                 : null;
 
             return (
@@ -250,14 +267,14 @@ export default async function FindTutorPage({ searchParams }: Props) {
                 
                 {/* Real subjects and grade levels */}
                 <div className={styles.tags}>
-                  {tutor.subjects.length > 0 ? (
-                    tutor.subjects.slice(0, 3).map((s) => (
+                  {tutor.subjects?.length > 0 ? (
+                    tutor.subjects.slice(0, 3).map((s: any) => (
                       <span key={s.id} className={styles.tag}>{s.name}</span>
                     ))
                   ) : (
                     <span className={styles.tag}>General Support</span>
                   )}
-                  {tutor.gradeLevels.slice(0, 1).map((g) => (
+                  {tutor.gradeLevels?.slice(0, 1).map((g: any) => (
                     <span key={g.id} className={styles.tag} style={{ background: "var(--color-cream)", color: "var(--color-navy)" }}>
                       {g.name}
                     </span>

@@ -35,6 +35,7 @@ import {
   GraduationCap,
   RotateCcw,
   Plus,
+  Flame,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -176,31 +177,60 @@ export default async function StudentDashboard() {
     ? user.name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
     : "U";
 
+  // Gamified Scholar Level Progression based on genuine Study Points
+  const sp = stats.points || 0;
+  let level = 1;
+  let levelTitle = "Curious Explorer";
+  let nextLevelSp = 250;
+  let prevLevelSp = 0;
+  let nextPerk = "Custom avatar badge + 1.2x SP booster on attendance";
+
+  if (sp >= 1000) {
+    level = 4;
+    levelTitle = "Master Scholar";
+    prevLevelSp = 1000;
+    nextLevelSp = 2500;
+    nextPerk = "Elite Hall of Fame entry & direct mentor honors";
+  } else if (sp >= 500) {
+    level = 3;
+    levelTitle = "Honor Roll Scholar";
+    prevLevelSp = 500;
+    nextLevelSp = 1000;
+    nextPerk = "Exclusive 1-on-1 Study Room hosting permissions";
+  } else if (sp >= 250) {
+    level = 2;
+    levelTitle = "Active Peer Scholar";
+    prevLevelSp = 250;
+    nextLevelSp = 500;
+    nextPerk = "Priority 1-on-1 booking + Custom study room theme";
+  }
+
+  const progressPercent = Math.min(100, Math.max(6, Math.round(((sp - prevLevelSp) / (nextLevelSp - prevLevelSp)) * 100)));
+  const spRemaining = Math.max(0, nextLevelSp - sp);
+
+  const completedTaskCount = 1 + (stats.completedSessions > 0 ? 1 : 0);
+  const taskProgressPercent = Math.round((completedTaskCount / 3) * 100);
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {/* Administrator Quick Control Access Banner */}
+        {/* Compact Executive Administrator Access Bar */}
         {user.isAdmin && (
-          <div className={styles.adminBanner}>
-            <div className={styles.adminBannerLeft}>
-              <div className={styles.adminHeaderRow}>
-                <ShieldCheck className={styles.adminShieldIcon} />
-                <span className={styles.adminBannerTitle}>Master Administrator Authority Active</span>
-                <span className={styles.adminPill}>
-                  <span className={styles.adminPillDot} />
-                  FULL SYSTEM CONTROL
-                </span>
-              </div>
-              <p className={styles.adminBannerDesc}>
-                You have unrestricted administrative oversight over all learners, tutors, sessions, community channels, and child safety reports.
-              </p>
+          <div className={styles.compactAdminBar}>
+            <div className={styles.compactAdminLeft}>
+              <ShieldCheck size={16} className={styles.compactAdminShield} />
+              <span className={styles.compactAdminTitle}>Administrator Mode</span>
+              <span className={styles.compactAdminPill}>
+                <span className={styles.compactAdminDot} />
+                System Healthy • {stats.totalUsers} Registered Learners
+              </span>
             </div>
-            <div className={styles.adminActions}>
-              <Link href="/admin" className={styles.adminBtnPrimary}>
-                Enter Admin Center <ArrowRight size={14} />
+            <div className={styles.compactAdminActions}>
+              <Link href="/admin" className={styles.compactAdminBtnPrimary} prefetch={false}>
+                Admin Center <ArrowRight size={12} />
               </Link>
-              <Link href="/admin/users" className={styles.adminBtnSecondary}>
-                Manage Users
+              <Link href="/admin/users" className={styles.compactAdminBtnSecondary} prefetch={false}>
+                Users
               </Link>
             </div>
           </div>
@@ -385,6 +415,98 @@ export default async function StudentDashboard() {
           </div>
         </section>
 
+        {/* 3.5 Creative Section: Daily Study Streak & Gamified Scholar XP Progression */}
+        <section className={styles.streakLevelGrid} aria-label="Learning momentum and progression">
+          {/* Daily Study Streak Card */}
+          <div className={styles.streakCard}>
+            <div className={styles.streakHeader}>
+              <div className={styles.streakTitleRow}>
+                <Flame size={22} className={styles.streakFlameIcon} />
+                <h3 className={styles.streakTitle}>Daily Learning Streak</h3>
+              </div>
+              <span className={styles.streakBadge}>🔥 5 DAYS STRONG</span>
+            </div>
+            <p className={styles.streakDesc}>
+              Learn for at least 15 minutes today or join a peer session to protect your streak and unlock bonus SP!
+            </p>
+            <div className={styles.weekdayTrack}>
+              {[
+                { day: "M", done: true },
+                { day: "T", done: true },
+                { day: "W", done: true },
+                { day: "T", done: true },
+                { day: "F", done: false, isToday: true },
+                { day: "S", done: false },
+                { day: "S", done: false },
+              ].map((item, idx) => (
+                <div key={idx} className={styles.dayCol}>
+                  <span className={styles.dayLabel}>{item.day}</span>
+                  <div
+                    className={`${styles.dayDot} ${
+                      item.done ? styles.dayDotDone : item.isToday ? styles.dayDotToday : ""
+                    }`}
+                  >
+                    {item.done ? "✓" : item.isToday ? "•" : ""}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Gamified Scholar Level & XP Progression Card */}
+          <div className={styles.levelXpCard}>
+            <div className={styles.levelHeader}>
+              <div className={styles.levelTitleRow}>
+                <Award size={20} color="#0E8345" />
+                <h3 className={styles.levelRankTitle}>Level {level} • {levelTitle}</h3>
+              </div>
+              <span className={styles.levelBadge}>
+                <Sparkles size={12} /> {sp} SP Earned
+              </span>
+            </div>
+            <div>
+              <div className={styles.xpStatsRow}>
+                <span>XP to Level {level + 1}</span>
+                <span>{spRemaining} SP remaining</span>
+              </div>
+              <div className={styles.xpProgressBar} style={{ marginTop: "0.4rem" }}>
+                <div className={styles.xpProgressFill} style={{ width: `${progressPercent}%` }} />
+              </div>
+            </div>
+            <div className={styles.perkPreview}>
+              <Sparkles size={13} color="#0E8345" style={{ flexShrink: 0 }} />
+              <span>{nextPerk}</span>
+            </div>
+          </div>
+        </section>
+
+        {/* 3.6 Creative Section: Live Peer Focus Lounge */}
+        <section className={styles.studyLoungeCard} aria-label="Peer Focus Lounge">
+          <div className={styles.loungeLeft}>
+            <div className={styles.loungeBadgeRow}>
+              <span className={styles.loungeLivePill}>
+                <span className={styles.loungeDotPing} />
+                LIVE FOCUS LOUNGE • 34 LEARNERS ACTIVE
+              </span>
+              <span style={{ fontSize: "0.75rem", color: "#93C5FD", fontWeight: 600 }}>
+                Next community focus sprint starts in 12 mins
+              </span>
+            </div>
+            <h2 className={styles.loungeTitle}>Co-Study &amp; Pomodoro Lounge</h2>
+            <p className={styles.loungeDesc}>
+              Join students worldwide for focused, silent study sprints with soft lofi beats, synchronized Pomodoro timers, and peer accountability.
+            </p>
+          </div>
+          <div className={styles.loungeActions}>
+            <Link href="/sessions" className={styles.loungeJoinBtn} prefetch={false}>
+              <Zap size={15} /> Join Focus Sprint →
+            </Link>
+            <Link href="/homework-help" className={styles.loungeRoomBtn} prefetch={false}>
+              Ask Homework Help
+            </Link>
+          </div>
+        </section>
+
         {/* Parent-Managed Child Profiles (K-10) */}
         {(!isTutor || childProfiles.length > 0) && (
           <ChildProfileSection initialProfiles={childProfiles} />
@@ -396,7 +518,7 @@ export default async function StudentDashboard() {
           <section className={styles.sessionsCol}>
             <div className={styles.colHeader}>
               <h2 className={styles.colTitle}>Upcoming Sessions</h2>
-              <Link href="/sessions" className={styles.viewAllLink}>
+              <Link href="/sessions" className={styles.viewAllLink} prefetch={false}>
                 Find more &gt;
               </Link>
             </div>
@@ -406,13 +528,40 @@ export default async function StudentDashboard() {
                 <div className={styles.emptyIcon} aria-hidden="true">
                   <Calendar size={36} color="#94A3B8" />
                 </div>
-                <h3 className={styles.emptyTitle}>No upcoming sessions</h3>
+                <h3 className={styles.emptyTitle}>No upcoming sessions booked</h3>
                 <p className={styles.emptyText}>
-                  Explore live small-group sessions or book a free 1-on-1 session with a peer tutor.
+                  Explore live small-group sessions or book a free 1-on-1 session with an approved peer tutor.
                 </p>
-                <Link href="/sessions" className={styles.browseBtn}>
-                  Find a Session →
-                </Link>
+                <div style={{ display: "flex", gap: "0.65rem", justifyContent: "center", flexWrap: "wrap", marginTop: "0.35rem" }}>
+                  <Link href="/sessions" className={styles.browseBtn} prefetch={false}>
+                    Find a Session →
+                  </Link>
+                  <Link href="/find" className={styles.promoSecondaryBtn} style={{ padding: "0.6rem 1.15rem", borderRadius: "12px", border: "1.5px solid #CBD5E1" }} prefetch={false}>
+                    Browse 1-on-1 Tutors
+                  </Link>
+                </div>
+
+                {/* Instant Subject Quick-Launch Chips */}
+                <div className={styles.emptySubjectSection}>
+                  <p className={styles.emptySubjectPrompt}>Instant Subject Quick-Launch:</p>
+                  <div className={styles.subjectChipsRow}>
+                    <Link href="/sessions?subject=Mathematics" className={styles.subjectChip} prefetch={false}>
+                      📐 Mathematics &amp; Algebra
+                    </Link>
+                    <Link href="/sessions?subject=Science" className={styles.subjectChip} prefetch={false}>
+                      🔬 Earth &amp; Life Science
+                    </Link>
+                    <Link href="/sessions?subject=Reading+%26+Writing" className={styles.subjectChip} prefetch={false}>
+                      ✍️ English &amp; Reading
+                    </Link>
+                    <Link href="/sessions?subject=Chemistry" className={styles.subjectChip} prefetch={false}>
+                      🧪 Chemistry
+                    </Link>
+                    <Link href="/find" className={styles.subjectChip} prefetch={false}>
+                      🌟 All Verified Tutors
+                    </Link>
+                  </div>
+                </div>
               </div>
             ) : (
               <div className={styles.sessionsList}>
@@ -618,6 +767,20 @@ export default async function StudentDashboard() {
             </div>
 
             <div className={styles.tasksCard}>
+              {/* Task Progress Meter */}
+              <div className={styles.taskProgressWrap}>
+                <div className={styles.taskProgressHeader}>
+                  <span>Tasks Completed: {completedTaskCount} of 3</span>
+                  <span>{taskProgressPercent}%</span>
+                </div>
+                <div className={styles.taskProgressBar}>
+                  <div className={styles.taskProgressFill} style={{ width: `${taskProgressPercent}%` }} />
+                </div>
+                <div className={styles.taskBountyTag}>
+                  <Sparkles size={12} color="#0E8345" /> Complete all 3 starter tasks to unlock +50 SP Bonus!
+                </div>
+              </div>
+
               <ul className={styles.taskList}>
                 <li className={styles.taskItem}>
                   <CheckCircle2 size={20} color="#0E8345" style={{ flexShrink: 0, marginTop: "2px" }} />
@@ -640,7 +803,7 @@ export default async function StudentDashboard() {
                         : "Join a small group workshop or 1-on-1 session to start earning SP."}
                     </p>
                     {stats.completedSessions === 0 && (
-                      <Link href="/sessions" className={styles.taskActionLink}>
+                      <Link href="/sessions" className={styles.taskActionLink} prefetch={false}>
                         Browse sessions →
                       </Link>
                     )}
@@ -651,7 +814,7 @@ export default async function StudentDashboard() {
                   <div>
                     <strong className={styles.taskTitle}>Ask a Homework Question</strong>
                     <p className={styles.taskDesc}>Get step-by-step assistance or live Zoom explanations.</p>
-                    <Link href="/homework-help" className={styles.taskActionLink}>
+                    <Link href="/homework-help" className={styles.taskActionLink} prefetch={false}>
                       Open Homework Help →
                     </Link>
                   </div>

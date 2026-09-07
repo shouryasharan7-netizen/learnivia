@@ -31,7 +31,19 @@ const DEFAULT_ANNOUNCEMENTS = [
   },
 ];
 
+const communityCache = new Map<string, { messages: CommunityMessage[]; timestamp: number }>();
+
+export function invalidateCommunityCache() {
+  communityCache.clear();
+}
+
 export async function getMessages(channel?: string): Promise<CommunityMessage[]> {
+  const cacheKey = channel || "all";
+  const cached = communityCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < 30_000) {
+    return cached.messages;
+  }
+
   try {
     const where: any = {};
     if (channel && channel !== "Home" && channel !== "All") {
@@ -53,7 +65,7 @@ export async function getMessages(channel?: string): Promise<CommunityMessage[]>
       }));
     }
 
-    return rows.map((r) => {
+    const messages: CommunityMessage[] = rows.map((r) => {
       const reactions = (r.reactions as any) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
       const timeStr = new Date(r.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
       const dateStr = new Date(r.createdAt).toLocaleDateString([], { month: "short", day: "numeric" });
@@ -85,6 +97,9 @@ export async function getMessages(channel?: string): Promise<CommunityMessage[]>
         },
       };
     });
+
+    communityCache.set(cacheKey, { messages, timestamp: Date.now() });
+    return messages;
   } catch (err) {
     console.error("Error loading community messages from DB:", err);
     return [];
@@ -101,6 +116,7 @@ export async function addMessage(msg: {
   content: string;
   authorId?: string;
 }): Promise<CommunityMessage> {
+  invalidateCommunityCache();
   const defaultReactions = { heart: 0, clap: 0, bulb: 0, fire: 0 };
 
   const created = await prisma.communityMessage.create({
@@ -149,6 +165,7 @@ export async function toggleReaction(
       where: { id: messageId },
       data: { reactions: currentReactions },
     });
+    invalidateCommunityCache();
 
     const timeStr = new Date(updated.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
     return {

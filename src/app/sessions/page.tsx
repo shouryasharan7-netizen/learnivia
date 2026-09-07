@@ -61,6 +61,9 @@ type Props = {
   }>;
 };
 
+// Fast in-memory cache for sessions & workshops to avoid multi-second DB roundtrips
+const sessionsMemoryCache = new Map<string, { workshops: any[]; tutors: any[]; timestamp: number }>();
+
 export default async function SessionsPage({ searchParams }: Props) {
   const session = await auth();
   const { q, subject, curriculum, grade, allGrades } = await searchParams;
@@ -204,23 +207,20 @@ export default async function SessionsPage({ searchParams }: Props) {
     tutorWhere.AND = tutorConditions;
   }
 
-  // Concurrent resilient fetching
-  let workshops: Awaited<ReturnType<typeof prisma.workshop.findMany<{
-    where: typeof workshopWhere;
-    include: {
-      tutor: { include: { user: true } };
-      enrollments: true;
-    };
-  }>>> = [];
+  // Fast cache check
+  const cacheKey = `${activeSubject}:${activeCurriculum}:${activeGrade}:${studentAge || ""}:${q || ""}`;
+  const cached = sessionsMemoryCache.get(cacheKey);
 
-  let tutors: Awaited<ReturnType<typeof prisma.tutorProfile.findMany<{
-    where: typeof tutorWhere;
-    include: { user: true; subjects: true; availabilities: true; gradeLevels: true };
-  }>>> = [];
+  let workshops: any[] = [];
+  let tutors: any[] = [];
 
-  try {
-    const [fetchedWorkshops, fetchedTutors] = await Promise.all([
-      prisma.workshop.findMany({
+  if (cached && Date.now() - cached.timestamp < 60_000) {
+    workshops = cached.workshops;
+    tutors = cached.tutors;
+  } else {
+    try {
+      // 1. Fetch workshops first
+      workshops = await prisma.workshop.findMany({
         where: workshopWhere,
         include: {
           tutor: { include: { user: true } },
@@ -228,17 +228,21 @@ export default async function SessionsPage({ searchParams }: Props) {
         },
         orderBy: { startTime: "asc" },
         take: 25,
-      }),
-      prisma.tutorProfile.findMany({
-        where: tutorWhere,
-        include: { user: true, subjects: true, availabilities: true, gradeLevels: true },
-        take: 16,
-      }),
-    ]);
-    workshops = fetchedWorkshops;
-    tutors = fetchedTutors;
-  } catch (err) {
-    console.warn("Sessions page query fallback triggered:", (err as Error)?.message);
+      });
+
+      // 2. Only fetch tutors if no workshops exist
+      if (workshops.length === 0) {
+        tutors = await prisma.tutorProfile.findMany({
+          where: tutorWhere,
+          include: { user: true, subjects: true, availabilities: true, gradeLevels: true },
+          take: 16,
+        });
+      }
+
+      sessionsMemoryCache.set(cacheKey, { workshops, tutors, timestamp: Date.now() });
+    } catch (err) {
+      console.warn("Sessions page query fallback triggered:", (err as Error)?.message);
+    }
   }
 
   const isAutoMatched = Boolean(dbUser && (activeGrade || activeCurriculum !== "All") && !isAllGradesExplicit);
@@ -458,7 +462,7 @@ export default async function SessionsPage({ searchParams }: Props) {
                   </Link>
 
                   {(() => {
-                    const isEnrolled = w.enrollments.some((e) => e.studentId === session?.user?.id);
+                    const isEnrolled = w.enrollments.some((e: any) => e.studentId === session?.user?.id);
                     const isHostTutor = w.tutor?.userId === session?.user?.id;
                     const isAdmin = dbUser?.role === "ADMIN";
                     const now = Date.now();

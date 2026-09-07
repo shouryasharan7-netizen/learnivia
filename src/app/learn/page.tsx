@@ -12,26 +12,47 @@ export const metadata: Metadata = {
   description: "Browse all Learnivia programs and live group workshops — free, interactive tutoring from homework help to exam prep.",
 };
 
+let learnCache: { programs: any[]; workshops: any[]; timestamp: number } | null = null;
+
 export default async function LearnPage() {
   const session = await auth();
 
-  const [programs, workshops] = await Promise.all([
-    prisma.program.findMany({
-      orderBy: { createdAt: "asc" },
-    }),
-    prisma.workshop.findMany({
-      where: {
-        status: "UPCOMING",
-        startTime: { gte: new Date() },
-      },
-      include: {
-        tutor: { include: { user: true } },
-        enrollments: true,
-      },
-      orderBy: { startTime: "asc" },
-      take: 6,
-    }),
-  ]);
+  let programs: any[] = [];
+  let workshops: any[] = [];
+
+  if (learnCache && Date.now() - learnCache.timestamp < 60_000) {
+    programs = learnCache.programs;
+    workshops = learnCache.workshops;
+  } else {
+    try {
+      const results = await Promise.all([
+        prisma.program.findMany({
+          orderBy: { createdAt: "asc" },
+        }),
+        prisma.workshop.findMany({
+          where: {
+            status: "UPCOMING",
+            startTime: { gte: new Date() },
+          },
+          include: {
+            tutor: { include: { user: true } },
+            enrollments: true,
+          },
+          orderBy: { startTime: "asc" },
+          take: 6,
+        }),
+      ]);
+      programs = results[0];
+      workshops = results[1];
+      learnCache = { programs, workshops, timestamp: Date.now() };
+    } catch (err) {
+      console.warn("Learn page cache fetch fallback:", err);
+      if (learnCache) {
+        programs = learnCache.programs;
+        workshops = learnCache.workshops;
+      }
+    }
+  }
 
   return (
     <main>
@@ -59,7 +80,7 @@ export default async function LearnPage() {
               {workshops.map((w) => {
                 const seatsLeft = w.maxCapacity - w.enrollments.length;
                 const isEnrolled = session?.user?.id
-                  ? w.enrollments.some((e) => e.studentId === session.user.id)
+                  ? w.enrollments.some((e: any) => e.studentId === session.user.id)
                   : false;
 
                 return (
@@ -122,7 +143,7 @@ export default async function LearnPage() {
                 <h2 className={styles.cardTitle}>{p.title}</h2>
                 <p className={styles.cardDesc}>{p.shortDescription}</p>
                 <div className={styles.tags}>
-                  {p.gradeLevels.slice(0, 2).map(g => (
+                  {p.gradeLevels.slice(0, 2).map((g: any) => (
                     <span key={g} className={styles.tag}>{g}</span>
                   ))}
                 </div>
