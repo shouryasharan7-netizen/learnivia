@@ -30,6 +30,26 @@ export async function bookSession(formData: FormData) {
     throw new Error("Time slot not found");
   }
 
+  // 1. Fetch & validate tutor profile
+  const tutorProfile = await prisma.tutorProfile.findUnique({
+    where: { id: tutorId },
+    include: { user: true },
+  });
+
+  if (!tutorProfile || tutorProfile.status !== "APPROVED") {
+    throw new Error("This tutor is not currently accepting bookings.");
+  }
+
+  // 2. Prevent self-booking (tutors cannot book themselves)
+  if (tutorProfile.userId === user.id) {
+    throw new Error("You cannot book a tutoring session with yourself.");
+  }
+
+  // 3. Slot verification: slot must belong to this tutor
+  if (slot.tutorId !== tutorId) {
+    throw new Error("Invalid slot selection for this tutor.");
+  }
+
   // Calculate the target booking date based on day of week
   const today = new Date();
   const currentDay = today.getDay();
@@ -53,17 +73,32 @@ export async function bookSession(formData: FormData) {
   const [endHours, endMinutes] = slot.endTime.split(":").map(Number);
   endDate.setHours(endHours, endMinutes, 0, 0);
 
-  // Check for conflicts: is this tutor already booked at this time?
-  const existingBooking = await prisma.booking.findFirst({
+  // 4. Overlap conflict protection: verify no overlapping bookings for tutor
+  const tutorConflict = await prisma.booking.findFirst({
     where: {
       tutorId,
-      startTime: targetDate,
       status: "CONFIRMED",
+      startTime: { lt: endDate },
+      endTime: { gt: targetDate },
     },
   });
 
-  if (existingBooking) {
+  if (tutorConflict) {
     throw new Error("This time slot is already booked. Please choose another available slot.");
+  }
+
+  // 5. Overlap conflict protection: verify student has no overlapping bookings
+  const studentConflict = await prisma.booking.findFirst({
+    where: {
+      studentId: user.id,
+      status: "CONFIRMED",
+      startTime: { lt: endDate },
+      endTime: { gt: targetDate },
+    },
+  });
+
+  if (studentConflict) {
+    throw new Error("You already have another confirmed tutoring session during this time window.");
   }
 
   const durationMinutes = Math.max(30, Math.round((endDate.getTime() - targetDate.getTime()) / 60000));
@@ -81,14 +116,13 @@ export async function bookSession(formData: FormData) {
       isCustom: false,
     });
   } catch (err) {
-    console.error("Zoom meeting creation failed, generating verified direct link:", err);
-    const meetingId = Math.floor(1000000000 + Math.random() * 9000000000);
-    const meetingPwd = Math.random().toString(36).substring(2, 8);
-    const fallbackUrl = `https://zoom.us/j/${meetingId}?pwd=${meetingPwd}`;
+    console.log("Zoom API unavailable or unconfigured, assigning Learnivia session room link:", err);
+    // Honest session link rather than a fabricated random Zoom meeting ID and password
+    const sessionRoomUrl = `https://learnivia-green.vercel.app/learn?session=lv-${Date.now().toString(36)}`;
     meetingUrl = JSON.stringify({
-      joinUrl: fallbackUrl,
-      startUrl: fallbackUrl,
-      isCustom: false,
+      joinUrl: sessionRoomUrl,
+      startUrl: sessionRoomUrl,
+      isCustom: true,
     });
   }
 
@@ -105,12 +139,6 @@ export async function bookSession(formData: FormData) {
       status: "CONFIRMED",
       zoomLink: meetingUrl,
     },
-  });
-
-  // Fetch tutor details for the email
-  const tutorProfile = await prisma.tutorProfile.findUnique({
-    where: { id: tutorId },
-    include: { user: true },
   });
 
   if (user.email && tutorProfile?.user.email) {

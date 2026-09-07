@@ -97,30 +97,41 @@ export async function completeSession(formData: FormData) {
     throw new Error("Only the tutor or an admin can mark a session as completed.");
   }
 
+  if (booking.status === "CANCELED") {
+    throw new Error("Cannot mark a cancelled session as completed.");
+  }
+
   if (booking.status === "COMPLETED") {
     return; // already completed
+  }
+
+  // Integrity check: session cannot be completed before it begins
+  if (new Date() < booking.startTime) {
+    throw new Error("A session cannot be marked as completed before its scheduled start time.");
   }
 
   // Calculate duration in hours (minimum 0.5 hours)
   const durationMs = booking.endTime.getTime() - booking.startTime.getTime();
   const durationHours = Math.max(0.5, Math.round((durationMs / (1000 * 60 * 60)) * 10) / 10);
 
-  // Update booking status and increment tutor volunteer hours atomically
-  await prisma.$transaction([
-    prisma.booking.update({
-      where: { id: bookingId },
-      data: { status: "COMPLETED" },
-    }),
-    prisma.tutorProfile.update({
+  // Atomically transition from CONFIRMED -> COMPLETED to prevent concurrent double-credit
+  const updateResult = await prisma.booking.updateMany({
+    where: { id: bookingId, status: "CONFIRMED" },
+    data: { status: "COMPLETED" },
+  });
+
+  if (updateResult.count > 0) {
+    await prisma.tutorProfile.update({
       where: { id: booking.tutorId },
       data: {
         volunteerHours: { increment: durationHours },
       },
-    }),
-  ]);
+    });
+  }
 
   revalidatePath("/tutor");
   revalidatePath("/dashboard");
+  revalidatePath(`/sessions/${bookingId}`);
 }
 
 export async function submitReview(formData: FormData) {

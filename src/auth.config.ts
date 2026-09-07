@@ -19,14 +19,15 @@ export const authConfig = {
   ],
   callbacks: {
     async jwt({ token, user, trigger, session }) {
-      // Handle session updates from the client
+      // Handle safe session updates from the client (e.g. onboarding status)
       if (trigger === "update" && session) {
         if (session.onboardingCompleted !== undefined) {
           token.onboardingCompleted = session.onboardingCompleted;
         }
-        if (session.role !== undefined) {
-          token.role = session.role;
+        if (session.timezone !== undefined) {
+          token.timezone = session.timezone;
         }
+        // NOTE: Never trust client-supplied session.role to prevent privilege escalation!
       }
 
       if (user) {

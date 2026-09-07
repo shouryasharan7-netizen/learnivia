@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
+import { getMeetingUrls } from "@/lib/meetingUrl";
+import { submitReview } from "@/app/actions/sessions";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -50,6 +52,13 @@ export default async function SessionDetailPage({
   const isStudent = booking.studentId === session.user.id;
   const isTutor = booking.tutor.userId === session.user.id;
   if (!isStudent && !isTutor) redirect("/dashboard");
+
+  const existingReview = await prisma.review.findFirst({
+    where: { bookingId: booking.id },
+  });
+
+  const meetingUrls = getMeetingUrls(booking.zoomLink);
+  const activeMeetingLink = isTutor ? (meetingUrls.hostUrl || meetingUrls.joinUrl) : meetingUrls.joinUrl;
 
   const now = new Date();
   const start = new Date(booking.startTime);
@@ -150,16 +159,18 @@ export default async function SessionDetailPage({
           {/* Zoom CTA */}
           {!isCanceled && (
             <div style={{ background: zoomIsActive ? "linear-gradient(135deg,#0E8345,#0a6b35)" : "#F3F4F6", borderRadius: "1rem", padding: "1.5rem", textAlign: "center", marginBottom: "1rem", border: zoomIsActive ? "2px solid #0E8345" : "2px solid #E5E7EB" }}>
-              {zoomIsActive && booking.zoomLink ? (
+              {zoomIsActive && activeMeetingLink ? (
                 <>
-                  <div style={{ color: "#fff", fontWeight: 600, fontSize: "0.875rem", marginBottom: "0.75rem" }}>🔗 Your session is ready — join now</div>
-                  <a href={booking.zoomLink} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#fff", color: "#0E8345", fontWeight: 800, fontSize: "1rem", padding: "0.875rem 2.5rem", borderRadius: "999px", textDecoration: "none", boxShadow: "0 2px 8px rgba(0,0,0,0.12)" }}>
+                  <div style={{ color: "#fff", fontWeight: 600, fontSize: "0.875rem", marginBottom: "0.75rem" }}>
+                    {isTutor ? "🎥 Start your session (Host View)" : "🔗 Your session is ready — join now"}
+                  </div>
+                  <a href={activeMeetingLink} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#fff", color: "#0E8345", fontWeight: 800, fontSize: "1rem", padding: "0.875rem 2.5rem", borderRadius: "999px", textDecoration: "none", boxShadow: "0 2px 8px rgba(0,0,0,0.12)" }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4a2.5 2.5 0 0 0-2.5 2.5v11A2.5 2.5 0 0 0 4.5 20h11a2.5 2.5 0 0 0 2.5-2.5V15l4 3V6l-4 3V6.5A2.5 2.5 0 0 0 15.5 4h-11z" /></svg>
-                    Join Session on Zoom
+                    {isTutor ? "Start Live Session" : "Join Session"}
                   </a>
                 </>
-              ) : zoomIsActive && !booking.zoomLink ? (
-                <div style={{ color: "#6B7280", fontWeight: 600, fontSize: "0.9rem" }}>⚠️ Zoom link not set — contact admin if this is within 15 min of session time.</div>
+              ) : zoomIsActive && !activeMeetingLink ? (
+                <div style={{ color: "#6B7280", fontWeight: 600, fontSize: "0.9rem" }}>⚠️ Meeting room link not set — please refresh in a moment or contact support.</div>
               ) : isCompleted ? (
                 <div style={{ color: "#6B7280" }}>
                   <div style={{ fontWeight: 700, marginBottom: "0.4rem" }}>Session ended</div>
@@ -173,14 +184,14 @@ export default async function SessionDetailPage({
                 <>
                   <div style={{ color: "#374151", fontWeight: 700, fontSize: "0.875rem", marginBottom: "0.5rem" }}>
                     🕐 {minutesUntilZoom > 60
-                      ? `Zoom opens ${Math.floor(minutesUntilZoom / 60)}h ${minutesUntilZoom % 60}m before start`
+                      ? `Meeting room opens ${Math.floor(minutesUntilZoom / 60)}h ${minutesUntilZoom % 60}m before start`
                       : minutesUntilZoom > 0
-                      ? `Zoom opens in ${minutesUntilZoom} minutes`
-                      : "Zoom opens 15 minutes before your session"}
+                      ? `Meeting room opens in ${minutesUntilZoom} minutes`
+                      : "Meeting room opens 15 minutes before your session"}
                   </div>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#E5E7EB", color: "#9CA3AF", fontWeight: 800, fontSize: "1rem", padding: "0.875rem 2.5rem", borderRadius: "999px", cursor: "not-allowed" }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4a2.5 2.5 0 0 0-2.5 2.5v11A2.5 2.5 0 0 0 4.5 20h11a2.5 2.5 0 0 0 2.5-2.5V15l4 3V6l-4 3V6.5A2.5 2.5 0 0 0 15.5 4h-11z" /></svg>
-                    Join via Zoom
+                    Join Session
                   </div>
                 </>
               ) : null}
@@ -193,6 +204,47 @@ export default async function SessionDetailPage({
               <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#1D4ED8", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.3rem" }}>💬 Check-up from your tutor</div>
               <div style={{ fontSize: "0.9375rem", color: "#1E40AF", lineHeight: 1.6 }}>{booking.checkUpNote}</div>
             </div>
+          )}
+
+          {/* Student Review Section (for completed sessions) */}
+          {isCompleted && isStudent && (
+            existingReview ? (
+              <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "0.75rem", padding: "1.25rem", marginBottom: "1rem" }}>
+                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0D683B", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.4rem" }}>⭐ Your Rating &amp; Review</div>
+                <div style={{ fontSize: "1.1rem", color: "#F59E0B", marginBottom: "0.25rem" }}>
+                  {"★".repeat(existingReview.rating)}{"☆".repeat(5 - existingReview.rating)}{" "}
+                  <span style={{ fontSize: "0.9rem", color: "#374151", fontWeight: 700 }}>({existingReview.rating}/5)</span>
+                </div>
+                {existingReview.comment && (
+                  <div style={{ fontSize: "0.9rem", color: "#374151", fontStyle: "italic" }}>&ldquo;{existingReview.comment}&rdquo;</div>
+                )}
+              </div>
+            ) : (
+              <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: "0.75rem", padding: "1.25rem", marginBottom: "1rem" }}>
+                <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: "0.3rem" }}>⭐ Rate Your Volunteer Tutoring Session</div>
+                <p style={{ fontSize: "0.8rem", color: "#64748B", marginBottom: "0.75rem" }}>Your honest review helps your tutor and verifies their volunteer teaching record.</p>
+                <form action={submitReview} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  <input type="hidden" name="bookingId" value={booking.id} />
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#475569", marginBottom: "0.25rem" }}>Rating *</label>
+                    <select name="rating" defaultValue="5" required style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.85rem", background: "#fff" }}>
+                      <option value="5">★★★★★ 5 - Outstanding, super helpful!</option>
+                      <option value="4">★★★★☆ 4 - Great session</option>
+                      <option value="3">★★★☆☆ 3 - Good / helpful</option>
+                      <option value="2">★★☆☆☆ 2 - Needed improvement</option>
+                      <option value="1">★☆☆☆☆ 1 - Poor experience</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#475569", marginBottom: "0.25rem" }}>Feedback / Note for Tutor (Optional)</label>
+                    <textarea name="comment" rows={2} placeholder="What was helpful? How did your tutor do?" style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.85rem", resize: "vertical" }} />
+                  </div>
+                  <button type="submit" style={{ alignSelf: "flex-start", padding: "0.5rem 1.25rem", background: "#0E8345", color: "#fff", border: "none", borderRadius: "6px", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer" }}>
+                    Submit Review
+                  </button>
+                </form>
+              </div>
+            )
           )}
 
           {/* Action buttons */}

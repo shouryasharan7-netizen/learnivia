@@ -97,11 +97,16 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
       if (res.ok) {
         const data = await res.json();
-        setDbStories((prev) => [data.story, ...prev]);
+        if (data.story?.isPublished) {
+          setDbStories((prev) => [data.story, ...prev]);
+        }
         setSubmissionSuccess(true);
         setQuote("");
         setAuthorName("");
         setSubject("");
+      } else {
+        const errData = await res.json().catch(() => null);
+        alert(errData?.error || "Please sign in to submit a story.");
       }
     } catch (err) {
       console.error("Failed to submit story:", err);
@@ -122,7 +127,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
           <h1 className={styles.title}>Learnivia Stories & Blog</h1>
           <p className={styles.subtitle}>
-            Explore real student breakthroughs, tutor journeys, test prep masterclasses, and college admissions advice from peer mentors around the globe.
+            Explore real student breakthroughs, volunteer tutor journeys, K–10 study guides, and peer mentoring insights from our global learning community.
           </p>
 
           {/* Search Bar */}
@@ -360,7 +365,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
               <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🎉</div>
               <h3 style={{ color: "#FFFFFF", fontSize: "1.25rem", fontWeight: 700 }}>Thank You for Sharing!</h3>
               <p style={{ color: "#E2E8F0", marginTop: "0.5rem", fontSize: "0.95rem" }}>
-                Your story has been added to our community voices. Thank you for making peer learning welcoming for everyone!
+                Your story has been submitted for moderation review. Once verified by our safety team, it will appear in our community voices!
               </p>
               <button
                 type="button"

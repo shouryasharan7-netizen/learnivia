@@ -7,6 +7,7 @@ import { cancelWorkshopEnrollment } from "@/app/actions/workshops";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { calculateUserStats } from "@/lib/stats";
+import ChildProfileSection from "./ChildProfileSection";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -88,6 +89,7 @@ export default async function StudentDashboard() {
     upcomingBookings,
     completedBookings,
     enrolledWorkshops,
+    childProfiles,
   ] = await Promise.all([
     calculateUserStats(user.id),
     prisma.booking.findMany({
@@ -124,6 +126,10 @@ export default async function StudentDashboard() {
           },
         },
       },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.childProfile.findMany({
+      where: { parentId: user.id },
       orderBy: { createdAt: "desc" },
     }),
   ]);
@@ -423,6 +429,11 @@ export default async function StudentDashboard() {
             </Link>
           </div>
         </section>
+
+        {/* Parent-Managed Child Profiles (K-10) */}
+        {(!isTutor || childProfiles.length > 0) && (
+          <ChildProfileSection initialProfiles={childProfiles} />
+        )}
 
         {/* 4. Two Columns: Upcoming Sessions & Tasks */}
         <div className={styles.twoColGrid}>

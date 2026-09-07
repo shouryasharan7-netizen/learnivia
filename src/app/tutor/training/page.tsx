@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const MODULES = [
@@ -207,10 +207,45 @@ export default function TutorTrainingPage() {
   const [activeModule, setActiveModule] = useState<number | null>(null);
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>({});
   const [quizSubmitted, setQuizSubmitted] = useState<Set<number>>(new Set());
+  const [savingModule, setSavingModule] = useState<number | null>(null);
 
-  const handleModuleComplete = (moduleId: number) => {
-    setCompletedModules((prev) => new Set([...prev, moduleId]));
-    setActiveModule(null);
+  useEffect(() => {
+    fetch("/api/tutor/training")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.completedModules && Array.isArray(data.completedModules)) {
+          setCompletedModules(new Set(data.completedModules));
+        }
+      })
+      .catch((err) => console.error("Failed to load training progress:", err));
+  }, []);
+
+  const handleModuleComplete = async (moduleId: number) => {
+    const mod = MODULES.find((m) => m.id === moduleId);
+    if (!mod) return;
+    const ans = quizAnswers[moduleId];
+    if (ans !== mod.quiz.correct) return;
+
+    setSavingModule(moduleId);
+    try {
+      const res = await fetch("/api/tutor/training", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          moduleId,
+          moduleTitle: mod.title,
+          quizPassed: true,
+        }),
+      });
+      if (res.ok) {
+        setCompletedModules((prev) => new Set([...prev, moduleId]));
+        setActiveModule(null);
+      }
+    } catch (err) {
+      console.error("Failed to persist training module completion:", err);
+    } finally {
+      setSavingModule(null);
+    }
   };
 
   const handleQuizAnswer = (moduleId: number, answerIndex: number) => {
@@ -219,6 +254,15 @@ export default function TutorTrainingPage() {
 
   const handleQuizSubmit = (moduleId: number) => {
     setQuizSubmitted((prev) => new Set([...prev, moduleId]));
+  };
+
+  const handleQuizRetry = (moduleId: number) => {
+    setQuizSubmitted((prev) => {
+      const updated = new Set(prev);
+      updated.delete(moduleId);
+      return updated;
+    });
+    setQuizAnswers((prev) => ({ ...prev, [moduleId]: null }));
   };
 
   const allDone = completedModules.size === MODULES.length;
@@ -520,10 +564,30 @@ export default function TutorTrainingPage() {
                           </button>
                         )}
                         {quizDone && (
-                          <div style={{ color: quizCorrect ? "#0D683B" : "#DC2626", fontWeight: 700, fontSize: "0.9rem" }}>
-                            {quizCorrect
-                              ? "✅ Correct! Great understanding."
-                              : "❌ Not quite — review the correct answer above."}
+                          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+                            <div style={{ color: quizCorrect ? "#0D683B" : "#DC2626", fontWeight: 700, fontSize: "0.9rem" }}>
+                              {quizCorrect
+                                ? "✅ Correct! Great understanding."
+                                : "❌ Not quite — review the notes and try again."}
+                            </div>
+                            {!quizCorrect && (
+                              <button
+                                type="button"
+                                onClick={() => handleQuizRetry(mod.id)}
+                                style={{
+                                  background: "#F3F4F6",
+                                  border: "1px solid #D1D5DB",
+                                  borderRadius: "999px",
+                                  padding: "0.35rem 0.85rem",
+                                  fontSize: "0.8rem",
+                                  fontWeight: 600,
+                                  cursor: "pointer",
+                                  color: "#374151",
+                                }}
+                              >
+                                Try Again 🔄
+                              </button>
+                            )}
                           </div>
                         )}
                       </div>
@@ -533,22 +597,28 @@ export default function TutorTrainingPage() {
                     {!isCompleted && (
                       <button
                         onClick={() => handleModuleComplete(mod.id)}
-                        disabled={!quizDone}
+                        disabled={!quizDone || !quizCorrect || savingModule === mod.id}
                         style={{
                           marginTop: "1.5rem",
                           width: "100%",
-                          background: quizDone ? "#0E8345" : "#E5E7EB",
-                          color: quizDone ? "#fff" : "#9CA3AF",
+                          background: quizDone && quizCorrect ? "#0E8345" : "#E5E7EB",
+                          color: quizDone && quizCorrect ? "#fff" : "#9CA3AF",
                           border: "none",
                           borderRadius: "0.75rem",
                           padding: "0.85rem",
                           fontWeight: 800,
                           fontSize: "0.9375rem",
-                          cursor: quizDone ? "pointer" : "not-allowed",
+                          cursor: quizDone && quizCorrect && savingModule !== mod.id ? "pointer" : "not-allowed",
                           transition: "background 0.2s",
                         }}
                       >
-                        {quizDone ? `✓ Mark Module ${mod.id} as Complete` : "Complete the quiz to continue"}
+                        {savingModule === mod.id
+                          ? "Saving progress..."
+                          : quizDone && quizCorrect
+                          ? `✓ Save & Mark Module ${mod.id} Complete`
+                          : quizDone && !quizCorrect
+                          ? "Must pass quiz check to proceed"
+                          : "Complete the quiz above to continue"}
                       </button>
                     )}
 

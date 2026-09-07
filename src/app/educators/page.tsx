@@ -24,7 +24,7 @@ export default function EducatorsPage() {
         {[
           {
             title: "Recommend Learnivia to students who need support",
-            content: "Students can sign up and book free tutoring sessions with no adult supervision required for account creation (though we recommend parental awareness for younger students). Sessions cover core school subjects and are suitable for lower secondary through pre-university learners.",
+            content: "Students and parents can access free peer tutoring for core K–10 school subjects. For learners under Grade 9, parents create and manage accounts, while Grade 9–10 learners can participate independently. Sessions cover foundational reading, mathematics, science, and learning support.",
           },
           {
             title: "Encourage strong students to volunteer",

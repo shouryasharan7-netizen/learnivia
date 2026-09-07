@@ -85,8 +85,12 @@ export default async function SessionsPage({ searchParams }: Props) {
   const activeGrade = isAllGradesExplicit ? "" : (grade || dbUser?.grade || "");
   const studentAge = dbUser?.age || null;
 
-  // 3. Build Workshop Where Clause
-  const workshopWhere: Prisma.WorkshopWhereInput = { status: "UPCOMING" };
+  // 3. Build Workshop Where Clause (only upcoming, non-expired workshops from approved tutors)
+  const workshopWhere: Prisma.WorkshopWhereInput = {
+    status: "UPCOMING",
+    startTime: { gte: new Date(Date.now() - 30 * 60 * 1000) },
+    tutor: { status: "APPROVED" },
+  };
   const workshopConditions: Prisma.WorkshopWhereInput[] = [];
 
   if (activeSubject !== "All") {
@@ -433,30 +437,43 @@ export default async function SessionsPage({ searchParams }: Props) {
                     </div>
                   </Link>
 
-                  {joinUrl && (
-                    <div style={{ marginTop: "0.75rem", borderTop: "1px solid #F1F5F9", paddingTop: "0.75rem" }}>
-                      <a
-                        href={joinUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          width: "100%",
-                          padding: "0.5rem 1rem",
-                          background: "#0E8345",
-                          color: "#FFFFFF",
-                          borderRadius: 8,
-                          fontSize: "0.85rem",
-                          fontWeight: 700,
-                          textDecoration: "none",
-                        }}
-                      >
-                        🎥 Join Live Session
-                      </a>
-                    </div>
-                  )}
+                  {(() => {
+                    const isEnrolled = w.enrollments.some((e) => e.studentId === session?.user?.id);
+                    const isHostTutor = w.tutor?.userId === session?.user?.id;
+                    const isAdmin = dbUser?.role === "ADMIN";
+                    const now = Date.now();
+                    const startTimeMs = new Date(w.startTime).getTime();
+                    const endTimeMs = new Date(w.endTime).getTime();
+                    const isWithinJoinWindow = now >= (startTimeMs - 15 * 60 * 1000) && now <= endTimeMs;
+
+                    if ((isEnrolled || isHostTutor || isAdmin) && joinUrl && isWithinJoinWindow) {
+                      return (
+                        <div style={{ marginTop: "0.75rem", borderTop: "1px solid #F1F5F9", paddingTop: "0.75rem" }}>
+                          <a
+                            href={joinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              width: "100%",
+                              padding: "0.5rem 1rem",
+                              background: "#0E8345",
+                              color: "#FFFFFF",
+                              borderRadius: 8,
+                              fontSize: "0.85rem",
+                              fontWeight: 700,
+                              textDecoration: "none",
+                            }}
+                          >
+                            🎥 Join Live Workshop
+                          </a>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
                 </div>
               );
             })}

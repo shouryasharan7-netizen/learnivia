@@ -59,10 +59,11 @@ export async function getCurrentUser(): Promise<AuthenticatedUser | null> {
     role = "ADMIN";
   }
 
+  // A user is only an active tutor if their tutor profile is explicitly APPROVED (or they are an admin).
+  // Suspended or rejected tutors cannot act as tutors regardless of user.role field.
   const isTutor =
-    role === "TUTOR" ||
     role === "ADMIN" ||
-    dbUser.tutorProfile?.status === "APPROVED";
+    (dbUser.tutorProfile?.status === "APPROVED");
 
   const isAdmin = role === "ADMIN";
 

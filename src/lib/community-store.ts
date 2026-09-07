@@ -23,7 +23,7 @@ const DEFAULT_ANNOUNCEMENTS = [
     channel: "Announcements",
     authorName: "Learnivia Team",
     authorEmail: "admin@learnivia.org",
-    authorRole: "COMMUNITY LEAD",
+    authorRole: "COMMUNITY LEAD" as const,
     authorInitials: "LT",
     authorColor: "#0E8345",
     content: "🎉 Welcome to the Learnivia Community! This is your space to connect with fellow learners and volunteer tutors around the globe. Join live sessions, ask questions in Homework Help, and start study circles in the channels below.",
@@ -38,40 +38,40 @@ export async function getMessages(channel?: string): Promise<CommunityMessage[]>
       where.channel = { equals: channel, mode: "insensitive" };
     }
 
-    const count = await prisma.communityMessage.count();
-    if (count === 0) {
-      // Seed default announcement if completely empty
-      for (const item of DEFAULT_ANNOUNCEMENTS) {
-        await prisma.communityMessage.create({
-          data: {
-            channel: item.channel,
-            authorName: item.authorName,
-            authorEmail: item.authorEmail,
-            authorRole: item.authorRole,
-            authorInitials: item.authorInitials,
-            authorColor: item.authorColor,
-            content: item.content,
-            reactions: item.reactions,
-          },
-        });
-      }
-    }
-
     const rows = await prisma.communityMessage.findMany({
       where,
       orderBy: { createdAt: "desc" },
       take: 50,
     });
 
+    if (rows.length === 0 && (!channel || channel === "Announcements" || channel === "Home")) {
+      return DEFAULT_ANNOUNCEMENTS.map((item, idx) => ({
+        id: `default-${idx}`,
+        ...item,
+        authorEmail: "",
+        timestamp: "Just now",
+      }));
+    }
+
     return rows.map((r) => {
       const reactions = (r.reactions as any) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
       const timeStr = new Date(r.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
       const dateStr = new Date(r.createdAt).toLocaleDateString([], { month: "short", day: "numeric" });
+
+      // Privacy protection for student authors: First Name + Last Initial
+      let displayName = r.authorName;
+      if (r.authorRole === "STUDENT") {
+        const parts = r.authorName.trim().split(/\s+/);
+        if (parts.length > 1) {
+          displayName = `${parts[0]} ${parts[parts.length - 1][0]}.`;
+        }
+      }
+
       return {
         id: r.id,
         channel: r.channel,
-        authorName: r.authorName,
-        authorEmail: r.authorEmail || "",
+        authorName: displayName,
+        authorEmail: "", // never leak personal email addresses to client
         authorRole: (r.authorRole as any) || "STUDENT",
         authorInitials: r.authorInitials,
         authorColor: r.authorColor,

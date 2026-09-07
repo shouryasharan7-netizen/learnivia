@@ -12,6 +12,7 @@ const publicPaths = [
   "/find",
   "/how-it-works",
   "/about",
+  "/faq",
   "/safety",
   "/stories",
   "/blog",
@@ -41,10 +42,17 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth
   const isOnboardingCompleted = req.auth?.user?.onboardingCompleted
 
+  // Public tutor profiles (/tutor/[id], /tutor/[id]/transcript) are accessible to guests;
+  // /tutor dashboard and /tutor/training require authentication
+  const isPublicTutorProfile =
+    nextUrl.pathname.startsWith("/tutor/") &&
+    !nextUrl.pathname.startsWith("/tutor/training") &&
+    !nextUrl.pathname.startsWith("/tutor/transcript");
+
   const isPublicPath =
     publicPaths.some(path => nextUrl.pathname === path || nextUrl.pathname.startsWith(path + "/")) ||
     nextUrl.pathname.startsWith("/api/auth") ||
-    nextUrl.pathname.startsWith("/tutors/")  // public tutor profiles
+    isPublicTutorProfile
 
   const isOnboardingPath = onboardingPaths.some(path => nextUrl.pathname.startsWith(path))
 
@@ -61,7 +69,8 @@ export default auth((req) => {
       return NextResponse.redirect(new URL("/dashboard", req.url))
     }
 
-    if (!isOnboardingCompleted && !isOnboardingPath && nextUrl.pathname !== "/api/auth/signout") {
+    // Only redirect to onboarding if user is trying to access protected app routes
+    if (!isOnboardingCompleted && !isOnboardingPath && !isPublicPath && nextUrl.pathname !== "/api/auth/signout") {
       return NextResponse.redirect(new URL("/onboarding", req.url))
     }
     if (isOnboardingCompleted && isOnboardingPath) {

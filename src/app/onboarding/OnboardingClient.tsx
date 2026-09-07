@@ -12,12 +12,19 @@ export default function OnboardingClient() {
   const [age, setAge] = useState("");
   const [grade, setGrade] = useState("");
   const [curriculum, setCurriculum] = useState("");
+  const [educationLevel, setEducationLevel] = useState("High School (Grade 11–12)");
+  const [school, setSchool] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const router = useRouter();
   const { update } = useSession();
+
+  const isTutor = goal === "become_tutor";
+  const isStep1Valid = isTutor
+    ? Boolean(goal && educationLevel && school.trim())
+    : Boolean(goal && grade && age);
 
   const handleNext = () => {
     if (step < 3) setStep(step + 1);
@@ -36,15 +43,26 @@ export default function OnboardingClient() {
     try {
       const formData = new FormData();
       formData.append("primaryGoal", goal);
-      formData.append("age", age);
-      formData.append("grade", grade);
-      formData.append("curriculum", curriculum);
+
+      if (isTutor) {
+        formData.append("educationLevel", educationLevel);
+        formData.append("school", school);
+        formData.append("curriculum", curriculum || "US Common Core");
+      } else {
+        formData.append("age", age);
+        formData.append("grade", grade);
+        formData.append("curriculum", curriculum);
+      }
       
       const res = await completeOnboarding(formData);
       if (res?.success) {
         await update({ onboardingCompleted: true });
-        router.push("/dashboard");
-        router.refresh(); // Force a hard refresh of Server Components
+        if (isTutor) {
+          router.push("/apply");
+        } else {
+          router.push("/dashboard");
+        }
+        router.refresh();
       } else {
         setErrorMsg(res?.error || "Unknown server error");
         setLoading(false);
@@ -69,11 +87,15 @@ export default function OnboardingClient() {
           <div className={`${styles.stepCircle} ${step >= 3 ? styles.activeCircle : ""}`}></div>
         </div>
 
-        {/* Step 1: Goals & Student Info */}
+        {/* Step 1: Goals & Adaptive Profile Info */}
         {step === 1 && (
           <div className={styles.stepContent}>
             <h1 className={styles.title}>Welcome to Learnivia!</h1>
-            <p className={styles.subtitle}>Tell us about your student (K-10) so we can match them with the right volunteer tutors. Everything is 100% free.</p>
+            <p className={styles.subtitle}>
+              {isTutor
+                ? "Welcome prospective volunteer tutor! Tell us about your educational background so we can guide you to our application and credential review."
+                : "Tell us about your student (K-10) so we can match them with the right volunteer tutors. Everything is 100% free."}
+            </p>
             
             <div className={styles.formGroup}>
               <label>Who is learning? <span className={styles.required}>*</span></label>
@@ -85,52 +107,99 @@ export default function OnboardingClient() {
               </select>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
-              <div className={styles.formGroup}>
-                <label>Student Age <span className={styles.required}>*</span></label>
-                <input
-                  type="number"
-                  min="5"
-                  max="16"
-                  placeholder="e.g. 10"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  required
-                  style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1.5px solid #CBD5E1", fontSize: "0.95rem" }}
-                />
-              </div>
+            {isTutor ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                  <div className={styles.formGroup}>
+                    <label>Your Current Education Level <span className={styles.required}>*</span></label>
+                    <select
+                      value={educationLevel}
+                      onChange={(e) => setEducationLevel(e.target.value)}
+                      required
+                    >
+                      <option value="High School (Grade 11–12)">High School (Grade 11–12)</option>
+                      <option value="Undergraduate College / University">Undergraduate College / University</option>
+                      <option value="Graduate Student">Graduate Student</option>
+                      <option value="Educator / Working Professional">Educator / Working Professional</option>
+                    </select>
+                  </div>
 
-              <div className={styles.formGroup}>
-                <label>Student Grade Level <span className={styles.required}>*</span></label>
-                <select value={grade} onChange={(e) => setGrade(e.target.value)} required>
-                  <option value="" disabled>Select grade...</option>
-                  <option value="Kindergarten">Kindergarten (Age 5–6)</option>
-                  <option value="Grade 1">Grade 1</option>
-                  <option value="Grade 2">Grade 2</option>
-                  <option value="Grade 3">Grade 3</option>
-                  <option value="Grade 4">Grade 4</option>
-                  <option value="Grade 5">Grade 5</option>
-                  <option value="Grade 6">Grade 6</option>
-                  <option value="Grade 7">Grade 7</option>
-                  <option value="Grade 8">Grade 8</option>
-                  <option value="Grade 9">Grade 9</option>
-                  <option value="Grade 10">Grade 10</option>
-                </select>
-              </div>
-            </div>
+                  <div className={styles.formGroup}>
+                    <label>Your School / Institution <span className={styles.required}>*</span></label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Lincoln High School or UC Berkeley"
+                      value={school}
+                      onChange={(e) => setSchool(e.target.value)}
+                      required
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1.5px solid #CBD5E1", fontSize: "0.95rem" }}
+                    />
+                  </div>
+                </div>
 
-            <div className={styles.formGroup} style={{ marginTop: "1rem" }}>
-              <label>Curriculum / School System <span className={styles.required}>*</span></label>
-              <select value={curriculum} onChange={(e) => setCurriculum(e.target.value)} required>
-                <option value="" disabled>Select curriculum...</option>
-                <option value="US Common Core">US Common Core / State Standard</option>
-                <option value="CBSE">CBSE (India)</option>
-                <option value="ICSE">ICSE (India)</option>
-                <option value="IGCSE">IGCSE / GCSE (UK)</option>
-                <option value="IB">IB (International Baccalaureate K–10)</option>
-                <option value="Other">Other National Curriculum</option>
-              </select>
-            </div>
+                <div className={styles.formGroup}>
+                  <label>Curriculum Familiarity / Specialty <span className={styles.required}>*</span></label>
+                  <select value={curriculum} onChange={(e) => setCurriculum(e.target.value)} required>
+                    <option value="" disabled>Select curriculum expertise...</option>
+                    <option value="US Common Core">US Common Core / State Standards</option>
+                    <option value="CBSE">CBSE (India)</option>
+                    <option value="ICSE">ICSE (India)</option>
+                    <option value="IGCSE">IGCSE / GCSE (UK)</option>
+                    <option value="IB">IB (International Baccalaureate K–10)</option>
+                    <option value="All Curricula">All K–10 Core Subjects</option>
+                  </select>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+                  <div className={styles.formGroup}>
+                    <label>Student Age <span className={styles.required}>*</span></label>
+                    <input
+                      type="number"
+                      min="5"
+                      max="16"
+                      placeholder="e.g. 10"
+                      value={age}
+                      onChange={(e) => setAge(e.target.value)}
+                      required
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1.5px solid #CBD5E1", fontSize: "0.95rem" }}
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label>Student Grade Level <span className={styles.required}>*</span></label>
+                    <select value={grade} onChange={(e) => setGrade(e.target.value)} required>
+                      <option value="" disabled>Select grade...</option>
+                      <option value="Kindergarten">Kindergarten (Age 5–6)</option>
+                      <option value="Grade 1">Grade 1</option>
+                      <option value="Grade 2">Grade 2</option>
+                      <option value="Grade 3">Grade 3</option>
+                      <option value="Grade 4">Grade 4</option>
+                      <option value="Grade 5">Grade 5</option>
+                      <option value="Grade 6">Grade 6</option>
+                      <option value="Grade 7">Grade 7</option>
+                      <option value="Grade 8">Grade 8</option>
+                      <option value="Grade 9">Grade 9</option>
+                      <option value="Grade 10">Grade 10</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className={styles.formGroup} style={{ marginTop: "1rem" }}>
+                  <label>Curriculum / School System <span className={styles.required}>*</span></label>
+                  <select value={curriculum} onChange={(e) => setCurriculum(e.target.value)} required>
+                    <option value="" disabled>Select curriculum...</option>
+                    <option value="US Common Core">US Common Core / State Standard</option>
+                    <option value="CBSE">CBSE (India)</option>
+                    <option value="ICSE">ICSE (India)</option>
+                    <option value="IGCSE">IGCSE / GCSE (UK)</option>
+                    <option value="IB">IB (International Baccalaureate K–10)</option>
+                    <option value="Other">Other National Curriculum</option>
+                  </select>
+                </div>
+              </>
+            )}
           </div>
         )}
 
@@ -215,7 +284,7 @@ export default function OnboardingClient() {
             <button 
               onClick={handleNext} 
               className={styles.nextBtn} 
-              disabled={step === 1 && (!goal || !grade || !age)}
+              disabled={step === 1 && !isStep1Valid}
               type="button"
             >
               Next
@@ -226,7 +295,7 @@ export default function OnboardingClient() {
               className={styles.nextBtn}
               disabled={!agreed || loading}
             >
-              {loading ? "Finishing..." : "Complete Setup"}
+              {loading ? "Finishing..." : isTutor ? "Proceed to Application →" : "Complete Setup"}
             </button>
           )}
         </div>

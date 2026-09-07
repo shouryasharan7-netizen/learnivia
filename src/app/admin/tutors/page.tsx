@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { suspendTutor, reactivateTutor, approveApplication, adminUpdateReportCard } from "../actions";
+import AdjustHoursButton from "./AdjustHoursButton";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -99,6 +100,11 @@ export default async function AdminTutorsPage() {
                       <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
                         {completedCount} completed
                       </div>
+                      <AdjustHoursButton
+                        tutorProfileId={tutor.id}
+                        tutorName={tutor.user.name || "Tutor"}
+                        currentHours={tutor.volunteerHours || realVolunteerHours}
+                      />
                     </td>
                     <td style={{ padding: "0.75rem" }}>
                       <span

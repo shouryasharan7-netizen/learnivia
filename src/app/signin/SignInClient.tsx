@@ -138,13 +138,12 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                     style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
                   >
                     <option value="">Select curriculum...</option>
-                    <option value="IB">IB (International Baccalaureate)</option>
-                    <option value="AP">AP (Advanced Placement)</option>
-                    <option value="US Common Core">US Common Core</option>
+                    <option value="US Common Core">US Common Core / State Standards</option>
+                    <option value="UK National Curriculum">UK National Curriculum</option>
                     <option value="CBSE">CBSE</option>
                     <option value="ICSE">ICSE</option>
+                    <option value="IB">IB (Primary / Middle Years Programme)</option>
                     <option value="IGCSE">IGCSE / GCSE</option>
-                    <option value="Other">Other System</option>
                     <option value="Other">Other National Curriculum</option>
                   </select>
                 </div>

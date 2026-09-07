@@ -25,8 +25,8 @@ const LEARNIVIA_CHANNELS = [
 
 const COMMUNITY_CHANNELS = [
   { label: "General", desc: "Academic discussions, peer advice, study questions, and general community chat.", icon: "💬" },
-  { label: "Ku201310 Homework Help", desc: "Ask questions, share solutions, and help fellow Ku201310 learners.", icon: "📚" },
-  { label: "College Admissions Workshop Learners", desc: "College list curation, personal essay reviews, and admissions advice.", icon: "🎓" },
+  { label: "K–10 Homework Help", desc: "Ask questions, share solutions, and help fellow K–10 learners.", icon: "📚" },
+  { label: "Math & Science Circles", desc: "Peer study groups, visual explanations, and homework collaboration.", icon: "🔬" },
   { label: "Study Circles", desc: "Find study partners, group Zoom rooms, and accountability buddies.", icon: "📚" },
 ];
 

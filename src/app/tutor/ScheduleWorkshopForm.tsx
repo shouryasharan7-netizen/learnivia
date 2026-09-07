@@ -129,21 +129,22 @@ export function ScheduleWorkshopForm() {
           <label className={styles.inputLabel}>Subject *</label>
           <select name="subject" required className={styles.selectInput}>
             <option value="Mathematics">Mathematics</option>
-            <option value="Mathematics">Mathematics</option>
             <option value="Science">Science (Bio / Chem / Physics)</option>
-            <option value="College Admissions">College Admissions</option>
-            <option value="Reading and Writing">Reading and Writing</option>
-            <option value="Computer Science">Computer Science</option>
+            <option value="Reading and Writing">Reading &amp; Writing</option>
+            <option value="Social Studies">Social Studies / History</option>
+            <option value="Computer Science">Computer Science &amp; Coding</option>
             <option value="Homework Help">Homework Help</option>
+            <option value="Learning Support">Learning Support &amp; Study Skills</option>
           </select>
         </div>
         <div style={{ flex: 1 }}>
           <label className={styles.inputLabel}>Grade Level *</label>
           <select name="grade" required className={styles.selectInput}>
-            <option value="High School">High School</option>
-            <option value="Middle School">Middle School</option>
-            <option value="Social Studies">Social Studies</option>
-            <option value="All Levels">All Levels</option>
+            <option value="All Levels">All K–10 Levels</option>
+            <option value="Early Elementary (K–2)">Early Elementary (K–2)</option>
+            <option value="Elementary (3–5)">Elementary (Grades 3–5)</option>
+            <option value="Middle School (6–8)">Middle School (Grades 6–8)</option>
+            <option value="Early High School (9–10)">Early High School (Grades 9–10)</option>
           </select>
         </div>
       </div>

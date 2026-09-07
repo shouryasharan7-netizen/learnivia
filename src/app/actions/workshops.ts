@@ -201,21 +201,31 @@ export async function completeWorkshop(formData: FormData) {
     throw new Error("Only the host tutor or admin can complete a workshop.");
   }
 
+  if (workshop.status === "COMPLETED") {
+    return; // already completed
+  }
+
+  if (new Date() < workshop.startTime) {
+    throw new Error("A workshop cannot be marked completed before its scheduled start time.");
+  }
+
   const durationMs = workshop.endTime.getTime() - workshop.startTime.getTime();
   const durationHours = Math.max(0.5, Math.round((durationMs / (1000 * 60 * 60)) * 10) / 10);
 
-  await prisma.$transaction([
-    prisma.workshop.update({
-      where: { id: workshopId },
-      data: { status: "COMPLETED" },
-    }),
-    prisma.tutorProfile.update({
+  // Atomically transition from UPCOMING -> COMPLETED to prevent duplicate volunteer hour credits
+  const updateResult = await prisma.workshop.updateMany({
+    where: { id: workshopId, status: "UPCOMING" },
+    data: { status: "COMPLETED" },
+  });
+
+  if (updateResult.count > 0) {
+    await prisma.tutorProfile.update({
       where: { id: workshop.tutorId },
       data: {
         volunteerHours: { increment: durationHours },
       },
-    }),
-  ]);
+    });
+  }
 
   revalidatePath("/sessions");
   revalidatePath("/dashboard");

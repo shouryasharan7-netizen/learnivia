@@ -22,20 +22,20 @@ async function main() {
       ],
     },
     {
-      slug: "gcse-exam-prep",
-      title: "GCSE Exam Prep",
-      emoji: "📝",
-      shortDescription: "Targeted revision for upcoming GCSEs in Math, Science, and English.",
-      longDescription: "Our GCSE Exam Prep program pairs students with tutors who have recently excelled in their own exams. Sessions focus on syllabus review, exam technique, and past paper practice to maximize grades.",
-      subjects: ["Math", "Biology", "Chemistry", "Physics", "English"],
-      gradeLevels: ["Year 10", "Year 11"],
-      format: "1-on-1 or Small Group",
-      duration: "6-12 Weeks (Pre-exams)",
+      slug: "early-reading-phonics",
+      title: "Early Reading & Phonics",
+      emoji: "📖",
+      shortDescription: "Build early literacy, phonics skills, and reading confidence for young learners.",
+      longDescription: "Designed for Kindergarten through Grade 2 students. Volunteer tutors guide young learners through letter sounds, sight words, and reading comprehension using engaging visual activities.",
+      subjects: ["Phonics", "Early Reading", "Sight Words"],
+      gradeLevels: ["Kindergarten", "Grade 1", "Grade 2"],
+      format: "1-on-1 Sessions",
+      duration: "Ongoing",
       outcomes: [
-        "Improved exam technique and time management",
-        "Targeted weak-point improvement",
-        "Reduced exam anxiety"
-      ],
+        "Mastery of letter sounds and phonemic awareness",
+        "Confidence with early readers and sight words",
+        "A joyful foundation for lifelong reading"
+      ]
     },
     {
       slug: "coding-for-beginners",
@@ -44,7 +44,7 @@ async function main() {
       shortDescription: "Introduction to programming logic using Python or Scratch.",
       longDescription: "Discover the world of programming! This beginner-friendly program introduces computational thinking. Younger students start with Scratch, while older students dive straight into Python fundamentals.",
       subjects: ["Python", "Scratch", "Logic"],
-      gradeLevels: ["Year 6", "Year 7", "Year 8", "Year 9"],
+      gradeLevels: ["Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8"],
       format: "Small Group Workshops",
       duration: "8 Weeks",
       outcomes: [
@@ -54,19 +54,19 @@ async function main() {
       ],
     },
     {
-      slug: "university-admissions",
-      title: "University Admissions",
-      emoji: "🎓",
-      shortDescription: "Guidance on personal statements and university interviews.",
-      longDescription: "Navigate the complex university admissions process with guidance from current university students. We offer feedback on personal statements, interview practice, and advice on choosing courses.",
-      subjects: ["Personal Statements", "Interview Prep", "UCAS Advice"],
-      gradeLevels: ["Year 12", "Year 13"],
-      format: "1-on-1 Mentoring",
-      duration: "Flexible",
+      slug: "middle-school-stem",
+      title: "Middle School STEM & Science",
+      emoji: "🔬",
+      shortDescription: "Interactive Earth science, physical science, and foundational biology.",
+      longDescription: "Engaging 1-on-1 and small group sessions covering middle school science. Break down complex topics into clear visual steps and explore hands-on problem solving.",
+      subjects: ["Life Science", "Earth Science", "Physical Science"],
+      gradeLevels: ["Grade 6", "Grade 7", "Grade 8"],
+      format: "1-on-1 or Small Group",
+      duration: "Ongoing",
       outcomes: [
-        "A polished, compelling personal statement",
-        "Confidence for university interviews",
-        "Clearer understanding of university life"
+        "Clear grasp of scientific concepts",
+        "Confidence for middle school science tests",
+        "Curiosity and scientific thinking"
       ],
     },
     {
@@ -76,7 +76,7 @@ async function main() {
       shortDescription: "Drop-in sessions for help with daily assignments.",
       longDescription: "Stuck on a tricky math problem or need someone to review your essay? Our Homework Help program pairs you with a volunteer tutor for quick, effective assistance with your daily assignments across all major subjects.",
       subjects: ["Math", "Science", "English", "History"],
-      gradeLevels: ["Year 5 to Year 13"],
+      gradeLevels: ["Kindergarten to Grade 10"],
       format: "1-on-1 Sessions",
       duration: "Flexible",
       outcomes: [
@@ -92,7 +92,7 @@ async function main() {
       shortDescription: "Explore biology, chemistry, and physics with confidence.",
       longDescription: "Science doesn't have to be intimidating! Our Science Support program breaks down complex concepts in Biology, Chemistry, and Physics, making them engaging and easy to understand through interactive learning.",
       subjects: ["Biology", "Chemistry", "Physics"],
-      gradeLevels: ["Year 7 to Year 11"],
+      gradeLevels: ["Grade 5 to Grade 10"],
       format: "Small Group or 1-on-1",
       duration: "Ongoing",
       outcomes: [
@@ -108,7 +108,7 @@ async function main() {
       shortDescription: "Learn to structure, draft, and polish essays.",
       longDescription: "From creative writing to analytical essays, this program teaches students how to structure their thoughts, develop strong arguments, and improve their grammar and vocabulary for better grades in humanities subjects.",
       subjects: ["English Literature", "History", "Creative Writing"],
-      gradeLevels: ["Year 8 to Year 13"],
+      gradeLevels: ["Grade 4 to Grade 10"],
       format: "1-on-1 Sessions",
       duration: "Ongoing",
       outcomes: [
@@ -197,8 +197,8 @@ async function main() {
         where: { id: adminUser.tutorProfile.id },
         data: {
           status: "APPROVED",
-          school: adminUser.tutorProfile.school || "Imperial College London",
-          volunteerHours: Math.max(adminUser.tutorProfile.volunteerHours, 14.5),
+          school: adminUser.tutorProfile.school || "Learnivia Core Team",
+          volunteerHours: adminUser.tutorProfile.volunteerHours || 0.0,
           subjects: {
             connectOrCreate: [
               { where: { name: "Mathematics" }, create: { name: "Mathematics" } },
@@ -207,8 +207,8 @@ async function main() {
           },
           gradeLevels: {
             connectOrCreate: [
-              { where: { name: "GCSE" }, create: { name: "GCSE" } },
-              { where: { name: "A-Level" }, create: { name: "A-Level" } },
+              { where: { name: "Middle School (Grades 6–8)" }, create: { name: "Middle School (Grades 6–8)" } },
+              { where: { name: "Early High School (Grades 9–10)" }, create: { name: "Early High School (Grades 9–10)" } },
             ]
           }
         }
@@ -237,11 +237,11 @@ async function main() {
       email: "maya.lin@learnivia.demo",
       name: "Maya Lin",
       school: "University of Oxford",
-      bio: "Biochemistry undergraduate at Oxford. Passionate about making chemistry and biology intuitive, fun, and accessible for everyone. 50+ hours of peer mentoring.",
-      experience: "Top 1% in A-Level Chemistry & Biology. Former president of the STEM Peer Tutoring society.",
-      volunteerHours: 32.5,
+      bio: "Biochemistry undergraduate at Oxford. Passionate about making chemistry and biology intuitive, fun, and accessible for everyone. Experienced peer mentor.",
+      experience: "Passionate STEM tutor with focus on hands-on visual explanations and step-by-step problem solving.",
+      volunteerHours: 0.0,
       subjects: ["Biology", "Chemistry", "Science Support"],
-      gradeLevels: ["GCSE", "A-Level", "Secondary"],
+      gradeLevels: ["Elementary (Grades 3–5)", "Middle School (Grades 6–8)", "Early High School (Grades 9–10)"],
       slots: [
         { dayOfWeek: 1, startTime: "17:00", endTime: "18:00" },
         { dayOfWeek: 3, startTime: "16:30", endTime: "17:30" },
@@ -252,11 +252,11 @@ async function main() {
       email: "liam.davies@learnivia.demo",
       name: "Liam Davies",
       school: "University of Cambridge",
-      bio: "Mathematics Tripos student at Cambridge. I specialize in breaking down calculus, algebra, and exam technique so students feel confident and prepared.",
-      experience: "Gold award in UKMT Senior Mathematical Challenge. 2 years of volunteer tutoring experience.",
-      volunteerHours: 48.0,
-      subjects: ["Mathematics", "Math Foundations", "GCSE Exam Prep"],
-      gradeLevels: ["Primary", "Secondary", "GCSE", "A-Level"],
+      bio: "Mathematics Tripos student at Cambridge. I specialize in breaking down pre-algebra, geometry, and foundational math so students feel confident and supported.",
+      experience: "Gold award in UKMT Senior Mathematical Challenge. Experienced volunteer peer tutor.",
+      volunteerHours: 0.0,
+      subjects: ["Mathematics", "Math Foundations", "Early Math"],
+      gradeLevels: ["Early Elementary (K–2)", "Elementary (Grades 3–5)", "Middle School (Grades 6–8)", "Early High School (Grades 9–10)"],
       slots: [
         { dayOfWeek: 2, startTime: "18:00", endTime: "19:00" },
         { dayOfWeek: 4, startTime: "18:00", endTime: "19:00" },

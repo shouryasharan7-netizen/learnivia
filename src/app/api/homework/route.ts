@@ -22,14 +22,25 @@ export async function GET(request: Request) {
     const requests = await prisma.homeworkRequest.findMany({
       where,
       include: {
-        student: { select: { id: true, name: true, email: true, grade: true, curriculum: true } },
+        student: { select: { id: true, name: true, grade: true, curriculum: true } },
         tutor: { include: { user: { select: { id: true, name: true, image: true } } } },
       },
       orderBy: { createdAt: "desc" },
       take: 50,
     });
 
-    return NextResponse.json({ success: true, requests });
+    // Privacy masking for minor students: First Name + Last Initial
+    const sanitizedRequests = requests.map((req) => {
+      const rawName = req.student?.name || "Student";
+      const parts = rawName.trim().split(/\s+/);
+      const maskedName = parts.length > 1 ? `${parts[0]} ${parts[parts.length - 1][0]}.` : parts[0];
+      return {
+        ...req,
+        student: req.student ? { ...req.student, name: maskedName } : null,
+      };
+    });
+
+    return NextResponse.json({ success: true, requests: sanitizedRequests });
   } catch (error) {
     console.error("Error fetching homework requests:", error);
     return NextResponse.json({ error: "Failed to fetch questions." }, { status: 500 });
@@ -66,15 +77,17 @@ export async function POST(request: Request) {
       },
     });
 
-    // 2. Also broadcast to Community channel for immediate visibility
+    // 2. Also broadcast to Community channel for immediate visibility (without exposing email)
     const userName = user.name || "Student";
-    const initials = userName.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
+    const nameParts = userName.trim().split(/\s+/);
+    const maskedAuthor = nameParts.length > 1 ? `${nameParts[0]} ${nameParts[nameParts.length - 1][0]}.` : nameParts[0];
+    const initials = nameParts.map((n) => n[0]).slice(0, 2).join("").toUpperCase();
 
     await addMessage({
-      channel: "Homework Help",
+      channel: "K–10 Homework Help",
       authorId: user.id,
-      authorName: userName,
-      authorEmail: user.email || "",
+      authorName: maskedAuthor,
+      authorEmail: "", // never leak personal email addresses to community store
       authorRole: "STUDENT",
       authorInitials: initials,
       authorColor: "#7C3AED",
@@ -111,11 +124,24 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Homework request not found." }, { status: 404 });
     }
 
-    // Tutor profile if current user is an approved tutor
+    // Enforce role & ownership authorization:
+    // Only the student who posted, an approved tutor, or an admin can update the request
+    const isOwner = existing.studentId === user.id;
+    const isTutor = user.isTutor;
+    const isAdmin = user.isAdmin;
+
+    if (!isOwner && !isTutor && !isAdmin) {
+      return NextResponse.json(
+        { error: "Forbidden: You do not have permission to modify this homework question." },
+        { status: 403 }
+      );
+    }
+
+    // Tutor profile if current user is an approved tutor answering
     let tutorProfileId = existing.tutorId;
-    if (user.isTutor) {
+    if (isTutor && !tutorProfileId) {
       const profile = await prisma.tutorProfile.findUnique({ where: { userId: user.id } });
-      if (profile) tutorProfileId = profile.id;
+      if (profile && profile.status === "APPROVED") tutorProfileId = profile.id;
     }
 
     const updated = await prisma.homeworkRequest.update({

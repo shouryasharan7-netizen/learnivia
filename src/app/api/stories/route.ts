@@ -18,6 +18,13 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Please sign in to submit a community story." },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { name, subject, quote } = body;
 
@@ -28,19 +35,31 @@ export async function POST(request: Request) {
       );
     }
 
-    const storyName = name?.trim() || session?.user?.name || "Community Member";
-    const storySubject = subject?.trim() || "General Tutoring";
+    // Mask name for student privacy (First Name + Last Initial)
+    let rawName = (name?.trim() || session.user.name || "Community Learner").trim();
+    const parts = rawName.split(/\s+/);
+    let storyName = parts[0];
+    if (parts.length > 1) {
+      storyName = `${parts[0]} ${parts[parts.length - 1].charAt(0).toUpperCase()}.`;
+    }
 
+    const storySubject = subject?.trim() || "Peer Learning";
+
+    // Submissions require administrator moderation approval before becoming public
     const newStory = await prisma.story.create({
       data: {
         name: storyName,
         subject: storySubject,
         quote: quote.trim(),
-        isPublished: true, // published so it appears immediately!
+        isPublished: false,
       },
     });
 
-    return NextResponse.json({ success: true, story: newStory });
+    return NextResponse.json({
+      success: true,
+      moderationPending: true,
+      story: newStory,
+    });
   } catch (err) {
     console.error("Failed to submit story:", err);
     return NextResponse.json({ error: "Failed to submit story" }, { status: 500 });

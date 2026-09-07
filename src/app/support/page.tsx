@@ -12,15 +12,15 @@ const FAQ_GROUPS = [
     items: [
       { q: "Is Learnivia really free?", a: "Yes. Learnivia is a free, volunteer-run platform. There are no subscriptions, session fees, or hidden charges." },
       { q: "Do I need an account to browse tutors?", a: "You can browse the /find page without an account. You will need to create a free account to book a session." },
-      { q: "What age is Learnivia suitable for?", a: "We support learners from upper primary (Year 5+) through university. Younger users should have a parent or guardian aware of their sessions." },
+      { q: "What age is Learnivia suitable for?", a: "We support learners in Kindergarten through Grade 10 (ages 5–16). For students below Grade 9, a parent or guardian creates and manages the account." },
     ],
   },
   {
     group: "Sessions",
     items: [
-      { q: "How long are sessions?", a: "Sessions are typically 30–60 minutes. The exact duration is agreed between you and your tutor when booking." },
-      { q: "Where do sessions take place?", a: "All sessions take place via Zoom video call. You will receive a link when your booking is confirmed." },
-      { q: "Can I cancel or reschedule?", a: "Yes. Please cancel with as much notice as possible out of respect for your tutor's time. Cancellation functionality in the app is being developed — in the meantime, contact your tutor directly via the dashboard." },
+      { q: "How long are sessions?", a: "Sessions are typically 30–60 minutes. The exact duration is scheduled between you and your tutor when booking." },
+      { q: "Where do sessions take place?", a: "All sessions take place via private 1-on-1 Zoom video calls. You will receive a secure join link when your booking is confirmed." },
+      { q: "Can I cancel or reschedule?", a: "Yes. You can cancel any upcoming session directly from your dashboard or session detail page. Please provide as much notice as possible out of respect for your volunteer tutor's time." },
       { q: "What if my tutor doesn't show up?", a: "Please report this via the dashboard and we will follow up. Repeated no-shows may result in a tutor being removed from the platform." },
     ],
   },
