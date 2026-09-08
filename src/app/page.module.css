@@ -310,7 +310,7 @@
 
 .soundwaveBar {
   width: 2.5px;
-  background-color: #0D683B;
+  background-color: var(--lv-primary);
   border-radius: 2px;
   animation: soundwaveBounce 1.2s ease-in-out infinite alternate;
 }
@@ -932,14 +932,14 @@
 }
 
 .bottomCtaCard {
-  background: linear-gradient(135deg, #0D683B 0%, #094F2B 100%);
+  background: linear-gradient(135deg, #4338CA 0%, #312E81 50%, #1E1B4B 100%);
   border-radius: 28px;
   padding: 4.5rem 2rem;
   text-align: center;
   color: #FFFFFF;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 40px -8px rgba(13, 104, 59, 0.35);
+  box-shadow: 0 20px 40px -8px rgba(79, 70, 229, 0.35);
 }
 
 .bottomCtaTitle {

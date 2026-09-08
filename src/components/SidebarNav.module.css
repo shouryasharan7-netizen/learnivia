@@ -145,28 +145,40 @@
 }
 
 .navItem:hover {
-  background: #F8FAFC;
+  background: #F1F5F9;
   color: #0F172A;
-  transform: translateX(2px);
+  transform: translateX(3px);
 }
 
 .navItemActive {
-  background: #F0FDF4;
-  color: #15803D;
-  border-color: rgba(34, 197, 94, 0.25);
+  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+  color: #4338CA;
+  border-color: rgba(99, 102, 241, 0.35);
   font-weight: 700;
-  box-shadow: 0 1px 3px rgba(34, 197, 94, 0.08);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  position: relative;
+}
+
+.navItemActive::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3.5px;
+  background: linear-gradient(180deg, #4F46E5 0%, #7C3AED 100%);
+  border-radius: 0 4px 4px 0;
 }
 
 .navItemActive:hover {
-  background: #DCFCE7;
-  color: #0F6B34;
+  background: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%);
+  color: #3730A3;
 }
 
 .navItemHighlight {
-  color: #15803D;
+  color: #4F46E5;
   font-weight: 700;
-  background: #F0FDF4;
+  background: #EEF2FF;
 }
 
 .navIcon {
@@ -186,13 +198,14 @@
 
 .itemBadge {
   font-size: 0.7rem;
-  font-weight: 700;
-  background: #DCFCE7;
-  color: #15803D;
+  font-weight: 800;
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  color: #FFFFFF;
   padding: 0.15rem 0.5rem;
-  border-radius: 6px;
+  border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
 }
 
 .expandChevron {
@@ -203,7 +216,7 @@
 
 .expandChevronOpen {
   transform: rotate(180deg);
-  color: #15803D;
+  color: #4F46E5;
 }
 
 /* Sub-Menu */
@@ -236,9 +249,9 @@
 }
 
 .subItemActive {
-  color: #15803D;
+  color: #4338CA;
   font-weight: 700;
-  background: #F0FDF4;
+  background: #EEF2FF;
 }
 
 /* Bottom Actions */
@@ -254,21 +267,21 @@
   justify-content: center;
   gap: 0.5rem;
   width: 100%;
-  background: linear-gradient(135deg, #0D683B 0%, #15803D 100%);
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
   color: #FFFFFF;
   font-size: 0.875rem;
   font-weight: 700;
   padding: 0.75rem 1rem;
-  border-radius: 12px;
+  border-radius: 14px;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(13, 104, 59, 0.25);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
   transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hostSessionBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(13, 104, 59, 0.35);
-  background: linear-gradient(135deg, #094F2B 0%, #0D683B 100%);
+  box-shadow: 0 8px 22px rgba(79, 70, 229, 0.45);
+  background: linear-gradient(135deg, #4338CA 0%, #6D28D9 100%);
 }
 
 .hostSessionBtn:active {
@@ -276,11 +289,12 @@
 }
 
 .studentApplyCard {
-  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
-  border: 1px solid #BBF7D0;
+  background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
+  border: 1px solid #C7D2FE;
   border-radius: 14px;
   padding: 1rem;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08);
 }
 
 .applyCardIcon {
@@ -291,13 +305,13 @@
 .applyCardTitle {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #14532D;
+  color: #312E81;
   margin-bottom: 0.2rem;
 }
 
 .applyCardText {
   font-size: 0.75rem;
-  color: #166534;
+  color: #4338CA;
   line-height: 1.4;
   margin-bottom: 0.65rem;
 }
@@ -306,7 +320,7 @@
   display: inline-block;
   font-size: 0.775rem;
   font-weight: 700;
-  color: #0D683B;
+  color: #4F46E5;
   text-decoration: underline;
 }
 

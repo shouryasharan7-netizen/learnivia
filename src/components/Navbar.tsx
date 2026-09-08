@@ -296,7 +296,7 @@ export function Navbar() {
 
                     {userRole === "TUTOR" || userRole === "ADMIN" ? (
                       <>
-                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 700 }}>
+                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#4F46E5", fontWeight: 700 }}>
                           ➕ Host / Add a Session
                         </Link>
                         <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
@@ -307,7 +307,7 @@ export function Navbar() {
                         </Link>
                       </>
                     ) : (
-                      <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#0E8345", fontWeight: 600 }}>
+                      <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#4F46E5", fontWeight: 600 }}>
                         🌱 Become a Volunteer Tutor
                       </Link>
                     )}

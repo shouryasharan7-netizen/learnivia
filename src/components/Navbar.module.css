@@ -78,7 +78,7 @@
   background-color: rgba(20, 36, 59, 0.04);
 }
 .navLinkActive {
-  color: #0E8345;
+  color: var(--lv-primary);
   font-weight: 600;
 }
 
@@ -105,9 +105,9 @@
 }
 .exploreBtn:hover,
 .exploreBtnActive {
-  background: #E8F7F1;
-  border-color: #A8E6CF;
-  color: #0E8345;
+  background: var(--lv-primary-subtle);
+  border-color: var(--lv-primary-light);
+  color: var(--lv-primary);
 }
 
 .navBtn {
@@ -177,7 +177,7 @@
   white-space: nowrap;
 }
 .signInBtn:hover {
-  color: #0E8345;
+  color: var(--lv-primary);
 }
 
 .signUpBtn {
@@ -187,18 +187,18 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: #FFFFFF;
-  background: #14243B;
+  background: var(--lv-primary);
   padding: 0.55rem 1.4rem;
   border-radius: 999px;
   text-decoration: none;
   transition: all 180ms ease;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(20, 36, 59, 0.15);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
 }
 .signUpBtn:hover {
-  background: #0E8345;
+  background: var(--lv-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(14, 131, 69, 0.25);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
 }
 
 /* ==========================================================================
@@ -209,12 +209,13 @@
   top: calc(100% + 14px);
   left: -20px;
   width: 580px;
-  background: #EAF8F2;
-  border: 1.5px solid #C2EEDB;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(224, 231, 255, 0.9);
   border-radius: 24px;
   padding: 2rem;
-  box-shadow: 0 20px 50px -10px rgba(14, 131, 69, 0.15),
-              0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  box-shadow: 0 24px 60px -12px rgba(79, 70, 229, 0.14),
+              0 0 0 1px rgba(255, 255, 255, 0.9) inset;
   z-index: 200;
   animation: megaMenuPop 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -245,7 +246,7 @@
 
 .megaMenuSubtitle {
   font-size: 1rem;
-  color: #4A6B61;
+  color: #64748B;
   margin: 0;
 }
 
@@ -257,19 +258,19 @@
 
 .megaCard {
   display: block;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(194, 238, 219, 0.8);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 16px;
   padding: 1.15rem 1.25rem;
   text-decoration: none;
-  transition: all 180ms ease;
-  box-shadow: 0 2px 8px rgba(14, 131, 69, 0.04);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 .megaCard:hover {
   background: #FFFFFF;
-  border-color: #0E8345;
+  border-color: var(--lv-primary-mid);
   transform: translateX(4px);
-  box-shadow: 0 6px 20px rgba(14, 131, 69, 0.12);
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.12);
 }
 
 .megaCardTop {
@@ -286,8 +287,8 @@
 .megaCardBadge {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #0E8345;
-  background: #E6F4EA;
+  color: var(--lv-primary);
+  background: var(--lv-primary-subtle);
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
   text-transform: uppercase;
@@ -314,13 +315,13 @@
   justify-content: space-between;
   margin-top: 1.25rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(194, 238, 219, 0.8);
+  border-top: 1px solid #E2E8F0;
   font-size: 0.85rem;
-  color: #4A6B61;
+  color: #64748B;
 }
 
 .megaFooterLink {
-  color: #0E8345;
+  color: var(--lv-primary);
   font-weight: 700;
   text-decoration: none;
   transition: color 150ms ease;
@@ -441,9 +442,10 @@
   transition: all 150ms ease;
 }
 .iconBtn:hover {
-  background: #E6F4EA;
-  color: #0E8345;
-  border-color: #A8E6CF;
+  background: #EEF2FF;
+  color: #4F46E5;
+  border-color: #C7D2FE;
+  transform: translateY(-1px);
 }
 
 .userCapsule {
@@ -456,18 +458,18 @@
   padding: 0.3rem 0.75rem 0.3rem 0.3rem;
   cursor: pointer;
   transition: all 150ms ease;
-}
 .userCapsule:hover {
-  background: #FFFFFF;
-  border-color: #CBD5E1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-color: #C7D2FE;
+  background: #EEF2FF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
 }
 
 .userAvatar {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: #0E8345;
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
   color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -541,7 +543,7 @@
   margin-top: 0.75rem;
   font-size: 0.825rem;
   font-weight: 600;
-  color: #0E8345;
+  color: var(--lv-primary);
   text-decoration: none;
 }
 
@@ -570,8 +572,8 @@
 .roleTag {
   font-size: 0.7rem;
   font-weight: 700;
-  background: #E6F4EA;
-  color: #0E8345;
+  background: var(--lv-primary-subtle);
+  color: var(--lv-primary);
   padding: 0.15rem 0.45rem;
   border-radius: 999px;
   text-transform: uppercase;
@@ -743,7 +745,7 @@
   text-align: center;
   padding: 0.75rem;
   border-radius: 999px;
-  background: #0E8345;
+  background: var(--lv-primary);
   font-weight: 600;
   color: #FFFFFF;
   text-decoration: none;

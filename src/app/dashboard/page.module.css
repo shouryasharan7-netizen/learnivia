@@ -1,38 +1,45 @@
+/* ==========================================================================
+   LEARNIVIA 21ST.DEV BENTO GRID & AURORA INDIGO DESIGN SYSTEM
+   ========================================================================== */
+
 .main {
-  padding: 1.5rem 0 4rem;
-  background: #F8FAFC;
-  min-height: calc(100vh - 56px);
+  padding: 1.5rem 0 4.5rem;
+  background-color: #F8FAFC;
+  background-image: 
+    radial-gradient(at 10% 12%, rgba(79, 70, 229, 0.05) 0px, transparent 45%),
+    radial-gradient(at 90% 88%, rgba(16, 185, 129, 0.04) 0px, transparent 45%);
+  min-height: calc(100vh - 60px);
 }
 
 .container {
-  max-width: 1040px;
+  max-width: 1200px;
   margin: 0 auto;
   padding-inline: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
-/* ============================
-   0. Administrative & Status Banners
-   ============================ */
+/* ==========================================================================
+   0. Executive Administrator Compact Toolbar
+   ========================================================================== */
 .compactAdminBar {
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
   border: 1px solid rgba(245, 158, 11, 0.35);
-  border-radius: 12px;
-  padding: 0.5rem 1rem;
+  border-radius: 14px;
+  padding: 0.55rem 1.15rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
-  box-shadow: 0 4px 14px -3px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.25);
 }
 
 .compactAdminLeft {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   flex-wrap: wrap;
 }
 
@@ -53,11 +60,11 @@
   color: #FBBF24;
   font-size: 0.6875rem;
   font-weight: 700;
-  padding: 0.15rem 0.5rem;
+  padding: 0.15rem 0.55rem;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 
 .compactAdminDot {
@@ -75,9 +82,9 @@
 }
 
 .compactAdminBtnPrimary {
-  background: #0E8345;
+  background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
   color: #FFFFFF;
-  padding: 0.35rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   border-radius: 8px;
   font-size: 0.75rem;
   font-weight: 700;
@@ -86,18 +93,19 @@
   align-items: center;
   gap: 0.3rem;
   transition: all 140ms ease;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
 }
 
 .compactAdminBtnPrimary:hover {
-  background: #0a6635;
   transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
 }
 
 .compactAdminBtnSecondary {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #E2E8F0;
-  padding: 0.35rem 0.7rem;
+  padding: 0.35rem 0.75rem;
   border-radius: 8px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -110,137 +118,35 @@
   color: #FFFFFF;
 }
 
-.adminBannerLeft {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.adminHeaderRow {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  flex-wrap: wrap;
-}
-
-.adminShieldIcon {
-  width: 22px;
-  height: 22px;
-  color: #F59E0B;
-  flex-shrink: 0;
-}
-
-.adminBannerTitle {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: #F8FAFC;
-}
-
-.adminPill {
-  background: rgba(245, 158, 11, 0.18);
-  border: 1px solid rgba(245, 158, 11, 0.4);
-  color: #FBBF24;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.adminPillDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #F59E0B;
-  box-shadow: 0 0 6px #F59E0B;
-}
-
-.adminBannerDesc {
-  color: #94A3B8;
-  font-size: 0.835rem;
-  margin: 0;
-  line-height: 1.5;
-  max-width: 620px;
-}
-
-.adminActions {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  flex-wrap: wrap;
-}
-
-.adminBtnPrimary {
-  background: #0E8345;
-  color: #FFFFFF;
-  padding: 0.55rem 1.15rem;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  box-shadow: 0 4px 12px rgba(14, 131, 69, 0.35);
-  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.adminBtnPrimary:hover {
-  background: #0b6635;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(14, 131, 69, 0.45);
-}
-
-.adminBtnSecondary {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #E2E8F0;
-  padding: 0.55rem 1.05rem;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: all 160ms ease;
-}
-
-.adminBtnSecondary:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #FFFFFF;
-}
-
 /* Tutor Pending Banner */
 .tutorPendingBanner {
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-  border: 1.5px solid #F59E0B;
-  border-radius: 18px;
-  padding: 1.25rem 1.75rem;
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border: 1.5px solid #FDE68A;
+  border-radius: 16px;
+  padding: 1.15rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1.25rem;
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12);
+  gap: 1rem;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1);
 }
 
 .tutorPendingLeft {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 .tutorPendingTitleRow {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
 }
 
 .tutorPendingTitle {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: #92400E;
 }
@@ -251,29 +157,29 @@
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.05em;
-  padding: 0.2rem 0.6rem;
+  padding: 0.18rem 0.55rem;
   border-radius: 999px;
 }
 
 .tutorPendingDesc {
   color: #78350F;
-  font-size: 0.835rem;
+  font-size: 0.8125rem;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.45;
   max-width: 620px;
 }
 
 .tutorPendingBtn {
   background: #D97706;
   color: #FFFFFF;
-  padding: 0.6rem 1.25rem;
+  padding: 0.55rem 1.15rem;
   border-radius: 10px;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   box-shadow: 0 4px 12px rgba(217, 119, 6, 0.28);
   transition: all 160ms ease;
 }
@@ -283,909 +189,172 @@
   transform: translateY(-1px);
 }
 
-/* ============================
-   1. Modern Hero Promo Banner
-   ============================ */
-.promoBanner {
-  background: linear-gradient(135deg, #0D683B 0%, #064E3B 55%, #082F1D 100%);
-  border-radius: 24px;
-  padding: 2.5rem 2.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2.5rem;
-  border: 1px solid rgba(52, 211, 153, 0.28);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 12px 32px -4px rgba(13, 104, 59, 0.28);
-  color: #FFFFFF;
-}
-
-.promoContent {
-  flex: 1;
-  max-width: 580px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  z-index: 2;
-}
-
-.promoBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 0.35rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  width: fit-content;
-  color: #FFFFFF;
-}
-
-.promoDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #34D399;
-  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.3);
-}
-
-.promoTitle {
-  font-size: 1.85rem;
-  font-weight: 800;
-  color: #FFFFFF;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.promoSubtitle {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.promoActionRow {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  flex-wrap: wrap;
-  margin-top: 0.4rem;
-}
-
-.promoBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #FFFFFF;
-  color: #0D683B;
-  font-size: 0.9rem;
-  font-weight: 700;
-  padding: 0.75rem 1.45rem;
-  border-radius: 12px;
-  text-decoration: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.promoBtn:hover {
-  background: #F0FDF4;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-}
-
-.promoSecondaryBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(8px);
-  color: #FFFFFF;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 0.75rem 1.35rem;
-  border-radius: 12px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  text-decoration: none;
-  transition: all 160ms ease;
-}
-.promoSecondaryBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-1px);
-}
-
-.promoRightWidget {
-  flex-shrink: 0;
-  z-index: 2;
-}
-
-.liveTutorCapsule {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  padding: 1.35rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.85rem;
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-}
-
-.tutorCapsuleHeader {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.liveDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #22C55E;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
-}
-
-.liveCapsuleText {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 0.02em;
-}
-
-.avatarStack {
-  display: flex;
-  align-items: center;
-  margin-inline: 0.5rem;
-}
-
-.stackAvatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2.5px solid #064E3B;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8125rem;
-  font-weight: 800;
-  color: #FFFFFF;
-  margin-left: -10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-.stackAvatar:first-child {
-  margin-left: 0;
-}
-
-.ratingBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #FDE68A;
-}
-
-/* ============================
-   2. Fast-Access Feature Cards (21st.dev Style)
-   ============================ */
-.fastCardsGrid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
-}
-
-.fastCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 18px;
-  padding: 1.35rem 1.15rem;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  position: relative;
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
-  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.fastCard:hover {
-  transform: translateY(-4px);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), 0 12px 28px -4px rgba(13, 104, 59, 0.14);
-  border-color: rgba(13, 104, 59, 0.35);
-}
-
-.circleBadge {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.cardTitle {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #0F172A;
-  line-height: 1.3;
-}
-
-.cardDesc {
-  font-size: 0.775rem;
-  color: #64748B;
-  line-height: 1.45;
-  flex: 1;
-}
-
-/* ============================
-   3. User Progress & Stats Strip
-   ============================ */
-.userStrip {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-
-.userProfileBlock {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-}
-
-.avatarCircle {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: #0E8345;
-  color: #FFFFFF;
-  font-size: 1.05rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.userMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.userDisplayName {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #1A1F2E;
-}
-
-.userLinks {
-  display: flex;
-  gap: 0.875rem;
-}
-
-.metaLink {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #0E8345;
-  text-decoration: none;
-}
-.metaLink:hover {
-  text-decoration: underline;
-}
-
-.statsBlock {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.statPill {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-}
-
-.statIcon {
-  font-size: 1.35rem;
-}
-
-.statValueCol {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.statNumber {
-  font-size: 1rem;
-  font-weight: 800;
-  color: #1A1F2E;
-}
-
-.statUnit {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: #64748B;
-}
-
-.leaderboardLink {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  padding: 0.65rem 1rem;
-  border-radius: 12px;
-  text-decoration: none;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #334155;
-  transition: border-color 120ms ease, background-color 120ms ease;
-}
-.leaderboardLink:hover {
-  border-color: #0E8345;
-  color: #0E8345;
-}
-
-/* ============================
-   4. Two Columns: Sessions & Tasks
-   ============================ */
-.twoColGrid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 1.5rem;
-}
-
-.colHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.colTitle {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #1A1F2E;
-}
-
-.viewAllLink {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #0E8345;
-  text-decoration: none;
-}
-.viewAllLink:hover {
-  text-decoration: underline;
-}
-
-.emptyCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 2.5rem 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.emptyIcon {
-  font-size: 2.5rem;
-}
-
-.emptyTitle {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #1A1F2E;
-}
-
-.emptyText {
-  font-size: 0.875rem;
-  color: #64748B;
-  max-width: 320px;
-  line-height: 1.5;
-}
-
-.browseBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #0E8345;
-  color: #FFFFFF;
-  font-size: 0.875rem;
-  font-weight: 700;
-  padding: 0.6rem 1.25rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  margin-top: 0.5rem;
-  transition: background-color 150ms ease;
-}
-.browseBtn:hover {
-  background: #0B6635;
-}
-
-.sessionsList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-}
-
-.bookingCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 14px;
-  padding: 1.125rem 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.bookingDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  flex: 1;
-}
-
-.sessionTypeBadge {
-  display: inline-block;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: #EFF6FF;
-  color: #2563EB;
-  padding: 0.15rem 0.5rem;
-  border-radius: 9999px;
-  width: fit-content;
-}
-
-.workshopBadge {
-  display: inline-block;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: #F3E8FF;
-  color: #7C3AED;
-  padding: 0.15rem 0.5rem;
-  border-radius: 9999px;
-  width: fit-content;
-}
-
-.bookingTitle {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1A1F2E;
-}
-
-.bookingTime {
-  font-size: 0.8125rem;
-  color: #64748B;
-}
-
-.bookingTopic {
-  font-size: 0.775rem;
-  color: #64748B;
-}
-
-.bookingActions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.zoomBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  background: #0E8345;
-  color: #FFFFFF;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: background-color 150ms ease;
-  white-space: nowrap;
-}
-.zoomBtn:hover {
-  background: #0B6635;
-}
-
-.cancelLink {
-  background: none;
-  border: none;
-  color: #DC2626;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 0.4rem;
-}
-.cancelLink:hover {
-  text-decoration: underline;
-}
-
-/* Tasks Card */
-.tasksCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-
-.taskList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.taskItem {
-  display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
-}
-
-.checkCircle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #E6F4EA;
-  color: #0E8345;
-  font-size: 0.75rem;
-  font-weight: 800;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.pendingCircle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #F1F5F9;
-  color: #94A3B8;
-  font-size: 0.875rem;
-  font-weight: 800;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.taskTitle {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: #1A1F2E;
-}
-
-.taskDesc {
-  font-size: 0.8125rem;
-  color: #64748B;
-  line-height: 1.4;
-  margin: 0.15rem 0 0.35rem;
-}
-
-.taskActionLink {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #0E8345;
-  text-decoration: none;
-}
-.taskActionLink:hover {
-  text-decoration: underline;
-}
-
-/* Side Info Card */
-.sideCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-}
-
-.sideCardTitle {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1A1F2E;
-}
-
-.sideCardText {
-  font-size: 0.8125rem;
-  color: #64748B;
-  line-height: 1.5;
-}
-
-.sideCardLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-top: 0.25rem;
-}
-
-.reportLink {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: #DC2626;
-  text-decoration: none;
-}
-.reportLink:hover {
-  text-decoration: underline;
-}
-
-.resourcesLink {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #0E8345;
-  text-decoration: none;
-}
-.resourcesLink:hover {
-  text-decoration: underline;
-}
-
-/* Completed block */
-.completedBlock {
-  margin-top: 2rem;
-}
-
-.subHeading {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1A1F2E;
-  margin-bottom: 0.75rem;
-}
-
-.completedList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.completedRow {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  font-size: 0.875rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
-  transition: border-color 0.15s ease;
-}
-
-.completedRow:hover {
-  border-color: #CBD5E1;
-}
-
-.completedRowHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.completedDate {
-  display: block;
-  font-size: 0.75rem;
-  color: #0E8345;
-  font-weight: 600;
-  margin-top: 0.2rem;
-}
-
-.durationBadge {
-  background: #F1F5F9;
-  color: #334155;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.completedActions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  border-top: 1px solid #F1F5F9;
-  padding-top: 0.65rem;
-}
-
-.bookAgainBtn {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  background: #0E8345;
-  padding: 0.45rem 0.95rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  transition: background-color 0.15s ease;
-}
-
-.bookAgainBtn:hover {
-  background: #0A6032;
-}
-
-.recordingBtn {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #2563EB;
-  background: #EFF6FF;
-  border: 1px solid #BFDBFE;
-  padding: 0.45rem 0.85rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  transition: background-color 0.15s ease;
-}
-
-.recordingBtn:hover {
-  background: #DBEAFE;
-}
-
-.viewTutorBtn {
-  font-size: 0.775rem;
-  font-weight: 600;
-  color: #475569;
-  background: #F1F5F9;
-  padding: 0.45rem 0.75rem;
-  border-radius: 9999px;
-  text-decoration: none;
-}
-
-.checkUpBox {
-  background: #F8FAFC;
-  border-left: 3px solid #0E8345;
-  padding: 0.6rem 0.85rem;
-  border-radius: 0 6px 6px 0;
-  font-size: 0.825rem;
-  color: #334155;
-  line-height: 1.5;
-}
-
-.rankPill {
-  background: #FEF3C7;
-  border: 1px solid #FDE68A;
-  color: #92400E;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1rem;
-  border-radius: 12px;
-  font-size: 0.8125rem;
-  font-weight: 700;
-}
-
-/* Unauth fallback */
-.unauthCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 3rem 2rem;
-  text-align: center;
-  max-width: 400px;
-  margin: 3rem auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-@media (max-width: 900px) {
-  .fastCardsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .twoColGrid {
-    grid-template-columns: 1fr;
-  }
-  .userStrip {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 600px) {
-  .fastCardsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .promoBanner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .statsBlock {
-    flex-wrap: wrap;
-  }
-}
-
 /* ==========================================================================
-   Creative Elevating Elements: Streak, Level XP, Study Lounge & Fast Discovery
+   1. Bento Deck 1: Hero Command Hub + Streak + Mastery Deck
    ========================================================================== */
-
-/* 1. Streak & Level XP 2-Column Responsive Row */
-.streakLevelGrid {
+.bentoHeroDeck {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2.1fr 1fr 1fr;
   gap: 1.25rem;
+  align-items: stretch;
 }
 
-@media (max-width: 800px) {
-  .streakLevelGrid {
-    grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+  .bentoHeroDeck {
+    grid-template-columns: 1fr 1fr;
+  }
+  .heroCommandCard {
+    grid-column: span 2;
   }
 }
 
-/* Study Streak Card */
-.streakCard {
-  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #FFFFFF 100%);
-  border: 1.5px solid #FDE68A;
-  border-radius: 16px;
-  padding: 1.25rem 1.4rem;
-  box-shadow: 0 4px 16px -2px rgba(245, 158, 11, 0.12);
+@media (max-width: 640px) {
+  .bentoHeroDeck {
+    grid-template-columns: 1fr;
+  }
+  .heroCommandCard {
+    grid-column: span 1;
+  }
+}
+
+/* Hero Command Card (Bento Tile A) */
+.heroCommandCard {
+  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #0F172A 100%);
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  border-radius: 22px;
+  padding: 2rem 2.25rem;
+  color: #FFFFFF;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 12px 36px -6px rgba(30, 27, 75, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.streakCard::before {
+.heroCommandCard::before {
   content: "";
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+  top: -40px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.35) 0%, transparent 70%);
   pointer-events: none;
 }
 
-.streakHeader {
+.heroStatusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.725rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  width: fit-content;
+}
+
+.heroPulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 8px #10B981;
+}
+
+.heroGreetingTitle {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.025em;
+  margin: 0.15rem 0 0.4rem;
+  line-height: 1.2;
+}
+
+.heroGreetingDesc {
+  font-size: 0.9rem;
+  color: #CBD5E1;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 540px;
+}
+
+.heroLaunchCluster {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
   flex-wrap: wrap;
 }
 
-.streakTitleRow {
+.heroLaunchBtnPrimary {
+  background: #FFFFFF;
+  color: #312E81;
+  font-size: 0.875rem;
+  font-weight: 800;
+  padding: 0.65rem 1.25rem;
+  border-radius: 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.heroLaunchBtnPrimary:hover {
+  background: #EEF2FF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.heroLaunchBtnSecondary {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.65rem 1.15rem;
+  border-radius: 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 160ms ease;
+}
+
+.heroLaunchBtnSecondary:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+/* Daily Study Streak (Bento Tile B) */
+.bentoStreakCard {
+  background: linear-gradient(135deg, #FFFDF5 0%, #FEF3C7 50%, #FFFFFF 100%);
+  border: 1.5px solid #FDE68A;
+  border-radius: 22px;
+  padding: 1.4rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 4px 18px -2px rgba(245, 158, 11, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  position: relative;
+  overflow: hidden;
+}
+
+.bentoTileHeader {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
 }
 
@@ -1199,14 +368,14 @@
   50% { transform: scale(1.12); filter: drop-shadow(0 0 8px rgba(234, 88, 12, 0.7)); }
 }
 
-.streakTitle {
+.bentoTileTitle {
   font-size: 0.95rem;
   font-weight: 800;
   color: #92400E;
   margin: 0;
 }
 
-.streakBadge {
+.streakCountBadge {
   background: #EA580C;
   color: #FFFFFF;
   font-size: 0.6875rem;
@@ -1217,58 +386,56 @@
   box-shadow: 0 2px 6px rgba(234, 88, 12, 0.3);
 }
 
-.streakDesc {
-  font-size: 0.8125rem;
+.bentoTileDesc {
+  font-size: 0.8rem;
   color: #78350F;
   margin: 0;
   line-height: 1.4;
 }
 
-/* Weekday Pulse Track */
 .weekdayTrack {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.4rem;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(253, 230, 138, 0.8);
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(253, 230, 138, 0.9);
   border-radius: 12px;
-  padding: 0.5rem 0.65rem;
+  padding: 0.45rem 0.55rem;
 }
 
 .dayCol {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
 }
 
 .dayLabel {
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 800;
   color: #92400E;
-  text-transform: uppercase;
 }
 
 .dayDot {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #F1F5F9;
   border: 1.5px solid #CBD5E1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #64748B;
   transition: all 160ms ease;
 }
 
 .dayDotDone {
-  background: #0E8345;
-  border-color: #0E8345;
+  background: #10B981;
+  border-color: #10B981;
   color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(14, 131, 69, 0.35);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
 }
 
 .dayDotToday {
@@ -1276,139 +443,113 @@
   border-color: #EA580C;
   color: #EA580C;
   font-weight: 800;
-  position: relative;
   box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
 }
 
-.dayDotToday::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  width: 5px;
-  height: 5px;
-  background: #EA580C;
-  border-radius: 50%;
-}
-
-/* Scholar Level & XP Progression Card */
-.levelXpCard {
-  background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 60%, #F8FAFC 100%);
-  border: 1.5px solid #BBF7D0;
-  border-radius: 16px;
-  padding: 1.25rem 1.4rem;
-  box-shadow: 0 4px 16px -2px rgba(14, 131, 69, 0.1);
+/* Scholar Mastery & Level (Bento Tile C) */
+.bentoMasteryCard {
+  background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 60%, #FFFFFF 100%);
+  border: 1.5px solid #C7D2FE;
+  border-radius: 22px;
+  padding: 1.4rem 1.35rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
+  box-shadow: 0 4px 18px -2px rgba(79, 70, 229, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
-.levelHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+.masteryTitle {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #312E81;
+  margin: 0;
 }
 
-.levelTitleRow {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.levelBadge {
-  background: #E6F4EA;
-  border: 1px solid #86EFAC;
-  color: #0E8345;
-  font-size: 0.725rem;
+.masteryBadge {
+  background: #4F46E5;
+  color: #FFFFFF;
+  font-size: 0.6875rem;
   font-weight: 800;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
 }
 
-.levelRankTitle {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #1E293B;
-  margin: 0;
+.xpProgressWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .xpStatsRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.785rem;
+  font-size: 0.775rem;
   font-weight: 700;
-  color: #475569;
+  color: #4338CA;
 }
 
-.xpProgressBar {
+.xpTrack {
   width: 100%;
-  height: 10px;
-  background: #E2E8F0;
+  height: 9px;
+  background: #E0E7FF;
   border-radius: 999px;
   overflow: hidden;
-  position: relative;
 }
 
-.xpProgressFill {
+.xpFill {
   height: 100%;
-  background: linear-gradient(90deg, #10B981 0%, #0E8345 100%);
+  background: linear-gradient(90deg, #4F46E5 0%, #7C3AED 100%);
   border-radius: 999px;
   transition: width 400ms ease;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 8px rgba(79, 70, 229, 0.5);
 }
 
-.perkPreview {
-  font-size: 0.75rem;
-  color: #059669;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px dashed #86EFAC;
-  padding: 0.45rem 0.75rem;
+.perkPreviewBox {
+  font-size: 0.725rem;
+  color: #4338CA;
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px dashed #C7D2FE;
+  padding: 0.45rem 0.65rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   font-weight: 600;
 }
 
-/* 2. Live Peer Study Lounge Widget */
-.studyLoungeCard {
-  background: linear-gradient(135deg, #0B132B 0%, #172554 50%, #064E3B 100%);
+/* ==========================================================================
+   2. Bento Deck 2: Interactive Focus Lounge Card
+   ========================================================================== */
+.bentoLoungeCard {
+  background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #064E3B 100%);
   border: 1.5px solid rgba(16, 185, 129, 0.4);
-  border-radius: 16px;
-  padding: 1.35rem 1.6rem;
+  border-radius: 22px;
+  padding: 1.75rem 2rem;
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
-  box-shadow: 0 10px 25px -4px rgba(11, 19, 43, 0.4);
+  box-shadow: 0 12px 32px -4px rgba(11, 19, 43, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
   position: relative;
   overflow: hidden;
 }
 
-.studyLoungeCard::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.loungeLeft {
+.bentoLoungeLeft {
+  flex: 1;
+  max-width: 650px;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  max-width: 620px;
+  gap: 0.65rem;
 }
 
 .loungeBadgeRow {
@@ -1424,8 +565,8 @@
   color: #6EE7B7;
   font-size: 0.6875rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.65rem;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -1447,67 +588,505 @@
   100% { transform: scale(0.95); opacity: 0.8; }
 }
 
-.loungeTitle {
-  font-size: 1.125rem;
+.loungeModeBadge {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #E2E8F0;
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.bentoLoungeTitle {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.4rem;
   font-weight: 800;
   color: #F8FAFC;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
-.loungeDesc {
-  font-size: 0.835rem;
+.bentoLoungeDesc {
+  font-size: 0.85rem;
   color: #CBD5E1;
   margin: 0;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
-.loungeActions {
+.bentoLoungeActions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   flex-wrap: wrap;
+  margin-top: 0.25rem;
 }
 
-.loungeJoinBtn {
+.bentoJoinBtn {
   background: #10B981;
   color: #FFFFFF;
   font-size: 0.85rem;
   font-weight: 700;
-  padding: 0.6rem 1.25rem;
-  border-radius: 10px;
+  padding: 0.65rem 1.25rem;
+  border-radius: 12px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
   transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.loungeJoinBtn:hover {
+.bentoJoinBtn:hover {
   background: #059669;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
 }
 
-.loungeRoomBtn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.bentoSecondaryBtn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   color: #E2E8F0;
   font-size: 0.85rem;
   font-weight: 600;
-  padding: 0.6rem 1.1rem;
-  border-radius: 10px;
+  padding: 0.65rem 1.15rem;
+  border-radius: 12px;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   transition: all 160ms ease;
 }
 
-.loungeRoomBtn:hover {
-  background: rgba(255, 255, 255, 0.18);
+.bentoSecondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
 }
 
-/* 3. Empty State Interactive Subject Quick Chips */
+/* Micro-Timer Widget in Focus Lounge */
+.timerWidget {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  min-width: 200px;
+}
+
+.timerModeLabel {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #6EE7B7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.timerDigits {
+  font-family: 'Outfit', 'Inter', monospace;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.timerControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.timerPlayBtn {
+  flex: 1;
+  background: #10B981;
+  border: none;
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: all 140ms ease;
+}
+
+.timerPlayBtn:hover {
+  background: #059669;
+}
+
+.timerResetBtn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #E2E8F0;
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 140ms ease;
+}
+
+.timerResetBtn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ==========================================================================
+   3. Bento Deck 3: Pathways Matrix (21st.dev Style Cards)
+   ========================================================================== */
+.bentoPathwaysGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.15rem;
+}
+
+@media (max-width: 900px) {
+  .bentoPathwaysGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .bentoPathwaysGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pathwayCard {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 1.4rem 1.25rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.pathwayCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -4px rgba(79, 70, 229, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 1);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.pathwayBadgeIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 160ms ease;
+}
+
+.pathwayCard:hover .pathwayBadgeIcon {
+  transform: scale(1.08);
+}
+
+.pathwayTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.pathwayDesc {
+  font-size: 0.785rem;
+  color: #64748B;
+  line-height: 1.45;
+  margin: 0;
+  flex: 1;
+}
+
+.pathwayFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.65rem;
+  border-top: 1px solid #F1F5F9;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4F46E5;
+}
+
+/* ==========================================================================
+   4. User Progress & Real-Time Stats Strip
+   ========================================================================== */
+.userStrip {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 1.15rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  flex-wrap: wrap;
+}
+
+.userProfileBlock {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatarCircle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.userMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.userDisplayName {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.userLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.metaLink {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4F46E5;
+  text-decoration: none;
+}
+
+.metaLink:hover {
+  text-decoration: underline;
+}
+
+.statsBlock {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.rankPill {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  color: #92400E;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.statPill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 0.55rem 0.95rem;
+  border-radius: 12px;
+}
+
+.statValueCol {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.statNumber {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.statUnit {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.leaderboardLink {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #EEF2FF;
+  border: 1px solid #C7D2FE;
+  padding: 0.55rem 0.95rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4338CA;
+  transition: all 140ms ease;
+}
+
+.leaderboardLink:hover {
+  background: #E0E7FF;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   5. Bento Main Deck: Sessions & Tasks Two-Column Grid
+   ========================================================================== */
+.twoColGrid {
+  display: grid;
+  grid-template-columns: 2fr 1.05fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .twoColGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sessionsCol, .tasksCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.colHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.colTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.viewAllLink {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4F46E5;
+  text-decoration: none;
+}
+
+.viewAllLink:hover {
+  text-decoration: underline;
+}
+
+/* Empty State Interactive Discovery Card */
+.emptyCard {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 2.25rem 1.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+}
+
+.emptyIcon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: #EEF2FF;
+  color: #4F46E5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyTitle {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.emptyText {
+  font-size: 0.85rem;
+  color: #64748B;
+  line-height: 1.5;
+  max-width: 440px;
+  margin: 0;
+}
+
+.browseBtn {
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  color: #FFFFFF;
+  padding: 0.65rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: all 160ms ease;
+}
+
+.browseBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+}
+
+.promoSecondaryBtn {
+  background: #F8FAFC;
+  border: 1.5px solid #CBD5E1;
+  color: #334155;
+  padding: 0.65rem 1.15rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 140ms ease;
+}
+
+.promoSecondaryBtn:hover {
+  background: #EEF2FF;
+  border-color: #A5B4FC;
+  color: #4338CA;
+}
+
+/* Empty State Subject Chips */
 .emptySubjectSection {
   margin-top: 1rem;
   padding-top: 1rem;
@@ -1520,29 +1099,29 @@
 }
 
 .emptySubjectPrompt {
-  font-size: 0.785rem;
-  font-weight: 700;
+  font-size: 0.775rem;
+  font-weight: 800;
   color: #64748B;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   margin: 0;
 }
 
 .subjectChipsRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.5rem;
   justify-content: center;
   width: 100%;
 }
 
 .subjectChip {
   background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  border: 1.5px solid #E2E8F0;
   color: #334155;
-  font-size: 0.775rem;
-  font-weight: 600;
-  padding: 0.35rem 0.75rem;
+  font-size: 0.785rem;
+  font-weight: 700;
+  padding: 0.4rem 0.8rem;
   border-radius: 999px;
   text-decoration: none;
   display: inline-flex;
@@ -1552,20 +1131,253 @@
 }
 
 .subjectChip:hover {
-  background: #E6F4EA;
-  border-color: #86EFAC;
-  color: #0E8345;
+  background: #EEF2FF;
+  border-color: #A5B4FC;
+  color: #4338CA;
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(14, 131, 69, 0.15);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
 }
 
-/* 4. Task Progress Meter */
+/* Sessions List */
+.sessionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.bookingCard {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+  flex-wrap: wrap;
+}
+
+.bookingDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.sessionTypeBadge {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #4F46E5;
+  background: #EEF2FF;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.workshopBadge {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #0D9488;
+  background: #CCFBF1;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.bookingTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.bookingTime {
+  font-size: 0.8125rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.bookingTopic {
+  font-size: 0.8rem;
+  color: #475569;
+  margin: 0;
+}
+
+.bookingActions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.zoomBtn {
+  background: #2563EB;
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  transition: all 140ms ease;
+}
+
+.zoomBtn:hover {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+}
+
+.cancelLink {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: color 120ms ease;
+}
+
+.cancelLink:hover {
+  color: #EF4444;
+  background: #FEF2F2;
+}
+
+/* Completed Sessions Block */
+.completedBlock {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.subHeading {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.completedList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.completedRow {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.completedRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.completedDate {
+  font-size: 0.775rem;
+  color: #64748B;
+}
+
+.durationBadge {
+  background: #F1F5F9;
+  color: #475569;
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.checkUpBox {
+  background: #F8FAFC;
+  border-left: 3px solid #4F46E5;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.8rem;
+  color: #334155;
+}
+
+.completedActions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  padding-top: 0.35rem;
+}
+
+.bookAgainBtn {
+  background: #EEF2FF;
+  border: 1px solid #C7D2FE;
+  color: #4338CA;
+  font-size: 0.775rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 140ms ease;
+}
+
+.bookAgainBtn:hover {
+  background: #E0E7FF;
+}
+
+.recordingBtn {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #334155;
+  font-size: 0.775rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.viewTutorBtn {
+  color: #64748B;
+  font-size: 0.775rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.viewTutorBtn:hover {
+  color: #0F172A;
+}
+
+/* ==========================================================================
+   6. Tasks Column & Task Meter
+   ========================================================================== */
+.tasksCard {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 1.35rem 1.4rem;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+}
+
 .taskProgressWrap {
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 12px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
+  padding: 0.75rem 0.95rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
@@ -1575,14 +1387,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #475569;
+  font-size: 0.775rem;
+  font-weight: 800;
+  color: #334155;
 }
 
 .taskProgressBar {
   width: 100%;
-  height: 6px;
+  height: 7px;
   background: #E2E8F0;
   border-radius: 999px;
   overflow: hidden;
@@ -1590,16 +1402,134 @@
 
 .taskProgressFill {
   height: 100%;
-  background: linear-gradient(90deg, #10B981 0%, #0E8345 100%);
+  background: linear-gradient(90deg, #4F46E5 0%, #10B981 100%);
   border-radius: 999px;
   transition: width 300ms ease;
 }
 
 .taskBountyTag {
-  font-size: 0.7rem;
-  color: #0E8345;
-  font-weight: 700;
+  font-size: 0.725rem;
+  color: #059669;
+  font-weight: 800;
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.taskList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.taskItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.taskTitle {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #0F172A;
+  display: block;
+}
+
+.taskDesc {
+  font-size: 0.785rem;
+  color: #64748B;
+  margin: 0.2rem 0 0;
+  line-height: 1.4;
+}
+
+.taskActionLink {
+  display: inline-block;
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: #4F46E5;
+  text-decoration: none;
+  margin-top: 0.35rem;
+}
+
+.taskActionLink:hover {
+  text-decoration: underline;
+}
+
+/* Role-Specific Side Cards */
+.sideCard {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 1.35rem 1.4rem;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sideCardTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.sideCardText {
+  font-size: 0.8125rem;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.sideCardLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.reportLink {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  color: #334155;
+  font-size: 0.785rem;
+  font-weight: 700;
+  padding: 0.5rem 0.95rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 140ms ease;
+}
+
+.reportLink:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+.resourcesLink {
+  font-size: 0.785rem;
+  font-weight: 700;
+  color: #4F46E5;
+  text-decoration: none;
+}
+
+.resourcesLink:hover {
+  text-decoration: underline;
+}
+
+/* Unauth fallback */
+.unauthCard {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  max-width: 400px;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
