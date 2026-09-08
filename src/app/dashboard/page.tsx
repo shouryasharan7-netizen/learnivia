@@ -8,7 +8,6 @@ import { getMeetingUrls } from "@/lib/meetingUrl";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { calculateUserStats } from "@/lib/stats";
 import ChildProfileSection from "./ChildProfileSection";
-import PomodoroLounge from "./PomodoroLounge";
 import {
   Calculator,
   Atom,
@@ -56,7 +55,7 @@ const BENTO_PATHWAYS = [
     icon: Calculator,
     iconBg: "rgba(79, 70, 229, 0.12)",
     iconColor: "#4F46E5",
-    badge: "14 Tutors Online",
+    badge: "1-on-1 Mentorship",
   },
   {
     id: "sci",
@@ -66,7 +65,7 @@ const BENTO_PATHWAYS = [
     icon: Atom,
     iconBg: "rgba(6, 182, 212, 0.12)",
     iconColor: "#0891B2",
-    badge: "9 Tutors Online",
+    badge: "Lab & Concept Prep",
   },
   {
     id: "eng",
@@ -76,7 +75,7 @@ const BENTO_PATHWAYS = [
     icon: BookOpen,
     iconBg: "rgba(124, 58, 237, 0.12)",
     iconColor: "#7C3AED",
-    badge: "11 Tutors Online",
+    badge: "Reading & Writing",
   },
   {
     id: "hw",
@@ -86,7 +85,7 @@ const BENTO_PATHWAYS = [
     icon: MessageSquare,
     iconBg: "rgba(245, 158, 11, 0.14)",
     iconColor: "#D97706",
-    badge: "Instant Queue",
+    badge: "Direct Queue",
   },
 ];
 
@@ -268,7 +267,7 @@ export default async function StudentDashboard() {
             <div>
               <div className={styles.heroStatusBadge}>
                 <span className={styles.heroPulseDot} />
-                <span>LIVE • 142 ACTIVE VOLUNTEER TUTORS ONLINE</span>
+                <span>COMMUNITY • VERIFIED PEER VOLUNTEER TUTORS</span>
               </div>
               <h1 className={styles.heroGreetingTitle}>
                 {timeGreeting}, {firstName} 👋
@@ -291,39 +290,41 @@ export default async function StudentDashboard() {
             </div>
           </div>
 
-          {/* Bento Tile B: Daily Study Streak Card */}
+          {/* Bento Tile B: Daily Study Goal Card */}
           <div className={styles.bentoStreakCard}>
             <div className={styles.bentoTileHeader}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                 <Flame size={20} className={styles.streakFlameIcon} />
-                <h2 className={styles.bentoTileTitle}>Study Streak</h2>
+                <h2 className={styles.bentoTileTitle}>Study Goals</h2>
               </div>
-              <span className={styles.streakCountBadge}>🔥 5 DAYS</span>
+              <span className={styles.streakCountBadge}>
+                {stats.completedSessions > 0 ? `🎯 ${stats.completedSessions} SESSIONS` : "🎯 ACTIVE GOAL"}
+              </span>
             </div>
             <p className={styles.bentoTileDesc}>
-              Learn for 15 minutes today to protect your streak and unlock +25 SP bonus.
+              {stats.learningMinutes > 0
+                ? `You have logged ${stats.learningMinutes} verified learning minutes on Learnivia.`
+                : "Attend or book your first 1-on-1 session to start building your verified transcript."}
             </p>
             <div className={styles.weekdayTrack}>
-              {[
-                { day: "M", done: true },
-                { day: "T", done: true },
-                { day: "W", done: true },
-                { day: "T", done: true },
-                { day: "F", done: false, isToday: true },
-                { day: "S", done: false },
-                { day: "S", done: false },
-              ].map((item, idx) => (
-                <div key={idx} className={styles.dayCol}>
-                  <span className={styles.dayLabel}>{item.day}</span>
-                  <div
-                    className={`${styles.dayDot} ${
-                      item.done ? styles.dayDotDone : item.isToday ? styles.dayDotToday : ""
-                    }`}
-                  >
-                    {item.done ? "✓" : item.isToday ? "•" : ""}
+              {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, idx) => {
+                const dayIndex = (now.getDay() + 6) % 7; // Monday = 0
+                const isToday = idx === dayIndex;
+                const isPast = idx < dayIndex;
+                const hasSession = stats.completedSessions > 0 && isPast;
+                return (
+                  <div key={day} className={styles.dayCol}>
+                    <span className={styles.dayLabel}>{day[0]}</span>
+                    <div
+                      className={`${styles.dayDot} ${
+                        hasSession ? styles.dayDotDone : isToday ? styles.dayDotToday : ""
+                      }`}
+                    >
+                      {hasSession ? "✓" : isToday ? "•" : ""}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -354,12 +355,7 @@ export default async function StudentDashboard() {
           </div>
         </section>
 
-        {/* 2. Bento Deck 2: Interactive Focus Lounge with Working Pomodoro Timer */}
-        <section aria-label="Interactive Focus Hub">
-          <PomodoroLounge />
-        </section>
-
-        {/* 3. Bento Deck 3: Learning Pathways Matrix */}
+        {/* 2. Bento Deck 2: Learning Pathways Matrix */}
         <section className={styles.bentoPathwaysGrid} aria-label="Learning Pathways">
           {BENTO_PATHWAYS.map((p) => {
             const IconComp = p.icon;

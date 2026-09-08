@@ -197,7 +197,7 @@ export default function HomeInteractiveClient({
                 <div className={styles.radarDot} />
               </div>
               <span className={styles.eyebrowText}>
-                ✨ Over {completedCount > 0 ? `${completedCount.toLocaleString()}+` : "4,200+"} Sessions Completed • 100% Free
+                ✨ {completedCount > 0 ? `Over ${completedCount.toLocaleString()} Sessions Completed` : "Verified Peer Tutoring Network"} • 100% Free
               </span>
             </motion.div>
 
@@ -445,8 +445,8 @@ export default function HomeInteractiveClient({
               </div>
 
               <div className={styles.bentoMetricsWrap}>
-                <div className={styles.bentoStatNumber}>12,450+</div>
-                <div className={styles.bentoStatLabel}>Verified Volunteer Hours Logged</div>
+                <div className={styles.bentoStatNumber}>100% Verified</div>
+                <div className={styles.bentoStatLabel}>Official Service Hours &amp; Signed Certificates</div>
                 <div className={styles.bentoSealBadge}>
                   <CheckCircle2 size={15} /> Official Transcript Included
                 </div>

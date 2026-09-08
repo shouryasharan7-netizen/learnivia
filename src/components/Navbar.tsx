@@ -5,6 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  Search,
+  MessageSquare,
+  BookOpen,
+  CalendarPlus,
+  GraduationCap,
+  Award,
+  ShieldAlert,
+  LogOut,
+  ChevronDown,
+  Sparkles
+} from "lucide-react";
 import styles from "./Navbar.module.css";
 
 const megaMenuPrograms = [
@@ -282,39 +295,48 @@ export function Navbar() {
 
                   <div className={styles.userMenuList}>
                     <Link href="/dashboard" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      🏠 My Dashboard
+                      <LayoutDashboard size={16} color="#6366F1" />
+                      <span>My Dashboard</span>
                     </Link>
                     <Link href="/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      🔍 Find a Session
+                      <Search size={16} color="#0EA5E9" />
+                      <span>Find a Session</span>
                     </Link>
                     <Link href="/community" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      👥 Community Discussions
+                      <MessageSquare size={16} color="#8B5CF6" />
+                      <span>Community Discussions</span>
                     </Link>
                     <Link href="/resources" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      📖 {userRole === "TUTOR" || userRole === "ADMIN" ? "Tutoring Resources" : "Learning Resources"}
+                      <BookOpen size={16} color="#10B981" />
+                      <span>{userRole === "TUTOR" || userRole === "ADMIN" ? "Tutoring Resources" : "Learning Resources"}</span>
                     </Link>
 
                     {userRole === "TUTOR" || userRole === "ADMIN" ? (
                       <>
-                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#4F46E5", fontWeight: 700 }}>
-                          ➕ Host / Add a Session
+                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#4F46E5", fontWeight: 600 }}>
+                          <CalendarPlus size={16} color="#4F46E5" />
+                          <span>Host a Session</span>
                         </Link>
                         <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                          💻 Tutor Dashboard
+                          <GraduationCap size={16} color="#6366F1" />
+                          <span>Tutor Dashboard</span>
                         </Link>
                         <Link href="/tutor/transcript" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                          📜 Volunteer Transcript
+                          <Award size={16} color="#F59E0B" />
+                          <span>Volunteer Transcript</span>
                         </Link>
                       </>
                     ) : (
                       <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#4F46E5", fontWeight: 600 }}>
-                        🌱 Become a Volunteer Tutor
+                        <Sparkles size={16} color="#4F46E5" />
+                        <span>Become a Volunteer Tutor</span>
                       </Link>
                     )}
 
                     {isAdmin && (
                       <Link href="/admin" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#92400E", fontWeight: 700, background: "#FFFBEB" }}>
-                        🛡️ Master Admin Center
+                        <ShieldAlert size={16} color="#D97706" />
+                        <span>Master Admin Center</span>
                       </Link>
                     )}
 
@@ -325,7 +347,8 @@ export function Navbar() {
                       role="menuitem"
                       onClick={() => signOut({ callbackUrl: "/" })}
                     >
-                      🚪 Sign Out
+                      <LogOut size={16} />
+                      <span>Sign Out</span>
                     </button>
                   </div>
                 </div>
