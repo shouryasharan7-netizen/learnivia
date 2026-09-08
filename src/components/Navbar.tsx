@@ -489,15 +489,15 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className={styles.mobileOverlay} onClick={() => setMobileOpen(false)} aria-hidden="true" />
-      )}
-      <div
-        id="mobile-menu"
-        className={`${styles.mobileMenu} ${mobileOpen ? styles.mobileMenuOpen : ""}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Navigation menu"
-      >
+        <>
+          <div className={styles.mobileOverlay} onClick={() => setMobileOpen(false)} aria-hidden="true" />
+          <div
+            id="mobile-menu"
+            className={`${styles.mobileMenu} ${styles.mobileMenuOpen}`}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+          >
         <div className={styles.mobileMenuInner}>
           <div className={styles.mobileBrandRow}>
             <Image src="/images/logo.png" alt="Learnivia" width={32} height={32} />
@@ -555,6 +555,8 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      </>
+      )}
     </>
   );
 }

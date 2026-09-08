@@ -61,25 +61,84 @@ type Props = {
   }>;
 };
 
-// Fast in-memory cache for sessions & workshops to avoid multi-second DB roundtrips
-const sessionsMemoryCache = new Map<string, { workshops: any[]; tutors: any[]; timestamp: number }>();
+// High-performance shared in-memory cache for sessions & tutors
+interface CachedSessionsData {
+  workshops: any[];
+  tutors: any[];
+  timestamp: number;
+}
+
+let cachedSessionsData: CachedSessionsData | null = null;
+let inflightSessionsPromise: Promise<CachedSessionsData> | null = null;
+
+async function getCachedSessionsData(): Promise<CachedSessionsData> {
+  const now = Date.now();
+  if (cachedSessionsData && now - cachedSessionsData.timestamp < 120_000) {
+    return cachedSessionsData;
+  }
+  if (inflightSessionsPromise) {
+    return inflightSessionsPromise;
+  }
+
+  inflightSessionsPromise = (async () => {
+    try {
+      const [workshops, tutors] = await Promise.all([
+        prisma.workshop.findMany({
+          where: {
+            status: "UPCOMING",
+            startTime: { gte: new Date(Date.now() - 30 * 60 * 1000) },
+            tutor: { status: "APPROVED" },
+          },
+          include: {
+            tutor: { include: { user: true } },
+            enrollments: true,
+          },
+          orderBy: { startTime: "asc" },
+          take: 30,
+        }),
+        prisma.tutorProfile.findMany({
+          where: { status: "APPROVED" },
+          include: {
+            user: { select: { id: true, name: true, image: true, email: true } },
+            subjects: true,
+            availabilities: true,
+            gradeLevels: true,
+          },
+          take: 30,
+        }),
+      ]);
+
+      cachedSessionsData = { workshops, tutors, timestamp: Date.now() };
+      return cachedSessionsData;
+    } catch (err) {
+      console.warn("Sessions data fetch error:", (err as Error)?.message);
+      return cachedSessionsData || { workshops: [], tutors: [], timestamp: Date.now() };
+    } finally {
+      inflightSessionsPromise = null;
+    }
+  })();
+
+  return inflightSessionsPromise;
+}
 
 export default async function SessionsPage({ searchParams }: Props) {
-  const session = await auth();
-  const { q, subject, curriculum, grade, allGrades } = await searchParams;
+  const [session, { q, subject, curriculum, grade, allGrades }] = await Promise.all([
+    auth(),
+    searchParams,
+  ]);
 
-  // 1. Fetch current user with their grade, age, and curriculum
-  let dbUser = null;
-  let isTutor = false;
-  if (session?.user?.id) {
-    dbUser = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      include: { tutorProfile: true },
-    });
-    if (dbUser?.tutorProfile && dbUser.tutorProfile.status === "APPROVED") {
-      isTutor = true;
-    }
-  }
+  // 1. Fetch current user if signed in concurrently with raw sessions data
+  const [dbUser, rawData] = await Promise.all([
+    session?.user?.id
+      ? prisma.user.findUnique({
+          where: { id: session.user.id },
+          include: { tutorProfile: true },
+        })
+      : Promise.resolve(null),
+    getCachedSessionsData(),
+  ]);
+
+  const isTutor = Boolean(dbUser?.tutorProfile && dbUser.tutorProfile.status === "APPROVED");
 
   // 2. Determine active matching filters
   const activeSubject = subject || "All";
@@ -88,162 +147,92 @@ export default async function SessionsPage({ searchParams }: Props) {
   const activeGrade = isAllGradesExplicit ? "" : (grade || dbUser?.grade || "");
   const studentAge = dbUser?.age || null;
 
-  // 3. Build Workshop Where Clause (only upcoming, non-expired workshops from approved tutors)
-  const workshopWhere: Prisma.WorkshopWhereInput = {
-    status: "UPCOMING",
-    startTime: { gte: new Date(Date.now() - 30 * 60 * 1000) },
-    tutor: { status: "APPROVED" },
-  };
-  const workshopConditions: Prisma.WorkshopWhereInput[] = [];
+  // 3. Ultra-fast in-memory filtering for workshops
+  const subTerms = activeSubject !== "All" && activeSubject.toLowerCase().includes("math")
+    ? ["math", "mathematics", "algebra", "calculus", "geometry"]
+    : activeSubject !== "All"
+    ? [activeSubject.toLowerCase()]
+    : [];
 
-  if (activeSubject !== "All") {
-    // Also match "Maths" if user selected "Mathematics" or vice versa
-    const subTerms = activeSubject.toLowerCase().includes("math")
-      ? ["math", "mathematics", "algebra", "calculus", "geometry"]
-      : [activeSubject];
+  const cleanGrade = activeGrade ? activeGrade.replace(/[^a-zA-Z0-9\s]/g, "").toLowerCase().trim() : "";
+  const queryTerm = q ? q.trim().toLowerCase() : "";
 
-    workshopConditions.push({
-      OR: subTerms.flatMap((term) => [
-        { subject: { contains: term, mode: "insensitive" } },
-        { title: { contains: term, mode: "insensitive" } },
-      ]),
-    });
-  }
-
-  if (activeCurriculum !== "All") {
-    workshopConditions.push({
-      OR: [
-        { curriculum: { contains: activeCurriculum, mode: "insensitive" } },
-        { title: { contains: activeCurriculum, mode: "insensitive" } },
-        { curriculum: null }, // General workshops open to all
-      ],
-    });
-  }
-
-  if (activeGrade && activeGrade.trim()) {
-    const cleanGrade = activeGrade.replace(/[^a-zA-Z0-9\s]/g, "").trim();
-    workshopConditions.push({
-      OR: [
-        { grade: { contains: cleanGrade, mode: "insensitive" } },
-        { grade: { contains: "All", mode: "insensitive" } },
-      ],
-    });
-  }
-
-  if (q && q.trim()) {
-    const term = q.trim();
-    workshopConditions.push({
-      OR: [
-        { title: { contains: term, mode: "insensitive" } },
-        { description: { contains: term, mode: "insensitive" } },
-        { subject: { contains: term, mode: "insensitive" } },
-      ],
-    });
-  }
-
-  if (workshopConditions.length > 0) {
-    workshopWhere.AND = workshopConditions;
-  }
-
-  // 4. Build Tutor Where Clause for 1-on-1 Sessions Matching Student
-  const tutorWhere: Prisma.TutorProfileWhereInput = { status: "APPROVED" };
-  const tutorConditions: Prisma.TutorProfileWhereInput[] = [];
-
-  if (activeSubject !== "All") {
-    const subTerms = activeSubject.toLowerCase().includes("math")
-      ? ["math", "mathematics", "algebra", "calculus", "geometry"]
-      : [activeSubject];
-
-    tutorConditions.push({
-      OR: subTerms.map((term) => ({
-        subjects: { some: { name: { contains: term, mode: "insensitive" } } },
-      })),
-    });
-  }
-
-  if (activeCurriculum !== "All") {
-    tutorConditions.push({
-      OR: [
-        { curricula: { contains: activeCurriculum, mode: "insensitive" } },
-        { curricula: null }, // Tutors without explicit restriction teach general curricula
-      ],
-    });
-  }
-
-  if (activeGrade && activeGrade.trim()) {
-    const cleanGrade = activeGrade.replace(/[^a-zA-Z0-9\s]/g, "").trim();
-    tutorConditions.push({
-      OR: [
-        { gradeLevels: { some: { name: { contains: cleanGrade, mode: "insensitive" } } } },
-        { targetGrades: { contains: cleanGrade, mode: "insensitive" } },
-        { gradeLevels: { none: {} } }, // Open to all grades
-      ],
-    });
-  }
-
-  if (studentAge) {
-    tutorConditions.push({
-      OR: [
-        { minAge: null, maxAge: null },
-        { AND: [{ minAge: { lte: studentAge } }, { maxAge: { gte: studentAge } }] },
-        { minAge: { lte: studentAge }, maxAge: null },
-      ],
-    });
-  }
-
-  if (q && q.trim()) {
-    const term = q.trim();
-    tutorConditions.push({
-      OR: [
-        { user: { name: { contains: term, mode: "insensitive" } } },
-        { bio: { contains: term, mode: "insensitive" } },
-        { school: { contains: term, mode: "insensitive" } },
-        { subjects: { some: { name: { contains: term, mode: "insensitive" } } } },
-      ],
-    });
-  }
-
-  if (tutorConditions.length > 0) {
-    tutorWhere.AND = tutorConditions;
-  }
-
-  // Fast cache check
-  const cacheKey = `${activeSubject}:${activeCurriculum}:${activeGrade}:${studentAge || ""}:${q || ""}`;
-  const cached = sessionsMemoryCache.get(cacheKey);
-
-  let workshops: any[] = [];
-  let tutors: any[] = [];
-
-  if (cached && Date.now() - cached.timestamp < 60_000) {
-    workshops = cached.workshops;
-    tutors = cached.tutors;
-  } else {
-    try {
-      // 1. Fetch workshops first
-      workshops = await prisma.workshop.findMany({
-        where: workshopWhere,
-        include: {
-          tutor: { include: { user: true } },
-          enrollments: true,
-        },
-        orderBy: { startTime: "asc" },
-        take: 25,
-      });
-
-      // 2. Only fetch tutors if no workshops exist
-      if (workshops.length === 0) {
-        tutors = await prisma.tutorProfile.findMany({
-          where: tutorWhere,
-          include: { user: true, subjects: true, availabilities: true, gradeLevels: true },
-          take: 16,
-        });
-      }
-
-      sessionsMemoryCache.set(cacheKey, { workshops, tutors, timestamp: Date.now() });
-    } catch (err) {
-      console.warn("Sessions page query fallback triggered:", (err as Error)?.message);
+  const workshops = rawData.workshops.filter((w) => {
+    // Subject check
+    if (subTerms.length > 0) {
+      const match = subTerms.some(
+        (t) =>
+          w.subject?.toLowerCase().includes(t) ||
+          w.title?.toLowerCase().includes(t)
+      );
+      if (!match) return false;
     }
-  }
+    // Curriculum check
+    if (activeCurriculum !== "All") {
+      if (w.curriculum && !w.curriculum.toLowerCase().includes(activeCurriculum.toLowerCase()) && !w.title?.toLowerCase().includes(activeCurriculum.toLowerCase())) {
+        return false;
+      }
+    }
+    // Grade check
+    if (cleanGrade) {
+      const g = (w.grade || "").toLowerCase();
+      if (!g.includes(cleanGrade) && !g.includes("all")) {
+        return false;
+      }
+    }
+    // Query search
+    if (queryTerm) {
+      const match =
+        w.title?.toLowerCase().includes(queryTerm) ||
+        w.description?.toLowerCase().includes(queryTerm) ||
+        w.subject?.toLowerCase().includes(queryTerm);
+      if (!match) return false;
+    }
+    return true;
+  });
+
+  // 4. In-memory filtering for tutors
+  const tutors = workshops.length === 0
+    ? rawData.tutors.filter((t) => {
+        // Subject check
+        if (subTerms.length > 0) {
+          const match = t.subjects.some((s: any) =>
+            subTerms.some((st) => s.name.toLowerCase().includes(st))
+          );
+          if (!match) return false;
+        }
+        // Curriculum check
+        if (activeCurriculum !== "All") {
+          if (t.curricula && !t.curricula.toLowerCase().includes(activeCurriculum.toLowerCase())) {
+            return false;
+          }
+        }
+        // Grade check
+        if (cleanGrade) {
+          const hasGradeLevel = t.gradeLevels?.some((gl: any) => gl.name.toLowerCase().includes(cleanGrade));
+          const hasTargetGrades = t.targetGrades?.toLowerCase().includes(cleanGrade);
+          const hasNoRestriction = !t.gradeLevels || t.gradeLevels.length === 0;
+          if (!hasGradeLevel && !hasTargetGrades && !hasNoRestriction) {
+            return false;
+          }
+        }
+        // Age check
+        if (studentAge) {
+          if (t.minAge && studentAge < t.minAge) return false;
+          if (t.maxAge && studentAge > t.maxAge) return false;
+        }
+        // Query search
+        if (queryTerm) {
+          const match =
+            t.user?.name?.toLowerCase().includes(queryTerm) ||
+            t.bio?.toLowerCase().includes(queryTerm) ||
+            t.school?.toLowerCase().includes(queryTerm) ||
+            t.subjects?.some((s: any) => s.name.toLowerCase().includes(queryTerm));
+          if (!match) return false;
+        }
+        return true;
+      })
+    : [];
 
   const isAutoMatched = Boolean(dbUser && (activeGrade || activeCurriculum !== "All") && !isAllGradesExplicit);
 

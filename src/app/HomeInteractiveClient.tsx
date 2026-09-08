@@ -174,10 +174,7 @@ export default function HomeInteractiveClient({
 
   return (
     <div className={styles.homeWrapper}>
-      {/* 1. Opening Brand Splash Animation */}
-      <LogoSplash />
-
-      {/* 2. Hero Section with Aurora Mesh Glows */}
+      {/* Hero Section with Aurora Mesh Glows */}
       <section className={styles.heroSection}>
         {/* Ambient Aurora Glows */}
         <div className={styles.auroraLayer} aria-hidden="true">

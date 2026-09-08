@@ -12,8 +12,8 @@ const nextConfig: NextConfig = {
       "@radix-ui/react-icons",
       "date-fns",
     ],
-    // Optimize CSS by inlining critical styles
-    optimizeCss: true,
+    // optimizeCss disabled in dev to prevent critters regex hang
+    optimizeCss: false,
     // Client-side router cache for blazing fast page transitions
     staleTimes: {
       dynamic: 30, // 30s client router cache for instant back/forward & link navigations

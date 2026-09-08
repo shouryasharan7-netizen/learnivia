@@ -61,7 +61,7 @@ export default auth((req) => {
     // If logged in and visiting signin or signup, redirect immediately to their role interface
     if (nextUrl.pathname === "/signin" || nextUrl.pathname === "/signup") {
       const userRole = req.auth?.user?.role;
-      const target = userRole === "TUTOR" ? "/tutor" : (userRole === "ADMIN" ? "/admin" : "/dashboard");
+      const target = userRole === "TUTOR" ? "/tutor" : "/dashboard";
       return NextResponse.redirect(new URL(target, req.url));
     }
 
