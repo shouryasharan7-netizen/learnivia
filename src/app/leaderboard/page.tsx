@@ -15,6 +15,11 @@ export default async function LeaderboardPage() {
   const session = await auth();
   const leaderboard = await getLeaderboard(50);
 
+  // P1-5: Derive current user's publicSlug for "You" detection without exposing raw DB id in page
+  const currentUserSlug = session?.user?.id
+    ? `usr_${session.user.id.slice(-8)}`
+    : null;
+
   const top3 = leaderboard.slice(0, 3);
   const remaining = leaderboard.slice(3);
 
@@ -38,11 +43,11 @@ export default async function LeaderboardPage() {
           <div className={styles.podiumGrid}>
             {top3.map((entry, index) => {
               const medal = index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉";
-              const isCurrentUser = session?.user?.id === entry.userId;
+              const isCurrentUser = currentUserSlug && currentUserSlug === entry.publicSlug;
 
               return (
                 <div
-                  key={entry.userId}
+                  key={entry.publicSlug}
                   className={`${styles.podiumCard} ${index === 0 ? styles.firstPlaceCard : ""}`}
                 >
                   <div className={styles.medalIcon}>{medal}</div>
@@ -89,7 +94,7 @@ export default async function LeaderboardPage() {
                   <th style={{ width: 70 }}>Rank</th>
                   <th>Learner / Tutor</th>
                   <th>Role</th>
-                  <th>Grade / School</th>
+                  <th>Grade</th>
                   <th style={{ textAlign: "right" }}>Learning Mins</th>
                   <th style={{ textAlign: "right" }}>Sessions</th>
                   <th style={{ textAlign: "right" }}>Total SP</th>
@@ -97,9 +102,9 @@ export default async function LeaderboardPage() {
               </thead>
               <tbody>
                 {leaderboard.map((u) => {
-                  const isCurrent = session?.user?.id === u.userId;
+                  const isCurrent = currentUserSlug && currentUserSlug === u.publicSlug;
                   return (
-                    <tr key={u.userId} className={isCurrent ? styles.highlightRow : ""}>
+                    <tr key={u.publicSlug} className={isCurrent ? styles.highlightRow : ""}>
                       <td className={styles.rankCell}>
                         {u.rank === 1 ? "🥇 1" : u.rank === 2 ? "🥈 2" : u.rank === 3 ? "🥉 3" : `#${u.rank}`}
                       </td>
@@ -116,7 +121,7 @@ export default async function LeaderboardPage() {
                         </span>
                       </td>
                       <td style={{ color: "#64748B", fontSize: "0.85rem" }}>
-                        {u.school || u.grade || "—"}
+                        {u.grade || "—"}
                       </td>
                       <td style={{ textAlign: "right", fontWeight: 600 }}>
                         {u.learningMinutes} min

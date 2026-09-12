@@ -7,40 +7,67 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const subject = searchParams.get("subject");
-    const mineOnly = searchParams.get("mine") === "true";
 
+    // P0-9: Homework questions are PRIVATE by default.
+    // - Unauthenticated: 401
+    // - Students: see only their own questions (full detail)
+    // - Tutors/Admins: see open questions anonymized (no student identity, truncated question)
     const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json(
+        { error: "Please sign in to view homework questions." },
+        { status: 401 }
+      );
+    }
 
-    const where: any = {};
+    const where: Record<string, unknown> = {};
     if (subject && subject !== "All") {
       where.subject = { contains: subject, mode: "insensitive" };
     }
-    if (mineOnly && user) {
+
+    if (user.isAdmin || user.isTutor) {
+      // Tutors & admins see open questions, anonymized
+      where.status = "OPEN";
+
+      const requests = await prisma.homeworkRequest.findMany({
+        where,
+        select: {
+          id: true,
+          subject: true,
+          grade: true,
+          curriculum: true,
+          preferredFormat: true,
+          status: true,
+          createdAt: true,
+          // Deliberately omit: question (full text), studentId, student details
+          // Tutors get a truncated preview only — full question revealed on accept
+          tutor: {
+            include: {
+              user: { select: { id: true, name: true, image: true } },
+            },
+          },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 50,
+      });
+
+      return NextResponse.json({ success: true, requests, viewMode: "tutor" });
+    } else {
+      // Students see only their OWN questions with full detail
       where.studentId = user.id;
+
+      const requests = await prisma.homeworkRequest.findMany({
+        where,
+        include: {
+          student: { select: { id: true, name: true, grade: true, curriculum: true } },
+          tutor: { include: { user: { select: { id: true, name: true, image: true } } } },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 50,
+      });
+
+      return NextResponse.json({ success: true, requests, viewMode: "student" });
     }
-
-    const requests = await prisma.homeworkRequest.findMany({
-      where,
-      include: {
-        student: { select: { id: true, name: true, grade: true, curriculum: true } },
-        tutor: { include: { user: { select: { id: true, name: true, image: true } } } },
-      },
-      orderBy: { createdAt: "desc" },
-      take: 50,
-    });
-
-    // Privacy masking for minor students: First Name + Last Initial
-    const sanitizedRequests = requests.map((req) => {
-      const rawName = req.student?.name || "Student";
-      const parts = rawName.trim().split(/\s+/);
-      const maskedName = parts.length > 1 ? `${parts[0]} ${parts[parts.length - 1][0]}.` : parts[0];
-      return {
-        ...req,
-        student: req.student ? { ...req.student, name: maskedName } : null,
-      };
-    });
-
-    return NextResponse.json({ success: true, requests: sanitizedRequests });
   } catch (error) {
     console.error("Error fetching homework requests:", error);
     return NextResponse.json({ error: "Failed to fetch questions." }, { status: 500 });

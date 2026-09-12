@@ -3,7 +3,56 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
-import { authConfig } from "./auth.config"
+import { authConfig, getAdminEmails } from "./auth.config"
+
+// ── P0-12: Brute-force protection ────────────────────────────────────────
+// In-memory rate limiting for credential login attempts.
+// NOTE: For multi-instance production, wire this to Redis (Upstash) or
+// use the failedLoginCount field in the DB (requires the migration to be run).
+interface BFEntry { count: number; lockedUntil: number | null }
+const loginAttemptMap = new Map<string, BFEntry>();
+
+const MAX_ATTEMPTS = 10;           // 10 failures before lockout
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
+const ATTEMPT_WINDOW_MS = 10 * 60 * 1000;   // Reset counter after 10 minutes of inactivity
+
+function getBFKey(email: string) {
+  return `bf:${email.trim().toLowerCase()}`;
+}
+
+function isLockedOut(email: string): boolean {
+  const key = getBFKey(email);
+  const entry = loginAttemptMap.get(key);
+  if (!entry) return false;
+  if (entry.lockedUntil && Date.now() < entry.lockedUntil) return true;
+  // Lockout expired or never set
+  if (entry.lockedUntil && Date.now() >= entry.lockedUntil) {
+    loginAttemptMap.delete(key); // Reset
+  }
+  return false;
+}
+
+function recordFailedAttempt(email: string): void {
+  const key = getBFKey(email);
+  const entry = loginAttemptMap.get(key);
+  const now = Date.now();
+
+  if (!entry || (now - (entry.lockedUntil || 0) > ATTEMPT_WINDOW_MS && !entry.lockedUntil)) {
+    loginAttemptMap.set(key, { count: 1, lockedUntil: null });
+    return;
+  }
+
+  const newCount = (entry.count || 0) + 1;
+  if (newCount >= MAX_ATTEMPTS) {
+    loginAttemptMap.set(key, { count: newCount, lockedUntil: now + LOCKOUT_DURATION_MS });
+  } else {
+    loginAttemptMap.set(key, { count: newCount, lockedUntil: null });
+  }
+}
+
+function clearAttempts(email: string): void {
+  loginAttemptMap.delete(getBFKey(email));
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -21,21 +70,35 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
         
         const email = (credentials.email as string).trim().toLowerCase();
+
+        // P0-12: Check if this email is currently locked out
+        if (isLockedOut(email)) {
+          // Return null — NextAuth will show generic error; lockout message surfaced in UI via query param
+          throw new Error("RATE_LIMITED");
+        }
+
         const user = await prisma.user.findUnique({
           where: { email },
           include: { tutorProfile: true },
         });
 
-        if (!user || !user.password) return null;
+        // P0-12: Always run bcrypt compare (even for non-existent users) to prevent timing attacks
+        const dummyHash = "$2a$12$dummyhashfortimingnnn.aaaaabbbbccccddddeeeefffff";
+        const passwordToCheck = user?.password || dummyHash;
+        const isValid = await bcrypt.compare(credentials.password as string, passwordToCheck);
 
-        const isValid = await bcrypt.compare(credentials.password as string, user.password);
-        if (!isValid) return null;
+        if (!user || !user.password || !isValid) {
+          // P0-12: Record failed attempt
+          recordFailedAttempt(email);
+          return null;
+        }
 
-        // Auto-elevate designated admin if needed
-        const isAdminEmail =
-          email === "shouryasharan7@gmail.com" ||
-          email === "ahmedashfaqfarooqui@gmail.com" ||
-          (process.env.ADMIN_EMAILS?.split(",").map((e) => e.trim().toLowerCase()).includes(email) ?? false);
+        // Success — clear failed attempts
+        clearAttempts(email);
+
+        // P0-5: Admin email check exclusively from ADMIN_EMAILS env var — no hardcoded fallbacks
+        const adminEmails = getAdminEmails();
+        const isAdminEmail = adminEmails.has(email);
 
         if (isAdminEmail && user.role !== "ADMIN") {
           return await prisma.user.update({
@@ -52,10 +115,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user }) {
       if (user.email) {
         const normalizedEmail = user.email.trim().toLowerCase();
-        const isAdminEmail =
-          normalizedEmail === "shouryasharan7@gmail.com" ||
-          normalizedEmail === "ahmedashfaqfarooqui@gmail.com" ||
-          (process.env.ADMIN_EMAILS?.split(",").map((e) => e.trim().toLowerCase()).includes(normalizedEmail) ?? false);
+        // P0-5: Admin email check exclusively from env var — no hardcoded fallbacks
+        const adminEmails = getAdminEmails();
+        const isAdminEmail = adminEmails.has(normalizedEmail);
 
         if (isAdminEmail) {
           try {

@@ -16,12 +16,13 @@ export interface UserStats {
 
 export interface LeaderboardEntry {
   rank: number;
-  userId: string;
+  /** Derived non-guessable slug for You-detection; never a raw DB userId */
+  publicSlug: string;
   name: string;
   initials: string;
   role: string;
   grade?: string | null;
-  school?: string | null;
+  // school intentionally removed (P1-5 privacy)
   points: number;
   learningMinutes: number;
   volunteerHours: number;
@@ -323,22 +324,32 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
       (tutorWorkshops * 50) +
       Math.floor(tutoringMinutes / 2);
 
-    const displayName = u.name || (u.email ? u.email.split("@")[0] : "Learner");
-    const initials = displayName
-      .split(" ")
+    // P1-5: Privacy — display first name + last initial only (protects student identity)
+    // Never display: full name, email, school, or userId in public leaderboard
+    const rawName = u.name || "Learner";
+    const nameParts = rawName.trim().split(/\s+/);
+    const displayName = nameParts.length > 1
+      ? `${nameParts[0]} ${nameParts[nameParts.length - 1][0]}.`
+      : nameParts[0];
+
+    const initials = nameParts
       .map((n) => n[0])
       .slice(0, 2)
       .join("")
       .toUpperCase();
 
+    // Derive a stable public identifier that isn't a database user ID
+    // This lets the leaderboard page detect "You" without exposing raw IDs
+    const publicSlug = `usr_${u.id.slice(-8)}`;
+
     return {
       rank: 1,
-      userId: u.id,
+      publicSlug,    // Use this for "You" detection on the page (not raw userId)
       name: displayName,
       initials,
       role: u.role === "TUTOR" || u.tutorProfile?.status === "APPROVED" ? "Verified Tutor" : "Student",
       grade: u.grade || u.tutorProfile?.currentGrade || null,
-      school: u.tutorProfile?.school || null,
+      // School intentionally excluded from public leaderboard (P1-5 privacy)
       points: pts,
       learningMinutes,
       volunteerHours,

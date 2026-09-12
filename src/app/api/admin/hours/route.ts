@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-
-const ADMINS = ["shouryasharan7@gmail.com", "ahmedashfaqfarooqui@gmail.com"];
+import { getAdminEmails } from "@/auth.config";
 
 async function assertAdmin(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) return null;
   const email = session.user.email.trim().toLowerCase();
-  const isAdmin = session.user.role === "ADMIN" || ADMINS.includes(email);
+  // P0-5: Admin check via env var only — no hardcoded email list
+  const adminEmails = getAdminEmails();
+  const isAdmin = session.user.role === "ADMIN" || adminEmails.has(email);
   if (!isAdmin) return null;
   return session.user;
 }

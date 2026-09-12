@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { getAdminEmails } from "@/auth.config";
 import type { User, TutorProfile, Role } from "@prisma/client";
 
 export interface AuthenticatedUser extends User {
@@ -9,16 +10,12 @@ export interface AuthenticatedUser extends User {
   tutorProfile: TutorProfile | null;
 }
 
-const ADMIN_EMAILS = new Set([
-  "shouryasharan7@gmail.com",
-  "ahmedashfaqfarooqui@gmail.com",
-  ...(process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase()) : []),
-]);
-
 /**
  * Resolves the currently authenticated user from the database.
  * Uses both session.user.id and session.user.email as fallbacks.
  * Ensures role synchronization (e.g. designated admin emails).
+ *
+ * P0-5: Admin email check exclusively from ADMIN_EMAILS env var.
  */
 export async function getCurrentUser(): Promise<AuthenticatedUser | null> {
   const session = await auth();
@@ -44,9 +41,10 @@ export async function getCurrentUser(): Promise<AuthenticatedUser | null> {
 
   if (!dbUser) return null;
 
-  // Ground truth role checks
+  // Ground truth role checks — env var only, no hardcoded emails
   const email = dbUser.email?.trim().toLowerCase();
-  const isDesignatedAdmin = email ? ADMIN_EMAILS.has(email) : false;
+  const adminEmails = getAdminEmails();
+  const isDesignatedAdmin = email ? adminEmails.has(email) : false;
 
   let role: Role = dbUser.role;
 
