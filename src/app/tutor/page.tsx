@@ -205,7 +205,7 @@ export default async function TutorDashboard() {
                 <CheckCircle2 size={13} color="#10B981" /> Verified Tutor
               </span>
               <span className={styles.hoursBadge}>
-                <Clock size={13} color="#4F46E5" /> {tutorHours.toFixed(1)} Hours Verified
+                <Clock size={13} color="#2D6A4F" /> {tutorHours.toFixed(1)} Hours Verified
               </span>
             </div>
             <h1 className={styles.title}>{tutorName}&apos;s Tutor Portal</h1>
@@ -213,7 +213,7 @@ export default async function TutorDashboard() {
           </div>
 
           <div className={styles.headerActions} style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-            <Link href="/tutor/training" className={styles.transcriptBtn} style={{ background: "rgba(79, 70, 229, 0.08)", borderColor: "rgba(79, 70, 229, 0.25)", color: "#4F46E5", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+            <Link href="/tutor/training" className={styles.transcriptBtn} style={{ background: "rgba(45, 106, 79, 0.08)", borderColor: "rgba(45, 106, 79, 0.25)", color: "#2D6A4F", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
               <GraduationCap size={15} /> Training Modules
             </Link>
             <a href="#schedule-session" className={styles.primaryBtn} style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
@@ -229,7 +229,7 @@ export default async function TutorDashboard() {
         <section className={styles.metricsGrid} aria-label="Tutor volunteer metrics">
           <div className={styles.metricCard}>
             <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Clock size={24} color="#4F46E5" />
+              <Clock size={24} color="#2D6A4F" />
             </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{tutorHours.toFixed(1)} hrs</span>
@@ -249,7 +249,7 @@ export default async function TutorDashboard() {
 
           <div className={styles.metricCard}>
             <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <CheckCircle2 size={24} color="#7C3AED" />
+              <CheckCircle2 size={24} color="#C9922A" />
             </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{completedBookings.length}</span>
@@ -337,11 +337,11 @@ export default async function TutorDashboard() {
 
             {/* Live Group Workshops */}
             {/* Schedule a New Session / Workshop */}
-            <section id="schedule-session" className={styles.card} style={{ border: "1.5px solid #6366F1", background: "#FFFFFF", boxShadow: "0 10px 30px -10px rgba(79, 70, 229, 0.12)" }}>
+            <section id="schedule-session" className={styles.card} style={{ border: "1.5px solid #2D6A4F", background: "#FFFFFF", boxShadow: "0 10px 30px -10px rgba(45, 106, 79, 0.12)" }}>
               <div className={styles.cardHeader}>
                 <div>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontSize: "0.75rem", fontWeight: 700, color: "#4F46E5", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
-                    <Zap size={14} color="#4F46E5" /> Instant Tutor Publishing
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontSize: "0.75rem", fontWeight: 700, color: "#2D6A4F", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
+                    <Zap size={14} color="#2D6A4F" /> Instant Tutor Publishing
                   </div>
                   <h2 className={styles.cardTitle}>Schedule a New Live Session / Workshop</h2>
                   <p className={styles.cardSub}>Publish a session to the directory. When published, it will immediately appear on Find a Session for learners to join.</p>

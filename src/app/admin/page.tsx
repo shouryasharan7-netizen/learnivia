@@ -54,7 +54,7 @@ export default async function AdminOverviewPage() {
   ]);
 
   const cards = [
-    { label: "Total Registered Users", count: totalUsers, icon: "👥", href: "/admin/users", bg: "#EFF6FF", color: "#2563EB" },
+    { label: "Total Registered Users", count: totalUsers, icon: "👥", href: "/admin/users", bg: "#EAF3ED", color: "#2563EB" },
     { label: "Approved Volunteer Tutors", count: totalTutors, icon: "🎓", href: "/admin/tutors", bg: "#ECFDF5", color: "#0E8345" },
     {
       label: "Pending Tutor Applications",
@@ -74,8 +74,8 @@ export default async function AdminOverviewPage() {
       color: openReports > 0 ? "#DC2626" : "#64748B",
       highlight: openReports > 0,
     },
-    { label: "1-on-1 Sessions Booked", count: totalBookings, icon: "🤝", href: "/admin/sessions", bg: "#F3E8FF", color: "#7C3AED" },
-    { label: "Group Workshops & Circles", count: totalWorkshops, icon: "📚", href: "/admin/sessions", bg: "#EFF6FF", color: "#3B82F6" },
+    { label: "1-on-1 Sessions Booked", count: totalBookings, icon: "🤝", href: "/admin/sessions", bg: "#EAF3ED", color: "#C9922A" },
+    { label: "Group Workshops & Circles", count: totalWorkshops, icon: "📚", href: "/admin/sessions", bg: "#EAF3ED", color: "#1E3A5F" },
     { label: "Community Messages", count: totalCommunityMessages, icon: "💬", href: "/admin/moderation", bg: "#F0FDF4", color: "#16A34A" },
     { label: "Homework Help Inquiries", count: totalHomeworkRequests, icon: "❓", href: "/admin/moderation", bg: "#FFFBEB", color: "#B45309" },
   ];
@@ -299,7 +299,7 @@ export default async function AdminOverviewPage() {
                   </div>
                   <span
                     style={{
-                      background: b.status === "COMPLETED" ? "#D1FAE5" : "#DBEAFE",
+                      background: b.status === "COMPLETED" ? "#D1FAE5" : "#B5D9C5",
                       color: b.status === "COMPLETED" ? "#065F46" : "#1E40AF",
                       fontSize: "0.7rem",
                       fontWeight: 700,

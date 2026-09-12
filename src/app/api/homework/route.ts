@@ -90,7 +90,7 @@ export async function POST(request: Request) {
       authorEmail: "", // never leak personal email addresses to community store
       authorRole: "STUDENT",
       authorInitials: initials,
-      authorColor: "#7C3AED",
+      authorColor: "#C9922A",
       content: `📌 [${subject}] ${question.trim()} (Format: ${preferredFormat === "zoom" ? "Live Zoom Room" : "Chat Discussion"})`,
     });
 

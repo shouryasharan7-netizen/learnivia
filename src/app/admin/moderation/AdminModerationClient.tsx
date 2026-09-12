@@ -306,8 +306,8 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.35rem", flexWrap: "wrap" }}>
                       <span
                         style={{
-                          background: "#F3E8FF",
-                          color: "#7C3AED",
+                          background: "#EAF3ED",
+                          color: "#C9922A",
                           fontSize: "0.75rem",
                           fontWeight: 700,
                           padding: "0.2rem 0.6rem",

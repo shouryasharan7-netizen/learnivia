@@ -61,7 +61,7 @@ export const STORIES_AND_BLOG: ArticleOrStory[] = [
     title: "What 47 Hours of Tutoring Taught Me About Teaching (and Myself)",
     category: "TUTOR_SPOTLIGHT",
     categoryLabel: "Tutor Spotlight",
-    categoryColor: "#7C3AED",
+    categoryColor: "#C9922A",
     categoryBg: "#F5F3FF",
     badge: "Tutor · Grade 11",
     excerpt:

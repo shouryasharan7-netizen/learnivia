@@ -49,11 +49,11 @@
 }
 
 .logoText {
-  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
   font-size: 1.5rem;
-  font-weight: 800;
-  color: #14243B;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: #1C1A17;
+  letter-spacing: -0.01em;
 }
 
 /* Navigation Links */
@@ -78,7 +78,7 @@
   background-color: rgba(20, 36, 59, 0.04);
 }
 .navLinkActive {
-  color: var(--lv-primary);
+  color: #2D6A4F;
   font-weight: 600;
 }
 
@@ -105,9 +105,9 @@
 }
 .exploreBtn:hover,
 .exploreBtnActive {
-  background: var(--lv-primary-subtle);
-  border-color: var(--lv-primary-light);
-  color: var(--lv-primary);
+  background: #EAF3ED;
+  border-color: #B5D9C5;
+  color: #2D6A4F;
 }
 
 .navBtn {
@@ -177,7 +177,7 @@
   white-space: nowrap;
 }
 .signInBtn:hover {
-  color: var(--lv-primary);
+  color: #2D6A4F;
 }
 
 .signUpBtn {
@@ -187,18 +187,18 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: #FFFFFF;
-  background: var(--lv-primary);
+  background: #2D6A4F;
   padding: 0.55rem 1.4rem;
   border-radius: 999px;
   text-decoration: none;
   transition: all 180ms ease;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.25);
 }
 .signUpBtn:hover {
-  background: var(--lv-primary-hover);
+  background: #235840;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 6px 16px rgba(45, 106, 79, 0.30);
 }
 
 /* ==========================================================================
@@ -209,13 +209,12 @@
   top: calc(100% + 14px);
   left: -20px;
   width: 580px;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(20px);
-  border: 1.5px solid rgba(224, 231, 255, 0.9);
-  border-radius: 24px;
+  border: 1.5px solid #DDD8D0;
+  border-radius: 18px;
   padding: 2rem;
-  box-shadow: 0 24px 60px -12px rgba(79, 70, 229, 0.14),
-              0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  box-shadow: 0 12px 40px -8px rgba(28, 26, 23, 0.14), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
   z-index: 200;
   animation: megaMenuPop 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -236,12 +235,12 @@
 }
 
 .megaMenuTitle {
-  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
   font-size: 1.75rem;
-  font-weight: 800;
-  color: #14243B;
+  font-weight: 600;
+  color: #1C1A17;
   margin: 0 0 0.35rem 0;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .megaMenuSubtitle {
@@ -259,18 +258,18 @@
 .megaCard {
   display: block;
   background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
+  border: 1px solid #DDD8D0;
+  border-radius: 12px;
   padding: 1.15rem 1.25rem;
   text-decoration: none;
   transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 4px rgba(28, 26, 23, 0.04);
 }
 .megaCard:hover {
   background: #FFFFFF;
-  border-color: var(--lv-primary-mid);
-  transform: translateX(4px);
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.12);
+  border-color: #4A9172;
+  transform: translateX(3px);
+  box-shadow: 0 6px 20px rgba(45, 106, 79, 0.10);
 }
 
 .megaCardTop {
@@ -287,8 +286,8 @@
 .megaCardBadge {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--lv-primary);
-  background: var(--lv-primary-subtle);
+  color: #2D6A4F;
+  background: #EAF3ED;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
   text-transform: uppercase;
@@ -321,13 +320,14 @@
 }
 
 .megaFooterLink {
-  color: var(--lv-primary);
+  color: #2D6A4F;
   font-weight: 700;
   text-decoration: none;
   transition: color 150ms ease;
 }
 .megaFooterLink:hover {
   text-decoration: underline;
+  color: #235840;
 }
 
 /* Get Involved Dropdown */
@@ -353,7 +353,7 @@
   transition: background-color 150ms ease;
 }
 .dropdownItem:hover {
-  background-color: #F8FAFC;
+  background-color: #EAF3ED;
 }
 
 .dropdownItemTitle {
@@ -435,16 +435,16 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  color: #475569;
+  background: #FAF8F5;
+  border: 1px solid #DDD8D0;
+  color: #3D3831;
   cursor: pointer;
   transition: all 150ms ease;
 }
 .iconBtn:hover {
-  background: #EEF2FF;
-  color: #4F46E5;
-  border-color: #C7D2FE;
+  background: #EAF3ED;
+  color: #2D6A4F;
+  border-color: #B5D9C5;
   transform: translateY(-1px);
 }
 
@@ -452,32 +452,32 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  background: #FAF8F5;
+  border: 1px solid #DDD8D0;
   border-radius: 999px;
   padding: 0.3rem 0.75rem 0.3rem 0.3rem;
   cursor: pointer;
   transition: all 150ms ease;
 }
 .userCapsule:hover {
-  border-color: #C7D2FE;
-  background: #EEF2FF;
+  border-color: #B5D9C5;
+  background: #EAF3ED;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.08);
 }
 
 .userAvatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  background: #2D6A4F;
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8125rem;
   font-weight: 700;
-  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 2px 6px rgba(45, 106, 79, 0.22);
 }
 
 .userName {
@@ -523,8 +523,8 @@
 
 .popoverCount {
   font-size: 0.75rem;
-  background: #EEF2FF;
-  color: #4F46E5;
+  background: #EAF3ED;
+  color: #2D6A4F;
   font-weight: 700;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
@@ -559,15 +559,15 @@
   text-align: center;
   margin-top: 0.75rem;
   padding-top: 0.65rem;
-  border-top: 1px solid #F1F5F9;
+  border-top: 1px solid #EDE9E1;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #4F46E5;
+  color: #2D6A4F;
   text-decoration: none;
   transition: color 150ms ease;
 }
 .popoverFooterLink:hover {
-  color: #3730A3;
+  color: #235840;
 }
 
 .userProfileMenu {
@@ -598,9 +598,10 @@
 .roleTag {
   display: inline-block;
   font-size: 0.6875rem;
-  font-weight: 800;
-  background: #EEF2FF;
-  color: #4F46E5;
+  font-weight: 700;
+  background: #EAF3ED;
+  color: #235840;
+  border: 1px solid #B5D9C5;
   padding: 0.15rem 0.55rem;
   border-radius: 999px;
   letter-spacing: 0.04em;
@@ -626,8 +627,8 @@
   transition: all 150ms ease;
 }
 .userMenuItem:hover {
-  background-color: #F8FAFC;
-  color: #0F172A;
+  background-color: #EAF3ED;
+  color: #1C1A17;
   transform: translateX(2px);
 }
 
@@ -654,8 +655,8 @@
   transition: all 150ms ease;
 }
 .signOutMenuItem:hover {
-  background-color: #FEF2F2;
-  color: #B91C1C;
+  background-color: #FAEDE9;
+  color: #A8543C;
 }
 
 /* ==========================================================================
@@ -783,7 +784,7 @@
   text-align: center;
   padding: 0.75rem;
   border-radius: 999px;
-  background: var(--lv-primary);
+  background: #2D6A4F;
   font-weight: 600;
   color: #FFFFFF;
   text-decoration: none;

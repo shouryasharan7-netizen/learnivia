@@ -295,40 +295,40 @@ export function Navbar() {
 
                   <div className={styles.userMenuList}>
                     <Link href="/dashboard" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <LayoutDashboard size={16} color="#6366F1" />
+                      <LayoutDashboard size={16} color="#2D6A4F" />
                       <span>My Dashboard</span>
                     </Link>
                     <Link href="/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <Search size={16} color="#0EA5E9" />
+                      <Search size={16} color="#1E3A5F" />
                       <span>Find a Session</span>
                     </Link>
                     <Link href="/community" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <MessageSquare size={16} color="#8B5CF6" />
+                      <MessageSquare size={16} color="#C1694F" />
                       <span>Community Discussions</span>
                     </Link>
                     <Link href="/resources" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <BookOpen size={16} color="#10B981" />
+                      <BookOpen size={16} color="#2D6A4F" />
                       <span>{userRole === "TUTOR" || userRole === "ADMIN" ? "Tutoring Resources" : "Learning Resources"}</span>
                     </Link>
 
                     {userRole === "TUTOR" || userRole === "ADMIN" ? (
                       <>
-                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#4F46E5", fontWeight: 600 }}>
-                          <CalendarPlus size={16} color="#4F46E5" />
+                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#2D6A4F", fontWeight: 600 }}>
+                          <CalendarPlus size={16} color="#C9922A" />
                           <span>Host a Session</span>
                         </Link>
                         <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                          <GraduationCap size={16} color="#6366F1" />
+                          <GraduationCap size={16} color="#2D6A4F" />
                           <span>Tutor Dashboard</span>
                         </Link>
                         <Link href="/tutor/transcript" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                          <Award size={16} color="#F59E0B" />
+                          <Award size={16} color="#C9922A" />
                           <span>Volunteer Transcript</span>
                         </Link>
                       </>
                     ) : (
-                      <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#4F46E5", fontWeight: 600 }}>
-                        <Sparkles size={16} color="#4F46E5" />
+                      <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#2D6A4F", fontWeight: 600 }}>
+                        <Sparkles size={16} color="#2D6A4F" />
                         <span>Become a Volunteer Tutor</span>
                       </Link>
                     )}

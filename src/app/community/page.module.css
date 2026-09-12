@@ -49,13 +49,13 @@
 }
 
 .channelHomeActive {
-  background: var(--lv-primary-subtle);
-  color: var(--lv-primary);
+  background: #EAF3ED;
+  color: #2D6A4F;
   font-weight: 700;
-  border: 1.5px solid var(--lv-primary-light);
+  border: 1.5px solid #B5D9C5;
 }
 .channelHomeActive:hover {
-  background: #E0E7FF;
+  background: #D4EDDF;
 }
 
 /* Group */
@@ -96,13 +96,13 @@
   transition: all 120ms ease;
 }
 .channelItem:hover {
-  background: var(--lv-primary-subtle);
-  color: var(--lv-primary);
+  background: #EAF3ED;
+  color: #2D6A4F;
 }
 
 .channelItemActive {
-  background: var(--lv-primary-subtle);
-  color: var(--lv-primary);
+  background: #EAF3ED;
+  color: #2D6A4F;
   font-weight: 700;
 }
 
@@ -186,7 +186,7 @@
 .channelHashtag {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--lv-primary);
+  color: #2D6A4F;
 }
 
 .bannerTitle {
@@ -201,8 +201,8 @@
   gap: 0.35rem;
   font-size: 0.6875rem;
   font-weight: 800;
-  background: var(--lv-primary-subtle);
-  color: var(--lv-primary);
+  background: #EAF3ED;
+  color: #2D6A4F;
   padding: 0.15rem 0.5rem;
   border-radius: 9999px;
   letter-spacing: 0.05em;
@@ -213,7 +213,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--lv-primary);
+  background: #2D6A4F;
   animation: pulseLive 1.5s infinite;
 }
 @keyframes pulseLive {
@@ -242,7 +242,7 @@
   transition: border-color 150ms ease;
 }
 .composerCard:focus-within {
-  border-color: var(--lv-primary);
+  border-color: #2D6A4F;
 }
 
 .composerHeader {
@@ -263,7 +263,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--lv-primary), var(--lv-violet));
+  background: linear-gradient(135deg, #2D6A4F, #C9922A);
   color: #FFFFFF;
   font-size: 0.75rem;
   font-weight: 700;
@@ -296,9 +296,9 @@
   transition: all 120ms ease;
 }
 .quickTag:hover {
-  background: var(--lv-primary-subtle);
-  color: var(--lv-primary);
-  border-color: var(--lv-primary);
+  background: #EAF3ED;
+  color: #2D6A4F;
+  border-color: #2D6A4F;
 }
 
 .composerTextarea {
@@ -357,7 +357,7 @@
 }
 
 .postBtn {
-  background: var(--lv-primary);
+  background: #2D6A4F;
   color: #FFFFFF;
   font-size: 0.875rem;
   font-weight: 700;
@@ -367,10 +367,10 @@
   cursor: pointer;
   font-family: inherit;
   transition: all 150ms ease;
-  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 2px 6px rgba(45, 106, 79, 0.25);
 }
 .postBtn:hover:not(:disabled) {
-  background: var(--lv-primary-hover);
+  background: #235840;
   transform: translateY(-1px);
 }
 .postBtn:disabled {
@@ -409,7 +409,7 @@
 }
 
 .guestSignInBtn {
-  background: var(--lv-primary);
+  background: #2D6A4F;
   color: #FFFFFF;
   font-size: 0.875rem;
   font-weight: 700;
@@ -421,7 +421,7 @@
   transition: background-color 150ms ease;
 }
 .guestSignInBtn:hover {
-  background: var(--lv-primary-hover);
+  background: #235840;
 }
 
 /* ==================================
@@ -510,8 +510,8 @@
 .messageRole {
   font-size: 0.6875rem;
   font-weight: 700;
-  background: var(--lv-primary-subtle);
-  color: var(--lv-primary);
+  background: #EAF3ED;
+  color: #2D6A4F;
   padding: 0.15rem 0.5rem;
   border-radius: 9999px;
   letter-spacing: 0.04em;
@@ -560,7 +560,7 @@
   transition: all 120ms ease;
 }
 .reactionBtn:hover {
-  background: #EFF6FF;
+  background: #EAF3ED;
   border-color: #2563EB;
   transform: scale(1.05);
 }

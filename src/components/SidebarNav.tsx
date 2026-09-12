@@ -232,7 +232,7 @@ export function SidebarNav() {
             ) : (
               <div className={styles.studentApplyCard}>
                 <div className={styles.applyCardIcon}>
-                  <Sparkles size={18} color="#4F46E5" />
+                  <Sparkles size={18} color="#2D6A4F" />
                 </div>
                 <div className={styles.applyCardTitle}>Want to Teach?</div>
                 <p className={styles.applyCardText}>Share your knowledge and earn verified service hours.</p>

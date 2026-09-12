@@ -150,7 +150,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             fontSize: "0.75rem",
                             fontWeight: 700,
                             backgroundColor:
-                              b.status === "COMPLETED" ? "#D1FAE5" : b.status === "CONFIRMED" ? "#DBEAFE" : "#FEE2E2",
+                              b.status === "COMPLETED" ? "#D1FAE5" : b.status === "CONFIRMED" ? "#B5D9C5" : "#FEE2E2",
                             color:
                               b.status === "COMPLETED" ? "#065F46" : b.status === "CONFIRMED" ? "#1E40AF" : "#991B1B",
                           }}

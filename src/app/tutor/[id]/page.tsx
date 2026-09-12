@@ -1,7 +1,6 @@
 import styles from "./page.module.css";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { bookSession } from "./actions";
 import { auth } from "@/auth";
 import Link from "next/link";
@@ -55,6 +54,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
 
   return (
     <main className={styles.main}>
+      <div className={styles.container}>
       <header className={styles.profileHeader}>
         <div className={styles.avatarLarge}>
           {tutorProfile.user.name?.charAt(0).toUpperCase() || "?"}
@@ -85,7 +85,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.35rem",
-                color: "var(--color-primary)",
+                color: "#2D6A4F",
                 fontWeight: 700,
                 textDecoration: "underline",
                 fontSize: "0.85rem",
@@ -129,12 +129,12 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
             <div className={styles.tags}>
               {tutorProfile.gradeLevels.length > 0 ? (
                 tutorProfile.gradeLevels.map(g => (
-                  <span key={g.id} className={styles.tag} style={{ background: "var(--color-sky)", color: "var(--color-navy)" }}>
+                  <span key={g.id} className={styles.tag} style={{ background: "#E8EEF5", color: "#1E3A5F", borderColor: "#C0CCE0" }}>
                     {g.name}
                   </span>
                 ))
               ) : (
-                <span className={styles.tag} style={{ background: "var(--color-sky)", color: "var(--color-navy)" }}>
+                <span className={styles.tag} style={{ background: "#E8EEF5", color: "#1E3A5F", borderColor: "#C0CCE0" }}>
                   All Ages Welcome
                 </span>
               )}
@@ -166,7 +166,6 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
 
         <div className={styles.sidebar}>
           <div className={styles.bookingCard}>
-            <Image src="/images/book-a-session.png" alt="Book a session" width={80} height={100} className={styles.bookingMascot} priority />
             <h2>Book a Free Session</h2>
             <p className={styles.bookingDesc}>100% free online tutoring over Zoom. Choose a subject and reserve your time slot.</p>
             
@@ -236,6 +235,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
             )}
           </div>
         </div>
+      </div>
       </div>
     </main>
   );

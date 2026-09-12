@@ -53,8 +53,8 @@ const BENTO_PATHWAYS = [
     desc: "1-on-1 algebra, geometry, calculus, and competition math.",
     href: "/sessions?subject=Mathematics",
     icon: Calculator,
-    iconBg: "rgba(79, 70, 229, 0.12)",
-    iconColor: "#4F46E5",
+    iconBg: "rgba(45, 106, 79, 0.12)",
+    iconColor: "#2D6A4F",
     badge: "1-on-1 Mentorship",
   },
   {
@@ -74,7 +74,7 @@ const BENTO_PATHWAYS = [
     href: "/sessions?subject=Reading+%26+Writing",
     icon: BookOpen,
     iconBg: "rgba(124, 58, 237, 0.12)",
-    iconColor: "#7C3AED",
+    iconColor: "#C9922A",
     badge: "Reading & Writing",
   },
   {
@@ -332,7 +332,7 @@ export default async function StudentDashboard() {
           <div className={styles.bentoMasteryCard}>
             <div className={styles.bentoTileHeader}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <Award size={19} color="#4F46E5" />
+                <Award size={19} color="#2D6A4F" />
                 <h2 className={styles.masteryTitle}>Level {level} Scholar</h2>
               </div>
               <span className={styles.masteryBadge}>
@@ -349,7 +349,7 @@ export default async function StudentDashboard() {
               </div>
             </div>
             <div className={styles.perkPreviewBox}>
-              <Sparkles size={13} color="#4F46E5" style={{ flexShrink: 0 }} />
+              <Sparkles size={13} color="#2D6A4F" style={{ flexShrink: 0 }} />
               <span>{nextPerk}</span>
             </div>
           </div>
@@ -395,8 +395,8 @@ export default async function StudentDashboard() {
                     <Clock size={13} color="#D97706" /> Tutor Review Pending
                   </span>
                 ) : (
-                  <span style={{ fontSize: "0.725rem", fontWeight: 700, color: "#4F46E5", background: "#EEF2FF", border: "1px solid #C7D2FE", padding: "0.15rem 0.55rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
-                    <GraduationCap size={13} color="#4F46E5" /> K–10 Learner
+                  <span style={{ fontSize: "0.725rem", fontWeight: 700, color: "#2D6A4F", background: "#EAF3ED", border: "1px solid #C7D2FE", padding: "0.15rem 0.55rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                    <GraduationCap size={13} color="#2D6A4F" /> K–10 Learner
                   </span>
                 )}
               </div>
@@ -441,7 +441,7 @@ export default async function StudentDashboard() {
 
             {/* Study Points Pill */}
             <div className={styles.statPill}>
-              <Sparkles size={16} color="#4F46E5" />
+              <Sparkles size={16} color="#2D6A4F" />
               <div className={styles.statValueCol}>
                 <span className={styles.statNumber}>{stats.points.toLocaleString()}</span>
                 <span className={styles.statUnit}>Study Points (SP)</span>
@@ -459,7 +459,7 @@ export default async function StudentDashboard() {
 
             {/* Real-time Leaderboard Link */}
             <Link href="/leaderboard" className={styles.leaderboardLink} prefetch={false}>
-              <Award size={15} color="#4338CA" />
+              <Award size={15} color="#1E3A5F" />
               <span>Leaderboard</span>
               <ChevronRight size={13} />
             </Link>
@@ -769,9 +769,9 @@ export default async function StudentDashboard() {
 
             {/* Role-Specific Action Card */}
             {isTutor ? (
-              <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%)", borderColor: "#C7D2FE" }}>
-                <h3 className={styles.sideCardTitle} style={{ color: "#312E81", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
-                  <Zap size={16} color="#4F46E5" /> Tutor Quick Portal
+              <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #EAF3ED 0%, #F3EFE8 100%)", borderColor: "#B5D9C5" }}>
+                <h3 className={styles.sideCardTitle} style={{ color: "#1C1A17", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                  <Zap size={16} color="#2D6A4F" /> Tutor Quick Portal
                 </h3>
                 <p className={styles.sideCardText}>
                   Verified Tutor: You have logged {stats.volunteerHours} hours of tutoring. Host small-group workshops and answer live homework questions.
@@ -803,9 +803,9 @@ export default async function StudentDashboard() {
                 </div>
               </div>
             ) : (
-              <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%)", borderColor: "#C7D2FE" }}>
-                <h3 className={styles.sideCardTitle} style={{ color: "#312E81", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
-                  <GraduationCap size={16} color="#4F46E5" /> Become a Volunteer Tutor
+              <div className={styles.sideCard} style={{ background: "linear-gradient(135deg, #EAF3ED 0%, #F3EFE8 100%)", borderColor: "#B5D9C5" }}>
+                <h3 className={styles.sideCardTitle} style={{ color: "#1C1A17", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                  <GraduationCap size={16} color="#2D6A4F" /> Become a Volunteer Tutor
                 </h3>
                 <p className={styles.sideCardText}>
                   Passionate about helping other students? Apply to become an approved peer tutor and receive official volunteer transcripts for your applications.

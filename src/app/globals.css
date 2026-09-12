@@ -1,114 +1,191 @@
 /* =========================================
-   LEARNIVIA SIGNATURE 21ST.DEV DESIGN SYSTEM
+   LEARNIVIA — WARM ACADEMIC DESIGN SYSTEM
+   "Trustworthy, Human, Community-Driven"
    ========================================= */
 
 :root {
-  /* --- Brand Identity: Deep Cosmic Indigo & Aurora Lumina --- */
-  --lv-primary: #4F46E5;
-  --lv-primary-hover: #4338CA;
-  --lv-primary-light: #EEF2FF;
-  --lv-primary-mid: #6366F1;
-  --lv-primary-muted: rgba(79, 70, 229, 0.12);
+  /* ── Canvas & Backgrounds ──────────────── */
+  --wa-cream:          #FAF8F5;
+  --wa-cream-dark:     #F3EFE8;
+  --wa-cream-mid:      #EDE9E1;
+  --wa-white:          #FFFFFF;
 
-  --lv-violet: #7C3AED;
-  --lv-violet-hover: #6D28D9;
-  --lv-violet-light: #F5F3FF;
+  /* ── Typography ────────────────────────── */
+  --wa-ink:            #1C1A17;
+  --wa-text:           #3D3831;
+  --wa-muted:          #7A7169;
+  --wa-subtle:         #A89F94;
 
-  --lv-emerald: #10B981;
-  --lv-emerald-hover: #059669;
-  --lv-emerald-light: #ECFDF5;
-  --lv-emerald-muted: rgba(16, 185, 129, 0.14);
+  /* ── Borders ───────────────────────────── */
+  --wa-border:         #DDD8D0;
+  --wa-border-strong:  #C8C0B4;
 
-  --lv-amber: #F59E0B;
-  --lv-amber-hover: #D97706;
-  --lv-amber-light: #FFFBEB;
+  /* ── Forest Green — Primary Accent ─────── */
+  --wa-green:          #2D6A4F;
+  --wa-green-hover:    #235840;
+  --wa-green-active:   #1B4733;
+  --wa-green-light:    #EAF3ED;
+  --wa-green-mid:      #4A9172;
+  --wa-green-muted:    rgba(45, 106, 79, 0.12);
 
-  --lv-rose: #F43F5E;
-  --lv-cyan: #06B6D4;
-  --lv-sky: #0284C7;
+  /* ── Terracotta — Secondary Accent ─────── */
+  --wa-terra:          #C1694F;
+  --wa-terra-hover:    #A8543C;
+  --wa-terra-light:    #FAEDE9;
+  --wa-terra-muted:    rgba(193, 105, 79, 0.12);
 
-  /* --- Canvas & Surfaces (Modern Clean Crisp Glass Canvas) --- */
-  --lv-bg: #F8FAFC;
-  --lv-surface: #FFFFFF;
-  --lv-surface-subtle: #F1F5F9;
-  --lv-surface-glass: rgba(255, 255, 255, 0.85);
-  --lv-border: #E2E8F0;
-  --lv-border-hover: #CBD5E1;
-  --lv-border-glow: rgba(99, 102, 241, 0.28);
+  /* ── Ochre/Amber — Tertiary Accent ─────── */
+  --wa-ochre:          #C9922A;
+  --wa-ochre-hover:    #B07A1F;
+  --wa-ochre-light:    #FDF3E3;
+  --wa-ochre-muted:    rgba(201, 146, 42, 0.12);
 
-  /* --- Obsidian / Executive Surfaces --- */
-  --lv-obsidian: #0F172A;
-  --lv-obsidian-2: #1E293B;
-  --lv-obsidian-border: rgba(255, 255, 255, 0.12);
+  /* ── Warm Navy — Deep Accent ────────────── */
+  --wa-navy:           #1E3A5F;
+  --wa-navy-hover:     #162E4D;
+  --wa-navy-light:     #E8EEF5;
 
-  /* --- Typography Colors --- */
-  --lv-heading: #0F172A;
-  --lv-text: #334155;
-  --lv-text-muted: #64748B;
-  --lv-text-subtle: #94A3B8;
+  /* ── Semantic Colors ────────────────────── */
+  --wa-success:        #2D6A4F;
+  --wa-success-bg:     #EAF3ED;
+  --wa-warning:        #C9922A;
+  --wa-warning-bg:     #FDF3E3;
+  --wa-error:          #C1694F;
+  --wa-error-bg:       #FAEDE9;
+  --wa-info:           #1E3A5F;
+  --wa-info-bg:        #E8EEF5;
 
-  /* --- 21st.dev Bento Architecture Tokens --- */
-  --lv-bento-radius: 20px;
-  --lv-bento-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
-  --lv-bento-hover-shadow: 0 16px 36px -6px rgba(79, 70, 229, 0.14), 0 6px 12px -2px rgba(15, 23, 42, 0.06);
-  --lv-bento-bevel: inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  --lv-focus-glow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+  /* ── Shadows ────────────────────────────── */
+  --wa-shadow-xs:      0 1px 3px rgba(28, 26, 23, 0.05);
+  --wa-shadow-sm:      0 2px 8px rgba(28, 26, 23, 0.07);
+  --wa-shadow-md:      0 4px 16px rgba(28, 26, 23, 0.09);
+  --wa-shadow-lg:      0 8px 28px rgba(28, 26, 23, 0.11);
+  --wa-shadow-hover:   0 6px 20px rgba(28, 26, 23, 0.12);
 
-  /* --- Legacy Aliases (Seamlessly Redirected to Learnivia Tokens) --- */
-  --sh-green: var(--lv-primary);
-  --sh-green-hover: var(--lv-primary-hover);
-  --sh-green-light: var(--lv-primary-light);
-  --sh-green-mid: var(--lv-primary-mid);
-  --sh-green-muted: var(--lv-primary-muted);
+  /* ── Radius ─────────────────────────────── */
+  --wa-radius-sm:      6px;
+  --wa-radius-md:      10px;
+  --wa-radius-lg:      14px;
+  --wa-radius-xl:      18px;
+  --wa-radius-pill:    999px;
 
-  --sh-bg: var(--lv-bg);
-  --sh-surface: var(--lv-surface);
-  --sh-surface-2: var(--lv-surface-subtle);
-  --sh-border: var(--lv-border);
-  --sh-border-strong: var(--lv-border-hover);
+  /* ── Spacing Scale ──────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
 
-  --sh-navy: var(--lv-heading);
-  --sh-text: var(--lv-text);
-  --sh-text-muted: var(--lv-text-muted);
-  --sh-text-light: var(--lv-text-subtle);
+  /* ── Typography Scale ───────────────────── */
+  --text-xs:   0.6875rem;
+  --text-sm:   0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg:   1.0625rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
 
-  --sh-nav-bg: var(--lv-obsidian);
-  --sh-nav-text: #F8FAFC;
-  --sh-nav-muted: #94A3B8;
+  /* ── Layout ─────────────────────────────── */
+  --container-xl: 1180px;
+  --container-lg: 960px;
 
-  --sh-purple: var(--lv-violet);
-  --sh-blue: var(--lv-primary);
-  --sh-amber: var(--lv-amber);
-  --sh-teal: var(--lv-emerald);
-  --sh-indigo: var(--lv-primary-hover);
+  /* ── Focus ───────────────────────────────── */
+  --focus-ring: 0 0 0 3px rgba(45, 106, 79, 0.30);
 
-  --color-navy: var(--lv-heading);
-  --color-text: var(--lv-text);
-  --color-text-muted: var(--lv-text-muted);
-  --color-text-light: var(--lv-text-subtle);
-  --color-border: var(--lv-border);
-  --color-border-strong: var(--lv-border-hover);
-  --color-bg: var(--lv-bg);
-  --color-bg-card: var(--lv-surface);
-  --color-bg-alt: var(--lv-primary-light);
-  --color-primary: var(--lv-primary);
-  --color-primary-hover: var(--lv-primary-hover);
-  --color-sky: var(--lv-primary-light);
-  --color-teal: var(--lv-emerald);
-  --color-teal-dark: var(--lv-emerald-hover);
-  --color-teal-light: var(--lv-emerald-light);
-  --color-cream: var(--lv-bg);
-  --color-cream-dark: var(--lv-surface-subtle);
-  --color-gold: var(--lv-amber);
-  --color-gold-dark: var(--lv-amber-hover);
-  --color-success: var(--lv-emerald);
-  --color-success-bg: var(--lv-emerald-light);
-  --color-error: #EF4444;
-  --color-error-bg: #FEF2F2;
-  --color-warning: var(--lv-amber);
-  --color-warning-bg: var(--lv-amber-light);
-  --color-info: var(--lv-primary);
-  --color-info-bg: var(--lv-primary-light);
+  /* ── Legacy aliases — preserve existing code ── */
+  --sh-green:          var(--wa-green);
+  --sh-green-hover:    var(--wa-green-hover);
+  --sh-green-light:    var(--wa-green-light);
+  --sh-green-mid:      var(--wa-green-mid);
+  --sh-green-muted:    var(--wa-green-muted);
+  --sh-bg:             var(--wa-cream);
+  --sh-surface:        var(--wa-white);
+  --sh-surface-2:      var(--wa-cream-dark);
+  --sh-border:         var(--wa-border);
+  --sh-border-strong:  var(--wa-border-strong);
+  --sh-navy:           var(--wa-ink);
+  --sh-text:           var(--wa-text);
+  --sh-text-muted:     var(--wa-muted);
+  --sh-text-light:     var(--wa-subtle);
+  --sh-nav-bg:         var(--wa-white);
+  --sh-nav-text:       var(--wa-ink);
+  --sh-nav-muted:      var(--wa-muted);
+  --sh-purple:         var(--wa-terra);
+  --sh-blue:           var(--wa-navy);
+  --sh-amber:          var(--wa-ochre);
+  --sh-teal:           var(--wa-green);
+  --sh-indigo:         var(--wa-navy);
+
+  --lv-primary:        var(--wa-green);
+  --lv-primary-hover:  var(--wa-green-hover);
+  --lv-primary-light:  var(--wa-green-light);
+  --lv-primary-mid:    var(--wa-green-mid);
+  --lv-primary-muted:  var(--wa-green-muted);
+  --lv-violet:         var(--wa-terra);
+  --lv-violet-hover:   var(--wa-terra-hover);
+  --lv-violet-light:   var(--wa-terra-light);
+  --lv-emerald:        var(--wa-green);
+  --lv-emerald-hover:  var(--wa-green-hover);
+  --lv-emerald-light:  var(--wa-green-light);
+  --lv-emerald-muted:  var(--wa-green-muted);
+  --lv-amber:          var(--wa-ochre);
+  --lv-amber-hover:    var(--wa-ochre-hover);
+  --lv-amber-light:    var(--wa-ochre-light);
+  --lv-rose:           var(--wa-terra);
+  --lv-cyan:           var(--wa-green-mid);
+  --lv-sky:            var(--wa-navy-light);
+  --lv-bg:             var(--wa-cream);
+  --lv-surface:        var(--wa-white);
+  --lv-surface-subtle: var(--wa-cream-dark);
+  --lv-border:         var(--wa-border);
+  --lv-border-hover:   var(--wa-border-strong);
+  --lv-border-glow:    rgba(45, 106, 79, 0.20);
+  --lv-obsidian:       var(--wa-ink);
+  --lv-obsidian-2:     var(--wa-text);
+  --lv-obsidian-border: var(--wa-border);
+  --lv-heading:        var(--wa-ink);
+  --lv-text:           var(--wa-text);
+  --lv-text-muted:     var(--wa-muted);
+  --lv-text-subtle:    var(--wa-subtle);
+  --lv-bento-radius:   var(--wa-radius-lg);
+  --lv-bento-shadow:   var(--wa-shadow-sm);
+  --lv-bento-hover-shadow: var(--wa-shadow-hover);
+  --lv-bento-bevel:    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  --lv-focus-glow:     var(--focus-ring);
+
+  --color-navy:        var(--wa-ink);
+  --color-text:        var(--wa-text);
+  --color-text-muted:  var(--wa-muted);
+  --color-text-light:  var(--wa-subtle);
+  --color-border:      var(--wa-border);
+  --color-border-strong: var(--wa-border-strong);
+  --color-bg:          var(--wa-cream);
+  --color-bg-card:     var(--wa-white);
+  --color-bg-alt:      var(--wa-green-light);
+  --color-primary:     var(--wa-green);
+  --color-primary-hover: var(--wa-green-hover);
+  --color-sky:         var(--wa-navy-light);
+  --color-teal:        var(--wa-green);
+  --color-teal-dark:   var(--wa-green-hover);
+  --color-teal-light:  var(--wa-green-light);
+  --color-cream:       var(--wa-cream);
+  --color-cream-dark:  var(--wa-cream-dark);
+  --color-gold:        var(--wa-ochre);
+  --color-gold-dark:   var(--wa-ochre-hover);
+  --color-success:     var(--wa-success);
+  --color-success-bg:  var(--wa-success-bg);
+  --color-error:       #C1694F;
+  --color-error-bg:    #FAEDE9;
+  --color-warning:     var(--wa-warning);
+  --color-warning-bg:  var(--wa-warning-bg);
+  --color-info:        var(--wa-info);
+  --color-info-bg:     var(--wa-info-bg);
 }
 
 /* =========================================
@@ -135,22 +212,23 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: var(--font-body);
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
   font-size: var(--text-base);
-  line-height: 1.5;
-  color: var(--sh-text);
-  background: var(--sh-bg);
+  line-height: 1.6;
+  color: var(--wa-text);
+  background: var(--wa-cream);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 main { flex: 1; }
 
+/* Serif headings — warm editorial feel */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-body);
-  font-weight: 700;
+  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-weight: 600;
   line-height: 1.2;
-  color: var(--sh-navy);
+  color: var(--wa-ink);
 }
 
 p { line-height: 1.6; }

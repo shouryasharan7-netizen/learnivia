@@ -68,7 +68,7 @@ export async function POST(request: Request) {
     .toUpperCase();
 
   const userRole = user.isAdmin ? "COMMUNITY LEAD" : user.isTutor ? "TUTOR" : "STUDENT";
-  const colors = ["#0E8345", "#7C3AED", "#2563EB", "#D97706", "#DC2626", "#0D9488"];
+  const colors = ["#0E8345", "#C9922A", "#1E3A5F", "#D97706", "#DC2626", "#0D9488"];
   const color = colors[userName.charCodeAt(0) % colors.length];
 
   const newMsg = await addMessage({

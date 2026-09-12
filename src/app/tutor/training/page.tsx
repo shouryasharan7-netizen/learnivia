@@ -44,7 +44,7 @@ const MODULES = [
     id: 2,
     title: "Supporting Students Who Learn Differently",
     icon: "🧠",
-    color: "#7C3AED",
+    color: "#C9922A",
     bg: "#F5F3FF",
     estimatedMinutes: 12,
     content: [

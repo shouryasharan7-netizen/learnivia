@@ -25,7 +25,7 @@ function getInitials(name: string) {
 }
 
 function getAvatarColor(name: string) {
-  const colors = ["#4F46E5", "#7C3AED", "#2563EB", "#D97706", "#059669", "#0D9488"];
+  const colors = ["#2D6A4F", "#C9922A", "#1E3A5F", "#C1694F", "#4A9172", "#8B5E10"];
   const idx = name.charCodeAt(0) % colors.length;
   return colors[idx];
 }
@@ -270,14 +270,14 @@ export default async function SessionsPage({ searchParams }: Props) {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.5rem",
-                  background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)",
+                  background: "#2D6A4F",
                   color: "#FFFFFF",
                   padding: "0.65rem 1.25rem",
                   borderRadius: "12px",
                   fontSize: "0.875rem",
                   fontWeight: 700,
                   textDecoration: "none",
-                  boxShadow: "0 4px 12px rgba(79, 70, 229, 0.25)",
+                  boxShadow: "0 3px 10px rgba(45, 106, 79, 0.28)",
                 }}
               >
                 <CalendarPlus size={16} />
@@ -290,9 +290,9 @@ export default async function SessionsPage({ searchParams }: Props) {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.5rem",
-                  background: "#FFFFFF",
-                  border: "1.5px solid #4F46E5",
-                  color: "#4F46E5",
+                  background: "#EAF3ED",
+                  border: "1.5px solid #2D6A4F",
+                  color: "#235840",
                   padding: "0.65rem 1.25rem",
                   borderRadius: "12px",
                   fontSize: "0.875rem",
@@ -310,9 +310,9 @@ export default async function SessionsPage({ searchParams }: Props) {
         {/* Dynamic Student Matching Notification Banner */}
         {isAutoMatched && (
           <div style={{
-            background: "#EEF2FF",
-            border: "1px solid #C7D2FE",
-            borderRadius: 14,
+            background: "#EAF3ED",
+            border: "1px solid #B5D9C5",
+            borderRadius: 12,
             padding: "0.85rem 1.25rem",
             marginBottom: "1.5rem",
             display: "flex",
@@ -321,8 +321,8 @@ export default async function SessionsPage({ searchParams }: Props) {
             flexWrap: "wrap",
             gap: "0.75rem",
           }}>
-            <div style={{ fontSize: "0.875rem", color: "#312E81", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Sparkles size={16} color="#4F46E5" />
+            <div style={{ fontSize: "0.875rem", color: "#235840", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <Sparkles size={16} color="#2D6A4F" />
               <span>
                 Matching sessions tailored for your enrolled profile:{" "}
                 <strong>{activeGrade || "Your Grade"}</strong>
@@ -332,7 +332,7 @@ export default async function SessionsPage({ searchParams }: Props) {
             </div>
             <Link
               href={`/sessions?allGrades=true${activeSubject !== "All" ? `&subject=${encodeURIComponent(activeSubject)}` : ""}`}
-              style={{ fontSize: "0.8125rem", color: "#4F46E5", fontWeight: 700, textDecoration: "underline" }}
+              style={{ fontSize: "0.8125rem", color: "#2D6A4F", fontWeight: 700, textDecoration: "underline" }}
             >
               Show All Grades &amp; Curricula
             </Link>
@@ -353,23 +353,23 @@ export default async function SessionsPage({ searchParams }: Props) {
         {/* Content Section: Workshops & Tutors */}
         {totalMatches === 0 ? (
           <div className={styles.sessionsGrid}>
-            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3.5rem 1.5rem", background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
-              <p style={{ fontSize: "1.1rem", fontWeight: 700, color: "#0F172A" }}>
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3.5rem 1.5rem", background: "#FFFFFF", borderRadius: 14, border: "1px solid #DDD8D0", boxShadow: "0 1px 4px rgba(28,26,23,0.05)" }}>
+              <p style={{ fontSize: "1.1rem", fontWeight: 600, color: "#1C1A17", fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)" }}>
                 No sessions or tutors currently matched for {activeSubject !== "All" ? activeSubject : "your search"} ({activeCurriculum !== "All" ? `${activeCurriculum} Curriculum` : "All Curricula"})
               </p>
-              <p style={{ color: "#64748B", marginTop: "0.5rem", fontSize: "0.875rem" }}>
+              <p style={{ color: "#7A7169", marginTop: "0.5rem", fontSize: "0.875rem" }}>
                 Try switching the curriculum filter or clearing your active search criteria.
               </p>
               <div style={{ marginTop: "1.25rem", display: "flex", gap: "0.75rem", justifyContent: "center" }}>
                 <Link
                   href="/sessions?allGrades=true"
-                  style={{ background: "#4F46E5", color: "#FFF", padding: "0.6rem 1.35rem", borderRadius: 12, fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}
+                  style={{ background: "#2D6A4F", color: "#FFF", padding: "0.6rem 1.35rem", borderRadius: 10, fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}
                 >
                   View All Sessions
                 </Link>
                 <Link
                   href="/find"
-                  style={{ background: "#F1F5F9", color: "#334155", padding: "0.6rem 1.35rem", borderRadius: 12, fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}
+                  style={{ background: "#FAF8F5", color: "#3D3831", border: "1.5px solid #DDD8D0", padding: "0.6rem 1.35rem", borderRadius: 10, fontWeight: 600, fontSize: "0.875rem", textDecoration: "none" }}
                 >
                   Browse All Mentors
                 </Link>
@@ -382,8 +382,8 @@ export default async function SessionsPage({ searchParams }: Props) {
             {showWorkshops && workshops.length > 0 && (
               <section aria-label="Interactive Group Workshops">
                 <div style={{ marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <Video size={18} color="#4F46E5" />
-                  <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "#0F172A", margin: 0 }}>
+                  <Video size={18} color="#2D6A4F" />
+                  <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "#1C1A17", margin: 0, fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)" }}>
                     Interactive Group Workshops ({workshops.length})
                   </h2>
                 </div>
@@ -397,16 +397,16 @@ export default async function SessionsPage({ searchParams }: Props) {
                       <div key={w.id} className={styles.sessionCard}>
                         <Link href={`/learn`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
                           <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
-                            <span style={{ fontSize: "0.75rem", fontWeight: 700, background: "#EEF2FF", color: "#4F46E5", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
+                            <span style={{ fontSize: "0.75rem", fontWeight: 700, background: "#EAF3ED", color: "#235840", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
                               {w.subject}
                             </span>
                             {w.grade && (
-                              <span style={{ fontSize: "0.75rem", background: "#F1F5F9", color: "#475569", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
+                              <span style={{ fontSize: "0.75rem", background: "#F3EFE8", color: "#3D3831", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
                                 {w.grade}
                               </span>
                             )}
                             {w.curriculum && (
-                              <span style={{ fontSize: "0.75rem", background: "#FEF3C7", color: "#92400E", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
+                              <span style={{ fontSize: "0.75rem", background: "#FDF3E3", color: "#8B5E10", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
                                 {w.curriculum}
                               </span>
                             )}
@@ -446,7 +446,7 @@ export default async function SessionsPage({ searchParams }: Props) {
 
                           if ((isEnrolled || isHostTutor || isAdmin) && joinUrl && isWithinJoinWindow) {
                             return (
-                              <div style={{ marginTop: "0.75rem", borderTop: "1px solid #F1F5F9", paddingTop: "0.75rem" }}>
+                              <div style={{ marginTop: "0.75rem", borderTop: "1px solid #EDE9E1", paddingTop: "0.75rem" }}>
                                 <a
                                   href={joinUrl}
                                   target="_blank"
@@ -457,7 +457,7 @@ export default async function SessionsPage({ searchParams }: Props) {
                                     justifyContent: "center",
                                     width: "100%",
                                     padding: "0.5rem 1rem",
-                                    background: "#4F46E5",
+                                    background: "#2D6A4F",
                                     color: "#FFFFFF",
                                     borderRadius: 8,
                                     fontSize: "0.85rem",
@@ -484,12 +484,12 @@ export default async function SessionsPage({ searchParams }: Props) {
               <section aria-label="1-on-1 Verified Peer Tutors">
                 <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <Users size={18} color="#4F46E5" />
-                    <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "#0F172A", margin: 0 }}>
+                    <Users size={18} color="#2D6A4F" />
+                    <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "#1C1A17", margin: 0, fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)" }}>
                       1-on-1 Tutors Available ({tutors.length})
                     </h2>
                   </div>
-                  <span style={{ fontSize: "0.8125rem", color: "#64748B" }}>
+                  <span style={{ fontSize: "0.8125rem", color: "#7A7169" }}>
                     Book an individual session matching your schedule directly
                   </span>
                 </div>
@@ -506,16 +506,16 @@ export default async function SessionsPage({ searchParams }: Props) {
                     return (
                       <Link key={t.id} href={`/tutor/${t.id}`} className={styles.sessionCard}>
                         <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
-                          <span style={{ fontSize: "0.75rem", fontWeight: 700, background: "#EEF2FF", color: "#4F46E5", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
+                          <span style={{ fontSize: "0.75rem", fontWeight: 700, background: "#EAF3ED", color: "#235840", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
                             {subjectName}
                           </span>
                           {tutorCurriculum && (
-                            <span style={{ fontSize: "0.75rem", fontWeight: 600, background: "#FEF3C7", color: "#92400E", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
+                            <span style={{ fontSize: "0.75rem", fontWeight: 600, background: "#FDF3E3", color: "#8B5E10", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
                               {tutorCurriculum}
                             </span>
                           )}
                           {t.gradeLevels[0] && (
-                            <span style={{ fontSize: "0.75rem", background: "#F1F5F9", color: "#475569", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
+                            <span style={{ fontSize: "0.75rem", background: "#F3EFE8", color: "#3D3831", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
                               {t.gradeLevels[0].name}
                             </span>
                           )}
@@ -542,7 +542,7 @@ export default async function SessionsPage({ searchParams }: Props) {
                             <span>{name}</span>
                           </div>
                           <div className={styles.cardAttendees}>
-                            <span style={{ fontSize: "0.84375rem", fontWeight: 700, color: "#4F46E5", display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>
+                            <span style={{ fontSize: "0.84375rem", fontWeight: 700, color: "#2D6A4F", display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>
                               Book 1-on-1 <ArrowRight size={13} />
                             </span>
                           </div>
