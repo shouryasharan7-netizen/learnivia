@@ -198,8 +198,18 @@ export async function deleteMessage(messageId: string): Promise<boolean> {
   }
 }
 
+/**
+ * P0-SAFEGUARDING: Content safety check for a K-10 children's platform.
+ * Detects: phone numbers, email addresses, social media handles, external URLs,
+ * explicit off-platform contact solicitation, and prohibited language.
+ *
+ * NOTE: This is a first-pass filter. A human moderator queue (P2) should
+ * review all flagged content before permanent deletion.
+ */
 export function checkContentSafety(content: string): { safe: boolean; reason?: string } {
-  // Check for common phone number patterns
+  const lower = content.toLowerCase();
+
+  // ── 1. Phone number patterns ─────────────────────────────────────────────
   const phonePattern = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/;
   if (phonePattern.test(content)) {
     return {
@@ -208,24 +218,66 @@ export function checkContentSafety(content: string): { safe: boolean; reason?: s
     };
   }
 
-  // Check for toxic or profanity words
-  const prohibited = [
-    "whatsapp me",
-    "dm me on ig",
-    "add my snap",
-    "send nudes",
-    "fuck",
-    "shit",
-    "bitch",
-    "asshole",
-    "dick",
-    "pussy",
-    "retard",
-    "faggot",
-    "nigger",
-    "nigga",
+  // ── 2. Email addresses ───────────────────────────────────────────────────
+  const emailPattern = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/;
+  if (emailPattern.test(content)) {
+    return {
+      safe: false,
+      reason: "For member safeguarding, sharing email addresses is not permitted in community channels. Use the Learnivia booking system to connect with tutors.",
+    };
+  }
+
+  // ── 3. Social media handles / usernames ──────────────────────────────────
+  // Matches @username patterns (Instagram, Snapchat, TikTok, Discord, etc.)
+  const socialHandlePattern = /@[a-zA-Z0-9._]{3,}/;
+  if (socialHandlePattern.test(content)) {
+    return {
+      safe: false,
+      reason: "For member safeguarding, sharing social media handles is not permitted. All tutoring happens through the Learnivia platform.",
+    };
+  }
+
+  // ── 4. Off-platform contact solicitation phrases ─────────────────────────
+  const contactPhrases = [
+    "whatsapp me", "whatsapp us", "text me", "call me",
+    "dm me on", "message me on", "add me on", "add my",
+    "find me on", "follow me on", "my snap", "my insta",
+    "on telegram", "telegram me", "kik me", "discord server",
+    "discord.gg", "t.me/", "ig:", "snap:", "fb:", "twitter.com/",
+    "instagram.com/", "tiktok.com/",
   ];
-  const lower = content.toLowerCase();
+  for (const phrase of contactPhrases) {
+    if (lower.includes(phrase)) {
+      return {
+        safe: false,
+        reason: "For member safeguarding, off-platform contact requests are not permitted. All communication happens through Learnivia.",
+      };
+    }
+  }
+
+  // ── 5. External non-educational URLs ────────────────────────────────────
+  // Allow only known educational / Learnivia domains, block generic external links
+  const urlPattern = /https?:\/\/(?!learnivia|zoom\.us|meet\.google\.com)[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}/i;
+  if (urlPattern.test(content)) {
+    return {
+      safe: false,
+      reason: "External links are not permitted in community channels to protect member safety. Share resources by describing them in text.",
+    };
+  }
+
+  // ── 6. Prohibited language ───────────────────────────────────────────────
+  const prohibited = [
+    "send nudes", "nudes", "naked",
+    "fuck", "fucking", "fucked", "fucker",
+    "shit", "bullshit",
+    "bitch", "asshole", "ass hole",
+    "dick", "pussy", "cock",
+    "retard", "retarded",
+    "faggot", "fag",
+    "nigger", "nigga",
+    "kill yourself", "kys",
+    "go die",
+  ];
   for (const word of prohibited) {
     if (lower.includes(word)) {
       return {
@@ -237,4 +289,5 @@ export function checkContentSafety(content: string): { safe: boolean; reason?: s
 
   return { safe: true };
 }
+
 

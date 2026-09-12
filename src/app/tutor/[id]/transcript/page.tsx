@@ -1,9 +1,10 @@
 import styles from "./page.module.css";
 import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import PrintButton from "./PrintButton";
+import { getCurrentUser } from "@/lib/auth-user";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -30,22 +31,61 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function TutorTranscriptPage({ params }: Props) {
   const { id } = await params;
 
+  // P0-2: Transcript requires authentication.
+  // Viewers must be: the tutor themselves, or an admin.
+  // Future: allow public share via signed token.
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    redirect(`/signin?callbackUrl=/tutor/${id}/transcript`);
+  }
+
   const tutor = await prisma.tutorProfile.findUnique({
     where: { id },
     include: {
-      user: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          grade: true,
+          curriculum: true,
+          // Explicitly exclude: email, password, age, dateOfBirth, failedLoginCount
+        },
+      },
       subjects: true,
       gradeLevels: true,
       tutorBookings: {
         where: { status: "COMPLETED" },
-        include: { student: true },
+        select: {
+          id: true,
+          startTime: true,
+          endTime: true,
+          subject: true,
+          topic: true,
+          studentId: true,
+          // Explicitly exclude: helpNeeded, zoomLink, recordingUrl, checkUpNote
+        },
         orderBy: { startTime: "desc" },
       },
       workshops: {
         where: { status: "COMPLETED" },
+        select: {
+          id: true,
+          startTime: true,
+          endTime: true,
+          subject: true,
+          title: true,
+        },
       },
       reviews: {
-        include: { student: true },
+        include: {
+          student: {
+            select: {
+              id: true,
+              name: true,
+              // Explicitly exclude email and other PII
+            },
+          },
+        },
         orderBy: { createdAt: "desc" },
       },
     },
@@ -53,6 +93,15 @@ export default async function TutorTranscriptPage({ params }: Props) {
 
   if (!tutor || tutor.status !== "APPROVED") {
     notFound();
+  }
+
+  // Authorization: only the tutor themselves or an admin can view
+  const isOwnTranscript = tutor.user.id === currentUser.id;
+  const isAdmin = currentUser.isAdmin;
+
+  if (!isOwnTranscript && !isAdmin) {
+    // Instead of 404 (which reveals existence), redirect to the public profile
+    redirect(`/tutor/${id}`);
   }
 
   const completedSessions = tutor.tutorBookings;
@@ -234,14 +283,22 @@ export default async function TutorTranscriptPage({ params }: Props) {
             <div className={styles.section}>
               <h2 className={styles.sectionTitle}>Learner Feedback &amp; Testimonials</h2>
               <div className={styles.reviewsGrid}>
-                {tutor.reviews.slice(0, 4).map((r) => (
-                  <div key={r.id} className={styles.reviewQuote}>
-                    <p className={styles.quoteText}>&quot;{r.comment || "Great session, really helpful!"}&quot;</p>
-                    <div className={styles.quoteAuthor}>
-                      — {r.student.name || "Verified Student"} • {"★".repeat(r.rating)}
+                {tutor.reviews.slice(0, 4).map((r) => {
+                  // Privacy: display first name + last initial only for student reviewers
+                  const rawName = r.student.name || "Verified Student";
+                  const parts = rawName.trim().split(/\s+/);
+                  const displayName = parts.length > 1
+                    ? `${parts[0]} ${parts[parts.length - 1][0]}.`
+                    : parts[0];
+                  return (
+                    <div key={r.id} className={styles.reviewQuote}>
+                      <p className={styles.quoteText}>&quot;{r.comment || "Great session, really helpful!"}&quot;</p>
+                      <div className={styles.quoteAuthor}>
+                        — {displayName} &bull; {"★".repeat(r.rating)}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -250,10 +307,10 @@ export default async function TutorTranscriptPage({ params }: Props) {
           <div className={styles.certFooter}>
             <div className={styles.disclaimer}>
               <p>
-                <strong>Verification Statement:</strong> This transcript is an official digital record issued by Learnivia. Hours recorded reflect active 1-on-1 tutoring sessions and small group workshops verified through attendance logs and session completion.
+                <strong>Verification Statement:</strong> This transcript is a platform-generated service record issued by Learnivia reflecting sessions and workshops marked as completed within the Learnivia platform. Hours are computed from session start and end times recorded at time of booking.
               </p>
               <p style={{ marginTop: "0.5rem" }}>
-                Official verification URL: <code>https://learnivia-green.vercel.app/tutor/{tutor.id}/transcript</code>
+                Record ID: <code>{certId}</code> — Issued {issueDate}
               </p>
             </div>
 

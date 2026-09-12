@@ -1,0 +1,43 @@
+# Learnivia robots.txt
+# https://learnivia-green.vercel.app
+
+User-agent: *
+
+# Allow public marketing and discovery pages
+Allow: /
+Allow: /about
+Allow: /how-it-works
+Allow: /find
+Allow: /sessions
+Allow: /tutor/
+Allow: /learn/
+Allow: /stories
+Allow: /resources
+Allow: /resources/study-guides
+Allow: /resources/tools
+Allow: /parents
+Allow: /educators
+Allow: /safety
+Allow: /faq
+Allow: /support
+Allow: /blog
+Allow: /terms
+Allow: /privacy
+Allow: /cookies
+
+# Block all authenticated/private areas
+Disallow: /dashboard
+Disallow: /admin/
+Disallow: /tutor/*/transcript
+Disallow: /sessions/*
+Disallow: /onboarding
+Disallow: /apply
+Disallow: /homework-help
+Disallow: /community
+Disallow: /leaderboard
+Disallow: /signin
+Disallow: /signup
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://learnivia-green.vercel.app/sitemap.xml

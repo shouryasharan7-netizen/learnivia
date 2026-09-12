@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
@@ -11,14 +11,12 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminSubjectsPage() {
-  const session = await auth();
-  const userEmail = session?.user?.email?.trim().toLowerCase();
-  const isAdmin =
-    session?.user?.role === "ADMIN" ||
-    userEmail === "shouryasharan7@gmail.com" ||
-    userEmail === "ahmedashfaqfarooqui@gmail.com";
-
-  if (!isAdmin) redirect("/dashboard");
+  // P1-8: Use requireAdmin() — not inline email check — for consistent authorization
+  try {
+    await requireAdmin();
+  } catch {
+    redirect("/dashboard");
+  }
 
   const [subjects, gradeLevels] = await Promise.all([
     prisma.subject.findMany({ orderBy: { name: "asc" } }),

@@ -114,20 +114,25 @@ export async function completeSession(formData: FormData) {
   const durationMs = booking.endTime.getTime() - booking.startTime.getTime();
   const durationHours = Math.max(0.5, Math.round((durationMs / (1000 * 60 * 60)) * 10) / 10);
 
-  // Atomically transition from CONFIRMED -> COMPLETED to prevent concurrent double-credit
-  const updateResult = await prisma.booking.updateMany({
-    where: { id: bookingId, status: "CONFIRMED" },
-    data: { status: "COMPLETED" },
-  });
-
-  if (updateResult.count > 0) {
-    await prisma.tutorProfile.update({
-      where: { id: booking.tutorId },
-      data: {
-        volunteerHours: { increment: durationHours },
-      },
+  // P1-9: Wrap the status transition AND volunteer hours increment in a single
+  // $transaction so a crash between the two writes cannot leave the DB in an
+  // inconsistent state (booking COMPLETED but hours not incremented, or vice versa).
+  await prisma.$transaction(async (tx) => {
+    // Atomically transition CONFIRMED → COMPLETED; skip if already transitioned
+    const updateResult = await tx.booking.updateMany({
+      where: { id: bookingId, status: "CONFIRMED" },
+      data: { status: "COMPLETED" },
     });
-  }
+
+    if (updateResult.count > 0) {
+      await tx.tutorProfile.update({
+        where: { id: booking.tutorId },
+        data: {
+          volunteerHours: { increment: durationHours },
+        },
+      });
+    }
+  });
 
   revalidatePath("/tutor");
   revalidatePath("/dashboard");

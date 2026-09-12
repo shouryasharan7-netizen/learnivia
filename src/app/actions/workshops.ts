@@ -4,6 +4,7 @@ import { requireAuth, requireTutor } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { createZoomMeeting } from "@/lib/zoom";
+import { validateMeetingUrl } from "@/lib/meetingUrl";
 
 export async function createWorkshop(formData: FormData) {
   const { tutor } = await requireTutor();
@@ -60,6 +61,11 @@ export async function createWorkshop(formData: FormData) {
 
   let meetingUrl = "";
   if (customMeetingUrl) {
+    // P1-10: Validate meeting URL is from an approved domain before storing
+    const urlCheck = validateMeetingUrl(customMeetingUrl);
+    if (!urlCheck.valid) {
+      throw new Error(urlCheck.reason ?? "Invalid meeting URL.");
+    }
     meetingUrl = JSON.stringify({
       joinUrl: customMeetingUrl,
       startUrl: customMeetingUrl,
@@ -78,15 +84,11 @@ export async function createWorkshop(formData: FormData) {
         isCustom: false,
       });
     } catch (err) {
-      console.log("Zoom API not configured, generating verified room link:", err);
-      const meetingId = Math.floor(1000000000 + Math.random() * 9000000000);
-      const meetingPwd = Math.random().toString(36).substring(2, 8);
-      const autoZoomUrl = `https://zoom.us/j/${meetingId}?pwd=${meetingPwd}`;
-      meetingUrl = JSON.stringify({
-        joinUrl: autoZoomUrl,
-        startUrl: autoZoomUrl,
-        isCustom: false,
-      });
+      console.error("Zoom API unavailable during workshop creation:", err);
+      // Do NOT generate a fake Zoom URL — a fabricated zoom.us/j/RANDOMID
+      // would give students a non-functional link.
+      // Leave meetingUrl empty; admin can add the link after Zoom is configured.
+      meetingUrl = "";
     }
   }
 

@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/lib/auth-user";
 import { getMessages } from "@/lib/community-store";
 import CommunityClient from "./CommunityClient";
 
@@ -15,17 +15,19 @@ type Props = {
 };
 
 export default async function CommunityPage({ searchParams }: Props) {
-  const session = await auth();
+  // P0-11: Use getCurrentUser() which resolves isAdmin from the database
+  // and ADMIN_EMAILS env var — never from hardcoded email strings in source.
+  const user = await getCurrentUser();
   const { channel } = await searchParams;
   const initialMessages = await getMessages(channel);
 
-  const currentUser = session?.user
+  const currentUser = user
     ? {
-        id: session.user.id || "",
-        name: session.user.name,
-        email: session.user.email,
-        role: (session.user.role as "STUDENT" | "TUTOR" | "COMMUNITY LEAD") || "STUDENT",
-        isAdmin: (session.user as any).role === "ADMIN" || session.user.email === "shouryasharan7@gmail.com" || session.user.email === "ahmedashfaqfarooqui@gmail.com",
+        id: user.id,
+        name: user.name ?? undefined,
+        email: user.email ?? undefined,
+        role: (user.isTutor ? "TUTOR" : user.role === "STUDENT" ? "STUDENT" : "STUDENT") as "STUDENT" | "TUTOR" | "COMMUNITY LEAD",
+        isAdmin: user.isAdmin,
       }
     : null;
 
