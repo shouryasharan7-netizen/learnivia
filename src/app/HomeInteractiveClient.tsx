@@ -141,13 +141,6 @@ export default function HomeInteractiveClient({
 
           {/* Left — headline + CTA */}
           <div className={styles.heroLeftCol}>
-            <div className={styles.heroBadge}>
-              <span className={styles.heroBadgeDot} />
-              {completedCount > 0
-                ? `${completedCount.toLocaleString()} sessions completed · Free forever`
-                : "Verified peer tutoring · Free forever"}
-            </div>
-
             <h1 className={styles.heroTitle}>
               Free tutoring,<br />
               <span className={styles.heroTitleAccent}>one Zoom call away.</span>

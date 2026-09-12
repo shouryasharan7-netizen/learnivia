@@ -13,16 +13,20 @@ export function AuthShell({ children }: Props) {
   const { data: session } = useSession();
 
   if (!session) {
-    // Pre-login: no sidebar, full width layout with footer
+    // Pre-login: full-width layout with revealing footer
+    // .pageContent has position:relative + z-index:1 so footer behind
+    // can "reveal" as content scrolls away (sticky footer reveal pattern)
     return (
-      <>
-        {children}
+      <div className={styles.pageWrapper}>
+        <div className={styles.pageContent}>
+          {children}
+        </div>
         <Footer />
-      </>
+      </div>
     );
   }
 
-  // Post-login: sidebar + content, no overlapping marketing footer
+  // Post-login: sidebar + content, no footer
   return (
     <div className={styles.shell}>
       <SidebarNav />

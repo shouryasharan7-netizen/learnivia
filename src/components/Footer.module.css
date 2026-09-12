@@ -1,14 +1,29 @@
 /* ==========================================================================
-   LEARNIVIA FOOTER — WARM ACADEMIC
-   Warm dark ink background, not cold dark navy/slate
+   LEARNIVIA FOOTER — WARM INK · REVEAL EFFECT
+   Footer sticks to bottom; page content scrolls over it revealing the footer
    ========================================================================== */
 
-.footer {
+/*
+  REVEAL PATTERN:
+  - .footerReveal is position: sticky bottom-0, z-0 (behind content)
+  - The layout wrapper (body/main) has padding-bottom equal to footer height
+  - As user scrolls down, the last content scrolls away revealing the footer
+  - The footer has position: sticky + bottom: 0, and sits BELOW main content in z-order
+  - This creates the "slide-out" reveal effect without JS
+*/
+
+.footerReveal {
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
+  width: 100%;
+}
+
+.footerInner {
   background: #1C1A17;
   color: #A89F94;
   padding: 3.5rem 0 2rem;
-  margin-top: auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .container {
@@ -19,7 +34,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 2.5rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -33,69 +48,74 @@
 }
 
 .logoLink {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: inline-block;
   text-decoration: none;
   width: fit-content;
+  opacity: 0.95;
+  transition: opacity 140ms ease;
 }
 
-.logoText {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #FFFFFF;
-  letter-spacing: -0.01em;
+.logoLink:hover {
+  opacity: 1;
 }
 
 .tagline {
   font-size: 0.875rem;
   color: #7A7169;
-  line-height: 1.6;
-  max-width: 260px;
+  line-height: 1.65;
+  max-width: 280px;
+  margin: 0;
 }
 
-.greenPill {
+/* Mission pill */
+.missionPill {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  background: rgba(45, 106, 79, 0.2);
-  border: 1px solid rgba(45, 106, 79, 0.35);
+  gap: 0.5rem;
+  background: rgba(45, 106, 79, 0.18);
+  border: 1px solid rgba(45, 106, 79, 0.32);
   color: #4A9172;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  padding: 0.25rem 0.65rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   width: fit-content;
+  letter-spacing: 0.02em;
+}
+
+.missionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2D6A4F;
+  flex-shrink: 0;
 }
 
 .socialRow {
   display: flex;
-  gap: 0.65rem;
+  gap: 0.6rem;
   align-items: center;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 .socialLink {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: #7A7169;
   text-decoration: none;
-  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
 }
 
 .socialLink:hover {
-  background: rgba(45, 106, 79, 0.2);
+  background: rgba(45, 106, 79, 0.18);
   color: #4A9172;
-  border-color: rgba(45, 106, 79, 0.35);
+  border-color: rgba(45, 106, 79, 0.32);
 }
 
 /* Link columns */
@@ -109,13 +129,15 @@
   font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #FAF8F5;
-  opacity: 0.7;
+  letter-spacing: 0.09em;
+  color: rgba(250, 248, 245, 0.55);
+  margin: 0;
 }
 
 .linkList {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -126,6 +148,7 @@
   color: #7A7169;
   text-decoration: none;
   transition: color 120ms ease;
+  line-height: 1.5;
 }
 
 .footerLink:hover {
@@ -145,6 +168,7 @@
 .copy {
   font-size: 0.8125rem;
   color: #5A524C;
+  margin: 0;
 }
 
 .disclaimer {
@@ -152,18 +176,20 @@
   color: #5A524C;
   text-align: right;
   flex: 1;
+  margin: 0;
 }
 
-@media (max-width: 900px) {
-  .grid { grid-template-columns: 1fr 1fr; gap: 1.75rem; }
+/* Responsive */
+@media (max-width: 960px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .brand { grid-column: 1 / -1; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
+  .footerInner { padding: 2.5rem 0 1.5rem; }
+  .grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .brand { grid-column: auto; }
   .bottom { flex-direction: column; align-items: flex-start; }
   .disclaimer { text-align: left; }
-}
-
-@media (max-width: 480px) {
-  .grid { grid-template-columns: 1fr; }
+  .container { padding-inline: 1.25rem; }
 }

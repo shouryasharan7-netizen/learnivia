@@ -232,6 +232,10 @@
   transition: all 150ms ease;
   font-family: inherit;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: center;
 }
 
 .roleBtn:hover {

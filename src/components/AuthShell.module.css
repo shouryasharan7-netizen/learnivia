@@ -1,7 +1,29 @@
+/* ==========================================================================
+   AUTH SHELL — LAYOUT WRAPPER
+   Handles pre-login (footer reveal) and post-login (sidebar) layouts
+   ========================================================================== */
+
+/* Pre-login: sticky footer reveal pattern */
+.pageWrapper {
+  /* This is the scroll container */
+  position: relative;
+  min-height: 100vh;
+}
+
+.pageContent {
+  /* Sits ABOVE the sticky footer (z-index stacking) */
+  position: relative;
+  z-index: 1;
+  background: #FAF8F5;
+  /* Minimum height so footer is always hidden initially */
+  min-height: 100vh;
+}
+
+/* Post-login: sidebar + content */
 .shell {
   display: flex;
   min-height: calc(100vh - 56px);
-  background: #F8FAFC;
+  background: #FAF8F5;
   width: 100%;
 }
 

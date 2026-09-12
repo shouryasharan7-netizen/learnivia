@@ -5,6 +5,7 @@ import { loginWithEmail, loginWithGoogle } from "./actions";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import { GraduationCap, Leaf } from "lucide-react";
 
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
@@ -137,14 +138,14 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                 className={`${styles.roleBtn} ${selectedRole === "STUDENT" ? styles.roleBtnActive : ""}`}
                 onClick={() => setSelectedRole("STUDENT")}
               >
-                🎓 I&apos;m a Student
+                <GraduationCap size={15} /> I&apos;m a Student
               </button>
               <button
                 type="button"
                 className={`${styles.roleBtn} ${selectedRole === "TUTOR" ? styles.roleBtnActive : ""}`}
                 onClick={() => setSelectedRole("TUTOR")}
               >
-                🌱 I&apos;m a Tutor
+                <Leaf size={15} /> I&apos;m a Tutor
               </button>
             </div>
           )}

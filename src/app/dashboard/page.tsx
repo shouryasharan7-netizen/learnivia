@@ -260,98 +260,58 @@ export default async function StudentDashboard() {
           </div>
         )}
 
-        {/* 1. Bento Deck 1: Hero Command Deck + Streak Tile + Scholar Mastery Tile */}
-        <section className={styles.bentoHeroDeck} aria-label="Scholar Command Hub">
-          {/* Bento Tile A: Hero Command Card */}
+        {/* 1. Welcome Hub + Scholar Stats */}
+        <section className={styles.bentoHeroDeck} aria-label="Dashboard Welcome">
+          {/* Welcome Card */}
           <div className={styles.heroCommandCard}>
             <div>
-              <div className={styles.heroStatusBadge}>
-                <span className={styles.heroPulseDot} />
-                <span>COMMUNITY • VERIFIED PEER VOLUNTEER TUTORS</span>
-              </div>
               <h1 className={styles.heroGreetingTitle}>
-                {timeGreeting}, {firstName} 👋
+                {timeGreeting}, {firstName}
               </h1>
               <p className={styles.heroGreetingDesc}>
-                Ready to elevate your learning? Connect with approved peer tutors for step-by-step K–10 homework help, exam prep, and live focus sessions.
+                Connect with a verified peer tutor for private 1-on-1 Zoom sessions — K–10, every subject, completely free.
               </p>
             </div>
 
             <div className={styles.heroLaunchCluster}>
               <Link href="/sessions" className={styles.heroLaunchBtnPrimary} prefetch={false}>
-                <Zap size={16} fill="currentColor" /> Explore Live Sessions →
-              </Link>
-              <Link href="/homework-help" className={styles.heroLaunchBtnSecondary} prefetch={false}>
-                <MessageSquare size={15} /> Ask a Homework Question
+                <Video size={16} /> Find a Live Session
               </Link>
               <Link href="/find" className={styles.heroLaunchBtnSecondary} prefetch={false}>
-                <Compass size={15} /> Browse 1-on-1 Tutors
+                <Users size={15} /> Browse Tutors
               </Link>
             </div>
           </div>
 
-          {/* Bento Tile B: Daily Study Goal Card */}
+          {/* Stats tile: sessions + scholar level */}
           <div className={styles.bentoStreakCard}>
             <div className={styles.bentoTileHeader}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <Flame size={20} className={styles.streakFlameIcon} />
-                <h2 className={styles.bentoTileTitle}>Study Goals</h2>
-              </div>
-              <span className={styles.streakCountBadge}>
-                {stats.completedSessions > 0 ? `🎯 ${stats.completedSessions} SESSIONS` : "🎯 ACTIVE GOAL"}
-              </span>
+              <Award size={19} color="#2D6A4F" />
+              <h2 className={styles.bentoTileTitle}>Your Progress</h2>
             </div>
-            <p className={styles.bentoTileDesc}>
-              {stats.learningMinutes > 0
-                ? `You have logged ${stats.learningMinutes} verified learning minutes on Learnivia.`
-                : "Attend or book your first 1-on-1 session to start building your verified transcript."}
-            </p>
-            <div className={styles.weekdayTrack}>
-              {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, idx) => {
-                const dayIndex = (now.getDay() + 6) % 7; // Monday = 0
-                const isToday = idx === dayIndex;
-                const isPast = idx < dayIndex;
-                const hasSession = stats.completedSessions > 0 && isPast;
-                return (
-                  <div key={day} className={styles.dayCol}>
-                    <span className={styles.dayLabel}>{day[0]}</span>
-                    <div
-                      className={`${styles.dayDot} ${
-                        hasSession ? styles.dayDotDone : isToday ? styles.dayDotToday : ""
-                      }`}
-                    >
-                      {hasSession ? "✓" : isToday ? "•" : ""}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Bento Tile C: Scholar Mastery Card */}
-          <div className={styles.bentoMasteryCard}>
-            <div className={styles.bentoTileHeader}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <Award size={19} color="#2D6A4F" />
-                <h2 className={styles.masteryTitle}>Level {level} Scholar</h2>
+            <div className={styles.statPairRow}>
+              <div className={styles.statPairItem}>
+                <span className={styles.statPairNum}>{stats.completedSessions}</span>
+                <span className={styles.statPairLabel}>Sessions</span>
               </div>
-              <span className={styles.masteryBadge}>
-                <Sparkles size={11} /> {sp} SP
-              </span>
+              <div className={styles.statPairDivider} />
+              <div className={styles.statPairItem}>
+                <span className={styles.statPairNum}>{stats.learningMinutes}</span>
+                <span className={styles.statPairLabel}>Minutes</span>
+              </div>
             </div>
             <div className={styles.xpProgressWrap}>
               <div className={styles.xpStatsRow}>
-                <span>{levelTitle}</span>
-                <span>{spRemaining} SP to Level {level + 1}</span>
+                <span style={{ fontWeight: 600 }}>Level {level} · {levelTitle}</span>
+                <span style={{ color: "#A89F94" }}>{sp} SP</span>
               </div>
               <div className={styles.xpTrack}>
                 <div className={styles.xpFill} style={{ width: `${progressPercent}%` }} />
               </div>
             </div>
-            <div className={styles.perkPreviewBox}>
-              <Sparkles size={13} color="#2D6A4F" style={{ flexShrink: 0 }} />
-              <span>{nextPerk}</span>
-            </div>
+            <Link href="/sessions" className={styles.heroLaunchBtnPrimary} prefetch={false} style={{ marginTop: "0.25rem", fontSize: "0.8125rem", padding: "0.55rem 1rem" }}>
+              <Calendar size={14} /> Book a Session
+            </Link>
           </div>
         </section>
 
@@ -395,7 +355,7 @@ export default async function StudentDashboard() {
                     <Clock size={13} color="#D97706" /> Tutor Review Pending
                   </span>
                 ) : (
-                  <span style={{ fontSize: "0.725rem", fontWeight: 700, color: "#2D6A4F", background: "#EAF3ED", border: "1px solid #C7D2FE", padding: "0.15rem 0.55rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                  <span style={{ fontSize: "0.725rem", fontWeight: 700, color: "#2D6A4F", background: "#EAF3ED", border: "1px solid #B5D9C5", padding: "0.15rem 0.55rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
                     <GraduationCap size={13} color="#2D6A4F" /> K–10 Learner
                   </span>
                 )}
