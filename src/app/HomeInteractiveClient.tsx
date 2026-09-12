@@ -2,17 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import LogoSplash from "@/components/LogoSplash";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
-import { springs, buttonMotion, cardHoverMotion, fadeUpVariants } from "@/lib/motion";
+import { springs, buttonMotion } from "@/lib/motion";
 import { fireConfetti } from "@/lib/confetti";
 import styles from "./page.module.css";
 import {
-  Sparkles,
   CheckCircle2,
-  Clock,
   Users,
   ShieldCheck,
   Award,
@@ -24,8 +19,8 @@ import {
   ArrowRight,
   ChevronDown,
   Video,
-  Globe,
-  Compass,
+  Search,
+  CalendarCheck,
 } from "lucide-react";
 
 const GRADE_BANDS = [
@@ -63,33 +58,6 @@ const GRADE_BANDS = [
   },
 ];
 
-const HOW_IT_WORKS_STEPS = [
-  {
-    step: "01",
-    title: "Select Your Grade & Subject",
-    desc: "Choose your grade (K–10) and target subject. Only tutors approved for your level appear.",
-    img: "/images/find-a-tutor.png",
-  },
-  {
-    step: "02",
-    title: "Book a Free 1-on-1 Session",
-    desc: "Pick an open slot with a verified volunteer tutor. No credit cards, zero fees — 100% free.",
-    img: "/images/book-a-session.png",
-  },
-  {
-    step: "03",
-    title: "Meet Live on Zoom",
-    desc: "Join a private 1-on-1 Zoom room. Share homework, discuss problems, get patient guidance.",
-    img: "/images/join-zoom.png",
-  },
-  {
-    step: "04",
-    title: "Track Your Progress",
-    desc: "Minutes are logged in real time. Tutors receive verified service hour transcripts.",
-    img: "/images/session-complete.png",
-  },
-];
-
 const FAQS = [
   {
     q: "Is Learnivia really 100% free?",
@@ -117,32 +85,26 @@ const FAQS = [
   },
 ];
 
-const BENTO_SUBJECT_CONTENT: Record<string, { topic: string; step1: string; step2: string; tip: string }> = {
-  math: {
-    topic: "Algebra I: Quadratic Factoring",
-    step1: "1. Identify common binomial terms: (x + p)(x + q)",
-    step2: "2. Verify product pq = c and sum p + q = b",
-    tip: "💡 Tutor Tip: Visualize roots as x-intercepts on the parabola!",
+const SESSION_STEPS = [
+  {
+    icon: Search,
+    num: "01",
+    title: "Find a tutor",
+    desc: "Browse verified tutors by subject and grade. Every tutor is screened and approved.",
   },
-  reading: {
-    topic: "Literary Analysis: Thesis Construction",
-    step1: "1. State central claim + specific author device",
-    step2: "2. Cite two direct text proofs with line anchors",
-    tip: "💡 Tutor Tip: Avoid generalizations — show exactly how word choice shapes tone!",
+  {
+    icon: CalendarCheck,
+    num: "02",
+    title: "Book for free",
+    desc: "Pick an open slot. No credit card, no fees — completely free for every student.",
   },
-  science: {
-    topic: "Biology: Photosynthesis Light Reactions",
-    step1: "1. Photons hit Photosystem II, splitting H₂O into oxygen",
-    step2: "2. Electron transport generates ATP + NADPH for Calvin cycle",
-    tip: "💡 Tutor Tip: Remember OIL RIG for oxidation & reduction!",
+  {
+    icon: Video,
+    num: "03",
+    title: "Meet on Zoom",
+    desc: "Join a private 1-on-1 Zoom session. Share your homework, get patient guidance.",
   },
-  phonics: {
-    topic: "Early Reading: Phoneme Blending (C-V-C)",
-    step1: "1. Sound out isolated phonemes: /b/ - /æ/ - /t/",
-    step2: "2. Blend together smoothly: 'bat'",
-    tip: "💡 Tutor Tip: Tap fingers on table for each sound block!",
-  },
-};
+];
 
 interface HomeInteractiveClientProps {
   liveSession?: {
@@ -167,358 +129,154 @@ export default function HomeInteractiveClient({
 }: HomeInteractiveClientProps) {
   const [activeTab, setActiveTab] = useState<string>("k2");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [bentoSubject, setBentoSubject] = useState<"math" | "reading" | "science" | "phonics">("math");
 
   const currentBand = GRADE_BANDS.find((b) => b.id === activeTab) || GRADE_BANDS[0];
-  const bentoContent = BENTO_SUBJECT_CONTENT[bentoSubject];
 
   return (
     <div className={styles.homeWrapper}>
-      {/* Hero Section with Aurora Mesh Glows */}
+
+      {/* ── 1. HERO ── */}
       <section className={styles.heroSection}>
-        {/* Ambient Aurora Glows */}
-        <div className={styles.auroraLayer} aria-hidden="true">
-          <div className={styles.aurora1} />
-          <div className={styles.aurora2} />
-          <div className={styles.aurora3} />
-        </div>
-
         <div className={styles.heroContainer}>
+
+          {/* Left — headline + CTA */}
           <div className={styles.heroLeftCol}>
-            {/* 21st.dev Shimmer Live Radar Pill */}
-            <motion.div
-              className={styles.eyebrowBadge}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={springs.smooth}
-            >
-              <div className={styles.radarPingWrapper}>
-                <div className={styles.radarPingRing} />
-                <div className={styles.radarDot} />
-              </div>
-              <span className={styles.eyebrowText}>
-                ✨ {completedCount > 0 ? `Over ${completedCount.toLocaleString()} Sessions Completed` : "Verified Peer Tutoring Network"} • 100% Free
+            <div className={styles.heroBadge}>
+              <span className={styles.heroBadgeDot} />
+              {completedCount > 0
+                ? `${completedCount.toLocaleString()} sessions completed · Free forever`
+                : "Verified peer tutoring · Free forever"}
+            </div>
+
+            <h1 className={styles.heroTitle}>
+              Free tutoring,<br />
+              <span className={styles.heroTitleAccent}>one Zoom call away.</span>
+            </h1>
+
+            <p className={styles.heroParagraph}>
+              Verified volunteer tutors guide K–10 students through private 1-on-1 Zoom sessions.
+              Every learning style supported — no cost, no subscriptions, ever.
+            </p>
+
+            <div className={styles.heroActions}>
+              <Link
+                href="/find"
+                className={styles.primaryBtn}
+                onClick={() => fireConfetti()}
+              >
+                Find a tutor — it&apos;s free
+                <ArrowRight size={18} strokeWidth={2.5} />
+              </Link>
+              <Link href="/signup?role=tutor" className={styles.secondaryBtn}>
+                Volunteer as tutor
+              </Link>
+            </div>
+
+            <div className={styles.trustRow}>
+              <span className={styles.trustItem}>
+                <CheckCircle2 size={15} color="#2D6A4F" />
+                No credit card
               </span>
-            </motion.div>
-
-            <motion.h1
-              className={styles.heroTitle}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...springs.smooth, delay: 0.1 }}
-            >
-              Free online tutoring{" "}
-              <br />
-              <span className={styles.heroTitleItalic}>designed for every mind.</span>
-            </motion.h1>
-
-            <motion.p
-              className={styles.heroParagraph}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...springs.smooth, delay: 0.2 }}
-            >
-              Connecting Kindergarten through Grade 10 students with verified volunteer peer tutors
-              for private 1-on-1 Zoom sessions. Every learning style supported — no cost, ever.
-            </motion.p>
-
-            {/* Dual Actions with Emil Kowalski Spring Physics */}
-            <motion.div
-              className={styles.heroActions}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...springs.smooth, delay: 0.3 }}
-            >
-              <motion.div {...buttonMotion}>
-                <Link
-                  href="/find"
-                  className={styles.primaryHeroBtn}
-                  onClick={() => fireConfetti()}
-                >
-                  <span>Find a Tutor (Free)</span>
-                  <ArrowRight size={18} />
-                </Link>
-              </motion.div>
-
-              <motion.div {...buttonMotion}>
-                <Link href="/signup?role=tutor" className={styles.secondaryHeroBtn}>
-                  <span>Become a Volunteer Tutor</span>
-                </Link>
-              </motion.div>
-            </motion.div>
-
-            {/* Trust Row */}
-            <motion.div
-              className={styles.trustRow}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-            >
-              <div className={styles.trustItem}>
-                <span className={styles.trustIcon}><CheckCircle2 size={18} /></span>
-                <span>Zero cost, ever</span>
-              </div>
-              <div className={styles.trustItem}>
-                <span className={styles.trustIcon}><ShieldCheck size={18} /></span>
-                <span>Verified K–10 tutors</span>
-              </div>
-              <div className={styles.trustItem}>
-                <span className={styles.trustIcon}><Award size={18} /></span>
-                <span>Official volunteer hours</span>
-              </div>
-            </motion.div>
+              <span className={styles.trustItem}>
+                <ShieldCheck size={15} color="#2D6A4F" />
+                COPPA-safe
+              </span>
+              <span className={styles.trustItem}>
+                <Award size={15} color="#2D6A4F" />
+                {tutorsCount > 0 ? `${tutorsCount}+ tutors` : "Screened tutors"}
+              </span>
+            </div>
           </div>
 
-          {/* Right Column: Floating Live Classroom Card */}
+          {/* Right — How it works (clean 3 steps) */}
           <div className={styles.heroRightCol}>
-            <div className={styles.liveCardDeck}>
-              <motion.div
-                className={styles.heroPreviewCard}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
-              >
-                <div className={styles.previewHeader}>
-                  <div className={styles.previewMascotMini}>
-                    <Image
-                      src="/images/logo.png"
-                      alt="Learnivia Fox"
-                      width={34}
-                      height={34}
-                      className={styles.mascotImg}
-                      priority
-                    />
-                  </div>
-                  <div>
-                    <div className={styles.liveIndicatorRow}>
-                      <span className={styles.liveIndicator}>
-                        {liveSession ? "Upcoming Session" : "Live Learning Room"}
-                      </span>
-                      <div className={styles.soundwave} aria-label="Audio active">
-                        <div className={styles.soundwaveBar} />
-                        <div className={styles.soundwaveBar} />
-                        <div className={styles.soundwaveBar} />
-                      </div>
+            <div className={styles.howItWorksCard}>
+              <div className={styles.howItWorksLabel}>How a session works</div>
+              <ol className={styles.howItWorksList}>
+                {SESSION_STEPS.map((step, i) => (
+                  <li key={step.num} className={styles.howItWorksStep}>
+                    <div className={styles.stepIcon}>
+                      <step.icon size={18} color="#2D6A4F" strokeWidth={2} />
                     </div>
-                    <h3 className={styles.previewTitle}>
-                      {liveSession ? liveSession.title : "1-on-1 Peer Mentoring • K–Grade 10"}
-                    </h3>
-                  </div>
-                </div>
-
-                <p className={styles.previewDesc}>
-                  {liveSession
-                    ? liveSession.description || "Personalized 1-on-1 support with a verified volunteer tutor."
-                    : "Live interactive whiteboard session. Tailored step-by-step pacing for visual & neurodiverse learners."}
-                </p>
-
-                <div className={styles.previewMeta}>
-                  <div className={styles.metaChip}>
-                    <Clock size={15} />
-                    <span>
-                      {liveSession
-                        ? new Date(liveSession.startTime).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
-                        : "Private 1-on-1 Zoom"}
-                    </span>
-                  </div>
-                  <div className={styles.metaChip}>
-                    <Users size={15} />
-                    <span>
-                      {liveSession
-                        ? `${liveSession.openSeats} seats available`
-                        : `${tutorsCount > 0 ? `${tutorsCount} Verified Tutors` : "Volunteer Mentors"}`}
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles.previewHostRow}>
-                  <div className={styles.hostAvatar}>
-                    {liveSession
-                      ? liveSession.tutorName.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
-                      : "LV"}
-                    <span className={styles.hostOnlineBeacon} />
-                  </div>
-                  <div className={styles.hostInfo}>
-                    <div className={styles.hostName}>
-                      {liveSession ? liveSession.tutorName : "Maya Lin & Team"}
+                    <div className={styles.stepBody}>
+                      <div className={styles.stepTitle}>{step.title}</div>
+                      <div className={styles.stepDesc}>{step.desc}</div>
                     </div>
-                    <div className={styles.hostCred}>
-                      {liveSession ? liveSession.tutorSchool : "Northwestern University • Approved Tutor"}
-                    </div>
-                  </div>
-                  <motion.div {...buttonMotion}>
-                    <Link
-                      href="/find"
-                      className={styles.previewJoinBtn}
-                      onClick={() => fireConfetti()}
-                    >
-                      {liveSession ? "Book Now" : "Find Tutor"}
-                    </Link>
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              <div className={styles.heroCardBackdrop} aria-hidden="true" />
+                    {i < SESSION_STEPS.length - 1 && (
+                      <div className={styles.stepConnector} aria-hidden="true" />
+                    )}
+                  </li>
+                ))}
+              </ol>
+              <Link href="/find" className={styles.howItWorksBtn} onClick={() => fireConfetti()}>
+                Get started — free <ArrowRight size={15} />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. 21st.dev Asymmetrical Bento Grid Section */}
-      <section className={styles.bentoSection}>
+      {/* ── 2. FEATURES ── */}
+      <section className={styles.featuresSection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionKicker}>THE LEARNIVIA DIFFERENCE</span>
-            <h2 className={styles.sectionHeading}>Engineered for how students actually learn.</h2>
+            <h2 className={styles.sectionHeading}>Everything a student needs to succeed</h2>
             <p className={styles.sectionLead}>
-              Replacing expensive corporate tutoring agencies with high-touch, verified peer volunteering.
+              Built around the real experience of K–10 learning — not corporate tutoring agencies.
             </p>
           </div>
 
-          <div className={styles.bentoGrid}>
-            {/* Bento Card 1: 1-on-1 Interactive Mentoring (Span 2) */}
-            <SpotlightCard className={`${styles.bentoCard} ${styles.bentoCardSpan2}`}>
-              <div>
-                <span className={styles.bentoBadge} style={{ background: "#F0FDF4", color: "#15803D" }}>
-                  <Users size={14} /> 1-on-1 Mentorship
-                </span>
-                <h3 className={styles.bentoTitle}>Personalized Peer Tutoring at Your Own Pace</h3>
-                <p className={styles.bentoDesc}>
-                  No rushed 15-minute explanations. High school & university peers sit side-by-side on Zoom,
-                  breaking down challenging concepts using interactive whiteboards.
-                </p>
-
-                {/* Interactive Subject Switcher */}
-                <div className={styles.bentoSubjectPills}>
-                  {(["math", "reading", "science", "phonics"] as const).map((sub) => (
-                    <button
-                      key={sub}
-                      type="button"
-                      className={`${styles.bentoPill} ${bentoSubject === sub ? styles.bentoPillActive : ""}`}
-                      onClick={() => setBentoSubject(sub)}
-                    >
-                      {sub === "math" && "📐 Math"}
-                      {sub === "reading" && "📖 Reading & Essay"}
-                      {sub === "science" && "🔬 Science"}
-                      {sub === "phonics" && "🔤 Early Phonics"}
-                    </button>
-                  ))}
-                </div>
+          <div className={styles.featuresGrid}>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon} style={{ background: "#EAF3ED" }}>
+                <Users size={22} color="#2D6A4F" />
               </div>
-
-              {/* Dynamic Whiteboard Sample */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={bentoSubject}
-                  className={styles.bentoWhiteboardPreview}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={springs.snappy}
-                >
-                  <div className={styles.bentoWhiteboardHeader}>
-                    <span>Interactive Whiteboard Sample</span>
-                    <span style={{ color: "#0D683B" }}>Live Note</span>
-                  </div>
-                  <div style={{ fontWeight: 700, color: "#0F172A", marginBottom: "0.25rem" }}>
-                    {bentoContent.topic}
-                  </div>
-                  <div>{bentoContent.step1}</div>
-                  <div>{bentoContent.step2}</div>
-                  <div style={{ marginTop: "0.5rem", color: "#0D683B", fontStyle: "italic" }}>
-                    {bentoContent.tip}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </SpotlightCard>
-
-            {/* Bento Card 2: Volunteer Hours & Transcripts (Span 1) */}
-            <SpotlightCard className={`${styles.bentoCard} ${styles.bentoCardSpan1}`}>
-              <div>
-                <span className={styles.bentoBadge} style={{ background: "#FEF3C7", color: "#B45309" }}>
-                  <Award size={14} /> Certified Service
-                </span>
-                <h3 className={styles.bentoTitle}>Official Volunteer Hours</h3>
-                <p className={styles.bentoDesc}>
-                  Every completed session is automatically timestamped and verified for National Honor Society,
-                  IB CAS, and high school graduation credit.
-                </p>
+              <h3 className={styles.featureTitle}>1-on-1 peer mentoring</h3>
+              <p className={styles.featureDesc}>
+                Private sessions with a verified tutor who adapts to your student's pace, style, and curriculum.
+              </p>
+            </div>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon} style={{ background: "#FDF3E3" }}>
+                <Award size={22} color="#C9922A" />
               </div>
-
-              <div className={styles.bentoMetricsWrap}>
-                <div className={styles.bentoStatNumber}>100% Verified</div>
-                <div className={styles.bentoStatLabel}>Official Service Hours &amp; Signed Certificates</div>
-                <div className={styles.bentoSealBadge}>
-                  <CheckCircle2 size={15} /> Official Transcript Included
-                </div>
+              <h3 className={styles.featureTitle}>Certified service hours</h3>
+              <p className={styles.featureDesc}>
+                Tutors earn official verified transcripts accepted by NHS, IB CAS, and college applications.
+              </p>
+            </div>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon} style={{ background: "#EAF3ED" }}>
+                <ShieldCheck size={22} color="#2D6A4F" />
               </div>
-            </SpotlightCard>
-
-            {/* Bento Card 3: Safeguarded Zoom (Span 1) */}
-            <SpotlightCard className={`${styles.bentoCard} ${styles.bentoCardSpan1}`}>
-              <div>
-                <span className={styles.bentoBadge} style={{ background: "#EFF6FF", color: "#1D4ED8" }}>
-                  <ShieldCheck size={14} /> Safeguarding
-                </span>
-                <h3 className={styles.bentoTitle}>COPPA & Child Safety Guardrails</h3>
-                <p className={styles.bentoDesc}>
-                  Built from the ground up for K–10 learners. Waiting rooms enforced, parent oversight,
-                  and verified tutor identity checks.
-                </p>
+              <h3 className={styles.featureTitle}>Child-safe by design</h3>
+              <p className={styles.featureDesc}>
+                Private Zoom waiting rooms, parent-managed profiles, and zero recordings without consent.
+              </p>
+            </div>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon} style={{ background: "#FAEDE9" }}>
+                <HeartHandshake size={22} color="#C1694F" />
               </div>
-
-              <div className={styles.bentoSafetyList}>
-                <div className={styles.bentoSafetyItem}>
-                  <CheckCircle2 size={16} color="#0D683B" />
-                  <span>Private 1-on-1 Zoom waiting rooms</span>
-                </div>
-                <div className={styles.bentoSafetyItem}>
-                  <CheckCircle2 size={16} color="#0D683B" />
-                  <span>Parent-managed child profiles</span>
-                </div>
-                <div className={styles.bentoSafetyItem}>
-                  <CheckCircle2 size={16} color="#0D683B" />
-                  <span>Zero recording without consent</span>
-                </div>
-              </div>
-            </SpotlightCard>
-
-            {/* Bento Card 4: Neurodiversity & Learning Styles (Span 2) */}
-            <SpotlightCard className={`${styles.bentoCard} ${styles.bentoCardSpan2}`}>
-              <div>
-                <span className={styles.bentoBadge} style={{ background: "#FDF2F8", color: "#BE185D" }}>
-                  <HeartHandshake size={14} /> Inclusive Education
-                </span>
-                <h3 className={styles.bentoTitle}>Personalized for Every Learning Style</h3>
-                <p className={styles.bentoDesc}>
-                  Whether your student learns best visually, needs step-by-step pacing, or requires extra
-                  processing time — our tutors adapt to them. No medical diagnosis or paperwork required.
-                </p>
-              </div>
-
-              <div className={styles.bentoStylesWrap}>
-                <span className={styles.styleChip}>🎨 Visual Explanations</span>
-                <span className={styles.styleChip}>⏳ Extra Processing Time</span>
-                <span className={styles.styleChip}>🪜 Step-by-Step Pacing</span>
-                <span className={styles.styleChip}>☕ Frequent Micro-Breaks</span>
-                <span className={styles.styleChip}>✍️ Practice-First Learning</span>
-              </div>
-            </SpotlightCard>
+              <h3 className={styles.featureTitle}>Every learning style welcome</h3>
+              <p className={styles.featureDesc}>
+                Visual, step-by-step, extra processing time — no diagnosis needed. Every learner belongs here.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Grade Bands Explorer with Emil Kowalski Sliding Spring Pill */}
+      {/* ── 3. GRADE BANDS ── */}
       <section className={styles.programsSection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionKicker}>GRADE BANDS • K–10</span>
-            <h2 className={styles.sectionHeading}>Find help for your grade level.</h2>
+            <h2 className={styles.sectionHeading}>Find help for your grade level</h2>
             <p className={styles.sectionLead}>
-              Every tutor is approved for specific grade bands — your student only connects with tutors matched to their level.
+              Every tutor is approved for specific grade bands — matched to your student&apos;s level.
             </p>
           </div>
 
-          {/* Sliding Spring Pill Tab Switcher */}
           <div className={styles.programTabsBar} role="tablist">
             {GRADE_BANDS.map((band) => (
               <button
@@ -543,91 +301,44 @@ export default function HomeInteractiveClient({
           <div className={styles.programStage}>
             <div className={styles.programStageHeader}>
               <div>
-                <h3 className={styles.stageTitle}>
-                  {currentBand.label} — {currentBand.grades}
-                </h3>
-                <p className={styles.stageDesc}>
-                  {currentBand.ages} • Subjects with verified volunteer peer tutors
-                </p>
+                <h3 className={styles.stageTitle}>{currentBand.label} — {currentBand.grades}</h3>
+                <p className={styles.stageDesc}>{currentBand.ages} · Subjects with verified volunteer peer tutors</p>
               </div>
-              <motion.div {...buttonMotion}>
-                <Link href={currentBand.href} className={styles.stageBrowseLink}>
-                  <span>Find a Tutor for This Grade</span>
-                  <ArrowRight size={16} />
-                </Link>
-              </motion.div>
+              <Link href={currentBand.href} className={styles.stageBrowseLink}>
+                Find a tutor <ArrowRight size={16} />
+              </Link>
             </div>
 
             <div className={styles.sessionCardsGrid}>
               {currentBand.subjects.map((subject, idx) => (
-                <SpotlightCard
+                <motion.div
                   key={subject}
-                  className={styles.subjectPillCard}
+                  className={styles.subjectCard}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ ...springs.smooth, delay: idx * 0.05 }}
                 >
-                  <Link href={`${currentBand.href}&subject=${encodeURIComponent(subject)}`} style={{ textDecoration: "none", color: "inherit", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                    <div className={styles.subjectPillTitle}>{subject}</div>
-                    <div className={styles.subjectPillKicker}>
-                      <span>Explore Tutors</span>
+                  <Link href={`${currentBand.href}&subject=${encodeURIComponent(subject)}`} className={styles.subjectCardLink}>
+                    <div className={styles.subjectCardTitle}>{subject}</div>
+                    <div className={styles.subjectCardCta}>
+                      <span>Explore</span>
                       <ArrowRight size={14} />
                     </div>
                   </Link>
-                </SpotlightCard>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. How It Works (Journey) */}
-      <section className={styles.journeySection}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionKicker}>HOW IT WORKS</span>
-            <h2 className={styles.sectionHeading}>Simple, transparent, and completely free.</h2>
-            <p className={styles.sectionLead}>
-              Start learning or tutoring in minutes. Zero subscriptions, zero paywalls.
-            </p>
-          </div>
-
-          <div className={styles.journeyGrid}>
-            {HOW_IT_WORKS_STEPS.map((step, idx) => (
-              <SpotlightCard
-                key={step.step}
-                className={styles.journeyCard}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ ...springs.smooth, delay: idx * 0.08 }}
-              >
-                <div className={styles.stepNumBadge}>{step.step}</div>
-                <div className={styles.journeyImgWrap}>
-                  <Image
-                    src={step.img}
-                    alt={step.title}
-                    width={140}
-                    height={140}
-                    className={styles.journeyIllustration}
-                  />
-                </div>
-                <h3 className={styles.journeyTitle}>{step.title}</h3>
-                <p className={styles.journeyDesc}>{step.desc}</p>
-              </SpotlightCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Interactive Spring Accordion FAQs */}
+      {/* ── 4. FAQ ── */}
       <section className={styles.faqSection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionKicker}>FREQUENTLY ASKED QUESTIONS</span>
-            <h2 className={styles.sectionHeading}>Everything you need to know.</h2>
+            <h2 className={styles.sectionHeading}>Common questions</h2>
             <p className={styles.sectionLead}>
-              Transparent answers about our mission, volunteer safeguarding, and peer matching.
+              Honest answers about how Learnivia works, who it's for, and how we keep it safe.
             </p>
           </div>
 
@@ -635,10 +346,7 @@ export default function HomeInteractiveClient({
             {FAQS.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
-                <div
-                  key={faq.q}
-                  className={`${styles.faqItem} ${isOpen ? styles.faqItemOpen : ""}`}
-                >
+                <div key={faq.q} className={`${styles.faqItem} ${isOpen ? styles.faqItemOpen : ""}`}>
                   <button
                     type="button"
                     className={styles.faqQuestionBtn}
@@ -676,30 +384,21 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* 7. Bottom CTA Banner with Spring Actions */}
+      {/* ── 5. CTA BANNER ── */}
       <section className={styles.bottomCtaSection}>
         <div className={styles.container}>
           <div className={styles.bottomCtaCard}>
-            <h2 className={styles.bottomCtaTitle}>Ready to experience free peer tutoring?</h2>
+            <h2 className={styles.bottomCtaTitle}>Ready to get started?</h2>
             <p className={styles.bottomCtaLead}>
-              Join hundreds of K–10 learners and certified volunteer tutors today. No subscriptions, zero fees.
+              Join thousands of K–10 learners and volunteer tutors. No subscriptions, zero fees.
             </p>
             <div className={styles.bottomCtaButtons}>
-              <motion.div {...buttonMotion}>
-                <Link
-                  href="/signup"
-                  className={styles.bottomPrimaryBtn}
-                  onClick={() => fireConfetti()}
-                >
-                  <span>Join Learnivia — Free Forever</span>
-                </Link>
-              </motion.div>
-
-              <motion.div {...buttonMotion}>
-                <Link href="/signup?role=tutor" className={styles.bottomSecondaryBtn}>
-                  <span>Become a Volunteer Tutor</span>
-                </Link>
-              </motion.div>
+              <Link href="/signup" className={styles.bottomPrimaryBtn} onClick={() => fireConfetti()}>
+                Join Learnivia — Free Forever
+              </Link>
+              <Link href="/signup?role=tutor" className={styles.bottomSecondaryBtn}>
+                Become a Volunteer Tutor
+              </Link>
             </div>
           </div>
         </div>

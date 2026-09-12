@@ -6,7 +6,6 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
-// Google Icon SVG
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
     <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
@@ -63,61 +62,94 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
 
   return (
     <main className={styles.main}>
-      <div className={styles.container}>
-        <Image src="/images/logo.png" alt="Learnivia" width={52} height={52} className={styles.logoImg} />
-        <h1 className={styles.title}>
-          {isRegister
-            ? (selectedRole === "TUTOR" ? "Join as Volunteer Tutor" : "Create Student Account")
-            : "Sign in to Learnivia"}
-        </h1>
-        <p className={styles.lead}>
-          {isRegister
-            ? (selectedRole === "TUTOR"
-                ? "Share your knowledge with K–10 students and earn certified service hours."
-                : "Free peer-to-peer tutoring and learning for all students.")
-            : "Welcome back! Continue learning and tutoring."}
-        </p>
+      {/* ── Left decorative panel ── */}
+      <aside className={styles.leftPanel} aria-hidden="true">
+        <div className={styles.leftPanelBg} />
 
-        <div className={styles.card}>
-          {/* Role Selection Cards on Register */}
+        {/* Brand */}
+        <div className={styles.leftBrandRow}>
+          <Image src="/images/logo.png" alt="Learnivia" width={36} height={36} style={{ borderRadius: "8px" }} />
+          <span className={styles.leftBrandName}>Learnivia</span>
+        </div>
+
+        {/* Central message */}
+        <div className={styles.leftContent}>
+          <p className={styles.leftTagline}>Free tutoring.</p>
+          <p className={styles.leftTagline}>Real humans.</p>
+          <p className={styles.leftTaglineAccent}>Zoom calls that click.</p>
+          <p className={styles.leftSubtext}>
+            Verified volunteer tutors guide K–10 students through private 1-on-1 Zoom sessions — no cost, no sign-up fees, ever.
+          </p>
+
+          {/* How it works — 3 simple steps */}
+          <ol className={styles.leftSteps}>
+            <li className={styles.leftStep}>
+              <span className={styles.leftStepNum}>1</span>
+              <span className={styles.leftStepText}>Find a verified tutor by subject & grade</span>
+            </li>
+            <li className={styles.leftStep}>
+              <span className={styles.leftStepNum}>2</span>
+              <span className={styles.leftStepText}>Book a free private Zoom session</span>
+            </li>
+            <li className={styles.leftStep}>
+              <span className={styles.leftStepNum}>3</span>
+              <span className={styles.leftStepText}>Learn 1-on-1 — at your own pace</span>
+            </li>
+          </ol>
+        </div>
+
+        {/* Bottom trust line */}
+        <div className={styles.leftFooter}>
+          <span className={styles.leftFooterPill}>100% Free</span>
+          <span className={styles.leftFooterPill}>K–10 Students</span>
+          <span className={styles.leftFooterPill}>140+ Tutors</span>
+        </div>
+      </aside>
+
+      {/* ── Right form panel ── */}
+      <div className={styles.rightPanel}>
+        <div className={styles.formContainer}>
+
+          {/* Mobile brand (hidden on desktop where left panel shows) */}
+          <div className={styles.mobileHeader}>
+            <Image src="/images/logo.png" alt="Learnivia" width={40} height={40} style={{ borderRadius: "8px" }} />
+            <span className={styles.mobileBrandName}>Learnivia</span>
+          </div>
+
+          <h1 className={styles.title}>
+            {isRegister
+              ? (selectedRole === "TUTOR" ? "Become a volunteer tutor" : "Start learning, free")
+              : "Welcome back"}
+          </h1>
+          <p className={styles.lead}>
+            {isRegister
+              ? (selectedRole === "TUTOR"
+                  ? "Share your knowledge. Earn certified service hours."
+                  : "Connect with a verified peer tutor. No cost, ever.")
+              : "Sign in to your Learnivia account."}
+          </p>
+
+          {/* Role switch (register only) */}
           {isRegister && (
-            <div className={styles.roleSelectorContainer}>
-              <div className={styles.roleSelectorLabel}>I want to join Learnivia as:</div>
-              <div className={styles.roleCardsGrid} role="radiogroup" aria-label="Account type">
-                <button
-                  type="button"
-                  role="radio"
-                  aria-checked={selectedRole === "STUDENT"}
-                  className={`${styles.roleCard} ${selectedRole === "STUDENT" ? styles.roleCardActive : ""}`}
-                  onClick={() => setSelectedRole("STUDENT")}
-                >
-                  <span className={styles.roleIcon}>🎓</span>
-                  <div className={styles.roleInfo}>
-                    <span className={styles.roleTitle}>Student / Parent</span>
-                    <span className={styles.roleDesc}>Get free 1-on-1 tutoring, homework help & workshops (K–10)</span>
-                  </div>
-                  <span className={styles.roleCheck} aria-hidden="true">✓</span>
-                </button>
-
-                <button
-                  type="button"
-                  role="radio"
-                  aria-checked={selectedRole === "TUTOR"}
-                  className={`${styles.roleCard} ${selectedRole === "TUTOR" ? styles.roleCardActive : ""}`}
-                  onClick={() => setSelectedRole("TUTOR")}
-                >
-                  <span className={styles.roleIcon}>🌱</span>
-                  <div className={styles.roleInfo}>
-                    <span className={styles.roleTitle}>Volunteer Tutor</span>
-                    <span className={styles.roleDesc}>Tutor K–10 students, earn certified service hours & lead</span>
-                  </div>
-                  <span className={styles.roleCheck} aria-hidden="true">✓</span>
-                </button>
-              </div>
+            <div className={styles.roleSwitcher}>
+              <button
+                type="button"
+                className={`${styles.roleBtn} ${selectedRole === "STUDENT" ? styles.roleBtnActive : ""}`}
+                onClick={() => setSelectedRole("STUDENT")}
+              >
+                🎓 I&apos;m a Student
+              </button>
+              <button
+                type="button"
+                className={`${styles.roleBtn} ${selectedRole === "TUTOR" ? styles.roleBtnActive : ""}`}
+                onClick={() => setSelectedRole("TUTOR")}
+              >
+                🌱 I&apos;m a Tutor
+              </button>
             </div>
           )}
 
-          {/* Google Sign In */}
+          {/* Google button */}
           <form onSubmit={handleGoogleSignIn}>
             <input type="hidden" name="callbackUrl" value={callbackUrl} />
             <button type="submit" className={styles.googleBtn}>
@@ -127,21 +159,20 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
           </form>
 
           <div className={styles.divider} role="separator">
-            <span>or continue with email</span>
+            <span>or use email</span>
           </div>
 
-          {/* Email/Password Form */}
+          {/* Email form */}
           <form onSubmit={handleSubmit} className={styles.emailForm} noValidate>
             {error && (
               <div className={styles.errorBanner} role="alert" aria-live="polite">
-                <span>⚠️</span> {error}
+                <span aria-hidden="true">⚠</span> {error}
               </div>
             )}
 
             {isRegister && (
               <>
                 <input type="hidden" name="role" value={selectedRole} />
-
                 <div className={styles.inputGroup}>
                   <label htmlFor="name">Full Name</label>
                   <input
@@ -155,89 +186,35 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                 </div>
 
                 {selectedRole === "STUDENT" ? (
-                  <>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-                      <div className={styles.inputGroup}>
-                        <label htmlFor="age">Student Age</label>
-                        <input
-                          id="age"
-                          type="number"
-                          name="age"
-                          min="5"
-                          max="18"
-                          placeholder="e.g. 11"
-                          required={isRegister}
-                        />
-                      </div>
-                      <div className={styles.inputGroup}>
-                        <label htmlFor="grade">Grade Level (K–10)</label>
-                        <select
-                          id="grade"
-                          name="grade"
-                          required={isRegister}
-                          style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
-                        >
-                          <option value="">Select grade...</option>
-                          <option value="Kindergarten">Kindergarten</option>
-                          <option value="Grade 1-2">Grade 1–2 (Early Elementary)</option>
-                          <option value="Grade 3-5">Grade 3–5 (Upper Elementary)</option>
-                          <option value="Grade 6-8">Grade 6–8 (Middle School)</option>
-                          <option value="Grade 9">Grade 9 (High School Freshman)</option>
-                          <option value="Grade 10">Grade 10 (High School Sophomore)</option>
-                        </select>
-                      </div>
-                    </div>
-
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
                     <div className={styles.inputGroup}>
-                      <label htmlFor="curriculum">Curriculum / Program</label>
-                      <select
-                        id="curriculum"
-                        name="curriculum"
-                        required={isRegister}
-                        style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
-                      >
-                        <option value="">Select curriculum...</option>
-                        <option value="US Common Core">US Common Core / State Standards</option>
-                        <option value="UK National Curriculum">UK National Curriculum / Key Stages</option>
-                        <option value="CBSE">CBSE (Central Board of Secondary Education)</option>
-                        <option value="ICSE">ICSE (Indian Certificate of Secondary Education)</option>
-                        <option value="IB">IB (Primary / Middle Years Programme)</option>
-                        <option value="IGCSE">IGCSE / Cambridge Secondary</option>
-                        <option value="Canadian">Canadian Provincial Curriculum</option>
-                        <option value="Australian">Australian National Curriculum</option>
-                        <option value="Other">Other National / State Curriculum</option>
+                      <label htmlFor="age">Student Age</label>
+                      <input id="age" type="number" name="age" min="5" max="18" placeholder="e.g. 11" required={isRegister} />
+                    </div>
+                    <div className={styles.inputGroup}>
+                      <label htmlFor="grade">Grade Level</label>
+                      <select id="grade" name="grade" required={isRegister} className={styles.selectInput}>
+                        <option value="">Select grade…</option>
+                        <option value="Kindergarten">Kindergarten</option>
+                        <option value="Grade 1-2">Grade 1–2</option>
+                        <option value="Grade 3-5">Grade 3–5</option>
+                        <option value="Grade 6-8">Grade 6–8</option>
+                        <option value="Grade 9">Grade 9</option>
+                        <option value="Grade 10">Grade 10</option>
                       </select>
                     </div>
-                  </>
+                  </div>
                 ) : (
-                  <>
-                    <div className={styles.inputGroup}>
-                      <label htmlFor="educationLevel">Current Education Standing</label>
-                      <select
-                        id="educationLevel"
-                        name="educationLevel"
-                        required={isRegister}
-                        style={{ width: "100%", padding: "0.625rem", borderRadius: "8px", border: "1.5px solid #E2E8F0", fontSize: "0.9rem", background: "#FFF" }}
-                      >
-                        <option value="">Select your standing...</option>
-                        <option value="High School (Grades 11-12)">High School (Grades 11–12)</option>
-                        <option value="Undergraduate / College Student">Undergraduate / College Student</option>
-                        <option value="Graduate / Master's / PhD">Graduate / Master&apos;s / PhD Student</option>
-                        <option value="Certified Educator / Professional">Certified Educator / Professional</option>
-                      </select>
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label htmlFor="school">School / University / Organization</label>
-                      <input
-                        id="school"
-                        type="text"
-                        name="school"
-                        placeholder="e.g. University of Toronto or Lincoln High"
-                        required={isRegister}
-                      />
-                    </div>
-                  </>
+                  <div className={styles.inputGroup}>
+                    <label htmlFor="educationLevel">Your Education Level</label>
+                    <select id="educationLevel" name="educationLevel" required={isRegister} className={styles.selectInput}>
+                      <option value="">Select standing…</option>
+                      <option value="High School (Grades 11-12)">High School (Grades 11–12)</option>
+                      <option value="Undergraduate / College Student">Undergraduate / College</option>
+                      <option value="Graduate / Master's / PhD">Graduate / Master's / PhD</option>
+                      <option value="Certified Educator / Professional">Certified Educator</option>
+                    </select>
+                  </div>
                 )}
               </>
             )}
@@ -271,8 +248,8 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
               {loading
                 ? "Please wait…"
                 : isRegister
-                ? (selectedRole === "TUTOR" ? "Join as Volunteer Tutor →" : "Create Student Account →")
-                : "Sign In"}
+                ? (selectedRole === "TUTOR" ? "Join as Volunteer Tutor →" : "Create Free Account →")
+                : "Sign In →"}
             </button>
           </form>
 
@@ -282,22 +259,19 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
               <button
                 className={styles.toggleBtn}
                 type="button"
-                onClick={() => {
-                  setIsRegister(!isRegister);
-                  setError("");
-                }}
+                onClick={() => { setIsRegister(!isRegister); setError(""); }}
               >
                 {isRegister ? "Sign in" : "Create a free account"}
               </button>
             </p>
           </div>
-        </div>
 
-        <p className={styles.termsNote}>
-          By continuing, you agree to our{" "}
-          <a href="/terms">Terms of Service</a> and{" "}
-          <a href="/privacy">Privacy Policy</a>.
-        </p>
+          <p className={styles.termsNote}>
+            By continuing, you agree to our{" "}
+            <a href="/terms">Terms of Service</a> and{" "}
+            <a href="/privacy">Privacy Policy</a>.
+          </p>
+        </div>
       </div>
     </main>
   );

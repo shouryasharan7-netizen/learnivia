@@ -14,7 +14,7 @@
   padding-inline: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 /* ==========================================================================
@@ -218,26 +218,13 @@
   background: #FFFFFF;
   border: 1.5px solid #DDD8D0;
   border-radius: 16px;
-  padding: 2rem 2.25rem;
+  padding: 2.25rem 2.5rem;
   color: #3D3831;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1.5rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(28, 26, 23, 0.07);
-}
-
-.heroCommandCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle at top right, rgba(45, 106, 79, 0.06) 0%, transparent 70%);
-  pointer-events: none;
+  gap: 1.75rem;
+  box-shadow: 0 2px 8px rgba(28, 26, 23, 0.06);
 }
 
 .heroStatusBadge {
