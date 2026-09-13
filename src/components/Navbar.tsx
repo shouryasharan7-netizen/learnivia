@@ -124,11 +124,7 @@ export function Navbar() {
       : "U";
 
     const userRole = session.user?.role || "STUDENT";
-    const userEmail = session.user?.email?.trim().toLowerCase();
-    const isAdmin =
-      userRole === "ADMIN" ||
-      userEmail === "shouryasharan7@gmail.com" ||
-      userEmail === "ahmedashfaqfarooqui@gmail.com";
+    const isAdmin = userRole === "ADMIN";
 
     return (
       <header className={styles.authHeader} role="banner">

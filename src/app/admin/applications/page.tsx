@@ -55,8 +55,8 @@ export default async function AdminApplicationsPage() {
               {/* Academic Grades & Report Card Verification Box */}
               <div
                 style={{
-                  background: tutor.reportCardUrl ? "#F0FDF4" : "#FFFBEB",
-                  border: `1.5px solid ${tutor.reportCardUrl ? "#86EFAC" : "#FCD34D"}`,
+                  background: (tutor.reportCardStorageKey || tutor.reportCardUrl) ? "#F0FDF4" : "#FFFBEB",
+                  border: `1.5px solid ${(tutor.reportCardStorageKey || tutor.reportCardUrl) ? "#86EFAC" : "#FCD34D"}`,
                   borderRadius: "10px",
                   padding: "1.25rem",
                   display: "flex",
@@ -71,7 +71,7 @@ export default async function AdminApplicationsPage() {
                       Academic Credentials &amp; Report Card
                     </strong>
                   </div>
-                  {tutor.reportCardUrl ? (
+                  {(tutor.reportCardStorageKey || tutor.reportCardUrl) ? (
                     <span style={{ color: "#065F46", background: "#D1FAE5", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700 }}>
                       ✓ Document Attached
                     </span>
@@ -92,9 +92,9 @@ export default async function AdminApplicationsPage() {
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.25rem" }}>
-                  {tutor.reportCardUrl ? (
+                  {(tutor.reportCardStorageKey || tutor.reportCardUrl) ? (
                     <a
-                      href={tutor.reportCardUrl}
+                      href={`/api/admin/report-card/${tutor.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{

@@ -154,10 +154,10 @@ export default async function AdminTutorsPage() {
                         )}
 
                         {/* Official Report Card / Academic Transcript */}
-                        {tutor.reportCardUrl ? (
+                        {(tutor.reportCardStorageKey || tutor.reportCardUrl) ? (
                           <div style={{ marginTop: "0.3rem" }}>
                             <a
-                              href={tutor.reportCardUrl}
+                              href={`/api/admin/report-card/${tutor.id}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               style={{

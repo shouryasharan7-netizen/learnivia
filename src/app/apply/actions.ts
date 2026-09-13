@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { sendApplicationReceived } from "@/lib/email";
+import { validateDocumentFile, uploadReportCardToStorage } from "@/lib/storage";
 
 const GRADE_MAP: Record<string, string> = {
   kindergarten: "Kindergarten",
@@ -47,15 +48,35 @@ export async function submitApplication(formData: FormData) {
 
     let reportCardUrl: string | null = reportCardLink;
     let reportCardName: string | null = reportCardLink ? "Academic Report Card Document" : null;
+    let reportCardStorageKey: string | null = null;
+    let reportCardMimeType: string | null = null;
 
     if (reportCardFile && reportCardFile.size > 0) {
-      // 4MB limit check
-      if (reportCardFile.size > 4 * 1024 * 1024) {
-        return { success: false, error: "Report card document file is too large (max 4MB). You can also share a Google Drive link." };
+      const validation = validateDocumentFile(reportCardFile);
+      if (!validation.valid) {
+        return { success: false, error: validation.error };
       }
+
+      const mimeType = reportCardFile.type || "application/pdf";
       const buffer = Buffer.from(await reportCardFile.arrayBuffer());
-      reportCardUrl = `data:${reportCardFile.type || "application/pdf"};base64,${buffer.toString("base64")}`;
-      reportCardName = reportCardFile.name;
+      const uploadRes = await uploadReportCardToStorage({
+        buffer,
+        fileName: reportCardFile.name,
+        mimeType,
+        userId: session.user.id,
+      });
+
+      if (uploadRes.storageKey) {
+        reportCardStorageKey = uploadRes.storageKey;
+        reportCardMimeType = mimeType;
+        reportCardName = reportCardFile.name;
+        reportCardUrl = null;
+      } else {
+        // Safe fallback if bucket not yet ready
+        reportCardUrl = `data:${mimeType};base64,${buffer.toString("base64")}`;
+        reportCardName = reportCardFile.name;
+        reportCardMimeType = mimeType;
+      }
     }
 
     // 1. Update User timezone and ensure role is TUTOR
@@ -89,7 +110,10 @@ export async function submitApplication(formData: FormData) {
         experience,
         status: "PENDING",
         ...(academicScores ? { academicScores } : {}),
-        ...(reportCardUrl ? { reportCardUrl, reportCardName } : {}),
+        reportCardName,
+        reportCardUrl,
+        reportCardStorageKey,
+        reportCardMimeType,
         subjects: {
           set: [],
           connectOrCreate: subjectNames.map((name) => ({
@@ -114,6 +138,8 @@ export async function submitApplication(formData: FormData) {
         academicScores,
         reportCardUrl,
         reportCardName,
+        reportCardStorageKey,
+        reportCardMimeType,
         subjects: {
           connectOrCreate: subjectNames.map((name) => ({
             where: { name },
@@ -166,23 +192,50 @@ export async function updateReportCard(formData: FormData) {
 
     let reportCardUrl: string | null = reportCardLink;
     let reportCardName: string | null = reportCardLink ? "Academic Report Card Document" : null;
+    let reportCardStorageKey: string | null = null;
+    let reportCardMimeType: string | null = null;
 
     if (reportCardFile && reportCardFile.size > 0) {
-      if (reportCardFile.size > 4 * 1024 * 1024) {
-        return { success: false, error: "File too large (max 4MB). You can also share a Google Drive link." };
+      const validation = validateDocumentFile(reportCardFile);
+      if (!validation.valid) {
+        return { success: false, error: validation.error };
       }
+
+      const mimeType = reportCardFile.type || "application/pdf";
       const buffer = Buffer.from(await reportCardFile.arrayBuffer());
-      reportCardUrl = `data:${reportCardFile.type || "application/pdf"};base64,${buffer.toString("base64")}`;
-      reportCardName = reportCardFile.name;
+      const uploadRes = await uploadReportCardToStorage({
+        buffer,
+        fileName: reportCardFile.name,
+        mimeType,
+        userId: session.user.id,
+      });
+
+      if (uploadRes.storageKey) {
+        reportCardStorageKey = uploadRes.storageKey;
+        reportCardMimeType = mimeType;
+        reportCardName = reportCardFile.name;
+        reportCardUrl = null;
+      } else {
+        reportCardUrl = `data:${mimeType};base64,${buffer.toString("base64")}`;
+        reportCardName = reportCardFile.name;
+        reportCardMimeType = mimeType;
+      }
     }
 
     const updateData: Record<string, unknown> = {};
     if (academicScores !== null && academicScores !== "") {
       updateData.academicScores = academicScores;
     }
-    if (reportCardUrl) {
+    if (reportCardStorageKey) {
+      updateData.reportCardStorageKey = reportCardStorageKey;
+      updateData.reportCardMimeType = reportCardMimeType;
+      updateData.reportCardName = reportCardName;
+      updateData.reportCardUrl = null;
+    } else if (reportCardUrl) {
       updateData.reportCardUrl = reportCardUrl;
       updateData.reportCardName = reportCardName;
+      updateData.reportCardMimeType = reportCardMimeType;
+      updateData.reportCardStorageKey = null;
     }
 
     if (Object.keys(updateData).length > 0) {

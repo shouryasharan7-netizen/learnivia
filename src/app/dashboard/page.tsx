@@ -8,6 +8,7 @@ import { getMeetingUrls } from "@/lib/meetingUrl";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { calculateUserStats } from "@/lib/stats";
 import ChildProfileSection from "./ChildProfileSection";
+import EmailVerificationBanner from "@/components/EmailVerificationBanner";
 import {
   Calculator,
   Atom,
@@ -234,6 +235,11 @@ export default async function StudentDashboard() {
           </div>
         )}
 
+        {/* Email Verification Banner */}
+        {!user.emailVerified && user.email && (
+          <EmailVerificationBanner email={user.email} />
+        )}
+
         {/* Tutor Application Status & Report Card Banner */}
         {tutorProfile && tutorProfile.status === "PENDING" && (
           <div className={styles.tutorPendingBanner}>
@@ -248,14 +254,14 @@ export default async function StudentDashboard() {
                 </span>
               </div>
               <p className={styles.tutorPendingDesc}>
-                {tutorProfile.reportCardUrl
+                {(tutorProfile.reportCardStorageKey || tutorProfile.reportCardUrl)
                   ? "Your academic report card & scores have been submitted and are being reviewed by the Learnivia Academic Board."
                   : "Action needed: Please upload your academic report card / mark sheet so our team can verify your scores and approve your tutor profile."}
               </p>
             </div>
             <Link href="/apply" className={styles.tutorPendingBtn} prefetch={false}>
               <FileText size={15} />
-              {tutorProfile.reportCardUrl ? "View / Update Report Card →" : "Upload Report Card Now →"}
+              {(tutorProfile.reportCardStorageKey || tutorProfile.reportCardUrl) ? "View / Update Report Card →" : "Upload Report Card Now →"}
             </Link>
           </div>
         )}

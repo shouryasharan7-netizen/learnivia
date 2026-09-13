@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import { loginWithEmail, loginWithGoogle } from "./actions";
 import styles from "./page.module.css";
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { GraduationCap, Leaf } from "lucide-react";
 
@@ -28,6 +29,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
   const [selectedRole, setSelectedRole] = useState<"STUDENT" | "TUTOR">(
     roleParam === "tutor" ? "TUTOR" : "STUDENT"
   );
+  const [studentAge, setStudentAge] = useState<string>("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
@@ -187,24 +189,55 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                 </div>
 
                 {selectedRole === "STUDENT" ? (
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-                    <div className={styles.inputGroup}>
-                      <label htmlFor="age">Student Age</label>
-                      <input id="age" type="number" name="age" min="5" max="18" placeholder="e.g. 11" required={isRegister} />
+                  <>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                      <div className={styles.inputGroup}>
+                        <label htmlFor="age">Student Age</label>
+                        <input
+                          id="age"
+                          type="number"
+                          name="age"
+                          min="5"
+                          max="18"
+                          placeholder="e.g. 11"
+                          required={isRegister}
+                          value={studentAge}
+                          onChange={(e) => setStudentAge(e.target.value)}
+                        />
+                      </div>
+                      <div className={styles.inputGroup}>
+                        <label htmlFor="grade">Grade Level</label>
+                        <select id="grade" name="grade" required={isRegister} className={styles.selectInput}>
+                          <option value="">Select grade…</option>
+                          <option value="Kindergarten">Kindergarten</option>
+                          <option value="Grade 1-2">Grade 1–2</option>
+                          <option value="Grade 3-5">Grade 3–5</option>
+                          <option value="Grade 6-8">Grade 6–8</option>
+                          <option value="Grade 9">Grade 9</option>
+                          <option value="Grade 10">Grade 10</option>
+                        </select>
+                      </div>
                     </div>
-                    <div className={styles.inputGroup}>
-                      <label htmlFor="grade">Grade Level</label>
-                      <select id="grade" name="grade" required={isRegister} className={styles.selectInput}>
-                        <option value="">Select grade…</option>
-                        <option value="Kindergarten">Kindergarten</option>
-                        <option value="Grade 1-2">Grade 1–2</option>
-                        <option value="Grade 3-5">Grade 3–5</option>
-                        <option value="Grade 6-8">Grade 6–8</option>
-                        <option value="Grade 9">Grade 9</option>
-                        <option value="Grade 10">Grade 10</option>
-                      </select>
-                    </div>
-                  </div>
+
+                    {/* Age Gate & Guardian Acknowledgment for under-13 */}
+                    {studentAge && parseInt(studentAge, 10) < 13 && (
+                      <div className={styles.inputGroup} style={{ marginTop: "0.5rem" }}>
+                        <label htmlFor="parentEmail" style={{ color: "#0E8345", fontWeight: 700 }}>
+                          Parent / Guardian Email (Learners under 13)
+                        </label>
+                        <input
+                          id="parentEmail"
+                          type="email"
+                          name="parentEmail"
+                          required
+                          placeholder="parent@example.com"
+                        />
+                        <span style={{ fontSize: "0.75rem", color: "#78716C", marginTop: "0.25rem", display: "block" }}>
+                          Learnivia requires parent or guardian acknowledgment for learners under 13 before participating in sessions.
+                        </span>
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <div className={styles.inputGroup}>
                     <label htmlFor="educationLevel">Your Education Level</label>
@@ -233,7 +266,22 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="password">Password</label>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <label htmlFor="password">Password</label>
+                {!isRegister && (
+                  <Link
+                    href="/forgot-password"
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "#0E8345",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Forgot password?
+                  </Link>
+                )}
+              </div>
               <input
                 id="password"
                 type="password"

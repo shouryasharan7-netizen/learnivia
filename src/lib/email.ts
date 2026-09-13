@@ -150,3 +150,83 @@ export async function sendBookingCancellation(
     console.error("Failed to send cancellation email:", error);
   }
 }
+
+export async function sendPasswordResetEmail(recipientEmail: string, resetUrl: string) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping password reset email.");
+    return;
+  }
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: recipientEmail,
+      subject: "Reset your Learnivia password",
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 540px; margin: 0 auto; padding: 32px 24px; color: #1E293B; background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0;">
+          <div style="margin-bottom: 24px;">
+            <span style="font-size: 20px; font-weight: 800; color: #0E8345; letter-spacing: -0.02em;">Learnivia</span>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Password Reset Request</h2>
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 24px;">
+            We received a request to reset your password for your Learnivia account. Click the secure button below to choose a new password:
+          </p>
+          <div style="margin: 28px 0;">
+            <a href="${resetUrl}" style="background-color: #0E8345; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block;">
+              Reset Password →
+            </a>
+          </div>
+          <p style="font-size: 13px; color: #64748B; line-height: 1.5; margin: 24px 0 0;">
+            This link will expire in 1 hour. If you didn't request this password reset, you can safely ignore this email — your account remains completely secure.
+          </p>
+          <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 28px 0 16px;" />
+          <p style="font-size: 12px; color: #94A3B8; margin: 0;">
+            Learnivia — Free K–10 Peer Tutoring Platform
+          </p>
+        </div>
+      `,
+    });
+  } catch (error) {
+    console.error("Failed to send password reset email:", error);
+  }
+}
+
+export async function sendEmailVerification(recipientEmail: string, verifyUrl: string) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping email verification email.");
+    return;
+  }
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: recipientEmail,
+      subject: "Verify your email on Learnivia",
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 540px; margin: 0 auto; padding: 32px 24px; color: #1E293B; background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0;">
+          <div style="margin-bottom: 24px;">
+            <span style="font-size: 20px; font-weight: 800; color: #0E8345; letter-spacing: -0.02em;">Learnivia</span>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Verify your email address</h2>
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 24px;">
+            Welcome to Learnivia! To keep our tutoring community safe and secure for all students and tutors, please verify your email address.
+          </p>
+          <div style="margin: 28px 0;">
+            <a href="${verifyUrl}" style="background-color: #0E8345; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block;">
+              Verify My Email →
+            </a>
+          </div>
+          <p style="font-size: 13px; color: #64748B; line-height: 1.5; margin: 24px 0 0;">
+            This link is valid for 24 hours. If you did not create a Learnivia account, no further action is required.
+          </p>
+          <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 28px 0 16px;" />
+          <p style="font-size: 12px; color: #94A3B8; margin: 0;">
+            Learnivia — Free K–10 Peer Tutoring Platform
+          </p>
+        </div>
+      `,
+    });
+  } catch (error) {
+    console.error("Failed to send verification email:", error);
+  }
+}

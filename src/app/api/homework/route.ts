@@ -42,7 +42,9 @@ export async function GET(request: Request) {
           // Deliberately omit: question (full text), studentId, student details
           // Tutors get a truncated preview only — full question revealed on accept
           tutor: {
-            include: {
+            select: {
+              id: true,
+              school: true,
               user: { select: { id: true, name: true, image: true } },
             },
           },
@@ -60,7 +62,13 @@ export async function GET(request: Request) {
         where,
         include: {
           student: { select: { id: true, name: true, grade: true, curriculum: true } },
-          tutor: { include: { user: { select: { id: true, name: true, image: true } } } },
+          tutor: {
+            select: {
+              id: true,
+              school: true,
+              user: { select: { id: true, name: true, image: true } },
+            },
+          },
         },
         orderBy: { createdAt: "desc" },
         take: 50,
@@ -181,7 +189,7 @@ export async function PATCH(request: Request) {
       },
       include: {
         student: { select: { id: true, name: true } },
-        tutor: { include: { user: { select: { name: true } } } },
+        tutor: { select: { id: true, school: true, user: { select: { name: true } } } },
       },
     });
 

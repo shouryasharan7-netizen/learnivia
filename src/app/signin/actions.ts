@@ -3,13 +3,10 @@
 import { signIn } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import { AuthError } from "next-auth";
-
-const ADMIN_EMAILS = new Set([
-  "shouryasharan7@gmail.com",
-  "ahmedashfaqfarooqui@gmail.com",
-  ...(process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase()) : []),
-]);
+import { getAdminEmails } from "@/auth.config";
+import { sendEmailVerification } from "@/lib/email";
 
 export async function loginWithEmail(formData: FormData) {
   const rawEmail = (formData.get("email") as string) || "";
@@ -45,19 +42,30 @@ export async function loginWithEmail(formData: FormData) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const isAdmin = ADMIN_EMAILS.has(email);
+    // P0-5: Admin check exclusively from env var
+    const adminEmails = getAdminEmails();
+    const isAdmin = adminEmails.has(email);
+
+    // P0-7: Generate email verification token
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+    const baseUrl = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://learnivia-green.vercel.app";
+    const verifyUrl = `${baseUrl}/verify-email?token=${verificationToken}`;
 
     if (role === "TUTOR") {
       const school = ((formData.get("school") as string) || "").trim();
       const educationLevel = ((formData.get("educationLevel") as string) || "").trim();
 
-      const newUser = await prisma.user.create({
+      await prisma.user.create({
         data: {
           email,
           password: hashedPassword,
           name: name || email.split("@")[0],
           role: isAdmin ? "ADMIN" : "TUTOR",
           onboardingCompleted: true,
+          emailVerificationToken: verificationToken,
+          emailVerificationExpires: verificationExpires,
           tutorProfile: {
             create: {
               status: "PENDING",
@@ -67,6 +75,11 @@ export async function loginWithEmail(formData: FormData) {
           },
         },
       });
+
+      // Send verification email non-blockingly
+      sendEmailVerification(email, verifyUrl).catch((err) =>
+        console.error("Non-blocking email verification error:", err)
+      );
 
       try {
         await signIn("credentials", { email, password, redirect: false });
@@ -84,6 +97,9 @@ export async function loginWithEmail(formData: FormData) {
       const age = rawAge ? parseInt(rawAge, 10) : undefined;
       const grade = ((formData.get("grade") as string) || "").trim() || undefined;
       const curriculum = ((formData.get("curriculum") as string) || "").trim() || undefined;
+      const parentEmail = ((formData.get("parentEmail") as string) || "").trim().toLowerCase() || null;
+
+      const isMinor = (age !== undefined && !isNaN(age)) ? age < 13 : false;
 
       await prisma.user.create({
         data: {
@@ -95,8 +111,17 @@ export async function loginWithEmail(formData: FormData) {
           age: isNaN(age as number) ? undefined : age,
           grade,
           curriculum,
+          isMinor,
+          parentEmail,
+          emailVerificationToken: verificationToken,
+          emailVerificationExpires: verificationExpires,
         },
       });
+
+      // Send verification email non-blockingly
+      sendEmailVerification(email, verifyUrl).catch((err) =>
+        console.error("Non-blocking email verification error:", err)
+      );
 
       try {
         await signIn("credentials", { email, password, redirect: false });

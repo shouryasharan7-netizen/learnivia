@@ -6,6 +6,8 @@ import { sendApplicationApproved } from "@/lib/email";
 import { revalidatePath } from "next/cache";
 import type { Role } from "@prisma/client";
 
+import { validateDocumentFile, uploadReportCardToStorage } from "@/lib/storage";
+
 export async function approveApplication(tutorId: string) {
   await requireAdmin();
 
@@ -18,13 +20,17 @@ export async function approveApplication(tutorId: string) {
   // Update user role to TUTOR if they were a STUDENT
   if (profile.user.role === "STUDENT") {
     await prisma.user.update({
-      where: { id: profile.user.id },
+      where: { id: profile.userId },
       data: { role: "TUTOR" }
     });
   }
 
   if (profile.user.email) {
-    await sendApplicationApproved(profile.user.email, profile.user.name || "Tutor");
+    try {
+      await sendApplicationApproved(profile.user.email, profile.user.name || "Tutor");
+    } catch (err) {
+      console.error("Non-blocking email error in approveApplication:", err);
+    }
   }
 
   revalidatePath("/admin/applications");
@@ -41,7 +47,6 @@ export async function rejectApplication(tutorId: string) {
   });
 
   revalidatePath("/admin/applications");
-  revalidatePath("/admin/tutors");
   revalidatePath("/admin");
 }
 
@@ -72,26 +77,61 @@ export async function reactivateTutor(tutorId: string) {
 export async function adminUpdateReportCard(tutorId: string, formData: FormData) {
   await requireAdmin();
 
+  const tutor = await prisma.tutorProfile.findUnique({
+    where: { id: tutorId },
+    select: { userId: true },
+  });
+  if (!tutor) throw new Error("Tutor not found");
+
   const academicScores = ((formData.get("academicScores") as string) || "").trim() || null;
   const reportCardLink = ((formData.get("reportCardLink") as string) || "").trim() || null;
   const reportCardFile = formData.get("reportCardFile") as File | null;
 
   let reportCardUrl: string | null = reportCardLink;
   let reportCardName: string | null = reportCardLink ? "Academic Report Card Document" : null;
+  let reportCardStorageKey: string | null = null;
+  let reportCardMimeType: string | null = null;
 
   if (reportCardFile && reportCardFile.size > 0) {
+    const validation = validateDocumentFile(reportCardFile);
+    if (!validation.valid) {
+      throw new Error(validation.error || "Invalid file");
+    }
+    const mimeType = reportCardFile.type || "application/pdf";
     const buffer = Buffer.from(await reportCardFile.arrayBuffer());
-    reportCardUrl = `data:${reportCardFile.type || "application/pdf"};base64,${buffer.toString("base64")}`;
-    reportCardName = reportCardFile.name;
+    const uploadRes = await uploadReportCardToStorage({
+      buffer,
+      fileName: reportCardFile.name,
+      mimeType,
+      userId: tutor.userId,
+    });
+
+    if (uploadRes.storageKey) {
+      reportCardStorageKey = uploadRes.storageKey;
+      reportCardMimeType = mimeType;
+      reportCardName = reportCardFile.name;
+      reportCardUrl = null;
+    } else {
+      reportCardUrl = `data:${mimeType};base64,${buffer.toString("base64")}`;
+      reportCardName = reportCardFile.name;
+      reportCardMimeType = mimeType;
+    }
   }
 
   const updateData: Record<string, unknown> = {};
   if (academicScores !== null && academicScores !== "") {
     updateData.academicScores = academicScores;
   }
-  if (reportCardUrl) {
+  if (reportCardStorageKey) {
+    updateData.reportCardStorageKey = reportCardStorageKey;
+    updateData.reportCardMimeType = reportCardMimeType;
+    updateData.reportCardName = reportCardName;
+    updateData.reportCardUrl = null;
+  } else if (reportCardUrl) {
     updateData.reportCardUrl = reportCardUrl;
     updateData.reportCardName = reportCardName;
+    updateData.reportCardMimeType = reportCardMimeType;
+    updateData.reportCardStorageKey = null;
   }
 
   if (Object.keys(updateData).length > 0) {

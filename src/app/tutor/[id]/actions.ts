@@ -10,6 +10,11 @@ import { getMeetingUrls } from "@/lib/meetingUrl";
 export async function bookSession(formData: FormData) {
   const user = await requireAuth();
 
+  // P0-7: Email verification check
+  if (user.email && !user.emailVerified) {
+    throw new Error("Please verify your email address before booking a tutoring session. Check your dashboard for the verification link.");
+  }
+
   const tutorId = formData.get("tutorId") as string;
   const slotId = formData.get("slotId") as string;
   const subject = (formData.get("subject") as string) || "General Tutoring";
@@ -138,6 +143,7 @@ export async function bookSession(formData: FormData) {
       endTime: endDate,
       status: "CONFIRMED",
       zoomLink: meetingUrl,
+      idempotencyKey: `${tutorId}-${user.id}-${targetDate.getTime()}`,
     },
   });
 

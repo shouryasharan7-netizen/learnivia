@@ -73,6 +73,27 @@ model User {
   curriculum    String?
   points        Int       @default(0)
   
+  // Password Reset (P1-3)
+  passwordResetToken       String?
+  passwordResetExpires     DateTime?
+
+  // Email Verification (P0-7)
+  emailVerificationToken   String?
+  emailVerificationExpires DateTime?
+
+  // Age Gating & Minor Protection (P0-8)
+  dateOfBirth              DateTime?
+  isMinor                  Boolean?  @default(false)
+  parentEmail              String?
+  guardianConsentGiven     Boolean   @default(false)
+
+  // Account Security & Brute Force Lockout (P0-12)
+  failedLoginCount         Int       @default(0)
+  lockedUntil              DateTime?
+  lastLoginAt              DateTime?
+  accountSuspended         Boolean   @default(false)
+  suspendedReason          String?
+
   accounts      Account[]
   sessions      Session[]
   
@@ -98,6 +119,9 @@ model User {
 
   // Parent-managed child profiles (Phase 2)
   childProfiles     ChildProfile[]      @relation("ParentChildProfiles")
+
+  @@index([passwordResetToken])
+  @@index([emailVerificationToken])
 }
 
 model TutorProfile {
@@ -120,9 +144,11 @@ model TutorProfile {
   maxAge          Int?
   targetGrades    String?
 
-  academicScores  String?     @db.Text
-  reportCardUrl   String?     @db.Text
-  reportCardName  String?
+  academicScores       String?     @db.Text
+  reportCardUrl        String?     @db.Text
+  reportCardName       String?
+  reportCardStorageKey String?
+  reportCardMimeType   String?
 
   gradeLevels     GradeLevel[]
   subjects        Subject[]
@@ -209,9 +235,12 @@ model Booking {
   checkUpSent     Boolean       @default(false)
   cancelReason    String?       @db.Text
   maxParticipants Int           @default(1)
+  idempotencyKey  String?
   
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+
+  @@index([idempotencyKey])
 }
 
 model Program {
@@ -355,6 +384,8 @@ model HomeworkRequest {
   tutor           TutorProfile? @relation(fields: [tutorId], references: [id], onDelete: SetNull)
   
   zoomLink        String?       @db.Text
+  isPrivate       Boolean       @default(true)
+  deletedAt       DateTime?
   
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
