@@ -81,7 +81,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "How do I get my volunteer service transcript?",
-        a: "Go to your Tutor Dashboard → Volunteer Transcript. You can download an official transcript with unique session verification IDs, accepted by NHS chapters, school advisors, and community organizations.",
+        a: "Go to your Tutor Dashboard → Volunteer Transcript. You can download a verified service record with unique session verification IDs suitable for school advisors, community service programs, and college portfolios.",
       },
       {
         q: "Can I choose my own schedule and subjects?",
@@ -103,7 +103,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "Is my personal information protected?",
-        a: "Yes. Minor learners are displayed by first name and last initial only (e.g., 'Priya K.'). Parent accounts protect children's personal details. Learnivia complies with COPPA and GDPR-K data protection requirements.",
+        a: "Yes. Minor learners are displayed by first name and last initial only (e.g., 'Priya K.'). Parent accounts protect children's personal details, and all minor accounts require parent/guardian setup.",
       },
       {
         q: "What if I forget my password?",

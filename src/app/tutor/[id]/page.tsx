@@ -91,7 +91,7 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                 fontSize: "0.85rem",
               }}
             >
-              📜 Official Transcript →
+              📜 Verified Service Record →
             </Link>
           </div>
         </div>

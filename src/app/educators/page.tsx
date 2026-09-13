@@ -28,7 +28,7 @@ export default function EducatorsPage() {
           },
           {
             title: "Encourage strong students to volunteer",
-            content: "Volunteering with Learnivia builds communication skills, empathy, and subject mastery. Tutors receive verified records of their volunteer hours, which can support UCAS personal statements, Duke of Edinburgh awards, or other extracurricular portfolios.",
+            content: "Volunteering with Learnivia builds communication skills, empathy, and subject mastery. Tutors receive verified records of their volunteer hours, which can support university personal statements, service awards, or other extracurricular portfolios.",
           },
           {
             title: "Not a replacement for classroom support",

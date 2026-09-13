@@ -4,13 +4,16 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import PrintButton from "./PrintButton";
+import ShareTranscriptButton from "./ShareTranscriptButton";
 import { getCurrentUser } from "@/lib/auth-user";
+import { generateTranscriptToken, verifyTranscriptToken } from "@/lib/transcript";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ id: string }>;
+  searchParams?: Promise<{ token?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -23,19 +26,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!tutor) return { title: "Transcript Not Found - Learnivia" };
 
   return {
-    title: `Official Volunteer Service Transcript - ${tutor.user.name || "Tutor"} | Learnivia`,
-    description: `Official verified record of volunteer peer-tutoring hours, student impact, and academic subjects for ${tutor.user.name}.`,
+    title: `Volunteer Service Record - ${tutor.user.name || "Tutor"} | Learnivia`,
+    description: `Verified record of volunteer peer-tutoring hours, student impact, and academic subjects for ${tutor.user.name}.`,
   };
 }
 
-export default async function TutorTranscriptPage({ params }: Props) {
+export default async function TutorTranscriptPage({ params, searchParams }: Props) {
   const { id } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const token = resolvedSearchParams?.token;
 
-  // P0-2: Transcript requires authentication.
-  // Viewers must be: the tutor themselves, or an admin.
-  // Future: allow public share via signed token.
+  const hasValidToken = token ? verifyTranscriptToken(id, token) : false;
   const currentUser = await getCurrentUser();
-  if (!currentUser) {
+
+  // P0-2 & P2-2: Access requires authentication OR a valid cryptographic token
+  if (!currentUser && !hasValidToken) {
     redirect(`/signin?callbackUrl=/tutor/${id}/transcript`);
   }
 
@@ -95,14 +100,16 @@ export default async function TutorTranscriptPage({ params }: Props) {
     notFound();
   }
 
-  // Authorization: only the tutor themselves or an admin can view
-  const isOwnTranscript = tutor.user.id === currentUser.id;
-  const isAdmin = currentUser.isAdmin;
+  // Authorization: viewer must be the tutor themselves, an admin, or have a valid cryptographic token
+  const isOwnTranscript = currentUser ? tutor.user.id === currentUser.id : false;
+  const isAdmin = currentUser ? currentUser.isAdmin : false;
 
-  if (!isOwnTranscript && !isAdmin) {
+  if (!isOwnTranscript && !isAdmin && !hasValidToken) {
     // Instead of 404 (which reveals existence), redirect to the public profile
     redirect(`/tutor/${id}`);
   }
+
+  const shareToken = generateTranscriptToken(tutor.id);
 
   const completedSessions = tutor.tutorBookings;
   const completedWorkshops = tutor.workshops || [];
@@ -134,12 +141,26 @@ export default async function TutorTranscriptPage({ params }: Props) {
     <main className={styles.main}>
       <div className={styles.container}>
         {/* Top actions bar */}
-        <div className={styles.topActions}>
+        <div className={styles.topActions} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
           <Link href={`/tutor/${tutor.id}`} className={styles.backLink}>
             ← Back to Tutor Profile
           </Link>
-          <PrintButton />
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+            {(isOwnTranscript || isAdmin) && (
+              <ShareTranscriptButton tutorId={tutor.id} token={shareToken} />
+            )}
+            <PrintButton />
+          </div>
         </div>
+
+        {hasValidToken && !currentUser && (
+          <div style={{ background: "#ECFDF5", border: "1px solid #A7F3D0", padding: "0.75rem 1.25rem", borderRadius: "8px", marginBottom: "1.25rem", fontSize: "0.85rem", color: "#065F46", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span>🔒</span>
+            <span>
+              <strong>Verified Public View:</strong> You are viewing an authentic Learnivia Volunteer Service Record verified via cryptographic signature. Student PII is strictly protected and redacted.
+            </span>
+          </div>
+        )}
 
         {/* The Official Certificate Document */}
         <div className={styles.certificate}>
@@ -150,7 +171,7 @@ export default async function TutorTranscriptPage({ params }: Props) {
                 <Image src="/images/logo.png" alt="Learnivia" width={42} height={42} priority />
                 <span className={styles.brandName}>Learnivia</span>
               </div>
-              <span className={styles.docType}>Official Volunteer Service Record</span>
+              <span className={styles.docType}>Verified Volunteer Service Record</span>
             </div>
 
             <div className={styles.verificationBadge}>
@@ -166,7 +187,7 @@ export default async function TutorTranscriptPage({ params }: Props) {
           <div className={styles.tutorIntro}>
             <h1 className={styles.certTitle}>Certificate of Volunteer Service</h1>
             <p className={styles.certSubtitle}>
-              This official transcript certifies that the individual named below has actively volunteered as an approved peer tutor on Learnivia, delivering free, interactive academic support to learners worldwide.
+              This verified service record certifies that the individual named below has actively volunteered as an approved peer tutor on Learnivia, delivering free, interactive academic support to learners worldwide.
             </p>
             <div className={styles.tutorHighlight}>{tutor.user.name}</div>
             <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.5rem" }}>

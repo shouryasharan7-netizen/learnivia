@@ -37,7 +37,7 @@ export async function createChildProfile(formData: FormData) {
     }
 
     if (!lastInitial) {
-      return { success: false, error: "Last initial is required for privacy (COPPA compliant)." };
+      return { success: false, error: "Last initial is required for child privacy protection (never full surname)." };
     }
 
     // Format last initial as single uppercase letter or single letter with dot

@@ -85,6 +85,7 @@ export default async function TutorDashboard() {
     include: {
       availabilities: true,
       subjects: true,
+      trainingModules: true,
     },
   });
 
@@ -101,6 +102,7 @@ export default async function TutorDashboard() {
       include: {
         availabilities: true,
         subjects: true,
+        trainingModules: true,
       },
     });
   }
@@ -113,12 +115,14 @@ export default async function TutorDashboard() {
           <h1 className={styles.title}>Become a Volunteer Tutor</h1>
           <p>You have not registered a tutor profile yet. Join our global community of volunteer educators.</p>
           <Link href="/apply" className={styles.primaryBtn} style={{ marginTop: "1rem" }}>
-            Apply to Become a Tutor →
+            Start Volunteer Application →
           </Link>
         </div>
       </main>
     );
   }
+
+  const passedModules = (tutor.trainingModules || []).filter((m) => m.quizPassed).length;
 
   if (tutor.status === "PENDING") {
     return (
@@ -126,13 +130,29 @@ export default async function TutorDashboard() {
         <div className={styles.authNoticeCard}>
           <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>⏳</div>
           <h1 className={styles.title}>Application Pending Review</h1>
-          <p>Your tutor application is currently being reviewed by the Learnivia Academic Board. Please make sure your official academic report card and scores have been submitted!</p>
+          <p>Your tutor application is currently being reviewed by the Learnivia Academic Board. To prepare for approval, complete the 5 mandatory Safeguarding &amp; Tutoring training modules!</p>
+
+          <div style={{ margin: "1.25rem 0", background: passedModules === 5 ? "#F0FDF4" : "#FFFBEB", border: `1px solid ${passedModules === 5 ? "#86EFAC" : "#FCD34D"}`, padding: "1rem", borderRadius: "10px", textAlign: "left" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+              <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--color-navy)" }}>🛡️ Safeguarding &amp; Tutoring Modules</span>
+              <span style={{ fontSize: "0.8rem", fontWeight: 800, color: passedModules === 5 ? "#065F46" : "#92400E" }}>
+                {passedModules}/5 Completed
+              </span>
+            </div>
+            <div style={{ background: "#E2E8F0", borderRadius: "999px", height: "8px", overflow: "hidden" }}>
+              <div style={{ background: passedModules === 5 ? "#10B981" : "#F59E0B", width: `${(passedModules / 5) * 100}%`, height: "100%", transition: "width 0.3s ease" }} />
+            </div>
+          </div>
+
           <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "1.25rem", flexWrap: "wrap" }}>
+            <Link href="/tutor/training" className={styles.primaryBtn} style={{ background: "#0E8345" }}>
+              🎓 Complete Training Modules ({passedModules}/5) →
+            </Link>
             <Link href="/apply" className={styles.primaryBtn} style={{ background: "var(--color-teal)" }}>
-              📄 Upload / Manage Report Card →
+              📄 Report Card &amp; Documents
             </Link>
             <Link href="/dashboard" className={styles.primaryBtn} style={{ background: "#F1F5F9", color: "var(--color-navy)", border: "1px solid var(--color-border)" }}>
-              Go to Dashboard
+              Dashboard
             </Link>
           </div>
         </div>
@@ -197,6 +217,20 @@ export default async function TutorDashboard() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
+        {passedModules < 5 && (
+          <div style={{ background: "#FEF3C7", border: "1px solid #FCD34D", borderRadius: "10px", padding: "0.85rem 1.25rem", marginBottom: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span>🛡️</span>
+              <span style={{ fontSize: "0.875rem", color: "#92400E", fontWeight: 600 }}>
+                <strong>Training in progress ({passedModules}/5 completed):</strong> Complete all 5 safeguarding modules to verify your tutor credential and maintain session compliance.
+              </span>
+            </div>
+            <Link href="/tutor/training" style={{ background: "#D97706", color: "white", padding: "0.35rem 0.85rem", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 700, textDecoration: "none" }}>
+              Continue Training →
+            </Link>
+          </div>
+        )}
+
         {/* Compact, professional top header */}
         <div className={styles.headerRow}>
           <div className={styles.headerTitleCol}>
@@ -220,7 +254,7 @@ export default async function TutorDashboard() {
               <Plus size={15} /> Schedule a Session
             </a>
             <Link href={`/tutor/${tutor.id}/transcript`} className={styles.transcriptBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-              <FileText size={15} /> Official Transcript →
+              <FileText size={15} /> Volunteer Record →
             </Link>
           </div>
         </div>
@@ -459,21 +493,21 @@ export default async function TutorDashboard() {
               </div>
             </section>
 
-            {/* Official Transcript Quick Card */}
+            {/* Volunteer Service Record Quick Card */}
             <div className={styles.transcriptCard}>
               <div className={styles.transcriptTop}>
                 <div style={{ background: "rgba(14, 131, 69, 0.12)", width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <FileText size={22} color="#0E8345" />
                 </div>
                 <div>
-                  <h3 className={styles.transcriptTitle}>Official Service Transcript</h3>
+                  <h3 className={styles.transcriptTitle}>Volunteer Service Record</h3>
                   <p className={styles.transcriptText}>
-                    Download your verified certificate for university applications and honor societies.
+                    Download your verified service certificate with cryptographic IDs for school counselors.
                   </p>
                 </div>
               </div>
               <Link href={`/tutor/${tutor.id}/transcript`} className={styles.viewTranscriptLink}>
-                View &amp; Print Transcript →
+                View &amp; Print Record →
               </Link>
             </div>
 

@@ -53,25 +53,91 @@ export async function rejectApplication(tutorId: string) {
 export async function suspendTutor(tutorId: string) {
   await requireAdmin();
 
+  const tutor = await prisma.tutorProfile.findUnique({
+    where: { id: tutorId },
+    select: { userId: true },
+  });
+
+  if (!tutor) throw new Error("Tutor profile not found");
+
+  const now = new Date();
+
+  // 1. Mark profile suspended
   await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "SUSPENDED" },
   });
 
+  // 2. Mark user account suspended
+  await prisma.user.update({
+    where: { id: tutor.userId },
+    data: {
+      accountSuspended: true,
+      suspendedReason: "Tutor account suspended by administrator review.",
+    },
+  });
+
+  // 3. Cancel upcoming confirmed bookings
+  await prisma.booking.updateMany({
+    where: {
+      tutorId: tutorId,
+      startTime: { gte: now },
+      status: "CONFIRMED",
+    },
+    data: {
+      status: "CANCELED",
+      cancelReason: "Tutor account inactive.",
+      checkUpNote: "Session automatically canceled: tutor is currently unavailable.",
+    },
+  });
+
+  // 4. Cancel upcoming workshops
+  await prisma.workshop.updateMany({
+    where: {
+      tutorId: tutorId,
+      startTime: { gte: now },
+      status: "UPCOMING",
+    },
+    data: {
+      status: "CANCELED",
+      checkUpNote: "Workshop automatically canceled: host is currently unavailable.",
+    },
+  });
+
   revalidatePath("/admin/tutors");
+  revalidatePath("/admin/reports");
   revalidatePath("/admin");
+  revalidatePath("/dashboard");
+  revalidatePath("/tutor");
 }
 
 export async function reactivateTutor(tutorId: string) {
   await requireAdmin();
+
+  const tutor = await prisma.tutorProfile.findUnique({
+    where: { id: tutorId },
+    select: { userId: true },
+  });
+
+  if (!tutor) throw new Error("Tutor profile not found");
 
   await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "APPROVED" },
   });
 
+  await prisma.user.update({
+    where: { id: tutor.userId },
+    data: {
+      accountSuspended: false,
+      suspendedReason: null,
+    },
+  });
+
   revalidatePath("/admin/tutors");
   revalidatePath("/admin");
+  revalidatePath("/dashboard");
+  revalidatePath("/tutor");
 }
 
 export async function adminUpdateReportCard(tutorId: string, formData: FormData) {

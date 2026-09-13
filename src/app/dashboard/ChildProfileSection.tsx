@@ -109,7 +109,7 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
           </div>
           <p style={{ color: "#64748B", fontSize: "0.85rem", margin: "0.25rem 0 0 0" }}>
             Safely register your children to book personalized 1-on-1 tutoring sessions and live workshops.
-            Under COPPA guidelines, only First Name + Last Initial are displayed.
+            For minor privacy protection, only First Name + Last Initial are displayed to tutors.
           </p>
         </div>
 

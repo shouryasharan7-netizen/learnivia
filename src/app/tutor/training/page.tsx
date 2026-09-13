@@ -182,7 +182,7 @@ const MODULES = [
       },
       {
         heading: "Downloading Your Transcript",
-        body: "Go to Tutor Dashboard → Volunteer Transcript. You can download a PDF with your total verified hours, session-by-session breakdown, and unique verification IDs for each session. This transcript is accepted by NHS chapters, school advisors, and community organizations.",
+        body: "Go to Tutor Dashboard → Volunteer Transcript. You can download a PDF with your total verified hours, session-by-session breakdown, and unique verification IDs for each session. This verified record can be submitted to school advisors, community service programs, and student portfolios.",
       },
       {
         heading: "Adjustments & Disputes",

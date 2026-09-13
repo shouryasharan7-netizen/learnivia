@@ -69,12 +69,12 @@ export const STORIES_AND_BLOG: ArticleOrStory[] = [
     fullContent: [
       "I applied to Learnivia thinking I would teach students. I did not expect to learn so much myself.",
       "In my first session, a Grade 3 student named James asked me why you can't divide by zero. I gave the standard answer — 'because it's undefined.' He stared at me. 'But why is it undefined?' I had to actually think. That question sent me down a rabbit hole that improved my own mathematical intuition.",
-      "47 sessions later, I have a Volunteer Service Transcript with unique verification IDs accepted by my school's NHS chapter. But more than that, I have 47 memories of the moment a concept clicked for a young learner.",
+      "47 sessions later, I have a verified Volunteer Service Record with verifiable session IDs accepted by my school advisor. But more than that, I have 47 memories of the moment a concept clicked for a young learner.",
       "If you're in high school and wondering whether to apply — do it. The impact is real. The hours are verified. And the experience is genuinely unlike anything else on a university application.",
     ],
     keyTakeaways: [
       "Teaching younger students deepens your own subject understanding",
-      "Learnivia Volunteer Transcripts are accepted by NHS chapters",
+      "Learnivia Volunteer Records include verifiable session IDs",
       "The experience is genuinely formative, not just a line on a CV",
     ],
     authorName: "Rayan A.",

@@ -8,6 +8,7 @@ export default async function AdminApplicationsPage() {
       user: true,
       subjects: true,
       gradeLevels: true,
+      trainingModules: true,
     },
     orderBy: { createdAt: "asc" }
   });
@@ -193,6 +194,74 @@ export default async function AdminApplicationsPage() {
                 </details>
               </div>
 
+              {/* Safeguarding & Tutor Training Modules Verification Box */}
+              <div
+                style={{
+                  background: tutor.trainingModules.length === 5 ? "#F0FDF4" : "#FFFBEB",
+                  border: `1.5px solid ${tutor.trainingModules.length === 5 ? "#86EFAC" : "#FCD34D"}`,
+                  borderRadius: "10px",
+                  padding: "1.25rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <span style={{ fontSize: "1.2rem" }}>🛡️</span>
+                    <strong style={{ color: "var(--color-navy)", fontSize: "0.95rem" }}>
+                      Safeguarding &amp; Tutor Training Modules
+                    </strong>
+                  </div>
+                  <span
+                    style={{
+                      color: tutor.trainingModules.length === 5 ? "#065F46" : "#92400E",
+                      background: tutor.trainingModules.length === 5 ? "#D1FAE5" : "#FEF3C7",
+                      padding: "0.2rem 0.65rem",
+                      borderRadius: "999px",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {tutor.trainingModules.length === 5
+                      ? "✓ 5/5 Completed (Ready for Approval)"
+                      : `⚠️ ${tutor.trainingModules.length}/5 Completed`}
+                  </span>
+                </div>
+
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                  {[
+                    { id: 1, title: "Tutoring Basics & Encouragement" },
+                    { id: 2, title: "Supporting Different Learning Styles" },
+                    { id: 3, title: "Online Zoom Best Practices" },
+                    { id: 4, title: "Safety, Boundaries & Safeguarding" },
+                    { id: 5, title: "Volunteer Hours & Rules" },
+                  ].map((m) => {
+                    const completed = tutor.trainingModules.some((tm) => tm.moduleId === m.id && tm.quizPassed);
+                    return (
+                      <span
+                        key={m.id}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "0.3rem",
+                          fontSize: "0.75rem",
+                          padding: "0.25rem 0.6rem",
+                          borderRadius: "6px",
+                          background: completed ? "#DCFCE7" : "#F1F5F9",
+                          color: completed ? "#166534" : "#64748B",
+                          fontWeight: completed ? 700 : 500,
+                          border: `1px solid ${completed ? "#86EFAC" : "#E2E8F0"}`,
+                        }}
+                        title={m.title}
+                      >
+                        {completed ? "✓" : "○"} M{m.id}: {m.title}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Subjects & Grade levels */}
               <div>
                 <strong style={{ fontSize: "0.8rem", color: "var(--color-navy)", display: "block", marginBottom: "0.35rem" }}>
@@ -226,17 +295,24 @@ export default async function AdminApplicationsPage() {
               </div>
 
               {/* Action buttons */}
-              <div style={{ display: "flex", gap: "1rem", marginTop: "0.5rem", borderTop: "1px solid var(--color-border)", paddingTop: "1.25rem" }}>
-                <form action={approveApplication.bind(null, tutor.id)}>
-                  <button type="submit" style={{ background: "var(--color-teal)", color: "white", border: "none", padding: "0.75rem 1.75rem", borderRadius: "8px", fontWeight: 700, fontSize: "0.9rem", cursor: "pointer" }}>
-                    ✓ Approve Tutor Application
-                  </button>
-                </form>
-                <form action={rejectApplication.bind(null, tutor.id)}>
-                  <button type="submit" style={{ background: "white", color: "var(--color-error)", border: "1px solid var(--color-error)", padding: "0.75rem 1.5rem", borderRadius: "8px", fontWeight: 600, fontSize: "0.9rem", cursor: "pointer" }}>
-                    Reject Application
-                  </button>
-                </form>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "0.5rem", borderTop: "1px solid var(--color-border)", paddingTop: "1.25rem" }}>
+                {tutor.trainingModules.length < 5 && (
+                  <div style={{ fontSize: "0.8rem", color: "#B45309", background: "#FEF3C7", padding: "0.5rem 0.75rem", borderRadius: "6px", border: "1px solid #FCD34D" }}>
+                    ⚠️ <strong>Advisory:</strong> Applicant has completed {tutor.trainingModules.length}/5 training modules. You may approve if offline/direct orientation was provided.
+                  </div>
+                )}
+                <div style={{ display: "flex", gap: "1rem" }}>
+                  <form action={approveApplication.bind(null, tutor.id)}>
+                    <button type="submit" style={{ background: "var(--color-teal)", color: "white", border: "none", padding: "0.75rem 1.75rem", borderRadius: "8px", fontWeight: 700, fontSize: "0.9rem", cursor: "pointer" }}>
+                      ✓ Approve Tutor Application
+                    </button>
+                  </form>
+                  <form action={rejectApplication.bind(null, tutor.id)}>
+                    <button type="submit" style={{ background: "white", color: "var(--color-error)", border: "1px solid var(--color-error)", padding: "0.75rem 1.5rem", borderRadius: "8px", fontWeight: 600, fontSize: "0.9rem", cursor: "pointer" }}>
+                      Reject Application
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           ))}

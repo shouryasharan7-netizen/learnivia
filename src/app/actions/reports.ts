@@ -58,10 +58,15 @@ export async function updateReportStatus(formData: FormData) {
 
   // If admin chose to suspend tutor
   if (suspendTutorId) {
-    await prisma.tutorProfile.update({
-      where: { id: suspendTutorId },
-      data: { status: "REJECTED" },
+    const tp = await prisma.tutorProfile.findFirst({
+      where: {
+        OR: [{ id: suspendTutorId }, { userId: suspendTutorId }],
+      },
     });
+    if (tp) {
+      const { suspendTutor } = await import("@/app/admin/actions");
+      await suspendTutor(tp.id);
+    }
   }
 
   revalidatePath("/admin/reports");

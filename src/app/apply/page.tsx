@@ -46,7 +46,7 @@ export default async function ApplyPage() {
             <h3>What volunteer tutors get on Learnivia</h3>
             <ul>
               <li>✓ Verified record of volunteer service hours</li>
-              <li>✓ Official downloadable transcript for NHS, school counselors &amp; portfolios</li>
+              <li>✓ Verified downloadable service record for school counselors &amp; portfolios</li>
               <li>✓ Complete schedule freedom — you set your own availability</li>
               <li>✓ Free training in safeguarding and online pedagogy</li>
             </ul>

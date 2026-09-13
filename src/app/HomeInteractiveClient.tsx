@@ -81,7 +81,7 @@ const FAQS = [
   },
   {
     q: "How do tutors receive verified volunteer service hours?",
-    a: "When a session concludes, the duration is logged automatically. Tutors can download an official verified Volunteer Service Transcript signed for NHS, school advisors, and college applications.",
+    a: "When a session concludes, the duration is logged automatically. Tutors can download a verified Volunteer Service Record with verifiable session IDs for school advisors, community service programs, and college portfolios.",
   },
 ];
 
@@ -172,7 +172,7 @@ export default function HomeInteractiveClient({
               </span>
               <span className={styles.trustItem}>
                 <ShieldCheck size={15} color="#2D6A4F" />
-                COPPA-safe
+                Privacy-first
               </span>
               <span className={styles.trustItem}>
                 <Award size={15} color="#2D6A4F" />
@@ -235,7 +235,7 @@ export default function HomeInteractiveClient({
               </div>
               <h3 className={styles.featureTitle}>Certified service hours</h3>
               <p className={styles.featureDesc}>
-                Tutors earn official verified transcripts accepted by NHS, IB CAS, and college applications.
+                Tutors earn verified service records with verifiable session IDs for school advisors and community service credit.
               </p>
             </div>
             <div className={styles.featureCard}>

@@ -21,7 +21,7 @@ export default async function VolunteerTranscriptRedirectPage() {
   });
 
   if (profile) {
-    // Redirect directly to the tutor's official transcript
+    // Redirect directly to the tutor's verified transcript
     redirect(`/tutor/${profile.id}/transcript`);
   }
 
@@ -30,9 +30,9 @@ export default async function VolunteerTranscriptRedirectPage() {
     <main className={styles.main}>
       <div className={styles.card}>
         <div className={styles.icon} aria-hidden="true">📜</div>
-        <h1 className={styles.title}>Volunteer Service Transcript</h1>
+        <h1 className={styles.title}>Volunteer Service Record</h1>
         <p className={styles.description}>
-          Official transcripts verify your logged tutoring hours, student testimonials, and verified subjects. These documents feature cryptographic verification codes for high school, university (Common App / UCAS), and scholarship applications.
+          Verified service records detail your logged tutoring hours, student testimonials, and verified subjects. These documents feature cryptographic verification codes for school advisors, community service logs, and scholarship portfolios.
         </p>
 
         <div className={styles.noticeBox}>

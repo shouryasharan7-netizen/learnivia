@@ -56,7 +56,7 @@ export default function AboutPage() {
             <li>✔️ Only tutors approved for that grade band appear in search results</li>
             <li>✔️ Book a free, private 1-on-1 Zoom session with a verified volunteer tutor</li>
             <li>✔️ Sessions are logged for volunteer-hour verification &mdash; no recording without consent</li>
-            <li>✔️ Tutors earn official Volunteer Service Transcripts accepted by NHS and school advisors</li>
+            <li>✔️ Tutors earn verified Volunteer Service Records with verifiable session IDs</li>
           </ul>
         </div>
 
@@ -68,9 +68,9 @@ export default function AboutPage() {
             by our admin team before hosting any sessions.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            Every completed session is automatically logged. Tutors can download an official Volunteer Service
-            Transcript with unique session verification IDs &mdash; accepted by NHS chapters, school counselors,
-            and community organizations.
+            Every completed session is automatically logged. Tutors can download a verified Volunteer Service
+            Record with unique session verification IDs &mdash; suitable for school counselors, advisors,
+            and community service recognition.
           </p>
         </div>
 
