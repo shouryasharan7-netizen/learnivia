@@ -289,21 +289,24 @@ export async function adminUpdateBookingStatus(
 
   if (!booking) throw new Error("Booking not found");
 
-  await prisma.booking.update({
-    where: { id: bookingId },
-    data: { status: newStatus },
-  });
-
-  if (newStatus === "COMPLETED" && booking.status !== "COMPLETED") {
-    const durationHours = Math.max(
-      0.5,
-      (new Date(booking.endTime).getTime() - new Date(booking.startTime).getTime()) / (1000 * 60 * 60)
-    );
-    await prisma.tutorProfile.update({
-      where: { id: booking.tutorId },
-      data: { volunteerHours: { increment: durationHours } },
+  // P1-9: Transactional integrity for session completion and hours logging
+  await prisma.$transaction(async (tx) => {
+    await tx.booking.update({
+      where: { id: bookingId },
+      data: { status: newStatus },
     });
-  }
+
+    if (newStatus === "COMPLETED" && booking.status !== "COMPLETED") {
+      const durationHours = Math.max(
+        0.5,
+        (new Date(booking.endTime).getTime() - new Date(booking.startTime).getTime()) / (1000 * 60 * 60)
+      );
+      await tx.tutorProfile.update({
+        where: { id: booking.tutorId },
+        data: { volunteerHours: { increment: durationHours } },
+      });
+    }
+  });
 
   revalidatePath("/admin/sessions");
   revalidatePath("/admin");

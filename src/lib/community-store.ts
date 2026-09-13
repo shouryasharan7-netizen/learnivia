@@ -22,7 +22,7 @@ const DEFAULT_ANNOUNCEMENTS = [
   {
     channel: "Announcements",
     authorName: "Learnivia Team",
-    authorEmail: "admin@learnivia.org",
+    authorEmail: "",
     authorRole: "COMMUNITY LEAD" as const,
     authorInitials: "LT",
     authorColor: "#0E8345",

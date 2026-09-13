@@ -21,12 +21,12 @@ interface HomeworkItem {
   answer?: string | null;
   zoomLink?: string | null;
   createdAt: string;
-  student: {
+  student?: {
     id: string;
     name?: string | null;
     grade?: string | null;
     curriculum?: string | null;
-  };
+  } | null;
   tutor?: {
     user: {
       name?: string | null;
@@ -54,6 +54,8 @@ export default function HomeworkHelpPage() {
   const [tutorAnswerText, setTutorAnswerText] = useState("");
   const [tutorZoomUrl, setTutorZoomUrl] = useState("");
   const [answerSubmitting, setAnswerSubmitting] = useState(false);
+  const [answerError, setAnswerError] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const fetchQuestions = useCallback(async () => {
     try {
@@ -117,6 +119,7 @@ export default function HomeworkHelpPage() {
     if (!answeringId) return;
 
     setAnswerSubmitting(true);
+    setAnswerError("");
     try {
       const res = await fetch("/api/homework", {
         method: "PATCH",
@@ -133,12 +136,40 @@ export default function HomeworkHelpPage() {
         setAnsweringId(null);
         setTutorAnswerText("");
         setTutorZoomUrl("");
+        setAnswerError("");
         fetchQuestions();
+      } else {
+        const data = await res.json();
+        setAnswerError(data.error || "Failed to submit tutor answer.");
       }
     } catch (err) {
       console.error("Failed to submit tutor answer:", err);
+      setAnswerError("Network error. Please check your connection and try again.");
     } finally {
       setAnswerSubmitting(false);
+    }
+  }
+
+  async function handleDeleteQuestion(id: string) {
+    if (!confirm("Are you sure you want to delete this homework request?")) return;
+    setDeletingId(id);
+    try {
+      const res = await fetch("/api/homework", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (res.ok) {
+        fetchQuestions();
+      } else {
+        const data = await res.json();
+        alert(data.error || "Failed to delete question.");
+      }
+    } catch (err) {
+      console.error("Failed to delete homework question:", err);
+      alert("Network error. Please try again.");
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -387,8 +418,9 @@ export default function HomeworkHelpPage() {
           ) : (
             questions.map((item) => {
               const isAnswered = item.status === "ANSWERED" || Boolean(item.answer);
-              const isStudentAuthor = session?.user?.id === item.student.id;
+              const isStudentAuthor = Boolean(session?.user?.id && item.student?.id && session.user.id === item.student.id);
               const isTutorRole = (session?.user as any)?.role === "TUTOR";
+              const isAdmin = Boolean((session?.user as any)?.isAdmin);
 
               return (
                 <article key={item.id} className={styles.questionCard}>
@@ -407,11 +439,31 @@ export default function HomeworkHelpPage() {
                       )}
                     </div>
 
-                    <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       {isAnswered ? (
                         <span className={styles.statusBadgeAnswered}>✓ Answered</span>
                       ) : (
                         <span className={styles.statusBadgeOpen}>⏳ Waiting for Tutor</span>
+                      )}
+                      {(isStudentAuthor || isAdmin) && (
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteQuestion(item.id)}
+                          disabled={deletingId === item.id}
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: "#94A3B8",
+                            fontSize: "0.75rem",
+                            cursor: "pointer",
+                            padding: "0.15rem 0.4rem",
+                            borderRadius: 4,
+                            textDecoration: "underline",
+                          }}
+                          title="Delete this homework question"
+                        >
+                          {deletingId === item.id ? "Deleting..." : "Delete"}
+                        </button>
                       )}
                     </div>
                   </div>
@@ -419,7 +471,7 @@ export default function HomeworkHelpPage() {
                   <p className={styles.questionText}>{item.question}</p>
 
                   <div className={styles.studentMeta}>
-                    <span>Asked by <strong>{item.student.name || "Student"}</strong></span>
+                    <span>Asked by <strong>{item.student?.name || "Student"}</strong></span>
                     <span>•</span>
                     <span>{new Date(item.createdAt).toLocaleDateString()}</span>
                     <span>•</span>
@@ -455,7 +507,10 @@ export default function HomeworkHelpPage() {
                     <div className={styles.tutorActionRow}>
                       <button
                         type="button"
-                        onClick={() => setAnsweringId(answeringId === item.id ? null : item.id)}
+                        onClick={() => {
+                          setAnsweringId(answeringId === item.id ? null : item.id);
+                          setAnswerError("");
+                        }}
                         className={styles.tutorAnswerBtn}
                       >
                         {answeringId === item.id ? "Close Reply" : "✍️ Write Answer / Provide Zoom Room"}
@@ -466,6 +521,11 @@ export default function HomeworkHelpPage() {
                   {/* Inline Tutor Reply Form */}
                   {answeringId === item.id && (
                     <form onSubmit={handleTutorAnswer} style={{ marginTop: "1rem", background: "#F8FAFC", padding: "1rem", borderRadius: 10, border: "1px solid #E2E8F0" }}>
+                      {answerError && (
+                        <div style={{ color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "0.5rem 0.75rem", fontSize: "0.85rem", marginBottom: "0.75rem" }}>
+                          ⚠️ {answerError}
+                        </div>
+                      )}
                       <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: "0.4rem" }}>
                         Your Step-by-Step Answer / Explanation:
                       </label>
@@ -479,7 +539,7 @@ export default function HomeworkHelpPage() {
                       />
 
                       <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: "0.4rem" }}>
-                        Optional Live Zoom Link:
+                        Optional Live Zoom Link (approved providers only):
                       </label>
                       <input
                         type="url"
@@ -499,7 +559,10 @@ export default function HomeworkHelpPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setAnsweringId(null)}
+                          onClick={() => {
+                            setAnsweringId(null);
+                            setAnswerError("");
+                          }}
                           style={{ background: "#E2E8F0", border: "none", padding: "0.5rem 1rem", borderRadius: 6, fontWeight: 600, cursor: "pointer" }}
                         >
                           Cancel

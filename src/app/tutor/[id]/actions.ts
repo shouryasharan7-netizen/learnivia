@@ -78,34 +78,6 @@ export async function bookSession(formData: FormData) {
   const [endHours, endMinutes] = slot.endTime.split(":").map(Number);
   endDate.setHours(endHours, endMinutes, 0, 0);
 
-  // 4. Overlap conflict protection: verify no overlapping bookings for tutor
-  const tutorConflict = await prisma.booking.findFirst({
-    where: {
-      tutorId,
-      status: "CONFIRMED",
-      startTime: { lt: endDate },
-      endTime: { gt: targetDate },
-    },
-  });
-
-  if (tutorConflict) {
-    throw new Error("This time slot is already booked. Please choose another available slot.");
-  }
-
-  // 5. Overlap conflict protection: verify student has no overlapping bookings
-  const studentConflict = await prisma.booking.findFirst({
-    where: {
-      studentId: user.id,
-      status: "CONFIRMED",
-      startTime: { lt: endDate },
-      endTime: { gt: targetDate },
-    },
-  });
-
-  if (studentConflict) {
-    throw new Error("You already have another confirmed tutoring session during this time window.");
-  }
-
   const durationMinutes = Math.max(30, Math.round((endDate.getTime() - targetDate.getTime()) / 60000));
 
   let meetingUrl = "";
@@ -131,20 +103,53 @@ export async function bookSession(formData: FormData) {
     });
   }
 
-  await prisma.booking.create({
-    data: {
-      studentId: user.id,
-      tutorId,
-      subject,
-      grade,
-      topic,
-      helpNeeded,
-      startTime: targetDate,
-      endTime: endDate,
-      status: "CONFIRMED",
-      zoomLink: meetingUrl,
-      idempotencyKey: `${tutorId}-${user.id}-${targetDate.getTime()}`,
-    },
+  const idempotencyKey = `${tutorId}-${user.id}-${targetDate.getTime()}`;
+
+  // P1-2: Atomic double-booking and slot collision prevention inside an interactive transaction
+  await prisma.$transaction(async (tx) => {
+    // Overlap conflict protection: verify no overlapping bookings for tutor
+    const tutorConflict = await tx.booking.findFirst({
+      where: {
+        tutorId,
+        status: "CONFIRMED",
+        startTime: { lt: endDate },
+        endTime: { gt: targetDate },
+      },
+    });
+
+    if (tutorConflict) {
+      throw new Error("This time slot is already booked. Please choose another available slot.");
+    }
+
+    // Overlap conflict protection: verify student has no overlapping bookings
+    const studentConflict = await tx.booking.findFirst({
+      where: {
+        studentId: user.id,
+        status: "CONFIRMED",
+        startTime: { lt: endDate },
+        endTime: { gt: targetDate },
+      },
+    });
+
+    if (studentConflict) {
+      throw new Error("You already have another confirmed tutoring session during this time window.");
+    }
+
+    return tx.booking.create({
+      data: {
+        studentId: user.id,
+        tutorId,
+        subject,
+        grade,
+        topic,
+        helpNeeded,
+        startTime: targetDate,
+        endTime: endDate,
+        status: "CONFIRMED",
+        zoomLink: meetingUrl,
+        idempotencyKey,
+      },
+    });
   });
 
   if (user.email && tutorProfile?.user.email) {

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
 import { addMessage } from "@/lib/community-store";
+import { validateMeetingUrl } from "@/lib/meetingUrl";
 
 export async function GET(request: Request) {
   try {
@@ -20,7 +21,10 @@ export async function GET(request: Request) {
       );
     }
 
-    const where: Record<string, unknown> = {};
+    // Exclude soft-deleted questions
+    const where: Record<string, unknown> = {
+      deletedAt: null,
+    };
     if (subject && subject !== "All") {
       where.subject = { contains: subject, mode: "insensitive" };
     }
@@ -150,12 +154,23 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Missing question ID." }, { status: 400 });
     }
 
+    // P1-10: Domain validate zoomLink if provided
+    if (zoomLink) {
+      const urlCheck = validateMeetingUrl(zoomLink);
+      if (!urlCheck.valid) {
+        return NextResponse.json(
+          { error: urlCheck.reason || "Invalid meeting link. Only approved video providers (Zoom, Google Meet) are permitted." },
+          { status: 400 }
+        );
+      }
+    }
+
     const existing = await prisma.homeworkRequest.findUnique({
       where: { id },
       include: { tutor: true },
     });
 
-    if (!existing) {
+    if (!existing || existing.deletedAt) {
       return NextResponse.json({ error: "Homework request not found." }, { status: 404 });
     }
 
@@ -197,5 +212,71 @@ export async function PATCH(request: Request) {
   } catch (error) {
     console.error("Failed to update homework request:", error);
     return NextResponse.json({ error: "Failed to update homework request." }, { status: 500 });
+  }
+}
+
+/**
+ * DELETE /api/homework
+ * P0-9: Soft-delete homework requests (sets deletedAt timestamp).
+ * Authorized for question author or platform admins only.
+ */
+export async function DELETE(request: Request) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+    }
+
+    let id: string | null = null;
+    try {
+      const body = await request.json();
+      id = body?.id ?? null;
+    } catch {
+      // Empty body is acceptable; fallback to searchParams
+    }
+
+    if (!id) {
+      const { searchParams } = new URL(request.url);
+      id = searchParams.get("id");
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: "Missing question ID." }, { status: 400 });
+    }
+
+    const existing = await prisma.homeworkRequest.findUnique({
+      where: { id },
+    });
+
+    if (!existing || existing.deletedAt) {
+      return NextResponse.json({ error: "Homework request not found." }, { status: 404 });
+    }
+
+    const isOwner = existing.studentId === user.id;
+    const isAdmin = user.isAdmin;
+
+    if (!isOwner && !isAdmin) {
+      return NextResponse.json(
+        { error: "Forbidden: You do not have permission to delete this homework question." },
+        { status: 403 }
+      );
+    }
+
+    const deleted = await prisma.homeworkRequest.update({
+      where: { id },
+      data: {
+        deletedAt: new Date(),
+        status: "CANCELLED",
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Homework question successfully deleted.",
+      id: deleted.id,
+    });
+  } catch (error) {
+    console.error("Failed to delete homework request:", error);
+    return NextResponse.json({ error: "Failed to delete homework request." }, { status: 500 });
   }
 }

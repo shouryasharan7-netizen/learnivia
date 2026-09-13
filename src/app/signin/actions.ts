@@ -148,6 +148,20 @@ export async function loginWithEmail(formData: FormData) {
     };
   }
 
+  // P0-12: Account status pre-checks
+  if (existingUser?.accountSuspended) {
+    return {
+      error: `Your account is currently suspended (${existingUser.suspendedReason || "administrative review"}). Please contact support@learnivia.app.`,
+    };
+  }
+
+  if (existingUser?.lockedUntil && existingUser.lockedUntil > new Date()) {
+    const mins = Math.max(1, Math.ceil((existingUser.lockedUntil.getTime() - Date.now()) / 60000));
+    return {
+      error: `Too many failed login attempts. Account temporarily locked. Please try again in ${mins} minute(s) or use "Forgot password".`,
+    };
+  }
+
   try {
     await signIn("credentials", { email, password, redirect: false });
 
@@ -167,6 +181,23 @@ export async function loginWithEmail(formData: FormData) {
     return { success: true, redirectUrl };
   } catch (error) {
     if (error instanceof AuthError) {
+      if (existingUser) {
+        const freshUser = await prisma.user.findUnique({
+          where: { id: existingUser.id },
+          select: { lockedUntil: true, failedLoginCount: true },
+        });
+        if (freshUser?.lockedUntil && freshUser.lockedUntil > new Date()) {
+          return {
+            error: "Too many failed login attempts. Account temporarily locked for 15 minutes. Please try again later or reset your password.",
+          };
+        }
+        if (freshUser?.failedLoginCount && freshUser.failedLoginCount >= 3) {
+          return {
+            error: `Incorrect email or password. Warning: ${Math.max(1, 5 - freshUser.failedLoginCount)} attempt(s) remaining before temporary lockout.`,
+          };
+        }
+      }
+
       switch (error.type) {
         case "CredentialsSignin":
           return { error: "Incorrect email or password. Please try again." };

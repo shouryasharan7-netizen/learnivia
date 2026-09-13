@@ -119,11 +119,30 @@ export default async function FindTutorPage({ searchParams }: Props) {
     try {
       tutors = await prisma.tutorProfile.findMany({
         where: whereClause,
-        include: {
-          user: true,
+        select: {
+          id: true,
+          bio: true,
+          school: true,
+          volunteerHours: true,
+          curricula: true,
+          minAge: true,
+          maxAge: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              timezone: true,
+              image: true,
+            },
+          },
           subjects: true,
           gradeLevels: true,
-          reviews: true,
+          reviews: {
+            select: {
+              id: true,
+              rating: true,
+            },
+          },
         },
         orderBy: { volunteerHours: "desc" },
       });

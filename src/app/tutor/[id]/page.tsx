@@ -17,17 +17,45 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
     where: { id },
     include: {
       availabilities: true,
-      user: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          timezone: true,
+        },
+      },
       subjects: true,
       gradeLevels: true,
       tutorBookings: {
         where: { status: "COMPLETED" },
+        select: {
+          id: true,
+          startTime: true,
+          endTime: true,
+        },
       },
       workshops: {
         where: { status: "COMPLETED" },
+        select: {
+          id: true,
+          startTime: true,
+          endTime: true,
+        },
       },
       reviews: {
-        include: { student: true },
+        select: {
+          id: true,
+          rating: true,
+          comment: true,
+          createdAt: true,
+          student: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
         orderBy: { createdAt: "desc" },
       },
     },

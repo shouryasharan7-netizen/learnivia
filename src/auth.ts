@@ -71,9 +71,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         
         const email = (credentials.email as string).trim().toLowerCase();
 
-        // P0-12: Check if this email is currently locked out
+        // P0-12: Check memory lockout first as quick filter
         if (isLockedOut(email)) {
-          // Return null — NextAuth will show generic error; lockout message surfaced in UI via query param
           throw new Error("RATE_LIMITED");
         }
 
@@ -82,19 +81,48 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           include: { tutorProfile: true },
         });
 
+        // P0-12: Block suspended accounts immediately
+        if (user?.accountSuspended) {
+          throw new Error("ACCOUNT_SUSPENDED");
+        }
+
+        // P0-12: Check DB-backed lockout across distributed instances
+        const now = new Date();
+        if (user?.lockedUntil && user.lockedUntil > now) {
+          throw new Error("RATE_LIMITED");
+        }
+
         // P0-12: Always run bcrypt compare (even for non-existent users) to prevent timing attacks
         const dummyHash = "$2a$12$dummyhashfortimingnnn.aaaaabbbbccccddddeeeefffff";
         const passwordToCheck = user?.password || dummyHash;
         const isValid = await bcrypt.compare(credentials.password as string, passwordToCheck);
 
         if (!user || !user.password || !isValid) {
-          // P0-12: Record failed attempt
           recordFailedAttempt(email);
+          if (user) {
+            const newFailCount = (user.failedLoginCount || 0) + 1;
+            const willLock = newFailCount >= 5;
+            await prisma.user.update({
+              where: { id: user.id },
+              data: {
+                failedLoginCount: newFailCount,
+                lockedUntil: willLock ? new Date(Date.now() + 15 * 60 * 1000) : null,
+              },
+            });
+          }
           return null;
         }
 
-        // Success — clear failed attempts
+        // Success — clear failed attempts in memory & DB, record login timestamp
         clearAttempts(email);
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            failedLoginCount: 0,
+            lockedUntil: null,
+            lastLoginAt: new Date(),
+          },
+        });
 
         // P0-5: Admin email check exclusively from ADMIN_EMAILS env var — no hardcoded fallbacks
         const adminEmails = getAdminEmails();
