@@ -29,9 +29,9 @@ export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePr
       const res = await confirmStudentAttendance(bookingId, attended);
       if (res.success) {
         if (attended) {
-          toast.success("Thank you! Session attendance confirmed and volunteer hours verified for your tutor.");
+          toast.success("Thank you! Your session attendance has been confirmed.");
         } else {
-          toast.info("Thank you for updating us. The session has been recorded as not held.");
+          toast.info("Thank you for letting us know. We have updated your session record.");
         }
         setList((prev) => prev.filter((b) => b.id !== bookingId));
       }
@@ -51,12 +51,12 @@ export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePr
               <CheckCircle2 size={18} className={styles.headerIcon} />
             </div>
             <div className={styles.headerText}>
-              <span className={styles.eyebrow}>Session Verification Required</span>
+              <span className={styles.eyebrow}>Session Attendance Check</span>
               <h3 className={styles.title}>
-                Did your tutoring session for <strong>{booking.subject}</strong> happen?
+                Did your tutoring session for <strong>{booking.subject}</strong> take place?
               </h3>
               <p className={styles.subtitle}>
-                Tutor: <strong>{booking.tutorName}</strong> &bull; Confirming your attendance verifies the session so your tutor can be credited their official volunteer service hours.
+                Tutor: <strong>{booking.tutorName}</strong> &bull; Please let us know if you and your tutor met for this lesson so we can keep your learning records up to date.
               </p>
             </div>
           </div>
@@ -78,7 +78,7 @@ export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePr
               className={styles.declineBtn}
             >
               <XCircle size={15} />
-              <span>No, meeting did not happen</span>
+              <span>No, session didn&apos;t happen</span>
             </button>
           </div>
         </div>

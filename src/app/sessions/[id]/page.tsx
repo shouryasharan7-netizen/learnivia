@@ -600,7 +600,7 @@ export default async function SessionDetailPage({
                         Did this tutoring session take place?
                       </div>
                       <p style={{ margin: "0 0 0.75rem", fontSize: "0.8125rem", color: "#3B82F6", lineHeight: 1.4 }}>
-                        Confirming your attendance verifies the session so <strong>{tutorName}</strong> can receive their official volunteer service hours.
+                        Please confirm whether you and <strong>{tutorName}</strong> met for this lesson so we can keep your learning records and session history up to date.
                       </p>
                       <form action={async () => {
                         "use server";
@@ -627,7 +627,7 @@ export default async function SessionDetailPage({
                   {booking.hoursCredited && (
                     <div style={{ margin: "0.6rem 0", color: "#166534", fontSize: "0.8125rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
                       <CheckCircle2 size={15} color="#166534" />
-                      <span>Student attendance verified &bull; Volunteer service hours accredited</span>
+                      <span>{isStudent ? "Session completed • Attendance verified" : "Student attendance verified • Volunteer service hours accredited"}</span>
                     </div>
                   )}
                   {isTutor && !booking.hoursCredited && (
