@@ -79,6 +79,26 @@ export async function submitApplication(formData: FormData) {
       }
     }
 
+    // Enforce strictly mandatory report card document
+    const existingTutorCheck = await prisma.tutorProfile.findUnique({
+      where: { userId: session.user.id },
+      select: { reportCardStorageKey: true, reportCardUrl: true },
+    });
+
+    const hasReportCardDoc = Boolean(
+      reportCardStorageKey ||
+      reportCardUrl ||
+      existingTutorCheck?.reportCardStorageKey ||
+      existingTutorCheck?.reportCardUrl
+    );
+
+    if (!hasReportCardDoc) {
+      return {
+        success: false,
+        error: "An academic report card or marksheet document is strictly required to sign up as a tutor.",
+      };
+    }
+
     // 1. Update User timezone and ensure role is TUTOR
     await prisma.user.update({
       where: { id: session.user.id },

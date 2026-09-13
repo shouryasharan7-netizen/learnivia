@@ -21,6 +21,7 @@ interface ApplyFormClientProps {
     academicScores?: string | null;
     reportCardUrl?: string | null;
     reportCardName?: string | null;
+    reportCardStorageKey?: string | null;
     subjects: { id: string; name: string }[];
     gradeLevels: { id: string; name: string }[];
   } | null;
@@ -110,8 +111,14 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
       return;
     }
 
-    if (!academicScores.trim() && !reportCardLink.trim() && !reportCardFile && !existingProfile?.reportCardUrl) {
-      setErrorMsg("Please provide your academic scores or attach a report card / transcript.");
+    const hasReportCard = Boolean(
+      reportCardFile ||
+      reportCardLink.trim() ||
+      existingProfile?.reportCardStorageKey ||
+      existingProfile?.reportCardUrl
+    );
+    if (!hasReportCard) {
+      setErrorMsg("An academic report card or marksheet document is strictly required to sign up as a tutor. Please upload your document or provide a share link.");
       return;
     }
 
@@ -395,7 +402,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1rem" }}>
             <div className={styles.formGroup}>
-              <label htmlFor="reportCardFile">Upload Report Card / Marksheet (PDF or Image)</label>
+              <label htmlFor="reportCardFile">
+                Upload Report Card / Marksheet (PDF or Image) <span style={{ color: "var(--wa-error, #dc2626)", fontWeight: 700 }}>* Required</span>
+              </label>
               <input
                 id="reportCardFile"
                 type="file"

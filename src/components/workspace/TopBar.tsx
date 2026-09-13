@@ -31,7 +31,22 @@ interface TopBarProps {
 export function TopBar({ user }: TopBarProps) {
   const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState(false);
+  const [shortcutLabel, setShortcutLabel] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Only show keyboard shortcut on desktop devices with hover and precision pointers
+    if (typeof window !== "undefined") {
+      const isTouch = window.matchMedia("(pointer: coarse)").matches;
+      const isSmallScreen = window.innerWidth <= 768;
+      if (isTouch || isSmallScreen) {
+        setShortcutLabel(null);
+        return;
+      }
+      const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent || navigator.platform || "");
+      setShortcutLabel(isMac ? "⌘K" : "Ctrl K");
+    }
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -109,19 +124,21 @@ export function TopBar({ user }: TopBarProps) {
         >
           <Search size={13} aria-hidden="true" />
           <span className="topbar-search-text">Find subjects...</span>
-          <kbd
-            className="topbar-search-kbd"
-            style={{
-              padding: "0.1rem 0.35rem",
-              borderRadius: "4px",
-              background: "var(--wa-white)",
-              border: "1px solid var(--wa-border)",
-              fontSize: "0.65rem",
-              fontFamily: "monospace",
-            }}
-          >
-            ⌘K
-          </kbd>
+          {shortcutLabel && (
+            <kbd
+              className="topbar-search-kbd"
+              style={{
+                padding: "0.1rem 0.35rem",
+                borderRadius: "4px",
+                background: "var(--wa-white)",
+                border: "1px solid var(--wa-border)",
+                fontSize: "0.65rem",
+                fontFamily: "monospace",
+              }}
+            >
+              {shortcutLabel}
+            </kbd>
+          )}
         </Link>
 
         {/* Sessions quick link */}

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { suspendTutor, reactivateTutor, approveApplication, adminUpdateReportCard } from "../actions";
 import AdjustHoursButton from "./AdjustHoursButton";
+import RunAvailabilityAuditButton from "./RunAvailabilityAuditButton";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -36,13 +37,16 @@ export default async function AdminTutorsPage() {
 
   return (
     <div>
-      <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--color-navy)", marginBottom: "0.5rem" }}>
-          Tutor Directory &amp; Transcripts
-        </h1>
-        <p style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
-          Manage all approved and registered volunteer tutors, audit real-time service hours, and view academic grades and verified transcripts.
-        </p>
+      <div style={{ marginBottom: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div>
+          <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--color-navy)", marginBottom: "0.5rem" }}>
+            Tutor Directory &amp; Transcripts
+          </h1>
+          <p style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
+            Manage all approved and registered volunteer tutors, audit real-time service hours, and view academic grades and verified transcripts.
+          </p>
+        </div>
+        <RunAvailabilityAuditButton />
       </div>
 
       <div style={{ background: "white", borderRadius: "12px", border: "1px solid var(--color-border)", padding: "1.5rem" }}>

@@ -11,6 +11,8 @@ interface BookingItem {
   startTime: string;
   endTime: string;
   status: string;
+  studentAttended?: boolean;
+  hoursCredited?: boolean;
   zoomLink: string | null;
   tutor: { id: string; user: { name: string | null; email: string | null } };
   student: { id: string; name: string | null; email: string | null };
@@ -145,17 +147,34 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                       <td style={{ padding: "0.75rem" }}>
                         <span
                           style={{
-                            padding: "0.25rem 0.6rem",
-                            borderRadius: "99px",
+                            display: "inline-block",
+                            padding: "0.2rem 0.5rem",
+                            borderRadius: "999px",
                             fontSize: "0.75rem",
                             fontWeight: 700,
                             backgroundColor:
-                              b.status === "COMPLETED" ? "#D1FAE5" : b.status === "CONFIRMED" ? "#B5D9C5" : "#FEE2E2",
+                              b.status === "COMPLETED"
+                                ? b.hoursCredited
+                                  ? "#D1FAE5"
+                                  : "#FEF3C7"
+                                : b.status === "CONFIRMED"
+                                ? "#B5D9C5"
+                                : "#FEE2E2",
                             color:
-                              b.status === "COMPLETED" ? "#065F46" : b.status === "CONFIRMED" ? "#1E40AF" : "#991B1B",
+                              b.status === "COMPLETED"
+                                ? b.hoursCredited
+                                  ? "#065F46"
+                                  : "#92400E"
+                                : b.status === "CONFIRMED"
+                                ? "#1E40AF"
+                                : "#991B1B",
                           }}
                         >
-                          {b.status}
+                          {b.status === "COMPLETED"
+                            ? b.hoursCredited
+                              ? "Completed (Verified)"
+                              : "Completed (Pending Attendance)"
+                            : b.status}
                         </span>
                       </td>
                       <td style={{ padding: "0.75rem" }}>
@@ -166,7 +185,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             rel="noopener noreferrer"
                             style={{ color: "#2563EB", fontWeight: 600, textDecoration: "underline" }}
                           >
-                            Open Zoom 🎥
+                            Open Zoom
                           </a>
                         ) : (
                           "—"
@@ -192,6 +211,26 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                               title="Mark session completed and credit tutor hours"
                             >
                               ✓ Complete
+                            </button>
+                          )}
+                          {b.status === "COMPLETED" && !b.hoursCredited && (
+                            <button
+                              type="button"
+                              disabled={isBusy}
+                              onClick={() => handleBookingStatus(b.id, "COMPLETED")}
+                              style={{
+                                background: "#EFF6FF",
+                                color: "#1E40AF",
+                                border: "1px solid #BFDBFE",
+                                padding: "0.25rem 0.5rem",
+                                borderRadius: "6px",
+                                fontSize: "0.75rem",
+                                fontWeight: 700,
+                                cursor: "pointer",
+                              }}
+                              title="Verify student attendance and credit tutor volunteer hours"
+                            >
+                              ✓ Verify &amp; Credit Hours
                             </button>
                           )}
                           {b.status !== "CANCELED" && (

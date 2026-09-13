@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
-import { submitReview } from "@/app/actions/sessions";
+import { submitReview, confirmStudentAttendance } from "@/app/actions/sessions";
 import { ROUTES } from "@/lib/routes";
 import {
   ArrowLeft,
@@ -594,6 +594,47 @@ export default async function SessionDetailPage({
                   <div style={{ fontWeight: 700, marginBottom: "0.35rem", fontSize: "0.9375rem" }}>
                     Session Concluded
                   </div>
+                  {isStudent && !booking.hoursCredited && (
+                    <div style={{ margin: "1rem 0", background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "8px", padding: "1rem", textAlign: "left" }}>
+                      <div style={{ fontWeight: 600, color: "#1E40AF", marginBottom: "0.35rem", fontSize: "0.875rem" }}>
+                        Did this tutoring session take place?
+                      </div>
+                      <p style={{ margin: "0 0 0.75rem", fontSize: "0.8125rem", color: "#3B82F6", lineHeight: 1.4 }}>
+                        Confirming your attendance verifies the session so <strong>{tutorName}</strong> can receive their official volunteer service hours.
+                      </p>
+                      <form action={async () => {
+                        "use server";
+                        await confirmStudentAttendance(booking.id, true);
+                      }}>
+                        <button
+                          type="submit"
+                          style={{
+                            background: "var(--wa-green, #1B4D3E)",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "6px",
+                            padding: "0.5rem 1.25rem",
+                            fontSize: "0.85rem",
+                            fontWeight: 600,
+                            cursor: "pointer",
+                          }}
+                        >
+                          ✓ Confirm I Attended This Session
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                  {booking.hoursCredited && (
+                    <div style={{ margin: "0.6rem 0", color: "#166534", fontSize: "0.8125rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                      <CheckCircle2 size={15} color="#166534" />
+                      <span>Student attendance verified &bull; Volunteer service hours accredited</span>
+                    </div>
+                  )}
+                  {isTutor && !booking.hoursCredited && (
+                    <div style={{ margin: "0.75rem 0", color: "#92400E", fontSize: "0.8125rem", fontWeight: 500, background: "#FEF3C7", padding: "0.5rem 0.75rem", borderRadius: "6px" }}>
+                      Awaiting student attendance confirmation before volunteer hours are accredited.
+                    </div>
+                  )}
                   {booking.recordingUrl ? (
                     <a
                       href={booking.recordingUrl}
@@ -606,13 +647,14 @@ export default async function SessionDetailPage({
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "0.35rem",
+                        marginTop: "0.5rem",
                       }}
                     >
                       <Video size={14} aria-hidden="true" />
                       <span>Watch Session Recording</span>
                     </a>
                   ) : (
-                    <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #78716C)" }}>
+                    <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #78716C)", marginTop: "0.5rem" }}>
                       No cloud recording attached for this private session.
                     </div>
                   )}

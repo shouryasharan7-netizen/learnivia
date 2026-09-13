@@ -39,6 +39,8 @@ export default async function AdminSessionsPage() {
     startTime: b.startTime.toISOString(),
     endTime: b.endTime.toISOString(),
     status: b.status,
+    studentAttended: b.studentAttended,
+    hoursCredited: b.hoursCredited,
     zoomLink: b.zoomLink,
     tutor: {
       id: b.tutorId,

@@ -13,7 +13,10 @@ export async function approveApplication(tutorId: string) {
 
   const profile = await prisma.tutorProfile.update({
     where: { id: tutorId },
-    data: { status: "APPROVED" },
+    data: {
+      status: "APPROVED",
+      approvedAt: new Date(),
+    },
     include: { user: true }
   });
 
@@ -293,10 +296,13 @@ export async function adminUpdateBookingStatus(
   await prisma.$transaction(async (tx) => {
     await tx.booking.update({
       where: { id: bookingId },
-      data: { status: newStatus },
+      data: {
+        status: newStatus,
+        ...(newStatus === "COMPLETED" ? { studentAttended: true, studentConfirmedAt: new Date(), hoursCredited: true } : {}),
+      },
     });
 
-    if (newStatus === "COMPLETED" && booking.status !== "COMPLETED") {
+    if (newStatus === "COMPLETED" && !booking.hoursCredited) {
       const durationHours = Math.max(
         0.5,
         (new Date(booking.endTime).getTime() - new Date(booking.startTime).getTime()) / (1000 * 60 * 60)

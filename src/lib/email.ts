@@ -30,34 +30,68 @@ export async function sendBookingConfirmation(
 
   try {
     // Send to Student
-    await resend.emails.send({
+    const studentRes = await resend.emails.send({
       from: FROM_EMAIL,
       to: studentEmail,
       subject: `Booking Confirmed: ${details.subject} with ${details.tutorName}`,
       html: `
-        <h2>Your tutoring session is confirmed!</h2>
-        <p>Hi ${details.studentName},</p>
-        <p>You have a confirmed session with <strong>${details.tutorName}</strong> for <strong>${details.subject}</strong>.</p>
-        <p><strong>When:</strong> ${date}</p>
-        <p><strong>Where:</strong> <a href="${details.zoomLink}">Join Zoom Meeting</a></p>
-        <p>Thank you for using Learnivia!</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
+          <h2 style="color: #1b4d3e;">Your tutoring session is confirmed!</h2>
+          <p>Hi ${details.studentName},</p>
+          <p>You have a confirmed 1-on-1 tutoring session with <strong>${details.tutorName}</strong> for <strong>${details.subject}</strong>.</p>
+          
+          <div style="background-color: #f8f6f0; border: 1px solid #e5dfd5; border-radius: 8px; padding: 18px; margin: 20px 0;">
+            <p style="margin: 0 0 8px 0;"><strong>Scheduled Time:</strong> ${date}</p>
+            <p style="margin: 0 0 16px 0;"><strong>Format:</strong> Zoom Video Meeting (Waiting Room enabled)</p>
+            <a href="${details.zoomLink}" style="display: inline-block; background-color: #1b4d3e; color: #ffffff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">
+              Join Zoom Session →
+            </a>
+            <p style="margin: 12px 0 0 0; font-size: 12px; color: #78716c; word-break: break-all;">
+              Direct link: <a href="${details.zoomLink}" style="color: #1b4d3e;">${details.zoomLink}</a>
+            </p>
+          </div>
+          
+          <p style="font-size: 13px; color: #78716c;">
+            Tip: You can also access and copy this Zoom link anytime directly from your <a href="https://learnivia-green.vercel.app/dashboard" style="color: #1b4d3e;">Learnivia Dashboard</a>.
+          </p>
+          <p>Thank you for learning with Learnivia!</p>
+        </div>
       `,
     });
+    if (studentRes.error) {
+      console.warn("Resend booking email delivery note (Student):", studentRes.error);
+    }
 
     // Send to Tutor
-    await resend.emails.send({
+    const tutorRes = await resend.emails.send({
       from: FROM_EMAIL,
       to: tutorEmail,
       subject: `New Booking: ${details.subject} with ${details.studentName}`,
       html: `
-        <h2>You have a new booking!</h2>
-        <p>Hi ${details.tutorName},</p>
-        <p><strong>${details.studentName}</strong> just booked a session for <strong>${details.subject}</strong>.</p>
-        <p><strong>When:</strong> ${date}</p>
-        <p><strong>Where:</strong> <a href="${details.zoomLink}">Start Zoom Meeting</a></p>
-        <p>Please log in to your dashboard to view more details.</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
+          <h2 style="color: #1b4d3e;">You have a new tutoring booking!</h2>
+          <p>Hi ${details.tutorName},</p>
+          <p><strong>${details.studentName}</strong> just booked a 1-on-1 session with you for <strong>${details.subject}</strong>.</p>
+          
+          <div style="background-color: #f8f6f0; border: 1px solid #e5dfd5; border-radius: 8px; padding: 18px; margin: 20px 0;">
+            <p style="margin: 0 0 8px 0;"><strong>Scheduled Time:</strong> ${date}</p>
+            <p style="margin: 0 0 16px 0;"><strong>Session Meeting Link:</strong></p>
+            <a href="${details.zoomLink}" style="display: inline-block; background-color: #1b4d3e; color: #ffffff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">
+              Start Zoom Session →
+            </a>
+            <p style="margin: 12px 0 0 0; font-size: 12px; color: #78716c; word-break: break-all;">
+              Meeting URL: <a href="${details.zoomLink}" style="color: #1b4d3e;">${details.zoomLink}</a>
+            </p>
+          </div>
+
+          <p>Please log in to your <a href="https://learnivia-green.vercel.app/tutor" style="color: #1b4d3e;">Tutor Dashboard</a> to view student details and preparation notes.</p>
+          <p>Thank you for volunteering!</p>
+        </div>
       `,
     });
+    if (tutorRes.error) {
+      console.warn("Resend booking email delivery note (Tutor):", tutorRes.error);
+    }
   } catch (error) {
     console.error("Failed to send booking confirmation emails:", error);
   }
@@ -92,21 +126,80 @@ export async function sendApplicationApproved(tutorEmail: string, tutorName: str
     return;
   }
   try {
-    await resend.emails.send({
+    const res = await resend.emails.send({
       from: FROM_EMAIL,
       to: tutorEmail,
-      subject: "Welcome to Learnivia! Your application is approved",
+      subject: "You're Approved! Complete Your Tutoring Training Course - Learnivia",
       html: `
-        <h2>You're approved! 🎉</h2>
-        <p>Hi ${tutorName},</p>
-        <p>Great news! Your volunteer tutor application has been approved.</p>
-        <p>Your profile is now live. Please log in to your dashboard to set your availability so students can start booking sessions with you.</p>
-        <p><a href="https://learnivia-green.vercel.app/tutor">Go to Tutor Dashboard</a></p>
-        <p>Thank you for volunteering!</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
+          <h2 style="color: #1b4d3e; font-size: 24px; margin-bottom: 16px;">Welcome to Learnivia, ${tutorName}!</h2>
+          <p>Congratulations! Your volunteer tutor application has been reviewed and <strong>approved</strong> by our Academic Board.</p>
+          
+          <div style="background-color: #f8f6f0; border: 1px solid #e5dfd5; border-radius: 8px; padding: 20px; margin: 24px 0;">
+            <h3 style="margin-top: 0; color: #1b4d3e; font-size: 16px;">Next Step: Complete Your 5-Video Training Course</h3>
+            <p style="margin-bottom: 16px; font-size: 14px; color: #44403c;">
+              To safeguard students and ensure the highest pedagogical standards, all approved tutors must complete the mandatory 5-module training course before accessing the tutoring dashboard or hosting sessions.
+            </p>
+            <a href="https://learnivia-green.vercel.app/tutor/training" style="display: inline-block; background-color: #1b4d3e; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">
+              Start 5-Module Training Course →
+            </a>
+          </div>
+
+          <p style="font-size: 14px; color: #78716c;">
+            While in training, you can also review our comprehensive tutoring guidelines and best practices in the <a href="https://learnivia-green.vercel.app/resources" style="color: #1b4d3e; text-decoration: underline;">Tutoring Guide &amp; Resources Hub</a>.
+          </p>
+          <p style="font-size: 14px; color: #78716c;">
+            Once you have watched all 5 videos and completed the quick comprehension checks, your tutoring dashboard, session hosting, and weekly calendar will automatically unlock.
+          </p>
+          <p style="margin-top: 24px;">Warm regards,<br><strong>The Learnivia Academic &amp; Safeguarding Team</strong></p>
+        </div>
       `,
     });
+    if (res.error) {
+      console.warn("Resend application approved delivery notice:", res.error);
+    }
   } catch (error) {
     console.error("Failed to send application approved email:", error);
+  }
+}
+
+export async function sendTutorAvailabilityReminder(tutorEmail: string, tutorName: string, daysRemaining: number) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping availability reminder email.");
+    return;
+  }
+  try {
+    const res = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: tutorEmail,
+      subject: "Action Required: Set Your Weekly Tutoring Availability - Learnivia",
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
+          <h2 style="color: #1b4d3e; font-size: 22px; margin-bottom: 16px;">Reminder: Please add your available tutoring hours</h2>
+          <p>Hi ${tutorName},</p>
+          <p>You recently joined Learnivia as an approved volunteer educator, but you haven't set your weekly available time slots yet.</p>
+          
+          <div style="background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 18px; margin: 20px 0;">
+            <p style="margin: 0; font-size: 14px; color: #92400e; font-weight: 500;">
+              Important Policy: Volunteer tutors must specify at least one weekly available time slot within 3 weeks of approval to maintain active tutor status. (${daysRemaining} days remaining).
+            </p>
+          </div>
+
+          <p>Adding your availability takes less than 2 minutes and lets eager students book free 1-on-1 sessions with you.</p>
+          
+          <a href="https://learnivia-green.vercel.app/tutor" style="display: inline-block; background-color: #1b4d3e; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin: 12px 0;">
+            Set Weekly Availability Now →
+          </a>
+
+          <p style="font-size: 13px; color: #78716c; margin-top: 24px;">Thank you for your dedication to peer learning!<br>The Learnivia Team</p>
+        </div>
+      `,
+    });
+    if (res.error) {
+      console.warn("Resend availability reminder delivery notice:", res.error);
+    }
+  } catch (error) {
+    console.error("Failed to send tutor availability reminder:", error);
   }
 }
 

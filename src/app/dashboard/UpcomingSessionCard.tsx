@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Calendar, Video, ArrowRight } from "lucide-react";
+import { Calendar, Video, ArrowRight, Copy, Check } from "lucide-react";
 import styles from "./dashboard.module.css";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -10,6 +10,7 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { ROUTES } from "@/lib/routes";
 import { cancelBooking } from "@/app/actions/sessions";
+import { getMeetingUrls } from "@/lib/meetingUrl";
 import { toast } from "sonner";
 
 interface UpcomingSession {
@@ -36,6 +37,20 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
   const [isCancelling, setIsCancelling] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const cleanJoinUrl = session?.zoomLink
+    ? getMeetingUrls(session.zoomLink).joinUrl
+    : null;
+
+  const handleCopyLink = () => {
+    if (cleanJoinUrl) {
+      navigator.clipboard.writeText(cleanJoinUrl);
+      setCopiedLink(true);
+      toast.success("Zoom meeting link copied to clipboard!");
+      setTimeout(() => setCopiedLink(false), 2500);
+    }
+  };
 
   if (!session) {
     return (
@@ -136,15 +151,27 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
 
         <footer className={styles.sessionCardFooter}>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
-            {session.zoomLink ? (
-              <a
-                href={session.zoomLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.joinBtn}
-              >
-                <Video size={16} /> Join Zoom Room
-              </a>
+            {cleanJoinUrl ? (
+              <>
+                <a
+                  href={cleanJoinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.joinBtn}
+                >
+                  <Video size={16} /> Join Zoom Room
+                </a>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className={styles.secondaryBtn}
+                  title="Copy Zoom link to clipboard"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}
+                >
+                  {copiedLink ? <Check size={14} color="#166534" /> : <Copy size={14} />}
+                  <span>{copiedLink ? "Link Copied" : "Copy Zoom Link"}</span>
+                </button>
+              </>
             ) : (
               <Link href={`/sessions/${session.id}`} className={styles.joinBtn}>
                 <Video size={16} /> Session Room Details

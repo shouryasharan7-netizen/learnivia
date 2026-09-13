@@ -79,6 +79,7 @@ const publicPaths = [
   "/apply",
   "/api/health",     // Health check is public
   "/api/auth",       // NextAuth callbacks
+  "/api/cron",       // Cron endpoints (Vercel cron)
   "/robots.txt",
   "/sitemap.xml",
 ]

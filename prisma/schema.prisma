@@ -137,6 +137,8 @@ model TutorProfile {
   teachingStyles  String?     // Comma separated tags
   
   status          TutorStatus @default(PENDING)
+  approvedAt      DateTime?
+  lastReminderSentAt DateTime?
   volunteerHours  Float       @default(0.0)
 
   curricula       String?     // Comma separated list e.g. "IB, AP, CBSE, IGCSE, US Common Core"
@@ -229,6 +231,9 @@ model Booking {
   endTime         DateTime      // Stored in UTC
   
   status          BookingStatus @default(CONFIRMED)
+  studentAttended Boolean       @default(false)
+  studentConfirmedAt DateTime?
+  hoursCredited   Boolean       @default(false)
   zoomLink        String?       @db.Text
   recordingUrl    String?       @db.Text
   checkUpNote     String?       @db.Text

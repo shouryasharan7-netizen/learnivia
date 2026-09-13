@@ -1,10 +1,13 @@
 import React from "react";
 import { getCurrentUser } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
+import { ROUTES } from "@/lib/routes";
+import { getMeetingUrls } from "@/lib/meetingUrl";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
 import { NextActionPanel } from "./NextActionPanel";
 import { UpcomingSessionCard } from "./UpcomingSessionCard";
+import { StudentAttendancePrompt } from "./StudentAttendancePrompt";
 import { QuickActions } from "./QuickActions";
 import { TruthfulSummary } from "./TruthfulSummary";
 import { LearningPaths } from "./LearningPaths";
@@ -12,7 +15,6 @@ import { ActivityTimeline, TimelineItem } from "./ActivityTimeline";
 import { CollapsibleResources } from "./CollapsibleResources";
 import ChildProfileSection from "./ChildProfileSection";
 import EmailVerificationBanner from "@/components/EmailVerificationBanner";
-import { ROUTES } from "@/lib/routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -153,6 +155,16 @@ export default async function StudentDashboard() {
     return sum + Math.max(0, Math.round(diff / 60000));
   }, 0);
 
+  // Unconfirmed sessions awaiting student attendance verification for volunteer hours
+  const pendingAttendanceList = completedBookings
+    .filter((b: any) => !b.hoursCredited)
+    .map((b: any) => ({
+      id: b.id,
+      subject: b.subject,
+      startTime: b.startTime,
+      tutorName: b.tutor?.user?.name || "Volunteer Tutor",
+    }));
+
   // Determine user state for NextActionPanel
   const isNewLearner =
     !user.onboardingCompleted ||
@@ -171,7 +183,7 @@ export default async function StudentDashboard() {
         subject: nextBooking.subject,
         startTime: nextBooking.startTime,
         tutorName: nextBooking.tutor?.user?.name || "Volunteer Tutor",
-        meetingUrl: nextBooking.zoomLink,
+        meetingUrl: nextBooking.zoomLink ? getMeetingUrls(nextBooking.zoomLink).joinUrl : null,
       }
     : null;
 
@@ -230,6 +242,9 @@ export default async function StudentDashboard() {
         {emailUnverified && user.email && (
           <EmailVerificationBanner email={user.email} />
         )}
+
+        {/* Student Attendance Confirmation for Volunteer Hours */}
+        <StudentAttendancePrompt pendingBookings={pendingAttendanceList} />
 
         {/* 1. Greeting and One-Sentence Context */}
         <header className={styles.greetingSection}>

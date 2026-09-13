@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { addAvailability, removeAvailability } from "./actions";
 import { completeSession, cancelBooking } from "@/app/actions/sessions";
 import { completeWorkshop } from "@/app/actions/workshops";
@@ -245,6 +246,12 @@ export default async function TutorDashboard() {
         </div>
       </main>
     );
+  }
+
+  // Mandatory Safeguarding & Training Gate:
+  // Approved tutors cannot access the dashboard or host sessions until completing all 5 training modules.
+  if (passedModules < 5) {
+    redirect(ROUTES.tutor.training);
   }
 
   let rawWorkshops: any[] = [];

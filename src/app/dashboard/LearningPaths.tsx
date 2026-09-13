@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Calculator, Atom, BookOpen, ArrowRight } from "lucide-react";
+import { Calculator, Atom, BookOpen, MessageSquare, ArrowRight } from "lucide-react";
 import styles from "./dashboard.module.css";
 import { ROUTES } from "@/lib/routes";
 
@@ -31,6 +31,14 @@ export function LearningPaths() {
       href: `${ROUTES.find}?subject=Reading+%26+Writing`,
       icon: BookOpen,
       badge: "Language & Arts",
+    },
+    {
+      id: "dialogues",
+      title: "Dialogues & Discussions",
+      desc: "Discuss interesting topics, current events, and ideas with peers in moderated community roundtables.",
+      href: ROUTES.community,
+      icon: MessageSquare,
+      badge: "Peer Dialogues",
     },
   ];
 

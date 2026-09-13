@@ -12,6 +12,7 @@ import {
   BookOpen,
   ArrowRight,
   ShieldCheck,
+  CheckCircle2,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -153,9 +154,30 @@ export default async function FindTutorPage({ searchParams }: Props) {
               rating: true,
             },
           },
+          _count: {
+            select: {
+              tutorBookings: {
+                where: { status: "COMPLETED" },
+              },
+              workshops: {
+                where: { status: "COMPLETED" },
+              },
+            },
+          },
         },
         orderBy: { volunteerHours: "desc" },
       });
+
+      // Prioritize tutors who have the most completed classes/sessions
+      tutors.sort((a, b) => {
+        const aCompleted = (a._count?.tutorBookings || 0) + (a._count?.workshops || 0);
+        const bCompleted = (b._count?.tutorBookings || 0) + (b._count?.workshops || 0);
+        if (bCompleted !== aCompleted) {
+          return bCompleted - aCompleted;
+        }
+        return (b.volunteerHours || 0) - (a.volunteerHours || 0);
+      });
+
       findTutorsMemoryCache.set(cacheKey, { tutors, timestamp: Date.now() });
     } catch (err) {
       console.warn("Find page tutor lookup fallback triggered:", (err as Error)?.message);
@@ -293,6 +315,7 @@ export default async function FindTutorPage({ searchParams }: Props) {
           </div>
         ) : (
           tutors.map((tutor: any) => {
+            const completedSessions = (tutor._count?.tutorBookings || 0) + (tutor._count?.workshops || 0);
             const avgRating =
               tutor.reviews?.length > 0
                 ? (tutor.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / tutor.reviews.length).toFixed(1)
@@ -352,6 +375,12 @@ export default async function FindTutorPage({ searchParams }: Props) {
                 </div>
 
                 <div className={styles.tutorMeta}>
+                  {completedSessions > 0 && (
+                    <span className={styles.hoursBadge} style={{ background: "#F0FDF4", borderColor: "#BBF7D0", color: "#166534" }}>
+                      <CheckCircle2 size={13} color="#166534" />
+                      <span>{completedSessions} {completedSessions === 1 ? "class" : "classes"} taught</span>
+                    </span>
+                  )}
                   <span className={styles.hoursBadge}>
                     <Clock size={13} color="#1B4D3E" />
                     <span>{tutor.volunteerHours} hrs volunteered</span>

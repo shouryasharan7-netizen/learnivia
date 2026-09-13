@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { CheckCircle2, ShieldCheck, BookOpen, ArrowRight } from "lucide-react";
 
 const MODULES = [
   {
@@ -332,6 +333,23 @@ export default function TutorTrainingPage() {
                 }}
               />
             </div>
+            <div style={{ marginTop: "1rem" }}>
+              <Link
+                href="/resources"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                  textDecoration: "underline",
+                  opacity: 0.95,
+                  fontWeight: 500,
+                }}
+              >
+                <BookOpen size={14} /> Review Official Tutoring Guide &amp; Resources →
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -349,7 +367,9 @@ export default function TutorTrainingPage() {
               marginBottom: "2.5rem",
             }}
           >
-            <div style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>🎉</div>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.75rem" }}>
+              <CheckCircle2 size={44} color="#0D683B" />
+            </div>
             <h2 style={{ color: "#0D683B", fontWeight: 800, margin: "0 0 0.5rem" }}>
               Training Complete!
             </h2>

@@ -1,0 +1,158 @@
+.slotSelectorContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.timezoneBadge {
+  background: var(--wa-paper-warm, #f8f6f0);
+  border: 1px solid var(--wa-border, #e5dfd5);
+  border-radius: var(--wa-radius-sm, 6px);
+  padding: 0.6rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--wa-ink, #1c1917);
+}
+
+.timezoneBadgeHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.globeIcon {
+  color: var(--wa-forest, #1b4d3e);
+  flex-shrink: 0;
+}
+
+.timezoneText {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.timezoneText strong {
+  color: var(--wa-forest, #1b4d3e);
+}
+
+.changeTzBtn {
+  background: none;
+  border: 1px solid var(--wa-border, #e5dfd5);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--wa-muted, #78716c);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.changeTzBtn:hover {
+  background: var(--wa-white, #ffffff);
+  color: var(--wa-ink, #1c1917);
+  border-color: var(--wa-forest, #1b4d3e);
+}
+
+.timezonePickerDropdown {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--wa-border, #e5dfd5);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pickerLabel {
+  font-size: 0.75rem;
+  color: var(--wa-muted, #78716c);
+}
+
+.pickerSelect {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid var(--wa-border, #e5dfd5);
+  background: var(--wa-white, #ffffff);
+  color: var(--wa-ink, #1c1917);
+  outline: none;
+}
+
+.pickerSelect:focus {
+  border-color: var(--wa-forest, #1b4d3e);
+}
+
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.selectLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wa-ink, #1c1917);
+}
+
+.slotDropdown {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.88rem;
+  border-radius: var(--wa-radius-sm, 6px);
+  border: 1.5px solid var(--wa-border, #e5dfd5);
+  background: var(--wa-white, #ffffff);
+  color: var(--wa-ink, #1c1917);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.slotDropdown:focus {
+  border-color: var(--wa-forest, #1b4d3e);
+}
+
+.slotPreviewCard {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--wa-radius-sm, 6px);
+  padding: 0.65rem 0.75rem;
+  font-size: 0.82rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.previewItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.previewIcon {
+  color: #166534;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.previewTextGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.previewTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #166534;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.previewTime {
+  color: #14532d;
+  font-size: 0.88rem;
+}
+
+.tutorTzNote {
+  font-size: 0.75rem;
+  color: #15803d;
+  margin-left: 1.35rem;
+}

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { bookSession } from "./actions";
 import { auth } from "@/auth";
 import Link from "next/link";
+import { BookingSlotSelector } from "./BookingSlotSelector";
 
 const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -63,6 +64,15 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
 
   if (!tutorProfile || tutorProfile.status !== "APPROVED") {
     notFound();
+  }
+
+  let currentUserTimezone: string | null = null;
+  if (session?.user?.id) {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { timezone: true },
+    });
+    currentUserTimezone = dbUser?.timezone || null;
   }
 
   const bookingMinutes = (tutorProfile.tutorBookings || []).reduce((sum, b) => {
@@ -234,17 +244,11 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                   />
                 </div>
 
-                <div className={styles.formGroup}>
-                  <label htmlFor="slotSelect">Available Time Slot *</label>
-                  <select id="slotSelect" name="slotId" required>
-                    <option value="">Choose an available time...</option>
-                    {tutorProfile.availabilities.map((slot: { id: string; dayOfWeek: number; startTime: string; endTime: string }) => (
-                      <option key={slot.id} value={slot.id}>
-                        {DAYS_OF_WEEK[slot.dayOfWeek]} {slot.startTime} - {slot.endTime} ({tutorProfile.user.timezone || "Local"})
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <BookingSlotSelector
+                  availabilities={tutorProfile.availabilities}
+                  tutorTimezone={tutorProfile.user.timezone || "UTC"}
+                  defaultViewerTimezone={currentUserTimezone}
+                />
 
                 <div className={styles.formGroup}>
                   <label htmlFor="notesInput">Notes for Tutor (optional)</label>
