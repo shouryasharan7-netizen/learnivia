@@ -1,135 +1,420 @@
-.main {
-  padding: 4rem 2rem;
-  max-width: 1200px;
+/* ==========================================================================
+   Learnivia — Admin Command Center Styles
+   Design Language: Warm Editorial Administrative Oversight
+   ========================================================================== */
+
+.page {
+  padding: 2rem 0 4rem;
+  background: var(--wa-cream);
+  min-height: calc(100vh - 56px);
+}
+
+.container {
+  max-width: 1120px;
   margin: 0 auto;
-  min-height: calc(100vh - 80px);
+  padding-inline: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* ============================
+   Command Header
+   ============================ */
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--wa-shadow-sm);
+}
+
+.headerTitleCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.liveBadge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--wa-green-light);
+  color: var(--wa-green);
+  border: 1px solid var(--wa-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .title {
-  color: var(--deep-navy);
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--wa-ink);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--wa-muted);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 580px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.primaryBtn {
+  background: var(--wa-green);
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: var(--wa-radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background var(--wa-transition);
+}
+
+.primaryBtn:hover {
+  background: var(--wa-green-hover);
+}
+
+.secondaryBtn {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  color: var(--wa-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--wa-radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--wa-transition);
+}
+
+.secondaryBtn:hover {
+  background: var(--wa-cream-mid);
+  border-color: var(--wa-border-strong);
+}
+
+/* ============================
+   Operational Triage Alert
+   ============================ */
+.triageBanner {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: var(--wa-radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.triageBannerCritical {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: var(--wa-radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.triageBannerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 280px;
+}
+
+.triageIconAmber {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--wa-radius-sm);
+  background: #FEF3C7;
+  color: #92400E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.triageIconRed {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--wa-radius-sm);
+  background: #FEE2E2;
+  color: #991B1B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.triageTextAmber {
+  font-size: 0.875rem;
+  color: #92400E;
+  line-height: 1.45;
+}
+
+.triageTextRed {
+  font-size: 0.875rem;
+  color: #991B1B;
+  line-height: 1.45;
+}
+
+.triageBtnAmber {
+  background: #B45309;
+  color: #FFFFFF;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--wa-radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.triageBtnAmber:hover {
+  background: #92400E;
+}
+
+.triageBtnRed {
+  background: #DC2626;
+  color: #FFFFFF;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--wa-radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.triageBtnRed:hover {
+  background: #B91C1C;
+}
+
+/* ============================
+   8-Metric Health & Activity Grid
+   ============================ */
+.sectionLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--wa-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0.5rem 0 -0.5rem;
 }
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
-}
-
-.statCard {
-  background: white;
-  padding: 2rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  text-align: center;
-}
-
-.statCard h3 {
-  color: var(--color-text-muted);
-  font-size: 1.125rem;
-  margin-bottom: 1rem;
-}
-
-.statValue {
-  color: var(--color-primary);
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-.sectionTitle {
-  color: var(--color-navy);
-  font-size: 1.75rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.applicationsList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.applicationCard {
-  background: white;
-  padding: 2rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.appInfo {
-  flex: 1;
-}
-
-.appInfo h3 {
-  color: var(--color-navy);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.appInfo p {
-  color: var(--color-text);
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
-}
-
-.appActions {
-  display: flex;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
 
-.approveBtn, .rejectBtn {
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-full);
+.statCard {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-md);
+  padding: 1.25rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  box-shadow: var(--wa-shadow-sm);
+  transition: all var(--wa-transition);
+}
+
+.statCard:hover {
+  border-color: var(--wa-border-strong);
+  transform: translateY(-1px);
+}
+
+.statCardHighlight {
+  border-color: #FCD34D;
+  background: #FFFDF7;
+}
+
+.statCardCritical {
+  border-color: #FCA5A5;
+  background: #FFFBFB;
+}
+
+.statCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statIconWrap {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--wa-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statValue {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
   font-weight: 700;
-  cursor: pointer;
-  border: none;
-  transition: transform var(--transition-fast), background-color var(--transition-fast);
+  color: var(--wa-ink);
+  line-height: 1;
 }
 
-.approveBtn {
-  background-color: var(--color-primary);
-  color: white;
+.statLabel {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--wa-ink);
 }
 
-.rejectBtn {
-  background-color: var(--color-error);
-  color: white;
+.statHint {
+  font-size: 0.75rem;
+  color: var(--wa-muted);
+  margin-top: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-.approveBtn:hover {
-  background-color: var(--color-primary-hover);
-  transform: translateY(-1px);
+/* ============================
+   Two-Column Operational Activity
+   ============================ */
+.twoColGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
-.rejectBtn:hover {
-  background-color: #DC2626; /* Error dark */
-  transform: translateY(-1px);
+.panel {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: var(--wa-shadow-sm);
 }
 
-@media (max-width: 768px) {
-  .main {
-    padding: 2rem 1rem;
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panelTitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+.panelLink {
+  font-size: 0.8125rem;
+  color: var(--wa-green);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.panelLink:hover {
+  text-decoration: underline;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  background: var(--wa-cream);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-sm);
+  font-size: 0.8125rem;
+}
+
+.itemPrimary {
+  font-weight: 600;
+  color: var(--wa-ink);
+}
+
+.itemSecondary {
+  font-size: 0.75rem;
+  color: var(--wa-muted);
+}
+
+/* Responsive */
+@media (max-width: 950px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+  .twoColGrid {
+    grid-template-columns: 1fr;
   }
-  .applicationCard {
+}
+
+@media (max-width: 600px) {
+  .headerRow {
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
+    align-items: stretch;
   }
-  .appActions {
-    width: 100%;
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .headerActions {
     flex-direction: column;
+    align-items: stretch;
   }
-  .approveBtn, .rejectBtn {
-    width: 100%;
+  .headerActions > * {
+    justify-content: center;
   }
 }

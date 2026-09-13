@@ -27,24 +27,34 @@ export default async function Home() {
   let completedSessionsCount = 380;
 
   try {
-    const [nw, tc, cc] = await Promise.all([
-      prisma.workshop.findFirst({
-        where: {
-          status: "UPCOMING",
-          endTime: { gte: now },
-        },
-        include: {
-          tutor: { include: { user: true } },
-          enrollments: true,
-        },
-        orderBy: { startTime: "asc" },
-      }),
-      prisma.tutorProfile.count({ where: { status: "APPROVED" } }),
-      prisma.booking.count({ where: { status: "COMPLETED" } }),
+    const fetchWithTimeout = Promise.race([
+      Promise.all([
+        prisma.workshop.findFirst({
+          where: {
+            status: "UPCOMING",
+            endTime: { gte: now },
+          },
+          include: {
+            tutor: { include: { user: true } },
+            enrollments: true,
+          },
+          orderBy: { startTime: "asc" },
+        }),
+        prisma.tutorProfile.count({ where: { status: "APPROVED" } }),
+        prisma.booking.count({ where: { status: "COMPLETED" } }),
+      ]),
+      new Promise<null>((_, reject) =>
+        setTimeout(() => reject(new Error("Home page DB lookup timed out after 2000ms")), 2000)
+      ),
     ]);
-    nextWorkshop = nw;
-    if (typeof tc === "number") verifiedTutorsCount = tc;
-    if (typeof cc === "number") completedSessionsCount = cc;
+
+    const result = await fetchWithTimeout;
+    if (result) {
+      const [nw, tc, cc] = result;
+      nextWorkshop = nw;
+      if (typeof tc === "number") verifiedTutorsCount = tc;
+      if (typeof cc === "number") completedSessionsCount = cc;
+    }
   } catch (err) {
     console.warn("Home page live stats DB lookup fallback triggered:", (err as Error)?.message);
   }

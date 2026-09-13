@@ -16,7 +16,9 @@ import {
   ShieldAlert,
   LogOut,
   ChevronDown,
-  Sparkles
+  Sparkles,
+  Bell,
+  Calendar,
 } from "lucide-react";
 import styles from "./Navbar.module.css";
 
@@ -159,7 +161,7 @@ export function Navbar() {
                   boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
                 }}
               >
-                <span>🛡️</span>
+                <ShieldAlert size={14} color="#D97706" />
                 <span>Admin Center</span>
               </Link>
             )}
@@ -184,7 +186,9 @@ export function Navbar() {
                     <span className={styles.popoverCount}>0 new</span>
                   </div>
                   <div className={styles.popoverEmpty}>
-                    <div className={styles.popoverEmptyIcon} aria-hidden="true">💬</div>
+                    <div className={styles.popoverEmptyIcon} aria-hidden="true">
+                      <MessageSquare size={32} color="#78716C" strokeWidth={1.5} />
+                    </div>
                     <p className={styles.popoverEmptyTitle}>No new messages</p>
                     <p className={styles.popoverEmptyText}>
                       When you connect with tutors or attend group sessions, direct conversations will appear here.
@@ -217,7 +221,9 @@ export function Navbar() {
                     <span className={styles.popoverCount}>0 unread</span>
                   </div>
                   <div className={styles.popoverEmpty}>
-                    <div className={styles.popoverEmptyIcon} aria-hidden="true">🔔</div>
+                    <div className={styles.popoverEmptyIcon} aria-hidden="true">
+                      <Bell size={32} color="#78716C" strokeWidth={1.5} />
+                    </div>
                     <p className={styles.popoverEmptyTitle}>You&apos;re all caught up!</p>
                     <p className={styles.popoverEmptyText}>
                       Session reminders, enrollment confirmations, and community updates will appear here.
@@ -252,7 +258,9 @@ export function Navbar() {
                     <span>Upcoming Schedule</span>
                   </div>
                   <div className={styles.popoverEmpty}>
-                    <div className={styles.popoverEmptyIcon} aria-hidden="true">📅</div>
+                    <div className={styles.popoverEmptyIcon} aria-hidden="true">
+                      <Calendar size={32} color="#78716C" strokeWidth={1.5} />
+                    </div>
                     <p className={styles.popoverEmptyTitle}>No sessions scheduled today</p>
                     <p className={styles.popoverEmptyText}>
                       Check your upcoming bookings or register for a live study session.

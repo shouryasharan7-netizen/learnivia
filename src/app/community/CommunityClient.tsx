@@ -4,6 +4,27 @@ import { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { CommunityMessage } from "@/lib/community-store";
+import { ROUTES } from "@/lib/routes";
+import {
+  Megaphone,
+  UserPlus,
+  MessageSquare,
+  BookOpen,
+  Atom,
+  Users,
+  Award,
+  Newspaper,
+  ShieldCheck,
+  Lock,
+  Trash2,
+  Flag,
+  HelpCircle,
+  Lightbulb,
+  Send,
+  CheckCircle2,
+  Heart,
+  Sparkles,
+} from "lucide-react";
 import styles from "./page.module.css";
 
 interface Props {
@@ -19,18 +40,40 @@ interface Props {
 }
 
 const LEARNIVIA_CHANNELS = [
-  { label: "Announcements", desc: "Official updates, system schedules, and announcements from Learnivia staff.", icon: "📢" },
-  { label: "Introductions", desc: "Introduce yourself, share your grade, subjects of interest, and study goals.", icon: "👋" },
+  {
+    label: "Announcements",
+    desc: "Official updates, system schedules, and announcements from Learnivia staff.",
+    icon: Megaphone,
+  },
+  {
+    label: "Introductions",
+    desc: "Introduce yourself, share your grade, subjects of interest, and study goals.",
+    icon: UserPlus,
+  },
 ];
 
 const COMMUNITY_CHANNELS = [
-  { label: "General", desc: "Academic discussions, peer advice, study questions, and general community chat.", icon: "💬" },
-  { label: "K–10 Homework Help", desc: "Ask questions, share solutions, and help fellow K–10 learners.", icon: "📚" },
-  { label: "Math & Science Circles", desc: "Peer study groups, visual explanations, and homework collaboration.", icon: "🔬" },
-  { label: "Study Circles", desc: "Find study partners, group Zoom rooms, and accountability buddies.", icon: "📚" },
+  {
+    label: "General",
+    desc: "Academic discussions, peer advice, study questions, and general community chat.",
+    icon: MessageSquare,
+  },
+  {
+    label: "K–10 Homework Help",
+    desc: "Ask questions, share solutions, and help fellow K–10 learners.",
+    icon: BookOpen,
+  },
+  {
+    label: "Math & Science Circles",
+    desc: "Peer study groups, visual explanations, and homework collaboration.",
+    icon: Atom,
+  },
+  {
+    label: "Study Circles",
+    desc: "Find study partners, group Zoom rooms, and accountability buddies.",
+    icon: Users,
+  },
 ];
-
-const EMOJI_SHORTCUTS = ["👍", "❤️", "📚", "🚀", "💡", "🔥", "🙌"];
 
 export default function CommunityClient({ initialMessages, currentUser, initialChannel = "Announcements" }: Props) {
   const [activeChannel, setActiveChannel] = useState(initialChannel);
@@ -42,8 +85,8 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
 
   const normalizedActive = activeChannel.toLowerCase() === "random" ? "general" : activeChannel.toLowerCase();
 
-  const filteredMessages = activeChannel === "Home" 
-    ? messages 
+  const filteredMessages = activeChannel === "Home"
+    ? messages
     : messages.filter((m) => {
         const mc = m.channel.toLowerCase() === "random" ? "general" : m.channel.toLowerCase();
         return mc === normalizedActive;
@@ -90,13 +133,13 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
       if (res.ok && data.message) {
         setMessages((prev) => [data.message, ...prev]);
         setInputText("");
-        setSuccessMsg("Message posted.");
+        setSuccessMsg("Message posted to community.");
         setTimeout(() => setSuccessMsg(""), 3000);
       } else {
         setErrorMsg(data.error || "Failed to post message.");
       }
     } catch {
-      setErrorMsg("Connection error. Please try again.");
+      setErrorMsg("Connection error. Please check your network and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -194,35 +237,32 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
   return (
     <div className={styles.layout}>
       {/* Left Sub-Navigation */}
-      <aside className={styles.channelNav} aria-label="Community channels">
+      <aside className={styles.channelNav} aria-label="Community study channels">
         <button
           onClick={() => setActiveChannel("Home")}
           className={`${styles.channelHome} ${activeChannel === "Home" ? styles.channelHomeActive : ""}`}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-          Home Feed
+          <MessageSquare size={16} aria-hidden="true" />
+          <span>All Channels Feed</span>
         </button>
 
         {/* Learnivia Channels */}
         <div className={styles.channelGroup}>
           <div className={styles.channelGroupHeader}>
             <span>LEARNIVIA CHANNELS</span>
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 10l4-4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
           </div>
           {LEARNIVIA_CHANNELS.map((c) => {
             const isSelected = activeChannel.toLowerCase() === c.label.toLowerCase();
+            const Icon = c.icon;
             return (
               <button
                 key={c.label}
                 onClick={() => setActiveChannel(c.label)}
                 className={`${styles.channelItem} ${isSelected ? styles.channelItemActive : ""}`}
               >
-                <span className={styles.channelIcon}>{c.icon}</span>
+                <span className={styles.channelIcon}>
+                  <Icon size={15} aria-hidden="true" />
+                </span>
                 <span className={styles.channelNameText}>{c.label}</span>
               </button>
             );
@@ -233,19 +273,19 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
         <div className={styles.channelGroup}>
           <div className={styles.channelGroupHeader}>
             <span>COMMUNITY CHANNELS</span>
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 10l4-4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
           </div>
           {COMMUNITY_CHANNELS.map((c) => {
             const isSelected = normalizedActive === c.label.toLowerCase();
+            const Icon = c.icon;
             return (
               <button
                 key={c.label}
                 onClick={() => setActiveChannel(c.label)}
                 className={`${styles.channelItem} ${isSelected ? styles.channelItemActive : ""}`}
               >
-                <span className={styles.channelIcon}>{c.icon}</span>
+                <span className={styles.channelIcon}>
+                  <Icon size={15} aria-hidden="true" />
+                </span>
                 <span className={styles.channelNameText}>{c.label}</span>
               </button>
             );
@@ -257,21 +297,21 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
       <div className={styles.content}>
         {/* Top 3 Quick-Access Cards */}
         <div className={styles.topCards}>
-          <Link href="/stories" className={styles.topCard}>
-            <span className={styles.topCardIcon} style={{ background: "#FEF2F2", color: "#DC2626" }}>
-              🪶
+          <Link href={ROUTES.stories} className={styles.topCard}>
+            <span className={styles.topCardIcon} style={{ background: "var(--wa-contrast, #F3EFE8)", color: "var(--wa-ink, #1C1917)" }}>
+              <BookOpen size={15} aria-hidden="true" />
             </span>
-            <span>Community Stories</span>
+            <span>Learner Stories</span>
           </Link>
-          <Link href="/about" className={styles.topCard}>
-            <span className={styles.topCardIcon} style={{ background: "#EFF6FF", color: "#2563EB" }}>
-              📰
+          <Link href={ROUTES.about} className={styles.topCard}>
+            <span className={styles.topCardIcon} style={{ background: "var(--wa-contrast, #F3EFE8)", color: "var(--wa-ink, #1C1917)" }}>
+              <Newspaper size={15} aria-hidden="true" />
             </span>
-            <span>Learnivia Blog</span>
+            <span>Platform Updates</span>
           </Link>
-          <Link href="/sessions" className={styles.topCard}>
-            <span className={styles.topCardIcon} style={{ background: "#FFFBEB", color: "#D97706" }}>
-              🏆
+          <Link href={ROUTES.learner.mySessions} className={styles.topCard}>
+            <span className={styles.topCardIcon} style={{ background: "var(--wa-contrast, #F3EFE8)", color: "var(--wa-ink, #1C1917)" }}>
+              <Award size={15} aria-hidden="true" />
             </span>
             <span>Active Study Circles</span>
           </Link>
@@ -281,9 +321,10 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
         {currentUser?.isAdmin && (
           <div className={styles.adminModerationBanner}>
             <span className={styles.modBadge}>
-              🛡️ <strong>Admin Moderation Active:</strong> You can delete any message instantly and review safety reports.
+              <ShieldCheck size={16} aria-hidden="true" />
+              <span><strong>Admin Moderation Active:</strong> You can delete any message instantly and review safety reports.</span>
             </span>
-            <Link href="/admin/reports" className={styles.modLink}>
+            <Link href={ROUTES.admin.reports} className={styles.modLink}>
               Incident Reports Dashboard →
             </Link>
           </div>
@@ -292,18 +333,19 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
         {/* Toast / Notification Banner */}
         {successMsg && (
           <div style={{
-            background: "#ECFDF5",
-            border: "1px solid #A7F3D0",
-            color: "#065F46",
+            background: "var(--wa-green-light, #EAF2EE)",
+            border: "1px solid #C6DEC6",
+            color: "var(--wa-green, #1B4D3E)",
             padding: "0.75rem 1.25rem",
-            borderRadius: "12px",
+            borderRadius: "var(--wa-radius-sm, 8px)",
             fontSize: "0.875rem",
             fontWeight: 600,
             display: "flex",
             alignItems: "center",
             gap: "0.5rem"
           }}>
-            <span>✓</span> {successMsg}
+            <CheckCircle2 size={16} aria-hidden="true" />
+            <span>{successMsg}</span>
           </div>
         )}
 
@@ -318,7 +360,7 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
               </span>
             </div>
             <p className={styles.bannerDesc}>
-              {currentChannelInfo?.desc || "Explore all community discussions, questions, and updates."}
+              {currentChannelInfo?.desc || "Explore community discussions, study advice, and questions from fellow learners."}
             </p>
           </div>
         </div>
@@ -345,21 +387,24 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
                     className={styles.quickTag}
                     onClick={() => setInputText((prev) => prev + (prev ? " " : "") + "Question: ")}
                   >
-                    ❓ Question
+                    <HelpCircle size={12} aria-hidden="true" />
+                    <span>Question</span>
                   </button>
                   <button
                     type="button"
                     className={styles.quickTag}
                     onClick={() => setInputText((prev) => prev + (prev ? " " : "") + "Study Tip: ")}
                   >
-                    💡 Tip
+                    <Lightbulb size={12} aria-hidden="true" />
+                    <span>Study Tip</span>
                   </button>
                   <button
                     type="button"
                     className={styles.quickTag}
-                    onClick={() => setInputText((prev) => prev + (prev ? " " : "") + "Anyone want to study together for: ")}
+                    onClick={() => setInputText((prev) => prev + (prev ? " " : "") + "Looking for study partner: ")}
                   >
-                    🤝 Study Partner
+                    <Users size={12} aria-hidden="true" />
+                    <span>Study Partner</span>
                   </button>
                 </div>
               </div>
@@ -378,67 +423,55 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
               />
 
               <div className={styles.composerFooter}>
-                <div className={styles.emojiShortcuts}>
-                  {EMOJI_SHORTCUTS.map((emoji) => (
-                    <button
-                      key={emoji}
-                      type="button"
-                      className={styles.emojiBtn}
-                      onClick={() => setInputText((prev) => prev + emoji)}
-                      title={`Add ${emoji}`}
-                    >
-                      {emoji}
-                    </button>
-                  ))}
+                <div style={{
+                  fontSize: "0.75rem",
+                  color: "var(--wa-muted, #78716C)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                }}>
+                  <ShieldCheck size={14} aria-hidden="true" />
+                  <span>Classroom standards apply. Moderated for child safety.</span>
                 </div>
 
                 <div className={styles.composerActions}>
-                  <span className={styles.shortcutHint}>Press ⌘+Enter to post</span>
+                  <span className={styles.shortcutHint}>⌘+Enter</span>
                   <button
                     type="submit"
                     disabled={!inputText.trim() || isSubmitting}
                     className={styles.postBtn}
                   >
-                    {isSubmitting ? "Posting..." : "Post Message 🚀"}
+                    <Send size={13} aria-hidden="true" />
+                    <span>{isSubmitting ? "Posting..." : "Post Message"}</span>
                   </button>
                 </div>
-              </div>
-
-              <div style={{
-                fontSize: "0.75rem",
-                color: "#64748B",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.35rem",
-                paddingTop: "0.5rem",
-                borderTop: "1px solid #F1F5F9"
-              }}>
-                <span>🛡️</span>
-                <span>Classroom standards apply. Moderated for member safety — no contact sharing, offensive language, or spam.</span>
               </div>
 
               {errorMsg && <p className={styles.errorText}>{errorMsg}</p>}
             </form>
           ) : (
             <div className={styles.readOnlyNotice}>
-              🔒 <strong>Read-Only Channel:</strong> Official announcements are published exclusively by verified Learnivia staff.
-              <br />
-              <span style={{ fontSize: "0.8rem", color: "#64748B" }}>
-                To ask questions, share tips, or discuss topics, switch to <strong>#General</strong> or <strong>#Study Circles</strong>.
-              </span>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)", marginBottom: "0.25rem" }}>
+                <Lock size={15} aria-hidden="true" />
+                <span>Read-Only Channel</span>
+              </div>
+              <div>Official announcements are published exclusively by verified Learnivia staff.</div>
+              <div style={{ fontSize: "0.75rem", color: "var(--wa-muted, #78716C)", marginTop: "0.35rem" }}>
+                To ask questions or collaborate, switch to <strong>#General</strong> or <strong>#Study Circles</strong>.
+              </div>
             </div>
           )
         ) : (
           <div className={styles.guestPromptCard}>
             <div>
               <h3>Join the conversation in #{activeChannel === "Random" ? "General" : activeChannel}</h3>
-              <p>Sign in with Google to post questions, share resources, and connect with peer tutors.</p>
+              <p>Sign in to post questions, share resources, and connect with peer tutors.</p>
             </div>
             <button
               onClick={() => signIn("google", { callbackUrl: "/community" })}
               className={styles.guestSignInBtn}
             >
-              Sign In to Post
+              Sign In to Participate
             </button>
           </div>
         )}
@@ -447,9 +480,9 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
         <div className={styles.feedList}>
           {filteredMessages.length === 0 ? (
             <div className={styles.emptyFeed}>
-              <div className={styles.emptyFeedIcon}>💬</div>
+              <MessageSquare size={32} strokeWidth={1.5} className={styles.emptyFeedIcon} aria-hidden="true" />
               <h3>No messages in #{activeChannel === "Random" ? "General" : activeChannel} yet</h3>
-              <p>Be the first to start an academic discussion or share a study tip!</p>
+              <p>Be the first to start an academic discussion or share a study tip.</p>
             </div>
           ) : (
             filteredMessages.map((msg) => {
@@ -458,7 +491,7 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
 
               return (
                 <article key={msg.id} className={styles.messageCard}>
-                  <div className={styles.messageAvatar} style={{ background: msg.authorColor }}>
+                  <div className={styles.messageAvatar} style={{ background: msg.authorColor || "var(--wa-green, #1B4D3E)" }}>
                     {msg.authorInitials}
                   </div>
 
@@ -478,7 +511,8 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
                             onClick={() => handleDeleteMessage(msg.id)}
                             title="Delete this message permanently"
                           >
-                            🗑️ Delete
+                            <Trash2 size={12} aria-hidden="true" />
+                            <span>Delete</span>
                           </button>
                         )}
                         {currentUser && !isAuthor && (
@@ -488,7 +522,8 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
                             onClick={() => handleReportMessage(msg.id)}
                             title="Report this post to platform moderators"
                           >
-                            🚩 Report
+                            <Flag size={12} aria-hidden="true" />
+                            <span>Report</span>
                           </button>
                         )}
                       </div>
@@ -504,19 +539,10 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
                         type="button"
                         className={styles.reactionBtn}
                         onClick={() => handleReaction(msg.id, "heart")}
-                        title="Love this"
+                        title="Helpful"
                       >
-                        <span>❤️</span>
+                        <Heart size={12} fill="#DC2626" color="#DC2626" aria-hidden="true" />
                         <span className={styles.reactionCount}>{msg.reactions.heart}</span>
-                      </button>
-                      <button
-                        type="button"
-                        className={styles.reactionBtn}
-                        onClick={() => handleReaction(msg.id, "clap")}
-                        title="Applause"
-                      >
-                        <span>👏</span>
-                        <span className={styles.reactionCount}>{msg.reactions.clap}</span>
                       </button>
                       <button
                         type="button"
@@ -524,16 +550,16 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
                         onClick={() => handleReaction(msg.id, "bulb")}
                         title="Insightful"
                       >
-                        <span>💡</span>
+                        <Lightbulb size={12} color="#D97706" aria-hidden="true" />
                         <span className={styles.reactionCount}>{msg.reactions.bulb}</span>
                       </button>
                       <button
                         type="button"
                         className={styles.reactionBtn}
                         onClick={() => handleReaction(msg.id, "fire")}
-                        title="Awesome"
+                        title="Inspiring"
                       >
-                        <span>🔥</span>
+                        <Sparkles size={12} color="var(--wa-green, #1B4D3E)" aria-hidden="true" />
                         <span className={styles.reactionCount}>{msg.reactions.fire}</span>
                       </button>
                     </div>

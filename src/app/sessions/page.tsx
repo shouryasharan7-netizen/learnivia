@@ -455,17 +455,19 @@ export default async function SessionsPage({ searchParams }: Props) {
                                     display: "inline-flex",
                                     alignItems: "center",
                                     justifyContent: "center",
+                                    gap: "0.4rem",
                                     width: "100%",
                                     padding: "0.5rem 1rem",
-                                    background: "#2D6A4F",
+                                    background: "var(--wa-green, #1B4D3E)",
                                     color: "#FFFFFF",
-                                    borderRadius: 8,
+                                    borderRadius: "var(--wa-radius-sm, 8px)",
                                     fontSize: "0.85rem",
-                                    fontWeight: 700,
+                                    fontWeight: 600,
                                     textDecoration: "none",
                                   }}
                                 >
-                                  🎥 Join Live Workshop
+                                  <Video size={15} aria-hidden="true" />
+                                  <span>Join Live Workshop</span>
                                 </a>
                               </div>
                             );

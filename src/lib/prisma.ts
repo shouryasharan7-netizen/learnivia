@@ -15,7 +15,7 @@ const pool =
     ssl: connectionString?.includes("supabase.com") ? { rejectUnauthorized: false } : undefined,
     max: 20,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 15000,
+    connectionTimeoutMillis: 60000,
     keepAlive: true,
   })
 

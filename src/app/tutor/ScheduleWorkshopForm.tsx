@@ -1,8 +1,16 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import { createWorkshop } from "@/app/actions/workshops";
 import styles from "./page.module.css";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Video,
+  Globe,
+  ArrowRight,
+  PlusCircle,
+} from "lucide-react";
 
 export function ScheduleWorkshopForm() {
   const [isPending, startTransition] = useTransition();
@@ -64,7 +72,6 @@ export function ScheduleWorkshopForm() {
       return;
     }
 
-    // Convert local date/time into exact UTC ISO string in the client's browser
     try {
       const [y, m, d] = date.split("-").map(Number);
       const [sh, sm] = startTime.split(":").map(Number);
@@ -83,7 +90,6 @@ export function ScheduleWorkshopForm() {
         return;
       }
 
-      // Inject exact UTC ISO strings into FormData
       formData.set("startUtc", startLocal.toISOString());
       formData.set("endUtc", endLocal.toISOString());
       formData.set("userTimezone", userTz);
@@ -95,7 +101,7 @@ export function ScheduleWorkshopForm() {
       startTransition(async () => {
         try {
           await createWorkshop(formData);
-          setSuccessMsg("🎉 Session published successfully! Your live room is ready to host.");
+          setSuccessMsg("Session published successfully. It is now open for learner enrollments.");
           form.reset();
         } catch (err: any) {
           setErrorMsg(err?.message || "Failed to schedule workshop. Please check your details.");
@@ -107,27 +113,66 @@ export function ScheduleWorkshopForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.workshopForm} style={{ borderTop: "none", padding: "0.5rem 0 0" }}>
+    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       {errorMsg && (
-        <div style={{ background: "#FEF2F2", border: "1px solid #FCA5A5", borderRadius: 8, padding: "0.75rem 1rem", color: "#991B1B", fontSize: "0.875rem", marginBottom: "1rem" }}>
-          ⚠️ {errorMsg}
+        <div
+          role="alert"
+          style={{
+            background: "#FEF2F2",
+            border: "1px solid #FCA5A5",
+            borderRadius: "var(--wa-radius-sm)",
+            padding: "0.75rem 1rem",
+            color: "#991B1B",
+            fontSize: "0.8125rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <AlertCircle size={16} aria-hidden="true" />
+          <span>{errorMsg}</span>
         </div>
       )}
 
       {successMsg && (
-        <div style={{ background: "#F0FDF4", border: "1px solid #86EFAC", borderRadius: 8, padding: "0.75rem 1rem", color: "#166534", fontSize: "0.875rem", marginBottom: "1rem" }}>
-          {successMsg}
+        <div
+          role="status"
+          style={{
+            background: "var(--wa-green-light)",
+            border: "1px solid var(--wa-border)",
+            borderRadius: "var(--wa-radius-sm)",
+            padding: "0.75rem 1rem",
+            color: "var(--wa-green)",
+            fontSize: "0.8125rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <CheckCircle2 size={16} aria-hidden="true" />
+          <span>{successMsg}</span>
         </div>
       )}
 
-      <div className={styles.formRow}>
-        <div style={{ flex: 2 }}>
-          <label className={styles.inputLabel}>Workshop Title *</label>
-          <input type="text" name="title" placeholder="e.g. Grade 6 Algebra: Variables & Expressions" required className={styles.textInput} />
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1.2fr 1fr", gap: "0.75rem" }}>
+        <div>
+          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+            Workshop Title *
+          </label>
+          <input
+            type="text"
+            name="title"
+            placeholder="e.g. Grade 6 Algebra: Variables & Expressions"
+            required
+            className={styles.textInput}
+            style={{ width: "100%" }}
+          />
         </div>
-        <div style={{ flex: 1.2 }}>
-          <label className={styles.inputLabel}>Subject *</label>
-          <select name="subject" required className={styles.selectInput}>
+        <div>
+          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+            Subject *
+          </label>
+          <select name="subject" required className={styles.selectInput} style={{ width: "100%" }}>
             <option value="Mathematics">Mathematics</option>
             <option value="Science">Science (Bio / Chem / Physics)</option>
             <option value="Reading and Writing">Reading &amp; Writing</option>
@@ -137,9 +182,11 @@ export function ScheduleWorkshopForm() {
             <option value="Learning Support">Learning Support &amp; Study Skills</option>
           </select>
         </div>
-        <div style={{ flex: 1 }}>
-          <label className={styles.inputLabel}>Grade Level *</label>
-          <select name="grade" required className={styles.selectInput}>
+        <div>
+          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+            Grade Level *
+          </label>
+          <select name="grade" required className={styles.selectInput} style={{ width: "100%" }}>
             <option value="All Levels">All K–10 Levels</option>
             <option value="Early Elementary (K–2)">Early Elementary (K–2)</option>
             <option value="Elementary (3–5)">Elementary (Grades 3–5)</option>
@@ -150,41 +197,80 @@ export function ScheduleWorkshopForm() {
       </div>
 
       <div>
-        <label className={styles.inputLabel}>Session Description &amp; Objectives *</label>
-        <textarea name="description" rows={2} placeholder="What topics will you cover? (e.g. We will walk through practice problems and answer live questions)" required className={styles.textareaInput} />
+        <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          Session Description &amp; Objectives *
+        </label>
+        <textarea
+          name="description"
+          rows={2}
+          placeholder="What topics will you cover? (e.g. We will walk through practice problems and answer live questions)"
+          required
+          className={styles.textareaInput}
+        />
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", margin: "0.5rem 0", background: "#F1F5F9", padding: "0.5rem 0.85rem", borderRadius: 8, fontSize: "0.8125rem", color: "#475569" }}>
-        <span>🌐 Scheduling in your local timezone: <strong style={{ color: "#0E8345" }}>{userTz}</strong></span>
-        <span>Times will adjust automatically for learners worldwide</span>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          background: "var(--wa-cream)",
+          border: "1px solid var(--wa-border)",
+          padding: "0.5rem 0.85rem",
+          borderRadius: "var(--wa-radius-sm)",
+          fontSize: "0.8125rem",
+          color: "var(--wa-muted)",
+        }}
+      >
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+          <Globe size={14} aria-hidden="true" />
+          Timezone: <strong style={{ color: "var(--wa-ink)" }}>{userTz}</strong>
+        </span>
+        <span>Times adjust automatically for learners worldwide</span>
       </div>
 
-      <div className={styles.formRow}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.75rem" }}>
         <div>
-          <label className={styles.inputLabel}>Date *</label>
-          <input type="date" name="date" defaultValue={defaultDate} required className={styles.textInput} />
+          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+            Date *
+          </label>
+          <input type="date" name="date" defaultValue={defaultDate} required className={styles.textInput} style={{ width: "100%" }} />
         </div>
         <div>
-          <label className={styles.inputLabel}>Start Time *</label>
-          <input type="time" name="startTime" defaultValue={defaultStart} required className={styles.textInput} />
+          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+            Start Time *
+          </label>
+          <input type="time" name="startTime" defaultValue={defaultStart} required className={styles.textInput} style={{ width: "100%" }} />
         </div>
         <div>
-          <label className={styles.inputLabel}>End Time *</label>
-          <input type="time" name="endTime" defaultValue={defaultEnd} required className={styles.textInput} />
+          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+            End Time *
+          </label>
+          <input type="time" name="endTime" defaultValue={defaultEnd} required className={styles.textInput} style={{ width: "100%" }} />
         </div>
         <div>
-          <label className={styles.inputLabel}>Max Capacity</label>
-          <input type="number" name="maxCapacity" defaultValue={12} min={2} max={30} className={styles.textInput} />
+          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+            Max Capacity
+          </label>
+          <input type="number" name="maxCapacity" defaultValue={12} min={2} max={30} className={styles.textInput} style={{ width: "100%" }} />
         </div>
       </div>
 
       {/* Meeting Room Options */}
-      <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: "0.85rem 1rem", marginTop: "0.5rem" }}>
-        <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: "0.5rem" }}>
-          🎥 Meeting Room Setup
+      <div
+        style={{
+          background: "var(--wa-cream)",
+          border: "1px solid var(--wa-border)",
+          borderRadius: "var(--wa-radius-sm)",
+          padding: "0.85rem 1rem",
+        }}
+      >
+        <div style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+          <Video size={15} aria-hidden="true" />
+          <span>Meeting Room Configuration</span>
         </div>
-        <div style={{ display: "flex", gap: "1.25rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "#334155", cursor: "pointer" }}>
+        <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.8125rem", color: "var(--wa-text)", cursor: "pointer" }}>
             <input
               type="radio"
               name="meetingOption"
@@ -193,14 +279,14 @@ export function ScheduleWorkshopForm() {
             />
             <span><strong>Automatic Zoom Room</strong> (Verified Zoom meeting with instant host launch)</span>
           </label>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "#334155", cursor: "pointer" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.8125rem", color: "var(--wa-text)", cursor: "pointer" }}>
             <input
               type="radio"
               name="meetingOption"
               checked={linkType === "custom"}
               onChange={() => setLinkType("custom")}
             />
-            <span><strong>Custom Link</strong> (Paste your personal Zoom PMI or Google Meet)</span>
+            <span><strong>Custom Link</strong> (Personal Zoom PMI or Google Meet)</span>
           </label>
         </div>
 
@@ -212,21 +298,23 @@ export function ScheduleWorkshopForm() {
               value={customUrl}
               onChange={(e) => setCustomUrl(e.target.value)}
               className={styles.textInput}
+              style={{ width: "100%" }}
               required={linkType === "custom"}
             />
-            <span style={{ fontSize: "0.75rem", color: "#64748B", marginTop: "0.25rem", display: "block" }}>
+            <span style={{ fontSize: "0.75rem", color: "var(--wa-muted)", marginTop: "0.25rem", display: "block" }}>
               Students and tutors will join your personal Zoom or Google Meet room directly.
             </span>
           </div>
         )}
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem", flexWrap: "wrap", gap: "1rem" }}>
-        <span style={{ fontSize: "0.8125rem", color: "#64748B" }}>
-          ✓ Meeting room links are configured to start immediately with zero waiting room delay.
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "0.5rem", flexWrap: "wrap", gap: "1rem" }}>
+        <span style={{ fontSize: "0.75rem", color: "var(--wa-muted)" }}>
+          Meeting room links are configured to start immediately without waiting room delays.
         </span>
         <button type="submit" disabled={isPending} className={styles.primaryBtn}>
-          {isPending ? "Publishing Session..." : "Publish Session to Directory 🚀"}
+          <PlusCircle size={15} aria-hidden="true" />
+          <span>{isPending ? "Publishing Session..." : "Publish Session to Directory"}</span>
         </button>
       </div>
     </form>

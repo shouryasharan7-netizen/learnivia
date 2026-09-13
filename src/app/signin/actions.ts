@@ -213,3 +213,22 @@ export async function loginWithGoogle(formData: FormData) {
   const callbackUrl = (formData.get("callbackUrl") as string) || "/dashboard";
   await signIn("google", { redirectTo: callbackUrl });
 }
+
+export async function loginAsDemo(role: "STUDENT" | "TUTOR" | "ADMIN") {
+  try {
+    let callbackUrl = "/dashboard";
+    if (role === "TUTOR") callbackUrl = "/tutor";
+    if (role === "ADMIN") callbackUrl = "/admin";
+
+    await signIn("credentials", {
+      demoRole: role,
+      password: "demo-preview",
+      redirect: false,
+    });
+
+    return { success: true, redirectUrl: callbackUrl };
+  } catch (error) {
+    console.error("Demo login error:", error);
+    return { error: "Failed to sign in as demo user." };
+  }
+}

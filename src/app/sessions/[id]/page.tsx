@@ -5,6 +5,25 @@ import Link from "next/link";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 import { submitReview } from "@/app/actions/sessions";
+import { ROUTES } from "@/lib/routes";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  BookOpen,
+  GraduationCap,
+  Video,
+  FileText,
+  MessageSquare,
+  Star,
+  User,
+  Search,
+  CheckCircle2,
+  XCircle,
+  Radio,
+  ShieldCheck,
+  AlertTriangle,
+} from "lucide-react";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -19,10 +38,10 @@ export async function generateMetadata({
     where: { id },
     select: { subject: true, grade: true },
   });
-  if (!booking) return { title: "Session Not Found — Learnivia" };
+  if (!booking) return { title: "Session Not Found | Learnivia" };
   return {
-    title: `${booking.subject} Session — ${booking.grade} | Learnivia`,
-    description: `Your 1-on-1 Learnivia tutoring session for ${booking.grade} ${booking.subject}.`,
+    title: `${booking.subject} Session (${booking.grade}) | Learnivia`,
+    description: `1-on-1 Learnivia peer tutoring session for ${booking.grade} ${booking.subject}.`,
   };
 }
 
@@ -33,7 +52,7 @@ export default async function SessionDetailPage({
 }) {
   const { id } = await params;
   const session = await auth();
-  if (!session?.user?.id) redirect("/signin");
+  if (!session?.user?.id) redirect(ROUTES.auth.signIn);
 
   const booking = await prisma.booking.findUnique({
     where: { id },
@@ -51,7 +70,7 @@ export default async function SessionDetailPage({
 
   const isStudent = booking.studentId === session.user.id;
   const isTutor = booking.tutor.userId === session.user.id;
-  if (!isStudent && !isTutor) redirect("/dashboard");
+  if (!isStudent && !isTutor) redirect(ROUTES.learner.home);
 
   const existingReview = await prisma.review.findFirst({
     where: { bookingId: booking.id },
@@ -75,171 +94,792 @@ export default async function SessionDetailPage({
 
   const durationMinutes = Math.round((end.getTime() - start.getTime()) / 60000);
 
-  type StatusKey = "LIVE" | "CONFIRMED_UPCOMING" | "ENDED" | "COMPLETED" | "CANCELED";
-  const getStatusConfig = (): { key: StatusKey; label: string; color: string; bg: string; border: string } => {
-    if (isLive) return { key: "LIVE", label: "🔴 LIVE NOW", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA" };
-    if (isCanceled) return { key: "CANCELED", label: "❌ Cancelled", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA" };
-    if (isCompleted) return { key: "COMPLETED", label: "✅ Completed", color: "#0D683B", bg: "#F0FDF4", border: "#BBF7D0" };
-    if (isUpcoming) return { key: "CONFIRMED_UPCOMING", label: "✅ Confirmed", color: "#0D683B", bg: "#F0FDF4", border: "#BBF7D0" };
-    return { key: "ENDED", label: "⏱ Session Ended", color: "#6B7280", bg: "#F9FAFB", border: "#E5E7EB" };
+  type StatusConfig = {
+    label: string;
+    icon: typeof Radio;
+    color: string;
+    bg: string;
+    border: string;
   };
+
+  const getStatusConfig = (): StatusConfig => {
+    if (isLive) {
+      return {
+        label: "Live Now",
+        icon: Radio,
+        color: "#DC2626",
+        bg: "#FEF2F2",
+        border: "#FECACA",
+      };
+    }
+    if (isCanceled) {
+      return {
+        label: "Cancelled",
+        icon: XCircle,
+        color: "#B91C1C",
+        bg: "#FEF2F2",
+        border: "#FECACA",
+      };
+    }
+    if (isCompleted) {
+      return {
+        label: "Completed",
+        icon: CheckCircle2,
+        color: "var(--wa-green, #1B4D3E)",
+        bg: "var(--wa-green-light, #EAF2EE)",
+        border: "#C6DEC6",
+      };
+    }
+    if (isUpcoming) {
+      return {
+        label: "Confirmed Upcoming",
+        icon: CheckCircle2,
+        color: "var(--wa-green, #1B4D3E)",
+        bg: "var(--wa-green-light, #EAF2EE)",
+        border: "#C6DEC6",
+      };
+    }
+    return {
+      label: "Session Concluded",
+      icon: Clock,
+      color: "var(--wa-muted, #78716C)",
+      bg: "var(--wa-contrast, #F3EFE8)",
+      border: "var(--wa-border, #E5DFD5)",
+    };
+  };
+
   const status = getStatusConfig();
-  const tutorName = booking.tutor.user.name || "Your Tutor";
+  const StatusIcon = status.icon;
+  const tutorName = booking.tutor.user.name || "Peer Tutor";
+  const studentName = booking.student.name || "Student";
+  const otherPartyName = isStudent ? tutorName : studentName;
+  const otherPartyInitials = otherPartyName.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
 
   return (
-    <main style={{ minHeight: "100vh", background: "#F9FAFB", fontFamily: "var(--font-body, Inter, sans-serif)", paddingBottom: "4rem" }}>
-      {/* Top bar */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "1rem 1.5rem", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-        <Link href="/dashboard" style={{ color: "#6B7280", textDecoration: "none", fontSize: "0.875rem", fontWeight: 600 }}>← Dashboard</Link>
-        <span style={{ color: "#D1D5DB" }}>•</span>
-        <span style={{ fontSize: "0.875rem", color: "#374151", fontWeight: 600 }}>Session Detail</span>
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "var(--wa-cream, #FAF8F5)",
+        fontFamily: "var(--font-sans, 'Plus Jakarta Sans', sans-serif)",
+        paddingBottom: "4rem",
+      }}
+    >
+      {/* Sub-Header Navigation */}
+      <nav
+        style={{
+          background: "var(--wa-white, #FFFFFF)",
+          borderBottom: "1px solid var(--wa-border, #E5DFD5)",
+          padding: "0.875rem 1.5rem",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "760px",
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+          }}
+        >
+          <Link
+            href={ROUTES.learner.home}
+            style={{
+              color: "var(--wa-muted, #78716C)",
+              textDecoration: "none",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.35rem",
+              transition: "color 0.15s ease",
+            }}
+          >
+            <ArrowLeft size={15} aria-hidden="true" />
+            <span>Dashboard</span>
+          </Link>
+          <span style={{ color: "var(--wa-border, #E5DFD5)" }}>/</span>
+          <Link
+            href={ROUTES.learner.mySessions}
+            style={{
+              color: "var(--wa-muted, #78716C)",
+              textDecoration: "none",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+            }}
+          >
+            Sessions
+          </Link>
+          <span style={{ color: "var(--wa-border, #E5DFD5)" }}>/</span>
+          <span style={{ fontSize: "0.875rem", color: "var(--wa-ink, #1C1917)", fontWeight: 600 }}>
+            Session Detail
+          </span>
+        </div>
       </nav>
 
-      <div style={{ maxWidth: "740px", margin: "2rem auto", padding: "0 1.25rem" }}>
-        {/* Status */}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: status.bg, color: status.color, border: `1px solid ${status.border}`, borderRadius: "999px", padding: "0.35rem 0.9rem", fontSize: "0.875rem", fontWeight: 800, marginBottom: "1.5rem" }}>
-          {status.label}
+      <div style={{ maxWidth: "760px", margin: "2rem auto 0", padding: "0 1.25rem" }}>
+        {/* Status Badge */}
+        <div style={{ marginBottom: "1.25rem" }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+              background: status.bg,
+              color: status.color,
+              border: `1px solid ${status.border}`,
+              borderRadius: "var(--wa-radius-sm, 8px)",
+              padding: "0.35rem 0.85rem",
+              fontSize: "0.8125rem",
+              fontWeight: 700,
+              letterSpacing: "0.02em",
+            }}
+          >
+            <StatusIcon size={14} strokeWidth={2} aria-hidden="true" />
+            <span>{status.label}</span>
+          </div>
         </div>
 
-        {/* Main Card */}
-        <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "1.25rem", padding: "2rem", boxShadow: "0 1px 8px rgba(0,0,0,0.04)" }}>
-          {/* Tutor row */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.75rem", paddingBottom: "1.75rem", borderBottom: "1px solid #F3F4F6" }}>
-            <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "linear-gradient(135deg,#0E8345,#1a6b3a)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.25rem", fontWeight: 800, flexShrink: 0 }}>
-              {isStudent ? tutorName.charAt(0).toUpperCase() : (booking.student.name || "S").charAt(0).toUpperCase()}
+        {/* Main Session Card */}
+        <div
+          style={{
+            background: "var(--wa-white, #FFFFFF)",
+            border: "1px solid var(--wa-border, #E5DFD5)",
+            borderRadius: "var(--wa-radius-lg, 12px)",
+            padding: "2rem",
+            boxShadow: "var(--wa-shadow-sm, 0 1px 2px rgba(28,25,23,0.04))",
+          }}
+        >
+          {/* Header row: Participant Info */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "1rem",
+              marginBottom: "1.75rem",
+              paddingBottom: "1.5rem",
+              borderBottom: "1px solid var(--wa-border, #E5DFD5)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <div
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "10px",
+                  background: "var(--wa-green, #1B4D3E)",
+                  color: "#FFFFFF",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "1.125rem",
+                  fontWeight: 700,
+                  flexShrink: 0,
+                }}
+                aria-hidden="true"
+              >
+                {otherPartyInitials}
+              </div>
+              <div>
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "var(--wa-muted, #78716C)",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {isStudent ? "Verified Peer Tutor" : "Enrolled Learner"}
+                </div>
+                <h1
+                  style={{
+                    fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)",
+                    fontSize: "1.5rem",
+                    fontWeight: 600,
+                    color: "var(--wa-ink, #1C1917)",
+                    margin: "0.15rem 0 0",
+                  }}
+                >
+                  {otherPartyName}
+                </h1>
+              </div>
             </div>
-            <div>
-              <div style={{ fontSize: "0.75rem", color: "#6B7280", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                {isStudent ? "Your Tutor" : "Your Student"}
+
+            {isStudent && (
+              <Link
+                href={`/tutor/${booking.tutor.id}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  color: "var(--wa-green, #1B4D3E)",
+                  textDecoration: "none",
+                  padding: "0.4rem 0.85rem",
+                  borderRadius: "var(--wa-radius-sm, 8px)",
+                  background: "var(--wa-green-light, #EAF2EE)",
+                  border: "1px solid #C6DEC6",
+                }}
+              >
+                <User size={14} aria-hidden="true" />
+                <span>View Full Profile</span>
+              </Link>
+            )}
+          </div>
+
+          {/* Academic Detail Grid */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+              gap: "0.875rem",
+              marginBottom: "1.5rem",
+            }}
+          >
+            <div
+              style={{
+                background: "var(--wa-contrast, #F3EFE8)",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "0.875rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  fontSize: "0.75rem",
+                  color: "var(--wa-muted, #78716C)",
+                  fontWeight: 600,
+                  marginBottom: "0.25rem",
+                }}
+              >
+                <BookOpen size={13} aria-hidden="true" />
+                <span>Subject</span>
               </div>
-              <div style={{ fontSize: "1.125rem", fontWeight: 800, color: "#111827" }}>
-                {isStudent ? tutorName : (booking.student.name || "Student")}
+              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+                {booking.subject}
               </div>
-              {isStudent && (
-                <Link href={`/tutor/${booking.tutor.id}`} style={{ fontSize: "0.8125rem", color: "#0E8345", fontWeight: 600, textDecoration: "none" }}>
-                  View profile →
-                </Link>
-              )}
+            </div>
+
+            <div
+              style={{
+                background: "var(--wa-contrast, #F3EFE8)",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "0.875rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  fontSize: "0.75rem",
+                  color: "var(--wa-muted, #78716C)",
+                  fontWeight: 600,
+                  marginBottom: "0.25rem",
+                }}
+              >
+                <GraduationCap size={13} aria-hidden="true" />
+                <span>Grade</span>
+              </div>
+              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+                {booking.grade}
+              </div>
+            </div>
+
+            <div
+              style={{
+                background: "var(--wa-contrast, #F3EFE8)",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "0.875rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  fontSize: "0.75rem",
+                  color: "var(--wa-muted, #78716C)",
+                  fontWeight: 600,
+                  marginBottom: "0.25rem",
+                }}
+              >
+                <Clock size={13} aria-hidden="true" />
+                <span>Duration</span>
+              </div>
+              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+                {durationMinutes} minutes
+              </div>
+            </div>
+
+            <div
+              style={{
+                background: "var(--wa-contrast, #F3EFE8)",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "0.875rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  fontSize: "0.75rem",
+                  color: "var(--wa-muted, #78716C)",
+                  fontWeight: 600,
+                  marginBottom: "0.25rem",
+                }}
+              >
+                <ShieldCheck size={13} aria-hidden="true" />
+                <span>Format</span>
+              </div>
+              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+                1-on-1 Mentorship
+              </div>
             </div>
           </div>
 
-          {/* Detail grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
-            {[
-              { label: "Subject", value: booking.subject, icon: "📚" },
-              { label: "Grade", value: booking.grade, icon: "🎓" },
-              { label: "Duration", value: `${durationMinutes} min`, icon: "⏱" },
-              { label: "Status", value: booking.status, icon: "📋" },
-            ].map(({ label, value, icon }) => (
-              <div key={label} style={{ background: "#F9FAFB", borderRadius: "0.75rem", padding: "0.875rem" }}>
-                <div style={{ fontSize: "0.75rem", color: "#6B7280", fontWeight: 600, marginBottom: "0.2rem" }}>{icon} {label}</div>
-                <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#111827" }}>{value}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Date/time */}
-          <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "0.75rem", padding: "1rem 1.25rem", marginBottom: "1.25rem" }}>
-            <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0D683B", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.3rem" }}>📅 Session Time</div>
-            <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#111827" }}>
+          {/* Session Schedule Panel */}
+          <div
+            style={{
+              background: "var(--wa-green-light, #EAF2EE)",
+              border: "1px solid #C6DEC6",
+              borderRadius: "var(--wa-radius-sm, 8px)",
+              padding: "1rem 1.25rem",
+              marginBottom: "1.25rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                color: "var(--wa-green, #1B4D3E)",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                marginBottom: "0.3rem",
+              }}
+            >
+              <Calendar size={14} aria-hidden="true" />
+              <span>Scheduled Appointment</span>
+            </div>
+            <div style={{ fontSize: "1rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
               <FormattedDateTime date={booking.startTime} />
             </div>
-            <div style={{ fontSize: "0.8rem", color: "#6B7280", marginTop: "0.2rem" }}>Displayed in your local timezone · {durationMinutes} min session</div>
+            <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #78716C)", marginTop: "0.2rem" }}>
+              Displayed in your local timezone · {durationMinutes}-minute verified session
+            </div>
           </div>
 
-          {/* Topic */}
+          {/* Topic & Learning Goals */}
           {booking.topic && (
-            <div style={{ background: "#F9FAFB", borderRadius: "0.75rem", padding: "1rem 1.25rem", marginBottom: "1.25rem" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#374151", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.3rem" }}>📝 Topic</div>
-              <div style={{ fontSize: "0.9375rem", color: "#111827", lineHeight: 1.6 }}>{booking.topic}</div>
-              {booking.helpNeeded && <div style={{ marginTop: "0.4rem", fontSize: "0.875rem", color: "#6B7280" }}>{booking.helpNeeded}</div>}
+            <div
+              style={{
+                background: "var(--wa-white, #FFFFFF)",
+                border: "1px solid var(--wa-border, #E5DFD5)",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "1rem 1.25rem",
+                marginBottom: "1.25rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  color: "var(--wa-muted, #78716C)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  marginBottom: "0.35rem",
+                }}
+              >
+                <FileText size={14} aria-hidden="true" />
+                <span>Session Learning Goals</span>
+              </div>
+              <div style={{ fontSize: "0.9375rem", color: "var(--wa-ink, #1C1917)", lineHeight: 1.6 }}>
+                {booking.topic}
+              </div>
+              {booking.helpNeeded && (
+                <div
+                  style={{
+                    marginTop: "0.4rem",
+                    fontSize: "0.875rem",
+                    color: "var(--wa-muted, #78716C)",
+                    borderTop: "1px dashed var(--wa-border, #E5DFD5)",
+                    paddingTop: "0.4rem",
+                  }}
+                >
+                  {booking.helpNeeded}
+                </div>
+              )}
             </div>
           )}
 
-          {/* Zoom CTA */}
+          {/* Video Room Launch / CTA Box */}
           {!isCanceled && (
-            <div style={{ background: zoomIsActive ? "linear-gradient(135deg,#0E8345,#0a6b35)" : "#F3F4F6", borderRadius: "1rem", padding: "1.5rem", textAlign: "center", marginBottom: "1rem", border: zoomIsActive ? "2px solid #0E8345" : "2px solid #E5E7EB" }}>
+            <div
+              style={{
+                background: zoomIsActive
+                  ? "var(--wa-green, #1B4D3E)"
+                  : "var(--wa-contrast, #F3EFE8)",
+                color: zoomIsActive ? "#FFFFFF" : "var(--wa-ink, #1C1917)",
+                borderRadius: "var(--wa-radius-md, 10px)",
+                padding: "1.5rem",
+                textAlign: "center",
+                marginBottom: "1.25rem",
+                border: zoomIsActive ? "none" : "1px solid var(--wa-border, #E5DFD5)",
+              }}
+            >
               {zoomIsActive && activeMeetingLink ? (
-                <>
-                  <div style={{ color: "#fff", fontWeight: 600, fontSize: "0.875rem", marginBottom: "0.75rem" }}>
-                    {isTutor ? "🎥 Start your session (Host View)" : "🔗 Your session is ready — join now"}
+                <div>
+                  <div
+                    style={{
+                      fontSize: "0.875rem",
+                      fontWeight: 600,
+                      marginBottom: "0.875rem",
+                      color: "#EAF2EE",
+                    }}
+                  >
+                    {isTutor
+                      ? "Start your 1-on-1 tutoring session (Host Room)"
+                      : "Your room is open. Click below to enter the live session."}
                   </div>
-                  <a href={activeMeetingLink} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#fff", color: "#0E8345", fontWeight: 800, fontSize: "1rem", padding: "0.875rem 2.5rem", borderRadius: "999px", textDecoration: "none", boxShadow: "0 2px 8px rgba(0,0,0,0.12)" }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4a2.5 2.5 0 0 0-2.5 2.5v11A2.5 2.5 0 0 0 4.5 20h11a2.5 2.5 0 0 0 2.5-2.5V15l4 3V6l-4 3V6.5A2.5 2.5 0 0 0 15.5 4h-11z" /></svg>
-                    {isTutor ? "Start Live Session" : "Join Session"}
+                  <a
+                    href={activeMeetingLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      background: "#FFFFFF",
+                      color: "var(--wa-green, #1B4D3E)",
+                      fontWeight: 700,
+                      fontSize: "0.9375rem",
+                      padding: "0.85rem 2.25rem",
+                      borderRadius: "var(--wa-radius-sm, 8px)",
+                      textDecoration: "none",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                    }}
+                  >
+                    <Video size={18} aria-hidden="true" />
+                    <span>{isTutor ? "Start Live Session" : "Join Session Now"}</span>
                   </a>
-                </>
+                </div>
               ) : zoomIsActive && !activeMeetingLink ? (
-                <div style={{ color: "#6B7280", fontWeight: 600, fontSize: "0.9rem" }}>⚠️ Meeting room link not set — please refresh in a moment or contact support.</div>
+                <div
+                  style={{
+                    color: "var(--wa-muted, #78716C)",
+                    fontSize: "0.9rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.4rem",
+                  }}
+                >
+                  <AlertTriangle size={16} color="#B45309" aria-hidden="true" />
+                  <span>Meeting link is being generated. Please refresh this page in a moment.</span>
+                </div>
               ) : isCompleted ? (
-                <div style={{ color: "#6B7280" }}>
-                  <div style={{ fontWeight: 700, marginBottom: "0.4rem" }}>Session ended</div>
+                <div>
+                  <div style={{ fontWeight: 700, marginBottom: "0.35rem", fontSize: "0.9375rem" }}>
+                    Session Concluded
+                  </div>
                   {booking.recordingUrl ? (
-                    <a href={booking.recordingUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#2563EB", fontWeight: 700, fontSize: "0.9rem" }}>📹 Watch session recording</a>
+                    <a
+                      href={booking.recordingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: "var(--wa-green, #1B4D3E)",
+                        fontWeight: 700,
+                        fontSize: "0.875rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.35rem",
+                      }}
+                    >
+                      <Video size={14} aria-hidden="true" />
+                      <span>Watch Session Recording</span>
+                    </a>
                   ) : (
-                    <div style={{ fontSize: "0.875rem" }}>No recording for this session.</div>
+                    <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #78716C)" }}>
+                      No cloud recording attached for this private session.
+                    </div>
                   )}
                 </div>
               ) : isUpcoming ? (
-                <>
-                  <div style={{ color: "#374151", fontWeight: 700, fontSize: "0.875rem", marginBottom: "0.5rem" }}>
-                    🕐 {minutesUntilZoom > 60
-                      ? `Meeting room opens ${Math.floor(minutesUntilZoom / 60)}h ${minutesUntilZoom % 60}m before start`
+                <div>
+                  <div
+                    style={{
+                      fontWeight: 600,
+                      fontSize: "0.875rem",
+                      color: "var(--wa-muted, #78716C)",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
+                    {minutesUntilZoom > 60
+                      ? `Meeting room opens ${Math.floor(minutesUntilZoom / 60)}h ${minutesUntilZoom % 60}m before session start.`
                       : minutesUntilZoom > 0
-                      ? `Meeting room opens in ${minutesUntilZoom} minutes`
-                      : "Meeting room opens 15 minutes before your session"}
+                      ? `Meeting room opens in ${minutesUntilZoom} minutes.`
+                      : "Meeting room opens 15 minutes before scheduled start time."}
                   </div>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#E5E7EB", color: "#9CA3AF", fontWeight: 800, fontSize: "1rem", padding: "0.875rem 2.5rem", borderRadius: "999px", cursor: "not-allowed" }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4a2.5 2.5 0 0 0-2.5 2.5v11A2.5 2.5 0 0 0 4.5 20h11a2.5 2.5 0 0 0 2.5-2.5V15l4 3V6l-4 3V6.5A2.5 2.5 0 0 0 15.5 4h-11z" /></svg>
-                    Join Session
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      background: "var(--wa-white, #FFFFFF)",
+                      color: "var(--wa-muted, #78716C)",
+                      fontWeight: 600,
+                      fontSize: "0.875rem",
+                      padding: "0.75rem 2rem",
+                      borderRadius: "var(--wa-radius-sm, 8px)",
+                      border: "1px solid var(--wa-border, #E5DFD5)",
+                      cursor: "not-allowed",
+                      opacity: 0.7,
+                    }}
+                  >
+                    <Video size={16} aria-hidden="true" />
+                    <span>Room Not Yet Open</span>
                   </div>
-                </>
+                </div>
               ) : null}
             </div>
           )}
 
-          {/* Check-up note */}
+          {/* Check-up Note */}
           {booking.checkUpNote && (
-            <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "0.75rem", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#1D4ED8", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.3rem" }}>💬 Check-up from your tutor</div>
-              <div style={{ fontSize: "0.9375rem", color: "#1E40AF", lineHeight: 1.6 }}>{booking.checkUpNote}</div>
+            <div
+              style={{
+                background: "#EFF6FF",
+                border: "1px solid #BFDBFE",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "1rem 1.25rem",
+                marginBottom: "1.25rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  color: "#1D4ED8",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  marginBottom: "0.3rem",
+                }}
+              >
+                <MessageSquare size={14} aria-hidden="true" />
+                <span>Tutor Progress Note</span>
+              </div>
+              <div style={{ fontSize: "0.9375rem", color: "#1E40AF", lineHeight: 1.6 }}>
+                {booking.checkUpNote}
+              </div>
             </div>
           )}
 
           {/* Student Review Section (for completed sessions) */}
           {isCompleted && isStudent && (
             existingReview ? (
-              <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "0.75rem", padding: "1.25rem", marginBottom: "1rem" }}>
-                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0D683B", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.4rem" }}>⭐ Your Rating &amp; Review</div>
-                <div style={{ fontSize: "1.1rem", color: "#F59E0B", marginBottom: "0.25rem" }}>
-                  {"★".repeat(existingReview.rating)}{"☆".repeat(5 - existingReview.rating)}{" "}
-                  <span style={{ fontSize: "0.9rem", color: "#374151", fontWeight: 700 }}>({existingReview.rating}/5)</span>
+              <div
+                style={{
+                  background: "var(--wa-green-light, #EAF2EE)",
+                  border: "1px solid #C6DEC6",
+                  borderRadius: "var(--wa-radius-sm, 8px)",
+                  padding: "1.25rem",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                    fontSize: "0.75rem",
+                    fontWeight: 700,
+                    color: "var(--wa-green, #1B4D3E)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.06em",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  <Star size={14} fill="currentColor" aria-hidden="true" />
+                  <span>Your Submitted Review</span>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.35rem",
+                    color: "#D97706",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star
+                      key={s}
+                      size={16}
+                      fill={s <= existingReview.rating ? "#F59E0B" : "none"}
+                      color={s <= existingReview.rating ? "#F59E0B" : "#CBD5E1"}
+                      aria-hidden="true"
+                    />
+                  ))}
+                  <span
+                    style={{
+                      fontSize: "0.875rem",
+                      color: "var(--wa-ink, #1C1917)",
+                      fontWeight: 700,
+                      marginLeft: "0.35rem",
+                    }}
+                  >
+                    ({existingReview.rating}/5)
+                  </span>
                 </div>
                 {existingReview.comment && (
-                  <div style={{ fontSize: "0.9rem", color: "#374151", fontStyle: "italic" }}>&ldquo;{existingReview.comment}&rdquo;</div>
+                  <div
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "var(--wa-ink, #1C1917)",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    &ldquo;{existingReview.comment}&rdquo;
+                  </div>
                 )}
               </div>
             ) : (
-              <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: "0.75rem", padding: "1.25rem", marginBottom: "1rem" }}>
-                <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: "0.3rem" }}>⭐ Rate Your Volunteer Tutoring Session</div>
-                <p style={{ fontSize: "0.8rem", color: "#64748B", marginBottom: "0.75rem" }}>Your honest review helps your tutor and verifies their volunteer teaching record.</p>
-                <form action={submitReview} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <div
+                style={{
+                  background: "var(--wa-contrast, #F3EFE8)",
+                  border: "1px solid var(--wa-border, #E5DFD5)",
+                  borderRadius: "var(--wa-radius-sm, 8px)",
+                  padding: "1.25rem",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                    fontSize: "0.875rem",
+                    fontWeight: 700,
+                    color: "var(--wa-ink, #1C1917)",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  <Star size={16} color="var(--wa-green, #1B4D3E)" aria-hidden="true" />
+                  <span>Verify Volunteer Service &amp; Share Feedback</span>
+                </div>
+                <p
+                  style={{
+                    fontSize: "0.8125rem",
+                    color: "var(--wa-muted, #78716C)",
+                    marginBottom: "1rem",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Your feedback helps your tutor maintain their certified volunteer teaching record and informs future learners.
+                </p>
+
+                <form action={submitReview} style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                   <input type="hidden" name="bookingId" value={booking.id} />
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#475569", marginBottom: "0.25rem" }}>Rating *</label>
-                    <select name="rating" defaultValue="5" required style={{ padding: "0.5rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.85rem", background: "#fff" }}>
-                      <option value="5">★★★★★ 5 - Outstanding, super helpful!</option>
-                      <option value="4">★★★★☆ 4 - Great session</option>
-                      <option value="3">★★★☆☆ 3 - Good / helpful</option>
-                      <option value="2">★★☆☆☆ 2 - Needed improvement</option>
-                      <option value="1">★☆☆☆☆ 1 - Poor experience</option>
+                    <label
+                      htmlFor="review-rating"
+                      style={{
+                        display: "block",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        color: "var(--wa-ink, #1C1917)",
+                        marginBottom: "0.35rem",
+                      }}
+                    >
+                      Rating *
+                    </label>
+                    <select
+                      id="review-rating"
+                      name="rating"
+                      defaultValue="5"
+                      required
+                      style={{
+                        padding: "0.6rem 0.85rem",
+                        borderRadius: "var(--wa-radius-sm, 8px)",
+                        border: "1px solid var(--wa-border, #E5DFD5)",
+                        fontSize: "0.875rem",
+                        background: "#FFFFFF",
+                        color: "var(--wa-ink, #1C1917)",
+                        width: "100%",
+                        maxWidth: "320px",
+                      }}
+                    >
+                      <option value="5">5 ★ - Outstanding, clear and patient</option>
+                      <option value="4">4 ★ - Great session, very helpful</option>
+                      <option value="3">3 ★ - Good, answered core questions</option>
+                      <option value="2">2 ★ - Needed pacing or technical improvement</option>
+                      <option value="1">1 ★ - Poor session experience</option>
                     </select>
                   </div>
+
                   <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#475569", marginBottom: "0.25rem" }}>Feedback / Note for Tutor (Optional)</label>
-                    <textarea name="comment" rows={2} placeholder="What was helpful? How did your tutor do?" style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.85rem", resize: "vertical" }} />
+                    <label
+                      htmlFor="review-comment"
+                      style={{
+                        display: "block",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        color: "var(--wa-ink, #1C1917)",
+                        marginBottom: "0.35rem",
+                      }}
+                    >
+                      Comments / Feedback for Tutor (Optional)
+                    </label>
+                    <textarea
+                      id="review-comment"
+                      name="comment"
+                      rows={2}
+                      placeholder="What went well? What topic did you cover?"
+                      style={{
+                        width: "100%",
+                        padding: "0.6rem 0.85rem",
+                        borderRadius: "var(--wa-radius-sm, 8px)",
+                        border: "1px solid var(--wa-border, #E5DFD5)",
+                        fontSize: "0.875rem",
+                        resize: "vertical",
+                        fontFamily: "inherit",
+                        color: "var(--wa-ink, #1C1917)",
+                        background: "#FFFFFF",
+                      }}
+                    />
                   </div>
-                  <button type="submit" style={{ alignSelf: "flex-start", padding: "0.5rem 1.25rem", background: "#0E8345", color: "#fff", border: "none", borderRadius: "6px", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer" }}>
+
+                  <button
+                    type="submit"
+                    style={{
+                      alignSelf: "flex-start",
+                      padding: "0.6rem 1.35rem",
+                      background: "var(--wa-green, #1B4D3E)",
+                      color: "#FFFFFF",
+                      border: "none",
+                      borderRadius: "var(--wa-radius-sm, 8px)",
+                      fontWeight: 600,
+                      fontSize: "0.875rem",
+                      cursor: "pointer",
+                      transition: "background 0.15s ease",
+                    }}
+                  >
                     Submit Review
                   </button>
                 </form>
@@ -247,19 +887,75 @@ export default async function SessionDetailPage({
             )
           )}
 
-          {/* Action buttons */}
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
-            <Link href={`/tutor/${booking.tutor.id}`} style={{ flex: 1, minWidth: "150px", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", background: "#F0FDF4", color: "#0E8345", border: "1.5px solid #BBF7D0", borderRadius: "0.75rem", padding: "0.75rem", fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}>
-              👤 Tutor Profile
+          {/* Action Links */}
+          <div
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              flexWrap: "wrap",
+              marginTop: "1.5rem",
+              paddingTop: "1.25rem",
+              borderTop: "1px solid var(--wa-border, #E5DFD5)",
+            }}
+          >
+            <Link
+              href={ROUTES.learner.findTutor}
+              style={{
+                flex: 1,
+                minWidth: "160px",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.45rem",
+                background: "var(--wa-white, #FFFFFF)",
+                color: "var(--wa-ink, #1C1917)",
+                border: "1px solid var(--wa-border, #E5DFD5)",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "0.7rem 1.25rem",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                textDecoration: "none",
+              }}
+            >
+              <Search size={15} aria-hidden="true" />
+              <span>Book Another Session</span>
             </Link>
-            <Link href="/find" style={{ flex: 1, minWidth: "150px", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", background: "#F3F4F6", color: "#374151", border: "1.5px solid #E5E7EB", borderRadius: "0.75rem", padding: "0.75rem", fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}>
-              🔍 Book Another
+
+            <Link
+              href={ROUTES.learner.mySessions}
+              style={{
+                flex: 1,
+                minWidth: "160px",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.45rem",
+                background: "var(--wa-green-light, #EAF2EE)",
+                color: "var(--wa-green, #1B4D3E)",
+                border: "1px solid #C6DEC6",
+                borderRadius: "var(--wa-radius-sm, 8px)",
+                padding: "0.7rem 1.25rem",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                textDecoration: "none",
+              }}
+            >
+              <Calendar size={15} aria-hidden="true" />
+              <span>All Scheduled Sessions</span>
             </Link>
           </div>
         </div>
 
-        <div style={{ textAlign: "center", marginTop: "1.25rem", fontSize: "0.75rem", color: "#9CA3AF" }}>
-          Session ID: <code style={{ background: "#F3F4F6", padding: "0.1rem 0.35rem", borderRadius: "4px" }}>{booking.id}</code> — Reference this ID when contacting support.
+        {/* Audit / Identifier Note */}
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "1.5rem",
+            fontSize: "0.75rem",
+            color: "var(--wa-muted, #78716C)",
+          }}
+        >
+          Session Record ID: <code style={{ background: "var(--wa-contrast, #F3EFE8)", padding: "0.15rem 0.4rem", borderRadius: "4px" }}>{booking.id}</code> · Learnivia Safeguarding &amp; Verified Volunteer Record
         </div>
       </div>
     </main>

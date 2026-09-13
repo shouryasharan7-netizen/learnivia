@@ -1,8 +1,18 @@
 import styles from "./page.module.css";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import Image from "next/image";
 import { auth } from "@/auth";
+import {
+  Target,
+  GraduationCap,
+  Globe,
+  Clock,
+  Star,
+  Search,
+  BookOpen,
+  ArrowRight,
+  ShieldCheck,
+} from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -157,28 +167,43 @@ export default async function FindTutorPage({ searchParams }: Props) {
   return (
     <main className={styles.main}>
       <div className={styles.header}>
-        <Image src="/images/find-a-tutor.png" alt="Find a tutor mascot" width={120} height={150} className={styles.mascotImg} priority />
+        <div className={styles.kicker}>
+          <GraduationCap size={14} color="#1B4D3E" />
+          <span>Verified Peer Mentors &middot; K–10</span>
+        </div>
         <h1 className={styles.title}>Find a Volunteer Tutor</h1>
-        <p className={styles.subtitle}>Browse verified volunteer tutors approved for your grade level — free 1-on-1 Zoom sessions.</p>
+        <p className={styles.subtitle}>
+          Browse verified high school and university mentors approved for your grade level — free 1-on-1 Zoom sessions.
+        </p>
       </div>
 
       {/* Auto-matching Notification Banner */}
       {isAutoMatched && (
-        <div style={{
-          maxWidth: 900,
-          margin: "0 auto 1.5rem",
-          background: "#F0FDF4",
-          border: "1px solid #BBF7D0",
-          borderRadius: 12,
-          padding: "0.75rem 1.25rem",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "0.5rem"
-        }}>
-          <div style={{ fontSize: "0.9rem", color: "#166534", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span>🎯</span>
+        <div
+          style={{
+            maxWidth: 960,
+            margin: "0 auto 1.75rem",
+            background: "#EAF2EE",
+            border: "1px solid #C6DEC6",
+            borderRadius: 10,
+            padding: "0.85rem 1.25rem",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "0.875rem",
+              color: "#1B4D3E",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <Target size={16} color="#1B4D3E" />
             <span>
               Showing tutors matched for your profile:{" "}
               <strong>{activeGrade || "Your Grade"}</strong>
@@ -188,7 +213,12 @@ export default async function FindTutorPage({ searchParams }: Props) {
           </div>
           <Link
             href={`/find?allGrades=true${subject ? `&subject=${encodeURIComponent(subject)}` : ""}`}
-            style={{ fontSize: "0.825rem", color: "#15803D", fontWeight: 700, textDecoration: "underline" }}
+            style={{
+              fontSize: "0.825rem",
+              color: "#1B4D3E",
+              fontWeight: 700,
+              textDecoration: "underline",
+            }}
           >
             Show All Tutors
           </Link>
@@ -196,15 +226,17 @@ export default async function FindTutorPage({ searchParams }: Props) {
       )}
 
       {/* Search & Filters Bar */}
-      <form method="GET" action="/find" className={styles.filters} style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
-        <input
-          type="text"
-          name="q"
-          defaultValue={q || ""}
-          placeholder="Search by tutor name, subject, or school..."
-          className={styles.searchInput}
-          style={{ flex: 1, minWidth: 200 }}
-        />
+      <form method="GET" action="/find" className={styles.filters}>
+        <div className={styles.searchWrapper}>
+          <Search size={16} className={styles.searchIcon} />
+          <input
+            type="text"
+            name="q"
+            defaultValue={q || ""}
+            placeholder="Search by tutor name, subject, or school…"
+            className={styles.searchInput}
+          />
+        </div>
 
         <select name="subject" defaultValue={subject || ""} className={styles.filterSelect}>
           <option value="">All Subjects</option>
@@ -252,8 +284,10 @@ export default async function FindTutorPage({ searchParams }: Props) {
       <div className={styles.tutorGrid}>
         {tutors.length === 0 ? (
           <div className={styles.noTutors}>
-            <p>No tutors matched your search criteria for {subject || "the selected filters"}.</p>
-            <Link href="/find?allGrades=true" className={styles.clearBtn} style={{ marginTop: "1rem" }}>
+            <p style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#1C1917" }}>
+              No tutors matched your search criteria for {subject || "the selected filters"}.
+            </p>
+            <Link href="/find?allGrades=true" className={styles.clearBtn}>
               Show All Available Tutors
             </Link>
           </div>
@@ -268,38 +302,50 @@ export default async function FindTutorPage({ searchParams }: Props) {
               <div key={tutor.id} className={styles.tutorCard}>
                 <div className={styles.tutorHeader}>
                   <div className={styles.avatarPlaceholder}>
-                    {tutor.user.name?.charAt(0).toUpperCase() || "?"}
+                    {tutor.user.name?.charAt(0).toUpperCase() || "T"}
                   </div>
                   <div>
                     <h2 className={styles.tutorName}>{tutor.user.name}</h2>
                     <p className={styles.tutorTimezone}>
-                      {tutor.school ? `🎓 ${tutor.school}` : `🌍 ${tutor.user.timezone || "UTC"}`}
+                      {tutor.school ? (
+                        <>
+                          <GraduationCap size={13} color="#1B4D3E" />
+                          <span>{tutor.school}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Globe size={13} color="#78716C" />
+                          <span>{tutor.user.timezone || "UTC"}</span>
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
 
                 <p className={styles.tutorBio}>
                   {(tutor.bio || "").length > 130
-                    ? `${(tutor.bio || "").substring(0, 130)}...`
+                    ? `${(tutor.bio || "").substring(0, 130)}…`
                     : (tutor.bio || "Volunteer tutor ready to help.")}
                 </p>
-                
+
                 {/* Real subjects and grade levels */}
                 <div className={styles.tags}>
                   {tutor.subjects?.length > 0 ? (
                     tutor.subjects.slice(0, 3).map((s: any) => (
-                      <span key={s.id} className={styles.tag}>{s.name}</span>
+                      <span key={s.id} className={`${styles.tag} ${styles.tagSubject}`}>
+                        {s.name}
+                      </span>
                     ))
                   ) : (
                     <span className={styles.tag}>General Support</span>
                   )}
                   {tutor.gradeLevels?.slice(0, 1).map((g: any) => (
-                    <span key={g.id} className={styles.tag} style={{ background: "var(--color-cream)", color: "var(--color-navy)" }}>
+                    <span key={g.id} className={styles.tag}>
                       {g.name}
                     </span>
                   ))}
                   {tutor.curricula && (
-                    <span className={styles.tag} style={{ background: "#FEF3C7", color: "#92400E" }}>
+                    <span key="curr" className={styles.tag}>
                       {tutor.curricula.split(",")[0].trim()}
                     </span>
                   )}
@@ -307,15 +353,20 @@ export default async function FindTutorPage({ searchParams }: Props) {
 
                 <div className={styles.tutorMeta}>
                   <span className={styles.hoursBadge}>
-                    ⏱️ {tutor.volunteerHours} hrs volunteered
+                    <Clock size={13} color="#1B4D3E" />
+                    <span>{tutor.volunteerHours} hrs volunteered</span>
                   </span>
                   {avgRating && (
-                    <span>⭐ {avgRating} ({tutor.reviews.length})</span>
+                    <span className={styles.ratingBadge}>
+                      <Star size={13} color="#92400E" fill="#92400E" />
+                      <span>{avgRating} ({tutor.reviews.length})</span>
+                    </span>
                   )}
                 </div>
 
                 <Link href={`/tutor/${tutor.id}`} className={styles.viewProfileBtn}>
-                  View Profile &amp; Book
+                  <span>View Profile &amp; Book</span>
+                  <ArrowRight size={14} />
                 </Link>
               </div>
             );

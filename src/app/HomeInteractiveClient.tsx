@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { springs, buttonMotion } from "@/lib/motion";
-import { fireConfetti } from "@/lib/confetti";
+import { loginAsDemo } from "./signin/actions";
 import styles from "./page.module.css";
 import {
   CheckCircle2,
@@ -12,6 +12,8 @@ import {
   ShieldCheck,
   Award,
   BookOpen,
+  GraduationCap,
+  Clock,
   Calculator,
   Atom,
   Languages,
@@ -129,6 +131,21 @@ export default function HomeInteractiveClient({
 }: HomeInteractiveClientProps) {
   const [activeTab, setActiveTab] = useState<string>("k2");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [demoLoading, setDemoLoading] = useState<string | null>(null);
+
+  async function handleDemo(role: "STUDENT" | "TUTOR" | "ADMIN") {
+    setDemoLoading(role);
+    try {
+      const res = await loginAsDemo(role);
+      if (res?.success && res.redirectUrl) {
+        window.location.href = res.redirectUrl;
+      } else {
+        window.location.href = "/signin";
+      }
+    } catch {
+      window.location.href = "/signin";
+    }
+  }
 
   const currentBand = GRADE_BANDS.find((b) => b.id === activeTab) || GRADE_BANDS[0];
 
@@ -155,7 +172,6 @@ export default function HomeInteractiveClient({
               <Link
                 href="/find"
                 className={styles.primaryBtn}
-                onClick={() => fireConfetti()}
               >
                 Find a tutor — it&apos;s free
                 <ArrowRight size={18} strokeWidth={2.5} />
@@ -167,17 +183,57 @@ export default function HomeInteractiveClient({
 
             <div className={styles.trustRow}>
               <span className={styles.trustItem}>
-                <CheckCircle2 size={15} color="#2D6A4F" />
+                <CheckCircle2 size={15} color="#1B4D3E" />
                 No credit card
               </span>
               <span className={styles.trustItem}>
-                <ShieldCheck size={15} color="#2D6A4F" />
+                <ShieldCheck size={15} color="#1B4D3E" />
                 Privacy-first
               </span>
               <span className={styles.trustItem}>
-                <Award size={15} color="#2D6A4F" />
+                <Award size={15} color="#1B4D3E" />
                 {tutorsCount > 0 ? `${tutorsCount}+ tutors` : "Screened tutors"}
               </span>
+            </div>
+
+            {/* Quick Demo Workspaces Preview */}
+            <div className={styles.demoBar}>
+              <div className={styles.demoBarHeader}>
+                <span className={styles.demoBarTitle}>Explore Redesigned Workspaces</span>
+                <span className={styles.demoBarSub}>1-Click Instant Preview</span>
+              </div>
+              <p className={styles.demoBarText}>
+                Tour any of the authenticated workspaces with live verified data:
+              </p>
+              <div className={styles.demoBarButtons}>
+                <button
+                  type="button"
+                  disabled={Boolean(demoLoading)}
+                  onClick={() => handleDemo("STUDENT")}
+                  className={styles.demoBtn}
+                >
+                  <BookOpen size={14} color="#1B4D3E" />
+                  <span>{demoLoading === "STUDENT" ? "Opening…" : "Learner Workspace"}</span>
+                </button>
+                <button
+                  type="button"
+                  disabled={Boolean(demoLoading)}
+                  onClick={() => handleDemo("TUTOR")}
+                  className={styles.demoBtn}
+                >
+                  <GraduationCap size={14} color="#1B4D3E" />
+                  <span>{demoLoading === "TUTOR" ? "Opening…" : "Tutor Center"}</span>
+                </button>
+                <button
+                  type="button"
+                  disabled={Boolean(demoLoading)}
+                  onClick={() => handleDemo("ADMIN")}
+                  className={styles.demoBtn}
+                >
+                  <ShieldCheck size={14} color="#1B4D3E" />
+                  <span>{demoLoading === "ADMIN" ? "Opening…" : "Admin Center"}</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -189,7 +245,7 @@ export default function HomeInteractiveClient({
                 {SESSION_STEPS.map((step, i) => (
                   <li key={step.num} className={styles.howItWorksStep}>
                     <div className={styles.stepIcon}>
-                      <step.icon size={18} color="#2D6A4F" strokeWidth={2} />
+                      <step.icon size={18} color="#1B4D3E" strokeWidth={2} />
                     </div>
                     <div className={styles.stepBody}>
                       <div className={styles.stepTitle}>{step.title}</div>
@@ -201,7 +257,7 @@ export default function HomeInteractiveClient({
                   </li>
                 ))}
               </ol>
-              <Link href="/find" className={styles.howItWorksBtn} onClick={() => fireConfetti()}>
+              <Link href="/find" className={styles.howItWorksBtn}>
                 Get started — free <ArrowRight size={15} />
               </Link>
             </div>
@@ -386,7 +442,7 @@ export default function HomeInteractiveClient({
               Join thousands of K–10 learners and volunteer tutors. No subscriptions, zero fees.
             </p>
             <div className={styles.bottomCtaButtons}>
-              <Link href="/signup" className={styles.bottomPrimaryBtn} onClick={() => fireConfetti()}>
+              <Link href="/signup" className={styles.bottomPrimaryBtn}>
                 Join Learnivia — Free Forever
               </Link>
               <Link href="/signup?role=tutor" className={styles.bottomSecondaryBtn}>

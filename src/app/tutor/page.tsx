@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./page.module.css";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
@@ -8,6 +9,8 @@ import { completeWorkshop } from "@/app/actions/workshops";
 import { ScheduleWorkshopForm } from "./ScheduleWorkshopForm";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ROUTES } from "@/lib/routes";
 import {
   Clock,
   Users,
@@ -19,7 +22,8 @@ import {
   Calendar,
   GraduationCap,
   ArrowRight,
-  Zap,
+  ShieldCheck,
+  AlertTriangle,
   X,
   Sparkles,
 } from "lucide-react";
@@ -28,8 +32,8 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Tutor Dashboard — Learnivia",
-  description: "Manage volunteer tutoring sessions, host live workshops, and view verified hours.",
+  title: "Tutor Workspace — Learnivia",
+  description: "Manage volunteer tutoring sessions, host live workshops, and view verified service hours.",
 };
 
 const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -39,13 +43,22 @@ export default async function TutorDashboard() {
 
   if (!session?.user) {
     return (
-      <main className={styles.main}>
-        <div className={styles.authNoticeCard}>
-          <h1 className={styles.title}>Unauthorized</h1>
-          <p>Please log in to view the Tutor Dashboard.</p>
-          <Link href="/signin?callbackUrl=/tutor" className={styles.primaryBtn}>
-            Sign In
-          </Link>
+      <main className={styles.page}>
+        <div className={styles.container}>
+          <div className={styles.authNoticeCard}>
+            <div className={styles.authNoticeIcon}>
+              <GraduationCap size={24} aria-hidden="true" />
+            </div>
+            <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
+              Sign In to Tutor Workspace
+            </h1>
+            <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
+              Please log in to manage your volunteer tutoring appointments, workshops, and service record.
+            </p>
+            <Link href="/signin?callbackUrl=/tutor" className={styles.primaryBtn} style={{ display: "inline-flex" }}>
+              Sign In to Your Account
+            </Link>
+          </div>
         </div>
       </main>
     );
@@ -56,104 +69,155 @@ export default async function TutorDashboard() {
   let userRole = session.user.role;
 
   if ((!userId || !userRole) && session.user.email) {
-    const dbUser = await prisma.user.findUnique({
-      where: { email: session.user.email },
-      select: { id: true, role: true, name: true },
-    });
-    if (dbUser) {
-      userId = dbUser.id;
-      userRole = dbUser.role;
+    try {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { id: true, role: true, name: true },
+      });
+      if (dbUser) {
+        userId = dbUser.id;
+        userRole = dbUser.role;
+      }
+    } catch {
+      // ignore
     }
   }
 
   if (!userId) {
     return (
-      <main className={styles.main}>
-        <div className={styles.authNoticeCard}>
-          <h1 className={styles.title}>Session Required</h1>
-          <p>Please sign in again to access the Tutor Dashboard.</p>
-          <Link href="/signin?callbackUrl=/tutor" className={styles.primaryBtn}>
-            Sign In
-          </Link>
+      <main className={styles.page}>
+        <div className={styles.container}>
+          <div className={styles.authNoticeCard}>
+            <div className={styles.authNoticeIcon}>
+              <GraduationCap size={24} aria-hidden="true" />
+            </div>
+            <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
+              Session Required
+            </h1>
+            <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
+              Please sign in again to access the Tutor Workspace.
+            </p>
+            <Link href="/signin?callbackUrl=/tutor" className={styles.primaryBtn} style={{ display: "inline-flex" }}>
+              Sign In
+            </Link>
+          </div>
         </div>
       </main>
     );
   }
 
-  let tutor = await prisma.tutorProfile.findUnique({
-    where: { userId },
-    include: {
-      availabilities: true,
-      subjects: true,
-      trainingModules: true,
-    },
-  });
-
-  // If user is an ADMIN or testing, ensure they have an approved profile
-  if (!tutor && userRole === "ADMIN") {
-    tutor = await prisma.tutorProfile.create({
-      data: {
-        userId,
-        status: "APPROVED",
-        bio: "Administrator & Lead Volunteer Mentor",
-        school: "Learnivia Core Team",
-        volunteerHours: 0.0,
-      },
+  let tutor: any = null;
+  try {
+    tutor = await prisma.tutorProfile.findUnique({
+      where: { userId },
       include: {
         availabilities: true,
         subjects: true,
         trainingModules: true,
       },
     });
+
+    // If user is an ADMIN or testing, ensure they have an approved profile
+    if (!tutor && userRole === "ADMIN") {
+      tutor = await prisma.tutorProfile.create({
+        data: {
+          userId,
+          status: "APPROVED",
+          bio: "Administrator & Lead Volunteer Mentor",
+          school: "Learnivia Core Team",
+          volunteerHours: 0.0,
+        },
+        include: {
+          availabilities: true,
+          subjects: true,
+          trainingModules: true,
+        },
+      });
+    }
+  } catch (err) {
+    console.warn("Tutor profile lookup fallback:", err);
   }
 
   if (!tutor) {
     return (
-      <main className={styles.main}>
-        <div className={styles.authNoticeCard}>
-          <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🌱</div>
-          <h1 className={styles.title}>Become a Volunteer Tutor</h1>
-          <p>You have not registered a tutor profile yet. Join our global community of volunteer educators.</p>
-          <Link href="/apply" className={styles.primaryBtn} style={{ marginTop: "1rem" }}>
-            Start Volunteer Application →
-          </Link>
+      <main className={styles.page}>
+        <div className={styles.container}>
+          <div className={styles.authNoticeCard}>
+            <div className={styles.authNoticeIcon}>
+              <Sparkles size={24} aria-hidden="true" />
+            </div>
+            <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
+              Become a Volunteer Tutor
+            </h1>
+            <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
+              You do not have an active volunteer tutor profile yet. Join our global community of academic peer educators.
+            </p>
+            <Link href={ROUTES.tutor.apply} className={styles.primaryBtn} style={{ display: "inline-flex" }}>
+              Start Volunteer Application <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </main>
     );
   }
 
-  const passedModules = (tutor.trainingModules || []).filter((m) => m.quizPassed).length;
+  const passedModules = (tutor.trainingModules || []).filter((m: any) => m.quizPassed).length;
 
   if (tutor.status === "PENDING") {
     return (
-      <main className={styles.main}>
-        <div className={styles.authNoticeCard}>
-          <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>⏳</div>
-          <h1 className={styles.title}>Application Pending Review</h1>
-          <p>Your tutor application is currently being reviewed by the Learnivia Academic Board. To prepare for approval, complete the 5 mandatory Safeguarding &amp; Tutoring training modules!</p>
-
-          <div style={{ margin: "1.25rem 0", background: passedModules === 5 ? "#F0FDF4" : "#FFFBEB", border: `1px solid ${passedModules === 5 ? "#86EFAC" : "#FCD34D"}`, padding: "1rem", borderRadius: "10px", textAlign: "left" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-              <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--color-navy)" }}>🛡️ Safeguarding &amp; Tutoring Modules</span>
-              <span style={{ fontSize: "0.8rem", fontWeight: 800, color: passedModules === 5 ? "#065F46" : "#92400E" }}>
-                {passedModules}/5 Completed
-              </span>
+      <main className={styles.page}>
+        <div className={styles.container}>
+          <div className={styles.authNoticeCard} style={{ maxWidth: "600px" }}>
+            <div className={styles.authNoticeIcon} style={{ background: "#FEF3C7", color: "#92400E" }}>
+              <Clock size={24} aria-hidden="true" />
             </div>
-            <div style={{ background: "#E2E8F0", borderRadius: "999px", height: "8px", overflow: "hidden" }}>
-              <div style={{ background: passedModules === 5 ? "#10B981" : "#F59E0B", width: `${(passedModules / 5) * 100}%`, height: "100%", transition: "width 0.3s ease" }} />
-            </div>
-          </div>
+            <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
+              Application Pending Review
+            </h1>
+            <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
+              Your tutor application is currently being reviewed by the Learnivia Academic Board. To prepare for approval, please complete all 5 mandatory Safeguarding &amp; Tutoring training modules.
+            </p>
 
-          <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "1.25rem", flexWrap: "wrap" }}>
-            <Link href="/tutor/training" className={styles.primaryBtn} style={{ background: "#0E8345" }}>
-              🎓 Complete Training Modules ({passedModules}/5) →
-            </Link>
-            <Link href="/apply" className={styles.primaryBtn} style={{ background: "var(--color-teal)" }}>
-              📄 Report Card &amp; Documents
-            </Link>
-            <Link href="/dashboard" className={styles.primaryBtn} style={{ background: "#F1F5F9", color: "var(--color-navy)", border: "1px solid var(--color-border)" }}>
-              Dashboard
-            </Link>
+            <div
+              style={{
+                margin: "1.5rem 0",
+                background: passedModules === 5 ? "var(--wa-green-light)" : "#FFFBEB",
+                border: `1px solid ${passedModules === 5 ? "var(--wa-border)" : "#FDE68A"}`,
+                padding: "1.25rem",
+                borderRadius: "var(--wa-radius-md)",
+                textAlign: "left",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                <span style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--wa-ink)", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <ShieldCheck size={16} color="var(--wa-green)" />
+                  Safeguarding &amp; Tutoring Modules
+                </span>
+                <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: passedModules === 5 ? "var(--wa-green)" : "#92400E" }}>
+                  {passedModules} of 5 Completed
+                </span>
+              </div>
+              <div style={{ background: "var(--wa-border)", borderRadius: "999px", height: "6px", overflow: "hidden" }}>
+                <div
+                  style={{
+                    background: passedModules === 5 ? "var(--wa-green)" : "#D97706",
+                    width: `${(passedModules / 5) * 100}%`,
+                    height: "100%",
+                    transition: "width 0.3s ease",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href={ROUTES.tutor.training} className={styles.primaryBtn}>
+                <GraduationCap size={15} />
+                <span>Complete Training Modules ({passedModules}/5)</span>
+              </Link>
+              <Link href={ROUTES.learner.home} className={styles.secondaryBtn}>
+                Return to Dashboard
+              </Link>
+            </div>
           </div>
         </div>
       </main>
@@ -162,30 +226,50 @@ export default async function TutorDashboard() {
 
   if (tutor.status === "REJECTED") {
     return (
-      <main className={styles.main}>
-        <div className={styles.authNoticeCard}>
-          <h1 className={styles.title}>Application Update</h1>
-          <p>Unfortunately, your application was not approved at this time. If you have questions, please reach out to support.</p>
+      <main className={styles.page}>
+        <div className={styles.container}>
+          <div className={styles.authNoticeCard}>
+            <div className={styles.authNoticeIcon} style={{ background: "#FEE2E2", color: "#991B1B" }}>
+              <AlertTriangle size={24} aria-hidden="true" />
+            </div>
+            <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
+              Application Status Update
+            </h1>
+            <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
+              Your volunteer tutor application was not approved at this time. If you have questions regarding this decision, please contact our support team.
+            </p>
+            <Link href={ROUTES.support} className={styles.secondaryBtn} style={{ display: "inline-flex" }}>
+              Contact Support
+            </Link>
+          </div>
         </div>
       </main>
     );
   }
 
-  // Fast subqueries to avoid pgBouncer transaction timeout
-  const [rawWorkshops, rawBookings] = await Promise.all([
-    prisma.workshop.findMany({
-      where: { tutorId: tutor.id },
-      include: {
-        enrollments: { include: { student: true } },
-      },
-      orderBy: { startTime: "asc" },
-    }),
-    prisma.booking.findMany({
-      where: { tutorId: tutor.id },
-      include: { student: true },
-      orderBy: { startTime: "asc" },
-    }),
-  ]);
+  let rawWorkshops: any[] = [];
+  let rawBookings: any[] = [];
+
+  try {
+    const results = await Promise.all([
+      prisma.workshop.findMany({
+        where: { tutorId: tutor.id },
+        include: {
+          enrollments: { include: { student: true } },
+        },
+        orderBy: { startTime: "asc" },
+      }),
+      prisma.booking.findMany({
+        where: { tutorId: tutor.id },
+        include: { student: true },
+        orderBy: { startTime: "asc" },
+      }),
+    ]);
+    rawWorkshops = results[0];
+    rawBookings = results[1];
+  } catch (dbErr) {
+    console.warn("Tutor data fetch fallback:", dbErr);
+  }
 
   const upcomingBookings = rawBookings.filter((b) => b && b.status === "CONFIRMED");
   const completedBookings = rawBookings.filter((b) => b && b.status === "COMPLETED");
@@ -208,82 +292,92 @@ export default async function TutorDashboard() {
     name,
     index,
     slots: (tutor.availabilities || [])
-      .filter((a) => a && a.dayOfWeek === index)
-      .sort((a, b) => (a.startTime || "").localeCompare(b.startTime || "")),
+      .filter((a: any) => a && a.dayOfWeek === index)
+      .sort((a: any, b: any) => (a.startTime || "").localeCompare(b.startTime || "")),
   }));
 
   const tutorName = session.user.name || "Volunteer Tutor";
 
   return (
-    <main className={styles.main}>
+    <main className={styles.page}>
       <div className={styles.container}>
+        {/* Safeguarding & Training Progress Notification */}
         {passedModules < 5 && (
-          <div style={{ background: "#FEF3C7", border: "1px solid #FCD34D", borderRadius: "10px", padding: "0.85rem 1.25rem", marginBottom: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span>🛡️</span>
-              <span style={{ fontSize: "0.875rem", color: "#92400E", fontWeight: 600 }}>
+          <div className={styles.trainingBanner}>
+            <div className={styles.trainingBannerLeft}>
+              <div className={styles.trainingBannerIcon}>
+                <ShieldCheck size={18} aria-hidden="true" />
+              </div>
+              <div className={styles.trainingBannerText}>
                 <strong>Training in progress ({passedModules}/5 completed):</strong> Complete all 5 safeguarding modules to verify your tutor credential and maintain session compliance.
-              </span>
+              </div>
             </div>
-            <Link href="/tutor/training" style={{ background: "#D97706", color: "white", padding: "0.35rem 0.85rem", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 700, textDecoration: "none" }}>
-              Continue Training →
+            <Link href={ROUTES.tutor.training} className={styles.trainingBannerAction}>
+              Continue Training <ArrowRight size={13} aria-hidden="true" />
             </Link>
           </div>
         )}
 
-        {/* Compact, professional top header */}
-        <div className={styles.headerRow}>
+        {/* Header Row */}
+        <header className={styles.headerRow}>
           <div className={styles.headerTitleCol}>
             <div className={styles.badgeRow}>
               <span className={styles.verifiedBadge}>
-                <CheckCircle2 size={13} color="#10B981" /> Verified Tutor
+                <CheckCircle2 size={13} aria-hidden="true" />
+                Verified Tutor
               </span>
               <span className={styles.hoursBadge}>
-                <Clock size={13} color="#2D6A4F" /> {tutorHours.toFixed(1)} Hours Verified
+                <Clock size={13} aria-hidden="true" />
+                {tutorHours.toFixed(1)} Hours Verified
               </span>
             </div>
-            <h1 className={styles.title}>{tutorName}&apos;s Tutor Portal</h1>
-            <p className={styles.subtitle}>Manage your 1-on-1 tutoring sessions, group bootcamps, and volunteer record.</p>
+            <h1 className={styles.title}>{tutorName}&apos;s Tutor Workspace</h1>
+            <p className={styles.subtitle}>
+              Manage 1-on-1 tutoring appointments, schedule group workshops, and maintain your official service record.
+            </p>
           </div>
 
-          <div className={styles.headerActions} style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-            <Link href="/tutor/training" className={styles.transcriptBtn} style={{ background: "rgba(45, 106, 79, 0.08)", borderColor: "rgba(45, 106, 79, 0.25)", color: "#2D6A4F", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-              <GraduationCap size={15} /> Training Modules
+          <div className={styles.headerActions}>
+            <Link href={ROUTES.tutor.training} className={styles.secondaryBtn}>
+              <GraduationCap size={15} aria-hidden="true" />
+              <span>Training Modules</span>
             </Link>
-            <a href="#schedule-session" className={styles.primaryBtn} style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-              <Plus size={15} /> Schedule a Session
+            <a href="#schedule-session" className={styles.primaryBtn}>
+              <Plus size={15} aria-hidden="true" />
+              <span>Schedule Session</span>
             </a>
-            <Link href={`/tutor/${tutor.id}/transcript`} className={styles.transcriptBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-              <FileText size={15} /> Volunteer Record →
+            <Link href={`/tutor/${tutor.id}/transcript`} className={styles.secondaryBtn}>
+              <FileText size={15} aria-hidden="true" />
+              <span>Service Record</span>
             </Link>
           </div>
-        </div>
+        </header>
 
-        {/* 4-Metric Compact Impact Row */}
-        <section className={styles.metricsGrid} aria-label="Tutor volunteer metrics">
+        {/* 4-Metric Impact Row */}
+        <section className={styles.metricsGrid} aria-label="Volunteer impact metrics">
           <div className={styles.metricCard}>
-            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Clock size={24} color="#2D6A4F" />
+            <div className={styles.metricIcon}>
+              <Clock size={20} aria-hidden="true" />
             </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{tutorHours.toFixed(1)} hrs</span>
-              <span className={styles.metricLabel}>Verified Volunteer Hours</span>
+              <span className={styles.metricLabel}>Verified Service Hours</span>
             </div>
           </div>
 
           <div className={styles.metricCard}>
-            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Users size={24} color="#2563EB" />
+            <div className={styles.metricIcon}>
+              <Users size={20} aria-hidden="true" />
             </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{uniqueStudents}</span>
-              <span className={styles.metricLabel}>Students Supported</span>
+              <span className={styles.metricLabel}>Learners Supported</span>
             </div>
           </div>
 
           <div className={styles.metricCard}>
-            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <CheckCircle2 size={24} color="#C9922A" />
+            <div className={styles.metricIcon}>
+              <CheckCircle2 size={20} aria-hidden="true" />
             </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{completedBookings.length}</span>
@@ -292,12 +386,12 @@ export default async function TutorDashboard() {
           </div>
 
           <div className={styles.metricCard}>
-            <div className={styles.metricIcon} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <BookOpen size={24} color="#D97706" />
+            <div className={styles.metricIcon}>
+              <BookOpen size={20} aria-hidden="true" />
             </div>
             <div className={styles.metricContent}>
               <span className={styles.metricValue}>{tutor.subjects?.length || 1}</span>
-              <span className={styles.metricLabel}>Subjects Approved</span>
+              <span className={styles.metricLabel}>Approved Subjects</span>
             </div>
           </div>
         </section>
@@ -307,29 +401,35 @@ export default async function TutorDashboard() {
           {/* Left Column: Sessions & Workshops */}
           <div className={styles.leftCol}>
             {/* Upcoming 1-on-1 Sessions */}
-            <section className={styles.card}>
+            <section className={styles.card} aria-labelledby="upcoming-sessions-heading">
               <div className={styles.cardHeader}>
                 <div>
-                  <h2 className={styles.cardTitle}>Upcoming 1-on-1 Tutoring Sessions</h2>
-                  <p className={styles.cardSub}>Scheduled sessions booked by learners.</p>
+                  <h2 id="upcoming-sessions-heading" className={styles.cardTitle}>
+                    Upcoming 1-on-1 Tutoring Sessions
+                  </h2>
+                  <p className={styles.cardSub}>Scheduled appointments booked by students.</p>
                 </div>
                 <span className={styles.countTag}>{upcomingBookings.length} Scheduled</span>
               </div>
 
               {upcomingBookings.length === 0 ? (
-                <div className={styles.emptyNotice}>
-                  <p>No upcoming 1-on-1 sessions booked.</p>
-                  <span>Ensure your weekly availability slots are up to date on the right.</span>
-                </div>
+                <EmptyState
+                  title="No upcoming 1-on-1 sessions"
+                  description="You do not have any pending appointments. Ensure your weekly availability slots are up to date on the right."
+                  icon={Calendar}
+                />
               ) : (
                 <div className={styles.sessionsList}>
                   {upcomingBookings.map((b) => (
                     <div key={b.id} className={styles.sessionCard}>
                       <div className={styles.sessionHeader}>
                         <div>
-                          <span className={styles.sessionType}>1-on-1 Tutoring</span>
-                          <h3 className={styles.sessionTitle}>{b.subject} with {b.student.name || "Student"}</h3>
+                          <span className={styles.sessionType}>1-on-1 Mentorship</span>
+                          <h3 className={styles.sessionTitle}>
+                            {b.subject} with {b.student?.name || "Student"}
+                          </h3>
                           <span className={styles.sessionTime}>
+                            <Clock size={13} aria-hidden="true" />
                             <FormattedDateTime date={b.startTime} />
                           </span>
                         </div>
@@ -341,25 +441,34 @@ export default async function TutorDashboard() {
                         {(() => {
                           const { hostUrl } = getMeetingUrls(b.zoomLink);
                           return hostUrl ? (
-                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-                              <Video size={14} /> Launch Zoom Call
+                            <a
+                              href={hostUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.zoomBtn}
+                            >
+                              <Video size={14} aria-hidden="true" />
+                              <span>Launch Zoom Call</span>
                             </a>
                           ) : (
-                            <span style={{ fontSize: "0.8rem", color: "#64748B" }}>Zoom link provided to student</span>
+                            <span style={{ fontSize: "0.75rem", color: "var(--wa-muted)" }}>
+                              Meeting link delivered to student
+                            </span>
                           );
                         })()}
 
                         <form action={completeSession}>
                           <input type="hidden" name="bookingId" value={b.id} />
-                          <button type="submit" className={styles.completeBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-                            <CheckCircle2 size={13} /> Mark Completed
+                          <button type="submit" className={styles.completeBtn}>
+                            <CheckCircle2 size={13} aria-hidden="true" />
+                            <span>Mark Completed</span>
                           </button>
                         </form>
 
                         <form action={cancelBooking}>
                           <input type="hidden" name="bookingId" value={b.id} />
                           <button type="submit" className={styles.cancelBtn}>
-                            Cancel
+                            Cancel Session
                           </button>
                         </form>
                       </div>
@@ -369,37 +478,42 @@ export default async function TutorDashboard() {
               )}
             </section>
 
-            {/* Live Group Workshops */}
             {/* Schedule a New Session / Workshop */}
-            <section id="schedule-session" className={styles.card} style={{ border: "1.5px solid #2D6A4F", background: "#FFFFFF", boxShadow: "0 10px 30px -10px rgba(45, 106, 79, 0.12)" }}>
+            <section id="schedule-session" className={styles.card} aria-labelledby="schedule-heading">
               <div className={styles.cardHeader}>
                 <div>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontSize: "0.75rem", fontWeight: 700, color: "#2D6A4F", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
-                    <Zap size={14} color="#2D6A4F" /> Instant Tutor Publishing
-                  </div>
-                  <h2 className={styles.cardTitle}>Schedule a New Live Session / Workshop</h2>
-                  <p className={styles.cardSub}>Publish a session to the directory. When published, it will immediately appear on Find a Session for learners to join.</p>
+                  <h2 id="schedule-heading" className={styles.cardTitle}>
+                    Schedule a Live Session or Workshop
+                  </h2>
+                  <p className={styles.cardSub}>
+                    Publish an interactive group session. When published, it immediately appears in the platform directory.
+                  </p>
                 </div>
               </div>
 
               <ScheduleWorkshopForm />
             </section>
 
-            {/* Live Group Workshops List */}
-            <section className={styles.card}>
+            {/* Active Group Workshops List */}
+            <section className={styles.card} aria-labelledby="active-workshops-heading">
               <div className={styles.cardHeader}>
                 <div>
-                  <h2 className={styles.cardTitle}>My Active Group Workshops &amp; Bootcamps</h2>
+                  <h2 id="active-workshops-heading" className={styles.cardTitle}>
+                    Active Group Workshops &amp; Bootcamps
+                  </h2>
                   <p className={styles.cardSub}>Scheduled group sessions hosted by you.</p>
                 </div>
                 <span className={styles.countTag}>{upcomingWorkshops.length} Active</span>
               </div>
 
-              {/* Workshops list */}
               {upcomingWorkshops.length === 0 ? (
-                 <p className={styles.emptyNotice}>You haven&apos;t scheduled any upcoming workshops yet.</p>
+                <EmptyState
+                  title="No active group workshops"
+                  description="You haven't scheduled any upcoming workshops yet. Use the form above to publish your next session."
+                  icon={BookOpen}
+                />
               ) : (
-                <div className={styles.sessionsList} style={{ marginTop: "1rem" }}>
+                <div className={styles.sessionsList}>
                   {upcomingWorkshops.map((w) => {
                     const { hostUrl } = getMeetingUrls(w.zoomLink);
                     return (
@@ -408,27 +522,37 @@ export default async function TutorDashboard() {
                           <div>
                             <span className={styles.workshopTag}>Group Workshop</span>
                             <h3 className={styles.sessionTitle}>{w.title}</h3>
-                            <p style={{ fontSize: "0.8125rem", color: "#64748B" }}>
-                              {w.subject} • {w.enrollments.length} / {w.maxCapacity} Seats Booked
+                            <p style={{ fontSize: "0.8125rem", color: "var(--wa-muted)", margin: "0.2rem 0" }}>
+                              {w.subject} • {w.enrollments?.length || 0} / {w.maxCapacity} Seats Booked
                             </p>
                           </div>
                           <span className={styles.sessionTime}>
+                            <Clock size={13} aria-hidden="true" />
                             <FormattedDateTime date={w.startTime} />
                           </span>
                         </div>
 
-                        <p style={{ fontSize: "0.875rem", color: "#334155" }}>{w.description}</p>
+                        <p style={{ fontSize: "0.8125rem", color: "var(--wa-text)", margin: 0 }}>
+                          {w.description}
+                        </p>
 
                         <div className={styles.sessionActions}>
                           {hostUrl && (
-                            <a href={hostUrl} target="_blank" rel="noopener noreferrer" className={styles.zoomBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-                              <Video size={14} /> Host Zoom Call
+                            <a
+                              href={hostUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.zoomBtn}
+                            >
+                              <Video size={14} aria-hidden="true" />
+                              <span>Host Zoom Call</span>
                             </a>
                           )}
                           <form action={completeWorkshop}>
                             <input type="hidden" name="workshopId" value={w.id} />
-                            <button type="submit" className={styles.completeBtn} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-                              <CheckCircle2 size={13} /> Mark Completed
+                            <button type="submit" className={styles.completeBtn}>
+                              <CheckCircle2 size={13} aria-hidden="true" />
+                              <span>Mark Completed</span>
                             </button>
                           </form>
                         </div>
@@ -440,32 +564,48 @@ export default async function TutorDashboard() {
             </section>
           </div>
 
-          {/* Right Column: Availability & Recent History */}
+          {/* Right Column: Availability & History */}
           <div className={styles.rightCol}>
-            {/* Availability Manager */}
-            <section className={styles.card}>
+            {/* Weekly Availability Manager */}
+            <section className={styles.card} aria-labelledby="availability-heading">
               <div className={styles.cardHeader}>
                 <div>
-                  <h2 className={styles.cardTitle}>Weekly Availability</h2>
-                  <p className={styles.cardSub}>Time slots when students can book you.</p>
+                  <h2 id="availability-heading" className={styles.cardTitle}>
+                    Weekly Availability
+                  </h2>
+                  <p className={styles.cardSub}>Set recurring time slots when students can book you.</p>
                 </div>
               </div>
 
-              {/* Add slot compact form */}
+              {/* Add slot form */}
               <form action={addAvailability} className={styles.addSlotForm}>
-                <select name="dayOfWeek" required className={styles.selectInput}>
+                <select name="dayOfWeek" required className={styles.selectInput} aria-label="Day of week">
                   <option value="">Day</option>
                   {DAYS_OF_WEEK.map((day, i) => (
                     <option key={day} value={i}>{day}</option>
                   ))}
                 </select>
 
-                <input type="time" name="startTime" defaultValue="16:00" required className={styles.timeInput} />
-                <span style={{ color: "#94A3B8" }}>to</span>
-                <input type="time" name="endTime" defaultValue="17:00" required className={styles.timeInput} />
+                <input
+                  type="time"
+                  name="startTime"
+                  defaultValue="16:00"
+                  required
+                  className={styles.timeInput}
+                  aria-label="Start time"
+                />
+                <span style={{ color: "var(--wa-muted)", fontSize: "0.8125rem" }}>to</span>
+                <input
+                  type="time"
+                  name="endTime"
+                  defaultValue="17:00"
+                  required
+                  className={styles.timeInput}
+                  aria-label="End time"
+                />
 
                 <button type="submit" className={styles.addSlotBtn}>
-                  + Add
+                  + Add Slot
                 </button>
               </form>
 
@@ -482,7 +622,9 @@ export default async function TutorDashboard() {
                           <span key={slot.id} className={styles.slotBadge}>
                             {slot.startTime}–{slot.endTime}
                             <form action={removeAvailability.bind(null, slot.id)}>
-                              <button type="submit" className={styles.removeSlotBtn} title="Remove slot">×</button>
+                              <button type="submit" className={styles.removeSlotBtn} title="Remove slot" aria-label={`Remove slot ${slot.startTime} to ${slot.endTime}`}>
+                                ×
+                              </button>
                             </form>
                           </span>
                         ))
@@ -496,34 +638,38 @@ export default async function TutorDashboard() {
             {/* Volunteer Service Record Quick Card */}
             <div className={styles.transcriptCard}>
               <div className={styles.transcriptTop}>
-                <div style={{ background: "rgba(14, 131, 69, 0.12)", width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <FileText size={22} color="#0E8345" />
+                <div className={styles.transcriptIconBox}>
+                  <FileText size={20} aria-hidden="true" />
                 </div>
                 <div>
-                  <h3 className={styles.transcriptTitle}>Volunteer Service Record</h3>
+                  <h3 className={styles.transcriptTitle}>Verified Service Record</h3>
                   <p className={styles.transcriptText}>
-                    Download your verified service certificate with cryptographic IDs for school counselors.
+                    Access your official volunteer certificate with cryptographic verification tokens for school counselors and community portfolios.
                   </p>
                 </div>
               </div>
               <Link href={`/tutor/${tutor.id}/transcript`} className={styles.viewTranscriptLink}>
-                View &amp; Print Record →
+                <span>View &amp; Share Service Record</span>
+                <ArrowRight size={13} aria-hidden="true" />
               </Link>
             </div>
 
             {/* Completed Sessions History */}
             {completedBookings.length > 0 && (
-              <section className={styles.card}>
-                <h2 className={styles.cardTitle} style={{ fontSize: "1.05rem" }}>Recent Completed Sessions</h2>
+              <section className={styles.card} aria-labelledby="history-heading">
+                <h2 id="history-heading" className={styles.cardTitle}>
+                  Recent Completed Sessions
+                </h2>
                 <div className={styles.historyList}>
-                  {completedBookings.slice(0, 4).map((b) => (
+                  {completedBookings.slice(0, 5).map((b) => (
                     <div key={b.id} className={styles.historyItem}>
                       <div>
                         <strong className={styles.historySubject}>{b.subject}</strong>
-                        <span className={styles.historyStudent}>Learner: {b.student.name || "Student"}</span>
+                        <span className={styles.historyStudent}>Learner: {b.student?.name || "Student"}</span>
                       </div>
                       <span className={styles.historyDate}>
-                        ✓ {new Date(b.startTime).toLocaleDateString()}
+                        <CheckCircle2 size={12} aria-hidden="true" />
+                        {new Date(b.startTime).toLocaleDateString()}
                       </span>
                     </div>
                   ))}

@@ -24,6 +24,7 @@ export function getAdminEmails(): Set<string> {
 }
 
 export const authConfig = {
+  trustHost: true,
   pages: {
     signIn: "/signin",
   },

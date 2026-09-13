@@ -64,9 +64,37 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       name: "Email and Password",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
+        demoRole: { label: "Demo Role", type: "text" },
       },
       async authorize(credentials) {
+        // Demo Evaluation Login support for frictionless workspace review
+        const demoRole = (credentials as any)?.demoRole as string | undefined;
+        if (demoRole && (credentials?.password === "demo-preview" || credentials?.password === "learnivia-demo")) {
+          let demoEmail = "sakurablush.27@gmail.com";
+          if (demoRole === "TUTOR") demoEmail = "kritikasinghsahi@gmail.com";
+          if (demoRole === "ADMIN") demoEmail = "shouryasharan7@gmail.com";
+
+          const user = await prisma.user.findUnique({
+            where: { email: demoEmail },
+            include: { tutorProfile: true },
+          });
+
+          if (user) {
+            const adminEmails = getAdminEmails();
+            const isAdminEmail = adminEmails.has(demoEmail) || user.role === "ADMIN";
+            return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              image: user.image,
+              role: isAdminEmail ? "ADMIN" : user.role,
+              onboardingCompleted: user.onboardingCompleted,
+              timezone: user.timezone,
+            };
+          }
+        }
+
         if (!credentials?.email || !credentials?.password) return null;
         
         const email = (credentials.email as string).trim().toLowerCase();

@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { AlertCircle, RotateCcw, Home } from "lucide-react";
+import { ROUTES } from "@/lib/routes";
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -22,20 +24,19 @@ export default function GlobalError({ error, reset }: ErrorProps) {
         alignItems: "center",
         justifyContent: "center",
         padding: "3rem 1.5rem",
-        background: "var(--color-bg, #FAF8F5)",
-        fontFamily: "var(--font-sans, system-ui, sans-serif)",
+        background: "var(--wa-cream)",
       }}
     >
       <div
         style={{
-          maxWidth: 520,
+          maxWidth: 500,
           width: "100%",
           textAlign: "center",
-          background: "#FFFFFF",
-          border: "1px solid #FEE2E2",
-          borderRadius: "16px",
+          background: "var(--wa-white)",
+          border: "1px solid var(--wa-border)",
+          borderRadius: "var(--wa-radius-lg)",
           padding: "3rem 2rem",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+          boxShadow: "var(--wa-shadow-sm)",
         }}
       >
         <div
@@ -43,29 +44,29 @@ export default function GlobalError({ error, reset }: ErrorProps) {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 72,
-            height: 72,
-            borderRadius: "50%",
+            width: 56,
+            height: 56,
+            borderRadius: "12px",
             background: "#FEF2F2",
-            fontSize: "2rem",
+            color: "#B91C1C",
             marginBottom: "1.25rem",
           }}
           aria-hidden="true"
         >
-          ⚠️
+          <AlertCircle size={28} strokeWidth={1.75} />
         </div>
 
         <div
           style={{
-            fontSize: "0.85rem",
-            fontWeight: 800,
+            fontSize: "0.8125rem",
+            fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            color: "#DC2626",
-            marginBottom: "0.5rem",
+            letterSpacing: "0.06em",
+            color: "#B91C1C",
+            marginBottom: "0.35rem",
           }}
         >
-          Unexpected Application Error
+          Application Error
         </div>
 
         <h1
@@ -122,38 +123,40 @@ export default function GlobalError({ error, reset }: ErrorProps) {
               alignItems: "center",
               justifyContent: "center",
               gap: "0.5rem",
-              background: "#0E8345",
+              background: "var(--wa-green)",
               color: "#FFFFFF",
-              fontWeight: 700,
-              fontSize: "0.95rem",
+              fontWeight: 600,
+              fontSize: "0.875rem",
               padding: "0.75rem 1.5rem",
-              borderRadius: "10px",
+              borderRadius: "var(--wa-radius-sm)",
               border: "none",
               cursor: "pointer",
               transition: "background 0.15s ease",
             }}
           >
-            🔄 Try Again
+            <RotateCcw size={16} aria-hidden="true" />
+            <span>Try Again</span>
           </button>
 
           <Link
-            href="/"
+            href={ROUTES.learner.home}
             style={{
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "0.5rem",
-              background: "#F5F5F4",
-              color: "var(--color-navy, #0F172A)",
+              background: "var(--wa-white)",
+              color: "var(--wa-ink)",
               fontWeight: 600,
-              fontSize: "0.95rem",
+              fontSize: "0.875rem",
               padding: "0.75rem 1.5rem",
-              borderRadius: "10px",
+              borderRadius: "var(--wa-radius-sm)",
               textDecoration: "none",
-              border: "1px solid #E7E5E4",
+              border: "1px solid var(--wa-border)",
             }}
           >
-            Return to Homepage
+            <Home size={16} aria-hidden="true" />
+            <span>Return to Dashboard</span>
           </Link>
         </div>
       </div>

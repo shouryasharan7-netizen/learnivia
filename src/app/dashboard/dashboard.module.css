@@ -1,0 +1,652 @@
+/* ==========================================================================
+   LEARNIVIA — CALM EDITORIAL LEARNER WORKSPACE
+   "Warm Paper, Deep Forest Green, Quiet Confidence"
+   ========================================================================== */
+
+.page {
+  padding: 2rem 0 4.5rem;
+  background-color: var(--wa-paper);
+  min-height: calc(100vh - 56px);
+}
+
+.container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+/* ── 1. Greeting & Context ──────────────────────────────────────────────── */
+.greetingSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wa-green-mid);
+}
+
+.greetingTitle {
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--wa-ink);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.greetingSubtitle {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--wa-muted);
+  max-width: 680px;
+  margin: 0;
+}
+
+/* ── 2. Next-Action Panel ───────────────────────────────────────────────── */
+.nextActionPanel {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-left: 4px solid var(--wa-green);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  box-shadow: var(--wa-shadow-sm);
+  transition: border-color var(--wa-transition);
+}
+
+.nextActionWarning {
+  border-left-color: var(--wa-warning);
+  background: #FFFDF9;
+}
+
+.nextActionContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+}
+
+.nextActionIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--wa-radius-md);
+  background: var(--wa-green-light);
+  color: var(--wa-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nextActionIconWarning {
+  background: #FEF3C7;
+  color: #B45309;
+}
+
+.nextActionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nextActionTag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--wa-green-mid);
+}
+
+.nextActionTagWarning {
+  color: #B45309;
+}
+
+.nextActionTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+.nextActionDesc {
+  font-size: 0.875rem;
+  color: var(--wa-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.nextActionBtn {
+  background: var(--wa-green);
+  color: var(--wa-white);
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--wa-radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background var(--wa-transition);
+  flex-shrink: 0;
+}
+
+.nextActionBtn:hover {
+  background: var(--wa-green-hover);
+}
+
+/* ── 3. Upcoming Session Section ────────────────────────────────────────── */
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.875rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+.sectionLink {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--wa-green);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sectionLink:hover {
+  text-decoration: underline;
+}
+
+.sessionCard {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--wa-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sessionCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sessionMetaGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.tutorAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--wa-cream-mid);
+  color: var(--wa-ink);
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--wa-border);
+}
+
+.sessionSubject {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+.sessionTutor {
+  font-size: 0.875rem;
+  color: var(--wa-muted);
+  margin: 0.125rem 0 0;
+}
+
+.sessionDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background: var(--wa-cream);
+  border-radius: var(--wa-radius-md);
+  padding: 1rem;
+  border: 1px solid var(--wa-border);
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.detailLabel {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--wa-muted);
+}
+
+.detailValue {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--wa-ink);
+}
+
+.sessionCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--wa-border);
+}
+
+.joinBtn {
+  background: var(--wa-green);
+  color: var(--wa-white);
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--wa-radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.joinBtn:hover {
+  background: var(--wa-green-hover);
+}
+
+.secondaryBtn {
+  background: transparent;
+  border: 1px solid var(--wa-border);
+  color: var(--wa-text);
+  padding: 0.55rem 1rem;
+  border-radius: var(--wa-radius-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--wa-transition);
+}
+
+.secondaryBtn:hover {
+  background: var(--wa-cream-dark);
+  border-color: var(--wa-border-strong);
+}
+
+/* ── 4. Exactly Three Quick Actions ─────────────────────────────────────── */
+.quickActionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.actionCard {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-decoration: none;
+  box-shadow: var(--wa-shadow-sm);
+  transition: all var(--wa-transition);
+}
+
+.actionCard:hover {
+  border-color: var(--wa-green-mid);
+  box-shadow: var(--wa-shadow-md);
+  transform: translateY(-1px);
+}
+
+.actionIconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--wa-radius-md);
+  background: var(--wa-cream-dark);
+  color: var(--wa-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--wa-transition), color var(--wa-transition);
+}
+
+.actionCard:hover .actionIconWrap {
+  background: var(--wa-green-light);
+  color: var(--wa-green);
+}
+
+.actionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--wa-ink);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actionDesc {
+  font-size: 0.8125rem;
+  color: var(--wa-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── 5. Truthful Learning Summary ───────────────────────────────────────── */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.summaryCard {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  box-shadow: var(--wa-shadow-xs);
+}
+
+.summaryNumber {
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--wa-ink);
+  line-height: 1.1;
+}
+
+.summaryLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--wa-muted);
+}
+
+.summaryNote {
+  font-size: 0.8125rem;
+  color: var(--wa-subtle);
+  margin-top: 0.2rem;
+}
+
+/* ── 6. Three Learning Paths ────────────────────────────────────────────── */
+.pathsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.pathCard {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  text-decoration: none;
+  box-shadow: var(--wa-shadow-xs);
+  transition: all var(--wa-transition);
+}
+
+.pathCard:hover {
+  border-color: var(--wa-green-mid);
+  box-shadow: var(--wa-shadow-sm);
+}
+
+.pathIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--wa-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--wa-green);
+  background: var(--wa-green-light);
+}
+
+.pathTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+.pathDesc {
+  font-size: 0.8125rem;
+  color: var(--wa-muted);
+  line-height: 1.45;
+  margin: 0;
+  flex: 1;
+}
+
+.pathFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--wa-green);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--wa-cream-mid);
+}
+
+/* ── 7. Recent Activity Timeline ────────────────────────────────────────── */
+.timelineCard {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--wa-shadow-xs);
+}
+
+.timelineList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--wa-cream-mid);
+}
+
+.timelineItem:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.timelineDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--wa-green);
+  margin-top: 0.4rem;
+  flex-shrink: 0;
+}
+
+.timelineDotHomework {
+  background: var(--wa-warning);
+}
+
+.timelineContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.timelineRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.timelineTitle {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+.timelineDate {
+  font-size: 0.75rem;
+  color: var(--wa-subtle);
+  white-space: nowrap;
+}
+
+.timelineSub {
+  font-size: 0.8125rem;
+  color: var(--wa-muted);
+  margin: 0;
+}
+
+/* ── 8. Collapsible / Lower Priority Sections ───────────────────────────── */
+.collapsibleCard {
+  background: var(--wa-white);
+  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--wa-shadow-xs);
+}
+
+.collapsibleTrigger {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--wa-ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.collapsibleTrigger:hover {
+  background: var(--wa-cream);
+}
+
+.collapsibleBody {
+  padding: 0 1.5rem 1.5rem;
+  border-top: 1px solid var(--wa-cream-mid);
+}
+
+.resourceLinksRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+}
+
+.resourceLinkItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--wa-green);
+  text-decoration: none;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--wa-radius-md);
+  background: var(--wa-cream);
+  border: 1px solid var(--wa-border);
+  transition: all var(--wa-transition);
+}
+
+.resourceLinkItem:hover {
+  background: var(--wa-green-light);
+  border-color: var(--wa-green-mid);
+}
+
+/* ── Responsive Viewports ───────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .quickActionsGrid,
+  .summaryGrid,
+  .pathsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nextActionPanel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nextActionBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 1.25rem 0 5.5rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+    gap: 1.75rem;
+  }
+
+  .greetingTitle {
+    font-size: 1.75rem;
+  }
+
+  .greetingSubtitle {
+    font-size: 0.9375rem;
+  }
+
+  .sessionCardFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .joinBtn,
+  .secondaryBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

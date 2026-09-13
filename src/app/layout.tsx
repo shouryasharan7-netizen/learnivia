@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
 import { Providers } from "@/components/Providers";
-import { AuthShell } from "@/components/AuthShell";
+import { AppShell } from "@/components/workspace/AppShell";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -42,10 +41,9 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${serif.variable}`}>
       <body className={sans.className}>
         <Providers>
-          <Navbar />
-          <AuthShell>
+          <AppShell>
             {children}
-          </AuthShell>
+          </AppShell>
         </Providers>
       </body>
     </html>

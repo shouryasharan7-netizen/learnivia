@@ -1,8 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Compass, Home, Search } from "lucide-react";
+import { ROUTES } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Page Not Found",
+  title: "Page Not Found | Learnivia",
 };
 
 export default function NotFound() {
@@ -14,20 +16,19 @@ export default function NotFound() {
         alignItems: "center",
         justifyContent: "center",
         padding: "3rem 1.5rem",
-        background: "var(--color-bg, #FAF8F5)",
-        fontFamily: "var(--font-sans, system-ui, sans-serif)",
+        background: "var(--wa-cream)",
       }}
     >
       <div
         style={{
-          maxWidth: 540,
+          maxWidth: 500,
           width: "100%",
           textAlign: "center",
-          background: "#FFFFFF",
-          border: "1px solid var(--color-border, #E7E5E4)",
-          borderRadius: "16px",
+          background: "var(--wa-white)",
+          border: "1px solid var(--wa-border)",
+          borderRadius: "var(--wa-radius-lg)",
           padding: "3rem 2rem",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+          boxShadow: "var(--wa-shadow-sm)",
         }}
       >
         <div
@@ -35,29 +36,29 @@ export default function NotFound() {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 72,
-            height: 72,
-            borderRadius: "50%",
-            background: "#FEF3C7",
-            fontSize: "2rem",
+            width: 56,
+            height: 56,
+            borderRadius: "12px",
+            background: "var(--wa-cream-dark)",
+            color: "var(--wa-muted)",
             marginBottom: "1.25rem",
           }}
           aria-hidden="true"
         >
-          🧭
+          <Compass size={28} strokeWidth={1.75} />
         </div>
 
         <div
           style={{
-            fontSize: "0.85rem",
-            fontWeight: 800,
+            fontSize: "0.8125rem",
+            fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            color: "#D97706",
-            marginBottom: "0.5rem",
+            letterSpacing: "0.06em",
+            color: "var(--wa-muted)",
+            marginBottom: "0.35rem",
           }}
         >
-          Error 404
+          404 Not Found
         </div>
 
         <h1
@@ -93,43 +94,44 @@ export default function NotFound() {
           }}
         >
           <Link
-            href="/find"
+            href={ROUTES.find}
             style={{
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "0.5rem",
-              background: "#0E8345",
+              background: "var(--wa-green)",
               color: "#FFFFFF",
-              fontWeight: 700,
-              fontSize: "0.95rem",
-              padding: "0.75rem 1.5rem",
-              borderRadius: "10px",
+              fontWeight: 600,
+              fontSize: "0.875rem",
+              padding: "0.7rem 1.25rem",
+              borderRadius: "var(--wa-radius-sm)",
               textDecoration: "none",
-              transition: "background 0.15s ease",
             }}
           >
-            🔍 Find a Volunteer Tutor
+            <Search size={16} aria-hidden="true" />
+            <span>Find a Peer Tutor</span>
           </Link>
 
           <Link
-            href="/"
+            href={ROUTES.learner.home}
             style={{
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "0.5rem",
-              background: "#F5F5F4",
-              color: "var(--color-navy, #0F172A)",
+              background: "var(--wa-white)",
+              color: "var(--wa-ink)",
               fontWeight: 600,
-              fontSize: "0.95rem",
-              padding: "0.75rem 1.5rem",
-              borderRadius: "10px",
+              fontSize: "0.875rem",
+              padding: "0.7rem 1.25rem",
+              borderRadius: "var(--wa-radius-sm)",
               textDecoration: "none",
-              border: "1px solid #E7E5E4",
+              border: "1px solid var(--wa-border)",
             }}
           >
-            Return to Homepage
+            <Home size={16} aria-hidden="true" />
+            <span>Return to Dashboard</span>
           </Link>
         </div>
 

@@ -3,6 +3,24 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { ROUTES } from "@/lib/routes";
+import {
+  HelpCircle,
+  Lightbulb,
+  CheckCheck,
+  CheckCircle2,
+  Clock,
+  Video,
+  FileText,
+  GraduationCap,
+  PenLine,
+  Trash2,
+  Users,
+  ArrowRight,
+  AlertTriangle,
+  Check,
+  MessageSquare,
+} from "lucide-react";
 import styles from "./page.module.css";
 
 const SUBJECTS = [
@@ -81,7 +99,7 @@ export default function HomeworkHelpPage() {
     if (!selectedSubject || !question.trim()) return;
 
     if (!session?.user) {
-      window.location.href = "/signin?callbackUrl=/homework-help";
+      window.location.href = `${ROUTES.auth.signIn}?callbackUrl=/homework-help`;
       return;
     }
 
@@ -185,9 +203,9 @@ export default function HomeworkHelpPage() {
         {/* Page header with verified live stats */}
         <div className={styles.header}>
           <div className={styles.headerText}>
-            <h1 className={styles.title}>Get quick help with homework!</h1>
+            <h1 className={styles.title}>Homework Help &amp; Clarifications</h1>
             <p className={styles.subtitle}>
-              Whether you&apos;re studying for an upcoming exam, stuck on a challenging problem, or need step-by-step guidance, volunteer peer tutors are here to help.
+              Submit challenging problems, concept questions, or assignment drafts. Certified volunteer tutors provide step-by-step written walkthroughs or live 1-on-1 Zoom sessions.
             </p>
           </div>
 
@@ -202,11 +220,7 @@ export default function HomeworkHelpPage() {
             <div className={styles.statCard}>
               <span className={styles.statLabel}>PEER TUTORS</span>
               <div className={styles.statValue}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0E8345" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                </svg>
+                <Users size={16} color="var(--wa-green, #1B4D3E)" aria-hidden="true" />
                 <span>Active</span>
               </div>
             </div>
@@ -216,57 +230,90 @@ export default function HomeworkHelpPage() {
         {/* Success State Card */}
         {submitted ? (
           <div className={styles.formCard} style={{ textAlign: "center", padding: "3rem 2rem" }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🎉</div>
-            <h2 className={styles.formTitle} style={{ color: "#0E8345" }}>
-              Question Posted to Homework Help!
+            <div
+              style={{
+                width: "56px",
+                height: "56px",
+                borderRadius: "50%",
+                background: "var(--wa-green-light, #EAF2EE)",
+                color: "var(--wa-green, #1B4D3E)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 1.25rem",
+              }}
+              aria-hidden="true"
+            >
+              <CheckCircle2 size={28} strokeWidth={2} />
+            </div>
+
+            <h2 className={styles.formTitle} style={{ color: "var(--wa-green, #1B4D3E)" }}>
+              Question Posted to Homework Queue
             </h2>
-            <p style={{ color: "#475569", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 540, margin: "0.5rem auto 1.75rem" }}>
-              Your question in <strong>{selectedSubject}</strong> is now live. Volunteer tutors have been notified and can reply with step-by-step solutions or launch a 1-on-1 Zoom room.
+            <p style={{ color: "var(--wa-muted, #78716C)", fontSize: "0.9375rem", lineHeight: 1.6, maxWidth: 540, margin: "0.5rem auto 1.75rem" }}>
+              Your question in <strong>{selectedSubject}</strong> is now live in the student queue. Volunteer peer tutors have been notified and can reply with step-by-step written guidance or provide a secure 1-on-1 Zoom room.
             </p>
 
-            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 type="button"
                 onClick={handleReset}
                 className={styles.submitBtn}
-                style={{ width: "auto", padding: "0.85rem 1.75rem" }}
+                style={{ width: "auto", padding: "0.75rem 1.5rem" }}
               >
                 Ask Another Question
               </button>
               <a
                 href="#live-feed"
                 style={{
-                  background: "#F1F5F9",
-                  color: "#334155",
-                  border: "1px solid #CBD5E1",
-                  borderRadius: "9999px",
-                  padding: "0.85rem 1.5rem",
+                  background: "var(--wa-white, #FFFFFF)",
+                  color: "var(--wa-ink, #1C1917)",
+                  border: "1px solid var(--wa-border, #E5DFD5)",
+                  borderRadius: "var(--wa-radius-sm, 8px)",
+                  padding: "0.75rem 1.25rem",
                   fontWeight: 600,
+                  fontSize: "0.875rem",
                   cursor: "pointer",
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
+                  gap: "0.35rem",
                 }}
               >
-                View Live Feed Below ↓
+                <span>View Question Feed</span>
+                <ArrowRight size={14} aria-hidden="true" />
               </a>
             </div>
           </div>
         ) : (
           /* Main form card */
           <form onSubmit={handleSubmit} className={styles.formCard}>
-            <h2 className={styles.formTitle}>Ask a tutor for help</h2>
+            <h2 className={styles.formTitle}>Submit a Question to Peer Tutors</h2>
 
             {errorMsg && (
-              <div style={{ background: "#FEF2F2", border: "1px solid #FCA5A5", color: "#B91C1C", padding: "0.75rem 1rem", borderRadius: 8, marginBottom: "1rem", fontSize: "0.9rem" }}>
-                {errorMsg}
+              <div
+                style={{
+                  background: "#FEF2F2",
+                  border: "1px solid #FECACA",
+                  color: "#B91C1C",
+                  padding: "0.75rem 1rem",
+                  borderRadius: "var(--wa-radius-sm, 8px)",
+                  marginBottom: "0.5rem",
+                  fontSize: "0.875rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <AlertTriangle size={16} aria-hidden="true" />
+                <span>{errorMsg}</span>
               </div>
             )}
 
             {/* Subject selector */}
             <div className={styles.formGroup}>
               <label htmlFor="hw-subject" className={styles.label}>
-                I need help in *
+                Subject Area *
               </label>
               <select
                 id="hw-subject"
@@ -275,7 +322,7 @@ export default function HomeworkHelpPage() {
                 onChange={(e) => setSelectedSubject(e.target.value)}
                 required
               >
-                <option value="">Choose a subject...</option>
+                <option value="">Select subject...</option>
                 {SUBJECTS.map((s) => (
                   <option key={s} value={s}>{s}</option>
                 ))}
@@ -285,13 +332,13 @@ export default function HomeworkHelpPage() {
             {/* Question textarea */}
             <div className={styles.formGroup}>
               <label htmlFor="hw-question" className={styles.label}>
-                My question *
+                Problem Description &amp; What You&apos;ve Tried *
               </label>
               <div className={styles.textareaWrap}>
                 <textarea
                   id="hw-question"
                   className={styles.textarea}
-                  placeholder="What do you need help with? Be as specific as possible (mention the problem number, concept, or formula)."
+                  placeholder="Describe what you need help with. Include key formulas, problem numbers, or where you got stuck."
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   rows={4}
@@ -302,16 +349,18 @@ export default function HomeworkHelpPage() {
                   <button
                     type="button"
                     className={styles.toolbarBtn}
-                    onClick={() => setQuestion((prev) => prev + " Can someone explain how to solve this step-by-step?")}
+                    onClick={() => setQuestion((prev) => prev + " Could you please walk through how to approach this step-by-step?")}
                   >
-                    💡 Step-by-step
+                    <Lightbulb size={13} aria-hidden="true" />
+                    <span>Request Step-by-Step</span>
                   </button>
                   <button
                     type="button"
                     className={styles.toolbarBtn}
-                    onClick={() => setQuestion((prev) => prev + " Is my reasoning correct on this problem?")}
+                    onClick={() => setQuestion((prev) => prev + " Here is my initial work. Could you check whether my reasoning is correct?")}
                   >
-                    ✏️ Check my work
+                    <CheckCheck size={13} aria-hidden="true" />
+                    <span>Check My Reasoning</span>
                   </button>
                 </div>
               </div>
@@ -319,7 +368,7 @@ export default function HomeworkHelpPage() {
 
             {/* Help type selector */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>How I want help</label>
+              <label className={styles.label}>Preferred Help Format</label>
               <div className={styles.helpTypeGrid}>
                 <button
                   type="button"
@@ -327,14 +376,11 @@ export default function HomeworkHelpPage() {
                   onClick={() => setHelpType("zoom")}
                 >
                   <div className={styles.helpIcon}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polygon points="23 7 16 12 23 17 23 7"/>
-                      <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-                    </svg>
+                    <Video size={18} aria-hidden="true" />
                   </div>
                   <div className={styles.helpText}>
-                    <strong>Zoom Help</strong>
-                    <span>Live 1-on-1 video call explanation</span>
+                    <strong>Live Zoom Explanation</strong>
+                    <span>Real-time 1-on-1 audio/video discussion</span>
                   </div>
                 </button>
 
@@ -343,14 +389,12 @@ export default function HomeworkHelpPage() {
                   className={`${styles.helpCard} ${helpType === "chat" ? styles.helpCardActive : ""}`}
                   onClick={() => setHelpType("chat")}
                 >
-                  <div className={styles.helpIcon} style={{ background: "#F4F6F8", color: "#374151" }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-                    </svg>
+                  <div className={styles.helpIcon}>
+                    <FileText size={18} aria-hidden="true" />
                   </div>
                   <div className={styles.helpText}>
-                    <strong>Written Solution</strong>
-                    <span>Step-by-step written explanation</span>
+                    <strong>Written Walkthrough</strong>
+                    <span>Detailed text solution posted in this feed</span>
                   </div>
                 </button>
               </div>
@@ -362,16 +406,17 @@ export default function HomeworkHelpPage() {
               className={styles.submitBtn}
               disabled={loading || !selectedSubject || !question.trim()}
             >
-              {loading ? "Posting Question..." : "Get help now"}
+              {loading ? "Submitting Question..." : "Post to Homework Queue"}
             </button>
           </form>
         )}
 
         {/* 3. Live Homework Questions Feed */}
-        <section id="live-feed" className={styles.feedSection}>
+        <section id="live-feed" className={styles.feedSection} aria-label="Recent Homework Help Requests">
           <div className={styles.feedHeader}>
             <h2 className={styles.feedTitle}>
-              <span>📋</span> Recent Homework Help Requests
+              <HelpCircle size={20} color="var(--wa-green, #1B4D3E)" aria-hidden="true" />
+              <span>Recent Homework Help Requests</span>
             </h2>
 
             {session?.user && (
@@ -380,15 +425,18 @@ export default function HomeworkHelpPage() {
                 onClick={() => setShowMineOnly((prev) => !prev)}
                 className={`${styles.pillBtn} ${showMineOnly ? styles.pillBtnActive : ""}`}
               >
-                {showMineOnly ? "✓ Showing My Questions" : "Show My Questions"}
+                {showMineOnly && <Check size={13} aria-hidden="true" />}
+                <span>{showMineOnly ? "Showing My Requests" : "Show My Requests Only"}</span>
               </button>
             )}
           </div>
 
           {/* Subject Filter Pills */}
-          <div className={styles.filterPills}>
+          <div className={styles.filterPills} role="tablist" aria-label="Filter questions by subject">
             <button
               type="button"
+              role="tab"
+              aria-selected={activeFilter === "All"}
               onClick={() => setActiveFilter("All")}
               className={`${styles.pillBtn} ${activeFilter === "All" ? styles.pillBtnActive : ""}`}
             >
@@ -398,6 +446,8 @@ export default function HomeworkHelpPage() {
               <button
                 key={s}
                 type="button"
+                role="tab"
+                aria-selected={activeFilter === s}
                 onClick={() => setActiveFilter(s)}
                 className={`${styles.pillBtn} ${activeFilter === s ? styles.pillBtnActive : ""}`}
               >
@@ -407,12 +457,16 @@ export default function HomeworkHelpPage() {
           </div>
 
           {feedLoading ? (
-            <p style={{ color: "#64748B", textAlign: "center", padding: "2rem" }}>Loading questions...</p>
+            <p style={{ color: "var(--wa-muted, #78716C)", textAlign: "center", padding: "2rem" }}>
+              Loading homework feed...
+            </p>
           ) : questions.length === 0 ? (
             <div className={styles.questionCard} style={{ textAlign: "center", padding: "2.5rem 1rem" }}>
-              <p style={{ color: "#64748B", fontSize: "1rem" }}>No homework questions found for this filter.</p>
-              <p style={{ color: "#94A3B8", fontSize: "0.875rem", marginTop: "0.25rem" }}>
-                Be the first to ask a question above!
+              <p style={{ color: "var(--wa-ink, #1C1917)", fontSize: "0.9375rem", fontWeight: 600 }}>
+                No active questions found for this subject filter.
+              </p>
+              <p style={{ color: "var(--wa-muted, #78716C)", fontSize: "0.8125rem", marginTop: "0.25rem" }}>
+                Submit a new question above to receive help from our volunteer community.
               </p>
             </div>
           ) : (
@@ -425,15 +479,15 @@ export default function HomeworkHelpPage() {
               return (
                 <article key={item.id} className={styles.questionCard}>
                   <div className={styles.qMetaRow}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", flexWrap: "wrap" }}>
                       <span className={styles.subjectBadge}>{item.subject}</span>
                       {item.grade && (
-                        <span style={{ fontSize: "0.75rem", background: "#F1F5F9", color: "#475569", padding: "0.2rem 0.5rem", borderRadius: 4 }}>
+                        <span style={{ fontSize: "0.75rem", background: "var(--wa-contrast, #F3EFE8)", color: "var(--wa-ink, #1C1917)", padding: "0.2rem 0.5rem", borderRadius: 4, border: "1px solid var(--wa-border, #E5DFD5)" }}>
                           {item.grade}
                         </span>
                       )}
                       {item.curriculum && (
-                        <span style={{ fontSize: "0.75rem", background: "#FEF3C7", color: "#92400E", padding: "0.2rem 0.5rem", borderRadius: 4 }}>
+                        <span style={{ fontSize: "0.75rem", background: "#FEF3C7", color: "#92400E", padding: "0.2rem 0.5rem", borderRadius: 4, border: "1px solid #FDE68A" }}>
                           {item.curriculum}
                         </span>
                       )}
@@ -441,9 +495,15 @@ export default function HomeworkHelpPage() {
 
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       {isAnswered ? (
-                        <span className={styles.statusBadgeAnswered}>✓ Answered</span>
+                        <span className={styles.statusBadgeAnswered}>
+                          <CheckCircle2 size={12} aria-hidden="true" />
+                          <span>Answered</span>
+                        </span>
                       ) : (
-                        <span className={styles.statusBadgeOpen}>⏳ Waiting for Tutor</span>
+                        <span className={styles.statusBadgeOpen}>
+                          <Clock size={12} aria-hidden="true" />
+                          <span>Awaiting Tutor</span>
+                        </span>
                       )}
                       {(isStudentAuthor || isAdmin) && (
                         <button
@@ -453,16 +513,20 @@ export default function HomeworkHelpPage() {
                           style={{
                             background: "transparent",
                             border: "none",
-                            color: "#94A3B8",
+                            color: "var(--wa-muted, #78716C)",
                             fontSize: "0.75rem",
                             cursor: "pointer",
                             padding: "0.15rem 0.4rem",
                             borderRadius: 4,
                             textDecoration: "underline",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.25rem",
                           }}
                           title="Delete this homework question"
                         >
-                          {deletingId === item.id ? "Deleting..." : "Delete"}
+                          <Trash2 size={12} aria-hidden="true" />
+                          <span>{deletingId === item.id ? "Deleting..." : "Delete"}</span>
                         </button>
                       )}
                     </div>
@@ -475,14 +539,27 @@ export default function HomeworkHelpPage() {
                     <span>•</span>
                     <span>{new Date(item.createdAt).toLocaleDateString()}</span>
                     <span>•</span>
-                    <span>Format: {item.preferredFormat === "zoom" ? "🎥 Live Zoom" : "💬 Written"}</span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                      {item.preferredFormat === "zoom" ? (
+                        <>
+                          <Video size={13} aria-hidden="true" />
+                          <span>Live Zoom</span>
+                        </>
+                      ) : (
+                        <>
+                          <FileText size={13} aria-hidden="true" />
+                          <span>Written Solution</span>
+                        </>
+                      )}
+                    </span>
                   </div>
 
                   {/* If Tutor has answered */}
                   {item.answer && (
                     <div className={styles.answerBox}>
                       <div className={styles.answerTitle}>
-                        <span>🧑‍🏫</span> Solution from {item.tutor?.user?.name || "Volunteer Tutor"}:
+                        <GraduationCap size={15} aria-hidden="true" />
+                        <span>Solution from {item.tutor?.user?.name || "Volunteer Tutor"}:</span>
                       </div>
                       <p className={styles.answerText}>{item.answer}</p>
                     </div>
@@ -497,7 +574,9 @@ export default function HomeworkHelpPage() {
                         rel="noopener noreferrer"
                         className={styles.zoomHelpBtn}
                       >
-                        <span>🎥</span> Join Tutor Live Zoom Room →
+                        <Video size={14} aria-hidden="true" />
+                        <span>Enter Tutor Live Zoom Room</span>
+                        <ArrowRight size={13} aria-hidden="true" />
                       </a>
                     </div>
                   )}
@@ -513,47 +592,49 @@ export default function HomeworkHelpPage() {
                         }}
                         className={styles.tutorAnswerBtn}
                       >
-                        {answeringId === item.id ? "Close Reply" : "✍️ Write Answer / Provide Zoom Room"}
+                        <PenLine size={13} aria-hidden="true" />
+                        <span>{answeringId === item.id ? "Close Reply" : "Answer / Provide Zoom Room"}</span>
                       </button>
                     </div>
                   )}
 
                   {/* Inline Tutor Reply Form */}
                   {answeringId === item.id && (
-                    <form onSubmit={handleTutorAnswer} style={{ marginTop: "1rem", background: "#F8FAFC", padding: "1rem", borderRadius: 10, border: "1px solid #E2E8F0" }}>
+                    <form onSubmit={handleTutorAnswer} style={{ marginTop: "0.75rem", background: "var(--wa-contrast, #F3EFE8)", padding: "1rem", borderRadius: "var(--wa-radius-sm, 8px)", border: "1px solid var(--wa-border, #E5DFD5)" }}>
                       {answerError && (
-                        <div style={{ color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "0.5rem 0.75rem", fontSize: "0.85rem", marginBottom: "0.75rem" }}>
-                          ⚠️ {answerError}
+                        <div style={{ color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "0.5rem 0.75rem", fontSize: "0.85rem", marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                          <AlertTriangle size={14} aria-hidden="true" />
+                          <span>{answerError}</span>
                         </div>
                       )}
-                      <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: "0.4rem" }}>
-                        Your Step-by-Step Answer / Explanation:
+                      <label style={{ display: "block", fontSize: "0.8125rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)", marginBottom: "0.4rem" }}>
+                        Step-by-Step Answer / Explanation:
                       </label>
                       <textarea
                         rows={3}
                         required
                         value={tutorAnswerText}
                         onChange={(e) => setTutorAnswerText(e.target.value)}
-                        placeholder="Explain the solution clearly..."
-                        style={{ width: "100%", padding: "0.6rem", borderRadius: 8, border: "1px solid #CBD5E1", fontSize: "0.9rem", marginBottom: "0.75rem" }}
+                        placeholder="Explain the solution clearly and guide the student..."
+                        style={{ width: "100%", padding: "0.6rem", borderRadius: "var(--wa-radius-sm, 8px)", border: "1px solid var(--wa-border, #E5DFD5)", fontSize: "0.875rem", marginBottom: "0.75rem", fontFamily: "inherit", color: "var(--wa-ink, #1C1917)", background: "#FFFFFF" }}
                       />
 
-                      <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#1E293B", marginBottom: "0.4rem" }}>
-                        Optional Live Zoom Link (approved providers only):
+                      <label style={{ display: "block", fontSize: "0.8125rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)", marginBottom: "0.4rem" }}>
+                        Optional Live Zoom Link:
                       </label>
                       <input
                         type="url"
                         placeholder="https://zoom.us/j/..."
                         value={tutorZoomUrl}
                         onChange={(e) => setTutorZoomUrl(e.target.value)}
-                        style={{ width: "100%", padding: "0.5rem", borderRadius: 8, border: "1px solid #CBD5E1", fontSize: "0.85rem", marginBottom: "0.75rem" }}
+                        style={{ width: "100%", padding: "0.5rem 0.75rem", borderRadius: "var(--wa-radius-sm, 8px)", border: "1px solid var(--wa-border, #E5DFD5)", fontSize: "0.85rem", marginBottom: "0.75rem", color: "var(--wa-ink, #1C1917)", background: "#FFFFFF" }}
                       />
 
                       <div style={{ display: "flex", gap: "0.5rem" }}>
                         <button
                           type="submit"
                           disabled={answerSubmitting || !tutorAnswerText.trim()}
-                          style={{ background: "#0E8345", color: "#FFF", border: "none", padding: "0.5rem 1rem", borderRadius: 6, fontWeight: 700, cursor: "pointer" }}
+                          style={{ background: "var(--wa-green, #1B4D3E)", color: "#FFF", border: "none", padding: "0.5rem 1rem", borderRadius: "var(--wa-radius-sm, 8px)", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer" }}
                         >
                           {answerSubmitting ? "Submitting..." : "Send Answer to Student"}
                         </button>
@@ -563,7 +644,7 @@ export default function HomeworkHelpPage() {
                             setAnsweringId(null);
                             setAnswerError("");
                           }}
-                          style={{ background: "#E2E8F0", border: "none", padding: "0.5rem 1rem", borderRadius: 6, fontWeight: 600, cursor: "pointer" }}
+                          style={{ background: "var(--wa-white, #FFFFFF)", border: "1px solid var(--wa-border, #E5DFD5)", color: "var(--wa-ink, #1C1917)", padding: "0.5rem 1rem", borderRadius: "var(--wa-radius-sm, 8px)", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer" }}
                         >
                           Cancel
                         </button>
@@ -578,8 +659,8 @@ export default function HomeworkHelpPage() {
 
         {/* Alternative: browse all sessions */}
         <div className={styles.altSection}>
-          <p className={styles.altText}>Need a scheduled 1-on-1 session or intensive bootcamp?</p>
-          <Link href="/sessions" className={styles.altLink}>Browse all sessions →</Link>
+          <p className={styles.altText}>Looking for a scheduled 1-on-1 tutoring appointment or small-group workshop?</p>
+          <Link href={ROUTES.learner.mySessions} className={styles.altLink}>Browse all sessions →</Link>
         </div>
       </div>
     </main>

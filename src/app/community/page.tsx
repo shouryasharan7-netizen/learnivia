@@ -32,7 +32,7 @@ export default async function CommunityPage({ searchParams }: Props) {
     : null;
 
   return (
-    <main style={{ minHeight: "calc(100vh - 56px)", background: "#F8FAFC" }}>
+    <main style={{ minHeight: "calc(100vh - 56px)", background: "var(--wa-cream, #FAF8F5)" }}>
       <CommunityClient
         initialMessages={initialMessages}
         currentUser={currentUser}
