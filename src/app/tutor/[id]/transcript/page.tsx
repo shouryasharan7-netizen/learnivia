@@ -7,6 +7,7 @@ import PrintButton from "./PrintButton";
 import ShareTranscriptButton from "./ShareTranscriptButton";
 import { getCurrentUser } from "@/lib/auth-user";
 import { generateTranscriptToken, verifyTranscriptToken } from "@/lib/transcript";
+import { Lock, Check, CheckCircle2, GraduationCap, Star } from "lucide-react";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -121,7 +122,8 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
     const dur = Math.max(15, (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / (1000 * 60));
     return acc + dur;
   }, 0);
-  const realVolunteerHours = Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
+  // P0-4 / Blocker B4: Authoritative canonical volunteer hours from database escrow ledger
+  const realVolunteerHours = tutor.volunteerHours > 0 ? tutor.volunteerHours : Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
   const totalSessionsCount = completedSessions.length + completedWorkshops.length;
 
   const uniqueLearners = new Set(completedSessions.map((s) => s.studentId)).size;
@@ -154,8 +156,8 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
         </div>
 
         {hasValidToken && !currentUser && (
-          <div style={{ background: "#ECFDF5", border: "1px solid #A7F3D0", padding: "0.75rem 1.25rem", borderRadius: "8px", marginBottom: "1.25rem", fontSize: "0.85rem", color: "#065F46", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span>🔒</span>
+          <div style={{ background: "var(--wa-paper)", border: "1px solid var(--wa-border)", padding: "0.75rem 1.25rem", borderRadius: "6px", marginBottom: "1.25rem", fontSize: "0.85rem", color: "var(--wa-forest)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Lock size={15} style={{ flexShrink: 0 }} aria-hidden="true" />
             <span>
               <strong>Verified Public View:</strong> You are viewing an authentic Learnivia Volunteer Service Record verified via cryptographic signature. Student PII is strictly protected and redacted.
             </span>
@@ -175,7 +177,9 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
             </div>
 
             <div className={styles.verificationBadge}>
-              <span className={styles.verifiedPill}>✓ Verified Record</span>
+              <span className={styles.verifiedPill} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                <CheckCircle2 size={13} /> Verified Record
+              </span>
               <div className={styles.certId}>ID: {certId}</div>
               <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
                 Issued: {issueDate}
@@ -236,16 +240,18 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
             <div className={styles.subjectsList}>
               {tutor.subjects.length > 0 ? (
                 tutor.subjects.map((s) => (
-                  <span key={s.id} className={styles.subjectTag}>
-                    ✓ {s.name}
+                  <span key={s.id} className={styles.subjectTag} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                    <Check size={12} /> {s.name}
                   </span>
                 ))
               ) : (
-                <span className={styles.subjectTag}>✓ General Academic Tutoring</span>
+                <span className={styles.subjectTag} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                  <Check size={12} /> General Academic Tutoring
+                </span>
               )}
               {tutor.gradeLevels.map((g) => (
-                <span key={g.id} className={styles.subjectTag} style={{ background: "var(--color-cream)", color: "var(--color-navy)" }}>
-                  🎓 {g.name}
+                <span key={g.id} className={styles.subjectTag} style={{ background: "var(--color-cream)", color: "var(--color-navy)", display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                  <GraduationCap size={13} /> {g.name}
                 </span>
               ))}
             </div>
@@ -288,7 +294,9 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
                           <td>{session.topic || "Homework Review"}</td>
                           <td>{durationHours} hr</td>
                           <td>
-                            <span className={styles.statusCompleted}>✓ Verified</span>
+                            <span className={styles.statusCompleted} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                              <CheckCircle2 size={13} /> Verified
+                            </span>
                           </td>
                         </tr>
                       );
@@ -314,8 +322,14 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
                   return (
                     <div key={r.id} className={styles.reviewQuote}>
                       <p className={styles.quoteText}>&quot;{r.comment || "Great session, really helpful!"}&quot;</p>
-                      <div className={styles.quoteAuthor}>
-                        — {displayName} &bull; {"★".repeat(r.rating)}
+                      <div className={styles.quoteAuthor} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                        <span>— {displayName}</span>
+                        <span>•</span>
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.15rem" }}>
+                          {Array.from({ length: r.rating }).map((_, i) => (
+                            <Star key={i} size={12} fill="var(--color-ochre, #B18435)" color="var(--color-ochre, #B18435)" />
+                          ))}
+                        </span>
                       </div>
                     </div>
                   );

@@ -5,6 +5,7 @@ import { bookSession } from "./actions";
 import { auth } from "@/auth";
 import Link from "next/link";
 import { BookingSlotSelector } from "./BookingSlotSelector";
+import { GraduationCap, Globe, FileCheck, Star } from "lucide-react";
 
 const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -99,10 +100,14 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
         </div>
         <div className={styles.headerInfo}>
           <h1 className={styles.name}>{tutorProfile.user.name}</h1>
-          <p className={styles.grade}>
-            {tutorProfile.school ? `🎓 ${tutorProfile.school}` : (tutorProfile.currentGrade || "Verified Tutor")}
+          <p className={styles.grade} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+            <GraduationCap size={15} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+            <span>{tutorProfile.school || tutorProfile.currentGrade || "Verified Tutor"}</span>
           </p>
-          <p className={styles.timezone}>🌍 Local Timezone: {tutorProfile.user.timezone || "UTC"}</p>
+          <p className={styles.timezone} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+            <Globe size={14} style={{ color: "var(--wa-muted)" }} aria-hidden="true" />
+            <span>Local Timezone: {tutorProfile.user.timezone || "UTC"}</span>
+          </p>
         </div>
         
         <div className={styles.metaInfo}>
@@ -113,7 +118,10 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
           {avgRating && (
             <div className={styles.metaItem}>
               <span>Rating</span>
-              <strong>⭐ {avgRating} ({tutorProfile.reviews.length})</strong>
+              <strong style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                <Star size={13} fill="var(--wa-ochre)" stroke="none" aria-hidden="true" />
+                <span>{avgRating} ({tutorProfile.reviews.length})</span>
+              </strong>
             </div>
           )}
           <div className={styles.metaItem}>
@@ -123,13 +131,14 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.35rem",
-                color: "#2D6A4F",
-                fontWeight: 700,
+                color: "var(--wa-forest)",
+                fontWeight: 600,
                 textDecoration: "underline",
                 fontSize: "0.85rem",
               }}
             >
-              📜 Verified Service Record →
+              <FileCheck size={14} aria-hidden="true" />
+              <span>Verified Service Record →</span>
             </Link>
           </div>
         </div>

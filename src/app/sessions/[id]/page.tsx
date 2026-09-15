@@ -23,6 +23,7 @@ import {
   Radio,
   ShieldCheck,
   AlertTriangle,
+  Check,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -295,10 +296,10 @@ export default async function SessionDetailPage({
                 </div>
                 <h1
                   style={{
-                    fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)",
+                    fontFamily: "var(--font-serif)",
                     fontSize: "1.5rem",
                     fontWeight: 600,
-                    color: "var(--wa-ink, #1C1917)",
+                    color: "var(--wa-ink)",
                     margin: "0.15rem 0 0",
                   }}
                 >
@@ -619,7 +620,9 @@ export default async function SessionDetailPage({
                             cursor: "pointer",
                           }}
                         >
-                          ✓ Confirm I Attended This Session
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                            <Check size={15} /> Confirm I Attended This Session
+                          </span>
                         </button>
                       </form>
                     </div>

@@ -192,14 +192,14 @@
 }
 
 .channelHashtag {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 600;
-  color: var(--wa-green, #1B4D3E);
+  color: var(--wa-green);
 }
 
 .bannerTitle {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--wa-ink, #1C1917);
@@ -393,7 +393,7 @@
 }
 
 .guestPromptCard h3 {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif);
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--wa-ink, #1C1917);
@@ -448,7 +448,7 @@
 }
 
 .emptyFeed h3 {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif);
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--wa-ink, #1C1917);

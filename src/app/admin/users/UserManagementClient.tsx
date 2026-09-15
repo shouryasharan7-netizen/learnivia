@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { updateUserRole, deleteUserAccount } from "../actions";
+import { CheckCircle2, Trash2 } from "lucide-react";
 
 interface SerializedUser {
   id: string;
@@ -107,9 +108,13 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
             marginBottom: "1.5rem",
             fontWeight: 600,
             fontSize: "0.875rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
           }}
         >
-          ✓ {toastMsg}
+          <CheckCircle2 size={16} aria-hidden="true" />
+          <span>{toastMsg}</span>
         </div>
       )}
 
@@ -279,7 +284,7 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
                               }}
                               title="Permanently delete user account"
                             >
-                              🗑️
+                              <Trash2 size={14} aria-hidden="true" />
                             </button>
                           )}
                         </div>

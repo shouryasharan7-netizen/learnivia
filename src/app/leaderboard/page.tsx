@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import { getLeaderboard } from "@/lib/stats";
 import Link from "next/link";
 import { auth } from "@/auth";
+import { Trophy, Award, Medal } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60; // ISR: 60s cache
@@ -42,7 +43,6 @@ export default async function LeaderboardPage() {
         {top3.length > 0 && (
           <div className={styles.podiumGrid}>
             {top3.map((entry, index) => {
-              const medal = index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉";
               const isCurrentUser = currentUserSlug && currentUserSlug === entry.publicSlug;
 
               return (
@@ -50,7 +50,15 @@ export default async function LeaderboardPage() {
                   key={entry.publicSlug}
                   className={`${styles.podiumCard} ${index === 0 ? styles.firstPlaceCard : ""}`}
                 >
-                  <div className={styles.medalIcon}>{medal}</div>
+                  <div className={styles.medalIcon}>
+                    {index === 0 ? (
+                      <Trophy size={28} color="var(--color-ochre, #B18435)" />
+                    ) : index === 1 ? (
+                      <Award size={28} color="var(--color-slate, #526B7A)" />
+                    ) : (
+                      <Medal size={28} color="var(--color-terracotta, #B85A43)" />
+                    )}
+                  </div>
                   <div className={styles.avatarCircle}>{entry.initials}</div>
                   <h2 className={styles.podiumName}>
                     {entry.name}
@@ -106,7 +114,21 @@ export default async function LeaderboardPage() {
                   return (
                     <tr key={u.publicSlug} className={isCurrent ? styles.highlightRow : ""}>
                       <td className={styles.rankCell}>
-                        {u.rank === 1 ? "🥇 1" : u.rank === 2 ? "🥈 2" : u.rank === 3 ? "🥉 3" : `#${u.rank}`}
+                        {u.rank === 1 ? (
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", color: "var(--color-ochre, #B18435)", fontWeight: 700 }}>
+                            <Trophy size={14} /> 1
+                          </span>
+                        ) : u.rank === 2 ? (
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", color: "var(--color-slate, #526B7A)", fontWeight: 700 }}>
+                            <Award size={14} /> 2
+                          </span>
+                        ) : u.rank === 3 ? (
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", color: "var(--color-terracotta, #B85A43)", fontWeight: 700 }}>
+                            <Medal size={14} /> 3
+                          </span>
+                        ) : (
+                          `#${u.rank}`
+                        )}
                       </td>
                       <td className={styles.userCell}>
                         <div className={styles.tableAvatar}>{u.initials}</div>

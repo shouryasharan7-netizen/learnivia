@@ -5,6 +5,7 @@ import Link from "next/link";
 import { suspendTutor, reactivateTutor, approveApplication, adminUpdateReportCard } from "../actions";
 import AdjustHoursButton from "./AdjustHoursButton";
 import RunAvailabilityAuditButton from "./RunAvailabilityAuditButton";
+import { GraduationCap, ShieldCheck, FileText, AlertTriangle, ExternalLink, Settings, Clock, Award } from "lucide-react";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -137,23 +138,24 @@ export default async function AdminTutorsPage() {
                     <td style={{ padding: "0.75rem" }}>
                       <div>
                         {tutor.user.grade ? (
-                          <div style={{ fontWeight: 700, color: "var(--color-navy)" }}>
-                            🎓 {tutor.user.grade}
+                          <div style={{ fontWeight: 700, color: "var(--color-navy)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                            <GraduationCap size={14} color="var(--wa-forest)" />
+                            {tutor.user.grade}
                             {tutor.user.curriculum ? ` (${tutor.user.curriculum})` : ""}
                           </div>
                         ) : tutor.school === "Learnivia Core Team" ? (
-                          <div style={{ fontWeight: 700, color: "var(--color-navy)" }}>
-                            🛡️ Core Team Educator
+                          <div style={{ fontWeight: 700, color: "var(--color-navy)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                            <ShieldCheck size={14} color="var(--wa-forest)" /> Core Team Educator
                           </div>
                         ) : (
-                          <div style={{ fontWeight: 600, color: "var(--color-navy)" }}>
-                            🎓 {tutor.school || "Student Tutor"}
+                          <div style={{ fontWeight: 600, color: "var(--color-navy)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                            <GraduationCap size={14} color="var(--wa-muted)" /> {tutor.school || "Student Tutor"}
                           </div>
                         )}
 
                         {tutor.academicScores && (
-                          <div style={{ fontSize: "0.75rem", color: "#1E3A8A", background: "#EFF6FF", border: "1px solid #DBEAFE", padding: "0.2rem 0.45rem", borderRadius: "4px", marginTop: "0.25rem", fontWeight: 700 }}>
-                            📊 Scores: {tutor.academicScores}
+                          <div style={{ fontSize: "0.75rem", color: "var(--wa-forest)", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", padding: "0.2rem 0.45rem", borderRadius: "4px", marginTop: "0.25rem", fontWeight: 600 }}>
+                            Scores: {tutor.academicScores}
                           </div>
                         )}
 
@@ -168,9 +170,9 @@ export default async function AdminTutorsPage() {
                                 display: "inline-flex",
                                 alignItems: "center",
                                 gap: "0.3rem",
-                                color: "#065F46",
-                                background: "#D1FAE5",
-                                border: "1px solid #A7F3D0",
+                                color: "var(--wa-forest)",
+                                background: "var(--wa-forest-light)",
+                                border: "1px solid var(--wa-border)",
                                 padding: "0.25rem 0.55rem",
                                 borderRadius: "6px",
                                 fontWeight: 700,
@@ -178,13 +180,13 @@ export default async function AdminTutorsPage() {
                                 textDecoration: "none",
                               }}
                             >
-                              📄 View Report Card / Transcript ↗
+                              <FileText size={13} /> View Report Card / Transcript <ExternalLink size={11} />
                             </a>
                           </div>
                         ) : (
                           <div style={{ marginTop: "0.25rem" }}>
-                            <span style={{ fontSize: "0.7rem", color: "#B45309", background: "#FEF3C7", padding: "0.15rem 0.45rem", borderRadius: "4px", fontWeight: 600 }}>
-                              ⚠️ Report Card Pending
+                            <span style={{ fontSize: "0.7rem", color: "var(--wa-ochre-hover)", background: "var(--wa-ochre-light)", border: "1px solid var(--wa-border)", padding: "0.15rem 0.45rem", borderRadius: "4px", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                              <AlertTriangle size={11} /> Report Card Pending
                             </span>
                           </div>
                         )}
@@ -201,21 +203,24 @@ export default async function AdminTutorsPage() {
                               href={`/tutor/${tutor.id}/transcript`}
                               target="_blank"
                               style={{
-                                color: "var(--color-primary)",
+                                color: "var(--wa-forest)",
                                 fontWeight: 600,
                                 textDecoration: "underline",
                                 fontSize: "0.75rem",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "0.3rem",
                               }}
                             >
-                              📜 Service Hours Record ({realVolunteerHours.toFixed(1)} hrs)
+                              <Award size={13} /> Service Hours Record ({realVolunteerHours.toFixed(1)} hrs)
                             </Link>
                           </div>
                         )}
 
                         {/* Admin Quick Report Card Attachment */}
                         <details style={{ marginTop: "0.35rem" }}>
-                          <summary style={{ fontSize: "0.7rem", color: "var(--color-primary)", cursor: "pointer", fontWeight: 600 }}>
-                            ⚙️ Attach / Edit Report Card
+                          <summary style={{ fontSize: "0.7rem", color: "var(--wa-forest)", cursor: "pointer", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                            <Settings size={12} /> Attach / Edit Report Card
                           </summary>
                           <form
                             action={adminUpdateReportCard.bind(null, tutor.id)}
@@ -302,7 +307,7 @@ export default async function AdminTutorsPage() {
                                 width: "100%",
                               }}
                             >
-                              ✓ Approve Tutor
+                              Approve Tutor
                             </button>
                           </form>
                           <Link

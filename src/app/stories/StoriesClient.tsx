@@ -2,6 +2,20 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { 
+  Sparkles, 
+  GraduationCap, 
+  UserCheck, 
+  BookOpen, 
+  Megaphone, 
+  PenTool, 
+  Clock, 
+  Search, 
+  CheckCircle2, 
+  X, 
+  Calendar, 
+  Lightbulb 
+} from "lucide-react";
 import styles from "./stories.module.css";
 import { STORIES_AND_BLOG, type ArticleOrStory } from "./data";
 
@@ -17,11 +31,11 @@ interface StoriesClientProps {
 }
 
 const CATEGORIES = [
-  { id: "ALL", label: "🌟 All Stories & Guides" },
-  { id: "STUDENT_SUCCESS", label: "🎓 Student Success" },
-  { id: "TUTOR_SPOTLIGHT", label: "🧑‍🏫 Tutor Spotlights" },
-  { id: "STUDY_GUIDE", label: "📝 Study Guides & Blog" },
-  { id: "COMMUNITY_NEWS", label: "📢 Platform News" },
+  { id: "ALL", label: "All Stories & Guides" },
+  { id: "STUDENT_SUCCESS", label: "Student Success" },
+  { id: "TUTOR_SPOTLIGHT", label: "Tutor Spotlights" },
+  { id: "STUDY_GUIDE", label: "Study Guides & Blog" },
+  { id: "COMMUNITY_NEWS", label: "Platform News" },
 ] as const;
 
 export default function StoriesClient({ initialDbStories }: StoriesClientProps) {
@@ -188,8 +202,9 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
         <a
           href="#share-story"
           className={styles.shareActionBtn}
+          style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
         >
-          ✍️ Share Your Story
+          <PenTool size={14} /> Share Your Story
         </a>
       </div>
 
@@ -220,7 +235,9 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
                   {featuredArticle.badge}
                 </span>
               </div>
-              <span className={styles.readTime}>⏱️ {featuredArticle.readTime}</span>
+              <span className={styles.readTime} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                <Clock size={13} /> {featuredArticle.readTime}
+              </span>
             </div>
 
             <h2 className={styles.featuredTitle}>{featuredArticle.title}</h2>
@@ -248,7 +265,9 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
         <section aria-label="Articles list">
           {gridArticles.length === 0 ? (
             <div style={{ textAlign: "center", padding: "4rem 1rem", background: "#FFFFFF", borderRadius: "1.25rem", border: "1px solid #E2E8F0" }}>
-              <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>🔍</div>
+              <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: "50%", background: "var(--bg-canvas, #F4F0E8)", color: "var(--text-muted, #66716A)", margin: "0 auto 1rem auto" }}>
+                <Search size={26} />
+              </div>
               <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#1E293B" }}>No matching stories found</h3>
               <p style={{ color: "#64748B", marginTop: "0.5rem" }}>
                 Try searching for different keywords or clear your category filter.
@@ -361,9 +380,11 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
           </p>
 
           {submissionSuccess ? (
-            <div style={{ background: "rgba(14, 131, 69, 0.2)", border: "1.5px solid #0E8345", borderRadius: "1rem", padding: "2rem", maxWidth: 540, margin: "0 auto" }}>
-              <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🎉</div>
-              <h3 style={{ color: "#FFFFFF", fontSize: "1.25rem", fontWeight: 700 }}>Thank You for Sharing!</h3>
+            <div style={{ background: "rgba(35, 75, 59, 0.08)", border: "1.5px solid var(--color-forest, #234B3B)", borderRadius: "1rem", padding: "2rem", maxWidth: 540, margin: "0 auto", textAlign: "center" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 48, height: 48, borderRadius: "50%", background: "var(--color-forest, #234B3B)", color: "#FBFAF7", margin: "0 auto 0.75rem auto" }}>
+                <CheckCircle2 size={24} />
+              </div>
+              <h3 style={{ color: "var(--text-ink, #1E2722)", fontSize: "1.25rem", fontWeight: 700 }}>Thank You for Sharing!</h3>
               <p style={{ color: "#E2E8F0", marginTop: "0.5rem", fontSize: "0.95rem" }}>
                 Your story has been submitted for moderation review. Once verified by our safety team, it will appear in our community voices!
               </p>
@@ -453,7 +474,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
               onClick={() => setActiveArticle(null)}
               aria-label="Close reader"
             >
-              ✕
+              <X size={18} />
             </button>
 
             <span
@@ -480,8 +501,14 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
                   </div>
                 </div>
               </div>
-              <div style={{ color: "#64748B", fontSize: "0.85rem", fontWeight: 500 }}>
-                📅 {activeArticle.publishedDate} • ⏱️ {activeArticle.readTime}
+              <div style={{ color: "#64748B", fontSize: "0.85rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                  <Calendar size={13} /> {activeArticle.publishedDate}
+                </span>
+                <span>•</span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                  <Clock size={13} /> {activeArticle.readTime}
+                </span>
               </div>
             </div>
 
@@ -493,8 +520,8 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
             {activeArticle.keyTakeaways && activeArticle.keyTakeaways.length > 0 && (
               <div className={styles.takeawaysCard}>
-                <div className={styles.takeawaysTitle}>
-                  <span>💡</span> Key Takeaways & Action Points
+                <div className={styles.takeawaysTitle} style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <Lightbulb size={16} /> Key Takeaways & Action Points
                 </div>
                 <ul className={styles.takeawaysList}>
                   {activeArticle.keyTakeaways.map((point, idx) => (

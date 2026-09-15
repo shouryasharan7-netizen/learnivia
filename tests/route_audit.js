@@ -28,12 +28,12 @@ async function checkRoutes() {
     ROUTES.auth.forgotPassword,
   ];
 
-  console.log(`Auditing ${routesToTest.length} primary routes on http://localhost:3000...`);
+  console.log(`Auditing ${routesToTest.length} primary routes on http://127.0.0.1:3000...`);
   let failures = 0;
 
   for (const route of routesToTest) {
     try {
-      const res = await fetch(`http://localhost:3000${route}`, { method: "HEAD" });
+      const res = await fetch(`http://127.0.0.1:3000${route}`, { method: "HEAD" });
       // 200, 307 (redirect for auth), etc. are valid, but 404 or 500 is failure
       if (res.status === 404 || res.status >= 500) {
         console.error(`❌ Route ${route} returned HTTP ${res.status}`);

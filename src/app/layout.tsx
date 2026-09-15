@@ -1,20 +1,29 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
+import { Source_Serif_4, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { AppShell } from "@/components/workspace/AppShell";
 
-const sans = Plus_Jakarta_Sans({
+const sans = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const serif = Newsreader({
+const serif = Source_Serif_4({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-serif",
   display: "swap",
   style: ["normal", "italic"],
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -38,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
       <body className={sans.className}>
         <Providers>
           <AppShell>

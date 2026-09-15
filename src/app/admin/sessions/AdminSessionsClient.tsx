@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { adminUpdateBookingStatus, adminCancelWorkshop } from "../actions";
 import { getMeetingUrls } from "@/lib/meetingUrl";
+import { CheckCircle2, XCircle, Video, Trash2 } from "lucide-react";
 
 interface BookingItem {
   id: string;
@@ -99,9 +100,13 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
             marginBottom: "1.5rem",
             fontWeight: 600,
             fontSize: "0.875rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
           }}
         >
-          ✓ {toastMsg}
+          <CheckCircle2 size={16} aria-hidden="true" />
+          <span>{toastMsg}</span>
         </div>
       )}
 
@@ -210,7 +215,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                               }}
                               title="Mark session completed and credit tutor hours"
                             >
-                              ✓ Complete
+                              Complete
                             </button>
                           )}
                           {b.status === "COMPLETED" && !b.hoursCredited && (
@@ -230,7 +235,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                               }}
                               title="Verify student attendance and credit tutor volunteer hours"
                             >
-                              ✓ Verify &amp; Credit Hours
+                              Verify &amp; Credit Hours
                             </button>
                           )}
                           {b.status !== "CANCELED" && (
@@ -250,7 +255,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                               }}
                               title="Cancel session"
                             >
-                              ❌ Cancel
+                              Cancel
                             </button>
                           )}
                         </div>
@@ -312,9 +317,10 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             href={activeUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={{ color: "#2563EB", fontWeight: 600, textDecoration: "underline" }}
+                            style={{ color: "var(--wa-forest)", fontWeight: 600, textDecoration: "underline", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}
                           >
-                            Open Zoom 🎥
+                            <Video size={13} aria-hidden="true" />
+                            <span>Open Zoom</span>
                           </a>
                         ) : (
                           "—"
@@ -332,12 +338,16 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             padding: "0.25rem 0.55rem",
                             borderRadius: "6px",
                             fontSize: "0.75rem",
-                            fontWeight: 700,
+                            fontWeight: 600,
                             cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.3rem",
                           }}
                           title="Cancel and remove this workshop"
                         >
-                          🗑️ Delete
+                          <Trash2 size={13} aria-hidden="true" />
+                          <span>Delete</span>
                         </button>
                       </td>
                     </tr>

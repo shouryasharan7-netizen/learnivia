@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-user";
 import { revalidatePath } from "next/cache";
+import { Trash2, BookOpen } from "lucide-react";
 
 async function togglePublishStory(id: string, currentStatus: boolean) {
   "use server";
@@ -40,10 +41,10 @@ export default async function AdminStoriesPage() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
         <div>
-          <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "var(--color-navy)", margin: 0 }}>
+          <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", fontWeight: 700, color: "var(--wa-ink)", margin: 0 }}>
             Stories Management
           </h1>
-          <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", margin: "0.25rem 0 0 0" }}>
+          <p style={{ color: "var(--wa-muted)", fontSize: "0.9rem", margin: "0.25rem 0 0 0" }}>
             Real-time stories and testimonials submitted by the community. Mock stories have been removed.
           </p>
         </div>
@@ -52,29 +53,35 @@ export default async function AdminStoriesPage() {
             <button
               type="submit"
               style={{
-                background: "white",
-                color: "var(--color-error)",
-                border: "1px solid var(--color-error)",
+                background: "var(--wa-white)",
+                color: "var(--wa-terracotta)",
+                border: "1px solid var(--wa-border)",
                 padding: "0.5rem 1rem",
-                borderRadius: "8px",
-                fontWeight: 700,
+                borderRadius: "6px",
+                fontWeight: 600,
                 fontSize: "0.85rem",
                 cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
               }}
             >
-              🗑️ Delete All Stories
+              <Trash2 size={13} aria-hidden="true" />
+              <span>Delete All Stories</span>
             </button>
           </form>
         )}
       </div>
 
       {stories.length === 0 ? (
-        <div style={{ background: "white", padding: "3.5rem 2rem", borderRadius: "1rem", textAlign: "center", border: "1px solid var(--color-border)" }}>
-          <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>✨</div>
-          <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--color-navy)", marginBottom: "0.5rem" }}>
+        <div style={{ background: "var(--wa-white)", padding: "3.5rem 2rem", borderRadius: "8px", textAlign: "center", border: "1px solid var(--wa-border)" }}>
+          <div style={{ marginBottom: "0.75rem", color: "var(--wa-forest)", display: "flex", justifyContent: "center" }}>
+            <BookOpen size={32} aria-hidden="true" />
+          </div>
+          <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.2rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "0.5rem" }}>
             All Stories Removed
           </h3>
-          <p style={{ color: "var(--color-text-muted)", maxWidth: "480px", margin: "0 auto", fontSize: "0.9rem" }}>
+          <p style={{ color: "var(--wa-muted)", maxWidth: "480px", margin: "0 auto", fontSize: "0.9rem" }}>
             All mock and draft stories have been completely purged from the system. As authentic learners and tutors share real-time feedback, they will appear here.
           </p>
         </div>

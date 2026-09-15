@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BookOpen, Wrench, FileCheck, ShieldCheck, ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -11,28 +12,28 @@ const RESOURCE_SECTIONS = [
     title: "Study Guides & Cheat Sheets",
     description: "Free K–10 study guides, formula sheets, and subject summaries across Mathematics, Sciences, Reading & Writing, and Social Studies.",
     href: "/resources/study-guides",
-    icon: "📚",
+    icon: BookOpen,
     tag: "High Impact",
   },
   {
     title: "Interactive Tutor Tools",
     description: "Collaborative whiteboard, session timers, equation editors, and icebreaker question prompts for live sessions.",
     href: "/resources/tools",
-    icon: "🛠️",
+    icon: Wrench,
     tag: "Live Session",
   },
   {
     title: "Official Volunteer Transcript",
     description: "View and print your official certificate and verified hours ledger for college and scholarship applications.",
     href: "/tutor/transcript",
-    icon: "📜",
+    icon: FileCheck,
     tag: "Certification",
   },
   {
     title: "Safeguarding & Session Etiquette",
     description: "Safety guidelines, video session standards, and incident reporting protocols for all tutors and learners.",
     href: "/safety",
-    icon: "🛡️",
+    icon: ShieldCheck,
     tag: "Safety",
   },
 ];
@@ -65,17 +66,24 @@ export default function ResourcesPage() {
         </div>
 
         <div className={styles.grid}>
-          {RESOURCE_SECTIONS.map((res) => (
-            <Link key={res.title} href={res.href} className={styles.card}>
-              <div className={styles.cardTop}>
-                <span className={styles.icon} aria-hidden="true">{res.icon}</span>
-                <span className={styles.tag}>{res.tag}</span>
-              </div>
-              <h2 className={styles.cardTitle}>{res.title}</h2>
-              <p className={styles.cardDesc}>{res.description}</p>
-              <span className={styles.cardArrow}>Explore resource →</span>
-            </Link>
-          ))}
+          {RESOURCE_SECTIONS.map((res) => {
+            const IconComponent = res.icon;
+            return (
+              <Link key={res.title} href={res.href} className={styles.card}>
+                <div className={styles.cardTop}>
+                  <span className={styles.icon} aria-hidden="true">
+                    <IconComponent size={24} />
+                  </span>
+                  <span className={styles.tag}>{res.tag}</span>
+                </div>
+                <h2 className={styles.cardTitle}>{res.title}</h2>
+                <p className={styles.cardDesc}>{res.description}</p>
+                <span className={styles.cardArrow} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                  Explore resource <ArrowRight size={13} />
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
         <div className={styles.tipsSection}>

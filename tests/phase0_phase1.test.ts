@@ -280,9 +280,19 @@ test("Phase 1 - Design Tokens: CSS variables integrity & accessibility rules", (
 
   const css = fs.readFileSync(cssPath, "utf-8");
 
-  // Forest green brand tokens
-  assert.ok(css.includes("#1B4D3E"), "Forest green primary token (#1B4D3E) must exist");
-  assert.ok(css.includes("#FAF8F5"), "Warm ivory paper background token (#FAF8F5) must exist");
+  // Learning Commons exact color tokens (#234B3B, #F4F0E8, #FBFAF7, #D9D3C8, #B85A43, #B18435, #526B7A)
+  assert.ok(css.includes("#234B3B"), "Forest green primary token (#234B3B) must exist");
+  assert.ok(css.includes("#F4F0E8"), "Warm paper background token (#F4F0E8) must exist");
+  assert.ok(css.includes("#FBFAF7"), "White paper surface token (#FBFAF7) must exist");
+  assert.ok(css.includes("#D9D3C8"), "Hairline border token (#D9D3C8) must exist");
+  assert.ok(css.includes("#B85A43"), "Terracotta accent token (#B85A43) must exist");
+  assert.ok(css.includes("#B18435"), "Ochre accent token (#B18435) must exist");
+  assert.ok(css.includes("#526B7A"), "Slate blue token (#526B7A) must exist");
+
+  // Typography definitions (Source Serif 4, IBM Plex Sans, IBM Plex Mono)
+  assert.ok(css.includes("IBM Plex Sans"), "IBM Plex Sans interface font must be configured");
+  assert.ok(css.includes("Source Serif 4"), "Source Serif 4 display font must be configured");
+  assert.ok(css.includes("IBM Plex Mono"), "IBM Plex Mono technical font must be configured");
 
   // Focus ring & accessibility tokens
   assert.ok(css.includes("--focus-ring"), "Accessible visible focus ring token must exist");
@@ -292,9 +302,30 @@ test("Phase 1 - Design Tokens: CSS variables integrity & accessibility rules", (
     "prefers-reduced-motion media query must be respected"
   );
 
-  // Radius token bounds (8-12px design rule)
+  // Radius token bounds (8-12px deliberate geometry)
   assert.ok(css.includes("--wa-radius-sm:      8px") || css.includes("--wa-radius-sm: 8px"), "--wa-radius-sm must be 8px");
   assert.ok(css.includes("--wa-radius-lg:      12px") || css.includes("--wa-radius-lg: 12px"), "--wa-radius-lg must be 12px");
+});
+
+test("Phase 1 - Launch Blocker Resolutions (B1, B4, B5)", () => {
+  // B1: Middleware public paths
+  const middlewarePath = path.join(PROJECT_ROOT, "src", "middleware.ts");
+  const middlewareCode = fs.readFileSync(middlewarePath, "utf-8");
+  assert.ok(middlewareCode.includes('"/forgot-password"'), "/forgot-password must be in publicPaths");
+  assert.ok(middlewareCode.includes('"/reset-password"'), "/reset-password must be in publicPaths");
+  assert.ok(middlewareCode.includes('"/verify-email"'), "/verify-email must be in publicPaths");
+  assert.ok(middlewareCode.includes('"/safety/report"'), "/safety/report must be in publicPaths");
+
+  // B5: Tutor availability anchor
+  const tutorPath = path.join(APP_DIR, "tutor", "page.tsx");
+  const tutorCode = fs.readFileSync(tutorPath, "utf-8");
+  assert.ok(tutorCode.includes('id="availability"'), 'Tutor workspace must define id="availability" section');
+
+  // B4: Canonical hours helper
+  const tutorHoursPath = path.join(PROJECT_ROOT, "src", "lib", "tutorHours.ts");
+  assert.ok(fs.existsSync(tutorHoursPath), "src/lib/tutorHours.ts helper must exist");
+  const tutorHoursCode = fs.readFileSync(tutorHoursPath, "utf-8");
+  assert.ok(tutorHoursCode.includes("export async function getVerifiedServiceHours"), "getVerifiedServiceHours must be exported");
 });
 
 test("Phase 2 - Learner Dashboard Architecture & Zero Gamification", () => {
@@ -311,6 +342,50 @@ test("Phase 2 - Learner Dashboard Architecture & Zero Gamification", () => {
   assert.ok(code.includes("NextActionPanel"), "NextActionPanel must be rendered");
   assert.ok(code.includes("UpcomingSessionCard"), "UpcomingSessionCard must be rendered");
   assert.ok(code.includes("TruthfulSummary"), "Truthful academic metrics summary must be rendered");
+  assert.ok(code.includes("StudentAttendancePrompt"), "StudentAttendancePrompt must be rendered for session confirmation");
+  assert.ok(code.includes("QuickActions"), "QuickActions must be rendered");
+  assert.ok(code.includes("LearningPaths"), "LearningPaths must be rendered");
+  assert.ok(code.includes("ActivityTimeline"), "ActivityTimeline must be rendered");
+  assert.ok(code.includes("ChildProfileSection"), "ChildProfileSection must be rendered for guardian oversight");
+
+  // Verify Find Tutors ranking and timezone conversion
+  const findPath = path.join(APP_DIR, "find", "page.tsx");
+  assert.ok(fs.existsSync(findPath), "find/page.tsx must exist");
+  const findCode = fs.readFileSync(findPath, "utf-8");
+  assert.ok(findCode.includes("bCompleted - aCompleted"), "Tutors must be ranked by completed classes count");
+
+  const slotSelectorPath = path.join(APP_DIR, "tutor", "[id]", "BookingSlotSelector.tsx");
+  assert.ok(fs.existsSync(slotSelectorPath), "BookingSlotSelector.tsx must exist");
+  const slotSelectorCode = fs.readFileSync(slotSelectorPath, "utf-8");
+  assert.ok(slotSelectorCode.includes("Intl.DateTimeFormat"), "BookingSlotSelector must use Intl for local timezone conversion");
+});
+
+test("Phase 3 - Tutor Workspace & Safeguarding Training Gate", () => {
+  const tutorPath = path.join(APP_DIR, "tutor", "page.tsx");
+  const trainingPath = path.join(APP_DIR, "tutor", "training", "page.tsx");
+
+  assert.ok(fs.existsSync(tutorPath), "tutor/page.tsx must exist");
+  assert.ok(fs.existsSync(trainingPath), "tutor/training/page.tsx must exist");
+
+  const tutorCode = fs.readFileSync(tutorPath, "utf-8");
+  const trainingCode = fs.readFileSync(trainingPath, "utf-8");
+
+  // Safeguarding Training Gate: uncompleted tutors redirected to training
+  assert.ok(
+    tutorCode.includes("passedModules < 5") && tutorCode.includes("ROUTES.tutor.training"),
+    "Approved tutors with <5 passed modules must be gated and redirected to /tutor/training"
+  );
+
+  // Authoritative canonical volunteer hours escrow
+  assert.ok(
+    tutorCode.includes("tutor.volunteerHours > 0 ? tutor.volunteerHours"),
+    "Tutor workspace must derive hours from canonical database escrow ledger"
+  );
+
+  // Zero emojis in training feedback & controls
+  assert.ok(!trainingCode.includes('isCompleted ? "✅"'), "Module completion icon must be Lucide icon not emoji");
+  assert.ok(!trainingCode.includes('"Try Again 🔄"'), "Quiz retry button must not contain emoji");
+  assert.ok(!trainingCode.includes('"✅ Module completed!"'), "Completion message must not contain emoji");
 });
 
 test("Phase 4 - Tutor & Admin Workspaces: Clean Editorial UI & Zero Emoji Controls", () => {

@@ -25,7 +25,7 @@ function getInitials(name: string) {
 }
 
 function getAvatarColor(name: string) {
-  const colors = ["#2D6A4F", "#C9922A", "#1E3A5F", "#C1694F", "#4A9172", "#8B5E10"];
+  const colors = ["#234B3B", "#B85A43", "#B18435", "#526B7A", "#2F614D", "#986E2A"];
   const idx = name.charCodeAt(0) % colors.length;
   return colors[idx];
 }
@@ -353,23 +353,23 @@ export default async function SessionsPage({ searchParams }: Props) {
         {/* Content Section: Workshops & Tutors */}
         {totalMatches === 0 ? (
           <div className={styles.sessionsGrid}>
-            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3.5rem 1.5rem", background: "#FFFFFF", borderRadius: 14, border: "1px solid #DDD8D0", boxShadow: "0 1px 4px rgba(28,26,23,0.05)" }}>
-              <p style={{ fontSize: "1.1rem", fontWeight: 600, color: "#1C1A17", fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)" }}>
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3.5rem 1.5rem", background: "var(--wa-white)", borderRadius: 12, border: "1px solid var(--wa-border)", boxShadow: "var(--wa-shadow-sm)" }}>
+              <p style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--wa-ink)", fontFamily: "var(--font-serif)" }}>
                 No sessions or tutors currently matched for {activeSubject !== "All" ? activeSubject : "your search"} ({activeCurriculum !== "All" ? `${activeCurriculum} Curriculum` : "All Curricula"})
               </p>
-              <p style={{ color: "#7A7169", marginTop: "0.5rem", fontSize: "0.875rem" }}>
+              <p style={{ color: "var(--wa-muted)", marginTop: "0.5rem", fontSize: "0.875rem" }}>
                 Try switching the curriculum filter or clearing your active search criteria.
               </p>
               <div style={{ marginTop: "1.25rem", display: "flex", gap: "0.75rem", justifyContent: "center" }}>
                 <Link
                   href="/sessions?allGrades=true"
-                  style={{ background: "#2D6A4F", color: "#FFF", padding: "0.6rem 1.35rem", borderRadius: 10, fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}
+                  style={{ background: "var(--wa-forest)", color: "var(--wa-white)", padding: "0.6rem 1.35rem", borderRadius: 8, fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}
                 >
                   View All Sessions
                 </Link>
                 <Link
                   href="/find"
-                  style={{ background: "#FAF8F5", color: "#3D3831", border: "1.5px solid #DDD8D0", padding: "0.6rem 1.35rem", borderRadius: 10, fontWeight: 600, fontSize: "0.875rem", textDecoration: "none" }}
+                  style={{ background: "var(--wa-paper)", color: "var(--wa-ink)", border: "1px solid var(--wa-border)", padding: "0.6rem 1.35rem", borderRadius: 8, fontWeight: 600, fontSize: "0.875rem", textDecoration: "none" }}
                 >
                   Browse All Mentors
                 </Link>
@@ -382,8 +382,8 @@ export default async function SessionsPage({ searchParams }: Props) {
             {showWorkshops && workshops.length > 0 && (
               <section aria-label="Interactive Group Workshops">
                 <div style={{ marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <Video size={18} color="#2D6A4F" />
-                  <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "#1C1A17", margin: 0, fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)" }}>
+                  <Video size={18} color="var(--wa-forest)" />
+                  <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--wa-ink)", margin: 0, fontFamily: "var(--font-serif)" }}>
                     Interactive Group Workshops ({workshops.length})
                   </h2>
                 </div>
@@ -486,8 +486,8 @@ export default async function SessionsPage({ searchParams }: Props) {
               <section aria-label="1-on-1 Verified Peer Tutors">
                 <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <Users size={18} color="#2D6A4F" />
-                    <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "#1C1A17", margin: 0, fontFamily: "var(--font-serif, 'Newsreader', Georgia, serif)" }}>
+                    <Users size={18} color="var(--wa-forest)" />
+                    <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--wa-ink)", margin: 0, fontFamily: "var(--font-serif)" }}>
                       1-on-1 Tutors Available ({tutors.length})
                     </h2>
                   </div>

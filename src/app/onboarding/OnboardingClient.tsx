@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { BookOpen, GraduationCap, MessageSquare, HeartHandshake, ShieldCheck, Smile } from "lucide-react";
 import styles from "./page.module.css";
 import { completeOnboarding } from "./actions";
 
@@ -211,15 +212,15 @@ export default function OnboardingClient() {
             
             <div className={styles.featuresBox}>
               <div className={styles.featureItem}>
-                <span className={styles.icon}>📚</span>
+                <span className={styles.icon}><BookOpen size={22} color="var(--color-forest, #234B3B)" /></span>
                 <p>Participate in small-group tutoring sessions, 1:1 homework help, and more.</p>
               </div>
               <div className={styles.featureItem}>
-                <span className={styles.icon}>🎓</span>
+                <span className={styles.icon}><GraduationCap size={22} color="var(--color-forest, #234B3B)" /></span>
                 <p>Become a tutor to earn volunteer hours, build your portfolio, and make an impact.</p>
               </div>
               <div className={styles.featureItem}>
-                <span className={styles.icon}>💬</span>
+                <span className={styles.icon}><MessageSquare size={22} color="var(--color-forest, #234B3B)" /></span>
                 <p>Grow and learn with peers from all over the world.</p>
               </div>
             </div>
@@ -237,21 +238,21 @@ export default function OnboardingClient() {
             
             <div className={styles.guidelinesBox}>
               <div className={styles.guideItem}>
-                <span className={styles.iconPink}>🤝</span>
+                <span className={styles.iconPink}><HeartHandshake size={24} color="var(--color-terracotta, #B85A43)" /></span>
                 <div>
                   <h3>Be respectful.</h3>
                   <p>Think about how your words and actions will affect others, and keep interactions classroom-appropriate.</p>
                 </div>
               </div>
               <div className={styles.guideItem}>
-                <span className={styles.iconGreen}>🛡️</span>
+                <span className={styles.iconGreen}><ShieldCheck size={24} color="var(--color-forest, #234B3B)" /></span>
                 <div>
                   <h3>Be safe.</h3>
                   <p>Remember to keep your personal boundaries—avoid sharing your personal contact information.</p>
                 </div>
               </div>
               <div className={styles.guideItem}>
-                <span className={styles.iconBlue}>😊</span>
+                <span className={styles.iconBlue}><Smile size={24} color="var(--color-slate, #526B7A)" /></span>
                 <div>
                   <h3>Be kind.</h3>
                   <p>Find ways to help out; whether that's pointing another learner in the right direction, or giving a tutor helpful feedback!</p>

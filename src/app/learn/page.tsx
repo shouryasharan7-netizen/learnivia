@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import Link from "next/link";
+import { Calendar, CheckCircle2, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 import { enrollInWorkshop } from "@/app/actions/workshops";
@@ -101,9 +102,12 @@ export default async function LearnPage() {
                       {w.description}
                     </p>
 
-                    <div style={{ fontSize: "0.85rem", color: "var(--color-primary)", fontWeight: 600 }}>
-                      📅 {new Date(w.startTime).toLocaleDateString()} at{" "}
-                      {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    <div style={{ fontSize: "0.85rem", color: "var(--color-primary)", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                      <Calendar size={14} />
+                      <span>
+                        {new Date(w.startTime).toLocaleDateString()} at{" "}
+                        {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      </span>
                     </div>
 
                     <div style={{ marginTop: "auto" }}>
@@ -112,12 +116,14 @@ export default async function LearnPage() {
                           Sign In to Reserve Seat
                         </Link>
                       ) : isEnrolled ? (
-                        <div className={styles.enrolledBadge}>✓ Seat Reserved (View in Dashboard)</div>
+                        <div className={styles.enrolledBadge} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                          <CheckCircle2 size={13} /> Seat Reserved (View in Dashboard)
+                        </div>
                       ) : seatsLeft > 0 ? (
                         <form action={enrollInWorkshop}>
                           <input type="hidden" name="workshopId" value={w.id} />
-                          <button type="submit" className={styles.rsvpBtn}>
-                            RSVP Free Seat →
+                          <button type="submit" className={styles.rsvpBtn} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.35rem" }}>
+                            RSVP Free Seat <ArrowRight size={13} />
                           </button>
                         </form>
                       ) : (

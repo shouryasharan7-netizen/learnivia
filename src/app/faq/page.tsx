@@ -1,19 +1,20 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Users, BookOpen, GraduationCap, Settings, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "FAQ — Learnivia Free K–10 Tutoring",
+  title: "Frequently Asked Questions — Learnivia",
   description: "Frequently asked questions about Learnivia: free 1-on-1 Zoom tutoring for K–10 students, volunteer tutor requirements, parent safeguarding, learning preferences, and volunteer hours.",
 };
 
 const FAQ_SECTIONS = [
   {
     category: "For Parents & Guardians",
-    emoji: "👨‍👩‍👧",
+    icon: Users,
     questions: [
       {
         q: "Is Learnivia really 100% free?",
-        a: "Yes — completely free, with no hidden fees, subscriptions, or credit card required. Learnivia runs on a peer-volunteer model: students help students in exchange for verified volunteer hours.",
+        a: "Yes — completely free, with no hidden fees, subscriptions, or credit card required. Learnivia runs on a peer-volunteer model: student mentors help younger peers in exchange for verified community service hours.",
       },
       {
         q: "Who manages my child's account?",
@@ -21,25 +22,25 @@ const FAQ_SECTIONS = [
       },
       {
         q: "Are sessions safe for my child?",
-        a: "Yes. All tutors are reviewed and approved by our admin team before hosting sessions. Sessions are private, 1-on-1 Zoom calls. Learnivia's safeguarding policy prohibits any off-platform communication between tutors and students.",
+        a: "Yes. All tutors are reviewed and approved by our admin team before hosting sessions. Sessions are private, 1-on-1 Zoom calls with waiting rooms enabled. Learnivia's safeguarding policy strictly prohibits any off-platform contact between tutors and students.",
       },
       {
         q: "Are sessions recorded?",
-        a: "Sessions are not recorded by default. Session duration is logged for volunteer-hour verification purposes only. Any recording would require your explicit written consent.",
+        a: "Sessions are not recorded by default. Session duration is logged for volunteer-hour verification purposes only. Any recording would require explicit written consent from the parent or guardian.",
       },
       {
         q: "How do I find a tutor for my child's grade?",
-        a: "Go to /find, select your child's grade (K–10), then choose the subject. Only tutors approved for that specific grade band will appear — so a Grade 4 student will only see tutors approved for Grades 3–5.",
+        a: "Go to Find a Tutor (/find), select your child's grade band (K–10), then choose the subject. Only tutors approved for that specific grade band will appear in results.",
       },
       {
         q: "What if I have a concern about a session?",
-        a: "Every session has a 'Report a Concern' option. Reports are reviewed promptly by our admin team. Tutors found violating our policies are suspended immediately.",
+        a: "Every session card features a direct 'Report a Concern' option. Reports are reviewed by our moderation staff within 24 hours. Tutors found violating safety standards are suspended immediately.",
       },
     ],
   },
   {
     category: "For Students",
-    emoji: "📚",
+    icon: BookOpen,
     questions: [
       {
         q: "What grades and subjects does Learnivia cover?",
@@ -47,67 +48,63 @@ const FAQ_SECTIONS = [
       },
       {
         q: "How do I book a session?",
-        a: "Sign in, go to 'Find a Tutor', select your grade and subject, choose a tutor you'd like to work with, pick an available time slot, describe the topic or help you need, and confirm your booking. The Zoom link will appear in your dashboard.",
+        a: "Sign in, navigate to 'Find a Tutor', select your grade and subject, choose a tutor you would like to work with, pick an available time slot, describe your homework topic, and confirm your booking. The Zoom link will appear in your dashboard.",
       },
       {
         q: "How do I join a session on Zoom?",
-        a: "The Zoom join button becomes active 15 minutes before your session starts. You'll find it on your session detail page in your dashboard. The link is only visible to you and your tutor.",
+        a: "The Zoom join button becomes active 15 minutes before your session begins. You can launch it directly from your session details page in your dashboard.",
       },
       {
         q: "Do I need any special software?",
-        a: "You need the Zoom app (free) installed on your device. Your tutor will share their screen, use a digital whiteboard, and walk through problems step by step.",
+        a: "You simply need the Zoom application (free) installed on your laptop, tablet, or desktop. Your tutor will share their screen, use an interactive whiteboard, and guide you through problems.",
       },
       {
-        q: "Does my child need a diagnosis to access learning support?",
-        a: "Absolutely not. Our Learning Support sessions are for any student who benefits from visual explanations, step-by-step pacing, extra processing time, frequent breaks, or repetition. No diagnosis or label is required.",
+        q: "Does my child need a formal diagnosis to access learning support?",
+        a: "No, never. Our Learning Support sessions are open to any student who benefits from visual diagrams, step-by-step explanations, extra processing time, frequent breaks, or repetition. No diagnosis or documentation is ever required.",
       },
     ],
   },
   {
     category: "For Volunteer Tutors",
-    emoji: "🎓",
+    icon: GraduationCap,
     questions: [
       {
-        q: "Who can apply to be a tutor?",
-        a: "High school students (Grade 11+) and university students who excel in K–10 subjects can apply. You'll need to provide academic credentials (e.g., report card or transcript) and complete our 5-module training before your first session.",
+        q: "Who can apply to be a volunteer tutor?",
+        a: "High school students (Grade 11+) and university students who excel in K–10 academic subjects can apply. You will need to provide an academic report card or marksheet and complete our 5 mandatory safeguarding modules before your first session.",
       },
       {
-        q: "What is the tutor training?",
-        a: "All approved tutors complete 5 short training modules: (1) Tutoring Basics & Encouragement, (2) Supporting Students Who Learn Differently, (3) Online Zoom Best Practices, (4) Safety, Boundaries & Safeguarding, and (5) Volunteer Hours & Verification Rules.",
+        q: "What does tutor training entail?",
+        a: "All approved tutors complete 5 concise modules: (1) Tutoring Basics & Encouragement, (2) Supporting Diverse Learning Styles, (3) Online Zoom Best Practices, (4) Safety, Boundaries & Safeguarding, and (5) Volunteer Hours & Verification Rules.",
       },
       {
         q: "How are volunteer hours tracked?",
-        a: "Every completed session is automatically logged. The system records start time, end time, and attendance. Only sessions where you were present and the student attended count toward verified volunteer hours.",
+        a: "Every completed session is automatically logged in our authoritative database escrow. The system records verified timestamps and student attendance. Only sessions where both parties were present count toward certified volunteer hours.",
       },
       {
         q: "How do I get my volunteer service transcript?",
-        a: "Go to your Tutor Dashboard → Volunteer Transcript. You can download a verified service record with unique session verification IDs suitable for school advisors, community service programs, and college portfolios.",
+        a: "Navigate to your Tutor Workspace → Volunteer Transcript. You can download an official verified service record containing verifiable cryptographic session IDs for school advisors, honor societies, and college admissions.",
       },
       {
         q: "Can I choose my own schedule and subjects?",
-        a: "Yes. You set your own availability windows and choose the subjects and grade bands you want to teach. You only receive booking requests that match your approved subjects and grade levels.",
-      },
-      {
-        q: "What happens if a student doesn't show up?",
-        a: "If a student does not join the session within 10 minutes, you may end the session and report a no-show. That session will not count against your hours, and the admin team will follow up with the student.",
+        a: "Yes. You control your weekly recurring availability windows and select the subjects and grade levels you feel confident teaching. You only receive bookings that match your selections.",
       },
     ],
   },
   {
-    category: "Platform & Technical",
-    emoji: "⚙️",
+    category: "Platform & Safety Integrity",
+    icon: Settings,
     questions: [
       {
         q: "What technology does Learnivia use?",
-        a: "Sessions take place on Zoom. Learnivia is a web application — no app download required. You can access it from any modern browser on laptop, tablet, or desktop. Mobile browsers are supported.",
+        a: "Sessions take place on private 1-on-1 Zoom video calls. Learnivia is accessible from any modern web browser on laptop, desktop, or tablet. Mobile browsers are fully responsive.",
       },
       {
-        q: "Is my personal information protected?",
-        a: "Yes. Minor learners are displayed by first name and last initial only (e.g., 'Priya K.'). Parent accounts protect children's personal details, and all minor accounts require parent/guardian setup.",
+        q: "How is student personal information protected?",
+        a: "Minor learners are displayed by first name and last initial only (e.g. 'Priya K.'). Personal contact information is never shared between learners and tutors.",
       },
       {
         q: "What if I forget my password?",
-        a: "Use the 'Forgot Password' link on the sign-in page to reset your password via email.",
+        a: "Use the 'Forgot Password' link on the sign-in page to securely receive a password reset token via your registered email.",
       },
     ],
   },
@@ -115,27 +112,27 @@ const FAQ_SECTIONS = [
 
 export default function FaqPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "#FAFAFA", fontFamily: "var(--font-body, Inter, sans-serif)" }}>
+    <main style={{ minHeight: "100vh", background: "var(--wa-paper)", fontFamily: "var(--font-sans)", color: "var(--wa-ink)" }}>
       {/* Hero */}
       <section
         style={{
-          background: "linear-gradient(135deg, #0E8345 0%, #1a6b3a 100%)",
-          padding: "4rem 1.5rem 3rem",
+          background: "var(--wa-white)",
+          padding: "4.5rem 1.5rem 3.5rem",
           textAlign: "center",
-          color: "#fff",
+          borderBottom: "1px solid var(--wa-border)",
         }}
       >
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <div
             style={{
               display: "inline-block",
-              background: "rgba(255,255,255,0.15)",
+              background: "var(--wa-paper)",
+              border: "1px solid var(--wa-border)",
               borderRadius: "999px",
-              padding: "0.35rem 1rem",
+              padding: "0.3rem 0.85rem",
               fontSize: "0.8rem",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
+              fontWeight: 600,
+              color: "var(--wa-forest)",
               marginBottom: "1rem",
             }}
           >
@@ -143,29 +140,32 @@ export default function FaqPage() {
           </div>
           <h1
             style={{
-              fontSize: "clamp(2rem, 5vw, 3rem)",
-              fontWeight: 800,
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(2.25rem, 5vw, 3.25rem)",
+              fontWeight: 700,
               margin: "0 0 1rem",
               lineHeight: 1.15,
+              color: "var(--wa-ink)",
+              letterSpacing: "-0.02em",
             }}
           >
             Everything you need to know about Learnivia
           </h1>
-          <p style={{ fontSize: "1.1rem", opacity: 0.9, maxWidth: "520px", margin: "0 auto" }}>
-            Free 1-on-1 tutoring for K–10 students. Honest answers for parents, students, and volunteer tutors.
+          <p style={{ fontSize: "1.1rem", color: "var(--wa-muted)", maxWidth: "560px", margin: "0 auto", lineHeight: 1.65 }}>
+            Free 1-on-1 peer tutoring for K–10 learners. Transparent, honest answers for parents, learners, and volunteer tutors.
           </p>
         </div>
       </section>
 
-      {/* Quick Nav */}
+      {/* Quick Category Navigation */}
       <nav
         aria-label="FAQ section navigation"
         style={{
-          background: "#fff",
-          borderBottom: "1px solid #E5E7EB",
+          background: "var(--wa-white)",
+          borderBottom: "1px solid var(--wa-border)",
           padding: "1rem 1.5rem",
           display: "flex",
-          gap: "1rem",
+          gap: "0.75rem",
           flexWrap: "wrap",
           justifyContent: "center",
         }}
@@ -178,24 +178,24 @@ export default function FaqPage() {
               display: "inline-flex",
               alignItems: "center",
               gap: "0.4rem",
-              padding: "0.5rem 1rem",
-              background: "#F3F4F6",
+              padding: "0.45rem 0.95rem",
+              background: "var(--wa-paper)",
+              border: "1px solid var(--wa-border)",
               borderRadius: "999px",
               textDecoration: "none",
-              color: "#374151",
-              fontSize: "0.875rem",
+              color: "var(--wa-ink)",
+              fontSize: "0.85rem",
               fontWeight: 600,
-              transition: "background 0.2s",
             }}
           >
-            <span>{s.emoji}</span>
+            <s.icon size={15} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
             <span>{s.category}</span>
           </a>
         ))}
       </nav>
 
       {/* FAQ Sections */}
-      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "3rem 1.5rem 5rem" }}>
+      <div style={{ maxWidth: "820px", margin: "0 auto", padding: "3.5rem 1.5rem 5rem" }}>
         {FAQ_SECTIONS.map((section) => (
           <section
             key={section.category}
@@ -206,18 +206,19 @@ export default function FaqPage() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.75rem",
+                gap: "0.6rem",
                 marginBottom: "1.5rem",
                 paddingBottom: "0.75rem",
-                borderBottom: "2px solid #0E8345",
+                borderBottom: "1px solid var(--wa-border)",
               }}
             >
-              <span style={{ fontSize: "1.5rem" }}>{section.emoji}</span>
+              <section.icon size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
               <h2
                 style={{
-                  fontSize: "1.25rem",
-                  fontWeight: 800,
-                  color: "#111827",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "1.5rem",
+                  fontWeight: 700,
+                  color: "var(--wa-ink)",
                   margin: 0,
                 }}
               >
@@ -226,119 +227,92 @@ export default function FaqPage() {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {section.questions.map((faq, idx) => (
-                <details
-                  key={idx}
+              {section.questions.map((faq) => (
+                <div
+                  key={faq.q}
                   style={{
-                    background: "#fff",
-                    border: "1px solid #E5E7EB",
-                    borderRadius: "0.75rem",
-                    overflow: "hidden",
+                    background: "var(--wa-white)",
+                    border: "1px solid var(--wa-border)",
+                    borderRadius: "8px",
+                    padding: "1.5rem",
                   }}
                 >
-                  <summary
+                  <h3
                     style={{
-                      padding: "1.25rem 1.5rem",
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "1.1rem",
                       fontWeight: 700,
-                      fontSize: "0.975rem",
-                      color: "#111827",
-                      cursor: "pointer",
-                      listStyle: "none",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "1rem",
+                      color: "var(--wa-ink)",
+                      margin: "0 0 0.5rem 0",
                     }}
                   >
-                    <span>{faq.q}</span>
-                    <span
-                      style={{
-                        flexShrink: 0,
-                        width: "24px",
-                        height: "24px",
-                        borderRadius: "50%",
-                        background: "#F0FDF4",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "1rem",
-                        color: "#0E8345",
-                        fontWeight: 800,
-                      }}
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <div
+                    {faq.q}
+                  </h3>
+                  <p
                     style={{
-                      padding: "0 1.5rem 1.25rem",
-                      color: "#374151",
-                      fontSize: "0.9375rem",
-                      lineHeight: 1.7,
-                      borderTop: "1px solid #F3F4F6",
-                      paddingTop: "1rem",
+                      color: "var(--wa-muted)",
+                      fontSize: "0.95rem",
+                      lineHeight: 1.65,
+                      margin: 0,
                     }}
                   >
                     {faq.a}
-                  </div>
-                </details>
+                  </p>
+                </div>
               ))}
             </div>
           </section>
         ))}
 
-        {/* Still have questions CTA */}
+        {/* Bottom Help Box */}
         <div
           style={{
-            background: "linear-gradient(135deg, #F0FDF4, #DCFCE7)",
-            border: "1px solid #BBF7D0",
-            borderRadius: "1rem",
-            padding: "2.5rem",
+            background: "var(--wa-white)",
+            border: "1px solid var(--wa-border)",
+            borderRadius: "8px",
+            padding: "2.5rem 2rem",
             textAlign: "center",
           }}
         >
-          <h2 style={{ fontSize: "1.375rem", fontWeight: 800, color: "#0E8345", marginBottom: "0.5rem" }}>
-            Still have questions?
-          </h2>
-          <p style={{ color: "#374151", marginBottom: "1.5rem", fontSize: "0.95rem" }}>
-            Our team is happy to help parents, students, and tutors with any questions not covered here.
+          <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.35rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "0.5rem" }}>
+            Have a question not listed here?
+          </h3>
+          <p style={{ color: "var(--wa-muted)", fontSize: "0.95rem", marginBottom: "1.5rem" }}>
+            Our team and volunteer tutors are always here to help.
           </p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <Link
-              href="/signup"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                background: "#0E8345",
-                color: "#fff",
-                padding: "0.75rem 1.75rem",
-                borderRadius: "999px",
-                textDecoration: "none",
-                fontWeight: 700,
-                fontSize: "0.9375rem",
-              }}
-            >
-              Get Started — It&apos;s Free
-            </Link>
+          <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
             <Link
               href="/find"
               style={{
+                background: "var(--wa-forest)",
+                color: "var(--wa-paper)",
+                padding: "0.65rem 1.5rem",
+                borderRadius: "6px",
+                fontWeight: 600,
+                fontSize: "0.9rem",
+                textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                background: "#fff",
-                color: "#0E8345",
-                padding: "0.75rem 1.75rem",
-                borderRadius: "999px",
-                textDecoration: "none",
-                fontWeight: 700,
-                fontSize: "0.9375rem",
-                border: "2px solid #0E8345",
+                gap: "0.35rem",
               }}
             >
-              Find a Tutor
+              Browse Tutors <ArrowRight size={15} />
             </Link>
+            <a
+              href="mailto:support@learnivia.app"
+              style={{
+                background: "var(--wa-white)",
+                color: "var(--wa-ink)",
+                border: "1px solid var(--wa-border)",
+                padding: "0.65rem 1.5rem",
+                borderRadius: "6px",
+                fontWeight: 600,
+                fontSize: "0.9rem",
+                textDecoration: "none",
+              }}
+            >
+              Email Support
+            </a>
           </div>
         </div>
       </div>

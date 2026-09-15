@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { Check } from "lucide-react";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -90,8 +91,8 @@ export default async function ProgramDetailPage({ params }: Props) {
                 <h2 className={styles.detailTitle}>What you&apos;ll get</h2>
                 <ul className={styles.outcomeList}>
                   {program.outcomes.map(o => (
-                    <li key={o} className={styles.outcomeItem}>
-                      <span aria-hidden="true">✓</span> {o}
+                    <li key={o} className={styles.outcomeItem} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <Check size={14} color="var(--color-forest, #234B3B)" style={{ flexShrink: 0 }} /> {o}
                     </li>
                   ))}
                 </ul>

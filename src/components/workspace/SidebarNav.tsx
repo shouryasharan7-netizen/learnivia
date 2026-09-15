@@ -110,7 +110,7 @@ export function SidebarNav({
             </div>
             <span
               style={{
-                fontFamily: "var(--font-serif, Newsreader, Georgia, serif)",
+                fontFamily: "var(--font-serif)",
                 fontSize: "1.375rem",
                 fontWeight: 600,
                 color: "var(--wa-ink)",

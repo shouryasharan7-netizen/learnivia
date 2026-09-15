@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { GraduationCap, Leaf, BookOpen, ShieldCheck } from "lucide-react";
+import { GraduationCap, Leaf, BookOpen, ShieldCheck, AlertTriangle } from "lucide-react";
 
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
@@ -186,8 +186,8 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
           {/* Email form */}
           <form onSubmit={handleSubmit} className={styles.emailForm} noValidate>
             {error && (
-              <div className={styles.errorBanner} role="alert" aria-live="polite">
-                <span aria-hidden="true">⚠</span> {error}
+              <div className={styles.errorBanner} role="alert" aria-live="polite" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <AlertTriangle size={15} style={{ flexShrink: 0 }} /> {error}
               </div>
             )}
 

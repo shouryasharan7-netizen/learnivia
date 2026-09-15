@@ -1,14 +1,16 @@
 .main {
   min-height: calc(100vh - 80px);
-  background-color: var(--color-bg);
-  padding-bottom: 4rem;
+  background-color: var(--wa-paper);
+  padding-bottom: 5rem;
+  font-family: var(--font-sans);
+  color: var(--wa-ink);
 }
 
 .hero {
-  background-color: white;
+  background-color: var(--wa-white);
   padding: 5rem 2rem;
   text-align: center;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--wa-border);
 }
 
 .heroContent {
@@ -24,17 +26,19 @@
 }
 
 .title {
-  color: var(--color-navy);
-  font-size: 3.5rem;
-  font-weight: 900;
+  font-family: var(--font-serif);
+  color: var(--wa-ink);
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  font-weight: 700;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
 }
 
 .subtitle {
-  color: var(--color-text-muted);
-  font-size: 1.25rem;
+  color: var(--wa-muted);
+  font-size: 1.15rem;
   line-height: 1.6;
+  max-width: 620px;
 }
 
 .contentSection {
@@ -43,56 +47,62 @@
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 3.5rem;
 }
 
 .textBlock h2 {
-  color: var(--color-navy);
-  font-size: 2.25rem;
+  font-family: var(--font-serif);
+  color: var(--wa-ink);
+  font-size: 1.75rem;
   margin-bottom: 1rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .textBlock p {
-  color: var(--color-text);
-  font-size: 1.125rem;
-  line-height: 1.7;
+  color: var(--wa-ink);
+  font-size: 1.05rem;
+  line-height: 1.75;
 }
 
 .featureList {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   list-style: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
-.featureList li {
-  color: var(--color-primary);
-  font-weight: 700;
-  font-size: 1.125rem;
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--wa-ink);
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .ctaBox {
-  background-color: var(--color-bg-alt);
-  padding: 4rem 3rem;
-  border-radius: var(--radius-2xl);
+  background-color: var(--wa-white);
+  padding: 3.5rem 2.5rem;
+  border-radius: 8px;
   text-align: center;
-  margin-top: 2rem;
-  border: 1px solid var(--color-border);
+  margin-top: 1.5rem;
+  border: 1px solid var(--wa-border);
 }
 
 .ctaBox h3 {
-  color: var(--color-navy);
-  font-size: 2rem;
-  font-weight: 800;
+  font-family: var(--font-serif);
+  color: var(--wa-ink);
+  font-size: 1.75rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 .ctaBox p {
-  color: var(--color-text-muted);
+  color: var(--wa-muted);
   margin-bottom: 2rem;
-  font-size: 1.125rem;
+  font-size: 1.05rem;
 }
 
 .btnGroup {
@@ -103,55 +113,35 @@
 }
 
 .primaryBtn {
-  background-color: var(--color-primary);
-  color: white;
-  padding: 0.875rem 2rem;
-  border-radius: var(--radius-full);
-  font-size: 1.125rem;
-  font-weight: 700;
-  transition: transform var(--transition-fast), background-color var(--transition-fast);
+  background-color: var(--wa-forest);
+  color: var(--wa-paper);
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.15s ease;
 }
 
 .primaryBtn:hover {
-  background-color: var(--color-primary-hover);
-  transform: translateY(-1px);
+  opacity: 0.9;
 }
 
 .secondaryBtn {
-  background-color: white;
-  color: var(--color-navy);
-  border: 2px solid var(--color-border-strong);
-  padding: 0.875rem 2rem;
-  border-radius: var(--radius-full);
-  font-size: 1.125rem;
-  font-weight: 700;
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  background-color: var(--wa-white);
+  color: var(--wa-ink);
+  border: 1px solid var(--wa-border);
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
 }
 
 .secondaryBtn:hover {
-  border-color: var(--color-navy);
-  transform: translateY(-1px);
-}
-
-@media (max-width: 768px) {
-  .hero {
-    padding: 3rem 1.5rem;
-  }
-  .title {
-    font-size: 2.25rem;
-  }
-  .contentSection {
-    margin-top: 2rem;
-    padding: 0 1.5rem;
-  }
-  .ctaBox {
-    padding: 2rem 1.5rem;
-  }
-  .btnGroup {
-    flex-direction: column;
-    width: 100%;
-  }
-  .primaryBtn, .secondaryBtn {
-    width: 100%;
-  }
+  background-color: var(--wa-paper);
 }

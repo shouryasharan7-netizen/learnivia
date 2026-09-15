@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { CheckCircle2, ArrowRight, ClipboardList, BookOpen, AlertTriangle, CheckSquare, Square, Check } from "lucide-react";
 import styles from "./page.module.css";
 import { submitApplication } from "./actions";
 
@@ -177,7 +178,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
           margin: "0 auto",
         }}
       >
-        <div style={{ fontSize: "3.5rem", marginBottom: "1rem" }}>🎉</div>
+        <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 64, height: 64, borderRadius: "50%", background: "rgba(35, 75, 59, 0.1)", color: "var(--color-forest, #234B3B)", margin: "0 auto 1.25rem auto" }}>
+          <CheckCircle2 size={36} />
+        </div>
         <h2 style={{ fontSize: "1.75rem", fontWeight: 800, color: "#0F172A", margin: "0 0 0.75rem" }}>
           Application Submitted Successfully!
         </h2>
@@ -196,8 +199,8 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
             textAlign: "left",
           }}
         >
-          <div style={{ fontWeight: 800, color: "#0D683B", marginBottom: "0.5rem" }}>
-            🚀 Next Step: Complete Your Required Training
+          <div style={{ fontWeight: 800, color: "#0D683B", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <ArrowRight size={16} /> Next Step: Complete Your Required Training
           </div>
           <p style={{ fontSize: "0.875rem", color: "#166534", margin: 0, lineHeight: 1.5 }}>
             While your credentials are being verified, you can complete the 5 required tutor training modules (safeguarding,
@@ -260,7 +263,7 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
         >
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ fontSize: "1.25rem" }}>📋</span>
+              <ClipboardList size={18} color="var(--color-forest, #234B3B)" />
               <strong style={{ fontSize: "1rem", color: "#0F172A" }}>Application Status:</strong>
               <span
                 style={{
@@ -304,9 +307,12 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
               fontWeight: 700,
               fontSize: "0.825rem",
               textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.35rem",
             }}
           >
-            📚 Tutor Training
+            <BookOpen size={14} /> Tutor Training
           </Link>
         </div>
       )}
@@ -321,9 +327,12 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
             borderRadius: "10px",
             fontSize: "0.9rem",
             fontWeight: 600,
+            display: "flex",
+            alignItems: "center",
+            gap: "0.4rem",
           }}
         >
-          ⚠️ {errorMsg}
+          <AlertTriangle size={16} style={{ flexShrink: 0 }} /> {errorMsg}
         </div>
       )}
 
@@ -438,8 +447,8 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
           </div>
 
           {existingProfile?.reportCardUrl && (
-            <div style={{ fontSize: "0.85rem", color: "#0D683B", background: "#F0FDF4", padding: "0.6rem 0.9rem", borderRadius: "8px" }}>
-              ✓ Previously submitted: <strong>{existingProfile.reportCardName || "Academic Document"}</strong>
+            <div style={{ fontSize: "0.85rem", color: "#0D683B", background: "#F0FDF4", padding: "0.6rem 0.9rem", borderRadius: "8px", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <Check size={14} /> Previously submitted: <strong>{existingProfile.reportCardName || "Academic Document"}</strong>
             </div>
           )}
         </div>
@@ -473,7 +482,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
                       transition: "all 150ms ease",
                     }}
                   >
-                    <span>{isSelected ? "✅" : "⬜"}</span>
+                    <span style={{ display: "inline-flex", alignItems: "center" }}>
+                      {isSelected ? <CheckSquare size={16} color="var(--color-forest, #234B3B)" /> : <Square size={16} color="#94A3B8" />}
+                    </span>
                     <span>{g.label}</span>
                   </button>
                 );
@@ -616,7 +627,15 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
               </>
             ) : (
               <span>
-                {existingProfile ? "✓ Save & Update Application Details" : "🚀 Submit Volunteer Tutor Application"}
+                {existingProfile ? (
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                    <Check size={16} /> Save &amp; Update Application Details
+                  </span>
+                ) : (
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                    Submit Volunteer Tutor Application <ArrowRight size={16} />
+                  </span>
+                )}
               </span>
             )}
           </button>

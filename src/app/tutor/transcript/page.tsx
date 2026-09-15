@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { FileCheck, ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -29,7 +30,9 @@ export default async function VolunteerTranscriptRedirectPage() {
   return (
     <main className={styles.main}>
       <div className={styles.card}>
-        <div className={styles.icon} aria-hidden="true">📜</div>
+        <div className={styles.iconWrap} aria-hidden="true">
+          <FileCheck size={32} />
+        </div>
         <h1 className={styles.title}>Volunteer Service Record</h1>
         <p className={styles.description}>
           Verified service records detail your logged tutoring hours, student testimonials, and verified subjects. These documents feature cryptographic verification codes for school advisors, community service logs, and scholarship portfolios.
@@ -42,7 +45,7 @@ export default async function VolunteerTranscriptRedirectPage() {
 
         <div className={styles.actions}>
           <Link href="/apply" className={styles.primaryBtn}>
-            Apply to Become a Tutor →
+            Apply to Become a Tutor <ArrowRight size={15} style={{ marginLeft: 6 }} />
           </Link>
           <Link href="/sessions" className={styles.secondaryBtn}>
             Explore Learning Sessions

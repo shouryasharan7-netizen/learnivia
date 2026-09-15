@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import { updateReportStatus } from "@/app/actions/reports";
+import { ShieldAlert, CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -27,17 +28,21 @@ export default async function AdminReportsPage() {
   return (
     <div>
       <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--color-navy)", marginBottom: "0.5rem" }}>
-          🛡️ Safety &amp; Safeguarding Reports ({reports.length})
+        <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "1.75rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <ShieldAlert size={24} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+          Safety &amp; Safeguarding Reports ({reports.length})
         </h1>
-        <p style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
+        <p style={{ color: "var(--wa-muted)", fontSize: "0.95rem" }}>
           Review incident reports filed by learners, guardians, or volunteer tutors. Investigate and take moderation action.
         </p>
       </div>
 
       {reports.length === 0 ? (
-        <div style={{ background: "white", padding: "3rem", borderRadius: "12px", textAlign: "center", border: "1px solid var(--color-border)" }}>
-          <p style={{ color: "var(--color-text-muted)" }}>✓ No safety incidents reported. The platform is clean and safe!</p>
+        <div style={{ background: "var(--wa-white)", padding: "3rem", borderRadius: "8px", textAlign: "center", border: "1px solid var(--wa-border)" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", color: "var(--wa-forest)", fontWeight: 600 }}>
+            <CheckCircle2 size={18} aria-hidden="true" />
+            <span>No safety incidents reported. The platform is clean and safe.</span>
+          </div>
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>

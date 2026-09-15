@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "./page.module.css";
+import { Link2, Check } from "lucide-react";
 
 interface ShareTranscriptButtonProps {
   tutorId: string;
@@ -18,6 +19,8 @@ export default function ShareTranscriptButton({ tutorId, token }: ShareTranscrip
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(shareableUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
       } else {
         const textarea = document.createElement("textarea");
         textarea.value = shareableUrl;
@@ -25,34 +28,46 @@ export default function ShareTranscriptButton({ tutorId, token }: ShareTranscrip
         textarea.select();
         document.execCommand("copy");
         document.body.removeChild(textarea);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
       }
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch (err) {
-      console.error("Failed to copy transcript link:", err);
+    } catch {
+      window.prompt("Copy this verifiable transcript link:", shareableUrl);
     }
   };
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
+      className={styles.shareBtn}
       style={{
         display: "inline-flex",
         alignItems: "center",
         gap: "0.4rem",
-        background: copied ? "#065F46" : "#0E8345",
-        color: "white",
+        background: copied ? "var(--wa-forest)" : "var(--wa-forest)",
+        color: "var(--wa-paper)",
         border: "none",
-        borderRadius: "8px",
-        padding: "0.6rem 1.1rem",
+        borderRadius: "6px",
+        padding: "0.55rem 1rem",
         fontSize: "0.85rem",
-        fontWeight: 700,
+        fontWeight: 600,
         cursor: "pointer",
-        transition: "all 0.2s ease",
+        transition: "all 0.15s ease",
       }}
       title="Copy a verifiable link for school counselors without requiring login"
     >
-      {copied ? "✓ Verifiable Link Copied!" : "🔗 Share Verifiable Link"}
+      {copied ? (
+        <>
+          <Check size={14} aria-hidden="true" />
+          <span>Verifiable Link Copied!</span>
+        </>
+      ) : (
+        <>
+          <Link2 size={14} aria-hidden="true" />
+          <span>Share Verifiable Link</span>
+        </>
+      )}
     </button>
   );
 }

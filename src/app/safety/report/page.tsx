@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import { auth } from "@/auth";
 import Link from "next/link";
 import { submitIncidentReport } from "@/app/actions/reports";
+import { ShieldAlert } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,7 +23,10 @@ export default async function ReportConcernPage({ searchParams }: Props) {
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.header}>
-            <h1 className={styles.title}>🛡️ Report a Safety Concern</h1>
+            <h1 className={styles.title} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+              <ShieldAlert size={26} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+              <span>Report a Safety Concern</span>
+            </h1>
             <p className={styles.subtitle}>
               Your safety and trust are our top priorities. All reports are confidential and reviewed directly by our safeguarding and moderation team within 24 hours.
             </p>

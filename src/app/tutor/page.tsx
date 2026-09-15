@@ -292,7 +292,8 @@ export default async function TutorDashboard() {
     const dur = Math.max(15, (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / (1000 * 60));
     return sum + dur;
   }, 0);
-  const tutorHours = Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
+  // P0-4: Authoritative canonical volunteer hours from database escrow ledger
+  const tutorHours = tutor.volunteerHours > 0 ? tutor.volunteerHours : Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
   const uniqueStudents = new Set(completedBookings.map((b) => b?.studentId).filter(Boolean)).size;
 
   const availabilityByDay = DAYS_OF_WEEK.map((name, index) => ({
@@ -574,7 +575,7 @@ export default async function TutorDashboard() {
           {/* Right Column: Availability & History */}
           <div className={styles.rightCol}>
             {/* Weekly Availability Manager */}
-            <section className={styles.card} aria-labelledby="availability-heading">
+            <section id="availability" className={styles.card} aria-labelledby="availability-heading">
               <div className={styles.cardHeader}>
                 <div>
                   <h2 id="availability-heading" className={styles.cardTitle}>

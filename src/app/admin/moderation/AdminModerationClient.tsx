@@ -6,6 +6,7 @@ import {
   adminDeleteHomeworkRequest,
   adminBroadcastAnnouncement,
 } from "../actions";
+import { Megaphone, MessageSquare, HelpCircle, Trash2, CheckCircle2 } from "lucide-react";
 
 interface MessageItem {
   id: string;
@@ -107,30 +108,33 @@ export default function AdminModerationClient({ initialMessages, initialHomework
             marginBottom: "1.5rem",
             fontWeight: 600,
             fontSize: "0.875rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
           }}
         >
-          ✓ {toastMsg}
+          <CheckCircle2 size={16} aria-hidden="true" />
+          <span>{toastMsg}</span>
         </div>
       )}
 
       {/* Official Announcement Publisher Card */}
       <div
         style={{
-          background: "#FFFFFF",
-          borderRadius: "14px",
-          border: "1px solid #E2E8F0",
+          background: "var(--wa-white)",
+          borderRadius: "8px",
+          border: "1px solid var(--wa-border)",
           padding: "1.5rem",
           marginBottom: "2rem",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-          <span style={{ fontSize: "1.25rem" }}>📢</span>
-          <h2 style={{ fontSize: "1.125rem", fontWeight: 700, color: "#0F172A", margin: 0 }}>
+          <Megaphone size={18} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "1.125rem", fontWeight: 700, color: "var(--wa-ink)", margin: 0 }}>
             Broadcast Official Announcement
           </h2>
         </div>
-        <p style={{ color: "#64748B", fontSize: "0.85rem", marginBottom: "1rem" }}>
+        <p style={{ color: "var(--wa-muted)", fontSize: "0.85rem", marginBottom: "1rem" }}>
           Posts directly to the verified <strong>#Announcements</strong> channel seen by all learners and tutors.
         </p>
 
@@ -143,8 +147,8 @@ export default function AdminModerationClient({ initialMessages, initialHomework
             style={{
               width: "100%",
               padding: "0.75rem 1rem",
-              borderRadius: "8px",
-              border: "1px solid #CBD5E1",
+              borderRadius: "6px",
+              border: "1px solid var(--wa-border)",
               fontSize: "0.875rem",
               outline: "none",
               fontFamily: "inherit",
@@ -157,18 +161,18 @@ export default function AdminModerationClient({ initialMessages, initialHomework
               type="submit"
               disabled={!announcementText.trim() || isBroadcasting}
               style={{
-                background: "#0E8345",
-                color: "#FFFFFF",
+                background: "var(--wa-forest)",
+                color: "var(--wa-paper)",
                 padding: "0.5rem 1.25rem",
-                borderRadius: "8px",
-                fontWeight: 700,
+                borderRadius: "6px",
+                fontWeight: 600,
                 fontSize: "0.875rem",
                 border: "none",
                 cursor: !announcementText.trim() || isBroadcasting ? "not-allowed" : "pointer",
                 opacity: !announcementText.trim() || isBroadcasting ? 0.6 : 1,
               }}
             >
-              {isBroadcasting ? "Publishing..." : "Publish Announcement 📢"}
+              {isBroadcasting ? "Publishing..." : "Publish Announcement"}
             </button>
           </div>
         </form>
@@ -180,33 +184,41 @@ export default function AdminModerationClient({ initialMessages, initialHomework
           type="button"
           onClick={() => setActiveTab("community")}
           style={{
-            background: activeTab === "community" ? "#0F172A" : "#FFFFFF",
-            color: activeTab === "community" ? "#FFFFFF" : "#475569",
-            border: "1px solid #CBD5E1",
+            background: activeTab === "community" ? "var(--wa-forest)" : "var(--wa-white)",
+            color: activeTab === "community" ? "var(--wa-paper)" : "var(--wa-muted)",
+            border: "1px solid var(--wa-border)",
             padding: "0.5rem 1rem",
-            borderRadius: "8px",
-            fontWeight: 700,
+            borderRadius: "6px",
+            fontWeight: 600,
             fontSize: "0.85rem",
             cursor: "pointer",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4rem",
           }}
         >
-          💬 Community Messages ({messages.length})
+          <MessageSquare size={14} aria-hidden="true" />
+          <span>Community Messages ({messages.length})</span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab("homework")}
           style={{
-            background: activeTab === "homework" ? "#0F172A" : "#FFFFFF",
-            color: activeTab === "homework" ? "#FFFFFF" : "#475569",
-            border: "1px solid #CBD5E1",
+            background: activeTab === "homework" ? "var(--wa-forest)" : "var(--wa-white)",
+            color: activeTab === "homework" ? "var(--wa-paper)" : "var(--wa-muted)",
+            border: "1px solid var(--wa-border)",
             padding: "0.5rem 1rem",
-            borderRadius: "8px",
-            fontWeight: 700,
+            borderRadius: "6px",
+            fontWeight: 600,
             fontSize: "0.85rem",
             cursor: "pointer",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4rem",
           }}
         >
-          ❓ Homework Help Questions ({homework.length})
+          <HelpCircle size={14} aria-hidden="true" />
+          <span>Homework Help Questions ({homework.length})</span>
         </button>
       </div>
 
@@ -266,13 +278,17 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                       padding: "0.35rem 0.65rem",
                       borderRadius: "6px",
                       fontSize: "0.75rem",
-                      fontWeight: 700,
+                      fontWeight: 600,
                       cursor: "pointer",
                       whiteSpace: "nowrap",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.3rem",
                     }}
                     title="Delete this message immediately"
                   >
-                    🗑️ Delete
+                    <Trash2 size={13} aria-hidden="true" />
+                    <span>Delete</span>
                   </button>
                 </div>
               ))}
@@ -348,13 +364,17 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                       padding: "0.35rem 0.65rem",
                       borderRadius: "6px",
                       fontSize: "0.75rem",
-                      fontWeight: 700,
+                      fontWeight: 600,
                       cursor: "pointer",
                       whiteSpace: "nowrap",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.3rem",
                     }}
                     title="Delete this question"
                   >
-                    🗑️ Delete
+                    <Trash2 size={13} aria-hidden="true" />
+                    <span>Delete</span>
                   </button>
                 </div>
               ))}

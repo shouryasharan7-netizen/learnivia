@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Clock, History, X } from "lucide-react";
 
 interface AdjustHoursButtonProps {
   tutorProfileId: string;
@@ -115,7 +116,7 @@ export default function AdjustHoursButton({
           gap: "0.25rem",
         }}
       >
-        ⏱️ Adjust Hours
+        <Clock size={13} aria-hidden="true" /> Adjust Hours
       </button>
 
       {isOpen && (
@@ -155,12 +156,16 @@ export default function AdjustHoursButton({
                 style={{
                   background: "transparent",
                   border: "none",
-                  fontSize: "1.2rem",
                   cursor: "pointer",
                   color: "#94A3B8",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.25rem",
                 }}
+                aria-label="Close"
               >
-                ✕
+                <X size={18} aria-hidden="true" />
               </button>
             </div>
 
@@ -266,8 +271,9 @@ export default function AdjustHoursButton({
 
             {/* Audit Trail History */}
             <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E2E8F0", paddingTop: "1rem" }}>
-              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0F172A", marginBottom: "0.5rem" }}>
-                📜 Audit Trail History
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0F172A", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                <History size={14} aria-hidden="true" />
+                <span>Audit Trail History</span>
               </div>
               {loadingAudits ? (
                 <div style={{ fontSize: "0.75rem", color: "#64748B" }}>Loading audit log...</div>

@@ -58,11 +58,15 @@ const publicPaths = [
   "/",
   "/signin",
   "/signup",
+  "/forgot-password",
+  "/reset-password",
+  "/verify-email",
   "/find",
   "/how-it-works",
   "/about",
   "/faq",
   "/safety",
+  "/safety/report",
   "/stories",
   "/blog",
   "/parents",
@@ -77,6 +81,7 @@ const publicPaths = [
   "/community",
   "/resources",
   "/apply",
+  "/leaderboard",
   "/api/health",     // Health check is public
   "/api/auth",       // NextAuth callbacks
   "/api/cron",       // Cron endpoints (Vercel cron)

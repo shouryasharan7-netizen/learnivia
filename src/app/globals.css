@@ -1,70 +1,73 @@
 /* =========================================
-   LEARNIVIA — WARM ACADEMIC DESIGN SYSTEM
-   "Trustworthy, Human, Community-Driven"
+   LEARNIVIA — THE LEARNING COMMONS DESIGN SYSTEM
+   "Tactile, Editorial, Warm, and Composed"
    ========================================= */
 
 :root {
-  /* ── Canvas & Backgrounds ──────────────── */
-  --wa-paper:          #FAF8F5;
-  --wa-cream:          #FAF8F5;
-  --wa-cream-dark:     #F3EFE8;
-  --wa-cream-mid:      #EDE9E1;
-  --wa-white:          #FFFFFF;
+  /* ── The Learning Commons Palette ───────── */
+  --wa-paper:          #F4F0E8;
+  --wa-cream:          #F4F0E8;
+  --wa-cream-dark:     #ECE7DD;
+  --wa-cream-mid:      #E5DFD4;
+  --wa-white:          #FBFAF7;
 
-  /* ── Typography ────────────────────────── */
-  --wa-ink:            #1C1A17;
-  --wa-text:           #3D3831;
-  --wa-muted:          #7A7169;
-  --wa-subtle:         #A89F94;
+  /* ── Typography (Dark Ink) ──────────────── */
+  --wa-ink:            #1E2722;
+  --wa-text:           #1E2722;
+  --wa-muted:          #66716A;
+  --wa-subtle:         #8A948E;
 
-  /* ── Borders ───────────────────────────── */
-  --wa-border:         #DDD8D0;
-  --wa-border-strong:  #C8C0B4;
+  /* ── Hairline Borders ───────────────────── */
+  --wa-border:         #D9D3C8;
+  --wa-border-hairline:#D9D3C8;
+  --wa-border-strong:  #C4BCB0;
 
-  /* ── Deep Forest Green — Primary Brand/Action Color ─────── */
-  --wa-forest:         #1B4D3E;
-  --wa-green:          #1B4D3E;
-  --wa-green-hover:    #143D31;
-  --wa-green-active:   #0F2E25;
-  --wa-green-light:    #EAF3ED;
-  --wa-green-mid:      #2D6A4F;
-  --wa-green-muted:    rgba(27, 77, 62, 0.12);
+  /* ── Forest — Primary Accent ────────────── */
+  --wa-forest:         #234B3B;
+  --wa-forest-light:   #DCE8DF;
+  --wa-green:          #234B3B;
+  --wa-green-hover:    #1A392D;
+  --wa-green-active:   #132A21;
+  --wa-green-light:    #DCE8DF;
+  --wa-green-mid:      #2F614D;
+  --wa-green-muted:    rgba(35, 75, 59, 0.12);
 
-  /* ── Terracotta — Secondary Accent ─────── */
-  --wa-terra:          #C1694F;
-  --wa-terra-hover:    #A8543C;
-  --wa-terra-light:    #FAEDE9;
-  --wa-terra-muted:    rgba(193, 105, 79, 0.12);
+  /* ── Terracotta — Secondary Accent ──────── */
+  --wa-terra:          #B85A43;
+  --wa-terra-hover:    #A04A34;
+  --wa-terra-light:    #F1DED6;
+  --wa-terra-muted:    rgba(184, 90, 67, 0.12);
 
-  /* ── Ochre/Amber — Tertiary Accent ─────── */
-  --wa-ochre:          #C9922A;
-  --wa-ochre-hover:    #B07A1F;
-  --wa-ochre-light:    #FDF3E3;
-  --wa-ochre-muted:    rgba(201, 146, 42, 0.12);
+  /* ── Ochre — Tertiary Accent ────────────── */
+  --wa-ochre:          #B18435;
+  --wa-ochre-hover:    #986E2A;
+  --wa-ochre-light:    #F2E7C8;
+  --wa-ochre-muted:    rgba(177, 132, 53, 0.12);
 
-  /* ── Warm Navy — Deep Accent ────────────── */
-  --wa-navy:           #1E3A5F;
-  --wa-navy-hover:     #162E4D;
-  --wa-navy-light:     #E8EEF5;
+  /* ── Slate Blue — Deep Utility Accent ───── */
+  --wa-slate-blue:     #526B7A;
+  --wa-navy:           #526B7A;
+  --wa-navy-hover:     #425662;
+  --wa-navy-light:     #E3E9ED;
 
   /* ── Semantic Colors ────────────────────── */
-  --wa-success:        #2D6A4F;
-  --wa-success-bg:     #EAF3ED;
-  --wa-warning:        #C9922A;
-  --wa-warning-bg:     #FDF3E3;
-  --wa-error:          #C1694F;
-  --wa-error-bg:       #FAEDE9;
-  --wa-info:           #1E3A5F;
-  --wa-info-bg:        #E8EEF5;
+  --wa-success:        #234B3B;
+  --wa-success-bg:     #DCE8DF;
+  --wa-warning:        #B18435;
+  --wa-warning-bg:     #F2E7C8;
+  --wa-error:          #B85A43;
+  --wa-error-bg:       #F1DED6;
+  --wa-info:           #526B7A;
+  --wa-info-bg:        #E3E9ED;
 
-  /* ── Shadows ────────────────────────────── */
-  --wa-shadow-xs:      0 1px 3px rgba(28, 26, 23, 0.05);
-  --wa-shadow-sm:      0 2px 8px rgba(28, 26, 23, 0.07);
-  --wa-shadow-md:      0 4px 16px rgba(28, 26, 23, 0.09);
-  --wa-shadow-lg:      0 8px 28px rgba(28, 26, 23, 0.11);
-  --wa-shadow-hover:   0 6px 20px rgba(28, 26, 23, 0.12);
+  /* ── Shadows (Quiet surfaces instead of constant shadows) ── */
+  --wa-shadow-xs:      0 1px 2px rgba(30, 39, 34, 0.04);
+  --wa-shadow-sm:      0 1px 3px rgba(30, 39, 34, 0.06);
+  --wa-shadow-md:      0 3px 8px rgba(30, 39, 34, 0.08);
+  --wa-shadow-lg:      0 6px 16px rgba(30, 39, 34, 0.10);
+  --wa-shadow-hover:   0 4px 12px rgba(30, 39, 34, 0.09);
 
-  /* ── Radius — Mostly 8–12px deliberate geometry ────── */
+  /* ── Radius — Deliberate 8–12px geometry ─── */
   --wa-radius-sm:      8px;
   --wa-radius-md:      10px;
   --wa-radius-lg:      12px;
@@ -86,22 +89,29 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
-  /* ── Typography Scale ───────────────────── */
-  --text-xs:   0.6875rem;
-  --text-sm:   0.8125rem;
-  --text-base: 0.9375rem;
-  --text-lg:   1.0625rem;
-  --text-xl:   1.25rem;
-  --text-2xl:  1.5rem;
-  --text-3xl:  1.875rem;
-  --text-4xl:  2.25rem;
+  /* ── Learning Commons Typography Scale ──── */
+  --type-display:      clamp(2.8rem, 6vw, 5.8rem);
+  --type-page-title:   clamp(2.1rem, 4vw, 3.8rem);
+  --type-section-title:clamp(1.6rem, 2.5vw, 2.4rem);
+  --type-card-title:   clamp(1.15rem, 1.5vw, 1.35rem);
+  --type-body:         1.04rem;
+  --type-metadata:     0.84rem;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.84rem;
+  --text-base: 1.04rem;
+  --text-lg:   1.15rem;
+  --text-xl:   1.35rem;
+  --text-2xl:  1.65rem;
+  --text-3xl:  2.1rem;
+  --text-4xl:  2.8rem;
 
   /* ── Layout ─────────────────────────────── */
   --container-xl: 1180px;
   --container-lg: 960px;
 
   /* ── Focus ───────────────────────────────── */
-  --focus-ring: 0 0 0 2px var(--wa-cream), 0 0 0 4px var(--wa-green);
+  --focus-ring: 0 0 0 2px var(--wa-paper), 0 0 0 4px var(--wa-forest);
 
   /* ── Legacy aliases — preserve existing code ── */
   --sh-green:          var(--wa-green);
@@ -217,23 +227,37 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-family: var(--font-sans, 'IBM Plex Sans', system-ui, -apple-system, sans-serif);
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--wa-text);
-  background: var(--wa-cream);
+  background: var(--wa-paper);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 main { flex: 1; }
 
-/* Serif headings — warm editorial feel */
+/* Display & Section Headings — Source Serif 4 editorial authority */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, 'Source Serif 4', Georgia, serif);
   font-weight: 600;
   line-height: 1.2;
   color: var(--wa-ink);
+  letter-spacing: -0.015em;
+}
+
+/* Technical IDs, verification codes, timestamps — IBM Plex Mono */
+code, kbd, samp, pre, .font-mono, [data-mono="true"] {
+  font-family: var(--font-mono, 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace);
+}
+
+.font-serif {
+  font-family: var(--font-serif, 'Source Serif 4', Georgia, serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans, 'IBM Plex Sans', system-ui, sans-serif);
 }
 
 p { line-height: 1.6; }

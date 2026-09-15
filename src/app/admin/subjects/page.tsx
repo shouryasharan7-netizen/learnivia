@@ -132,7 +132,7 @@ export default async function AdminSubjectsPage() {
                             fontWeight: 700,
                           }}
                         >
-                          {isK10 ? "✓ K-10" : "⚠ Out of Scope"}
+                          {isK10 ? "K-10" : "Out of Scope"}
                         </span>
                       </div>
                     );

@@ -1,11 +1,12 @@
 import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Learnivia — Free K\u201310 Volunteer Tutoring",
-  description: "Learnivia provides free, compassionate 1-on-1 peer tutoring for K\u201310 students. Built to support all learners \u2014 including neurodiverse students and those who learn differently.",
+  title: "About Learnivia — Free K–10 Volunteer Tutoring",
+  description: "Learnivia provides free, compassionate 1-on-1 peer tutoring for K–10 students. Built to support all learners — including neurodiverse students and those who learn differently.",
 };
 
 export default function AboutPage() {
@@ -13,7 +14,7 @@ export default function AboutPage() {
     <main className={styles.main}>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <Image src="/images/logo.png" alt="Learnivia Logo" width={80} height={80} className={styles.logo} />
+          <Image src="/images/logo.png" alt="Learnivia Logo" width={64} height={64} className={styles.logo} />
           <h1 className={styles.title}>About Learnivia</h1>
           <p className={styles.subtitle}>
             Free, compassionate peer tutoring built for every K&ndash;10 learner &mdash; especially those who learn differently.
@@ -52,11 +53,26 @@ export default function AboutPage() {
         <div className={styles.textBlock}>
           <h2>How It Works</h2>
           <ul className={styles.featureList}>
-            <li>✔️ Parents select their child&apos;s grade (K&ndash;10) and subject</li>
-            <li>✔️ Only tutors approved for that grade band appear in search results</li>
-            <li>✔️ Book a free, private 1-on-1 Zoom session with a verified volunteer tutor</li>
-            <li>✔️ Sessions are logged for volunteer-hour verification &mdash; no recording without consent</li>
-            <li>✔️ Tutors earn verified Volunteer Service Records with verifiable session IDs</li>
+            <li className={styles.featureItem}>
+              <CheckCircle2 size={18} style={{ color: "var(--wa-forest)", flexShrink: 0 }} aria-hidden="true" />
+              <span>Parents select their child&apos;s grade (K&ndash;10) and subject</span>
+            </li>
+            <li className={styles.featureItem}>
+              <CheckCircle2 size={18} style={{ color: "var(--wa-forest)", flexShrink: 0 }} aria-hidden="true" />
+              <span>Only tutors approved for that grade band appear in search results</span>
+            </li>
+            <li className={styles.featureItem}>
+              <CheckCircle2 size={18} style={{ color: "var(--wa-forest)", flexShrink: 0 }} aria-hidden="true" />
+              <span>Book a free, private 1-on-1 Zoom session with a verified volunteer tutor</span>
+            </li>
+            <li className={styles.featureItem}>
+              <CheckCircle2 size={18} style={{ color: "var(--wa-forest)", flexShrink: 0 }} aria-hidden="true" />
+              <span>Sessions are logged for volunteer-hour verification &mdash; no recording without consent</span>
+            </li>
+            <li className={styles.featureItem}>
+              <CheckCircle2 size={18} style={{ color: "var(--wa-forest)", flexShrink: 0 }} aria-hidden="true" />
+              <span>Tutors earn verified Volunteer Service Records with verifiable session IDs</span>
+            </li>
           </ul>
         </div>
 
@@ -86,4 +102,3 @@ export default function AboutPage() {
     </main>
   );
 }
-

@@ -130,7 +130,7 @@ export async function POST(request: Request) {
       authorRole: "STUDENT",
       authorInitials: initials,
       authorColor: "#C9922A",
-      content: `📌 [${subject}] ${question.trim()} (Format: ${preferredFormat === "zoom" ? "Live Zoom Room" : "Chat Discussion"})`,
+      content: `[${subject}] ${question.trim()} (Format: ${preferredFormat === "zoom" ? "Live Zoom Room" : "Chat Discussion"})`,
     });
 
     return NextResponse.json({ success: true, homework });

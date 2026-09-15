@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Users, Plus, X, GraduationCap, Trash2, FileText } from "lucide-react";
 import { createChildProfile, deleteChildProfile } from "@/app/actions/children";
 
 interface ChildProfile {
@@ -102,7 +103,7 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
       >
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ fontSize: "1.3rem" }}>👨‍👧‍👦</span>
+            <Users size={20} color="var(--color-forest, #234B3B)" />
             <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#0F172A", margin: 0 }}>
               Parent Hub: Managed Child Profiles (K–10)
             </h2>
@@ -116,7 +117,10 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
         <button
           onClick={() => setIsOpen(!isOpen)}
           style={{
-            background: isOpen ? "#F1F5F9" : "#0E8345",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4rem",
+            background: isOpen ? "#F1F5F9" : "var(--color-forest, #234B3B)",
             color: isOpen ? "#475569" : "#FFFFFF",
             border: isOpen ? "1px solid #CBD5E1" : "none",
             borderRadius: "8px",
@@ -127,7 +131,7 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             transition: "all 150ms ease",
           }}
         >
-          {isOpen ? "✕ Cancel" : "➕ Add Child (K–10)"}
+          {isOpen ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Add Child (K–10)</>}
         </button>
       </div>
 
@@ -355,7 +359,9 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             fontSize: "0.9rem",
           }}
         >
-          <div style={{ fontSize: "1.8rem", marginBottom: "0.5rem" }}>🎒</div>
+          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 48, height: 48, borderRadius: "50%", background: "var(--bg-canvas, #F4F0E8)", color: "var(--text-muted, #66716A)", margin: "0 auto 0.75rem auto" }}>
+            <GraduationCap size={24} />
+          </div>
           <strong>No child profiles registered yet.</strong>
           <p style={{ margin: "0.25rem 0 0 0", fontSize: "0.825rem" }}>
             Add your child's profile above so you can book 1-on-1 tutoring or workshops on their behalf.
@@ -430,15 +436,17 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
                   onClick={() => handleDeleteChild(child.id, `${child.firstName} ${child.lastInitial}`)}
                   title="Remove child profile"
                   style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                     background: "none",
                     border: "none",
                     color: "#94A3B8",
                     cursor: "pointer",
-                    fontSize: "0.85rem",
                     padding: "0.2rem 0.4rem",
                   }}
                 >
-                  ✕
+                  <Trash2 size={15} />
                 </button>
               </div>
 
@@ -452,9 +460,12 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
                     padding: "0.4rem 0.6rem",
                     borderRadius: "6px",
                     border: "1px solid #E2E8F0",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
                   }}
                 >
-                  📝 {child.notes}
+                  <FileText size={13} style={{ flexShrink: 0 }} /> {child.notes}
                 </p>
               )}
 

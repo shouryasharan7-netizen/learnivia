@@ -316,6 +316,66 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
+      {/* ── 2.5. AUDIENCE PATHWAYS (PARENTS, LEARNERS, TUTORS) ── */}
+      <section className={styles.pathwaysSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.pathwayPill}>Tailored for the Community</span>
+            <h2 className={styles.sectionHeading}>Three dedicated learning pathways</h2>
+            <p className={styles.sectionLead}>
+              Whether you are a parent seeking safe oversight, a student needing compassionate help, or a high school volunteer earning official service hours.
+            </p>
+          </div>
+
+          <div className={styles.pathwaysGrid}>
+            <div className={styles.pathwayCard}>
+              <div className={styles.pathwayIconWrap}>
+                <ShieldCheck size={24} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+              </div>
+              <span className={styles.pathwayAudience}>For Parents &amp; Guardians</span>
+              <h3 className={styles.pathwayTitle}>Transparent oversight &amp; verified safety</h3>
+              <p className={styles.pathwayDesc}>
+                Manage your child&apos;s account with privacy by design. Filter tutors by curriculum and grade band, observe sessions, and confirm attendance with 1-click verification.
+              </p>
+              <Link href="/parents" className={styles.pathwayLink}>
+                <span>Explore parent guide</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className={styles.pathwayCard}>
+              <div className={styles.pathwayIconWrap}>
+                <BookOpen size={24} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+              </div>
+              <span className={styles.pathwayAudience}>For K–10 Learners</span>
+              <h3 className={styles.pathwayTitle}>Friendly peer mentoring &amp; homework help</h3>
+              <p className={styles.pathwayDesc}>
+                Connect with patient older students who recently mastered your syllabus. Enjoy interactive Zoom whiteboard sessions with no subscriptions and zero judgment.
+              </p>
+              <Link href="/find" className={styles.pathwayLink}>
+                <span>Find your tutor</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className={styles.pathwayCard}>
+              <div className={styles.pathwayIconWrap}>
+                <GraduationCap size={24} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+              </div>
+              <span className={styles.pathwayAudience}>For Volunteer Student Tutors</span>
+              <h3 className={styles.pathwayTitle}>Certified hours &amp; leadership impact</h3>
+              <p className={styles.pathwayDesc}>
+                High school (Grade 11+) and university students earn verified volunteer service transcripts with cryptographic session verification codes for colleges and honor societies.
+              </p>
+              <Link href="/apply" className={styles.pathwayLink}>
+                <span>Apply to tutor</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 3. GRADE BANDS ── */}
       <section className={styles.programsSection}>
         <div className={styles.container}>

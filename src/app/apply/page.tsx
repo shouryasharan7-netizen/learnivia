@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { Lock, CheckCircle2, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import ApplyFormClient from "./ApplyFormClient";
@@ -27,28 +28,42 @@ export default async function ApplyPage() {
 
         <div className={styles.formContainer}>
           <div className={styles.loginPrompt}>
-            <div className={styles.loginPromptIcon} aria-hidden="true">🔐</div>
+            <div className={styles.loginPromptIcon} aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 56, height: 56, borderRadius: "50%", background: "var(--bg-canvas, #F4F0E8)", color: "var(--color-forest, #234B3B)", margin: "0 auto 1rem auto" }}>
+              <Lock size={28} />
+            </div>
             <h2>Create a free account to apply</h2>
             <p>
               You need a Learnivia account to submit your volunteer application and upload your academic report card. It takes less than a minute and is completely free.
             </p>
             <div className={styles.loginActions}>
-              <Link href="/signup?role=tutor" className={styles.submitBtn}>
-                Sign Up as a Volunteer Tutor →
+              <Link href="/signup?role=tutor" className={styles.submitBtn} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}>
+                Sign Up as a Volunteer Tutor <ArrowRight size={15} />
               </Link>
             </div>
             <p className={styles.loginNote}>
-              Already have an account? <Link href="/signin?callbackUrl=/apply" style={{ color: "#0E8345", fontWeight: 700 }}>Sign in here</Link>.
+              Already have an account? <Link href="/signin?callbackUrl=/apply" style={{ color: "var(--color-forest, #234B3B)", fontWeight: 700 }}>Sign in here</Link>.
             </p>
           </div>
 
           <div className={styles.benefitsList}>
             <h3>What volunteer tutors get on Learnivia</h3>
-            <ul>
-              <li>✓ Verified record of volunteer service hours</li>
-              <li>✓ Verified downloadable service record for school counselors &amp; portfolios</li>
-              <li>✓ Complete schedule freedom — you set your own availability</li>
-              <li>✓ Free training in safeguarding and online pedagogy</li>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <CheckCircle2 size={16} color="var(--color-forest, #234B3B)" style={{ flexShrink: 0 }} />
+                <span>Verified record of volunteer service hours</span>
+              </li>
+              <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <CheckCircle2 size={16} color="var(--color-forest, #234B3B)" style={{ flexShrink: 0 }} />
+                <span>Verified downloadable service record for school counselors &amp; portfolios</span>
+              </li>
+              <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <CheckCircle2 size={16} color="var(--color-forest, #234B3B)" style={{ flexShrink: 0 }} />
+                <span>Complete schedule freedom — you set your own availability</span>
+              </li>
+              <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <CheckCircle2 size={16} color="var(--color-forest, #234B3B)" style={{ flexShrink: 0 }} />
+                <span>Free training in safeguarding and online pedagogy</span>
+              </li>
             </ul>
           </div>
         </div>

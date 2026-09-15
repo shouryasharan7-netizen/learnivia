@@ -1,52 +1,96 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BookOpen, GraduationCap, ShieldCheck, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "For Educators",
-  description: "How teachers and school counsellors can use Learnivia to supplement their students' learning.",
+  title: "For Educators — Learnivia",
+  description: "How teachers and school counsellors can use Learnivia to supplement their students' learning with free peer tutoring.",
 };
 
 export default function EducatorsPage() {
+  const items = [
+    {
+      icon: BookOpen,
+      title: "Recommend Learnivia to students who need support",
+      content: "Students and parents can access free peer tutoring for core K–10 school subjects. For learners below Grade 9, parents create and manage accounts, while Grade 9–10 learners can participate with guardian awareness. Sessions cover foundational reading, mathematics, science, and learning support.",
+    },
+    {
+      icon: GraduationCap,
+      title: "Encourage strong students to volunteer",
+      content: "Volunteering with Learnivia develops communication skills, empathy, and subject mastery. Tutors receive verified records of their volunteer service hours with cryptographic session verification IDs, which can support school service requirements, honour societies, and college applications.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Not a replacement for classroom or SEN support",
+      content: "Learnivia is a peer supplement — not a substitute for SENCO input, specialist learning support, or qualified teacher intervention. Students with formal IEP or 504 plans should continue working with their school's specialized educational professionals.",
+    },
+  ];
+
   return (
-    <main>
-      <section style={{ background: "linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%)", padding: "5rem 1.5rem" }}>
+    <main style={{ background: "var(--wa-paper)", minHeight: "100vh", fontFamily: "var(--font-sans)", color: "var(--wa-ink)" }}>
+      <section style={{ background: "var(--wa-white)", padding: "4.5rem 1.5rem 3.5rem", borderBottom: "1px solid var(--wa-border)", textAlign: "center" }}>
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <h1 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "white", marginBottom: "1rem", letterSpacing: "-0.03em" }}>
-            For educators
+          <span style={{ display: "inline-block", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", color: "var(--wa-forest)", padding: "0.25rem 0.75rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600, marginBottom: "1rem" }}>
+            School &amp; Classroom Partnerships
+          </span>
+          <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.25rem, 4.5vw, 3.25rem)", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "1rem", letterSpacing: "-0.02em" }}>
+            For educators &amp; school advisors
           </h1>
-          <p style={{ fontSize: "1.125rem", color: "rgb(255 255 255 / 0.75)", lineHeight: 1.7 }}>
-            Learnivia is a free supplement to classroom learning. Share it with students who need extra support, or encourage high-achieving students to volunteer.
+          <p style={{ fontSize: "1.1rem", color: "var(--wa-muted)", lineHeight: 1.65, maxWidth: "600px", margin: "0 auto" }}>
+            Learnivia is a free, structured supplement to classroom instruction. Connect students who need patient revision, or encourage high-achieving student mentors to serve their community.
           </p>
         </div>
       </section>
 
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: "4rem 1.5rem", display: "flex", flexDirection: "column", gap: "3rem" }}>
-        {[
-          {
-            title: "Recommend Learnivia to students who need support",
-            content: "Students and parents can access free peer tutoring for core K–10 school subjects. For learners under Grade 9, parents create and manage accounts, while Grade 9–10 learners can participate independently. Sessions cover foundational reading, mathematics, science, and learning support.",
-          },
-          {
-            title: "Encourage strong students to volunteer",
-            content: "Volunteering with Learnivia builds communication skills, empathy, and subject mastery. Tutors receive verified records of their volunteer hours, which can support university personal statements, service awards, or other extracurricular portfolios.",
-          },
-          {
-            title: "Not a replacement for classroom support",
-            content: "Learnivia is a peer supplement — not a substitute for SENCO input, specialist learning support, or qualified teacher intervention. Students who need formal learning support plans should continue working with their school's support team.",
-          },
-        ].map(item => (
-          <div key={item.title}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--color-navy)", marginBottom: "0.75rem" }}>{item.title}</h2>
-            <p style={{ color: "var(--color-text-muted)", lineHeight: 1.7 }}>{item.content}</p>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: "3.5rem 1.5rem 5rem", display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+        {items.map((item) => (
+          <div key={item.title} style={{ background: "var(--wa-white)", border: "1px solid var(--wa-border)", borderRadius: "8px", padding: "1.75rem 2rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.75rem" }}>
+              <item.icon size={20} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+              <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", fontWeight: 700, color: "var(--wa-ink)", margin: 0 }}>
+                {item.title}
+              </h2>
+            </div>
+            <p style={{ color: "var(--wa-muted)", lineHeight: 1.7, fontSize: "0.95rem", margin: 0 }}>
+              {item.content}
+            </p>
           </div>
         ))}
 
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-          <Link href="/find" style={{ background: "var(--color-teal)", color: "white", fontWeight: 700, padding: "0.875rem 2rem", borderRadius: "999px", textDecoration: "none" }}>
-            Browse tutors
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1rem" }}>
+          <Link
+            href="/find"
+            style={{
+              background: "var(--wa-forest)",
+              color: "var(--wa-paper)",
+              fontWeight: 600,
+              padding: "0.75rem 1.75rem",
+              borderRadius: "6px",
+              textDecoration: "none",
+              fontSize: "0.95rem",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+            }}
+          >
+            Browse Verified Tutors <ArrowRight size={15} />
           </Link>
-          <Link href="/apply" style={{ background: "white", color: "var(--color-navy)", border: "2px solid var(--color-border-strong)", fontWeight: 700, padding: "0.875rem 2rem", borderRadius: "999px", textDecoration: "none" }}>
-            Volunteer to tutor
+          <Link
+            href="/apply"
+            style={{
+              background: "var(--wa-white)",
+              color: "var(--wa-ink)",
+              border: "1px solid var(--wa-border)",
+              fontWeight: 600,
+              padding: "0.75rem 1.75rem",
+              borderRadius: "6px",
+              textDecoration: "none",
+              fontSize: "0.95rem",
+              display: "inline-flex",
+              alignItems: "center",
+            }}
+          >
+            Volunteer as a Student Mentor
           </Link>
         </div>
       </div>

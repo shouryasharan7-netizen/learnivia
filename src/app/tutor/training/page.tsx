@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, ShieldCheck, BookOpen, ArrowRight } from "lucide-react";
+import { CheckCircle2, ShieldCheck, BookOpen, ArrowRight, Users, Video, Clock, RotateCcw, AlertCircle, ChevronDown, Check } from "lucide-react";
 
 const MODULES = [
   {
     id: 1,
     title: "Tutoring Basics & Encouragement",
-    icon: "📚",
     color: "#0D683B",
     bg: "#F0FDF4",
     estimatedMinutes: 10,
@@ -44,7 +43,6 @@ const MODULES = [
   {
     id: 2,
     title: "Supporting Students Who Learn Differently",
-    icon: "🧠",
     color: "#C9922A",
     bg: "#F5F3FF",
     estimatedMinutes: 12,
@@ -84,7 +82,6 @@ const MODULES = [
   {
     id: 3,
     title: "Online Zoom Tutoring Best Practices",
-    icon: "💻",
     color: "#1D4ED8",
     bg: "#EFF6FF",
     estimatedMinutes: 8,
@@ -124,7 +121,6 @@ const MODULES = [
   {
     id: 4,
     title: "Safety, Boundaries & Safeguarding",
-    icon: "🛡️",
     color: "#B45309",
     bg: "#FFFBEB",
     estimatedMinutes: 10,
@@ -164,7 +160,6 @@ const MODULES = [
   {
     id: 5,
     title: "Volunteer Hours & Verification Rules",
-    icon: "⏱️",
     color: "#0F766E",
     bg: "#F0FDFA",
     estimatedMinutes: 8,
@@ -430,35 +425,53 @@ export default function TutorTrainingPage() {
                 >
                   <div
                     style={{
-                      width: "44px",
-                      height: "44px",
-                      borderRadius: "0.75rem",
-                      background: isCompleted ? "#F0FDF4" : mod.bg,
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "var(--wa-radius-md)",
+                      background: isCompleted ? "var(--wa-forest-light)" : "var(--wa-paper)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "1.25rem",
                       flexShrink: 0,
+                      border: "1px solid var(--wa-border)",
                     }}
                   >
-                    {isCompleted ? "✅" : mod.icon}
+                    {isCompleted ? (
+                      <CheckCircle2 size={20} color="var(--wa-forest)" />
+                    ) : mod.id === 1 ? (
+                      <BookOpen size={18} color="var(--wa-forest)" />
+                    ) : mod.id === 2 ? (
+                      <Users size={18} color="var(--wa-ochre)" />
+                    ) : mod.id === 3 ? (
+                      <Video size={18} color="var(--wa-slate-blue)" />
+                    ) : mod.id === 4 ? (
+                      <ShieldCheck size={18} color="var(--wa-terra)" />
+                    ) : (
+                      <Clock size={18} color="var(--wa-forest)" />
+                    )}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div
                       style={{
                         fontSize: "1rem",
                         fontWeight: 700,
-                        color: isCompleted ? "#0D683B" : "#111827",
+                        color: isCompleted ? "var(--wa-forest)" : "var(--wa-ink)",
                       }}
                     >
                       Module {mod.id}: {mod.title}
                     </div>
-                    <div style={{ fontSize: "0.8125rem", color: "#6B7280", marginTop: "0.2rem" }}>
-                      ~{mod.estimatedMinutes} min · {isCompleted ? "Completed ✓" : "Not started"}
+                    <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted)", marginTop: "0.2rem" }}>
+                      ~{mod.estimatedMinutes} min · {isCompleted ? "Completed" : "Not started"}
                     </div>
                   </div>
-                  <div style={{ color: "#9CA3AF", fontSize: "1.25rem" }}>
-                    {isOpen ? "▲" : "▼"}
+                  <div style={{ color: "var(--wa-muted)", display: "flex", alignItems: "center" }}>
+                    <ChevronDown
+                      size={18}
+                      style={{
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: "transform var(--wa-transition)",
+                      }}
+                    />
                   </div>
                 </button>
 
@@ -585,27 +598,36 @@ export default function TutorTrainingPage() {
                         )}
                         {quizDone && (
                           <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-                            <div style={{ color: quizCorrect ? "#0D683B" : "#DC2626", fontWeight: 700, fontSize: "0.9rem" }}>
-                              {quizCorrect
-                                ? "✅ Correct! Great understanding."
-                                : "❌ Not quite — review the notes and try again."}
+                            <div style={{ color: quizCorrect ? "var(--wa-forest)" : "var(--wa-terra)", fontWeight: 700, fontSize: "0.9rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                              {quizCorrect ? (
+                                <>
+                                  <CheckCircle2 size={16} /> Correct! Great understanding.
+                                </>
+                              ) : (
+                                <>
+                                  <AlertCircle size={16} /> Not quite — review the notes and try again.
+                                </>
+                              )}
                             </div>
                             {!quizCorrect && (
                               <button
                                 type="button"
                                 onClick={() => handleQuizRetry(mod.id)}
                                 style={{
-                                  background: "#F3F4F6",
-                                  border: "1px solid #D1D5DB",
-                                  borderRadius: "999px",
+                                  background: "var(--wa-paper)",
+                                  border: "1px solid var(--wa-border)",
+                                  borderRadius: "var(--wa-radius-sm)",
                                   padding: "0.35rem 0.85rem",
                                   fontSize: "0.8rem",
                                   fontWeight: 600,
                                   cursor: "pointer",
-                                  color: "#374151",
+                                  color: "var(--wa-ink)",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  gap: "0.35rem",
                                 }}
                               >
-                                Try Again 🔄
+                                <RotateCcw size={13} /> Try Again
                               </button>
                             )}
                           </div>
@@ -635,7 +657,7 @@ export default function TutorTrainingPage() {
                         {savingModule === mod.id
                           ? "Saving progress..."
                           : quizDone && quizCorrect
-                          ? `✓ Save & Mark Module ${mod.id} Complete`
+                          ? `Save & Mark Module ${mod.id} Complete`
                           : quizDone && !quizCorrect
                           ? "Must pass quiz check to proceed"
                           : "Complete the quiz above to continue"}
@@ -647,12 +669,16 @@ export default function TutorTrainingPage() {
                         style={{
                           marginTop: "1.5rem",
                           textAlign: "center",
-                          color: "#0D683B",
+                          color: "var(--wa-forest)",
                           fontWeight: 700,
                           fontSize: "0.9375rem",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "0.4rem",
                         }}
                       >
-                        ✅ Module completed!
+                        <CheckCircle2 size={18} /> Module completed
                       </div>
                     )}
                   </div>
