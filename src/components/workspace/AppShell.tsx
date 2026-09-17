@@ -40,10 +40,60 @@ export function AppShell({ children }: AppShellProps) {
   const { data: session } = useSession();
   const pathname = usePathname();
 
+  const isWorkspaceRoute =
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/tutor") ||
+    pathname.startsWith("/admin");
+
   const isPublicRoute = PUBLIC_ONLY_ROUTES.includes(pathname) || pathname.startsWith("/blog/");
 
-  // If user is not logged in OR is visiting a public marketing/trust/auth page:
-  // Render the calm public header + footer layout.
+  // Authenticated workspace routes (Learner, Tutor, or Administrator):
+  // ALWAYS keep within the workspace shell layout; never flash the public marketing header/footer.
+  if (isWorkspaceRoute) {
+    if (session?.user) {
+      const user = session.user;
+      const isTutor = Boolean((user as any).isTutor || user.role === "TUTOR" || user.role === "ADMIN");
+      const isAdmin = Boolean((user as any).isAdmin || user.role === "ADMIN");
+
+      return (
+        <div className={styles.shell}>
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+
+          {/* Desktop Left Sidebar with workspace navigation */}
+          <SidebarNav
+            userRole={user.role}
+            isTutor={isTutor}
+            isAdmin={isAdmin}
+            className={styles.sidebarDesktop}
+          />
+
+          {/* Main Content Area */}
+          <div className={styles.mainContainer}>
+            <TopBar user={user} />
+            <main id="main-content" className={styles.content}>
+              {children}
+            </main>
+            <MobileBottomNav />
+          </div>
+        </div>
+      );
+    }
+
+    // While session is hydrating on a workspace route, maintain workspace frame layout
+    return (
+      <div className={styles.shell} style={{ minHeight: "100vh", background: "var(--wa-paper)" }}>
+        <div className={styles.mainContainer}>
+          <main id="main-content" className={styles.content}>
+            {children}
+          </main>
+        </div>
+      </div>
+    );
+  }
+
+  // Non-workspace pages: render calm public header + footer layout for guests or public docs
   if (!session?.user || isPublicRoute) {
     return (
       <div className={styles.publicWrapper}>
@@ -56,8 +106,6 @@ export function AppShell({ children }: AppShellProps) {
     );
   }
 
-  // Authenticated workspace view (Learner, Tutor, or Administrator):
-  // Clean single shell: Left sidebar + Top bar + Main content + Mobile bottom nav.
   const user = session.user;
   const isTutor = Boolean((user as any).isTutor || user.role === "TUTOR" || user.role === "ADMIN");
   const isAdmin = Boolean((user as any).isAdmin || user.role === "ADMIN");

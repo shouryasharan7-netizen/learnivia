@@ -46,9 +46,19 @@ export default async function FindTutorPage({ searchParams }: Props) {
   const activeGrade = isAllGradesExplicit ? "" : (grade || dbUser?.grade || "");
   const activeCurriculum = curriculum || (dbUser?.curriculum && dbUser.curriculum !== "Other" ? dbUser.curriculum : "");
   const studentAge = dbUser?.age || null;
+  const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
 
   const whereClause: any = {
     status: "APPROVED",
+    NOT: [
+      {
+        availabilities: { none: {} },
+        OR: [
+          { approvedAt: { lt: threeDaysAgo } },
+          { approvedAt: null, createdAt: { lt: threeDaysAgo } },
+        ],
+      },
+    ],
   };
 
   const conditions: any[] = [];

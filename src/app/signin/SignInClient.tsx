@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { loginWithEmail, loginWithGoogle, loginAsDemo } from "./actions";
+import { loginWithEmail, loginWithGoogle } from "./actions";
 import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { GraduationCap, Leaf, BookOpen, ShieldCheck, AlertTriangle } from "lucide-react";
+import { GraduationCap, Leaf, AlertTriangle } from "lucide-react";
 
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
@@ -32,25 +32,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
   const [studentAge, setStudentAge] = useState<string>("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [demoLoading, setDemoLoading] = useState<string | null>(null);
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-
-  async function handleDemoLogin(role: "STUDENT" | "TUTOR" | "ADMIN") {
-    setDemoLoading(role);
-    setError("");
-    try {
-      const res = await loginAsDemo(role);
-      if (res?.success && res.redirectUrl) {
-        window.location.href = res.redirectUrl;
-      } else {
-        setError(res?.error || "Failed to sign in to demo workspace.");
-        setDemoLoading(null);
-      }
-    } catch (err: any) {
-      setError(err?.message || "Demo login error.");
-      setDemoLoading(null);
-    }
-  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -331,122 +313,6 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                 {isRegister ? "Sign in" : "Create a free account"}
               </button>
             </p>
-          </div>
-
-          {/* Quick Demo Workspace Access */}
-          <div
-            style={{
-              marginTop: "1.5rem",
-              padding: "1.125rem",
-              background: "#FAF8F5",
-              border: "1px dashed #D6CFBE",
-              borderRadius: "10px",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "0.5rem",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  color: "#1B4D3E",
-                }}
-              >
-                Quick Demo Evaluation
-              </span>
-              <span style={{ fontSize: "0.725rem", color: "#78716C" }}>
-                1-Click Instant Preview
-              </span>
-            </div>
-            <p
-              style={{
-                fontSize: "0.8125rem",
-                color: "#44403C",
-                margin: "0 0 0.85rem 0",
-                lineHeight: 1.45,
-              }}
-            >
-              Tour any of the redesigned workspaces with verified sample data:
-            </p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
-              <button
-                type="button"
-                disabled={Boolean(demoLoading)}
-                onClick={() => handleDemoLogin("STUDENT")}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.35rem",
-                  padding: "0.55rem 0.4rem",
-                  fontSize: "0.775rem",
-                  fontWeight: 600,
-                  background: "#FFFFFF",
-                  border: "1px solid #E5DFD5",
-                  borderRadius: "8px",
-                  color: "#1C1917",
-                  cursor: "pointer",
-                  boxShadow: "0 1px 2px rgba(28,25,23,0.04)",
-                }}
-              >
-                <BookOpen size={14} color="#1B4D3E" />
-                <span>{demoLoading === "STUDENT" ? "Opening…" : "Learner"}</span>
-              </button>
-              <button
-                type="button"
-                disabled={Boolean(demoLoading)}
-                onClick={() => handleDemoLogin("TUTOR")}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.35rem",
-                  padding: "0.55rem 0.4rem",
-                  fontSize: "0.775rem",
-                  fontWeight: 600,
-                  background: "#FFFFFF",
-                  border: "1px solid #E5DFD5",
-                  borderRadius: "8px",
-                  color: "#1C1917",
-                  cursor: "pointer",
-                  boxShadow: "0 1px 2px rgba(28,25,23,0.04)",
-                }}
-              >
-                <GraduationCap size={14} color="#1B4D3E" />
-                <span>{demoLoading === "TUTOR" ? "Opening…" : "Tutor"}</span>
-              </button>
-              <button
-                type="button"
-                disabled={Boolean(demoLoading)}
-                onClick={() => handleDemoLogin("ADMIN")}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.35rem",
-                  padding: "0.55rem 0.4rem",
-                  fontSize: "0.775rem",
-                  fontWeight: 600,
-                  background: "#FFFFFF",
-                  border: "1px solid #E5DFD5",
-                  borderRadius: "8px",
-                  color: "#1C1917",
-                  cursor: "pointer",
-                  boxShadow: "0 1px 2px rgba(28,25,23,0.04)",
-                }}
-              >
-                <ShieldCheck size={14} color="#1B4D3E" />
-                <span>{demoLoading === "ADMIN" ? "Opening…" : "Admin"}</span>
-              </button>
-            </div>
           </div>
 
           <p className={styles.termsNote}>

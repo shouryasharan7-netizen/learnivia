@@ -28,8 +28,8 @@ export async function addAvailability(formData: FormData) {
     where: { userId }
   });
 
-  if (!tutor || tutor.status !== "APPROVED") {
-    throw new Error("Only approved tutors can add availability.");
+  if (!tutor || (tutor.status !== "APPROVED" && tutor.status !== "SUSPENDED")) {
+    throw new Error("Only approved or active tutors can add availability.");
   }
 
   const dayOfWeek = parseInt(formData.get("dayOfWeek") as string);
@@ -45,6 +45,14 @@ export async function addAvailability(formData: FormData) {
       timezone: session.user.timezone || "UTC"
     }
   });
+
+  // Automatically reactivate suspended tutor profile once they set their available time
+  if (tutor.status === "SUSPENDED") {
+    await prisma.tutorProfile.update({
+      where: { id: tutor.id },
+      data: { status: "APPROVED" },
+    });
+  }
 
   revalidatePath("/sessions");
   revalidatePath("/dashboard");

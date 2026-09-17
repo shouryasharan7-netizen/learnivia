@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, ShieldCheck, BookOpen, ArrowRight, Users, Video, Clock, RotateCcw, AlertCircle, ChevronDown, Check } from "lucide-react";
+import { CheckCircle2, ShieldCheck, BookOpen, ArrowRight, Users, Video, Clock, RotateCcw, AlertCircle, ChevronDown, Check, Play } from "lucide-react";
 
 const MODULES = [
   {
@@ -11,6 +11,13 @@ const MODULES = [
     color: "#0D683B",
     bg: "#F0FDF4",
     estimatedMinutes: 10,
+    video: {
+      title: "Module 1 Video: Mentorship Mindset & Active Encouragement",
+      duration: "3:45",
+      embedUrl: "",
+      summary: "Learn why guiding beats lecturing, how to ask discovery questions, and techniques for sincere praise.",
+      keyPoints: ["Guide through questions, don't lecture", "Active listening & repetition", "Normalize mistakes as discoveries"],
+    },
     content: [
       {
         heading: "The Role of a Volunteer Tutor",
@@ -46,6 +53,13 @@ const MODULES = [
     color: "#C9922A",
     bg: "#F5F3FF",
     estimatedMinutes: 12,
+    video: {
+      title: "Module 2 Video: Supporting Diverse Learning Styles & Whiteboards",
+      duration: "4:15",
+      embedUrl: "",
+      summary: "Visual diagrams, step-by-step problem pacing, and accommodating attention and processing differences.",
+      keyPoints: ["Draw visual diagrams on whiteboard", "Break problems into numbered micro-steps", "No formal diagnosis required"],
+    },
     content: [
       {
         heading: "Every Learner is Different",
@@ -85,6 +99,13 @@ const MODULES = [
     color: "#1D4ED8",
     bg: "#EFF6FF",
     estimatedMinutes: 8,
+    video: {
+      title: "Module 3 Video: Online Zoom Tutoring Technical Best Practices",
+      duration: "3:20",
+      embedUrl: "",
+      summary: "Pre-flight audio/camera checks, collaborative whiteboard sharing, window isolation, and session pacing.",
+      keyPoints: ["Pre-flight audio check 5 mins before", "Share window not entire desktop", "5m warm-up + 40m study + 10m review"],
+    },
     content: [
       {
         heading: "Before Every Session",
@@ -124,6 +145,13 @@ const MODULES = [
     color: "#B45309",
     bg: "#FFFBEB",
     estimatedMinutes: 10,
+    video: {
+      title: "Module 4 Video: Safeguarding, Safety Boundaries & Protocol",
+      duration: "4:00",
+      embedUrl: "",
+      summary: "Strict platform-only communication, minor protection standards, and mandatory reporting protocols.",
+      keyPoints: ["Platform-only communication", "No unconsented recordings", "Report student safety concerns immediately"],
+    },
     content: [
       {
         heading: "Platform-Only Communication",
@@ -163,6 +191,13 @@ const MODULES = [
     color: "#0F766E",
     bg: "#F0FDFA",
     estimatedMinutes: 8,
+    video: {
+      title: "Module 5 Video: Verified Volunteer Hours & Transcript Rules",
+      duration: "3:10",
+      embedUrl: "",
+      summary: "Automated session logging, handling student no-shows, and downloading verifiable PDF transcripts.",
+      keyPoints: ["10-minute active participation rule", "Automated system logging", "Verifiable PDF transcript with unique IDs"],
+    },
     content: [
       {
         heading: "How Hours are Logged",
@@ -478,6 +513,125 @@ export default function TutorTrainingPage() {
                 {/* Module Content */}
                 {isOpen && (
                   <div style={{ padding: "0 1.5rem 1.5rem", borderTop: "1px solid #F3F4F6" }}>
+                    {/* Video Training Walkthrough Player */}
+                    <div
+                      style={{
+                        marginTop: "1.25rem",
+                        borderRadius: "12px",
+                        overflow: "hidden",
+                        border: "1px solid var(--wa-border, #E2E8F0)",
+                        background: "#FFFFFF",
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          padding: "0.85rem 1.15rem",
+                          background: mod.bg,
+                          borderBottom: "1px solid var(--wa-border, #E2E8F0)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          flexWrap: "wrap",
+                          gap: "0.5rem",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                          <Video size={16} color={mod.color} />
+                          <span style={{ fontSize: "0.875rem", fontWeight: 700, color: mod.color }}>
+                            {mod.video.title}
+                          </span>
+                        </div>
+                        <span
+                          style={{
+                            fontSize: "0.75rem",
+                            fontWeight: 600,
+                            background: "rgba(0,0,0,0.05)",
+                            padding: "0.2rem 0.6rem",
+                            borderRadius: "999px",
+                            color: "#475569",
+                          }}
+                        >
+                          {mod.video.duration} Video Lesson
+                        </span>
+                      </div>
+
+                      {mod.video.embedUrl ? (
+                        <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
+                          <iframe
+                            src={mod.video.embedUrl}
+                            title={mod.video.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            style={{ width: "100%", height: "100%", border: "none" }}
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          style={{
+                            padding: "1.5rem 1.25rem",
+                            background: "linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            textAlign: "center",
+                            gap: "0.75rem",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "52px",
+                              height: "52px",
+                              borderRadius: "50%",
+                              background: mod.color,
+                              color: "#FFFFFF",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                            }}
+                          >
+                            <Play size={24} style={{ marginLeft: "3px" }} />
+                          </div>
+                          <div>
+                            <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0F172A" }}>
+                              {mod.video.title}
+                            </div>
+                            <div style={{ fontSize: "0.8125rem", color: "#64748B", marginTop: "0.25rem", maxWidth: "520px" }}>
+                              {mod.video.summary}
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "0.5rem",
+                              flexWrap: "wrap",
+                              justifyContent: "center",
+                              marginTop: "0.25rem",
+                            }}
+                          >
+                            {mod.video.keyPoints.map((point: string, pIdx: number) => (
+                              <span
+                                key={pIdx}
+                                style={{
+                                  fontSize: "0.75rem",
+                                  color: "#334155",
+                                  background: "#FFFFFF",
+                                  padding: "0.3rem 0.65rem",
+                                  borderRadius: "6px",
+                                  border: "1px solid #E2E8F0",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  gap: "0.3rem",
+                                }}
+                              >
+                                <Check size={12} color={mod.color} /> {point}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                     {mod.content.map((section, idx) => (
                       <div key={idx} style={{ marginTop: "1.25rem" }}>
                         <h3

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { springs, buttonMotion } from "@/lib/motion";
-import { loginAsDemo } from "./signin/actions";
 import styles from "./page.module.css";
 import {
   CheckCircle2,
@@ -131,21 +130,6 @@ export default function HomeInteractiveClient({
 }: HomeInteractiveClientProps) {
   const [activeTab, setActiveTab] = useState<string>("k2");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [demoLoading, setDemoLoading] = useState<string | null>(null);
-
-  async function handleDemo(role: "STUDENT" | "TUTOR" | "ADMIN") {
-    setDemoLoading(role);
-    try {
-      const res = await loginAsDemo(role);
-      if (res?.success && res.redirectUrl) {
-        window.location.href = res.redirectUrl;
-      } else {
-        window.location.href = "/signin";
-      }
-    } catch {
-      window.location.href = "/signin";
-    }
-  }
 
   const currentBand = GRADE_BANDS.find((b) => b.id === activeTab) || GRADE_BANDS[0];
 
@@ -199,46 +183,6 @@ export default function HomeInteractiveClient({
                 <Award size={15} color="#1B4D3E" />
                 {tutorsCount > 0 ? `${tutorsCount}+ tutors` : "Screened tutors"}
               </span>
-            </div>
-
-            {/* Quick Demo Workspaces Preview */}
-            <div className={styles.demoBar}>
-              <div className={styles.demoBarHeader}>
-                <span className={styles.demoBarTitle}>Explore Redesigned Workspaces</span>
-                <span className={styles.demoBarSub}>1-Click Instant Preview</span>
-              </div>
-              <p className={styles.demoBarText}>
-                Tour any of the authenticated workspaces with live verified data:
-              </p>
-              <div className={styles.demoBarButtons}>
-                <button
-                  type="button"
-                  disabled={Boolean(demoLoading)}
-                  onClick={() => handleDemo("STUDENT")}
-                  className={styles.demoBtn}
-                >
-                  <BookOpen size={14} color="#1B4D3E" />
-                  <span>{demoLoading === "STUDENT" ? "Opening…" : "Learner Workspace"}</span>
-                </button>
-                <button
-                  type="button"
-                  disabled={Boolean(demoLoading)}
-                  onClick={() => handleDemo("TUTOR")}
-                  className={styles.demoBtn}
-                >
-                  <GraduationCap size={14} color="#1B4D3E" />
-                  <span>{demoLoading === "TUTOR" ? "Opening…" : "Tutor Center"}</span>
-                </button>
-                <button
-                  type="button"
-                  disabled={Boolean(demoLoading)}
-                  onClick={() => handleDemo("ADMIN")}
-                  className={styles.demoBtn}
-                >
-                  <ShieldCheck size={14} color="#1B4D3E" />
-                  <span>{demoLoading === "ADMIN" ? "Opening…" : "Admin Center"}</span>
-                </button>
-              </div>
             </div>
           </div>
 

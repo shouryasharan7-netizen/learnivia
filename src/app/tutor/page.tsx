@@ -43,26 +43,7 @@ export default async function TutorDashboard() {
   const session = await auth();
 
   if (!session?.user) {
-    return (
-      <main className={styles.page}>
-        <div className={styles.container}>
-          <div className={styles.authNoticeCard}>
-            <div className={styles.authNoticeIcon}>
-              <GraduationCap size={24} aria-hidden="true" />
-            </div>
-            <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
-              Sign In to Tutor Workspace
-            </h1>
-            <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
-              Please log in to manage your volunteer tutoring appointments, workshops, and service record.
-            </p>
-            <Link href="/signin?callbackUrl=/tutor" className={styles.primaryBtn} style={{ display: "inline-flex" }}>
-              Sign In to Your Account
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
+    redirect("/signin?callbackUrl=/tutor");
   }
 
   // Safely resolve userId and role with DB fallback
@@ -242,6 +223,73 @@ export default async function TutorDashboard() {
             <Link href={ROUTES.support} className={styles.secondaryBtn} style={{ display: "inline-flex" }}>
               Contact Support
             </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (tutor.status === "SUSPENDED") {
+    const isMissingAvailability = (tutor.availabilities || []).length === 0;
+    const isIncompleteTraining = passedModules < 5;
+
+    return (
+      <main className={styles.page}>
+        <div className={styles.container}>
+          <div className={styles.authNoticeCard} style={{ maxWidth: "600px" }}>
+            <div className={styles.authNoticeIcon} style={{ background: "#FEE2E2", color: "#991B1B" }}>
+              <AlertTriangle size={24} aria-hidden="true" />
+            </div>
+            <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
+              Tutor Profile Inactive
+            </h1>
+            <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
+              {isMissingAvailability
+                ? "Your volunteer educator profile has been deactivated because weekly availability hours were not added within 3 days of joining. To reactivate your profile and start mentoring students, simply add your available weekly time below."
+                : isIncompleteTraining
+                ? "Your volunteer application was deactivated because mandatory safeguarding training was not completed within the 15-day onboarding window. Complete all 5 modules to request reactivation."
+                : "Your tutor profile has been temporarily deactivated for inactivity. Please contact support or add availability to reactivate."}
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", width: "100%" }}>
+              {isIncompleteTraining ? (
+                <Link href={ROUTES.tutor.training} className={styles.primaryBtn} style={{ display: "inline-flex" }}>
+                  <GraduationCap size={15} />
+                  <span>Complete Mandatory Training ({passedModules}/5)</span>
+                </Link>
+              ) : (
+                <form action={addAvailability} style={{ display: "flex", flexDirection: "column", gap: "0.75rem", width: "100%", maxWidth: "420px", margin: "0 auto", textAlign: "left", background: "#FFFFFF", padding: "1.25rem", borderRadius: "10px", border: "1px solid #E2E8F0" }}>
+                  <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0F172A" }}>Set Your Available Hours to Reactivate:</span>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
+                    <div>
+                      <label style={{ fontSize: "0.75rem", color: "#475569" }}>Day</label>
+                      <select name="dayOfWeek" style={{ width: "100%", padding: "0.45rem", borderRadius: "6px", border: "1px solid #CBD5E1" }} defaultValue="1">
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="0">Sunday</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "0.75rem", color: "#475569" }}>Time (Start – End)</label>
+                      <div style={{ display: "flex", gap: "0.25rem" }}>
+                        <input type="time" name="startTime" defaultValue="16:00" style={{ width: "50%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.75rem" }} required />
+                        <input type="time" name="endTime" defaultValue="17:00" style={{ width: "50%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.75rem" }} required />
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" className={styles.primaryBtn} style={{ marginTop: "0.5rem", width: "100%", justifyContent: "center" }}>
+                    Save Hours &amp; Reactivate Profile
+                  </button>
+                </form>
+              )}
+              <Link href={ROUTES.support} className={styles.secondaryBtn} style={{ display: "inline-flex" }}>
+                Contact Support
+              </Link>
+            </div>
           </div>
         </div>
       </main>

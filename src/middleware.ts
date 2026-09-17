@@ -140,8 +140,8 @@ export default auth((req) => {
   const isOnboardingPath = onboardingPaths.some(path => nextUrl.pathname.startsWith(path))
 
   if (isLoggedIn) {
-    // If logged in and visiting signin or signup, redirect to role interface
-    if (nextUrl.pathname === "/signin" || nextUrl.pathname === "/signup") {
+    // If logged in and visiting home, signin, or signup, immediately redirect at the edge to role workspace
+    if (nextUrl.pathname === "/" || nextUrl.pathname === "/signin" || nextUrl.pathname === "/signup") {
       const userRole = req.auth?.user?.role;
       const target = userRole === "TUTOR" ? "/tutor" : "/dashboard";
       return NextResponse.redirect(new URL(target, req.url));

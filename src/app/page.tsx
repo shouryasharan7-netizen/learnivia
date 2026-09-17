@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import HomeInteractiveClient from "./HomeInteractiveClient";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 30; // ISR: 30s cache for live stats
 
 export const metadata = {
   title: "Learnivia — Free Online Peer Tutoring for K–10 Students",

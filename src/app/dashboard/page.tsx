@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { ROUTES } from "@/lib/routes";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import styles from "./dashboard.module.css";
 import { NextActionPanel } from "./NextActionPanel";
 import { UpcomingSessionCard } from "./UpcomingSessionCard";
@@ -29,44 +30,7 @@ export default async function StudentDashboard() {
   const user = await getCurrentUser();
 
   if (!user) {
-    return (
-      <main className={styles.page}>
-        <div className={styles.container}>
-          <div
-            style={{
-              background: "var(--wa-white)",
-              border: "1px solid var(--wa-border)",
-              borderRadius: "var(--wa-radius-lg)",
-              padding: "3rem 2rem",
-              textAlign: "center",
-              boxShadow: "var(--wa-shadow-sm)",
-            }}
-          >
-            <h1
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "1.75rem",
-                fontWeight: 600,
-                color: "var(--wa-ink)",
-                marginBottom: "0.5rem",
-              }}
-            >
-              Sign In to Learnivia
-            </h1>
-            <p style={{ color: "var(--wa-muted)", marginBottom: "1.5rem" }}>
-              Please sign in to access your learner workspace, upcoming sessions, and homework queue.
-            </p>
-            <Link
-              href={ROUTES.auth.signIn}
-              className={styles.nextActionBtn}
-              style={{ display: "inline-flex" }}
-            >
-              Sign In to Your Account
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
+    redirect(ROUTES.auth.signIn);
   }
 
   const now = new Date();

@@ -30,7 +30,7 @@ export default function RunAvailabilityAuditButton() {
           total: data.summary.totalInactiveWithNoSlots,
           suspended: data.summary.suspendedCount,
           reminders: data.summary.remindersSentCount,
-          message: `Audit complete: ${data.summary.totalInactiveWithNoSlots} tutors without slots evaluated. ${data.summary.remindersSentCount} reminders sent, ${data.summary.suspendedCount} suspended for >=3 weeks inactivity.`,
+          message: `Audit complete: ${data.summary.totalInactiveWithNoSlots} missing slots & ${data.summary.totalIncompleteTraining} incomplete training evaluated. ${data.summary.suspendedForMissingAvailability} suspended (>3 days no slots), ${data.summary.suspendedForIncompleteTraining} suspended (>15 days incomplete training). ${data.summary.remindersSentCount} reminders sent.`,
         });
       } else {
         setResult({
@@ -60,7 +60,7 @@ export default function RunAvailabilityAuditButton() {
             gap: "0.5rem",
             padding: "0.55rem 1rem",
             borderRadius: "8px",
-            background: "#1B4D3E",
+            background: "var(--wa-forest, #2563EB)",
             color: "#FFFFFF",
             border: "none",
             fontWeight: 600,
@@ -76,11 +76,11 @@ export default function RunAvailabilityAuditButton() {
           ) : (
             <Clock size={15} />
           )}
-          <span>{loading ? "Auditing Availability..." : "Run Availability & Inactivity Audit"}</span>
+          <span>{loading ? "Auditing Compliance..." : "Run Compliance & Inactivity Audit"}</span>
         </button>
 
         <span style={{ fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
-          Automatically enforces 4-day reminder emails &amp; 3-week inactivity suspensions.
+          Automatically enforces 3-day availability removal &amp; 15-day incomplete training removal.
         </span>
       </div>
 

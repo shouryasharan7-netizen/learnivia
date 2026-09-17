@@ -175,19 +175,19 @@ export async function sendTutorAvailabilityReminder(tutorEmail: string, tutorNam
       subject: "Action Required: Set Your Weekly Tutoring Availability - Learnivia",
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
-          <h2 style="color: #1b4d3e; font-size: 22px; margin-bottom: 16px;">Reminder: Please add your available tutoring hours</h2>
+          <h2 style="color: #2563eb; font-size: 22px; margin-bottom: 16px;">Reminder: Please add your available tutoring hours</h2>
           <p>Hi ${tutorName},</p>
-          <p>You recently joined Learnivia as an approved volunteer educator, but you haven't set your weekly available time slots yet.</p>
+          <p>You recently joined Learnivia as a volunteer educator, but you haven't set your weekly available time slots yet.</p>
           
           <div style="background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 18px; margin: 20px 0;">
             <p style="margin: 0; font-size: 14px; color: #92400e; font-weight: 500;">
-              Important Policy: Volunteer tutors must specify at least one weekly available time slot within 3 weeks of approval to maintain active tutor status. (${daysRemaining} days remaining).
+              Important Policy: Volunteer tutors must specify their available hours within 3 days of joining to maintain active tutor status. You have approximately <strong>${daysRemaining} ${daysRemaining === 1 ? "day" : "days"} remaining</strong> before your profile is automatically deactivated.
             </p>
           </div>
 
           <p>Adding your availability takes less than 2 minutes and lets eager students book free 1-on-1 sessions with you.</p>
           
-          <a href="https://learnivia-green.vercel.app/tutor" style="display: inline-block; background-color: #1b4d3e; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin: 12px 0;">
+          <a href="https://learnivia-green.vercel.app/tutor" style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin: 12px 0;">
             Set Weekly Availability Now →
           </a>
 
@@ -200,6 +200,46 @@ export async function sendTutorAvailabilityReminder(tutorEmail: string, tutorNam
     }
   } catch (error) {
     console.error("Failed to send tutor availability reminder:", error);
+  }
+}
+
+export async function sendTutorTrainingReminder(tutorEmail: string, tutorName: string, completedCount: number, daysRemaining: number) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping training reminder email.");
+    return;
+  }
+  try {
+    const res = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: tutorEmail,
+      subject: "Action Required: Complete Tutor Training (15-Day Policy) - Learnivia",
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
+          <h2 style="color: #2563eb; font-size: 22px; margin-bottom: 16px;">Action Required: Complete Mandatory Tutor Training</h2>
+          <p>Hi ${tutorName},</p>
+          <p>You have completed <strong>${completedCount} of 5</strong> mandatory safeguarding and tutoring training modules on Learnivia.</p>
+          
+          <div style="background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 18px; margin: 20px 0;">
+            <p style="margin: 0; font-size: 14px; color: #991b1b; font-weight: 500;">
+              Important Policy: Volunteer tutors must complete all 5 mandatory modules within 15 days of applying. You have <strong>${daysRemaining} ${daysRemaining === 1 ? "day" : "days"} remaining</strong> before your profile is automatically removed.
+            </p>
+          </div>
+
+          <p>Completing your remaining modules takes around 15–20 minutes and ensures student safety and high-quality mentorship.</p>
+          
+          <a href="https://learnivia-green.vercel.app/tutor/training" style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin: 12px 0;">
+            Complete Training Modules Now →
+          </a>
+
+          <p style="font-size: 13px; color: #78716c; margin-top: 24px;">Thank you for helping keep our learning community safe and empowering!<br>The Learnivia Team</p>
+        </div>
+      `,
+    });
+    if (res.error) {
+      console.warn("Resend training reminder delivery notice:", res.error);
+    }
+  } catch (error) {
+    console.error("Failed to send tutor training reminder:", error);
   }
 }
 
