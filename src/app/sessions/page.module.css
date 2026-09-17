@@ -72,8 +72,8 @@
 }
 .searchInput::placeholder { color: #A89F94; }
 .searchInput:focus {
-  border-color: #2D6A4F;
-  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.10);
+  border-color: var(--wa-green);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .sortSelect {
@@ -97,7 +97,7 @@
   padding-right: 2.25rem;
   transition: border-color 150ms ease;
 }
-.select:focus { border-color: #2D6A4F; }
+.select:focus { border-color: var(--wa-green); }
 
 /* ==================
    Filter Pills
@@ -125,15 +125,15 @@
   white-space: nowrap;
 }
 .filterPill:hover {
-  border-color: #2D6A4F;
-  color: #2D6A4F;
-  background: #EAF3ED;
+  border-color: var(--wa-green);
+  color: var(--wa-green);
+  background: var(--wa-green-light);
 }
 
 .filterPillActive {
-  background: #EAF3ED;
-  border-color: #2D6A4F;
-  color: #235840;
+  background: var(--wa-green-light);
+  border-color: var(--wa-green);
+  color: var(--wa-green);
   font-weight: 700;
 }
 
@@ -152,7 +152,7 @@
   align-items: center;
   gap: 0.25rem;
 }
-.addSubjectBtn:hover { border-color: #2D6A4F; color: #2D6A4F; }
+.addSubjectBtn:hover { border-color: var(--wa-green); color: var(--wa-green); }
 
 /* ==================
    Session Cards Grid
@@ -197,7 +197,7 @@
 .cardTime {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #2D6A4F;
+  color: var(--wa-green);
 }
 
 .cardDesc {

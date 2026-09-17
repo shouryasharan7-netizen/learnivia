@@ -145,14 +145,14 @@
 }
 
 .categoryBtnActive {
-  background: #14243B;
+  background: var(--wa-green);
   color: #FFFFFF;
-  border-color: #14243B;
-  box-shadow: 0 4px 10px rgba(20, 36, 59, 0.18);
+  border-color: var(--wa-green);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
 }
 
 .categoryBtnActive:hover {
-  background: #0F172A;
+  background: var(--wa-green-hover);
   color: #FFFFFF;
 }
 
@@ -172,7 +172,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #0E8345;
+  background: var(--wa-green);
   color: #FFFFFF;
   font-weight: 700;
   font-size: 0.9rem;
@@ -180,12 +180,12 @@
   border-radius: 9999px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(14, 131, 69, 0.25);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
   transition: all 0.2s ease;
 }
 
 .shareActionBtn:hover {
-  background: #0B6B38;
+  background: var(--wa-green-hover);
   transform: translateY(-1px);
 }
 
@@ -462,26 +462,29 @@
 
 /* Share Your Story Form Drawer / Modal */
 .shareStoryBox {
-  background: linear-gradient(135deg, #14243B 0%, #1E3A5F 100%);
+  background: #FFFFFF;
+  border: 1.5px solid var(--wa-border);
   border-radius: 1.75rem;
-  padding: 3rem 2rem;
-  color: #FFFFFF;
+  padding: 3.5rem 2rem;
+  color: #0F172A;
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 30px rgba(20, 36, 59, 0.2);
+  box-shadow: var(--wa-shadow-md);
 }
 
 .shareStoryTitle {
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 800;
+  color: #0F172A;
   margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
 }
 
 .shareStorySub {
-  color: #94A3B8;
+  color: #64748B;
   max-width: 600px;
-  margin: 0 auto 2rem;
+  margin: 0 auto 2.5rem;
   line-height: 1.6;
   font-size: 1.05rem;
 }
@@ -490,11 +493,10 @@
   max-width: 580px;
   margin: 0 auto;
   text-align: left;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #F8FAFC;
+  border: 1px solid var(--wa-border);
   padding: 2rem;
   border-radius: 1.25rem;
-  backdrop-filter: blur(10px);
 }
 
 .formRow {
@@ -519,29 +521,30 @@
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 0.4rem;
-  color: #E2E8F0;
+  color: #334155;
 }
 
 .formInput, .formTextarea {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
-  color: #FFFFFF;
+  border: 1px solid var(--wa-border);
+  background: #FFFFFF;
+  color: #0F172A;
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .formInput:focus, .formTextarea:focus {
-  border-color: #1EB589;
-  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--wa-green);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  background: #FFFFFF;
 }
 
 .submitBtn {
   width: 100%;
-  background: #0E8345;
+  background: var(--wa-green);
   color: #FFFFFF;
   font-weight: 700;
   font-size: 1rem;
@@ -549,12 +552,12 @@
   border-radius: 9999px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(14, 131, 69, 0.35);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
   transition: all 0.2s;
 }
 
 .submitBtn:hover {
-  background: #0B6B38;
+  background: var(--wa-green-hover);
 }
 
 /* Modal Reader */
@@ -697,17 +700,17 @@
 }
 
 .modalCtaBtn {
-  background: #0E8345;
+  background: var(--wa-green);
   color: #FFFFFF;
   padding: 0.8rem 1.75rem;
   border-radius: 9999px;
   font-weight: 700;
   text-decoration: none;
   font-size: 0.95rem;
-  box-shadow: 0 4px 12px rgba(14, 131, 69, 0.25);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
   transition: all 0.2s;
 }
 
 .modalCtaBtn:hover {
-  background: #0B6B38;
+  background: var(--wa-green-hover);
 }

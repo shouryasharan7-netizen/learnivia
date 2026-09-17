@@ -1,77 +1,78 @@
 /* =========================================
-   LEARNIVIA — THE LEARNING COMMONS DESIGN SYSTEM
-   "Tactile, Editorial, Warm, and Composed"
+   LEARNIVIA — MODERN PRECISION EDTECH SYSTEM
+   "Crisp, Bright, Light, and Tech-Forward"
    ========================================= */
 
 :root {
-  /* ── The Learning Commons Palette ───────── */
-  --wa-paper:          #F4F0E8;
-  --wa-cream:          #F4F0E8;
-  --wa-cream-dark:     #ECE7DD;
-  --wa-cream-mid:      #E5DFD4;
-  --wa-white:          #FBFAF7;
+  /* ── Modern Precision Canvas & Surfaces (Bright & Clean) ── */
+  --wa-paper:          #F8FAFC;
+  --wa-cream:          #F8FAFC;
+  --wa-cream-dark:     #F1F5F9;
+  --wa-cream-mid:      #E2E8F0;
+  --wa-white:          #FFFFFF;
 
-  /* ── Typography (Dark Ink) ──────────────── */
-  --wa-ink:            #1E2722;
-  --wa-text:           #1E2722;
-  --wa-muted:          #66716A;
-  --wa-subtle:         #8A948E;
+  /* ── Typography (Sharp High-Contrast Slate) ── */
+  --wa-ink:            #0F172A;
+  --wa-text:           #0F172A;
+  --wa-muted:          #475569;
+  --wa-subtle:         #94A3B8;
 
-  /* ── Hairline Borders ───────────────────── */
-  --wa-border:         #D9D3C8;
-  --wa-border-hairline:#D9D3C8;
-  --wa-border-strong:  #C4BCB0;
+  /* ── Crisp Hairline Borders ──────────────── */
+  --wa-border:         #E2E8F0;
+  --wa-border-hairline:#E2E8F0;
+  --wa-border-strong:  #CBD5E1;
 
-  /* ── Forest — Primary Accent ────────────── */
-  --wa-forest:         #234B3B;
-  --wa-forest-light:   #DCE8DF;
-  --wa-green:          #234B3B;
-  --wa-green-hover:    #1A392D;
-  --wa-green-active:   #132A21;
-  --wa-green-light:    #DCE8DF;
-  --wa-green-mid:      #2F614D;
-  --wa-green-muted:    rgba(35, 75, 59, 0.12);
+  /* ── Electric Cobalt Blue — Primary Brand Accent ──── */
+  --wa-forest:         #2563EB;
+  --wa-forest-light:   #EFF6FF;
+  --wa-green:          #2563EB;
+  --wa-green-hover:    #1D4ED8;
+  --wa-green-active:   #1E40AF;
+  --wa-green-light:    #EFF6FF;
+  --wa-green-mid:      #3B82F6;
+  --wa-green-muted:    rgba(37, 99, 235, 0.08);
 
-  /* ── Terracotta — Secondary Accent ──────── */
-  --wa-terra:          #B85A43;
-  --wa-terra-hover:    #A04A34;
-  --wa-terra-light:    #F1DED6;
-  --wa-terra-muted:    rgba(184, 90, 67, 0.12);
+  /* ── Sky Azure — Secondary Tech Accent ────── */
+  --wa-terra:          #0284C7;
+  --wa-terracotta:     #0284C7;
+  --wa-terra-hover:    #0369A1;
+  --wa-terra-light:    #E0F2FE;
+  --wa-terra-muted:    rgba(2, 132, 199, 0.08);
 
-  /* ── Ochre — Tertiary Accent ────────────── */
-  --wa-ochre:          #B18435;
-  --wa-ochre-hover:    #986E2A;
-  --wa-ochre-light:    #F2E7C8;
-  --wa-ochre-muted:    rgba(177, 132, 53, 0.12);
+  /* ── Amber — Tertiary Status Accent ───────── */
+  --wa-ochre:          #D97706;
+  --wa-ochre-hover:    #B45309;
+  --wa-ochre-light:    #FEF3C7;
+  --wa-ochre-muted:    rgba(217, 119, 6, 0.08);
 
-  /* ── Slate Blue — Deep Utility Accent ───── */
-  --wa-slate-blue:     #526B7A;
-  --wa-navy:           #526B7A;
-  --wa-navy-hover:     #425662;
-  --wa-navy-light:     #E3E9ED;
+  /* ── Slate Steel — Deep Utility Accent ────── */
+  --wa-slate-blue:     #334155;
+  --wa-navy:           #1E293B;
+  --wa-navy-hover:     #0F172A;
+  --wa-navy-light:     #F1F5F9;
 
-  /* ── Semantic Colors ────────────────────── */
-  --wa-success:        #234B3B;
-  --wa-success-bg:     #DCE8DF;
-  --wa-warning:        #B18435;
-  --wa-warning-bg:     #F2E7C8;
-  --wa-error:          #B85A43;
-  --wa-error-bg:       #F1DED6;
-  --wa-info:           #526B7A;
-  --wa-info-bg:        #E3E9ED;
+  /* ── Semantic Colors (Bright & Clear) ─────── */
+  --wa-success:        #10B981;
+  --wa-success-bg:     #ECFDF5;
+  --wa-warning:        #D97706;
+  --wa-warning-bg:     #FEF3C7;
+  --wa-error:          #EF4444;
+  --wa-error-bg:       #FEF2F2;
+  --wa-info:           #0284C7;
+  --wa-info-bg:        #E0F2FE;
 
-  /* ── Shadows (Quiet surfaces instead of constant shadows) ── */
-  --wa-shadow-xs:      0 1px 2px rgba(30, 39, 34, 0.04);
-  --wa-shadow-sm:      0 1px 3px rgba(30, 39, 34, 0.06);
-  --wa-shadow-md:      0 3px 8px rgba(30, 39, 34, 0.08);
-  --wa-shadow-lg:      0 6px 16px rgba(30, 39, 34, 0.10);
-  --wa-shadow-hover:   0 4px 12px rgba(30, 39, 34, 0.09);
+  /* ── Luminous Modern Soft Shadows ─────────── */
+  --wa-shadow-xs:      0 1px 2px rgba(15, 23, 42, 0.04);
+  --wa-shadow-sm:      0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --wa-shadow-md:      0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --wa-shadow-lg:      0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --wa-shadow-hover:   0 12px 24px -4px rgba(37, 99, 235, 0.12), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
 
-  /* ── Radius — Deliberate 8–12px geometry ─── */
+  /* ── Radius — Deliberate 8–14px geometry ─── */
   --wa-radius-sm:      8px;
   --wa-radius-md:      10px;
-  --wa-radius-lg:      12px;
-  --wa-radius-xl:      16px;
+  --wa-radius-lg:      14px;
+  --wa-radius-xl:      18px;
   --wa-radius-pill:    999px;
 
   /* ── Transitions — Subtle 150–220ms ───────── */
@@ -227,7 +228,7 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: var(--font-sans, 'IBM Plex Sans', system-ui, -apple-system, sans-serif);
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif);
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--wa-text);
@@ -238,13 +239,13 @@ body {
 
 main { flex: 1; }
 
-/* Display & Section Headings — Source Serif 4 editorial authority */
+/* Display & Section Headings — Plus Jakarta Sans modern tech authority */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif, 'Source Serif 4', Georgia, serif);
-  font-weight: 600;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif);
+  font-weight: 700;
   line-height: 1.2;
   color: var(--wa-ink);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
 }
 
 /* Technical IDs, verification codes, timestamps — IBM Plex Mono */
@@ -253,11 +254,11 @@ code, kbd, samp, pre, .font-mono, [data-mono="true"] {
 }
 
 .font-serif {
-  font-family: var(--font-serif, 'Source Serif 4', Georgia, serif);
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
 }
 
 .font-sans {
-  font-family: var(--font-sans, 'IBM Plex Sans', system-ui, sans-serif);
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
 }
 
 p { line-height: 1.6; }

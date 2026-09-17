@@ -42,15 +42,17 @@ export function Footer() {
             {/* Brand column */}
             <div className={styles.brand}>
               <Link href="/" className={styles.logoLink} aria-label="Learnivia Home">
-                {/* White SVG logo for dark background */}
-                <Image
-                  src="/images/logo-white.svg"
-                  alt="Learnivia"
-                  width={140}
-                  height={32}
-                  style={{ display: "block" }}
-                  unoptimized
-                />
+                <div className={styles.brandRow}>
+                  <Image
+                    src="/images/logo.png"
+                    alt="Learnivia Fox Mascot"
+                    width={34}
+                    height={34}
+                    style={{ display: "block" }}
+                    unoptimized
+                  />
+                  <span className={styles.brandName}>Learnivia</span>
+                </div>
               </Link>
               <p className={styles.tagline}>
                 Free 1-on-1 peer tutoring for K–10 students, delivered by verified volunteer tutors on Zoom.

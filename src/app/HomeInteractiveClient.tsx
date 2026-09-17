@@ -158,6 +158,11 @@ export default function HomeInteractiveClient({
 
           {/* Left — headline + CTA */}
           <div className={styles.heroLeftCol}>
+            <div className={styles.heroBadge}>
+              <span className={styles.heroBadgeDot} />
+              <span>Free Peer Tutoring • Verified K–10 Community</span>
+            </div>
+
             <h1 className={styles.heroTitle}>
               Free tutoring,<br />
               <span className={styles.heroTitleAccent}>one Zoom call away.</span>

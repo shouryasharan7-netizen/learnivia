@@ -89,7 +89,7 @@
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #0E8345;
+  background: var(--wa-green);
   color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -214,7 +214,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #0E8345;
+  background: var(--wa-green);
   color: #FFF;
   display: flex;
   align-items: center;

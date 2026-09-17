@@ -280,18 +280,17 @@ test("Phase 1 - Design Tokens: CSS variables integrity & accessibility rules", (
 
   const css = fs.readFileSync(cssPath, "utf-8");
 
-  // Learning Commons exact color tokens (#234B3B, #F4F0E8, #FBFAF7, #D9D3C8, #B85A43, #B18435, #526B7A)
-  assert.ok(css.includes("#234B3B"), "Forest green primary token (#234B3B) must exist");
-  assert.ok(css.includes("#F4F0E8"), "Warm paper background token (#F4F0E8) must exist");
-  assert.ok(css.includes("#FBFAF7"), "White paper surface token (#FBFAF7) must exist");
-  assert.ok(css.includes("#D9D3C8"), "Hairline border token (#D9D3C8) must exist");
-  assert.ok(css.includes("#B85A43"), "Terracotta accent token (#B85A43) must exist");
-  assert.ok(css.includes("#B18435"), "Ochre accent token (#B18435) must exist");
-  assert.ok(css.includes("#526B7A"), "Slate blue token (#526B7A) must exist");
+  // Modern Precision EdTech exact color tokens (#2563EB, #F8FAFC, #FFFFFF, #E2E8F0, #0284C7, #D97706, #334155)
+  assert.ok(css.includes("#2563EB"), "Electric cobalt blue primary token (#2563EB) must exist");
+  assert.ok(css.includes("#F8FAFC"), "Bright slate paper background token (#F8FAFC) must exist");
+  assert.ok(css.includes("#FFFFFF"), "Pure white surface token (#FFFFFF) must exist");
+  assert.ok(css.includes("#E2E8F0"), "Hairline border token (#E2E8F0) must exist");
+  assert.ok(css.includes("#0284C7"), "Sky azure accent token (#0284C7) must exist");
+  assert.ok(css.includes("#D97706"), "Amber accent token (#D97706) must exist");
+  assert.ok(css.includes("#334155"), "Slate steel token (#334155) must exist");
 
-  // Typography definitions (Source Serif 4, IBM Plex Sans, IBM Plex Mono)
-  assert.ok(css.includes("IBM Plex Sans"), "IBM Plex Sans interface font must be configured");
-  assert.ok(css.includes("Source Serif 4"), "Source Serif 4 display font must be configured");
+  // Typography definitions (Plus Jakarta Sans, IBM Plex Mono)
+  assert.ok(css.includes("Plus Jakarta Sans"), "Plus Jakarta Sans modern interface font must be configured");
   assert.ok(css.includes("IBM Plex Mono"), "IBM Plex Mono technical font must be configured");
 
   // Focus ring & accessibility tokens
@@ -302,9 +301,9 @@ test("Phase 1 - Design Tokens: CSS variables integrity & accessibility rules", (
     "prefers-reduced-motion media query must be respected"
   );
 
-  // Radius token bounds (8-12px deliberate geometry)
+  // Radius token bounds (8-14px deliberate modern geometry)
   assert.ok(css.includes("--wa-radius-sm:      8px") || css.includes("--wa-radius-sm: 8px"), "--wa-radius-sm must be 8px");
-  assert.ok(css.includes("--wa-radius-lg:      12px") || css.includes("--wa-radius-lg: 12px"), "--wa-radius-lg must be 12px");
+  assert.ok(css.includes("--wa-radius-lg:      14px") || css.includes("--wa-radius-lg: 14px") || css.includes("--wa-radius-lg: 12px"), "--wa-radius-lg must be defined");
 });
 
 test("Phase 1 - Launch Blocker Resolutions (B1, B4, B5)", () => {

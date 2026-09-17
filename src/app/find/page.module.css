@@ -278,17 +278,20 @@
   justify-content: center;
   gap: 0.45rem;
   padding: 0.75rem 1rem;
-  background-color: var(--wa-forest);
-  color: var(--wa-white);
+  background-color: var(--wa-green);
+  color: #FFFFFF;
   border-radius: var(--wa-radius-md);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
-  transition: background-color var(--wa-transition);
+  transition: all 180ms ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.22);
 }
 
 .bookBtn:hover {
   background-color: var(--wa-green-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.32);
 }
 
 /* ── Empty State ── */
