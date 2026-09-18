@@ -65,60 +65,77 @@ export function SidebarNav({
       className={className}
       aria-label="Platform navigation"
       style={{
-        width: "250px",
-        minWidth: "250px",
+        width: "256px",
+        minWidth: "256px",
         height: "100vh",
         position: "sticky",
         top: 0,
-        background: "var(--wa-white)",
-        borderRight: "1px solid var(--wa-border)",
+        background: "var(--wa-paper, #FAF7F2)",
+        borderRight: "1px solid var(--wa-border, #E6DFD5)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        padding: "1.25rem 1rem",
+        padding: "1.5rem 1.15rem",
         zIndex: 40,
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
         {/* Brand Header */}
-        <div style={{ paddingBottom: "1.25rem", paddingLeft: "0.5rem" }}>
+        <div style={{ paddingBottom: "1.25rem", paddingLeft: "0.4rem" }}>
           <Link
             href={ROUTES.learner.home}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.6rem",
+              gap: "0.65rem",
               textDecoration: "none",
             }}
           >
             <div
               style={{
-                width: 28,
-                height: 28,
-                borderRadius: "7px",
-                background: "var(--wa-green)",
+                width: 32,
+                height: 32,
+                borderRadius: "8px",
+                background: "var(--wa-crimson, #8B263E)",
                 color: "#FFFFFF",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontWeight: 800,
-                fontSize: "0.875rem",
+                fontFamily: "var(--font-serif, serif)",
+                fontWeight: 700,
+                fontSize: "1rem",
+                boxShadow: "0 2px 5px rgba(139, 38, 62, 0.25)",
               }}
               aria-hidden="true"
             >
               L
             </div>
-            <span
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "1.375rem",
-                fontWeight: 600,
-                color: "var(--wa-ink)",
-                letterSpacing: "-0.015em",
-              }}
-            >
-              Learnivia
-            </span>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-serif, 'Fraunces', Georgia, serif)",
+                  fontSize: "1.3rem",
+                  fontWeight: 600,
+                  color: "var(--wa-ink, #1A1615)",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.15,
+                }}
+              >
+                Learnivia
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono, monospace)",
+                  fontSize: "0.625rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "var(--wa-muted, #685E5A)",
+                }}
+              >
+                Academic Salon
+              </span>
+            </div>
           </Link>
         </div>
 
@@ -130,10 +147,11 @@ export function SidebarNav({
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "0.25rem",
+            gap: "0.2rem",
             overflowY: "auto",
             flex: 1,
-            paddingRight: "0.25rem",
+            paddingRight: "0.2rem",
+            marginTop: "0.5rem",
           }}
         >
           {activeView === "admin" ? (
@@ -141,12 +159,13 @@ export function SidebarNav({
             <>
               <div
                 style={{
-                  fontSize: "0.6875rem",
+                  fontFamily: "var(--font-mono, monospace)",
+                  fontSize: "0.65rem",
                   fontWeight: 700,
                   textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "var(--wa-muted)",
-                  padding: "0.5rem 0.5rem 0.25rem",
+                  letterSpacing: "0.08em",
+                  color: "var(--wa-muted, #685E5A)",
+                  padding: "0.65rem 0.65rem 0.25rem",
                 }}
               >
                 Admin Center
@@ -166,18 +185,19 @@ export function SidebarNav({
             <>
               <div
                 style={{
-                  fontSize: "0.6875rem",
+                  fontFamily: "var(--font-mono, monospace)",
+                  fontSize: "0.65rem",
                   fontWeight: 700,
                   textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "var(--wa-muted)",
-                  padding: "0.5rem 0.5rem 0.25rem",
+                  letterSpacing: "0.08em",
+                  color: "var(--wa-muted, #685E5A)",
+                  padding: "0.65rem 0.65rem 0.25rem",
                 }}
               >
-                Tutor Tools
+                Tutor Folio
               </div>
               <NavItem href={ROUTES.tutor.home} label="Tutor Overview" icon={Home} active={isLinkActive(ROUTES.tutor.home)} />
-              <NavItem href={ROUTES.tutor.transcript} label="Verified Hours" icon={Award} active={isLinkActive(ROUTES.tutor.transcript)} />
+              <NavItem href={ROUTES.tutor.transcript} label="Verified Service Hours" icon={Award} active={isLinkActive(ROUTES.tutor.transcript)} />
               <NavItem href={ROUTES.tutor.training} label="Safeguarding Training" icon={ShieldCheck} active={isLinkActive(ROUTES.tutor.training)} />
               <NavItem href={ROUTES.sessions} label="Upcoming Sessions" icon={CalendarCheck} active={isLinkActive(ROUTES.sessions)} />
               <NavItem href={ROUTES.homeworkHelp} label="Answer Questions" icon={HelpCircle} active={isLinkActive(ROUTES.homeworkHelp)} />
@@ -187,42 +207,44 @@ export function SidebarNav({
             <>
               <div
                 style={{
-                  fontSize: "0.6875rem",
+                  fontFamily: "var(--font-mono, monospace)",
+                  fontSize: "0.65rem",
                   fontWeight: 700,
                   textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "var(--wa-muted)",
-                  padding: "0.5rem 0.5rem 0.25rem",
+                  letterSpacing: "0.08em",
+                  color: "var(--wa-muted, #685E5A)",
+                  padding: "0.65rem 0.65rem 0.25rem",
                 }}
               >
-                Learning
+                Study Desk
               </div>
-              <NavItem href={ROUTES.learner.home} label="Home" icon={Home} active={isLinkActive(ROUTES.learner.home)} />
-              <NavItem href={ROUTES.find} label="Find a Tutor" icon={Compass} active={isLinkActive(ROUTES.find)} />
-              <NavItem href={ROUTES.sessions} label="My Sessions" icon={CalendarCheck} active={isLinkActive(ROUTES.sessions)} />
+              <NavItem href={ROUTES.learner.home} label="Desk Overview" icon={Home} active={isLinkActive(ROUTES.learner.home)} />
+              <NavItem href={ROUTES.find} label="Find a Peer Tutor" icon={Compass} active={isLinkActive(ROUTES.find)} />
+              <NavItem href={ROUTES.sessions} label="My Study Sessions" icon={CalendarCheck} active={isLinkActive(ROUTES.sessions)} />
               <NavItem href={ROUTES.homeworkHelp} label="Homework Help" icon={HelpCircle} active={isLinkActive(ROUTES.homeworkHelp)} />
-              <NavItem href={ROUTES.community} label="Community" icon={MessageSquare} active={isLinkActive(ROUTES.community)} />
+              <NavItem href={ROUTES.community} label="Peer Dialogues" icon={MessageSquare} active={isLinkActive(ROUTES.community)} />
 
               <div
                 style={{
-                  fontSize: "0.6875rem",
+                  fontFamily: "var(--font-mono, monospace)",
+                  fontSize: "0.65rem",
                   fontWeight: 700,
                   textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "var(--wa-muted)",
-                  padding: "1rem 0.5rem 0.25rem",
+                  letterSpacing: "0.08em",
+                  color: "var(--wa-muted, #685E5A)",
+                  padding: "1rem 0.65rem 0.25rem",
                 }}
               >
-                Explore & Help
+                Library & Support
               </div>
-              <NavItem href={ROUTES.resources} label="Learning Resources" icon={FolderOpen} active={isLinkActive(ROUTES.resources)} />
+              <NavItem href={ROUTES.resources} label="Study Guides & Tools" icon={FolderOpen} active={isLinkActive(ROUTES.resources)} />
               {isTutor && (
-                <NavItem href={ROUTES.tutor.home} label="My Tutoring" icon={GraduationCap} active={isLinkActive(ROUTES.tutor.home)} />
+                <NavItem href={ROUTES.tutor.home} label="My Tutoring Folio" icon={GraduationCap} active={isLinkActive(ROUTES.tutor.home)} />
               )}
               {!isTutor && (
                 <NavItem href={ROUTES.tutor.apply} label="Volunteer as Tutor" icon={Sparkles} active={isLinkActive(ROUTES.tutor.apply)} />
               )}
-              <NavItem href={ROUTES.safety} label="Help & Safety" icon={ShieldCheck} active={isLinkActive(ROUTES.safety)} />
+              <NavItem href={ROUTES.safety} label="Safeguarding & Help" icon={ShieldCheck} active={isLinkActive(ROUTES.safety)} />
             </>
           )}
         </div>
@@ -232,16 +254,16 @@ export function SidebarNav({
       <div
         style={{
           paddingTop: "0.85rem",
-          borderTop: "1px solid var(--wa-border)",
+          borderTop: "1px solid var(--wa-border, #E6DFD5)",
           display: "flex",
           alignItems: "center",
           gap: "0.5rem",
           fontSize: "0.75rem",
-          color: "var(--wa-muted)",
+          color: "var(--wa-muted, #685E5A)",
         }}
       >
-        <ShieldCheck size={14} color="var(--wa-green)" />
-        <span>Verified Free Tutoring</span>
+        <ShieldCheck size={15} color="var(--wa-crimson, #8B263E)" />
+        <span>100% Free Volunteer Salon</span>
       </div>
     </aside>
   );
@@ -262,18 +284,18 @@ function NavItem({ href, label, icon: Icon, active }: NavItemProps) {
         display: "flex",
         alignItems: "center",
         gap: "0.65rem",
-        padding: "0.55rem 0.65rem",
-        borderRadius: "var(--wa-radius-sm)",
-        fontSize: "0.875rem",
+        padding: "0.55rem 0.75rem",
+        borderRadius: "var(--wa-radius-sm, 8px)",
+        fontSize: "0.85rem",
         fontWeight: active ? 600 : 500,
-        color: active ? "var(--wa-green)" : "var(--wa-text)",
-        background: active ? "var(--wa-green-light)" : "transparent",
-        borderLeft: active ? "3px solid var(--wa-green)" : "3px solid transparent",
+        color: active ? "#FFFFFF" : "var(--wa-text, #2C2422)",
+        background: active ? "var(--wa-crimson, #8B263E)" : "transparent",
         textDecoration: "none",
-        transition: "all var(--wa-transition)",
+        transition: "all var(--wa-transition, 180ms ease)",
+        boxShadow: active ? "0 2px 6px rgba(139, 38, 62, 0.25)" : "none",
       }}
     >
-      <Icon size={17} strokeWidth={active ? 2 : 1.75} aria-hidden="true" />
+      <Icon size={16} strokeWidth={active ? 2.2 : 1.75} aria-hidden="true" />
       <span>{label}</span>
     </Link>
   );

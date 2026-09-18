@@ -3,17 +3,60 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { BookOpen, GraduationCap, MessageSquare, HeartHandshake, ShieldCheck, Smile } from "lucide-react";
+import {
+  Users,
+  BookOpen,
+  GraduationCap,
+  Check,
+  ArrowRight,
+  ArrowLeft,
+  ShieldCheck,
+  HeartHandshake,
+  Smile,
+  Compass,
+  Sparkles,
+  Lock,
+} from "lucide-react";
 import styles from "./page.module.css";
 import { completeOnboarding } from "./actions";
 
+const GRADES = [
+  "Kindergarten",
+  "Grade 1",
+  "Grade 2",
+  "Grade 3",
+  "Grade 4",
+  "Grade 5",
+  "Grade 6",
+  "Grade 7",
+  "Grade 8",
+  "Grade 9",
+  "Grade 10",
+];
+
+const CURRICULA = [
+  { id: "US Common Core", label: "US Common Core / State" },
+  { id: "CBSE", label: "CBSE (India)" },
+  { id: "ICSE", label: "ICSE (India)" },
+  { id: "IGCSE", label: "IGCSE / GCSE (UK)" },
+  { id: "IB", label: "IB (International Baccalaureate)" },
+  { id: "Other", label: "Other National System" },
+];
+
+const TUTOR_LEVELS = [
+  "High School (Grade 11–12)",
+  "Undergraduate College / University",
+  "Graduate Student",
+  "Educator / Working Professional",
+];
+
 export default function OnboardingClient() {
   const [step, setStep] = useState(1);
-  const [goal, setGoal] = useState("");
-  const [age, setAge] = useState("");
-  const [grade, setGrade] = useState("");
-  const [curriculum, setCurriculum] = useState("");
-  const [educationLevel, setEducationLevel] = useState("High School (Grade 11–12)");
+  const [goal, setGoal] = useState("parent_child");
+  const [age, setAge] = useState("12");
+  const [grade, setGrade] = useState("Grade 7");
+  const [curriculum, setCurriculum] = useState("US Common Core");
+  const [educationLevel, setEducationLevel] = useState("Undergraduate College / University");
   const [school, setSchool] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,7 +68,7 @@ export default function OnboardingClient() {
   const isTutor = goal === "become_tutor";
   const isStep1Valid = isTutor
     ? Boolean(goal && educationLevel && school.trim())
-    : Boolean(goal && grade && age);
+    : Boolean(goal && grade && age && parseInt(age, 10) >= 5);
 
   const handleNext = () => {
     if (step < 3) setStep(step + 1);
@@ -38,7 +81,7 @@ export default function OnboardingClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agreed) return;
-    
+
     setLoading(true);
     setErrorMsg("");
     try {
@@ -47,14 +90,14 @@ export default function OnboardingClient() {
 
       if (isTutor) {
         formData.append("educationLevel", educationLevel);
-        formData.append("school", school);
+        formData.append("school", school.trim());
         formData.append("curriculum", curriculum || "US Common Core");
       } else {
         formData.append("age", age);
         formData.append("grade", grade);
         formData.append("curriculum", curriculum);
       }
-      
+
       const res = await completeOnboarding(formData);
       if (res?.success) {
         await update({ onboardingCompleted: true });
@@ -65,12 +108,12 @@ export default function OnboardingClient() {
         }
         router.refresh();
       } else {
-        setErrorMsg(res?.error || "Unknown server error");
+        setErrorMsg(res?.error || "Unknown server error occurred");
         setLoading(false);
       }
     } catch (error) {
       console.error("Onboarding failed", error);
-      setErrorMsg("An unexpected error occurred.");
+      setErrorMsg("An unexpected error occurred. Please try again.");
       setLoading(false);
     }
   };
@@ -78,227 +121,428 @@ export default function OnboardingClient() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {/* Progress Bar */}
-        <div className={styles.progressBar}>
-          <div className={`${styles.progressLine} ${step > 1 ? styles.activeLine : ""}`}></div>
-          <div className={`${styles.progressLine} ${step > 2 ? styles.activeLine : ""}`}></div>
-          
-          <div className={`${styles.stepCircle} ${step >= 1 ? styles.activeCircle : ""}`}></div>
-          <div className={`${styles.stepCircle} ${step >= 2 ? styles.activeCircle : ""}`}></div>
-          <div className={`${styles.stepCircle} ${step >= 3 ? styles.activeCircle : ""}`}></div>
-        </div>
+        {/* Folio Archival Header */}
+        <header className={styles.folioHeader}>
+          <div className={styles.folioBadge}>
+            <Sparkles size={12} />
+            <span>Matriculation Registry • Folio 2026</span>
+          </div>
+          <h1 className={styles.folioTitle}>
+            {step === 1 && "Define Your Academic Journey"}
+            {step === 2 && "Our Pedagogical Commitment"}
+            {step === 3 && "The Fellowship Covenant"}
+          </h1>
+          <p className={styles.folioSubtitle}>
+            {step === 1 &&
+              "Tell us who will be learning so we can curate matching volunteer tutors, verified materials, and appropriate grade standards."}
+            {step === 2 &&
+              "Learnivia is a non-profit peer tutoring salon run by dedicated student scholars worldwide. Zero bots, zero hidden fees, ever."}
+            {step === 3 &&
+              "We maintain a safe, welcoming academic environment protected by parent notifications, verified Zoom rooms, and a clear honor code."}
+          </p>
+        </header>
 
-        {/* Step 1: Goals & Adaptive Profile Info */}
-        {step === 1 && (
-          <div className={styles.stepContent}>
-            <h1 className={styles.title}>Welcome to Learnivia!</h1>
-            <p className={styles.subtitle}>
-              {isTutor
-                ? "Welcome prospective volunteer tutor! Tell us about your educational background so we can guide you to our application and credential review."
-                : "Tell us about your student (K-10) so we can match them with the right volunteer tutors. Everything is 100% free."}
-            </p>
-            
-            <div className={styles.formGroup}>
-              <label>Who is learning? <span className={styles.required}>*</span></label>
-              <select value={goal} onChange={(e) => setGoal(e.target.value)} required>
-                <option value="" disabled>Select account type...</option>
-                <option value="parent_child">Parent / Guardian managing a child's account</option>
-                <option value="student_9_10">Independent Student (Grade 9–10)</option>
-                <option value="become_tutor">I want to become a volunteer tutor</option>
-              </select>
+        {/* 3-Step Archival Ribbon */}
+        <nav className={styles.stepsRibbon} aria-label="Onboarding Progress">
+          <div
+            className={`${styles.stepTab} ${step === 1 ? styles.activeStepTab : step > 1 ? styles.completedStepTab : ""}`}
+          >
+            <div className={styles.stepTabNum}>
+              {step > 1 ? <Check size={14} /> : "01"}
             </div>
+            <div className={styles.stepTabLabel}>
+              <span className={styles.stepTabTitle}>Academic Identity</span>
+              <span className={styles.stepTabSubtitle}>Role & Grade Focus</span>
+            </div>
+          </div>
 
-            {isTutor ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                  <div className={styles.formGroup}>
-                    <label>Your Current Education Level <span className={styles.required}>*</span></label>
-                    <select
-                      value={educationLevel}
-                      onChange={(e) => setEducationLevel(e.target.value)}
-                      required
-                    >
-                      <option value="High School (Grade 11–12)">High School (Grade 11–12)</option>
-                      <option value="Undergraduate College / University">Undergraduate College / University</option>
-                      <option value="Graduate Student">Graduate Student</option>
-                      <option value="Educator / Working Professional">Educator / Working Professional</option>
-                    </select>
+          <div
+            className={`${styles.stepTab} ${step === 2 ? styles.activeStepTab : step > 2 ? styles.completedStepTab : ""}`}
+          >
+            <div className={styles.stepTabNum}>
+              {step > 2 ? <Check size={14} /> : "02"}
+            </div>
+            <div className={styles.stepTabLabel}>
+              <span className={styles.stepTabTitle}>Our Pedagogy</span>
+              <span className={styles.stepTabSubtitle}>Peer-to-Peer Ethos</span>
+            </div>
+          </div>
+
+          <div
+            className={`${styles.stepTab} ${step === 3 ? styles.activeStepTab : ""}`}
+          >
+            <div className={styles.stepTabNum}>
+              03
+            </div>
+            <div className={styles.stepTabLabel}>
+              <span className={styles.stepTabTitle}>Honor Covenant</span>
+              <span className={styles.stepTabSubtitle}>Community & Safety</span>
+            </div>
+          </div>
+        </nav>
+
+        {/* Main Folio Card Surface */}
+        <div className={styles.folioCard}>
+          {/* ── STEP 1: Academic Identity ── */}
+          {step === 1 && (
+            <>
+              {/* Role Selection */}
+              <div className={styles.fieldSection}>
+                <span className={styles.fieldLabel}>
+                  <span>Select Your Academic Persona <span className={styles.requiredStar}>*</span></span>
+                  <span className={styles.fieldHint}>Choose your primary workspace role</span>
+                </span>
+
+                <div className={styles.roleGrid}>
+                  {/* Option 1: Parent */}
+                  <div
+                    className={`${styles.roleCard} ${goal === "parent_child" ? styles.activeRoleCard : ""}`}
+                    onClick={() => setGoal("parent_child")}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && setGoal("parent_child")}
+                  >
+                    <div className={styles.roleIndicator}>
+                      {goal === "parent_child" && <div className={styles.roleIndicatorDot} />}
+                    </div>
+                    <div className={styles.roleIconWrap}>
+                      <Users size={20} />
+                    </div>
+                    <h3 className={styles.roleTitle}>Parent / Guardian</h3>
+                    <p className={styles.roleDesc}>
+                      Managing 1-on-1 tutoring for a student (K–10) with verified progress reports.
+                    </p>
                   </div>
 
-                  <div className={styles.formGroup}>
-                    <label>Your School / Institution <span className={styles.required}>*</span></label>
+                  {/* Option 2: Independent Learner */}
+                  <div
+                    className={`${styles.roleCard} ${goal === "student_9_10" ? styles.activeRoleCard : ""}`}
+                    onClick={() => setGoal("student_9_10")}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && setGoal("student_9_10")}
+                  >
+                    <div className={styles.roleIndicator}>
+                      {goal === "student_9_10" && <div className={styles.roleIndicatorDot} />}
+                    </div>
+                    <div className={styles.roleIconWrap}>
+                      <BookOpen size={20} />
+                    </div>
+                    <h3 className={styles.roleTitle}>Independent Scholar</h3>
+                    <p className={styles.roleDesc}>
+                      Enrolled in Grades 7–10 seeking homework guidance, exam prep, or enrichment.
+                    </p>
+                  </div>
+
+                  {/* Option 3: Volunteer Tutor */}
+                  <div
+                    className={`${styles.roleCard} ${goal === "become_tutor" ? styles.activeRoleCard : ""}`}
+                    onClick={() => setGoal("become_tutor")}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && setGoal("become_tutor")}
+                  >
+                    <div className={styles.roleIndicator}>
+                      {goal === "become_tutor" && <div className={styles.roleIndicatorDot} />}
+                    </div>
+                    <div className={styles.roleIconWrap}>
+                      <GraduationCap size={20} />
+                    </div>
+                    <h3 className={styles.roleTitle}>Volunteer Tutor</h3>
+                    <p className={styles.roleDesc}>
+                      High school senior, undergraduate or educator ready to teach peers & earn service hours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Conditional Inputs: Tutor vs Student */}
+              {isTutor ? (
+                <>
+                  {/* Education Level */}
+                  <div className={styles.fieldSection}>
+                    <span className={styles.fieldLabel}>
+                      <span>Your Current Education Level <span className={styles.requiredStar}>*</span></span>
+                    </span>
+                    <div className={styles.chipGrid}>
+                      {TUTOR_LEVELS.map((lvl) => (
+                        <button
+                          key={lvl}
+                          type="button"
+                          className={`${styles.chipBtn} ${educationLevel === lvl ? styles.activeChipBtn : ""}`}
+                          onClick={() => setEducationLevel(lvl)}
+                        >
+                          {educationLevel === lvl && <Check size={13} />}
+                          <span>{lvl}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* School / University */}
+                  <div className={styles.fieldSection}>
+                    <span className={styles.fieldLabel}>
+                      <span>Your School or Institution <span className={styles.requiredStar}>*</span></span>
+                      <span className={styles.fieldHint}>Verified on your tutor transcript</span>
+                    </span>
                     <input
                       type="text"
-                      placeholder="e.g. Lincoln High School or UC Berkeley"
+                      className={styles.paperInput}
+                      placeholder="e.g. Oxford High School, UC Berkeley, St. Xavier's"
                       value={school}
                       onChange={(e) => setSchool(e.target.value)}
                       required
-                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1.5px solid #CBD5E1", fontSize: "0.95rem" }}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label>Curriculum Familiarity / Specialty <span className={styles.required}>*</span></label>
-                  <select value={curriculum} onChange={(e) => setCurriculum(e.target.value)} required>
-                    <option value="" disabled>Select curriculum expertise...</option>
-                    <option value="US Common Core">US Common Core / State Standards</option>
-                    <option value="CBSE">CBSE (India)</option>
-                    <option value="ICSE">ICSE (India)</option>
-                    <option value="IGCSE">IGCSE / GCSE (UK)</option>
-                    <option value="IB">IB (International Baccalaureate K–10)</option>
-                    <option value="All Curricula">All K–10 Core Subjects</option>
-                  </select>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
-                  <div className={styles.formGroup}>
-                    <label>Student Age <span className={styles.required}>*</span></label>
-                    <input
-                      type="number"
-                      min="5"
-                      max="16"
-                      placeholder="e.g. 10"
-                      value={age}
-                      onChange={(e) => setAge(e.target.value)}
-                      required
-                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1.5px solid #CBD5E1", fontSize: "0.95rem" }}
                     />
                   </div>
 
-                  <div className={styles.formGroup}>
-                    <label>Student Grade Level <span className={styles.required}>*</span></label>
-                    <select value={grade} onChange={(e) => setGrade(e.target.value)} required>
-                      <option value="" disabled>Select grade...</option>
-                      <option value="Kindergarten">Kindergarten (Age 5–6)</option>
-                      <option value="Grade 1">Grade 1</option>
-                      <option value="Grade 2">Grade 2</option>
-                      <option value="Grade 3">Grade 3</option>
-                      <option value="Grade 4">Grade 4</option>
-                      <option value="Grade 5">Grade 5</option>
-                      <option value="Grade 6">Grade 6</option>
-                      <option value="Grade 7">Grade 7</option>
-                      <option value="Grade 8">Grade 8</option>
-                      <option value="Grade 9">Grade 9</option>
-                      <option value="Grade 10">Grade 10</option>
-                    </select>
+                  {/* Curriculum Expertise */}
+                  <div className={styles.fieldSection}>
+                    <span className={styles.fieldLabel}>
+                      <span>Curriculum Specialty <span className={styles.requiredStar}>*</span></span>
+                    </span>
+                    <div className={styles.chipGrid}>
+                      {CURRICULA.map((c) => (
+                        <button
+                          key={c.id}
+                          type="button"
+                          className={`${styles.chipBtn} ${curriculum === c.id ? styles.activeChipBtn : ""}`}
+                          onClick={() => setCurriculum(c.id)}
+                        >
+                          {curriculum === c.id && <Check size={13} />}
+                          <span>{c.label}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
+              ) : (
+                <>
+                  {/* Grade Level Chips */}
+                  <div className={styles.fieldSection}>
+                    <span className={styles.fieldLabel}>
+                      <span>Student Grade Level <span className={styles.requiredStar}>*</span></span>
+                      <span className={styles.fieldHint}>Matches curriculum standards</span>
+                    </span>
+                    <div className={styles.chipGrid}>
+                      {GRADES.map((g) => (
+                        <button
+                          key={g}
+                          type="button"
+                          className={`${styles.chipBtn} ${grade === g ? styles.activeChipBtn : ""}`}
+                          onClick={() => setGrade(g)}
+                        >
+                          {grade === g && <Check size={13} />}
+                          <span>{g}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-                <div className={styles.formGroup} style={{ marginTop: "1rem" }}>
-                  <label>Curriculum / School System <span className={styles.required}>*</span></label>
-                  <select value={curriculum} onChange={(e) => setCurriculum(e.target.value)} required>
-                    <option value="" disabled>Select curriculum...</option>
-                    <option value="US Common Core">US Common Core / State Standard</option>
-                    <option value="CBSE">CBSE (India)</option>
-                    <option value="ICSE">ICSE (India)</option>
-                    <option value="IGCSE">IGCSE / GCSE (UK)</option>
-                    <option value="IB">IB (International Baccalaureate K–10)</option>
-                    <option value="Other">Other National Curriculum</option>
-                  </select>
-                </div>
-              </>
-            )}
-          </div>
-        )}
+                  {/* Age Input & Curriculum Grid */}
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "1.25rem" }}>
+                    <div className={styles.fieldSection}>
+                      <span className={styles.fieldLabel}>
+                        <span>Age <span className={styles.requiredStar}>*</span></span>
+                        <span className={styles.fieldHint}>5 to 16 yrs</span>
+                      </span>
+                      <input
+                        type="number"
+                        min="5"
+                        max="16"
+                        className={styles.paperInput}
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        required
+                      />
+                    </div>
 
-        {/* Step 2: Welcome */}
-        {step === 2 && (
-          <div className={styles.stepContent}>
-            <h1 className={styles.title}>Welcome to Learnivia!</h1>
-            <p className={styles.subtitle}>Learnivia is a volunteer-run community of learners around the world who help each other learn. With Learnivia, you can:</p>
-            
-            <div className={styles.featuresBox}>
-              <div className={styles.featureItem}>
-                <span className={styles.icon}><BookOpen size={22} color="var(--color-forest, #234B3B)" /></span>
-                <p>Participate in small-group tutoring sessions, 1:1 homework help, and more.</p>
+                    <div className={styles.fieldSection}>
+                      <span className={styles.fieldLabel}>
+                        <span>Curriculum Framework <span className={styles.requiredStar}>*</span></span>
+                      </span>
+                      <div className={styles.chipGrid}>
+                        {CURRICULA.slice(0, 4).map((c) => (
+                          <button
+                            key={c.id}
+                            type="button"
+                            className={`${styles.chipBtn} ${curriculum === c.id ? styles.activeChipBtn : ""}`}
+                            onClick={() => setCurriculum(c.id)}
+                          >
+                            {curriculum === c.id && <Check size={13} />}
+                            <span>{c.id}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </>
+          )}
+
+          {/* ── STEP 2: Pedagogy & Ethos ── */}
+          {step === 2 && (
+            <div className={styles.pedagogyDeck}>
+              <div className={styles.pedagogyCard}>
+                <div className={styles.pedagogyIcon}>
+                  <HeartHandshake size={22} />
+                </div>
+                <div className={styles.pedagogyBody}>
+                  <h3 className={styles.pedagogyTitle}>100% Free & Peer-to-Peer</h3>
+                  <p className={styles.pedagogyDesc}>
+                    Learnivia is built on pure volunteer stewardship. We never charge subscription fees, sell study packs, or trade in virtual coins. Knowledge is shared freely between curious learners and passionate student tutors.
+                  </p>
+                </div>
               </div>
-              <div className={styles.featureItem}>
-                <span className={styles.icon}><GraduationCap size={22} color="var(--color-forest, #234B3B)" /></span>
-                <p>Become a tutor to earn volunteer hours, build your portfolio, and make an impact.</p>
+
+              <div className={styles.pedagogyCard}>
+                <div className={styles.pedagogyIcon}>
+                  <Compass size={22} />
+                </div>
+                <div className={styles.pedagogyBody}>
+                  <h3 className={styles.pedagogyTitle}>Real Humans, Zero AI Substitutes</h3>
+                  <p className={styles.pedagogyDesc}>
+                    Every tutoring session happens in a live, monitored 1-on-1 Zoom study room with an authentic volunteer mentor. We encourage real discussion, screen sharing, notebook diagrams, and patient step-by-step guidance.
+                  </p>
+                </div>
               </div>
-              <div className={styles.featureItem}>
-                <span className={styles.icon}><MessageSquare size={22} color="var(--color-forest, #234B3B)" /></span>
-                <p>Grow and learn with peers from all over the world.</p>
+
+              <div className={styles.pedagogyCard}>
+                <div className={styles.pedagogyIcon}>
+                  <ShieldCheck size={22} />
+                </div>
+                <div className={styles.pedagogyBody}>
+                  <h3 className={styles.pedagogyTitle}>Strict Child Safeguarding</h3>
+                  <p className={styles.pedagogyDesc}>
+                    Minor protection is fundamental: parents receive session confirmations, volunteer tutors undergo safety training, and personal contact exchanges outside the platform are strictly prohibited.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.fellowshipNote}>
+                <Sparkles size={18} style={{ flexShrink: 0 }} />
+                <span>
+                  <strong>Our Scholarly Compact:</strong> Whether you are conquering quadratic formulas or writing your first literary essay, you learn at your own pace in an encouraging, non-judgmental salon.
+                </span>
               </div>
             </div>
-            
-            <p className={styles.guidelinesIntro}>
-              Learnivia is a global community with members of all ages, cultures, and backgrounds. We ask that you adhere to our community guidelines to keep Learnivia safe.
-            </p>
-          </div>
-        )}
+          )}
 
-        {/* Step 3: Guidelines */}
-        {step === 3 && (
-          <div className={styles.stepContent}>
-            <h1 className={styles.title}>Community Guidelines</h1>
-            
-            <div className={styles.guidelinesBox}>
-              <div className={styles.guideItem}>
-                <span className={styles.iconPink}><HeartHandshake size={24} color="var(--color-terracotta, #B85A43)" /></span>
-                <div>
-                  <h3>Be respectful.</h3>
-                  <p>Think about how your words and actions will affect others, and keep interactions classroom-appropriate.</p>
+          {/* ── STEP 3: Community Covenant ── */}
+          {step === 3 && (
+            <div className={styles.covenantFrame}>
+              <div className={styles.covenantPillars}>
+                <div className={styles.pillarItem}>
+                  <div className={styles.pillarHeader}>
+                    <HeartHandshake size={16} color="var(--wa-crimson, #8B263E)" />
+                    <span>Mutual Respect</span>
+                  </div>
+                  <p className={styles.pillarText}>
+                    Treat every learner and tutor with dignity, patience, and warmth. Language is always classroom-appropriate.
+                  </p>
                 </div>
-              </div>
-              <div className={styles.guideItem}>
-                <span className={styles.iconGreen}><ShieldCheck size={24} color="var(--color-forest, #234B3B)" /></span>
-                <div>
-                  <h3>Be safe.</h3>
-                  <p>Remember to keep your personal boundaries—avoid sharing your personal contact information.</p>
-                </div>
-              </div>
-              <div className={styles.guideItem}>
-                <span className={styles.iconBlue}><Smile size={24} color="var(--color-slate, #526B7A)" /></span>
-                <div>
-                  <h3>Be kind.</h3>
-                  <p>Find ways to help out; whether that's pointing another learner in the right direction, or giving a tutor helpful feedback!</p>
-                </div>
-              </div>
-            </div>
 
-            <div className={styles.checkboxGroup}>
-              <label>
-                <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-                <span className={styles.checkboxText}>Do you agree to uphold the community guidelines? <span className={styles.required}>*</span></span>
+                <div className={styles.pillarItem}>
+                  <div className={styles.pillarHeader}>
+                    <Lock size={16} color="var(--wa-terra, #1E3A2F)" />
+                    <span>Personal Privacy</span>
+                  </div>
+                  <p className={styles.pillarText}>
+                    Never share phone numbers, social media handles, or home addresses. All interactions occur in verified rooms.
+                  </p>
+                </div>
+
+                <div className={styles.pillarItem}>
+                  <div className={styles.pillarHeader}>
+                    <Smile size={16} color="var(--wa-ochre, #C28B2B)" />
+                    <span>Socratic Spirit</span>
+                  </div>
+                  <p className={styles.pillarText}>
+                    Tutors guide students to discover answers themselves rather than doing homework for them. Growth over answers.
+                  </p>
+                </div>
+              </div>
+
+              {/* Agreement Pledge Card */}
+              <label className={styles.covenantAgreementCard}>
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className={styles.agreementCheckbox}
+                />
+                <div className={styles.agreementTextWrap}>
+                  <span className={styles.agreementTitle}>
+                    I pledge to uphold the Learnivia Academic Fellowship Covenant <span className={styles.requiredStar}>*</span>
+                  </span>
+                  <span className={styles.agreementSubtext}>
+                    By ticking this pledge, you agree to abide by our Child Safeguarding Standards, Community Honor Code, and Session Guidelines.
+                  </span>
+                </div>
               </label>
             </div>
-          </div>
-        )}
-
-        {errorMsg && (
-          <div style={{ color: "var(--color-error)", background: "var(--color-error-bg)", padding: "1rem", borderRadius: "0.5rem", marginBottom: "1.5rem", textAlign: "center", fontSize: "0.875rem", fontWeight: 600 }}>
-            {errorMsg}
-          </div>
-        )}
-
-        {/* Navigation Buttons */}
-        <div className={styles.navButtons}>
-          {step > 1 ? (
-            <button onClick={handleBack} className={styles.backBtn} type="button">Back</button>
-          ) : <div></div>}
-          
-          {step < 3 ? (
-            <button 
-              onClick={handleNext} 
-              className={styles.nextBtn} 
-              disabled={step === 1 && !isStep1Valid}
-              type="button"
-            >
-              Next
-            </button>
-          ) : (
-            <button 
-              onClick={handleSubmit} 
-              className={styles.nextBtn}
-              disabled={!agreed || loading}
-            >
-              {loading ? "Finishing..." : isTutor ? "Proceed to Application →" : "Complete Setup"}
-            </button>
           )}
+
+          {/* Error Advisory */}
+          {errorMsg && (
+            <div
+              style={{
+                color: "var(--wa-error, #9E2A2B)",
+                background: "var(--wa-error-bg, #FDF2F2)",
+                border: "1px solid rgba(158, 42, 43, 0.25)",
+                padding: "0.85rem 1rem",
+                borderRadius: "8px",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                textAlign: "center",
+              }}
+            >
+              {errorMsg}
+            </div>
+          )}
+
+          {/* Bottom Folio Navigation */}
+          <footer className={styles.folioNav}>
+            {step > 1 ? (
+              <button
+                type="button"
+                onClick={handleBack}
+                className={styles.backBtn}
+              >
+                <ArrowLeft size={16} /> Return
+              </button>
+            ) : (
+              <div />
+            )}
+
+            {step < 3 ? (
+              <button
+                type="button"
+                onClick={handleNext}
+                className={styles.nextBtn}
+                disabled={step === 1 && !isStep1Valid}
+              >
+                <span>Continue to {step === 1 ? "Pedagogy" : "Covenant"}</span>
+                <ArrowRight size={16} />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className={styles.nextBtn}
+                disabled={!agreed || loading}
+              >
+                <span>
+                  {loading
+                    ? "Inscribing Registry..."
+                    : isTutor
+                    ? "Proceed to Tutor Application"
+                    : "Matriculate & Enter Study Desk"}
+                </span>
+                <ArrowRight size={16} />
+              </button>
+            )}
+          </footer>
         </div>
       </div>
     </main>

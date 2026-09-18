@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Calendar, Video, ArrowRight, Copy, Check } from "lucide-react";
+import { Calendar, Video, ArrowRight, Copy, Check, Sparkles, BookOpen } from "lucide-react";
 import styles from "./dashboard.module.css";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { ROUTES } from "@/lib/routes";
@@ -63,21 +62,42 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
             All sessions <ArrowRight size={13} />
           </Link>
         </div>
-        <EmptyState
-          icon={Calendar}
-          title="No upcoming sessions booked"
-          description="You don't have any tutoring sessions scheduled. Search our approved volunteer tutors or explore interactive workshops."
-          action={
+
+        <div className={styles.emptyDeskSlip}>
+          <div className={styles.emptyDeskIcon}>
+            <Calendar size={24} />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", alignItems: "center" }}>
+            <h3 className={styles.emptyDeskTitle}>Your Study Desk is Open</h3>
+            <p className={styles.emptyDeskDesc}>
+              You have no upcoming tutoring sessions booked. Select a subject below to connect 1-on-1 with an approved peer tutor for free guidance.
+            </p>
+          </div>
+
+          <div className={styles.subjectFilterRow}>
+            <Link href={`${ROUTES.find}?subject=Mathematics`} className={styles.subjectPill}>
+              Mathematics
+            </Link>
+            <Link href={`${ROUTES.find}?subject=Science`} className={styles.subjectPill}>
+              Natural Sciences
+            </Link>
+            <Link href={`${ROUTES.find}?subject=Reading+%26+Writing`} className={styles.subjectPill}>
+              Essay & Reading
+            </Link>
+            <Link href={ROUTES.community} className={styles.subjectPill}>
+              Peer Roundtables
+            </Link>
+          </div>
+
+          <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem", flexWrap: "wrap", justifyContent: "center" }}>
             <Link href={ROUTES.find} className={styles.joinBtn}>
-              Find a Tutor
+              <Sparkles size={14} /> Find a Peer Tutor
             </Link>
-          }
-          secondaryAction={
             <Link href={ROUTES.sessions} className={styles.secondaryBtn}>
-              Browse Sessions
+              Browse Session Library
             </Link>
-          }
-        />
+          </div>
+        </div>
       </section>
     );
   }
@@ -126,22 +146,22 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
             </div>
             <div>
               <h3 className={styles.sessionSubject}>{session.subject}</h3>
-              <p className={styles.sessionTutor}>with {displayTutor}</p>
+              <p className={styles.sessionTutor}>Mentorship with {displayTutor}</p>
             </div>
           </div>
-          <StatusBadge status="confirmed" label="Confirmed" />
+          <StatusBadge status="confirmed" label="Confirmed Session" />
         </div>
 
         <div className={styles.sessionDetailsGrid}>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Date & Time</span>
+            <span className={styles.detailLabel}>Scheduled Time</span>
             <span className={styles.detailValue}>
               <FormattedDateTime date={session.startTime} userTimezone={userTimezone} />
             </span>
           </div>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Meeting Format</span>
-            <span className={styles.detailValue}>1-on-1 Zoom Room (Waiting Room Enabled)</span>
+            <span className={styles.detailLabel}>Format</span>
+            <span className={styles.detailValue}>1-on-1 Zoom Study Room</span>
           </div>
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Safeguarding</span>
@@ -150,7 +170,7 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
         </div>
 
         <footer className={styles.sessionCardFooter}>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap", alignItems: "center" }}>
             {cleanJoinUrl ? (
               <>
                 <a
@@ -159,16 +179,15 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
                   rel="noopener noreferrer"
                   className={styles.joinBtn}
                 >
-                  <Video size={16} /> Join Zoom Room
+                  <Video size={16} /> Enter Zoom Study Room
                 </a>
                 <button
                   type="button"
                   onClick={handleCopyLink}
                   className={styles.secondaryBtn}
                   title="Copy Zoom link to clipboard"
-                  style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}
                 >
-                  {copiedLink ? <Check size={14} color="#166534" /> : <Copy size={14} />}
+                  {copiedLink ? <Check size={14} color="var(--wa-success, #1E5A3E)" /> : <Copy size={14} />}
                   <span>{copiedLink ? "Link Copied" : "Copy Zoom Link"}</span>
                 </button>
               </>
@@ -178,7 +197,7 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
               </Link>
             )}
             <Link href={`/sessions/${session.id}`} className={styles.secondaryBtn}>
-              Preparation Notes
+              <BookOpen size={14} /> Notes
             </Link>
           </div>
 
@@ -186,7 +205,7 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
             type="button"
             onClick={() => setDialogOpen(true)}
             className={styles.secondaryBtn}
-            style={{ color: "var(--wa-error)", borderColor: "var(--wa-border)" }}
+            style={{ color: "var(--wa-error, #9E2A2B)", borderColor: "var(--wa-border, #E6DFD5)" }}
           >
             Cancel Session
           </button>
@@ -196,7 +215,7 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
       <ConfirmDialog
         isOpen={dialogOpen}
         title="Cancel Tutoring Session"
-        description="Are you sure you want to cancel this tutoring session? We'll notify your volunteer tutor immediately so they can release the slot to other learners."
+        description="Are you sure you want to cancel this tutoring session? We will notify your volunteer tutor immediately so they can release this slot to other learners."
         confirmLabel={isCancelling ? "Cancelling..." : "Confirm Cancellation"}
         cancelLabel="Keep Session"
         isDestructive={true}

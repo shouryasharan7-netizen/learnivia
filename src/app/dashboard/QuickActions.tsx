@@ -10,22 +10,22 @@ export function QuickActions() {
   const actions = [
     {
       id: "find",
-      title: "Find a tutor",
-      desc: "Search verified volunteer tutors by academic subject, curriculum, and grade level.",
+      title: "Find a Peer Tutor",
+      desc: "Search 140+ verified volunteer tutors across K–10 Math, Sciences, and Humanities.",
       href: ROUTES.find,
       icon: Compass,
     },
     {
       id: "homework",
-      title: "Ask homework help",
-      desc: "Submit a private academic question to our peer tutoring queue for step-by-step guidance.",
+      title: "Ask Homework Help",
+      desc: "Submit a private academic inquiry to our peer queue for step-by-step guidance.",
       href: ROUTES.homeworkHelp,
       icon: HelpCircle,
     },
     {
       id: "sessions",
-      title: "View my sessions",
-      desc: "Review your upcoming bookings, join Zoom meetings, and inspect past session notes.",
+      title: "My Study Sessions",
+      desc: "Review upcoming bookings, launch Zoom waiting rooms, and inspect session notes.",
       href: ROUTES.sessions,
       icon: CalendarCheck,
     },
@@ -35,7 +35,7 @@ export function QuickActions() {
     <section aria-labelledby="quick-actions-heading">
       <div className={styles.sectionHeader}>
         <h2 id="quick-actions-heading" className={styles.sectionTitle}>
-          Quick Actions
+          Study Desk Actions
         </h2>
       </div>
       <div className={styles.quickActionsGrid}>
@@ -44,11 +44,11 @@ export function QuickActions() {
           return (
             <Link key={act.id} href={act.href} className={styles.actionCard} prefetch={false}>
               <div className={styles.actionIconWrap}>
-                <Icon size={20} />
+                <Icon size={18} />
               </div>
               <h3 className={styles.actionTitle}>
-                {act.title}
-                <ArrowRight size={15} style={{ opacity: 0.6 }} />
+                <span>{act.title}</span>
+                <ArrowRight size={14} style={{ opacity: 0.6 }} />
               </h3>
               <p className={styles.actionDesc}>{act.desc}</p>
             </Link>

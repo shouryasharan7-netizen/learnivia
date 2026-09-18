@@ -119,6 +119,10 @@ export default async function StudentDashboard() {
     return sum + Math.max(0, Math.round(diff / 60000));
   }, 0);
 
+  const hours = Math.floor(totalLearningMinutes / 60);
+  const remainingMinutes = totalLearningMinutes % 60;
+  const totalHoursStr = hours > 0 ? `${hours}h ${remainingMinutes}m` : `${totalLearningMinutes}m`;
+
   // Unconfirmed sessions awaiting student attendance verification for volunteer hours
   const pendingAttendanceList = completedBookings
     .filter((b: any) => !b.hoursCredited)
@@ -210,63 +214,94 @@ export default async function StudentDashboard() {
         {/* Student Attendance Confirmation for Volunteer Hours */}
         <StudentAttendancePrompt pendingBookings={pendingAttendanceList} />
 
-        {/* 1. Greeting and One-Sentence Context */}
-        <header className={styles.greetingSection}>
-          <span className={styles.eyebrow}>Learner Workspace</span>
-          <h1 className={styles.greetingTitle}>
-            {timeGreeting}, {firstName}
-          </h1>
-          <p className={styles.greetingSubtitle}>
-            Welcome to your personal learning space. Connect with verified volunteer peer tutors for focused, 1-on-1 academic guidance.
-          </p>
+        {/* 1. Welcoming Study Desk Header with Academic Status Ribbon */}
+        <header className={styles.deskHeader}>
+          <div className={styles.deskHeaderContent}>
+            <div className={styles.deskEyebrowRow}>
+              <span className={styles.eyebrow}>Learner Workspace</span>
+              <span className={styles.datePill}>
+                {now.toLocaleDateString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            </div>
+            <h1 className={styles.greetingTitle}>
+              {timeGreeting}, {firstName}
+            </h1>
+            <p className={styles.greetingSubtitle}>
+              Welcome to your personal learning space. Connect with verified volunteer peer tutors for focused, 1-on-1 academic guidance.
+            </p>
+          </div>
+
+          <div className={styles.deskHeaderStats}>
+            <div className={styles.headerStatItem}>
+              <span className={styles.headerStatLabel}>Verified Learning</span>
+              <span className={styles.headerStatValue}>{totalHoursStr}</span>
+            </div>
+            <div className={styles.headerStatItem}>
+              <span className={styles.headerStatLabel}>Completed</span>
+              <span className={styles.headerStatValue}>{completedCount}</span>
+            </div>
+          </div>
         </header>
 
-        {/* 2. One State-Aware Next-Action Panel */}
-        <NextActionPanel
-          isNewLearner={isNewLearner}
-          guardianConsentPending={guardianConsentPending}
-          emailUnverified={emailUnverified}
-          isApprovedTutor={isApprovedTutor}
-          hasUpcomingSession={Boolean(nextSessionData)}
-          nextSession={nextSessionData}
-          hasCompletedSession={Boolean(lastCompletedData)}
-          lastCompletedSession={lastCompletedData}
-        />
+        {/* 2-Column Asymmetric Study Desk Grid */}
+        <div className={styles.deskGrid}>
+          {/* Primary Column: The Active Desk */}
+          <div className={styles.deskMain}>
+            {/* 2. One State-Aware Next-Action Panel */}
+            <NextActionPanel
+              isNewLearner={isNewLearner}
+              guardianConsentPending={guardianConsentPending}
+              emailUnverified={emailUnverified}
+              isApprovedTutor={isApprovedTutor}
+              hasUpcomingSession={Boolean(nextSessionData)}
+              nextSession={nextSessionData}
+              hasCompletedSession={Boolean(lastCompletedData)}
+              lastCompletedSession={lastCompletedData}
+            />
 
-        {/* 3. Upcoming Session Card or Useful Empty State */}
-        <UpcomingSessionCard
-          session={nextBooking}
-          userTimezone={user.timezone}
-        />
+            {/* 3. Upcoming Session Card or Useful Empty State */}
+            <UpcomingSessionCard
+              session={nextBooking}
+              userTimezone={user.timezone}
+            />
 
-        {/* 4. Exactly Three Quick Actions */}
-        <QuickActions />
+            {/* 4. Exactly Three Quick Actions */}
+            <QuickActions />
 
-        {/* 5. Truthful Learning Summary (Zero vanity metrics) */}
-        <TruthfulSummary
-          completedSessionsCount={completedCount}
-          totalLearningMinutes={totalLearningMinutes}
-          gradeBand={user.grade}
-          curriculum={user.curriculum}
-        />
+            {/* 8. Lower-Priority Resources on Separate Pages or Collapsible Sections */}
+            <CollapsibleResources hasChildProfiles={childProfiles.length > 0}>
+              {childProfiles.length > 0 && (
+                <div style={{ marginBottom: "1.25rem" }}>
+                  <ChildProfileSection initialProfiles={childProfiles} />
+                </div>
+              )}
+            </CollapsibleResources>
+          </div>
 
-        {/* 6. Three Learning Paths */}
-        <LearningPaths />
+          {/* Secondary Column: The Academic Ledger & Horizons */}
+          <div className={styles.deskSidebar}>
+            {/* 5. Truthful Learning Summary (Zero vanity metrics) */}
+            <TruthfulSummary
+              completedSessionsCount={completedCount}
+              totalLearningMinutes={totalLearningMinutes}
+              gradeBand={user.grade}
+              curriculum={user.curriculum}
+            />
 
-        {/* 7. Recent Activity Timeline */}
-        <ActivityTimeline
-          items={timelineItems.slice(0, 5)}
-          userTimezone={user.timezone}
-        />
+            {/* 6. Three Learning Paths */}
+            <LearningPaths />
 
-        {/* 8. Lower-Priority Resources on Separate Pages or Collapsible Sections */}
-        <CollapsibleResources hasChildProfiles={childProfiles.length > 0}>
-          {childProfiles.length > 0 && (
-            <div style={{ marginBottom: "1.25rem" }}>
-              <ChildProfileSection initialProfiles={childProfiles} />
-            </div>
-          )}
-        </CollapsibleResources>
+            {/* 7. Recent Activity Timeline */}
+            <ActivityTimeline
+              items={timelineItems.slice(0, 5)}
+              userTimezone={user.timezone}
+            />
+          </div>
+        </div>
       </div>
     </main>
   );

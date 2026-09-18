@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { BookOpen, ShieldCheck } from "lucide-react";
 import styles from "./dashboard.module.css";
 
 interface TruthfulSummaryProps {
@@ -32,31 +33,40 @@ export function TruthfulSummary({
     <section aria-labelledby="learning-summary-heading">
       <div className={styles.sectionHeader}>
         <h2 id="learning-summary-heading" className={styles.sectionTitle}>
-          Learning Summary
+          <BookOpen size={16} color="var(--wa-crimson, #8B263E)" />
+          <span>Academic Ledger</span>
         </h2>
       </div>
-      <div className={styles.summaryGrid}>
-        <div className={styles.summaryCard}>
-          <span className={styles.summaryLabel}>Completed Sessions</span>
-          <span className={styles.summaryNumber}>{completedSessionsCount}</span>
-          <span className={styles.summaryNote}>Verified 1-on-1 peer sessions</span>
-        </div>
 
-        <div className={styles.summaryCard}>
-          <span className={styles.summaryLabel}>Learning Time</span>
-          <span className={styles.summaryNumber}>{formattedDuration}</span>
-          <span className={styles.summaryNote}>Direct instructional minutes</span>
-        </div>
-
-        <div className={styles.summaryCard}>
-          <span className={styles.summaryLabel}>Academic Focus</span>
-          <div style={{ marginTop: "0.25rem" }}>
-            <span style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--wa-ink)" }}>
-              {gradeDisplay}
-            </span>
+      <div className={styles.summaryLedger}>
+        <div className={styles.summaryGrid}>
+          <div className={styles.summaryCard}>
+            <span className={styles.summaryLabel}>Completed</span>
+            <span className={styles.summaryNumber}>{completedSessionsCount}</span>
+            <span className={styles.summaryNote}>Verified sessions</span>
           </div>
-          <span className={styles.summaryNote}>Registered grade band & curriculum</span>
+
+          <div className={styles.summaryCard}>
+            <span className={styles.summaryLabel}>Total Time</span>
+            <span className={styles.summaryNumber}>{formattedDuration}</span>
+            <span className={styles.summaryNote}>Instructional time</span>
+          </div>
+
+          <div className={styles.summaryCard}>
+            <span className={styles.summaryLabel}>Grade Focus</span>
+            <div style={{ marginTop: "0.2rem" }}>
+              <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--wa-ink, #1A1615)", lineHeight: 1.2, display: "block" }}>
+                {gradeDisplay}
+              </span>
+            </div>
+            <span className={styles.summaryNote}>Academic track</span>
+          </div>
         </div>
+
+        <p className={styles.ledgerFooterNote}>
+          <ShieldCheck size={13} style={{ display: "inline", verticalAlign: "middle", marginRight: "4px" }} />
+          Truthful academic records verified through student & tutor attendance confirmation. Zero gamification.
+        </p>
       </div>
     </section>
   );

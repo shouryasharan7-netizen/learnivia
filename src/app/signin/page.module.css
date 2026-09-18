@@ -1,7 +1,7 @@
 /* ==========================================================================
-   SIGN IN — MODERN PRECISION EDTECH SPLIT LAYOUT
-   Left: bright electric cobalt panel with session workflow
-   Right: clean, luminous centered form on crisp slate-50
+   SIGN IN & SIGN UP — MODERN ACADEMIC SALON SPLIT LAYOUT
+   Left: Deep Oxford Crimson scholarly panel with peer learning ethos
+   Right: Luminous warm unbleached paper form container
    ========================================================================== */
 
 /* ── Page shell ── */
@@ -9,20 +9,20 @@
   min-height: calc(100vh - 72px);
   display: flex;
   align-items: stretch;
-  background-color: var(--wa-paper);
+  background-color: var(--wa-paper, #FAF7F2);
 }
 
 /* ── Left decorative panel ── */
 .leftPanel {
   display: none;
   flex: 0 0 44%;
-  background: linear-gradient(145deg, #1E40AF 0%, #2563EB 50%, #3B82F6 100%);
+  background: linear-gradient(145deg, #5A1626 0%, #8B263E 50%, #A53860 100%);
   flex-direction: column;
   justify-content: space-between;
   padding: 3.5rem 4rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.05);
+  box-shadow: 4px 0 24px rgba(26, 22, 21, 0.08);
 }
 
 /* Subtle modern radial highlights */
@@ -30,8 +30,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 0% 100%, rgba(56, 189, 248, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+    radial-gradient(ellipse at 0% 100%, rgba(194, 139, 43, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -49,11 +49,11 @@
 }
 
 .leftBrandName {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif, "Fraunces", Georgia, serif);
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 600;
   color: #FFFFFF;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 /* Central content */
@@ -68,30 +68,30 @@
 }
 
 .leftTagline {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif, "Fraunces", Georgia, serif);
   font-size: clamp(2.25rem, 3.5vw, 3rem);
-  font-weight: 800;
+  font-weight: 600;
   color: #FFFFFF;
   line-height: 1.15;
   margin: 0;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .leftTaglineAccent {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif, "Fraunces", Georgia, serif);
   font-size: clamp(2.25rem, 3.5vw, 3rem);
-  font-weight: 800;
-  color: #BAE6FD;
+  font-weight: 600;
+  color: #FCF6E9;
   line-height: 1.15;
   margin: 0 0 1.75rem 0;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .leftSubtext {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.65;
-  max-width: 360px;
+  max-width: 380px;
   margin: 0 0 2.5rem 0;
 }
 
@@ -124,7 +124,7 @@
   font-weight: 700;
   color: #FFFFFF;
   flex-shrink: 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono, monospace);
 }
 
 .leftStepText {
@@ -144,14 +144,16 @@
 }
 
 .leftFooterPill {
-  font-size: 0.775rem;
-  font-weight: 600;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
   color: #FFFFFF;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0.35rem 0.85rem;
-  border-radius: var(--wa-radius-pill);
-  letter-spacing: 0.02em;
+  border-radius: var(--wa-radius-pill, 999px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 /* ── Right form panel ── */
@@ -162,20 +164,20 @@
   justify-content: center;
   padding: 3rem 2rem;
   overflow-y: auto;
-  background: var(--wa-paper);
+  background: var(--wa-paper, #FAF7F2);
 }
 
 .formContainer {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
   gap: 0;
-  background: var(--wa-white);
+  background: var(--wa-white, #FFFFFF);
   padding: 2.75rem 2.5rem;
-  border-radius: var(--wa-radius-xl);
-  border: 1px solid var(--wa-border);
-  box-shadow: var(--wa-shadow-lg);
+  border-radius: var(--wa-radius-xl, 18px);
+  border: 1px solid var(--wa-border, #E6DFD5);
+  box-shadow: var(--wa-shadow-md);
 }
 
 /* Mobile brand — visible only when left panel is hidden */
@@ -187,11 +189,11 @@
 }
 
 .mobileBrandName {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif, "Fraunces", Georgia, serif);
   font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--wa-ink);
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  color: var(--wa-ink, #1A1615);
+  letter-spacing: -0.02em;
 }
 
 @media (min-width: 900px) {
@@ -200,19 +202,19 @@
 
 /* Heading + subtext */
 .title {
-  font-family: var(--font-sans);
-  color: var(--wa-ink);
-  font-size: 1.85rem;
-  font-weight: 800;
+  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  color: var(--wa-ink, #1A1615);
+  font-size: 2rem;
+  font-weight: 600;
   margin: 0 0 0.5rem 0;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .lead {
-  color: var(--wa-muted);
+  color: var(--wa-muted, #685E5A);
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.55;
   margin: 0 0 1.75rem 0;
 }
 
@@ -222,18 +224,18 @@
   grid-template-columns: 1fr 1fr;
   gap: 0.35rem;
   margin-bottom: 1.5rem;
-  background: var(--wa-cream-dark);
+  background: var(--wa-paper, #FAF7F2);
   padding: 0.3rem;
-  border-radius: var(--wa-radius-md);
-  border: 1px solid var(--wa-border);
+  border-radius: var(--wa-radius-md, 10px);
+  border: 1.5px solid var(--wa-border, #E6DFD5);
 }
 
 .roleBtn {
   padding: 0.6rem 0.75rem;
-  border-radius: var(--wa-radius-sm);
+  border-radius: var(--wa-radius-sm, 8px);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--wa-muted);
+  color: var(--wa-muted, #685E5A);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -247,12 +249,12 @@
 }
 
 .roleBtn:hover {
-  color: var(--wa-ink);
+  color: var(--wa-ink, #1A1615);
 }
 
 .roleBtnActive {
-  background: var(--wa-white);
-  color: var(--wa-green);
+  background: var(--wa-white, #FFFFFF);
+  color: var(--wa-crimson, #8B263E);
   box-shadow: var(--wa-shadow-sm);
 }
 
@@ -263,13 +265,13 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  background: var(--wa-white);
-  border: 1px solid var(--wa-border);
+  background: var(--wa-white, #FFFFFF);
+  border: 1.5px solid var(--wa-border, #E6DFD5);
   padding: 0.85rem 1rem;
-  border-radius: var(--wa-radius-md);
+  border-radius: var(--wa-radius-md, 10px);
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--wa-ink);
+  color: var(--wa-ink, #1A1615);
   cursor: pointer;
   transition: all 160ms ease;
   font-family: inherit;
@@ -278,8 +280,8 @@
 }
 
 .googleBtn:hover {
-  border-color: rgba(37, 99, 235, 0.4);
-  background: var(--wa-paper);
+  border-color: var(--wa-border-strong, #C8BFAF);
+  background: var(--wa-paper, #FAF7F2);
   transform: translateY(-1px);
 }
 
@@ -297,18 +299,19 @@
   left: 0;
   right: 0;
   height: 1px;
-  background-color: var(--wa-border);
+  background-color: var(--wa-border, #E6DFD5);
 }
 
 .divider span {
   position: relative;
-  background: var(--wa-white);
+  background: var(--wa-white, #FFFFFF);
   padding: 0 0.85rem;
-  color: var(--wa-subtle);
+  color: var(--wa-subtle, #9E948F);
   font-size: 0.725rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 700;
+  font-family: var(--font-mono, monospace);
 }
 
 /* Email form */
@@ -326,20 +329,20 @@
 }
 
 .inputGroup label {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.84rem;
-  color: var(--wa-ink);
+  color: var(--wa-ink, #1A1615);
 }
 
 .inputGroup input,
 .selectInput {
   padding: 0.75rem 1rem;
-  border: 1px solid var(--wa-border);
-  border-radius: var(--wa-radius-sm);
+  border: 1.5px solid var(--wa-border, #E6DFD5);
+  border-radius: var(--wa-radius-sm, 8px);
   font-family: inherit;
   font-size: 0.9375rem;
-  color: var(--wa-ink);
-  background: var(--wa-paper);
+  color: var(--wa-ink, #1A1615);
+  background: var(--wa-paper, #FAF7F2);
   transition: all 160ms ease;
   width: 100%;
   box-sizing: border-box;
@@ -348,35 +351,35 @@
 .inputGroup input:focus,
 .selectInput:focus {
   outline: none;
-  border-color: var(--wa-green);
-  background: var(--wa-white);
-  box-shadow: var(--focus-ring);
+  border-color: var(--wa-crimson, #8B263E);
+  background: var(--wa-white, #FFFFFF);
+  box-shadow: 0 0 0 3px rgba(139, 38, 62, 0.12);
 }
 
 .inputGroup input::placeholder {
-  color: var(--wa-subtle);
+  color: var(--wa-subtle, #9E948F);
 }
 
 /* Submit button */
 .submitBtn {
-  background-color: var(--wa-green);
+  background-color: var(--wa-crimson, #8B263E);
   color: #FFFFFF;
   padding: 0.875rem;
   border: none;
-  border-radius: var(--wa-radius-md);
+  border-radius: var(--wa-radius-md, 10px);
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 180ms ease;
   width: 100%;
   font-family: inherit;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+  box-shadow: 0 4px 14px rgba(139, 38, 62, 0.25);
 }
 
 .submitBtn:hover {
-  background-color: var(--wa-green-hover);
+  background-color: var(--wa-crimson-hover, #731E33);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 6px 20px rgba(139, 38, 62, 0.35);
 }
 
 .submitBtn:disabled {
@@ -390,13 +393,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: var(--wa-error-bg);
-  color: var(--wa-error);
+  background-color: var(--wa-error-bg, #FDF2F2);
+  color: var(--wa-error, #9E2A2B);
   padding: 0.75rem 1rem;
-  border-radius: var(--wa-radius-sm);
+  border-radius: var(--wa-radius-sm, 8px);
   font-size: 0.84rem;
   font-weight: 500;
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(158, 42, 43, 0.25);
 }
 
 /* Toggle + terms */
@@ -406,7 +409,7 @@
 }
 
 .toggleText {
-  color: var(--wa-muted);
+  color: var(--wa-muted, #685E5A);
   font-size: 0.875rem;
   margin: 0;
 }
@@ -414,7 +417,7 @@
 .toggleBtn {
   background: none;
   border: none;
-  color: var(--wa-green);
+  color: var(--wa-crimson, #8B263E);
   font-weight: 700;
   font-size: inherit;
   cursor: pointer;
@@ -424,19 +427,19 @@
 }
 
 .toggleBtn:hover {
-  color: var(--wa-green-hover);
+  color: var(--wa-crimson-hover, #731E33);
 }
 
 .termsNote {
   margin-top: 1.5rem;
   font-size: 0.725rem;
-  color: var(--wa-subtle);
+  color: var(--wa-subtle, #9E948F);
   line-height: 1.55;
   text-align: center;
 }
 
 .termsNote a {
-  color: var(--wa-green);
+  color: var(--wa-crimson, #8B263E);
   text-decoration: underline;
 }
 
