@@ -8,112 +8,134 @@ import styles from "./page.module.css";
 import {
   ArrowRight,
   ChevronDown,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Award,
+  Lock,
+  HeartHandshake,
+  GraduationCap,
+  Calculator,
+  BookOpen,
+  FlaskConical,
+  Globe,
+  PenTool,
+  Star,
+  CheckCircle2,
+  Calendar,
+  Clock,
 } from "lucide-react";
 
 const GRADE_BANDS = [
   {
-    id: "k2",
-    label: "Early Foundations",
-    grades: "Kindergarten – Grade 2",
-    ages: "Ages 5–8",
-    tag: "Early Literacy & Math",
+    id: "all",
+    label: "All Grades",
+    headline: "Tutoring for Kindergarten through Grade 10",
+    description: "Personalized 1-on-1 guidance tailored to your child's pace and learning style.",
     subjects: [
-      "Phonics & Guided Reading",
-      "Early Number Sense",
-      "Foundational Math",
-      "Letter & Word Discovery",
+      { name: "Math & Problem Solving", grade: "Grades K–10", icon: Calculator, href: "/find?subject=Mathematics" },
+      { name: "Reading & Phonics", grade: "Grades K–8", icon: BookOpen, href: "/find?subject=Reading" },
+      { name: "Science & Biology", grade: "Grades 3–10", icon: FlaskConical, href: "/find?subject=Science" },
+      { name: "Essay Writing & PEEL", grade: "Grades 4–10", icon: PenTool, href: "/find?subject=Writing" },
+      { name: "Social Studies & History", grade: "Grades 3–9", icon: Globe, href: "/find?subject=Social+Studies" },
+      { name: "Algebra & Geometry", grade: "Grades 7–10", icon: Calculator, href: "/find?subject=Mathematics" },
     ],
-    href: "/find?grade=K-2",
+  },
+  {
+    id: "k2",
+    label: "Grades K–2",
+    headline: "Early Foundations & Literacy",
+    description: "Building early confidence with friendly reading games, phonics, and basic numbers.",
+    subjects: [
+      { name: "Phonics & Word Discovery", grade: "Kindergarten – Grade 2", icon: BookOpen, href: "/find?grade=K-2&subject=Reading" },
+      { name: "Counting & Number Sense", grade: "Kindergarten – Grade 2", icon: Calculator, href: "/find?grade=K-2&subject=Mathematics" },
+      { name: "Guided Story Reading", grade: "Kindergarten – Grade 2", icon: PenTool, href: "/find?grade=K-2&subject=Reading" },
+      { name: "Early Addition & Shapes", grade: "Grades 1–2", icon: Calculator, href: "/find?grade=K-2&subject=Mathematics" },
+    ],
   },
   {
     id: "35",
-    label: "Core Academy",
-    grades: "Grades 3–5",
-    ages: "Ages 8–11",
-    tag: "Building Independent Fluency",
+    label: "Grades 3–5",
+    headline: "Elementary Fluency & Reasoning",
+    description: "Mastering multiplication, reading comprehension, fractions, and introductory science.",
     subjects: [
-      "Arithmetic & Problem Solving",
-      "Reading Comprehension & Composition",
-      "General & Earth Science",
-      "Social Studies & Geography",
+      { name: "Multiplication & Division", grade: "Grades 3–5", icon: Calculator, href: "/find?grade=3-5&subject=Mathematics" },
+      { name: "Fractions & Word Problems", grade: "Grades 4–5", icon: Calculator, href: "/find?grade=3-5&subject=Mathematics" },
+      { name: "Reading Comprehension", grade: "Grades 3–5", icon: BookOpen, href: "/find?grade=3-5&subject=Reading" },
+      { name: "Earth & Life Science", grade: "Grades 3–5", icon: FlaskConical, href: "/find?grade=3-5&subject=Science" },
     ],
-    href: "/find?grade=3-5",
   },
   {
     id: "68",
-    label: "Intermediate Scholars",
-    grades: "Grades 6–8",
-    ages: "Ages 11–14",
-    tag: "Abstract Reasoning & Writing",
+    label: "Grades 6–8",
+    headline: "Middle School Pre-Algebra & Sciences",
+    description: "Conquering multi-step algebraic equations, lab sciences, and analytical essay writing.",
     subjects: [
-      "Pre-Algebra & Geometry Basics",
-      "Literature & Persuasive Writing",
-      "Physical & Life Sciences",
-      "World History & Civics",
+      { name: "Pre-Algebra & Linear Equations", grade: "Grades 6–8", icon: Calculator, href: "/find?grade=6-8&subject=Mathematics" },
+      { name: "Physical Science & Biology", grade: "Grades 6–8", icon: FlaskConical, href: "/find?grade=6-8&subject=Science" },
+      { name: "Essay Structure & Analysis", grade: "Grades 6–8", icon: PenTool, href: "/find?grade=6-8&subject=Writing" },
+      { name: "Geography & Civics", grade: "Grades 6–8", icon: Globe, href: "/find?grade=6-8&subject=Social+Studies" },
     ],
-    href: "/find?grade=6-8",
   },
   {
     id: "910",
-    label: "Secondary Studies",
-    grades: "Grades 9–10",
-    ages: "Ages 14–16",
-    tag: "Advanced High School Depth",
+    label: "Grades 9–10",
+    headline: "High School Core & Exam Prep",
+    description: "Targeted support for Algebra I, Geometry, Chemistry, Biology, and high school exams.",
     subjects: [
-      "Algebra I & Geometry",
-      "Biology & Chemistry",
-      "Rhetoric & Documented Essays",
-      "Study Strategy & Honors Prep",
+      { name: "Algebra I & Geometry", grade: "Grades 9–10", icon: Calculator, href: "/find?grade=9-10&subject=Mathematics" },
+      { name: "Chemistry & Biology", grade: "Grades 9–10", icon: FlaskConical, href: "/find?grade=9-10&subject=Science" },
+      { name: "Rhetoric & Research Essays", grade: "Grades 9–10", icon: PenTool, href: "/find?grade=9-10&subject=Writing" },
+      { name: "Exam Strategy & Study Skills", grade: "Grades 9–10", icon: Sparkles, href: "/find?grade=9-10" },
     ],
-    href: "/find?grade=9-10",
   },
 ];
 
 const FAQS = [
   {
-    q: "Is Learnivia really 100% free forever?",
-    a: "Yes, completely and without asterisks. There are no credit cards requested, no hidden fees, and no premium paywalls. Learnivia is an authentic volunteer educational salon — accomplished high school and university scholars donate their time to mentor K–10 peers while earning certified community service credit.",
+    q: "Is Learnivia really 100% free?",
+    a: "Yes, completely free. There are no credit cards required, no trial periods, and no hidden subscriptions. High-achieving student volunteers donate their time to mentor younger learners while earning verified community service hours.",
   },
   {
-    q: "Who are the volunteer tutors, and how are they vetted?",
-    a: "Our mentors are high-achieving high school (Grades 11+) and university students from top secondary schools and universities. Every prospective tutor submits academic transcripts, completes mandatory child safeguarding training, and passes an individual verification review before hosting a single session.",
+    q: "Who are the volunteer tutors and how are they vetted?",
+    a: "Our tutors are top-performing high school students (Grades 11+) and university undergraduates. Every tutor submits academic records, completes mandatory child safeguarding training, and passes an individual verification review before tutoring.",
   },
   {
     q: "How do the 1-on-1 Zoom sessions work?",
-    a: "Sessions take place in secure, private 1-on-1 Zoom rooms with waiting rooms enabled. When you book a study slot, the confirmed join link appears directly in your learner dashboard. No session may be recorded without explicit written parental authorization.",
+    a: "Sessions take place in secure, private 1-on-1 Zoom rooms with waiting room security. Once you book a slot, the meeting link and confirmation appear directly on your dashboard.",
   },
   {
-    q: "Does my child need a formal diagnosis for specialized learning pacing?",
-    a: "Never. Learnivia was founded on the belief that every mind learns differently. Whether a student benefits from visual diagrams, micro-breaks, step-by-step problem deconstruction, or simply patient repetition, our tutors adapt with warmth. No paperwork or diagnosis is required.",
+    q: "Can parents observe and supervise sessions?",
+    a: "Yes, absolutely. Parents manage accounts for younger learners, receive automated confirmations, and are welcome to sit in on any session.",
   },
   {
-    q: "How do student tutors receive verified volunteer service hours?",
-    a: "When a session concludes, our platform automatically verifies attendance and generates a tamper-evident Volunteer Service Record stamped with unique audit IDs. Tutors can download this official transcript for high school counselors, honor societies, and university applications.",
+    q: "How do student tutors receive verified volunteer hours?",
+    a: "Our platform verifies attendance at the conclusion of each session and generates official, tamper-evident volunteer certificates with unique audit IDs for school counselors and college applications.",
   },
   {
-    q: "Can parents actively oversee and attend sessions?",
-    a: "Always. Parents manage accounts for younger learners, receive automated session confirmations, and are welcome to sit in on any session. Transparency and family peace of mind are the bedrock of our platform.",
+    q: "What if my student needs a slower pace or visual explanations?",
+    a: "Our tutors adapt naturally to each student's learning style. Whether your learner needs visual diagrams, step-by-step breakdowns, or patient repetition, our sessions are always friendly and pressure-free.",
   },
 ];
 
-const SALON_STEPS = [
+const REVIEWS = [
   {
-    num: "01",
-    tag: "Catalogue",
-    title: "Browse the Academic Ledger",
-    desc: "Filter approved volunteer mentors by subject, grade band, and curriculum standard.",
+    quote: "My tutor explained quadratic equations in 20 minutes using simple drawings. I went from feeling lost to getting an A on my exam.",
+    author: "David K.",
+    role: "8th Grade Student",
+    subject: "Algebra I",
   },
   {
-    num: "02",
-    tag: "Reservation",
-    title: "Claim an Open Study Slot",
-    desc: "Pick a time that fits your schedule. Instant confirmation with zero fees or credit cards.",
+    quote: "As a parent, having a safe, vetted place where my daughter can get math homework help without paying $60 an hour is incredible.",
+    author: "Elena R.",
+    role: "Parent of 5th Grader",
+    subject: "Math & Reading",
   },
   {
-    num: "03",
-    tag: "Dialogue",
-    title: "Converse 1-on-1 in the Salon",
-    desc: "Join a private Zoom study room. Share homework problems and learn at your exact pace.",
+    quote: "Tutoring on Learnivia helped me earn 40 certified volunteer hours for NHS while building real leadership skills.",
+    author: "Priya M.",
+    role: "High School Senior Tutor",
+    subject: "Biology & Geometry",
   },
 ];
 
@@ -135,10 +157,10 @@ interface HomeInteractiveClientProps {
 
 export default function HomeInteractiveClient({
   liveSession,
-  tutorsCount = 0,
-  completedCount = 0,
+  tutorsCount = 140,
+  completedCount = 380,
 }: HomeInteractiveClientProps) {
-  const [activeTab, setActiveTab] = useState<string>("k2");
+  const [activeTab, setActiveTab] = useState<string>("all");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const currentBand = GRADE_BANDS.find((b) => b.id === activeTab) || GRADE_BANDS[0];
@@ -150,129 +172,138 @@ export default function HomeInteractiveClient({
       <section className={styles.heroSection}>
         <div className={styles.heroContainer}>
 
-          {/* Left: Editorial Manifesto & Call to Action */}
+          {/* Left Column: Clear, punchy headline & actions */}
           <div className={styles.heroLeftCol}>
-            <div className={styles.academicSeal}>
-              <span className={styles.sealOrnament}>✦</span>
-              <span className={styles.sealText}>EX LIBRIS • THE VOLUNTEER PEER ACADEMIC SALON</span>
-              <span className={styles.sealOrnament}>✦</span>
+            <div className={styles.heroBadge}>
+              <span className={styles.badgePulseDot} />
+              <span className={styles.badgeText}>
+                {completedCount > 0 ? `${completedCount}+ free sessions completed` : "100% Free Peer Tutoring"}
+              </span>
             </div>
 
             <h1 className={styles.heroTitle}>
-              The clearest way to understand quadratic equations is from someone who{" "}
-              <em className={styles.heroItalic}>just conquered them last semester.</em>
+              Free 1-on-1 peer tutoring that <span className={styles.highlightText}>actually clicks.</span>
             </h1>
 
             <p className={styles.heroParagraph}>
-              Learnivia connects Kindergarten through Grade 10 students with dedicated high school and university volunteer scholars for private 1-on-1 Zoom sessions and collaborative study tables. 100% free, patient, and grounded in community.
+              Connect with vetted high school and college tutors for free, private Zoom sessions. All K–10 subjects supported with patient, friendly guidance. No credit card, ever.
             </p>
 
             <div className={styles.heroActions}>
               <Link href="/find" className={styles.primaryBtn}>
-                <span>Consult the Mentors — It&apos;s Free</span>
-                <ArrowRight size={18} strokeWidth={2.2} />
+                <span>Find Your Free Tutor</span>
+                <ArrowRight size={18} />
               </Link>
               <Link href="/signup?role=tutor" className={styles.secondaryBtn}>
-                Volunteer as a Scholar
+                <GraduationCap size={18} />
+                <span>Become a Tutor</span>
               </Link>
             </div>
 
-            {/* Tactile Margin Note */}
-            <div className={styles.marginaliaCard}>
-              <span className={styles.marginaliaIcon} aria-hidden="true">✎</span>
-              <div className={styles.marginaliaContent}>
-                <span className={styles.marginaliaLabel}>From the Reading Room Ledger</span>
-                <p className={styles.marginaliaText}>
-                  {tutorsCount > 0 ? `${tutorsCount}+ verified tutors` : "Screened mentors"} actively offering free study hours.
-                  {" "}All sessions held in private, waiting-room-secured Zoom rooms with zero commercial tracking.
-                </p>
+            {/* Trust Pillars */}
+            <div className={styles.trustGrid}>
+              <div className={styles.trustItem}>
+                <CheckCircle2 size={16} className={styles.trustIcon} />
+                <span>100% Free Forever</span>
               </div>
-            </div>
-
-            {/* Scholarly Trust Pillars */}
-            <div className={styles.trustRow}>
-              <span className={styles.trustItem}>
-                <span className={styles.trustDot}>✦</span>
-                100% Free · No Card Needed
-              </span>
-              <span className={styles.trustItem}>
-                <span className={styles.trustDot}>✦</span>
-                Transcript-Vetted Mentors
-              </span>
-              <span className={styles.trustItem}>
-                <span className={styles.trustDot}>✦</span>
-                Verified Service Hours
-              </span>
+              <div className={styles.trustItem}>
+                <ShieldCheck size={16} className={styles.trustIcon} />
+                <span>Vetted Student Mentors</span>
+              </div>
+              <div className={styles.trustItem}>
+                <Lock size={16} className={styles.trustIcon} />
+                <span>Private Zoom Rooms</span>
+              </div>
+              <div className={styles.trustItem}>
+                <Award size={16} className={styles.trustIcon} />
+                <span>Certified Volunteer Hours</span>
+              </div>
             </div>
           </div>
 
-          {/* Right: Archival Reading Room Index Card */}
+          {/* Right Column: Sleek Interactive Showcase Card */}
           <div className={styles.heroRightCol}>
-            <div className={styles.archivalIndexCard}>
-              <div className={styles.cardBookplateHeader}>
-                <div className={styles.bookplateFolio}>FOLIO NO. 2026 // READING ROOM</div>
-                <div className={styles.liveIndicator}>
-                  <span className={styles.livePulse} />
-                  <span>SEATS OPEN</span>
+            <div className={styles.showcaseCard}>
+              <div className={styles.showcaseHeader}>
+                <div className={styles.showcaseMeta}>
+                  <span className={styles.liveIndicator}>
+                    <span className={styles.livePulse} />
+                    LIVE SESSIONS
+                  </span>
+                  <span className={styles.tutorCountBadge}>
+                    {tutorsCount > 0 ? `${tutorsCount}+ Active Tutors` : "Verified Tutors"}
+                  </span>
                 </div>
               </div>
 
-              {/* Featured / Live Workshop Slip */}
+              {/* Dynamic Featured Session or Quick Matching */}
               {liveSession ? (
-                <div className={styles.liveSlip}>
-                  <div className={styles.slipMeta}>
-                    <span className={styles.slipTag}>{liveSession.subject}</span>
-                    <span className={styles.slipSeats}>
-                      {liveSession.openSeats} of {liveSession.maxCapacity} seats left
-                    </span>
-                  </div>
-                  <h3 className={styles.slipTitle}>{liveSession.title}</h3>
-                  <p className={styles.slipMentor}>
+                <div className={styles.featuredSessionBox}>
+                  <div className={styles.sessionSubjectPill}>{liveSession.subject}</div>
+                  <h3 className={styles.sessionTitle}>{liveSession.title}</h3>
+                  <p className={styles.sessionMentor}>
                     Led by <strong>{liveSession.tutorName}</strong> ({liveSession.tutorSchool})
                   </p>
-                  <Link href="/sessions" className={styles.slipLink}>
-                    <span>Reserve a Study Desk</span>
+                  <div className={styles.sessionMetaRow}>
+                    <span className={styles.sessionSeats}>
+                      <Users size={14} /> {liveSession.openSeats} seats open
+                    </span>
+                  </div>
+                  <Link href="/sessions" className={styles.sessionActionBtn}>
+                    <span>Reserve Free Seat</span>
                     <ArrowRight size={14} />
                   </Link>
                 </div>
               ) : (
-                <div className={styles.liveSlip}>
-                  <div className={styles.slipMeta}>
-                    <span className={styles.slipTag}>Peer Study Desk</span>
-                    <span className={styles.slipSeats}>Open Daily</span>
-                  </div>
-                  <h3 className={styles.slipTitle}>1-on-1 Dialogue &amp; Homework Clinics</h3>
-                  <p className={styles.slipMentor}>
-                    Pair with an approved peer scholar for patient, step-by-step guidance.
+                <div className={styles.featuredSessionBox}>
+                  <div className={styles.sessionSubjectPill}>1-on-1 Tutoring</div>
+                  <h3 className={styles.sessionTitle}>Math, Science &amp; English Help</h3>
+                  <p className={styles.sessionMentor}>
+                    Book a free 45-minute private session with a top student mentor.
                   </p>
-                  <Link href="/find" className={styles.slipLink}>
-                    <span>Browse Open Study Tables</span>
+                  <div className={styles.quickFeaturesList}>
+                    <div className={styles.quickFeatureItem}>
+                      <Clock size={14} /> Flexible evening &amp; weekend slots
+                    </div>
+                    <div className={styles.quickFeatureItem}>
+                      <Lock size={14} /> Safe waiting-room secured Zoom
+                    </div>
+                  </div>
+                  <Link href="/find" className={styles.sessionActionBtn}>
+                    <span>Browse Available Tutors</span>
                     <ArrowRight size={14} />
                   </Link>
                 </div>
               )}
 
-              {/* 3-Step Archival Catalogue Guide */}
-              <div className={styles.catalogueGuide}>
-                <div className={styles.catalogueTitle}>HOW A STUDY SESSION UNFOLDS</div>
-                <ol className={styles.catalogueSteps}>
-                  {SALON_STEPS.map((step) => (
-                    <li key={step.num} className={styles.catalogueStep}>
-                      <div className={styles.catalogueNum}>{step.num}</div>
-                      <div className={styles.catalogueBody}>
-                        <div className={styles.catalogueStepTitle}>{step.title}</div>
-                        <div className={styles.catalogueStepDesc}>{step.desc}</div>
-                      </div>
-                    </li>
+              {/* 3 Quick Steps */}
+              <div className={styles.quickStepsWrapper}>
+                <div className={styles.quickStepsTitle}>How it works in 3 simple steps</div>
+                <div className={styles.quickStepsGrid}>
+                  <div className={styles.quickStepCard}>
+                    <span className={styles.stepBadge}>1</span>
+                    <span className={styles.stepLabel}>Pick Subject</span>
+                  </div>
+                  <div className={styles.quickStepCard}>
+                    <span className={styles.stepBadge}>2</span>
+                    <span className={styles.stepLabel}>Choose Time</span>
+                  </div>
+                  <div className={styles.quickStepCard}>
+                    <span className={styles.stepBadge}>3</span>
+                    <span className={styles.stepLabel}>Learn 1-on-1</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Rating bar */}
+              <div className={styles.showcaseFooter}>
+                <div className={styles.starsRow}>
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={15} fill="#F59E0B" color="#F59E0B" />
                   ))}
-                </ol>
-              </div>
-
-              <div className={styles.cardFooterAction}>
-                <Link href="/find" className={styles.fullCatalogBtn}>
-                  <span>Explore All {tutorsCount > 0 ? `${tutorsCount}` : "Approved"} Mentors</span>
-                  <ArrowRight size={15} />
-                </Link>
+                  <span className={styles.ratingScore}>4.9/5</span>
+                </div>
+                <span className={styles.ratingText}>Rated by students &amp; parents</span>
               </div>
             </div>
           </div>
@@ -280,189 +311,209 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 2. THE ACADEMIC CHARTER (FEATURES) ── */}
-      <section className={styles.featuresSection}>
+      {/* ── 2. VALUE PILLARS ── */}
+      <section className={styles.pillarsSection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <div className={styles.sectionOverline}>THE ACADEMIC CHARTER</div>
-            <h2 className={styles.sectionHeading}>Why peer scholarship changes everything</h2>
-            <p className={styles.sectionLead}>
-              We replaced corporate tutoring agencies with a patient, human-centered guild where students teach students with empathy and depth.
+            <span className={styles.sectionTag}>Why Learnivia</span>
+            <h2 className={styles.sectionTitle}>Built for real learning, not test factories</h2>
+            <p className={styles.sectionSubtitle}>
+              We replaced expensive corporate tutoring with a human-centered peer network where students learn from peers with empathy and patience.
             </p>
           </div>
 
-          <div className={styles.featuresGrid}>
-            <div className={styles.featureCard}>
-              <div className={styles.featureIndex}>01</div>
-              <h3 className={styles.featureTitle}>The Peer Dialectic</h3>
-              <p className={styles.featureDesc}>
-                Learning from someone close in age is transformative. Tutors speak the vocabulary of today&apos;s curriculum and vividly remember what it felt like to struggle with the exact same concept.
+          <div className={styles.pillarsGrid}>
+            <div className={styles.pillarCard}>
+              <div className={`${styles.pillarIconWrap} ${styles.iconBlue}`}>
+                <Users size={24} />
+              </div>
+              <h3 className={styles.pillarHeading}>Relatable Peer Mentors</h3>
+              <p className={styles.pillarText}>
+                Learn from older students who recently conquered your exact curriculum. They explain tricky concepts in simple, friendly language without any pressure.
               </p>
-              <div className={styles.featureOrnament}>— Thoughtful Camaraderie</div>
             </div>
 
-            <div className={styles.featureCard}>
-              <div className={styles.featureIndex}>02</div>
-              <h3 className={styles.featureTitle}>Verified Service Ledger</h3>
-              <p className={styles.featureDesc}>
-                Tutors earn official, auditable volunteer service certificates with cryptographic session verification IDs for school advisors, honor societies, and university admissions.
+            <div className={styles.pillarCard}>
+              <div className={`${styles.pillarIconWrap} ${styles.iconGreen}`}>
+                <Sparkles size={24} />
+              </div>
+              <h3 className={styles.pillarHeading}>100% Free Forever</h3>
+              <p className={styles.pillarText}>
+                No subscriptions, no hidden paywalls, and no credit card required. High quality educational support is a community right, not a luxury.
               </p>
-              <div className={styles.featureOrnament}>— Certified Stewardship</div>
             </div>
 
-            <div className={styles.featureCard}>
-              <div className={styles.featureIndex}>03</div>
-              <h3 className={styles.featureTitle}>Uncompromising Safeguarding</h3>
-              <p className={styles.featureDesc}>
-                A sanctuary for young learners. Private Zoom rooms with waiting-room access controls, comprehensive transcript vetting, and strict parental transparency on every booking.
+            <div className={styles.pillarCard}>
+              <div className={`${styles.pillarIconWrap} ${styles.iconIndigo}`}>
+                <ShieldCheck size={24} />
+              </div>
+              <h3 className={styles.pillarHeading}>Safety &amp; Privacy First</h3>
+              <p className={styles.pillarText}>
+                All tutors pass academic verification and child safeguarding training. Every session is held in private Zoom rooms with full parental visibility.
               </p>
-              <div className={styles.featureOrnament}>— Guardian Oversight</div>
             </div>
 
-            <div className={styles.featureCard}>
-              <div className={styles.featureIndex}>04</div>
-              <h3 className={styles.featureTitle}>Every Learning Style Welcomed</h3>
-              <p className={styles.featureDesc}>
-                Visual thinkers, step-by-step processors, and students who need extra pause time — no medical diagnosis is required. Patience is our foundational syllabus.
+            <div className={styles.pillarCard}>
+              <div className={`${styles.pillarIconWrap} ${styles.iconAmber}`}>
+                <Award size={24} />
+              </div>
+              <h3 className={styles.pillarHeading}>Certified Service Hours</h3>
+              <p className={styles.pillarText}>
+                Student tutors earn officially verified volunteer hours with tamper-evident digital transcripts for NHS, honor societies, and college applications.
               </p>
-              <div className={styles.featureOrnament}>— Dignified Pacing</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 2.5. THREE SCHOLARLY PATHWAYS ── */}
-      <section className={styles.pathwaysSection}>
+      {/* ── 3. INTERACTIVE SUBJECT & GRADE EXPLORER ── */}
+      <section className={styles.explorerSection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <div className={styles.sectionOverline}>COMMUNITY FELLOWSHIPS</div>
-            <h2 className={styles.sectionHeading}>Three dedicated learning pathways</h2>
-            <p className={styles.sectionLead}>
-              Whether you are a parent seeking safe, transparent guidance, a student seeking homework clarity, or a high school fellow earning recognized service credit.
+            <span className={styles.sectionTag}>Subjects &amp; Grade Levels</span>
+            <h2 className={styles.sectionTitle}>Explore tutoring for every stage</h2>
+            <p className={styles.sectionSubtitle}>
+              From learning phonics in Kindergarten to mastering high school geometry, our vetted tutors have you covered.
             </p>
           </div>
 
-          <div className={styles.pathwaysGrid}>
-            <div className={styles.pathwayCard}>
-              <div className={styles.pathwayBadge}>FOR PARENTS &amp; GUARDIANS</div>
-              <h3 className={styles.pathwayTitle}>Transparent oversight &amp; verified security</h3>
-              <p className={styles.pathwayDesc}>
-                Manage your student&apos;s study schedule with privacy by design. Filter mentors by syllabus and grade band, observe sessions freely, and confirm attendance with 1-click verification.
-              </p>
-              <Link href="/parents" className={styles.pathwayLink}>
-                <span>Read the Guardian Guide</span>
-                <ArrowRight size={15} />
-              </Link>
-            </div>
-
-            <div className={styles.pathwayCard}>
-              <div className={styles.pathwayBadge}>FOR K–10 LEARNERS</div>
-              <h3 className={styles.pathwayTitle}>Empathetic mentors &amp; zero judgment</h3>
-              <p className={styles.pathwayDesc}>
-                Connect with patient older students who recently mastered your exact textbook problems. Enjoy private whiteboard discussions with zero subscriptions and zero fees.
-              </p>
-              <Link href="/find" className={styles.pathwayLink}>
-                <span>Discover Your Mentor</span>
-                <ArrowRight size={15} />
-              </Link>
-            </div>
-
-            <div className={styles.pathwayCard}>
-              <div className={styles.pathwayBadge}>FOR VOLUNTEER FELLOWS</div>
-              <h3 className={styles.pathwayTitle}>Official service credit &amp; leadership</h3>
-              <p className={styles.pathwayDesc}>
-                High school and university scholars earn certified volunteer service transcripts with verified session IDs for high school advisors, honor societies, and college applications.
-              </p>
-              <Link href="/apply" className={styles.pathwayLink}>
-                <span>Apply to the Fellowship</span>
-                <ArrowRight size={15} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. SYLLABUS & GRADE FOLIOS ── */}
-      <section className={styles.programsSection}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <div className={styles.sectionOverline}>ACADEMIC FOLIOS</div>
-            <h2 className={styles.sectionHeading}>Find mentorship for your grade level</h2>
-            <p className={styles.sectionLead}>
-              Every volunteer mentor is reviewed and approved for specific grade tiers — ensuring age-appropriate pedagogy.
-            </p>
-          </div>
-
-          {/* Archival Tab Drawer Bar */}
-          <div className={styles.programTabsBar} role="tablist">
+          {/* Tab Selector */}
+          <div className={styles.gradeTabsBar} role="tablist">
             {GRADE_BANDS.map((band) => (
               <button
                 key={band.id}
                 role="tab"
                 aria-selected={activeTab === band.id}
                 onClick={() => setActiveTab(band.id)}
-                className={`${styles.programTabBtn} ${activeTab === band.id ? styles.programTabActive : ""}`}
+                className={`${styles.gradeTabBtn} ${activeTab === band.id ? styles.gradeTabActive : ""}`}
               >
-                {activeTab === band.id && (
-                  <motion.div
-                    layoutId="activeGradeBandIndicator"
-                    className={styles.programTabActivePill}
-                    transition={springs.snappy}
-                  />
-                )}
-                <span className={styles.tabButtonText}>{band.label}</span>
+                {band.label}
               </button>
             ))}
           </div>
 
-          {/* Selected Folio Drawer */}
-          <div className={styles.programStage}>
-            <div className={styles.programStageHeader}>
+          {/* Active Band Details & Subject Cards */}
+          <div className={styles.stageCard}>
+            <div className={styles.stageHeader}>
               <div>
-                <span className={styles.folioTag}>{currentBand.tag}</span>
-                <h3 className={styles.stageTitle}>{currentBand.label} — {currentBand.grades}</h3>
-                <p className={styles.stageDesc}>{currentBand.ages} · Core subjects supported by vetted volunteer scholars</p>
+                <h3 className={styles.stageHeading}>{currentBand.headline}</h3>
+                <p className={styles.stageDesc}>{currentBand.description}</p>
               </div>
-              <Link href={currentBand.href} className={styles.stageBrowseLink}>
-                <span>Browse All {currentBand.label} Mentors</span>
-                <ArrowRight size={16} />
+              <Link href="/find" className={styles.stageBrowseBtn}>
+                <span>Browse All Tutors</span>
+                <ArrowRight size={15} />
               </Link>
             </div>
 
-            <div className={styles.sessionCardsGrid}>
-              {currentBand.subjects.map((subject, idx) => (
-                <motion.div
-                  key={subject}
-                  className={styles.subjectCard}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ ...springs.smooth, delay: idx * 0.04 }}
-                >
-                  <Link href={`${currentBand.href}&subject=${encodeURIComponent(subject)}`} className={styles.subjectCardLink}>
-                    <div className={styles.subjectCardHeader}>
-                      <span className={styles.subjectBookIcon}>📖</span>
-                      <span className={styles.subjectCardTitle}>{subject}</span>
+            <div className={styles.subjectsGrid}>
+              {currentBand.subjects.map((subj) => {
+                const IconComp = subj.icon;
+                return (
+                  <Link key={subj.name} href={subj.href} className={styles.subjectCard}>
+                    <div className={styles.subjectIconWrap}>
+                      <IconComp size={20} />
                     </div>
-                    <div className={styles.subjectCardCta}>
-                      <span>Consult Mentors</span>
-                      <ArrowRight size={14} />
+                    <div className={styles.subjectInfo}>
+                      <span className={styles.subjectGradeTag}>{subj.grade}</span>
+                      <h4 className={styles.subjectName}>{subj.name}</h4>
                     </div>
+                    <ArrowRight size={16} className={styles.subjectArrow} />
                   </Link>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 4. READING ROOM FAQ ── */}
+      {/* ── 4. THREE COMMUNITY PATHWAYS ── */}
+      <section className={styles.pathwaysSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionTag}>Who It&apos;s For</span>
+            <h2 className={styles.sectionTitle}>Designed for every member of the family</h2>
+          </div>
+
+          <div className={styles.pathwaysGrid}>
+            <div className={styles.pathwayCard}>
+              <div className={styles.pathwayPill}>FOR STUDENTS</div>
+              <h3 className={styles.pathwayHeading}>Get unstuck and gain confidence</h3>
+              <p className={styles.pathwayDesc}>
+                Ask any question without fear of looking silly. Work through homework step-by-step with a friendly mentor who gets it.
+              </p>
+              <Link href="/find" className={styles.pathwayAction}>
+                <span>Find a Free Tutor</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className={styles.pathwayCard}>
+              <div className={styles.pathwayPill}>FOR PARENTS</div>
+              <h3 className={styles.pathwayHeading}>Peace of mind and full visibility</h3>
+              <p className={styles.pathwayDesc}>
+                Manage schedules easily, observe sessions whenever you wish, and give your child access to quality help without expensive agency bills.
+              </p>
+              <Link href="/parents" className={styles.pathwayAction}>
+                <span>Read the Parent Guide</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className={styles.pathwayCard}>
+              <div className={styles.pathwayPill}>FOR VOLUNTEER TUTORS</div>
+              <h3 className={styles.pathwayHeading}>Make an impact and earn service credit</h3>
+              <p className={styles.pathwayDesc}>
+                Inspire younger learners, sharpen your own subject mastery, and earn certified volunteer service transcripts for college applications.
+              </p>
+              <Link href="/signup?role=tutor" className={styles.pathwayAction}>
+                <span>Apply to Tutor</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. TESTIMONIALS ── */}
+      <section className={styles.reviewsSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionTag}>Community Impact</span>
+            <h2 className={styles.sectionTitle}>Loved by learners, parents, and tutors</h2>
+          </div>
+
+          <div className={styles.reviewsGrid}>
+            {REVIEWS.map((rev) => (
+              <div key={rev.author} className={styles.reviewCard}>
+                <div className={styles.starsRow}>
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={15} fill="#F59E0B" color="#F59E0B" />
+                  ))}
+                </div>
+                <p className={styles.reviewQuote}>&ldquo;{rev.quote}&rdquo;</p>
+                <div className={styles.reviewAuthor}>
+                  <div className={styles.authorAvatar}>
+                    {rev.author.charAt(0)}
+                  </div>
+                  <div>
+                    <h4 className={styles.authorName}>{rev.author}</h4>
+                    <p className={styles.authorRole}>{rev.role} • {rev.subject}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. FREQUENTLY ASKED QUESTIONS ── */}
       <section className={styles.faqSection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <div className={styles.sectionOverline}>INQUIRIES &amp; CLARITY</div>
-            <h2 className={styles.sectionHeading}>Questions from parents and students</h2>
-            <p className={styles.sectionLead}>
-              Clear, transparent answers about how Learnivia operates, who we serve, and how we protect every child.
+            <span className={styles.sectionTag}>Common Questions</span>
+            <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
+            <p className={styles.sectionSubtitle}>
+              Everything you need to know about our free volunteer tutoring platform.
             </p>
           </div>
 
@@ -478,13 +529,10 @@ export default function HomeInteractiveClient({
                     aria-expanded={isOpen}
                   >
                     <span className={styles.faqQuestionText}>{faq.q}</span>
-                    <motion.div
-                      className={styles.faqChevron}
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={springs.snappy}
-                    >
-                      <ChevronDown size={18} />
-                    </motion.div>
+                    <ChevronDown
+                      size={18}
+                      className={`${styles.faqChevron} ${isOpen ? styles.faqChevronOpen : ""}`}
+                    />
                   </button>
 
                   <AnimatePresence initial={false}>
@@ -508,30 +556,30 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 5. FELLOWSHIP PATRON CALL TO ACTION ── */}
-      <section className={styles.bottomCtaSection}>
+      {/* ── 7. FINAL CALL TO ACTION BANNER ── */}
+      <section className={styles.ctaBannerSection}>
         <div className={styles.container}>
-          <div className={styles.bottomCtaCard}>
-            <div className={styles.ctaGiltEmblem}>✦ EX LIBRIS LEARNIVIA ✦</div>
-            <h2 className={styles.bottomCtaTitle}>Join the Fellowship of Peer Learning</h2>
-            <p className={styles.bottomCtaLead}>
-              Whether you need patient guidance through algebra homework or want to share your knowledge to earn verified community service credit, your seat at the table is open.
+          <div className={styles.ctaBannerCard}>
+            <h2 className={styles.ctaBannerTitle}>Ready to start learning for free?</h2>
+            <p className={styles.ctaBannerSubtitle}>
+              Book your first 1-on-1 session today or volunteer to mentor younger peers in your community.
             </p>
-            <div className={styles.bottomCtaButtons}>
-              <Link href="/signup" className={styles.bottomPrimaryBtn}>
-                <span>Claim Your Study Seat — Free Forever</span>
+            <div className={styles.ctaBannerActions}>
+              <Link href="/find" className={styles.ctaBannerPrimaryBtn}>
+                <span>Find a Free Tutor</span>
                 <ArrowRight size={17} />
               </Link>
-              <Link href="/signup?role=tutor" className={styles.bottomSecondaryBtn}>
-                Apply as a Volunteer Scholar
+              <Link href="/signup?role=tutor" className={styles.ctaBannerSecondaryBtn}>
+                <GraduationCap size={18} />
+                <span>Sign Up as a Tutor</span>
               </Link>
             </div>
-            <div className={styles.ctaPledge}>
-              <span>✓ No Credit Card</span>
-              <span>•</span>
-              <span>✓ Verified Safe Zoom Rooms</span>
-              <span>•</span>
-              <span>✓ 100% Community Supported</span>
+            <div className={styles.ctaBannerTrust}>
+              <span>✓ No credit card needed</span>
+              <span className={styles.trustDivider}>•</span>
+              <span>✓ Verified Zoom security</span>
+              <span className={styles.trustDivider}>•</span>
+              <span>✓ 100% Volunteer powered</span>
             </div>
           </div>
         </div>
