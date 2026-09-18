@@ -23,6 +23,17 @@ export async function GET(request: Request) {
     const now = new Date();
     const nowMs = now.getTime();
 
+    const EXEMPT_EMAILS = [
+      "shouryasharan7@gmail.com",
+      "ahmedashfaqfarooqui@gmail.com",
+    ];
+
+    function isTutorExempt(tutor: { user: { email?: string | null; role?: string | null } }) {
+      if (tutor.user?.role === "ADMIN") return true;
+      if (tutor.user?.email && EXEMPT_EMAILS.includes(tutor.user.email.toLowerCase())) return true;
+      return false;
+    }
+
     // ── Audit 1: Availability Audit (3-Day Policy) ──────────────────────
     const inactiveAvailabilityTutors = await prisma.tutorProfile.findMany({
       where: {
@@ -37,6 +48,7 @@ export async function GET(request: Request) {
             id: true,
             email: true,
             name: true,
+            role: true,
           },
         },
       },
@@ -49,6 +61,8 @@ export async function GET(request: Request) {
     };
 
     for (const tutor of inactiveAvailabilityTutors) {
+      if (isTutorExempt(tutor)) continue;
+
       const refDate = tutor.approvedAt || tutor.createdAt;
       const daysSinceRef = (nowMs - new Date(refDate).getTime()) / (1000 * 60 * 60 * 24);
 
@@ -98,6 +112,7 @@ export async function GET(request: Request) {
             id: true,
             email: true,
             name: true,
+            role: true,
           },
         },
       },
@@ -110,6 +125,8 @@ export async function GET(request: Request) {
     };
 
     for (const tutor of pendingTrainingTutors) {
+      if (isTutorExempt(tutor)) continue;
+
       const passedCount = (tutor.trainingModules || []).length;
       if (passedCount >= 5) continue; // Training fully satisfied
 

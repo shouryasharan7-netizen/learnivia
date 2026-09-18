@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   HeartHandshake,
   ArrowRight,
+  ArrowLeft,
   ShieldAlert,
 } from "lucide-react";
 
@@ -45,6 +46,62 @@ const guidelines = [
 export default function SafetyPage() {
   return (
     <main className={styles.main}>
+      {/* Return to Dashboard Navigation Bar */}
+      <div
+        style={{
+          background: "var(--wa-white, #FFFFFF)",
+          borderBottom: "1px solid var(--wa-border, #E2E8F0)",
+          padding: "0.75rem 1.5rem",
+          position: "sticky",
+          top: 0,
+          zIndex: 40,
+          boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1080px",
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+          }}
+        >
+          <Link
+            href="/dashboard"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              color: "var(--wa-green, #2563EB)",
+              textDecoration: "none",
+            }}
+          >
+            <ArrowLeft size={16} />
+            <span>Return to Workspace Dashboard</span>
+          </Link>
+          <Link
+            href="/safety/report"
+            style={{
+              fontSize: "0.8125rem",
+              fontWeight: 600,
+              color: "#DC2626",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.35rem",
+            }}
+          >
+            <ShieldAlert size={14} />
+            <span>Report a Safety Concern</span>
+          </Link>
+        </div>
+      </div>
+
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroIconWrap} aria-hidden="true">
@@ -162,9 +219,29 @@ export default function SafetyPage() {
         {/* For parents */}
         <section className={styles.section}>
           <div className={styles.parentCta}>
-            <h2>For parents & guardians</h2>
+            <h2>For parents &amp; guardians</h2>
             <p>Read our dedicated parent guide explaining account management, session observation, and safety best practices.</p>
-            <Link href="/parents" className={styles.outlineBtn}>Read guardian guide <ArrowRight size={15} /></Link>
+            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap", marginTop: "1rem" }}>
+              <Link href="/parents" className={styles.outlineBtn}>Read guardian guide <ArrowRight size={15} /></Link>
+              <Link
+                href="/dashboard"
+                style={{
+                  background: "var(--wa-green, #2563EB)",
+                  color: "#FFFFFF",
+                  padding: "0.75rem 1.5rem",
+                  borderRadius: "999px",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}
+              >
+                <span>Return to Dashboard</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
           </div>
         </section>
       </div>

@@ -4,36 +4,36 @@
    ========================================= */
 
 :root {
-  /* ── Academic Salon Canvas & Surfaces (Warm Unbleached Paper) ── */
-  --wa-paper:          #FAF7F2;
-  --wa-cream:          #FAF7F2;
-  --wa-cream-dark:     #F2ECE1;
-  --wa-cream-mid:      #E8E1D5;
+  /* ── Precision Modern Surfaces (Crisp Slate Canvas) ── */
+  --wa-paper:          #F8FAFC;
+  --wa-cream:          #F8FAFC;
+  --wa-cream-dark:     #F1F5F9;
+  --wa-cream-mid:      #E2E8F0;
   --wa-white:          #FFFFFF;
 
-  /* ── Literary Typography (Deep Espresso Ink) ── */
-  --wa-ink:            #1A1615;
-  --wa-text:           #2C2422;
-  --wa-muted:          #685E5A;
-  --wa-subtle:         #9E948F;
+  /* ── Modern Human Typography (Deep Slate & Graphite) ── */
+  --wa-ink:            #0F172A;
+  --wa-text:           #1E293B;
+  --wa-muted:          #64748B;
+  --wa-subtle:         #94A3B8;
 
-  /* ── Bookbinding Hairline Rules & Borders ──── */
-  --wa-border:         #E6DFD5;
-  --wa-border-hairline:#EFE9E0;
-  --wa-border-strong:  #C8BFAF;
+  /* ── Precision Hairline Rules & Borders ──── */
+  --wa-border:         #E2E8F0;
+  --wa-border-hairline:#F1F5F9;
+  --wa-border-strong:  #CBD5E1;
 
-  /* ── Oxford Crimson / Burgundy — Scholarly Signature Accent ──── */
-  --wa-crimson:        #8B263E;
-  --wa-crimson-hover:  #731E33;
-  --wa-crimson-light:  #FDF2F4;
-  --wa-forest:         #8B263E;
-  --wa-forest-light:   #FDF2F4;
-  --wa-green:          #8B263E;
-  --wa-green-hover:    #731E33;
-  --wa-green-active:   #5A1626;
-  --wa-green-light:    #FDF2F4;
-  --wa-green-mid:      #A53860;
-  --wa-green-muted:    rgba(139, 38, 62, 0.08);
+  /* ── Royal Cobalt Blue — Signature Accent ──── */
+  --wa-crimson:        #2563EB;
+  --wa-crimson-hover:  #1D4ED8;
+  --wa-crimson-light:  #EFF6FF;
+  --wa-forest:         #2563EB;
+  --wa-forest-light:   #EFF6FF;
+  --wa-green:          #2563EB;
+  --wa-green-hover:    #1D4ED8;
+  --wa-green-active:   #1E40AF;
+  --wa-green-light:    #EFF6FF;
+  --wa-green-mid:      #3B82F6;
+  --wa-green-muted:    rgba(37, 99, 235, 0.08);
 
   /* ── Scholarly Forest / Antique Botanical Accent ────── */
   --wa-terra:          #1E3A2F;
@@ -78,7 +78,7 @@
   --wa-shadow-sm:      0 1px 3px rgba(26, 22, 21, 0.05), 0 1px 2px rgba(26, 22, 21, 0.03);
   --wa-shadow-md:      0 4px 8px -1px rgba(26, 22, 21, 0.06), 0 2px 4px -2px rgba(26, 22, 21, 0.04);
   --wa-shadow-lg:      0 12px 20px -3px rgba(26, 22, 21, 0.07), 0 4px 6px -4px rgba(26, 22, 21, 0.03);
-  --wa-shadow-hover:   0 14px 28px -4px rgba(139, 38, 62, 0.12), 0 4px 8px -2px rgba(26, 22, 21, 0.04);
+  --wa-shadow-hover:   0 14px 28px -4px rgba(37, 99, 235, 0.12), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
 
   /* ── Radius — Deliberate 8–14px geometry ─── */
   --wa-radius-sm:      8px;
@@ -253,13 +253,13 @@ body {
 
 main { flex: 1; }
 
-/* Display & Section Headings — Fraunces Academic Editorial Serif */
+/* Display & Section Headings — Clean, Human, Modern Sans */
 h1, h2, h3 {
-  font-family: var(--font-serif, 'Fraunces', Georgia, serif);
-  font-weight: 650;
-  line-height: 1.18;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif);
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--wa-ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 h4, h5, h6 {
@@ -276,7 +276,7 @@ code, kbd, samp, pre, .font-mono, [data-mono="true"] {
 }
 
 .font-serif {
-  font-family: var(--font-serif, 'Fraunces', Georgia, serif);
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
 }
 
 .font-sans {

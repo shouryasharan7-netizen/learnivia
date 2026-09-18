@@ -26,6 +26,7 @@ import {
   Check,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { SessionChat } from "./SessionChat";
 
 export const dynamic = "force-dynamic";
 
@@ -48,10 +49,14 @@ export async function generateMetadata({
 
 export default async function SessionDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams?: Promise<{ booked?: string }>;
 }) {
   const { id } = await params;
+  const sp = searchParams ? await searchParams : {};
+  const isJustBooked = sp?.booked === "true";
   const session = await auth();
   if (!session?.user?.id) redirect(ROUTES.auth.signIn);
 
@@ -239,6 +244,33 @@ export default async function SessionDetailPage({
             <span>{status.label}</span>
           </div>
         </div>
+
+        {/* Just Booked Confirmation Banner */}
+        {isJustBooked && (
+          <div
+            style={{
+              marginBottom: "1.5rem",
+              background: "#F0FDF4",
+              border: "1px solid #86EFAC",
+              borderRadius: "var(--wa-radius-md, 10px)",
+              padding: "1rem 1.25rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              boxShadow: "0 2px 8px rgba(22, 101, 52, 0.08)",
+            }}
+          >
+            <CheckCircle2 size={22} color="#16A34A" />
+            <div>
+              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#166534" }}>
+                Session Booked Smoothly &amp; Confirmed!
+              </div>
+              <p style={{ fontSize: "0.8125rem", color: "#15803D", margin: "0.2rem 0 0", lineHeight: 1.4 }}>
+                We sent a calendar confirmation email with class details to your inbox. You can join the room below when your session starts, or chat with your tutor anytime.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Main Session Card */}
         <div
@@ -990,6 +1022,14 @@ export default async function SessionDetailPage({
             </Link>
           </div>
         </div>
+
+        {/* Group Discussion & Post-Class Study Resources */}
+        <SessionChat
+          bookingId={booking.id}
+          isTutor={isTutor}
+          tutorName={tutorName}
+          studentName={studentName}
+        />
 
         {/* Audit / Identifier Note */}
         <div

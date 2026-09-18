@@ -121,28 +121,28 @@ export default function OnboardingClient() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {/* Folio Archival Header */}
+        {/* Modern Welcome Header */}
         <header className={styles.folioHeader}>
           <div className={styles.folioBadge}>
             <Sparkles size={12} />
-            <span>Matriculation Registry • Folio 2026</span>
+            <span>Welcome to Learnivia • Let&apos;s get you set up</span>
           </div>
           <h1 className={styles.folioTitle}>
-            {step === 1 && "Define Your Academic Journey"}
-            {step === 2 && "Our Pedagogical Commitment"}
-            {step === 3 && "The Fellowship Covenant"}
+            {step === 1 && "Tell us a bit about yourself"}
+            {step === 2 && "How Learnivia works"}
+            {step === 3 && "Community rules & safety"}
           </h1>
           <p className={styles.folioSubtitle}>
             {step === 1 &&
-              "Tell us who will be learning so we can curate matching volunteer tutors, verified materials, and appropriate grade standards."}
+              "Whether you're looking for help in math, science, or English, we'll connect you with friendly peer tutors and great resources."}
             {step === 2 &&
-              "Learnivia is a non-profit peer tutoring salon run by dedicated student scholars worldwide. Zero bots, zero hidden fees, ever."}
+              "Learnivia is 100% free peer-to-peer tutoring led by high school and university students worldwide. No subscriptions, zero fees, ever."}
             {step === 3 &&
-              "We maintain a safe, welcoming academic environment protected by parent notifications, verified Zoom rooms, and a clear honor code."}
+              "We keep learning safe, supportive, and kind with parent notifications, verified video rooms, and a clear student code of conduct."}
           </p>
         </header>
 
-        {/* 3-Step Archival Ribbon */}
+        {/* 3-Step Progress Ribbon */}
         <nav className={styles.stepsRibbon} aria-label="Onboarding Progress">
           <div
             className={`${styles.stepTab} ${step === 1 ? styles.activeStepTab : step > 1 ? styles.completedStepTab : ""}`}
@@ -151,8 +151,8 @@ export default function OnboardingClient() {
               {step > 1 ? <Check size={14} /> : "01"}
             </div>
             <div className={styles.stepTabLabel}>
-              <span className={styles.stepTabTitle}>Academic Identity</span>
-              <span className={styles.stepTabSubtitle}>Role & Grade Focus</span>
+              <span className={styles.stepTabTitle}>About You</span>
+              <span className={styles.stepTabSubtitle}>Role &amp; Grade</span>
             </div>
           </div>
 
@@ -163,8 +163,8 @@ export default function OnboardingClient() {
               {step > 2 ? <Check size={14} /> : "02"}
             </div>
             <div className={styles.stepTabLabel}>
-              <span className={styles.stepTabTitle}>Our Pedagogy</span>
-              <span className={styles.stepTabSubtitle}>Peer-to-Peer Ethos</span>
+              <span className={styles.stepTabTitle}>How It Works</span>
+              <span className={styles.stepTabSubtitle}>Peer Learning</span>
             </div>
           </div>
 
@@ -175,22 +175,22 @@ export default function OnboardingClient() {
               03
             </div>
             <div className={styles.stepTabLabel}>
-              <span className={styles.stepTabTitle}>Honor Covenant</span>
-              <span className={styles.stepTabSubtitle}>Community & Safety</span>
+              <span className={styles.stepTabTitle}>Community &amp; Safety</span>
+              <span className={styles.stepTabSubtitle}>Safety Guidelines</span>
             </div>
           </div>
         </nav>
 
-        {/* Main Folio Card Surface */}
+        {/* Main Card Surface */}
         <div className={styles.folioCard}>
-          {/* ── STEP 1: Academic Identity ── */}
+          {/* ── STEP 1: Profile & Role ── */}
           {step === 1 && (
             <>
               {/* Role Selection */}
               <div className={styles.fieldSection}>
                 <span className={styles.fieldLabel}>
-                  <span>Select Your Academic Persona <span className={styles.requiredStar}>*</span></span>
-                  <span className={styles.fieldHint}>Choose your primary workspace role</span>
+                  <span>How will you be using Learnivia? <span className={styles.requiredStar}>*</span></span>
+                  <span className={styles.fieldHint}>Choose your primary role</span>
                 </span>
 
                 <div className={styles.roleGrid}>
@@ -214,7 +214,7 @@ export default function OnboardingClient() {
                     </p>
                   </div>
 
-                  {/* Option 2: Independent Learner */}
+                  {/* Option 2: Student */}
                   <div
                     className={`${styles.roleCard} ${goal === "student_9_10" ? styles.activeRoleCard : ""}`}
                     onClick={() => setGoal("student_9_10")}
@@ -228,9 +228,9 @@ export default function OnboardingClient() {
                     <div className={styles.roleIconWrap}>
                       <BookOpen size={20} />
                     </div>
-                    <h3 className={styles.roleTitle}>Independent Scholar</h3>
+                    <h3 className={styles.roleTitle}>Student (K–10)</h3>
                     <p className={styles.roleDesc}>
-                      Enrolled in Grades 7–10 seeking homework guidance, exam prep, or enrichment.
+                      Looking for friendly homework help, exam prep, or concept reviews from peer tutors.
                     </p>
                   </div>
 
@@ -250,7 +250,7 @@ export default function OnboardingClient() {
                     </div>
                     <h3 className={styles.roleTitle}>Volunteer Tutor</h3>
                     <p className={styles.roleDesc}>
-                      High school senior, undergraduate or educator ready to teach peers & earn service hours.
+                      High school senior, university student or educator ready to teach peers &amp; earn service hours.
                     </p>
                   </div>
                 </div>
@@ -422,19 +422,19 @@ export default function OnboardingClient() {
               <div className={styles.fellowshipNote}>
                 <Sparkles size={18} style={{ flexShrink: 0 }} />
                 <span>
-                  <strong>Our Scholarly Compact:</strong> Whether you are conquering quadratic formulas or writing your first literary essay, you learn at your own pace in an encouraging, non-judgmental salon.
+                  <strong>Our Promise:</strong> Whether you are working through quadratic equations or drafting an essay, you learn at your own pace with encouraging, patient student mentors.
                 </span>
               </div>
             </div>
           )}
 
-          {/* ── STEP 3: Community Covenant ── */}
+          {/* ── STEP 3: Community Code & Safety ── */}
           {step === 3 && (
             <div className={styles.covenantFrame}>
               <div className={styles.covenantPillars}>
                 <div className={styles.pillarItem}>
                   <div className={styles.pillarHeader}>
-                    <HeartHandshake size={16} color="var(--wa-crimson, #8B263E)" />
+                    <HeartHandshake size={16} color="var(--wa-green, #2563EB)" />
                     <span>Mutual Respect</span>
                   </div>
                   <p className={styles.pillarText}>
@@ -444,21 +444,21 @@ export default function OnboardingClient() {
 
                 <div className={styles.pillarItem}>
                   <div className={styles.pillarHeader}>
-                    <Lock size={16} color="var(--wa-terra, #1E3A2F)" />
+                    <Lock size={16} color="var(--wa-green, #2563EB)" />
                     <span>Personal Privacy</span>
                   </div>
                   <p className={styles.pillarText}>
-                    Never share phone numbers, social media handles, or home addresses. All interactions occur in verified rooms.
+                    Never share phone numbers, social media handles, or home addresses. All sessions occur in secure video rooms.
                   </p>
                 </div>
 
                 <div className={styles.pillarItem}>
                   <div className={styles.pillarHeader}>
-                    <Smile size={16} color="var(--wa-ochre, #C28B2B)" />
-                    <span>Socratic Spirit</span>
+                    <Smile size={16} color="var(--wa-green, #2563EB)" />
+                    <span>Active Learning</span>
                   </div>
                   <p className={styles.pillarText}>
-                    Tutors guide students to discover answers themselves rather than doing homework for them. Growth over answers.
+                    Tutors guide students to discover solutions themselves rather than simply giving answers. Effort and growth come first.
                   </p>
                 </div>
               </div>
@@ -473,10 +473,10 @@ export default function OnboardingClient() {
                 />
                 <div className={styles.agreementTextWrap}>
                   <span className={styles.agreementTitle}>
-                    I pledge to uphold the Learnivia Academic Fellowship Covenant <span className={styles.requiredStar}>*</span>
+                    I agree to Learnivia&apos;s Community Guidelines &amp; Safety Standards <span className={styles.requiredStar}>*</span>
                   </span>
                   <span className={styles.agreementSubtext}>
-                    By ticking this pledge, you agree to abide by our Child Safeguarding Standards, Community Honor Code, and Session Guidelines.
+                    By checking this box, you agree to follow our Child Safeguarding Standards, Community Honor Code, and Session Guidelines.
                   </span>
                 </div>
               </label>
@@ -501,7 +501,7 @@ export default function OnboardingClient() {
             </div>
           )}
 
-          {/* Bottom Folio Navigation */}
+          {/* Bottom Navigation */}
           <footer className={styles.folioNav}>
             {step > 1 ? (
               <button
@@ -509,7 +509,7 @@ export default function OnboardingClient() {
                 onClick={handleBack}
                 className={styles.backBtn}
               >
-                <ArrowLeft size={16} /> Return
+                <ArrowLeft size={16} /> Back
               </button>
             ) : (
               <div />
@@ -522,7 +522,7 @@ export default function OnboardingClient() {
                 className={styles.nextBtn}
                 disabled={step === 1 && !isStep1Valid}
               >
-                <span>Continue to {step === 1 ? "Pedagogy" : "Covenant"}</span>
+                <span>Continue</span>
                 <ArrowRight size={16} />
               </button>
             ) : (
@@ -534,10 +534,10 @@ export default function OnboardingClient() {
               >
                 <span>
                   {loading
-                    ? "Inscribing Registry..."
+                    ? "Setting up your account..."
                     : isTutor
-                    ? "Proceed to Tutor Application"
-                    : "Matriculate & Enter Study Desk"}
+                    ? "Continue to Tutor Application"
+                    : "Complete Setup & Go to Dashboard"}
                 </span>
                 <ArrowRight size={16} />
               </button>

@@ -166,21 +166,20 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
 
   const volunteerHours = Math.round((tutoringMinutes / 60) * 10) / 10;
 
-  // 4. Calculate Real-Time Study Points (SP)
+  // Real-Time Study Points (SP) derived deterministically:
   // - 1 SP per 2 minutes learned
   // - 20 SP per attended completed session
   // - 15 SP per review submitted
   // - 10 SP per homework help interaction
   // - 50 SP per workshop hosted (for tutors)
   // - 1 SP per 2 minutes volunteered (for tutors)
-  const basePoints = user.points || 0;
   const learningPoints = Math.floor(learningMinutes / 2);
   const sessionPoints = completedSessions * 20;
   const reviewPoints = user.reviewsGiven.length * 15;
   const homeworkPoints = user.homeworkRequests.length * 10;
   const tutorPoints = (completedTutorWorkshops * 50) + Math.floor(tutoringMinutes / 2);
 
-  const totalPoints = basePoints + learningPoints + sessionPoints + reviewPoints + homeworkPoints + tutorPoints;
+  const totalPoints = learningPoints + sessionPoints + reviewPoints + homeworkPoints + tutorPoints;
 
   // 5. Calculate Real-Time Rank across all registered users in DB (fast indexed count)
   let rank = 1;
@@ -316,7 +315,7 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
     }
 
     const volunteerHours = Math.round((tutoringMinutes / 60) * 10) / 10;
-    const pts = (u.points || 0) +
+    const pts =
       Math.floor(learningMinutes / 2) +
       (completedSessions * 20) +
       (u.reviewsGiven.length * 15) +

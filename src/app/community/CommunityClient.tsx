@@ -365,6 +365,100 @@ export default function CommunityClient({ initialMessages, currentUser, initialC
           </div>
         </div>
 
+        {/* Pinned Weekly Socratic Dialogue & Peer Innovation Challenge */}
+        <div
+          style={{
+            background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)",
+            border: "1px solid #BFDBFE",
+            borderRadius: "var(--wa-radius-md, 10px)",
+            padding: "1.25rem 1.5rem",
+            marginBottom: "1.25rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.75rem",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span
+                style={{
+                  background: "var(--wa-green, #2563EB)",
+                  color: "#FFFFFF",
+                  fontSize: "0.6875rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  padding: "0.2rem 0.55rem",
+                  borderRadius: "999px",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                Socratic Topic of the Week
+              </span>
+              <span style={{ fontSize: "0.75rem", color: "#1E40AF", fontWeight: 600 }}>
+                Curated by Learnivia Mentors
+              </span>
+            </div>
+            <span style={{ fontSize: "0.75rem", color: "#3B82F6", fontWeight: 500 }}>
+              Live Peer Discussion
+            </span>
+          </div>
+
+          <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1E3A8A", lineHeight: 1.4 }}>
+            &ldquo;When tackling complex multi-step problems in STEM or writing, what is your most effective technique to find where an error occurred without starting from scratch?&rdquo;
+          </div>
+
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
+            <button
+              type="button"
+              onClick={() => setInputText("On problem debugging: I check intermediate units and signs: ")}
+              style={{
+                background: "#FFFFFF",
+                color: "#1E40AF",
+                border: "1px solid #BFDBFE",
+                padding: "0.35rem 0.75rem",
+                borderRadius: "6px",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              Reply with Unit Tracing
+            </button>
+            <button
+              type="button"
+              onClick={() => setInputText("My strategy: I explain each equation aloud using the Feynman Technique: ")}
+              style={{
+                background: "#FFFFFF",
+                color: "#1E40AF",
+                border: "1px solid #BFDBFE",
+                padding: "0.35rem 0.75rem",
+                borderRadius: "6px",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              Reply with Feynman Technique
+            </button>
+            <button
+              type="button"
+              onClick={() => setInputText("I test extreme boundary cases (0, 1, or infinity): ")}
+              style={{
+                background: "#FFFFFF",
+                color: "#1E40AF",
+                border: "1px solid #BFDBFE",
+                padding: "0.35rem 0.75rem",
+                borderRadius: "6px",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              Reply with Boundary Testing
+            </button>
+          </div>
+        </div>
+
         {/* Composer Card or Read-only Notice */}
         {currentUser ? (
           canPostInCurrentChannel ? (

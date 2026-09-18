@@ -14,7 +14,7 @@ const MODULES = [
     video: {
       title: "Module 1 Video: Mentorship Mindset & Active Encouragement",
       duration: "3:45",
-      embedUrl: "",
+      embedUrl: "https://www.youtube-nocookie.com/embed/4p5286T_kn0",
       summary: "Learn why guiding beats lecturing, how to ask discovery questions, and techniques for sincere praise.",
       keyPoints: ["Guide through questions, don't lecture", "Active listening & repetition", "Normalize mistakes as discoveries"],
     },
@@ -56,7 +56,7 @@ const MODULES = [
     video: {
       title: "Module 2 Video: Supporting Diverse Learning Styles & Whiteboards",
       duration: "4:15",
-      embedUrl: "",
+      embedUrl: "https://www.youtube-nocookie.com/embed/855Guy415Z8",
       summary: "Visual diagrams, step-by-step problem pacing, and accommodating attention and processing differences.",
       keyPoints: ["Draw visual diagrams on whiteboard", "Break problems into numbered micro-steps", "No formal diagnosis required"],
     },
@@ -102,7 +102,7 @@ const MODULES = [
     video: {
       title: "Module 3 Video: Online Zoom Tutoring Technical Best Practices",
       duration: "3:20",
-      embedUrl: "",
+      embedUrl: "https://www.youtube-nocookie.com/embed/hK2U5w1s0qQ",
       summary: "Pre-flight audio/camera checks, collaborative whiteboard sharing, window isolation, and session pacing.",
       keyPoints: ["Pre-flight audio check 5 mins before", "Share window not entire desktop", "5m warm-up + 40m study + 10m review"],
     },
@@ -148,7 +148,7 @@ const MODULES = [
     video: {
       title: "Module 4 Video: Safeguarding, Safety Boundaries & Protocol",
       duration: "4:00",
-      embedUrl: "",
+      embedUrl: "https://www.youtube-nocookie.com/embed/dGKs3yU_CgI",
       summary: "Strict platform-only communication, minor protection standards, and mandatory reporting protocols.",
       keyPoints: ["Platform-only communication", "No unconsented recordings", "Report student safety concerns immediately"],
     },
@@ -194,7 +194,7 @@ const MODULES = [
     video: {
       title: "Module 5 Video: Verified Volunteer Hours & Transcript Rules",
       duration: "3:10",
-      embedUrl: "",
+      embedUrl: "https://www.youtube-nocookie.com/embed/xL3dG2Gk13k",
       summary: "Automated session logging, handling student no-shows, and downloading verifiable PDF transcripts.",
       keyPoints: ["10-minute active participation rule", "Automated system logging", "Verifiable PDF transcript with unique IDs"],
     },

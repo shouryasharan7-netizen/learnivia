@@ -106,7 +106,7 @@ export async function bookSession(formData: FormData) {
   const idempotencyKey = `${tutorId}-${user.id}-${targetDate.getTime()}`;
 
   // P1-2: Atomic double-booking and slot collision prevention inside an interactive transaction
-  await prisma.$transaction(async (tx) => {
+  const booking = await prisma.$transaction(async (tx) => {
     // Overlap conflict protection: verify no overlapping bookings for tutor
     const tutorConflict = await tx.booking.findFirst({
       where: {
@@ -163,6 +163,6 @@ export async function bookSession(formData: FormData) {
     });
   }
 
-  // Redirect to student dashboard
-  redirect("/dashboard");
+  // Redirect to the session detail room with confirmation
+  redirect(`/sessions/${booking.id}?booked=true`);
 }
