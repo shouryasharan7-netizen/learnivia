@@ -12,6 +12,8 @@ import {
   User,
   ShieldCheck,
   GraduationCap,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 
@@ -30,7 +32,26 @@ interface TopBarProps {
 export function TopBar({ user }: TopBarProps) {
   const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("learnivia-theme") as "light" | "dark" | null;
+    if (saved) {
+      setTheme(saved);
+      document.documentElement.setAttribute("data-theme", saved);
+    } else if (typeof window !== "undefined") {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(prefersDark ? "dark" : "light");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    localStorage.setItem("learnivia-theme", nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
+  };
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -228,6 +249,33 @@ export function TopBar({ user }: TopBarProps) {
                 <ShieldCheck size={14} />
                 <span>Safety Standards</span>
               </Link>
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.5rem",
+                  padding: "0.45rem 0.65rem",
+                  fontSize: "0.8125rem",
+                  color: "var(--wa-text)",
+                  borderRadius: "6px",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+                  <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                </div>
+                <span style={{ fontSize: "0.7rem", color: "var(--wa-muted)", textTransform: "capitalize" }}>
+                  {theme}
+                </span>
+              </button>
 
               <div style={{ borderTop: "1px solid var(--wa-border)", margin: "0.35rem 0" }} />
 

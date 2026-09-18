@@ -231,6 +231,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                           name="parentEmail"
                           required
                           placeholder="parent@example.com"
+                          autoComplete="email"
                         />
                         <span style={{ fontSize: "0.75rem", color: "#78716C", marginTop: "0.25rem", display: "block" }}>
                           Learnivia requires parent or guardian acknowledgment for learners under 13 before participating in sessions.
