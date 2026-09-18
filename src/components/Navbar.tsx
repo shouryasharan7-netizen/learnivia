@@ -19,6 +19,8 @@ import {
   Sparkles,
   Bell,
   Calendar,
+  Sun,
+  Moon,
 } from "lucide-react";
 import styles from "./Navbar.module.css";
 
@@ -92,6 +94,25 @@ export function Navbar() {
 
   const [activePopover, setActivePopover] = useState<"messages" | "notifications" | "calendar" | "user" | null>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("learnivia-theme") as "light" | "dark" | null;
+    if (saved === "dark" || saved === "light") {
+      setTheme(saved);
+      document.documentElement.setAttribute("data-theme", saved);
+    } else {
+      setTheme("light");
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    localStorage.setItem("learnivia-theme", nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
+  };
 
   // Close dropdowns and popovers on outside click
   useEffect(() => {
@@ -272,6 +293,18 @@ export function Navbar() {
                 </div>
               )}
             </div>
+
+            {/* Direct Theme Switcher */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              className={styles.iconBtn}
+              style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+            >
+              {theme === "dark" ? <Sun size={18} color="#F59E0B" /> : <Moon size={18} color="#2563EB" />}
+            </button>
 
             {/* User profile capsule with dropdown */}
             <div className={styles.actionWrapper}>
@@ -485,6 +518,39 @@ export function Navbar() {
 
           {/* Auth Controls */}
           <div className={styles.authControls}>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.35rem",
+                padding: "0.4rem 0.75rem",
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                borderRadius: "9999px",
+                border: "1px solid var(--wa-border, #CBD5E1)",
+                background: "var(--wa-white, #FFFFFF)",
+                color: "var(--wa-ink, #0F172A)",
+                cursor: "pointer",
+                marginRight: "0.4rem",
+                transition: "all 0.15s ease",
+              }}
+            >
+              {theme === "dark" ? (
+                <>
+                  <Sun size={14} color="#F59E0B" />
+                  <span>Light</span>
+                </>
+              ) : (
+                <>
+                  <Moon size={14} color="#2563EB" />
+                  <span>Dark</span>
+                </>
+              )}
+            </button>
             {status === "loading" ? (
               <div className={styles.authSkeleton} aria-hidden="true" />
             ) : (
@@ -571,6 +637,39 @@ export function Navbar() {
           ))}
 
           <div className={styles.mobileDivider} />
+
+          <div style={{ padding: "0.5rem 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--wa-ink)" }}>Appearance</span>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.4rem 0.85rem",
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                borderRadius: "9999px",
+                border: "1px solid var(--wa-border, #CBD5E1)",
+                background: "var(--wa-white, #FFFFFF)",
+                color: "var(--wa-ink, #0F172A)",
+                cursor: "pointer",
+              }}
+            >
+              {theme === "dark" ? (
+                <>
+                  <Sun size={14} color="#F59E0B" />
+                  <span>Light Mode</span>
+                </>
+              ) : (
+                <>
+                  <Moon size={14} color="#2563EB" />
+                  <span>Dark Mode</span>
+                </>
+              )}
+            </button>
+          </div>
 
           <div className={styles.mobileAuthRow}>
             <Link href="/signin" className={styles.mobileSignIn} onClick={() => setMobileOpen(false)}>

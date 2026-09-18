@@ -37,12 +37,12 @@ export function TopBar({ user }: TopBarProps) {
 
   useEffect(() => {
     const saved = localStorage.getItem("learnivia-theme") as "light" | "dark" | null;
-    if (saved) {
+    if (saved === "dark" || saved === "light") {
       setTheme(saved);
       document.documentElement.setAttribute("data-theme", saved);
-    } else if (typeof window !== "undefined") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
+    } else {
+      setTheme("light");
+      document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);
 
@@ -126,6 +126,40 @@ export function TopBar({ user }: TopBarProps) {
           <Calendar size={17} aria-hidden="true" />
           <span className="sr-only">Scheduled sessions</span>
         </Link>
+
+        {/* Direct One-Click Theme Switcher Button */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.45rem",
+            padding: "0.35rem 0.7rem",
+            fontSize: "0.8125rem",
+            fontWeight: 600,
+            borderRadius: "6px",
+            border: "1px solid var(--wa-border, #CBD5E1)",
+            background: "var(--wa-cream-dark, #F1F5F9)",
+            color: "var(--wa-ink, #0F172A)",
+            cursor: "pointer",
+            transition: "all 0.15s ease",
+          }}
+        >
+          {theme === "dark" ? (
+            <>
+              <Sun size={15} color="#F59E0B" />
+              <span>Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon size={15} color="#2563EB" />
+              <span>Dark Mode</span>
+            </>
+          )}
+        </button>
 
         {/* Profile Menu */}
         <div ref={menuRef} style={{ position: "relative" }}>

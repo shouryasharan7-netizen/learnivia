@@ -372,38 +372,41 @@ textarea:focus-visible {
 }
 
 /* =========================================
-   DARK THEME TOKENS (SYSTEM PREFERENCE & MANUAL TOGGLE)
+   LIGHT THEME TOKENS (DEFAULT & EXPLICIT)
    ========================================= */
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --wa-paper:          #0B0F17;
-    --wa-cream:          #0F172A;
-    --wa-cream-dark:     #1E293B;
-    --wa-cream-mid:      #334155;
-    --wa-white:          #161E2E;
+:root,
+[data-theme="light"] {
+  --wa-paper:          #FAF7F2;
+  --wa-cream:          #F5EFEB;
+  --wa-cream-dark:     #EDE4DC;
+  --wa-cream-mid:      #E4D8CC;
+  --wa-white:          #FFFFFF;
 
-    --wa-ink:            #F8FAFC;
-    --wa-text:           #E2E8F0;
-    --wa-muted:          #94A3B8;
-    --wa-subtle:         #64748B;
+  --wa-ink:            #1C1917;
+  --wa-text:           #292524;
+  --wa-muted:          #64748B;
+  --wa-subtle:         #94A3B8;
 
-    --wa-border:         #1E293B;
-    --wa-border-hairline:#1E293B;
-    --wa-border-strong:  #334155;
+  --wa-border:         #E5E0D8;
+  --wa-border-hairline:#EDE7DF;
+  --wa-border-strong:  #D4C9BD;
 
-    --wa-crimson-light:  rgba(37, 99, 235, 0.15);
-    --wa-forest-light:   rgba(37, 99, 235, 0.15);
-    --wa-green-light:    rgba(37, 99, 235, 0.15);
-    --wa-terra-light:    rgba(30, 58, 47, 0.25);
-    --wa-ochre-light:    rgba(194, 139, 43, 0.2);
+  --wa-crimson-light:  #EFF6FF;
+  --wa-forest-light:   #EFF6FF;
+  --wa-green-light:    #EFF6FF;
+  --wa-terra-light:    rgba(30, 58, 47, 0.08);
+  --wa-ochre-light:    rgba(194, 139, 43, 0.08);
 
-    --wa-shadow-xs:      0 1px 2px rgba(0, 0, 0, 0.3);
-    --wa-shadow-sm:      0 1px 3px rgba(0, 0, 0, 0.4);
-    --wa-shadow-md:      0 4px 8px rgba(0, 0, 0, 0.5);
-    --wa-shadow-lg:      0 12px 20px rgba(0, 0, 0, 0.6);
-  }
+  --wa-shadow-xs:      0 1px 2px rgba(26, 22, 21, 0.04);
+  --wa-shadow-sm:      0 1px 3px rgba(26, 22, 21, 0.05), 0 1px 2px rgba(26, 22, 21, 0.03);
+  --wa-shadow-md:      0 4px 8px -1px rgba(26, 22, 21, 0.06), 0 2px 4px -2px rgba(26, 22, 21, 0.04);
+  --wa-shadow-lg:      0 12px 20px -3px rgba(26, 22, 21, 0.07), 0 4px 6px -4px rgba(26, 22, 21, 0.03);
 }
+
+/* =========================================
+   DARK THEME TOKENS (EXPLICIT USER TOGGLE)
+   ========================================= */
 
 [data-theme="dark"] {
   --wa-paper:          #0B0F17;

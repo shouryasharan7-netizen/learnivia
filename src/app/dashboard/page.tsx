@@ -208,7 +208,7 @@ export default async function StudentDashboard() {
 
   return (
     <main className={styles.deskWorkspace}>
-      <EmailVerificationBanner />
+      {!user.emailVerified && <EmailVerificationBanner email={user.email} />}
       <div className={styles.deskContainer}>
         {/* Unconfirmed Attendance Verification Prompts */}
         {pendingAttendanceList.length > 0 && (
