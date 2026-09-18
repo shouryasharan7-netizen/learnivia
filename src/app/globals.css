@@ -352,15 +352,56 @@ textarea:focus-visible {
 }
 
 /* =========================================
-   MOTION PREFERENCES
+   MOTION PREFERENCES (WCAG AA INTENTIONAL)
    ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    /* Eliminate disorienting spatial movement while retaining intentional opacity feedback */
+    transform: none !important;
+  }
+
+  /* Retain subtle opacity transitions so state changes (active, hover, focus) remain perceivable */
+  *, *::before, *::after {
+    transition-duration: 0.15s !important;
+    transition-property: opacity, color, background-color, border-color !important;
+  }
+}
+
+/* =========================================
+   SYSTEM DARK THEME TOKENS
+   ========================================= */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wa-paper:          #0B0F17;
+    --wa-cream:          #0F172A;
+    --wa-cream-dark:     #1E293B;
+    --wa-cream-mid:      #334155;
+    --wa-white:          #161E2E;
+
+    --wa-ink:            #F8FAFC;
+    --wa-text:           #E2E8F0;
+    --wa-muted:          #94A3B8;
+    --wa-subtle:         #64748B;
+
+    --wa-border:         #1E293B;
+    --wa-border-hairline:#1E293B;
+    --wa-border-strong:  #334155;
+
+    --wa-crimson-light:  rgba(37, 99, 235, 0.15);
+    --wa-forest-light:   rgba(37, 99, 235, 0.15);
+    --wa-green-light:    rgba(37, 99, 235, 0.15);
+    --wa-terra-light:    rgba(30, 58, 47, 0.25);
+    --wa-ochre-light:    rgba(194, 139, 43, 0.2);
+
+    --wa-shadow-xs:      0 1px 2px rgba(0, 0, 0, 0.3);
+    --wa-shadow-sm:      0 1px 3px rgba(0, 0, 0, 0.4);
+    --wa-shadow-md:      0 4px 8px rgba(0, 0, 0, 0.5);
+    --wa-shadow-lg:      0 12px 20px rgba(0, 0, 0, 0.6);
   }
 }
 

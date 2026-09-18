@@ -231,11 +231,12 @@
 }
 
 .roleBtn {
-  padding: 0.6rem 0.75rem;
+  padding: 0.65rem 0.75rem;
+  min-height: 44px;
   border-radius: var(--wa-radius-sm, 8px);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #64748B);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -432,15 +433,16 @@
 
 .termsNote {
   margin-top: 1.5rem;
-  font-size: 0.725rem;
-  color: var(--wa-subtle, #9E948F);
+  font-size: 0.8125rem;
+  color: var(--wa-muted, #64748B);
   line-height: 1.55;
   text-align: center;
 }
 
 .termsNote a {
-  color: var(--wa-crimson, #8B263E);
+  color: var(--wa-crimson, #2563EB);
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* Mobile adjustments */

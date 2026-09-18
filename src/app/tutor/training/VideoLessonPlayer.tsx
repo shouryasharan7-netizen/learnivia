@@ -116,45 +116,49 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
           <button
             type="button"
             onClick={() => setViewMode("interactive")}
+            aria-pressed={viewMode === "interactive"}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: "0.35rem",
-              padding: "0.3rem 0.65rem",
+              padding: "0.45rem 0.75rem",
+              minHeight: "36px",
               borderRadius: "6px",
               fontSize: "0.75rem",
               fontWeight: 600,
               cursor: "pointer",
               border: "1px solid",
               borderColor: viewMode === "interactive" ? color : "var(--wa-border, #CBD5E1)",
-              background: viewMode === "interactive" ? color : "#FFFFFF",
-              color: viewMode === "interactive" ? "#FFFFFF" : "#475569",
+              background: viewMode === "interactive" ? color : "var(--wa-white, #FFFFFF)",
+              color: viewMode === "interactive" ? "#FFFFFF" : "var(--wa-muted, #475569)",
               transition: "all 0.15s ease",
             }}
           >
-            <MonitorPlay size={13} />
+            <MonitorPlay size={14} />
             <span>Interactive Visual Lesson</span>
           </button>
           <button
             type="button"
             onClick={() => setViewMode("stream")}
+            aria-pressed={viewMode === "stream"}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: "0.35rem",
-              padding: "0.3rem 0.65rem",
+              padding: "0.45rem 0.75rem",
+              minHeight: "36px",
               borderRadius: "6px",
               fontSize: "0.75rem",
               fontWeight: 600,
               cursor: "pointer",
               border: "1px solid",
               borderColor: viewMode === "stream" ? color : "var(--wa-border, #CBD5E1)",
-              background: viewMode === "stream" ? color : "#FFFFFF",
-              color: viewMode === "stream" ? "#FFFFFF" : "#475569",
+              background: viewMode === "stream" ? color : "var(--wa-white, #FFFFFF)",
+              color: viewMode === "stream" ? "#FFFFFF" : "var(--wa-muted, #475569)",
               transition: "all 0.15s ease",
             }}
           >
-            <Video size={13} />
+            <Video size={14} />
             <span>Video Stream</span>
           </button>
         </div>
@@ -296,11 +300,12 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
               <button
                 type="button"
                 onClick={() => setIsPlaying(!isPlaying)}
+                aria-label={isPlaying ? "Pause lecture audio" : "Play lecture audio"}
                 style={{
-                  width: "38px",
-                  height: "38px",
+                  width: "44px",
+                  height: "44px",
                   borderRadius: "50%",
-                  background: "#2563EB",
+                  background: "var(--wa-crimson, #2563EB)",
                   border: "none",
                   color: "#FFFFFF",
                   display: "flex",
@@ -311,7 +316,7 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
                   transition: "transform 0.15s ease",
                 }}
               >
-                {isPlaying ? <Pause size={16} /> : <Play size={16} style={{ marginLeft: "2px" }} />}
+                {isPlaying ? <Pause size={18} /> : <Play size={18} style={{ marginLeft: "2px" }} />}
               </button>
 
               <button
@@ -321,27 +326,55 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
                   setIsPlaying(true);
                 }}
                 title="Restart Lecture"
+                aria-label="Restart lecture from beginning"
                 style={{
                   background: "transparent",
                   border: "none",
                   color: "#94A3B8",
                   cursor: "pointer",
-                  display: "flex",
+                  minWidth: "44px",
+                  minHeight: "44px",
+                  display: "inline-flex",
                   alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "6px",
+                  transition: "color 0.15s ease",
                 }}
               >
-                <RotateCcw size={15} />
+                <RotateCcw size={16} />
               </button>
 
-              {/* Progress bar */}
+              {/* Accessible Progress Slider */}
               <div
+                role="slider"
+                tabIndex={0}
+                aria-label="Lecture progress"
+                aria-valuemin={0}
+                aria-valuemax={totalSeconds}
+                aria-valuenow={playbackSeconds}
+                aria-valuetext={`${formatTime(playbackSeconds)} of ${formatTime(totalSeconds)}`}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    setPlaybackSeconds((prev) => Math.max(0, prev - 5));
+                  } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    setPlaybackSeconds((prev) => Math.min(totalSeconds, prev + 5));
+                  } else if (e.key === "Home") {
+                    e.preventDefault();
+                    setPlaybackSeconds(0);
+                  } else if (e.key === "End") {
+                    e.preventDefault();
+                    setPlaybackSeconds(totalSeconds);
+                  }
+                }}
                 style={{
                   width: "160px",
-                  height: "5px",
-                  background: "rgba(255, 255, 255, 0.2)",
-                  borderRadius: "999px",
-                  overflow: "hidden",
+                  height: "24px",
+                  display: "flex",
+                  alignItems: "center",
                   cursor: "pointer",
+                  outline: "none",
                 }}
                 onClick={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -351,50 +384,65 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
               >
                 <div
                   style={{
-                    height: "100%",
                     width: "100%",
-                    transform: `scaleX(${totalSeconds > 0 ? playbackSeconds / totalSeconds : 0})`,
-                    transformOrigin: "left",
-                    background: "#38BDF8",
-                    transition: "transform 0.2s linear",
+                    height: "6px",
+                    background: "rgba(255, 255, 255, 0.2)",
+                    borderRadius: "999px",
+                    overflow: "hidden",
+                    position: "relative",
                   }}
-                />
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      transform: `scaleX(${totalSeconds > 0 ? playbackSeconds / totalSeconds : 0})`,
+                      transformOrigin: "left",
+                      background: "var(--wa-crimson, #38BDF8)",
+                      transition: "transform 0.2s linear",
+                    }}
+                  />
+                </div>
               </div>
             </div>
 
             {/* Slide Navigation */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <button
                 type="button"
                 disabled={activeSlide === 0}
                 onClick={() => setActiveSlide((prev) => Math.max(0, prev - 1))}
+                aria-label="Previous concept slide"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "0.25rem",
-                  padding: "0.35rem 0.65rem",
+                  gap: "0.35rem",
+                  padding: "0.45rem 0.85rem",
+                  minHeight: "44px",
                   borderRadius: "6px",
-                  fontSize: "0.75rem",
+                  fontSize: "0.775rem",
                   background: "rgba(255, 255, 255, 0.1)",
                   border: "1px solid rgba(255, 255, 255, 0.2)",
                   color: activeSlide === 0 ? "#64748B" : "#FFFFFF",
                   cursor: activeSlide === 0 ? "not-allowed" : "pointer",
                 }}
               >
-                <ChevronLeft size={14} />
+                <ChevronLeft size={16} />
                 <span>Prev Concept</span>
               </button>
               <button
                 type="button"
                 disabled={activeSlide === content.length - 1}
                 onClick={() => setActiveSlide((prev) => Math.min(content.length - 1, prev + 1))}
+                aria-label="Next concept slide"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "0.25rem",
-                  padding: "0.35rem 0.65rem",
+                  gap: "0.35rem",
+                  padding: "0.45rem 0.85rem",
+                  minHeight: "44px",
                   borderRadius: "6px",
-                  fontSize: "0.75rem",
+                  fontSize: "0.775rem",
                   background: "rgba(255, 255, 255, 0.15)",
                   border: "1px solid rgba(255, 255, 255, 0.25)",
                   color: activeSlide === content.length - 1 ? "#64748B" : "#FFFFFF",
@@ -403,7 +451,7 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
                 }}
               >
                 <span>Next Concept</span>
-                <ChevronRight size={14} />
+                <ChevronRight size={16} />
               </button>
             </div>
           </div>
@@ -491,19 +539,23 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
           <button
             type="button"
             onClick={() => setShowTranscript(!showTranscript)}
+            aria-expanded={showTranscript}
+            aria-controls="lecture-notes-drawer"
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.3rem",
+              gap: "0.35rem",
               background: "transparent",
               border: "none",
               color: color,
-              fontSize: "0.775rem",
+              fontSize: "0.8rem",
               fontWeight: 600,
               cursor: "pointer",
+              minHeight: "44px",
+              padding: "0.35rem 0.5rem",
             }}
           >
-            <FileText size={13} />
+            <FileText size={14} />
             <span>{showTranscript ? "Hide Full Notes" : "View Full Notes"}</span>
           </button>
         </div>
@@ -515,16 +567,16 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
               key={pIdx}
               style={{
                 fontSize: "0.8rem",
-                color: "#1E293B",
-                background: "#FFFFFF",
-                padding: "0.35rem 0.75rem",
+                color: "var(--wa-ink, #1E293B)",
+                background: "var(--wa-white, #FFFFFF)",
+                padding: "0.4rem 0.85rem",
                 borderRadius: "8px",
                 border: "1px solid var(--wa-border, #CBD5E1)",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
                 fontWeight: 500,
-                boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
+                boxShadow: "var(--wa-shadow-xs)",
               }}
             >
               <Check size={13} color={color} strokeWidth={2.5} /> {point}
@@ -535,14 +587,15 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
         {/* Collapsible Full Notes */}
         {showTranscript && (
           <div
+            id="lecture-notes-drawer"
             style={{
               marginTop: "1rem",
-              padding: "1rem",
-              background: "#FFFFFF",
+              padding: "1rem 1.25rem",
+              background: "var(--wa-white, #FFFFFF)",
               borderRadius: "8px",
-              border: "1px solid #E2E8F0",
-              fontSize: "0.85rem",
-              color: "#334155",
+              border: "1px solid var(--wa-border, #E2E8F0)",
+              fontSize: "0.875rem",
+              color: "var(--wa-text, #334155)",
               lineHeight: 1.65,
             }}
           >
