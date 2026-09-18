@@ -20,8 +20,8 @@
 }
 
 .footerInner {
-  background: #FFFFFF;
-  color: #475569;
+  background: var(--wa-paper);
+  color: var(--wa-muted);
   padding: 3.5rem 0 2rem;
   border-top: 1px solid var(--wa-border);
 }
@@ -65,15 +65,16 @@
 }
 
 .brandName {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #0F172A;
-  letter-spacing: -0.03em;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--wa-ink);
+  letter-spacing: -0.02em;
 }
 
 .tagline {
   font-size: 0.875rem;
-  color: #64748B;
+  color: var(--wa-muted);
   line-height: 1.65;
   max-width: 290px;
   margin: 0;
@@ -84,15 +85,16 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--wa-forest-light);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  color: var(--wa-forest);
-  font-size: 0.75rem;
+  background: var(--wa-crimson-light);
+  border: 1px solid rgba(139, 38, 62, 0.2);
+  color: var(--wa-crimson);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 700;
   padding: 0.35rem 0.85rem;
-  border-radius: 999px;
+  border-radius: var(--wa-radius-pill);
   width: fit-content;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
 }
 
 .missionDot {

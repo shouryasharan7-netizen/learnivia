@@ -7,7 +7,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(250, 247, 242, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--wa-border);
@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  box-shadow: 0 1px 3px 0 rgba(26, 22, 21, 0.04), 0 4px 12px -2px rgba(26, 22, 21, 0.03);
 }
 
 .container {
@@ -49,11 +49,11 @@
 }
 
 .logoText {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-size: 1.45rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--wa-ink);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 /* Navigation Links */
@@ -189,18 +189,19 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: #FFFFFF;
-  background: var(--wa-green);
+  background: var(--wa-crimson);
   padding: 0.55rem 1.45rem;
-  border-radius: var(--wa-radius-pill);
+  border-radius: var(--wa-radius-sm);
   text-decoration: none;
   transition: all 180ms ease;
   white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+  box-shadow: 0 4px 14px rgba(139, 38, 62, 0.25);
 }
 .signUpBtn:hover {
-  background: var(--wa-green-hover);
+  background: var(--wa-crimson-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 6px 20px rgba(139, 38, 62, 0.35);
+  color: #FFFFFF;
 }
 
 /* ==========================================================================

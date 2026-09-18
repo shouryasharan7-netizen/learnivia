@@ -1,73 +1,84 @@
 /* =========================================
-   LEARNIVIA — MODERN PRECISION EDTECH SYSTEM
-   "Crisp, Bright, Light, and Tech-Forward"
+   LEARNIVIA — MODERN ACADEMIC SALON SYSTEM
+   "Warm Unbleached Paper, Literary Ink & Oxford Crimson"
    ========================================= */
 
 :root {
-  --font-serif:        var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
-  /* ── Modern Precision Canvas & Surfaces (Bright & Clean) ── */
-  --wa-paper:          #F8FAFC;
-  --wa-cream:          #F8FAFC;
-  --wa-cream-dark:     #F1F5F9;
-  --wa-cream-mid:      #E2E8F0;
+  /* ── Academic Salon Canvas & Surfaces (Warm Unbleached Paper) ── */
+  --wa-paper:          #FAF7F2;
+  --wa-cream:          #FAF7F2;
+  --wa-cream-dark:     #F2ECE1;
+  --wa-cream-mid:      #E8E1D5;
   --wa-white:          #FFFFFF;
 
-  /* ── Typography (Sharp High-Contrast Slate) ── */
-  --wa-ink:            #0F172A;
-  --wa-text:           #0F172A;
-  --wa-muted:          #475569;
-  --wa-subtle:         #94A3B8;
+  /* ── Literary Typography (Deep Espresso Ink) ── */
+  --wa-ink:            #1A1615;
+  --wa-text:           #2C2422;
+  --wa-muted:          #685E5A;
+  --wa-subtle:         #9E948F;
 
-  /* ── Crisp Hairline Borders ──────────────── */
-  --wa-border:         #E2E8F0;
-  --wa-border-hairline:#E2E8F0;
-  --wa-border-strong:  #CBD5E1;
+  /* ── Bookbinding Hairline Rules & Borders ──── */
+  --wa-border:         #E6DFD5;
+  --wa-border-hairline:#EFE9E0;
+  --wa-border-strong:  #C8BFAF;
 
-  /* ── Electric Cobalt Blue — Primary Brand Accent ──── */
-  --wa-forest:         #2563EB;
-  --wa-forest-light:   #EFF6FF;
-  --wa-green:          #2563EB;
-  --wa-green-hover:    #1D4ED8;
-  --wa-green-active:   #1E40AF;
-  --wa-green-light:    #EFF6FF;
-  --wa-green-mid:      #3B82F6;
-  --wa-green-muted:    rgba(37, 99, 235, 0.08);
+  /* ── Oxford Crimson / Burgundy — Scholarly Signature Accent ──── */
+  --wa-crimson:        #8B263E;
+  --wa-crimson-hover:  #731E33;
+  --wa-crimson-light:  #FDF2F4;
+  --wa-forest:         #8B263E;
+  --wa-forest-light:   #FDF2F4;
+  --wa-green:          #8B263E;
+  --wa-green-hover:    #731E33;
+  --wa-green-active:   #5A1626;
+  --wa-green-light:    #FDF2F4;
+  --wa-green-mid:      #A53860;
+  --wa-green-muted:    rgba(139, 38, 62, 0.08);
 
-  /* ── Sky Azure — Secondary Tech Accent ────── */
-  --wa-terra:          #0284C7;
-  --wa-terracotta:     #0284C7;
-  --wa-terra-hover:    #0369A1;
-  --wa-terra-light:    #E0F2FE;
-  --wa-terra-muted:    rgba(2, 132, 199, 0.08);
+  /* ── Scholarly Forest / Antique Botanical Accent ────── */
+  --wa-terra:          #1E3A2F;
+  --wa-terracotta:     #1E3A2F;
+  --wa-terra-hover:    #162C23;
+  --wa-terra-light:    #F0F5F2;
+  --wa-terra-muted:    rgba(30, 58, 47, 0.08);
 
-  /* ── Amber — Tertiary Status Accent ───────── */
-  --wa-ochre:          #D97706;
-  --wa-ochre-hover:    #B45309;
-  --wa-ochre-light:    #FEF3C7;
-  --wa-ochre-muted:    rgba(217, 119, 6, 0.08);
+  /* ── Bookplate Ochre / Gilt Gold Accent ───────── */
+  --wa-ochre:          #C28B2B;
+  --wa-ochre-hover:    #A0701F;
+  --wa-ochre-light:    #FCF6E9;
+  --wa-ochre-muted:    rgba(194, 139, 43, 0.08);
 
-  /* ── Slate Steel — Deep Utility Accent ────── */
-  --wa-slate-blue:     #334155;
-  --wa-navy:           #1E293B;
-  --wa-navy-hover:     #0F172A;
-  --wa-navy-light:     #F1F5F9;
+  /* ── Library Slate / Dark Timber ────── */
+  --wa-slate-blue:     #3E3633;
+  --wa-navy:           #1A1615;
+  --wa-navy-hover:     #100D0C;
+  --wa-navy-light:     #F2ECE1;
 
-  /* ── Semantic Colors (Bright & Clear) ─────── */
-  --wa-success:        #10B981;
-  --wa-success-bg:     #ECFDF5;
-  --wa-warning:        #D97706;
-  --wa-warning-bg:     #FEF3C7;
-  --wa-error:          #EF4444;
-  --wa-error-bg:       #FEF2F2;
-  --wa-info:           #0284C7;
-  --wa-info-bg:        #E0F2FE;
+  /* ── Core Precision Palette Tokens (Utility & Baseline Integrity) ── */
+  --wa-cobalt-blue:    #2563EB;
+  --wa-slate-paper:    #F8FAFC;
+  --wa-pure-white:     #FFFFFF;
+  --wa-hairline-border:#E2E8F0;
+  --wa-sky-azure:      #0284C7;
+  --wa-amber-status:   #D97706;
+  --wa-slate-steel:    #334155;
 
-  /* ── Luminous Modern Soft Shadows ─────────── */
-  --wa-shadow-xs:      0 1px 2px rgba(15, 23, 42, 0.04);
-  --wa-shadow-sm:      0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --wa-shadow-md:      0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  --wa-shadow-lg:      0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
-  --wa-shadow-hover:   0 12px 24px -4px rgba(37, 99, 235, 0.12), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
+  /* ── Semantic Colors (Academic & Refined) ─────── */
+  --wa-success:        #1E5A3E;
+  --wa-success-bg:     #F0F7F3;
+  --wa-warning:        #C28B2B;
+  --wa-warning-bg:     #FCF6E9;
+  --wa-error:          #9E2A2B;
+  --wa-error-bg:       #FDF2F2;
+  --wa-info:           #1E3A2F;
+  --wa-info-bg:        #F0F5F2;
+
+  /* ── Layered Paper & Bookbinding Shadows ─────────── */
+  --wa-shadow-xs:      0 1px 2px rgba(26, 22, 21, 0.04);
+  --wa-shadow-sm:      0 1px 3px rgba(26, 22, 21, 0.05), 0 1px 2px rgba(26, 22, 21, 0.03);
+  --wa-shadow-md:      0 4px 8px -1px rgba(26, 22, 21, 0.06), 0 2px 4px -2px rgba(26, 22, 21, 0.04);
+  --wa-shadow-lg:      0 12px 20px -3px rgba(26, 22, 21, 0.07), 0 4px 6px -4px rgba(26, 22, 21, 0.03);
+  --wa-shadow-hover:   0 14px 28px -4px rgba(139, 38, 62, 0.12), 0 4px 8px -2px rgba(26, 22, 21, 0.04);
 
   /* ── Radius — Deliberate 8–14px geometry ─── */
   --wa-radius-sm:      8px;
@@ -242,13 +253,21 @@ body {
 
 main { flex: 1; }
 
-/* Display & Section Headings — Plus Jakarta Sans modern tech authority */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif);
-  font-weight: 700;
-  line-height: 1.2;
+/* Display & Section Headings — Fraunces Academic Editorial Serif */
+h1, h2, h3 {
+  font-family: var(--font-serif, 'Fraunces', Georgia, serif);
+  font-weight: 650;
+  line-height: 1.18;
   color: var(--wa-ink);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
+}
+
+h4, h5, h6 {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--wa-ink);
+  letter-spacing: -0.01em;
 }
 
 /* Technical IDs, verification codes, timestamps — IBM Plex Mono */
@@ -257,7 +276,7 @@ code, kbd, samp, pre, .font-mono, [data-mono="true"] {
 }
 
 .font-serif {
-  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-family: var(--font-serif, 'Fraunces', Georgia, serif);
 }
 
 .font-sans {
