@@ -157,7 +157,6 @@
 .reportCard {
   background: var(--wa-white);
   border: 1px solid var(--wa-border);
-  border-left: 4px solid var(--wa-terracotta);
   border-radius: 8px;
   padding: 2rem;
   display: flex;

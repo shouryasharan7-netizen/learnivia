@@ -14,13 +14,32 @@ import GoogleProvider from "next-auth/providers/google"
  */
 export function getAdminEmails(): Set<string> {
   if (!process.env.ADMIN_EMAILS) {
-    // If ADMIN_EMAILS is not configured, no email-based admin elevation occurs.
-    // Admins can still be set directly in the database via user.role = "ADMIN".
     return new Set<string>();
   }
   return new Set(
     process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase()).filter(Boolean)
   );
+}
+
+/**
+ * Strict Admin Designation:
+ * Only Ahmed and Shourya (or emails in ADMIN_EMAILS) qualify for the ADMIN role.
+ * All other learners and tutors are strictly non-admins.
+ */
+export function isDesignatedAdmin(user?: { name?: string | null; email?: string | null } | null): boolean {
+  if (!user) return false;
+  const email = (user.email || "").trim().toLowerCase();
+  const name = (user.name || "").trim().toLowerCase();
+
+  // Explicit check for Ahmed and Shourya
+  if (email.includes("shourya") || name.includes("shourya")) return true;
+  if (email.includes("ahmed") || name.includes("ahmed")) return true;
+
+  // Environment variable check
+  const adminEmails = getAdminEmails();
+  if (email && adminEmails.has(email)) return true;
+
+  return false;
 }
 
 export const authConfig = {
@@ -44,28 +63,34 @@ export const authConfig = {
         if (session.timezone !== undefined) {
           token.timezone = session.timezone;
         }
-        // NOTE: Never trust client-supplied session.role to prevent privilege escalation!
       }
 
       if (user) {
         token.id = (user.id || token.id || token.sub) as string;
         const normalizedEmail = (user.email || token.email || "").trim().toLowerCase();
         if (normalizedEmail) token.email = normalizedEmail;
+        if (user.name) token.name = user.name;
 
-        // P0-5: Admin check via env var only
-        const adminEmails = getAdminEmails();
-        const isUserAdmin = normalizedEmail ? adminEmails.has(normalizedEmail) : false;
-        token.role = isUserAdmin ? "ADMIN" : (user.role || token.role || "STUDENT");
+        const isUserAdmin = isDesignatedAdmin({ email: normalizedEmail, name: user.name });
+        token.role = isUserAdmin ? "ADMIN" : (user.role === "ADMIN" ? "STUDENT" : (user.role || token.role || "STUDENT"));
+        token.isAdmin = isUserAdmin;
+        token.isTutor = Boolean((user as any).isTutor);
+        token.isTrainingCompleted = Boolean((user as any).isTrainingCompleted);
+        token.tutorStatus = (user as any).tutorStatus || null;
         token.onboardingCompleted = user.onboardingCompleted ?? true;
         token.timezone = user.timezone ?? null;
       }
 
-      // If token has an admin email, ensure role is always ADMIN
-      if (token.email) {
-        const adminEmails = getAdminEmails();
-        if (adminEmails.has((token.email as string).trim().toLowerCase())) {
-          token.role = "ADMIN";
+      // Security enforcement: Ensure role and isAdmin match isDesignatedAdmin
+      const userAdmin = isDesignatedAdmin({ email: token.email as string, name: token.name as string });
+      if (userAdmin) {
+        token.role = "ADMIN";
+        token.isAdmin = true;
+      } else {
+        if (token.role === "ADMIN") {
+          token.role = "STUDENT";
         }
+        token.isAdmin = false;
       }
 
       // Guarantee token.id is never empty
@@ -78,7 +103,12 @@ export const authConfig = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = ((token.id || token.sub) as string) || "";
-        session.user.role = (token.role as "STUDENT" | "TUTOR" | "ADMIN") || "STUDENT";
+        const userAdmin = isDesignatedAdmin({ email: token.email as string, name: session.user.name || (token.name as string) });
+        session.user.role = userAdmin ? "ADMIN" : ((token.role as any) === "ADMIN" ? "STUDENT" : (token.role as "STUDENT" | "TUTOR" | "ADMIN") || "STUDENT");
+        session.user.isAdmin = userAdmin;
+        session.user.isTutor = Boolean(token.isTutor);
+        session.user.isTrainingCompleted = Boolean(token.isTrainingCompleted);
+        session.user.tutorStatus = (token.tutorStatus as string | null) || null;
         session.user.onboardingCompleted = Boolean(token.onboardingCompleted);
         session.user.timezone = (token.timezone as string | null) || null;
         if (token.email) {

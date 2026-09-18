@@ -1,14 +1,15 @@
 import { cache } from "react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { getAdminEmails } from "@/auth.config";
+import { getAdminEmails, isDesignatedAdmin } from "@/auth.config";
 import type { User, TutorProfile, Role } from "@prisma/client";
 
 export interface AuthenticatedUser extends User {
   role: Role;
   isTutor: boolean;
   isAdmin: boolean;
-  tutorProfile: TutorProfile | null;
+  isTrainingCompleted: boolean;
+  tutorProfile: (TutorProfile & { trainingModules?: any[] }) | null;
 }
 
 /**
@@ -16,7 +17,7 @@ export interface AuthenticatedUser extends User {
  * Uses both session.user.id and session.user.email as fallbacks.
  * Wrapped with React.cache() to deduplicate queries across layouts and components in the same server request.
  *
- * P0-5: Admin email check exclusively from ADMIN_EMAILS env var.
+ * Admin designation: Exclusively for Ahmed and Shourya (or ADMIN_EMAILS).
  */
 export const getCurrentUser = cache(async function getCurrentUser(): Promise<AuthenticatedUser | null> {
   const session = await auth();
@@ -36,41 +37,44 @@ export const getCurrentUser = cache(async function getCurrentUser(): Promise<Aut
       ],
     },
     include: {
-      tutorProfile: true,
+      tutorProfile: {
+        include: {
+          trainingModules: true,
+        },
+      },
     },
   });
 
   if (!dbUser) return null;
 
-  // Ground truth role checks — env var only, no hardcoded emails
-  const email = dbUser.email?.trim().toLowerCase();
-  const adminEmails = getAdminEmails();
-  const isDesignatedAdmin = email ? adminEmails.has(email) : false;
+  // Strict designated admin check
+  const isAdmin = isDesignatedAdmin(dbUser);
+  let role: Role = isAdmin ? "ADMIN" : (dbUser.role === "ADMIN" ? "STUDENT" : dbUser.role);
 
-  let role: Role = dbUser.role;
-
-  // Elevate designated admin if needed
-  if (isDesignatedAdmin && role !== "ADMIN") {
+  if (isAdmin && dbUser.role !== "ADMIN") {
     await prisma.user.update({
       where: { id: dbUser.id },
       data: { role: "ADMIN" },
     });
-    role = "ADMIN";
+  } else if (!isAdmin && dbUser.role === "ADMIN") {
+    await prisma.user.update({
+      where: { id: dbUser.id },
+      data: { role: "STUDENT" },
+    });
   }
 
-  // A user is only an active tutor if their tutor profile is explicitly APPROVED (or they are an admin).
-  // Suspended or rejected tutors cannot act as tutors regardless of user.role field.
-  const isTutor =
-    role === "ADMIN" ||
-    (dbUser.tutorProfile?.status === "APPROVED");
-
-  const isAdmin = role === "ADMIN";
+  // A user is only an active tutor if their tutor profile is explicitly APPROVED.
+  // Admins do not automatically have an active tutor profile on learner dashboard.
+  const isTutor = Boolean(dbUser.tutorProfile?.status === "APPROVED");
+  const passedModules = (dbUser.tutorProfile?.trainingModules || []).filter((m: any) => m.quizPassed).length;
+  const isTrainingCompleted = passedModules === 5;
 
   return {
     ...dbUser,
     role,
     isTutor,
     isAdmin,
+    isTrainingCompleted,
   };
 });
 

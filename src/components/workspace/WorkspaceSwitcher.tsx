@@ -15,9 +15,10 @@ import { ROUTES } from "@/lib/routes";
 interface WorkspaceSwitcherProps {
   isTutor: boolean;
   isAdmin: boolean;
+  isTrainingCompleted?: boolean;
 }
 
-export function WorkspaceSwitcher({ isTutor, isAdmin }: WorkspaceSwitcherProps) {
+export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = false }: WorkspaceSwitcherProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -136,7 +137,7 @@ export function WorkspaceSwitcher({ isTutor, isAdmin }: WorkspaceSwitcherProps) 
           {/* Tutor Option */}
           {isTutor && (
             <Link
-              href={ROUTES.tutor.home}
+              href={isTrainingCompleted ? ROUTES.tutor.home : ROUTES.tutor.training}
               onClick={() => setIsOpen(false)}
               style={{
                 display: "flex",
@@ -154,6 +155,20 @@ export function WorkspaceSwitcher({ isTutor, isAdmin }: WorkspaceSwitcherProps) 
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <BookOpen size={15} color={isCurrentTutor ? "var(--wa-green)" : "var(--wa-muted)"} />
                 <span>Tutor Workspace</span>
+                {!isTrainingCompleted && (
+                  <span
+                    style={{
+                      fontSize: "0.65rem",
+                      padding: "0.1rem 0.4rem",
+                      borderRadius: "999px",
+                      background: "#FEF3C7",
+                      color: "#92400E",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Training
+                  </span>
+                )}
               </div>
               {isCurrentTutor && <Check size={14} color="var(--wa-green)" />}
             </Link>

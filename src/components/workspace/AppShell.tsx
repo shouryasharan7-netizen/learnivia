@@ -52,8 +52,9 @@ export function AppShell({ children }: AppShellProps) {
   if (isWorkspaceRoute) {
     if (session?.user) {
       const user = session.user;
-      const isTutor = Boolean((user as any).isTutor || user.role === "TUTOR" || user.role === "ADMIN");
-      const isAdmin = Boolean((user as any).isAdmin || user.role === "ADMIN");
+      const isTutor = Boolean(user.isTutor);
+      const isAdmin = Boolean(user.isAdmin);
+      const isTrainingCompleted = Boolean(user.isTrainingCompleted);
 
       return (
         <div className={styles.shell}>
@@ -66,6 +67,7 @@ export function AppShell({ children }: AppShellProps) {
             userRole={user.role}
             isTutor={isTutor}
             isAdmin={isAdmin}
+            isTrainingCompleted={isTrainingCompleted}
             className={styles.sidebarDesktop}
           />
 

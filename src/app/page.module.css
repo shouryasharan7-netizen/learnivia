@@ -94,10 +94,8 @@
 }
 
 .highlightText {
-  color: #2563EB;
-  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #1D4ED8;
+  font-weight: 700;
 }
 
 /* Paragraph */

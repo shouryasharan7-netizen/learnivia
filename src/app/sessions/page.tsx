@@ -118,13 +118,22 @@ export default async function SessionsPage({ searchParams }: Props) {
     session?.user?.id
       ? prisma.user.findUnique({
           where: { id: session.user.id },
-          include: { tutorProfile: true },
+          include: {
+            tutorProfile: {
+              include: {
+                trainingModules: true,
+              },
+            },
+          },
         })
       : Promise.resolve(null),
     getCachedSessionsData(),
   ]);
 
   const isTutor = Boolean(dbUser?.tutorProfile && dbUser.tutorProfile.status === "APPROVED");
+  const passedModules = (dbUser?.tutorProfile?.trainingModules || []).filter((m: any) => m.quizPassed).length;
+  const isTrainingCompleted = passedModules === 5;
+  const canHost = isTutor && isTrainingCompleted;
 
   // 1b. Fetch user's bookings if signed in
   let userBookings: any[] = [];
@@ -326,7 +335,7 @@ export default async function SessionsPage({ searchParams }: Props) {
               <Compass size={16} />
               <span>Find a Peer Tutor</span>
             </Link>
-            {isTutor && (
+            {canHost && (
               <Link
                 href="/tutor#schedule-session"
                 style={{

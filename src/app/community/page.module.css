@@ -40,8 +40,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #2563EB, #0284C7, #10B981);
+  height: 1px;
+  background: var(--wa-border, #E2E8F0);
 }
 
 .academicTitle {

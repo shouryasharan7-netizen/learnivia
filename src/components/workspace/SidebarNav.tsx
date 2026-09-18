@@ -21,6 +21,7 @@ import {
   AlertTriangle,
   FolderOpen,
   Settings,
+  Lock,
 } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 import { WorkspaceSwitcher } from "./WorkspaceSwitcher";
@@ -29,6 +30,7 @@ interface SidebarNavProps {
   userRole?: string;
   isTutor?: boolean;
   isAdmin?: boolean;
+  isTrainingCompleted?: boolean;
   className?: string;
 }
 
@@ -36,6 +38,7 @@ export function SidebarNav({
   userRole = "STUDENT",
   isTutor = false,
   isAdmin = false,
+  isTrainingCompleted = false,
   className = "",
 }: SidebarNavProps) {
   const pathname = usePathname();
@@ -134,7 +137,7 @@ export function SidebarNav({
         </div>
 
         {/* Workspace Switcher for multi-role users */}
-        <WorkspaceSwitcher isTutor={isTutor} isAdmin={isAdmin} />
+        <WorkspaceSwitcher isTutor={isTutor} isAdmin={isAdmin} isTrainingCompleted={isTrainingCompleted} />
 
         {/* Workspace Navigation Links */}
         <div
@@ -190,11 +193,41 @@ export function SidebarNav({
               >
                 Tutor Folio
               </div>
-              <NavItem href={ROUTES.tutor.home} label="Tutor Overview" icon={Home} active={isLinkActive(ROUTES.tutor.home)} />
-              <NavItem href={ROUTES.tutor.transcript} label="Verified Service Hours" icon={Award} active={isLinkActive(ROUTES.tutor.transcript)} />
-              <NavItem href={ROUTES.tutor.training} label="Safeguarding Training" icon={ShieldCheck} active={isLinkActive(ROUTES.tutor.training)} />
-              <NavItem href={ROUTES.sessions} label="Upcoming Sessions" icon={CalendarCheck} active={isLinkActive(ROUTES.sessions)} />
-              <NavItem href={ROUTES.homeworkHelp} label="Answer Questions" icon={HelpCircle} active={isLinkActive(ROUTES.homeworkHelp)} />
+              <NavItem
+                href={isTrainingCompleted ? ROUTES.tutor.home : `${ROUTES.tutor.training}?locked=1`}
+                label="Tutor Overview"
+                icon={Home}
+                active={isLinkActive(ROUTES.tutor.home)}
+                locked={!isTrainingCompleted}
+              />
+              <NavItem
+                href={isTrainingCompleted ? ROUTES.tutor.transcript : `${ROUTES.tutor.training}?locked=1`}
+                label="Verified Service Hours"
+                icon={Award}
+                active={isLinkActive(ROUTES.tutor.transcript)}
+                locked={!isTrainingCompleted}
+              />
+              <NavItem
+                href={ROUTES.tutor.training}
+                label="Safeguarding Training"
+                icon={ShieldCheck}
+                active={isLinkActive(ROUTES.tutor.training)}
+                badge={!isTrainingCompleted ? "Required" : undefined}
+              />
+              <NavItem
+                href={isTrainingCompleted ? ROUTES.sessions : `${ROUTES.tutor.training}?locked=1`}
+                label="Upcoming Sessions"
+                icon={CalendarCheck}
+                active={isLinkActive(ROUTES.sessions)}
+                locked={!isTrainingCompleted}
+              />
+              <NavItem
+                href={isTrainingCompleted ? ROUTES.homeworkHelp : `${ROUTES.tutor.training}?locked=1`}
+                label="Answer Questions"
+                icon={HelpCircle}
+                active={isLinkActive(ROUTES.homeworkHelp)}
+                locked={!isTrainingCompleted}
+              />
             </>
           ) : (
             /* Primary Learner Navigation */
@@ -268,29 +301,57 @@ interface NavItemProps {
   label: string;
   icon: React.ElementType;
   active: boolean;
+  locked?: boolean;
+  badge?: string;
 }
 
-function NavItem({ href, label, icon: Icon, active }: NavItemProps) {
+function NavItem({ href, label, icon: Icon, active, locked, badge }: NavItemProps) {
   return (
     <Link
       href={href}
+      title={locked ? "Complete Safeguarding Training to unlock" : undefined}
       style={{
         display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
         gap: "0.65rem",
         padding: "0.55rem 0.75rem",
         borderRadius: "var(--wa-radius-sm, 8px)",
         fontSize: "0.85rem",
         fontWeight: active ? 600 : 500,
-        color: active ? "#FFFFFF" : "var(--wa-text, #1E293B)",
+        color: active ? "#FFFFFF" : locked ? "var(--wa-muted, #64748B)" : "var(--wa-text, #1E293B)",
         background: active ? "var(--wa-green, #2563EB)" : "transparent",
         textDecoration: "none",
         transition: "all var(--wa-transition, 180ms ease)",
         boxShadow: active ? "0 2px 8px rgba(37, 99, 235, 0.25)" : "none",
+        opacity: locked ? 0.7 : 1,
       }}
     >
-      <Icon size={16} strokeWidth={active ? 2.2 : 1.75} aria-hidden="true" />
-      <span>{label}</span>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+        <Icon size={16} strokeWidth={active ? 2.2 : 1.75} aria-hidden="true" />
+        <span>{label}</span>
+      </div>
+      {locked && (
+        <div style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+          <Lock size={12} color="var(--wa-muted, #64748B)" />
+        </div>
+      )}
+      {badge && (
+        <span
+          style={{
+            fontSize: "0.65rem",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.04em",
+            padding: "0.15rem 0.45rem",
+            borderRadius: "999px",
+            background: active ? "rgba(255,255,255,0.25)" : "#FEF3C7",
+            color: active ? "#FFFFFF" : "#92400E",
+          }}
+        >
+          {badge}
+        </span>
+      )}
     </Link>
   );
 }

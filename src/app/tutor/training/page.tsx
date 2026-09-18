@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CheckCircle2, ShieldCheck, BookOpen, ArrowRight, Users, Video, Clock, RotateCcw, AlertCircle, ChevronDown, Check, Play } from "lucide-react";
+import { VideoLessonPlayer } from "./VideoLessonPlayer";
 
 const MODULES = [
   {
@@ -239,8 +240,16 @@ export default function TutorTrainingPage() {
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>({});
   const [quizSubmitted, setQuizSubmitted] = useState<Set<number>>(new Set());
   const [savingModule, setSavingModule] = useState<number | null>(null);
+  const [isLockedNotice, setIsLockedNotice] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("locked") === "1" || params.get("gate") === "1") {
+        setIsLockedNotice(true);
+      }
+    }
+
     fetch("/api/tutor/training")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
@@ -356,10 +365,12 @@ export default function TutorTrainingPage() {
               <div
                 style={{
                   height: "100%",
-                  width: `${(completedModules.size / MODULES.length) * 100}%`,
+                  width: "100%",
+                  transform: `scaleX(${completedModules.size / MODULES.length})`,
+                  transformOrigin: "left",
                   background: "#fff",
                   borderRadius: "4px",
-                  transition: "width 0.4s ease",
+                  transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                 }}
               />
             </div>
@@ -385,6 +396,33 @@ export default function TutorTrainingPage() {
       </div>
 
       <div style={{ maxWidth: "800px", margin: "0 auto", padding: "2.5rem 1.5rem 5rem" }}>
+        {/* Locked Notice if redirected from other tutor features */}
+        {isLockedNotice && !allDone && (
+          <div
+            style={{
+              background: "#FFFBEB",
+              border: "1.5px solid #FCD34D",
+              borderRadius: "14px",
+              padding: "1.25rem 1.5rem",
+              marginBottom: "2rem",
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "1rem",
+              boxShadow: "0 2px 8px rgba(217, 119, 6, 0.08)",
+            }}
+          >
+            <AlertCircle size={24} color="#D97706" style={{ flexShrink: 0, marginTop: "2px" }} />
+            <div>
+              <div style={{ fontWeight: 700, color: "#92400E", fontSize: "1rem" }}>
+                Safeguarding Training Required
+              </div>
+              <p style={{ margin: "0.35rem 0 0", color: "#78350F", fontSize: "0.875rem", lineHeight: 1.55 }}>
+                Tutor Overview, verified service records, upcoming sessions, and student inquiries are locked until all 5 safeguarding training modules below are passed. Complete each module and pass its short quiz to unlock full access.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* All Done Banner */}
         {allDone && (
           <div
@@ -513,124 +551,14 @@ export default function TutorTrainingPage() {
                 {/* Module Content */}
                 {isOpen && (
                   <div style={{ padding: "0 1.5rem 1.5rem", borderTop: "1px solid #F3F4F6" }}>
-                    {/* Video Training Walkthrough Player */}
-                    <div
-                      style={{
-                        marginTop: "1.25rem",
-                        borderRadius: "12px",
-                        overflow: "hidden",
-                        border: "1px solid var(--wa-border, #E2E8F0)",
-                        background: "#FFFFFF",
-                        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: "0.85rem 1.15rem",
-                          background: mod.bg,
-                          borderBottom: "1px solid var(--wa-border, #E2E8F0)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          flexWrap: "wrap",
-                          gap: "0.5rem",
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                          <Video size={16} color={mod.color} />
-                          <span style={{ fontSize: "0.875rem", fontWeight: 700, color: mod.color }}>
-                            {mod.video.title}
-                          </span>
-                        </div>
-                        <span
-                          style={{
-                            fontSize: "0.75rem",
-                            fontWeight: 600,
-                            background: "rgba(0,0,0,0.05)",
-                            padding: "0.2rem 0.6rem",
-                            borderRadius: "999px",
-                            color: "#475569",
-                          }}
-                        >
-                          {mod.video.duration} Video Lesson
-                        </span>
-                      </div>
-
-                      {mod.video.embedUrl ? (
-                        <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
-                          <iframe
-                            src={mod.video.embedUrl}
-                            title={mod.video.title}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            style={{ width: "100%", height: "100%", border: "none" }}
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          style={{
-                            padding: "1.5rem 1.25rem",
-                            background: "linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            textAlign: "center",
-                            gap: "0.75rem",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "52px",
-                              height: "52px",
-                              borderRadius: "50%",
-                              background: mod.color,
-                              color: "#FFFFFF",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                            }}
-                          >
-                            <Play size={24} style={{ marginLeft: "3px" }} />
-                          </div>
-                          <div>
-                            <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0F172A" }}>
-                              {mod.video.title}
-                            </div>
-                            <div style={{ fontSize: "0.8125rem", color: "#64748B", marginTop: "0.25rem", maxWidth: "520px" }}>
-                              {mod.video.summary}
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "0.5rem",
-                              flexWrap: "wrap",
-                              justifyContent: "center",
-                              marginTop: "0.25rem",
-                            }}
-                          >
-                            {mod.video.keyPoints.map((point: string, pIdx: number) => (
-                              <span
-                                key={pIdx}
-                                style={{
-                                  fontSize: "0.75rem",
-                                  color: "#334155",
-                                  background: "#FFFFFF",
-                                  padding: "0.3rem 0.65rem",
-                                  borderRadius: "6px",
-                                  border: "1px solid #E2E8F0",
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  gap: "0.3rem",
-                                }}
-                              >
-                                <Check size={12} color={mod.color} /> {point}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                    {/* Resilient Video Training Walkthrough Player */}
+                    <div style={{ marginTop: "1.25rem" }}>
+                      <VideoLessonPlayer
+                        video={mod.video}
+                        color={mod.color}
+                        bg={mod.bg}
+                        content={mod.content}
+                      />
                     </div>
                     {mod.content.map((section, idx) => (
                       <div key={idx} style={{ marginTop: "1.25rem" }}>

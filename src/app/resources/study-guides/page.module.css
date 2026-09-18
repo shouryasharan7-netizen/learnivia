@@ -80,7 +80,6 @@
 .toolsBanner {
   background: #FFFFFF;
   border: 1px solid var(--wa-border, #E2E8F0);
-  border-left: 4px solid var(--wa-green, #2563EB);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   display: flex;

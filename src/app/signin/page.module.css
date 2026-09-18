@@ -16,13 +16,13 @@
 .leftPanel {
   display: none;
   flex: 0 0 44%;
-  background: linear-gradient(145deg, #5A1626 0%, #8B263E 50%, #A53860 100%);
+  background: linear-gradient(150deg, #0F172A 0%, #1E3A8A 55%, #2563EB 100%);
   flex-direction: column;
   justify-content: space-between;
-  padding: 3.5rem 4rem;
+  padding: 4rem 4.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 4px 0 24px rgba(26, 22, 21, 0.08);
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.12);
 }
 
 /* Subtle modern radial highlights */
@@ -30,8 +30,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 0% 100%, rgba(194, 139, 43, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 50%);
+    radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -49,7 +49,7 @@
 }
 
 .leftBrandName {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.5rem;
   font-weight: 600;
   color: #FFFFFF;
@@ -64,35 +64,35 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 3rem 0;
+  padding: 3.5rem 0;
 }
 
 .leftTagline {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: clamp(2.25rem, 3.5vw, 3rem);
   font-weight: 600;
   color: #FFFFFF;
-  line-height: 1.15;
+  line-height: 1.2;
   margin: 0;
   letter-spacing: -0.02em;
 }
 
 .leftTaglineAccent {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: clamp(2.25rem, 3.5vw, 3rem);
   font-weight: 600;
-  color: #FCF6E9;
-  line-height: 1.15;
-  margin: 0 0 1.75rem 0;
+  color: #DBEAFE;
+  line-height: 1.2;
+  margin: 0 0 2rem 0;
   letter-spacing: -0.02em;
 }
 
 .leftSubtext {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.65;
-  max-width: 380px;
-  margin: 0 0 2.5rem 0;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.7;
+  max-width: 400px;
+  margin: 0 0 2.75rem 0;
 }
 
 /* Steps list */
@@ -102,25 +102,25 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.4rem;
 }
 
 .leftStep {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 .leftStepNum {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #FFFFFF;
   flex-shrink: 0;
@@ -128,9 +128,9 @@
 }
 
 .leftStepText {
-  font-size: 0.925rem;
+  font-size: 0.975rem;
   color: rgba(255, 255, 255, 0.95);
-  line-height: 1.45;
+  line-height: 1.5;
   font-weight: 500;
 }
 
@@ -139,18 +139,18 @@
   position: relative;
   z-index: 1;
   display: flex;
-  gap: 0.65rem;
+  gap: 0.85rem;
   flex-wrap: wrap;
 }
 
 .leftFooterPill {
   font-family: var(--font-mono, monospace);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0.35rem 0.85rem;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 0.45rem 1rem;
   border-radius: var(--wa-radius-pill, 999px);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -162,19 +162,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem;
+  padding: 3.5rem 2.5rem;
   overflow-y: auto;
   background: var(--wa-paper, #FAF7F2);
 }
 
 .formContainer {
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   display: flex;
   flex-direction: column;
   gap: 0;
   background: var(--wa-white, #FFFFFF);
-  padding: 2.75rem 2.5rem;
+  padding: 3rem 2.75rem;
   border-radius: var(--wa-radius-xl, 18px);
   border: 1px solid var(--wa-border, #E6DFD5);
   box-shadow: var(--wa-shadow-md);
@@ -189,7 +189,7 @@
 }
 
 .mobileBrandName {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.35rem;
   font-weight: 700;
   color: var(--wa-ink, #1A1615);
@@ -202,7 +202,7 @@
 
 /* Heading + subtext */
 .title {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   color: var(--wa-ink, #1A1615);
   font-size: 2rem;
   font-weight: 600;

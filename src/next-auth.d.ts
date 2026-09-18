@@ -7,6 +7,10 @@ declare module "next-auth" {
       role: "STUDENT" | "TUTOR" | "ADMIN";
       onboardingCompleted: boolean;
       timezone?: string | null;
+      isTutor?: boolean;
+      isAdmin?: boolean;
+      isTrainingCompleted?: boolean;
+      tutorStatus?: string | null;
     } & DefaultSession["user"];
   }
 
@@ -15,5 +19,9 @@ declare module "next-auth" {
     role: "STUDENT" | "TUTOR" | "ADMIN";
     onboardingCompleted: boolean;
     timezone?: string | null;
+    isTutor?: boolean;
+    isAdmin?: boolean;
+    isTrainingCompleted?: boolean;
+    tutorStatus?: string | null;
   }
 }

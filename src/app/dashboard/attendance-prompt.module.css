@@ -8,7 +8,6 @@
 .attendanceCard {
   background: var(--wa-white);
   border: 1px solid var(--wa-border);
-  border-left: 4px solid var(--wa-forest);
   border-radius: var(--wa-radius-md);
   padding: 1.25rem 1.5rem;
   display: flex;

@@ -183,9 +183,11 @@ export default async function TutorDashboard() {
                 <div
                   style={{
                     background: passedModules === 5 ? "var(--wa-green)" : "#D97706",
-                    width: `${(passedModules / 5) * 100}%`,
+                    width: "100%",
+                    transform: `scaleX(${passedModules / 5})`,
+                    transformOrigin: "left",
                     height: "100%",
-                    transition: "width 0.3s ease",
+                    transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
                 />
               </div>
@@ -299,7 +301,7 @@ export default async function TutorDashboard() {
   // Mandatory Safeguarding & Training Gate:
   // Approved tutors cannot access the dashboard or host sessions until completing all 5 training modules.
   if (passedModules < 5) {
-    redirect(ROUTES.tutor.training);
+    redirect(`${ROUTES.tutor.training}?locked=1`);
   }
 
   let rawWorkshops: any[] = [];

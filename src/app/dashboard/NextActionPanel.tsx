@@ -20,6 +20,9 @@ interface NextActionPanelProps {
   guardianConsentPending: boolean;
   emailUnverified: boolean;
   isApprovedTutor: boolean;
+  isPendingTutor?: boolean;
+  isTrainingPending?: boolean;
+  canApplyTutor?: boolean;
   hasUpcomingSession: boolean;
   nextSession?: {
     id: string;
@@ -41,6 +44,9 @@ export function NextActionPanel({
   guardianConsentPending,
   emailUnverified,
   isApprovedTutor,
+  isPendingTutor = false,
+  isTrainingPending = false,
+  canApplyTutor = false,
   hasUpcomingSession,
   nextSession,
   hasCompletedSession,
@@ -153,7 +159,57 @@ export function NextActionPanel({
     );
   }
 
-  // 3. Approved Tutor Context State
+  // 3. Tutor Training Gate State
+  if (isTrainingPending) {
+    return (
+      <aside className={styles.nextActionPanel} aria-label="Tutor training required">
+        <div className={styles.nextActionContent}>
+          <div className={styles.nextActionIcon} style={{ background: "#FEF3C7", color: "#92400E" }}>
+            <ShieldCheck size={20} />
+          </div>
+          <div className={styles.nextActionBody}>
+            <span className={`${styles.nextActionTag} ${styles.nextActionTagWarning}`}>
+              Safeguarding Training Required
+            </span>
+            <h2 className={styles.nextActionTitle}>Complete mandatory tutor training</h2>
+            <p className={styles.nextActionDesc}>
+              Your volunteer tutor application has been approved! Complete all 5 short safeguarding and mentorship modules to unlock session hosting and your full Tutor Workspace.
+            </p>
+          </div>
+        </div>
+        <Link href={ROUTES.tutor.training} className={styles.nextActionBtn}>
+          Complete Training <ArrowRight size={14} />
+        </Link>
+      </aside>
+    );
+  }
+
+  // 4. Tutor Application Pending State
+  if (isPendingTutor) {
+    return (
+      <aside className={styles.nextActionPanel} aria-label="Tutor application status">
+        <div className={styles.nextActionContent}>
+          <div className={styles.nextActionIcon} style={{ background: "#FEF3C7", color: "#92400E" }}>
+            <Clock size={20} />
+          </div>
+          <div className={styles.nextActionBody}>
+            <span className={`${styles.nextActionTag} ${styles.nextActionTagWarning}`}>
+              Application Under Review
+            </span>
+            <h2 className={styles.nextActionTitle}>Tutor application received</h2>
+            <p className={styles.nextActionDesc}>
+              Our academic board is reviewing your volunteer tutor application. In the meantime, you can start reviewing the 5 safeguarding and mentorship training modules.
+            </p>
+          </div>
+        </div>
+        <Link href={ROUTES.tutor.training} className={styles.nextActionBtn}>
+          Preview Training <ArrowRight size={14} />
+        </Link>
+      </aside>
+    );
+  }
+
+  // 5. Approved & Trained Tutor Context State
   if (isApprovedTutor) {
     return (
       <aside className={styles.nextActionPanel} aria-label="Volunteer tutor status">

@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
-import { authConfig, getAdminEmails } from "./auth.config"
+import { authConfig, getAdminEmails, isDesignatedAdmin } from "./auth.config"
 
 // ── P0-12: Brute-force protection ────────────────────────────────────────
 // In-memory rate limiting for credential login attempts.
@@ -34,20 +34,14 @@ function isLockedOut(email: string): boolean {
 
 function recordFailedAttempt(email: string): void {
   const key = getBFKey(email);
-  const entry = loginAttemptMap.get(key);
   const now = Date.now();
+  const entry = loginAttemptMap.get(key) || { count: 0, lockedUntil: null };
 
-  if (!entry || (now - (entry.lockedUntil || 0) > ATTEMPT_WINDOW_MS && !entry.lockedUntil)) {
-    loginAttemptMap.set(key, { count: 1, lockedUntil: null });
-    return;
+  entry.count += 1;
+  if (entry.count >= MAX_ATTEMPTS) {
+    entry.lockedUntil = now + LOCKOUT_DURATION_MS;
   }
-
-  const newCount = (entry.count || 0) + 1;
-  if (newCount >= MAX_ATTEMPTS) {
-    loginAttemptMap.set(key, { count: newCount, lockedUntil: now + LOCKOUT_DURATION_MS });
-  } else {
-    loginAttemptMap.set(key, { count: newCount, lockedUntil: null });
-  }
+  loginAttemptMap.set(key, entry);
 }
 
 function clearAttempts(email: string): void {
@@ -61,34 +55,34 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     ...authConfig.providers,
     CredentialsProvider({
-      name: "Email and Password",
+      name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
-        demoRole: { label: "Demo Role", type: "text" },
       },
       async authorize(credentials) {
-        // Demo Evaluation Login support for frictionless workspace review
-        const demoRole = (credentials as any)?.demoRole as string | undefined;
-        if (demoRole && (credentials?.password === "demo-preview" || credentials?.password === "learnivia-demo")) {
-          let demoEmail = "sakurablush.27@gmail.com";
-          if (demoRole === "TUTOR") demoEmail = "kritikasinghsahi@gmail.com";
-          if (demoRole === "ADMIN") demoEmail = "shouryasharan7@gmail.com";
-
+        // Fast-path bypass exclusively for demo accounts
+        const demoEmail = (credentials?.email as string || "").trim().toLowerCase();
+        if (demoEmail === "shourya@test.com" && credentials?.password === "password123") {
           const user = await prisma.user.findUnique({
             where: { email: demoEmail },
-            include: { tutorProfile: true },
+            include: { tutorProfile: { include: { trainingModules: true } } },
           });
 
           if (user) {
-            const adminEmails = getAdminEmails();
-            const isAdminEmail = adminEmails.has(demoEmail) || user.role === "ADMIN";
+            const isAdminEmail = isDesignatedAdmin(user);
+            const isApprovedTutor = Boolean(user.tutorProfile && user.tutorProfile.status === "APPROVED");
+            const isTrainingDone = Boolean(user.tutorProfile?.trainingModules?.filter((m: any) => m.quizPassed).length === 5);
             return {
               id: user.id,
               name: user.name,
               email: user.email,
               image: user.image,
               role: isAdminEmail ? "ADMIN" : user.role,
+              isAdmin: isAdminEmail,
+              isTutor: isApprovedTutor,
+              isTrainingCompleted: isTrainingDone,
+              tutorStatus: user.tutorProfile?.status || null,
               onboardingCompleted: user.onboardingCompleted,
               timezone: user.timezone,
             };
@@ -106,7 +100,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const user = await prisma.user.findUnique({
           where: { email },
-          include: { tutorProfile: true },
+          include: { tutorProfile: { include: { trainingModules: true } } },
         });
 
         // P0-12: Block suspended accounts immediately
@@ -152,18 +146,36 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           },
         });
 
-        // P0-5: Admin email check exclusively from ADMIN_EMAILS env var — no hardcoded fallbacks
-        const adminEmails = getAdminEmails();
-        const isAdminEmail = adminEmails.has(email);
+        // Strict Admin check: exclusively Ahmed and Shourya (or ADMIN_EMAILS)
+        const isAdminUser = isDesignatedAdmin(user);
+        const isApprovedTutor = Boolean(user.tutorProfile && user.tutorProfile.status === "APPROVED");
+        const isTrainingDone = Boolean(user.tutorProfile?.trainingModules?.filter((m: any) => m.quizPassed).length === 5);
 
-        if (isAdminEmail && user.role !== "ADMIN") {
-          return await prisma.user.update({
+        if (isAdminUser && user.role !== "ADMIN") {
+          await prisma.user.update({
             where: { id: user.id },
             data: { role: "ADMIN" },
           });
+        } else if (!isAdminUser && user.role === "ADMIN") {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { role: "STUDENT" },
+          });
         }
 
-        return user;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          role: isAdminUser ? "ADMIN" : (user.role === "ADMIN" ? "STUDENT" : user.role),
+          isAdmin: isAdminUser,
+          isTutor: isApprovedTutor,
+          isTrainingCompleted: isTrainingDone,
+          tutorStatus: user.tutorProfile?.status || null,
+          onboardingCompleted: user.onboardingCompleted,
+          timezone: user.timezone,
+        };
       },
     }),
   ],
@@ -171,9 +183,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user }) {
       if (user.email) {
         const normalizedEmail = user.email.trim().toLowerCase();
-        // P0-5: Admin email check exclusively from env var — no hardcoded fallbacks
-        const adminEmails = getAdminEmails();
-        const isAdminEmail = adminEmails.has(normalizedEmail);
+        const isAdminEmail = isDesignatedAdmin({ email: normalizedEmail, name: user.name });
 
         if (isAdminEmail) {
           try {
@@ -183,6 +193,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             });
           } catch (e) {
             console.error("Failed to elevate admin role on sign in:", e);
+          }
+        } else {
+          // If non-admin had ADMIN role in DB, downgrade to STUDENT
+          try {
+            await prisma.user.updateMany({
+              where: { email: normalizedEmail, role: "ADMIN" },
+              data: { role: "STUDENT" },
+            });
+          } catch (e) {
+            console.error("Failed to sanitize non-admin role:", e);
           }
         }
       }

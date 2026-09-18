@@ -39,8 +39,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--wa-crimson, #8B263E), var(--wa-ochre, #C28B2B), var(--wa-terra, #1E3A2F));
+  height: 1px;
+  background: var(--wa-border, #E6DFD5);
 }
 
 .deskHeaderContent {
@@ -148,7 +148,6 @@
 .nextActionPanel {
   background: var(--wa-white, #FFFFFF);
   border: 1px solid var(--wa-border, #E6DFD5);
-  border-left: 4px solid var(--wa-crimson, #8B263E);
   border-radius: var(--wa-radius-lg, 14px);
   padding: 1.35rem 1.65rem;
   display: flex;
@@ -160,7 +159,7 @@
 }
 
 .nextActionWarning {
-  border-left-color: var(--wa-ochre, #C28B2B);
+  border-color: rgba(194, 139, 43, 0.4);
   background: var(--wa-ochre-light, #FCF6E9);
 }
 

@@ -159,17 +159,6 @@
   position: relative;
 }
 
-.navItemActive::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 8px;
-  bottom: 8px;
-  width: 3.5px;
-  background: linear-gradient(180deg, #2D6A4F 0%, #C9922A 100%);
-  border-radius: 0 4px 4px 0;
-}
-
 .navItemActive:hover {
   background: linear-gradient(135deg, #D4EDDF 0%, #B5D9C5 100%);
   color: #235840;

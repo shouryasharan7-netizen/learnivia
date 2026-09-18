@@ -19,9 +19,14 @@ export default async function VolunteerTranscriptRedirectPage() {
 
   const profile = await prisma.tutorProfile.findUnique({
     where: { userId: session.user.id },
+    include: { trainingModules: true },
   });
 
   if (profile) {
+    const passed = (profile.trainingModules || []).filter((m: any) => m.quizPassed).length;
+    if (passed < 5) {
+      redirect("/tutor/training?locked=1");
+    }
     // Redirect directly to the tutor's verified transcript
     redirect(`/tutor/${profile.id}/transcript`);
   }
