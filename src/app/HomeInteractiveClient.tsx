@@ -9,7 +9,7 @@ import {
   ArrowRight,
   ChevronDown,
   ShieldCheck,
-  Sparkles,
+  Compass,
   Users,
   Award,
   Lock,
@@ -86,7 +86,7 @@ const GRADE_BANDS = [
       { name: "Algebra I & Geometry", grade: "Grades 9–10", icon: Calculator, href: "/find?grade=9-10&subject=Mathematics" },
       { name: "Chemistry & Biology", grade: "Grades 9–10", icon: FlaskConical, href: "/find?grade=9-10&subject=Science" },
       { name: "Rhetoric & Research Essays", grade: "Grades 9–10", icon: PenTool, href: "/find?grade=9-10&subject=Writing" },
-      { name: "Exam Strategy & Study Skills", grade: "Grades 9–10", icon: Sparkles, href: "/find?grade=9-10" },
+      { name: "Exam Strategy & Study Skills", grade: "Grades 9–10", icon: Compass, href: "/find?grade=9-10" },
     ],
   },
 ];
@@ -335,7 +335,7 @@ export default function HomeInteractiveClient({
 
             <div className={styles.pillarCard}>
               <div className={`${styles.pillarIconWrap} ${styles.iconGreen}`}>
-                <Sparkles size={24} />
+                <Award size={24} />
               </div>
               <h3 className={styles.pillarHeading}>100% Free Forever</h3>
               <p className={styles.pillarText}>

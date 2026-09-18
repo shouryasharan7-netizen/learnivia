@@ -11,7 +11,6 @@ import {
   Wrench,
   ArrowRight,
   X,
-  Sparkles,
   Calculator,
   Compass,
   FileText,
@@ -934,7 +933,7 @@ export default function StudyGuidesClient() {
               {/* 1. Overview */}
               <section className={styles.guideSection}>
                 <h3 className={styles.sectionHeading}>
-                  <Sparkles size={16} /> Concept Overview
+                  <BookOpen size={16} /> Concept Overview
                 </h3>
                 <p className={styles.sectionParagraph}>{activeGuideModal.content.overview}</p>
               </section>

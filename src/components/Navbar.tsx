@@ -16,7 +16,7 @@ import {
   ShieldAlert,
   LogOut,
   ChevronDown,
-  Sparkles,
+  HeartHandshake,
   Bell,
   Calendar,
   Sun,
@@ -332,47 +332,47 @@ export function Navbar() {
 
                   <div className={styles.userMenuList}>
                     <Link href="/dashboard" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <LayoutDashboard size={16} color="#2D6A4F" />
+                      <LayoutDashboard size={16} color="var(--wa-muted, #64748B)" />
                       <span>My Dashboard</span>
                     </Link>
                     <Link href="/sessions" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <Search size={16} color="#1E3A5F" />
+                      <Search size={16} color="var(--wa-muted, #64748B)" />
                       <span>Find a Session</span>
                     </Link>
                     <Link href="/community" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <MessageSquare size={16} color="#C1694F" />
+                      <MessageSquare size={16} color="var(--wa-muted, #64748B)" />
                       <span>Community Discussions</span>
                     </Link>
                     <Link href="/resources" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                      <BookOpen size={16} color="#2D6A4F" />
+                      <BookOpen size={16} color="var(--wa-muted, #64748B)" />
                       <span>{userRole === "TUTOR" || userRole === "ADMIN" ? "Tutoring Resources" : "Learning Resources"}</span>
                     </Link>
 
                     {userRole === "TUTOR" || userRole === "ADMIN" ? (
                       <>
-                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#2D6A4F", fontWeight: 600 }}>
-                          <CalendarPlus size={16} color="#C9922A" />
+                        <Link href="/tutor#schedule-session" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "var(--wa-crimson, #2563EB)", fontWeight: 600 }}>
+                          <CalendarPlus size={16} color="var(--wa-crimson, #2563EB)" />
                           <span>Host a Session</span>
                         </Link>
                         <Link href="/tutor" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                          <GraduationCap size={16} color="#2D6A4F" />
+                          <GraduationCap size={16} color="var(--wa-muted, #64748B)" />
                           <span>Tutor Dashboard</span>
                         </Link>
                         <Link href="/tutor/transcript" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)}>
-                          <Award size={16} color="#C9922A" />
+                          <Award size={16} color="var(--wa-muted, #64748B)" />
                           <span>Volunteer Transcript</span>
                         </Link>
                       </>
                     ) : (
-                      <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#2D6A4F", fontWeight: 600 }}>
-                        <Sparkles size={16} color="#2D6A4F" />
+                      <Link href="/apply" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "var(--wa-crimson, #2563EB)", fontWeight: 600 }}>
+                        <HeartHandshake size={16} color="var(--wa-crimson, #2563EB)" />
                         <span>Become a Volunteer Tutor</span>
                       </Link>
                     )}
 
                     {isAdmin && (
-                      <Link href="/admin" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "#92400E", fontWeight: 700, background: "#FFFBEB" }}>
-                        <ShieldAlert size={16} color="#D97706" />
+                      <Link href="/admin" className={styles.userMenuItem} role="menuitem" onClick={() => setActivePopover(null)} style={{ color: "var(--wa-warning, #D97706)", fontWeight: 700, background: "var(--wa-warning-bg, #FFFBEB)" }}>
+                        <ShieldAlert size={16} color="var(--wa-warning, #D97706)" />
                         <span>Master Admin Center</span>
                       </Link>
                     )}

@@ -21,7 +21,7 @@ import {
   Send,
   CheckCircle2,
   Heart,
-  Sparkles,
+  Bookmark,
   Calculator,
   Clock,
   Compass,
@@ -572,7 +572,7 @@ export default function CommunityClient({
                       className={styles.quickTag}
                       onClick={() => setInputText((prev) => (prev ? `${prev} [Study Tip]` : "[Study Tip] "))}
                     >
-                      <Sparkles size={12} />
+                      <Bookmark size={12} />
                       <span>Study Tip</span>
                     </button>
                     <button
@@ -749,7 +749,7 @@ export default function CommunityClient({
                           onClick={() => handleReaction(msg.id, "fire")}
                           title="Inspiring"
                         >
-                          <Sparkles size={13} color="#2563EB" aria-hidden="true" />
+                          <Award size={13} color="var(--wa-crimson, #2563EB)" aria-hidden="true" />
                           <span className={styles.reactionCount}>Inspiring {msg.reactions.fire > 0 ? `(${msg.reactions.fire})` : ""}</span>
                         </button>
                       </div>

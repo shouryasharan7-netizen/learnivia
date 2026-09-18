@@ -9,7 +9,7 @@
   min-height: calc(100vh - 72px);
   display: flex;
   align-items: stretch;
-  background-color: var(--wa-paper, #FAF7F2);
+  background-color: var(--wa-paper, #F8FAFC);
 }
 
 /* ── Left decorative panel ── */
@@ -164,7 +164,7 @@
   justify-content: center;
   padding: 3.5rem 2.5rem;
   overflow-y: auto;
-  background: var(--wa-paper, #FAF7F2);
+  background: var(--wa-paper, #F8FAFC);
 }
 
 .formContainer {
@@ -176,7 +176,7 @@
   background: var(--wa-white, #FFFFFF);
   padding: 3rem 2.75rem;
   border-radius: var(--wa-radius-xl, 18px);
-  border: 1px solid var(--wa-border, #E6DFD5);
+  border: 1px solid var(--wa-border, #E2E8F0);
   box-shadow: var(--wa-shadow-md);
 }
 
@@ -192,7 +192,7 @@
   font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.35rem;
   font-weight: 700;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #0F172A);
   letter-spacing: -0.02em;
 }
 

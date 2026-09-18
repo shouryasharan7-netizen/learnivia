@@ -16,7 +16,7 @@ import { ActivityTimeline, TimelineItem } from "./ActivityTimeline";
 import { CollapsibleResources } from "./CollapsibleResources";
 import ChildProfileSection from "./ChildProfileSection";
 import EmailVerificationBanner from "@/components/EmailVerificationBanner";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { GraduationCap, ArrowRight } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -301,7 +301,7 @@ export default async function StudentDashboard() {
                         boxShadow: "0 4px 12px rgba(37, 99, 235, 0.25)",
                       }}
                     >
-                      <Sparkles size={22} />
+                      <GraduationCap size={22} />
                     </div>
                     <div>
                       <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1E3A8A", fontFamily: "var(--font-serif)" }}>

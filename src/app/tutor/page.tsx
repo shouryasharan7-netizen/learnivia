@@ -26,7 +26,6 @@ import {
   ShieldCheck,
   AlertTriangle,
   X,
-  Sparkles,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -126,7 +125,7 @@ export default async function TutorDashboard() {
         <div className={styles.container}>
           <div className={styles.authNoticeCard}>
             <div className={styles.authNoticeIcon}>
-              <Sparkles size={24} aria-hidden="true" />
+              <GraduationCap size={24} aria-hidden="true" />
             </div>
             <h1 className={styles.title} style={{ marginBottom: "0.5rem" }}>
               Become a Volunteer Tutor

@@ -15,7 +15,7 @@ import {
   Users,
   BookOpen,
   FolderOpen,
-  Sparkles,
+  HeartHandshake,
   CalendarPlus,
   ChevronDown,
   PanelLeftClose,
@@ -76,7 +76,7 @@ export function SidebarNav() {
     {
       href: "/apply",
       label: "Become a Tutor",
-      icon: <Sparkles size={19} />,
+      icon: <HeartHandshake size={19} />,
       badge: "Apply",
       highlight: true,
     },
@@ -232,7 +232,7 @@ export function SidebarNav() {
             ) : (
               <div className={styles.studentApplyCard}>
                 <div className={styles.applyCardIcon}>
-                  <Sparkles size={18} color="#2D6A4F" />
+                  <HeartHandshake size={18} color="var(--wa-crimson, #2563EB)" />
                 </div>
                 <div className={styles.applyCardTitle}>Want to Teach?</div>
                 <p className={styles.applyCardText}>Share your knowledge and earn verified service hours.</p>

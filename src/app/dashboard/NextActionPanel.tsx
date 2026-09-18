@@ -77,29 +77,6 @@ export function NextActionPanel({
     );
   }
 
-  if (emailUnverified) {
-    return (
-      <aside className={`${styles.nextActionPanel} ${styles.nextActionWarning}`} aria-label="Action required">
-        <div className={styles.nextActionContent}>
-          <div className={`${styles.nextActionIcon} ${styles.nextActionIconWarning}`}>
-            <Clock size={20} />
-          </div>
-          <div className={styles.nextActionBody}>
-            <span className={`${styles.nextActionTag} ${styles.nextActionTagWarning}`}>
-              Email Verification
-            </span>
-            <h2 className={styles.nextActionTitle}>Please verify your email address</h2>
-            <p className={styles.nextActionDesc}>
-              Confirming your email address ensures you receive session notifications, Zoom room links, and calendar invites.
-            </p>
-          </div>
-        </div>
-        <Link href="/verify-email" className={styles.nextActionBtn}>
-          Verify Account <ArrowRight size={14} />
-        </Link>
-      </aside>
-    );
-  }
 
   if (isNewLearner) {
     return (

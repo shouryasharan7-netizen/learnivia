@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Calendar, Video, ArrowRight, Copy, Check, Sparkles, BookOpen } from "lucide-react";
+import { Calendar, Video, ArrowRight, Copy, Check, Compass, BookOpen } from "lucide-react";
 import styles from "./dashboard.module.css";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -91,7 +91,7 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
 
           <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem", flexWrap: "wrap", justifyContent: "center" }}>
             <Link href={ROUTES.find} className={styles.joinBtn}>
-              <Sparkles size={14} /> Find a Peer Tutor
+              <Compass size={14} /> Find a Peer Tutor
             </Link>
             <Link href={ROUTES.sessions} className={styles.secondaryBtn}>
               Browse Session Library

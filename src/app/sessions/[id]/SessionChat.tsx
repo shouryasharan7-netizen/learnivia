@@ -8,7 +8,6 @@ import {
   FileText,
   ExternalLink,
   Plus,
-  Sparkles,
   CheckCircle2,
   RefreshCw,
   FolderOpen,

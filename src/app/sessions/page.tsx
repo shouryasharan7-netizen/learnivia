@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 import SessionFilterBar from "./SessionFilterBar";
-import { CalendarPlus, GraduationCap, ArrowRight, Video, Users, Sparkles, CalendarCheck, Clock, Compass, ExternalLink } from "lucide-react";
+import { CalendarPlus, GraduationCap, ArrowRight, Video, Users, CalendarCheck, Clock, Compass, ExternalLink } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 30; // ISR: 30s cache
@@ -533,8 +533,8 @@ export default async function SessionsPage({ searchParams }: Props) {
         {/* Dynamic Student Matching Notification Banner */}
         {isAutoMatched && (
           <div style={{
-            background: "#EAF3ED",
-            border: "1px solid #B5D9C5",
+            background: "var(--wa-white, #FFFFFF)",
+            border: "1px solid var(--wa-border, #E2E8F0)",
             borderRadius: 12,
             padding: "0.85rem 1.25rem",
             marginBottom: "1.5rem",
@@ -543,9 +543,10 @@ export default async function SessionsPage({ searchParams }: Props) {
             alignItems: "center",
             flexWrap: "wrap",
             gap: "0.75rem",
+            boxShadow: "var(--wa-shadow-xs)",
           }}>
-            <div style={{ fontSize: "0.875rem", color: "#235840", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Sparkles size={16} color="#2D6A4F" />
+            <div style={{ fontSize: "0.875rem", color: "var(--wa-ink, #0F172A)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <Compass size={16} color="var(--wa-crimson, #2563EB)" />
               <span>
                 Matching sessions tailored for your enrolled profile:{" "}
                 <strong>{activeGrade || "Your Grade"}</strong>
@@ -555,7 +556,7 @@ export default async function SessionsPage({ searchParams }: Props) {
             </div>
             <Link
               href={`/sessions?allGrades=true${activeSubject !== "All" ? `&subject=${encodeURIComponent(activeSubject)}` : ""}`}
-              style={{ fontSize: "0.8125rem", color: "#2D6A4F", fontWeight: 700, textDecoration: "underline" }}
+              style={{ fontSize: "0.8125rem", color: "var(--wa-crimson, #2563EB)", fontWeight: 700, textDecoration: "underline" }}
             >
               Show All Grades &amp; Curricula
             </Link>

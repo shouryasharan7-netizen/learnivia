@@ -7,34 +7,20 @@ import type { Transition } from "motion/react";
 export const springs = {
   // Snappy: For micro-interactions, buttons, active pill tabs, toggles
   snappy: {
-    type: "spring",
-    stiffness: 450,
-    damping: 32,
-    mass: 0.8,
+    duration: 0.15,
+    ease: [0.16, 1, 0.3, 1],
   } as Transition,
 
   // Smooth: For cards, drawers, sheet expansions, modals
   smooth: {
-    type: "spring",
-    stiffness: 280,
-    damping: 28,
-    mass: 1,
+    duration: 0.22,
+    ease: [0.16, 1, 0.3, 1],
   } as Transition,
 
-  // Bouncy: For celebration moments, checkmarks, badges, delight pings
-  bouncy: {
-    type: "spring",
-    stiffness: 380,
-    damping: 18,
-    mass: 0.8,
-  } as Transition,
-
-  // Gentle: For floating hero cards, background glows, ambient movement
+  // Gentle: For opacity reveals and smooth fades
   gentle: {
-    type: "spring",
-    stiffness: 160,
-    damping: 24,
-    mass: 1.2,
+    duration: 0.28,
+    ease: [0.16, 1, 0.3, 1],
   } as Transition,
 };
 

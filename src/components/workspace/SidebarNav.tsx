@@ -17,7 +17,7 @@ import {
   Users,
   FileCheck,
   GraduationCap,
-  Sparkles,
+  HeartHandshake,
   AlertTriangle,
   FolderOpen,
   Settings,
@@ -269,7 +269,7 @@ export function SidebarNav({
                 <NavItem href={ROUTES.tutor.home} label="Tutor Workspace" icon={GraduationCap} active={isLinkActive(ROUTES.tutor.home)} />
               )}
               {!isTutor && (
-                <NavItem href={ROUTES.tutor.apply} label="Volunteer as Tutor" icon={Sparkles} active={isLinkActive(ROUTES.tutor.apply)} />
+                <NavItem href={ROUTES.tutor.apply} label="Volunteer as Tutor" icon={HeartHandshake} active={isLinkActive(ROUTES.tutor.apply)} />
               )}
               <NavItem href={ROUTES.safety} label="Safeguarding & Safety" icon={ShieldCheck} active={isLinkActive(ROUTES.safety)} />
             </>

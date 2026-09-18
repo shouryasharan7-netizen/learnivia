@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Check, AlertCircle, Loader2, Sparkles, X } from "lucide-react";
+import { Mail, Check, AlertCircle, Loader2, ShieldCheck, X } from "lucide-react";
 
 export default function EmailVerificationBanner({ email }: { email?: string | null }) {
   const [loading, setLoading] = useState(false);
@@ -173,7 +173,7 @@ export default function EmailVerificationBanner({ email }: { email?: string | nu
                 </>
               ) : (
                 <>
-                  <Sparkles size={14} />
+                  <ShieldCheck size={14} />
                   Verify Email Now
                 </>
               )}

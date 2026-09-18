@@ -14,7 +14,6 @@ import {
   HeartHandshake,
   Smile,
   Compass,
-  Sparkles,
   Lock,
 } from "lucide-react";
 import styles from "./page.module.css";
@@ -124,7 +123,7 @@ export default function OnboardingClient() {
         {/* Modern Welcome Header */}
         <header className={styles.folioHeader}>
           <div className={styles.folioBadge}>
-            <Sparkles size={12} />
+            <Compass size={12} />
             <span>Welcome to Learnivia • Let&apos;s get you set up</span>
           </div>
           <h1 className={styles.folioTitle}>
@@ -420,7 +419,7 @@ export default function OnboardingClient() {
               </div>
 
               <div className={styles.fellowshipNote}>
-                <Sparkles size={18} style={{ flexShrink: 0 }} />
+                <HeartHandshake size={18} style={{ flexShrink: 0 }} />
                 <span>
                   <strong>Our Promise:</strong> Whether you are working through quadratic equations or drafting an essay, you learn at your own pace with encouraging, patient student mentors.
                 </span>
