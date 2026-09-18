@@ -3,34 +3,27 @@ import { BookOpen, Wrench, FileCheck, ShieldCheck, ArrowRight } from "lucide-rea
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Tutoring Resources — Learnivia",
-  description: "Curated guides, session tools, and resources for tutors and students on Learnivia.",
+  title: "Learning Resources & Study Guides — Learnivia",
+  description: "Curated study guides, formula cheat sheets, and practice tools for students on Learnivia.",
 };
 
 const RESOURCE_SECTIONS = [
   {
-    title: "Study Guides & Subject Summaries",
-    description: "Curated K–10 visual concept breakdowns across Mathematics, Sciences, Reading & Writing, and Social Studies.",
+    title: "Study Guides & Formula Sheets",
+    description: "Curated K–10 visual concept breakdowns, downloadable formula blueprints, and step-by-step problem guides across Math, Science, and English.",
     href: "/resources/study-guides",
     icon: BookOpen,
-    tag: "Concept Guides",
+    tag: "Guides & Formulas",
   },
   {
-    title: "Interactive Study & Tutor Tools",
-    description: "Live focus timers, whiteboard scratchpads, equation reference guides, and collaborative session prompts.",
+    title: "Interactive Study & Practice Tools",
+    description: "Live focus timers, whiteboard scratchpads, equation reference guides, and collaborative practice prompts.",
     href: "/resources/tools",
     icon: Wrench,
-    tag: "Active Tools",
+    tag: "Study Tools",
   },
   {
-    title: "Formula Sheets & Quick Cheat Sheets",
-    description: "High-yield downloadable formula blueprints: Algebra & Calculus, Periodic Table, PEEL Essay Planning, and Physics Kinematics.",
-    href: "/resources/study-guides#formula-sheets",
-    icon: FileCheck,
-    tag: "Quick Reference",
-  },
-  {
-    title: "Safeguarding & Learning Standards",
+    title: "Safeguarding & Student Safety",
     description: "Classroom safety guidelines, video session etiquette, and student protection protocols.",
     href: "/safety",
     icon: ShieldCheck,
@@ -75,16 +68,16 @@ const DOWNLOADABLE_TOOLKITS = [
 
 const QUICK_TIPS = [
   {
-    title: "The 80/20 Talking Rule",
-    desc: "Encourage the student to talk, explain their reasoning, and write out steps for 80% of the session time.",
+    title: "The Active Recall Method",
+    desc: "Explain what you just learned out loud without looking at notes. Teaching a concept back is the fastest way to cement it in your memory.",
   },
   {
-    title: "Scaffolded Problem Solving",
-    desc: "Break complex multi-step calculus or chemistry problems into 2-3 manageable sub-goals before solving.",
+    title: "Break Down Big Problems",
+    desc: "Tackle complex math and science equations in 2–3 smaller steps. Identify what is known, what is needed, and solve piece by piece.",
   },
   {
-    title: "Praise the Process",
-    desc: "Reinforce problem-solving effort, consistency, and curiosity rather than just getting the right answer quickly.",
+    title: "Focus on Understanding",
+    desc: "Prioritize understanding why an answer works over just finishing quickly. Working through challenging steps is how real learning happens.",
   },
 ];
 
@@ -93,10 +86,10 @@ export default function ResourcesPage() {
     <main className={styles.main}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <span className={styles.categoryBadge}>Tutor & Learner Hub</span>
-          <h1 className={styles.title}>Tutoring Resources</h1>
+          <span className={styles.categoryBadge}>Student Study Hub</span>
+          <h1 className={styles.title}>Study Guides &amp; Learning Tools</h1>
           <p className={styles.subtitle}>
-            Everything you need to plan engaging sessions, master core concepts, and deliver high-impact peer learning.
+            Free study guides, formula cheat sheets, interactive practice tools, and learning strategies to help you succeed in your classes.
           </p>
         </div>
 

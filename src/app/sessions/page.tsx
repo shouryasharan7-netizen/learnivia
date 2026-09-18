@@ -5,14 +5,14 @@ import { auth } from "@/auth";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 import SessionFilterBar from "./SessionFilterBar";
-import { CalendarPlus, GraduationCap, ArrowRight, Video, Users, Sparkles } from "lucide-react";
+import { CalendarPlus, GraduationCap, ArrowRight, Video, Users, Sparkles, CalendarCheck, Clock, Compass, ExternalLink } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 30; // ISR: 30s cache
 
 export const metadata = {
-  title: "Find a Session — Learnivia",
-  description: "Browse verified peer tutoring sessions and small-group workshops filtered to your grade, age, and curriculum.",
+  title: "My Schedule & Study Sessions — Learnivia",
+  description: "Manage your booked 1-on-1 peer tutoring sessions, join live study rooms, and explore upcoming group workshops.",
 };
 
 function getInitials(name: string) {
@@ -125,6 +125,40 @@ export default async function SessionsPage({ searchParams }: Props) {
   ]);
 
   const isTutor = Boolean(dbUser?.tutorProfile && dbUser.tutorProfile.status === "APPROVED");
+
+  // 1b. Fetch user's bookings if signed in
+  let userBookings: any[] = [];
+  if (session?.user?.id) {
+    try {
+      userBookings = await prisma.booking.findMany({
+        where: {
+          OR: [
+            { studentId: session.user.id },
+            ...(isTutor && dbUser?.tutorProfile?.id ? [{ tutorId: dbUser.tutorProfile.id }] : []),
+          ],
+        },
+        include: {
+          student: { select: { id: true, name: true, image: true, grade: true } },
+          tutor: {
+            include: {
+              user: { select: { id: true, name: true, image: true } },
+            },
+          },
+        },
+        orderBy: { startTime: "asc" },
+      });
+    } catch (err) {
+      console.warn("Could not fetch user bookings:", err);
+    }
+  }
+
+  const now = new Date();
+  const upcomingUserBookings = userBookings.filter(
+    (b) => b.status === "CONFIRMED" && new Date(b.endTime) >= now
+  );
+  const completedUserBookings = userBookings.filter(
+    (b) => b.status === "COMPLETED" || (b.status === "CONFIRMED" && new Date(b.endTime) < now)
+  );
 
   // 2. Determine active matching filters
   const isAllGradesExplicit = allGrades === "true";
@@ -263,35 +297,38 @@ export default async function SessionsPage({ searchParams }: Props) {
         {/* Page header */}
         <div className={styles.pageHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap" }}>
           <div>
-            <h1 className={styles.pageTitle}>Find a Session</h1>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#EFF6FF", color: "#2563EB", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+              <CalendarCheck size={13} />
+              <span>Personal Study Desk</span>
+            </div>
+            <h1 className={styles.pageTitle}>My Schedule &amp; Study Sessions</h1>
             <p className={styles.pageSubtitle}>
-              Small-group workshops and 1-on-1 tutoring sessions run by verified volunteer tutors.
+              Manage your scheduled 1-on-1 peer tutoring appointments, enter live video study rooms, and explore upcoming group workshops.
             </p>
           </div>
-          <div>
-            {isTutor ? (
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+            <Link
+              href="/find"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "var(--wa-forest, #2563EB)",
+                color: "#FFFFFF",
+                padding: "0.65rem 1.25rem",
+                borderRadius: "12px",
+                fontSize: "0.875rem",
+                fontWeight: 700,
+                textDecoration: "none",
+                boxShadow: "0 3px 10px rgba(37, 99, 235, 0.25)",
+              }}
+            >
+              <Compass size={16} />
+              <span>Find a Peer Tutor</span>
+            </Link>
+            {isTutor && (
               <Link
                 href="/tutor#schedule-session"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  background: "#2D6A4F",
-                  color: "#FFFFFF",
-                  padding: "0.65rem 1.25rem",
-                  borderRadius: "12px",
-                  fontSize: "0.875rem",
-                  fontWeight: 700,
-                  textDecoration: "none",
-                  boxShadow: "0 3px 10px rgba(45, 106, 79, 0.28)",
-                }}
-              >
-                <CalendarPlus size={16} />
-                <span>Host a New Session</span>
-              </Link>
-            ) : (
-              <Link
-                href="/apply"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -306,12 +343,183 @@ export default async function SessionsPage({ searchParams }: Props) {
                   textDecoration: "none",
                 }}
               >
-                <GraduationCap size={16} />
-                <span>Become a Tutor</span>
+                <CalendarPlus size={16} />
+                <span>Host a Workshop</span>
               </Link>
             )}
           </div>
         </div>
+
+        {/* SECTION 1: Personal Booked 1-on-1 Sessions */}
+        <section aria-labelledby="booked-sessions-heading" style={{ marginBottom: "2.5rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <CalendarCheck size={18} color="var(--wa-forest, #2563EB)" />
+              <h2 id="booked-sessions-heading" style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--wa-ink, #0F172A)", margin: 0, fontFamily: "var(--font-serif)" }}>
+                My Scheduled 1-on-1 Sessions
+              </h2>
+            </div>
+            {upcomingUserBookings.length > 0 && (
+              <span style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #64748B)", fontWeight: 600 }}>
+                {upcomingUserBookings.length} {upcomingUserBookings.length === 1 ? "session" : "sessions"} booked
+              </span>
+            )}
+          </div>
+
+          {!session?.user ? (
+            <div style={{ background: "var(--wa-white, #FFFFFF)", border: "1px solid var(--wa-border, #E2E8F0)", borderRadius: "14px", padding: "2rem", textAlign: "center" }}>
+              <p style={{ fontSize: "1rem", color: "var(--wa-ink, #0F172A)", fontWeight: 600, margin: 0 }}>
+                Sign in to view your scheduled 1-on-1 sessions and access live video rooms.
+              </p>
+              <div style={{ marginTop: "1rem", display: "flex", gap: "0.75rem", justifyContent: "center" }}>
+                <Link
+                  href="/signin?callbackUrl=/sessions"
+                  style={{ background: "var(--wa-forest, #2563EB)", color: "#FFFFFF", padding: "0.55rem 1.25rem", borderRadius: "8px", fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}
+                >
+                  Sign In to View Schedule
+                </Link>
+                <Link
+                  href="/find"
+                  style={{ background: "var(--wa-paper, #F8FAFC)", border: "1px solid var(--wa-border, #CBD5E1)", color: "var(--wa-ink, #1E293B)", padding: "0.55rem 1.25rem", borderRadius: "8px", fontWeight: 600, fontSize: "0.875rem", textDecoration: "none" }}
+                >
+                  Browse Tutors
+                </Link>
+              </div>
+            </div>
+          ) : upcomingUserBookings.length === 0 ? (
+            <div style={{ background: "var(--wa-white, #FFFFFF)", border: "1px solid var(--wa-border, #E2E8F0)", borderRadius: "14px", padding: "2.25rem 1.5rem", textAlign: "center" }}>
+              <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#EFF6FF", color: "#2563EB", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: "0.75rem" }}>
+                <CalendarCheck size={24} />
+              </div>
+              <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--wa-ink, #0F172A)", margin: "0 0 0.35rem" }}>
+                No upcoming 1-on-1 sessions scheduled
+              </h3>
+              <p style={{ fontSize: "0.875rem", color: "var(--wa-muted, #64748B)", maxWidth: "480px", margin: "0 auto 1.25rem", lineHeight: 1.5 }}>
+                Connect with a volunteer peer tutor in Mathematics, Sciences, or Reading &amp; Writing for free personalized 1-on-1 guidance.
+              </p>
+              <Link
+                href="/find"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  background: "var(--wa-forest, #2563EB)",
+                  color: "#FFFFFF",
+                  padding: "0.6rem 1.35rem",
+                  borderRadius: "10px",
+                  fontWeight: 700,
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
+                  boxShadow: "0 2px 8px rgba(37, 99, 235, 0.2)",
+                }}
+              >
+                <span>Find &amp; Book a Peer Tutor</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "1rem" }}>
+              {upcomingUserBookings.map((b: any) => {
+                const partnerName = isTutor && b.student?.name ? b.student.name : b.tutor?.user?.name || "Peer Tutor";
+                const isLive = new Date() >= new Date(b.startTime) && new Date() <= new Date(b.endTime);
+
+                return (
+                  <div
+                    key={b.id}
+                    style={{
+                      background: "var(--wa-white, #FFFFFF)",
+                      border: isLive ? "2px solid #2563EB" : "1px solid var(--wa-border, #E2E8F0)",
+                      borderRadius: "14px",
+                      padding: "1.25rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.75rem",
+                      boxShadow: "var(--wa-shadow-sm)",
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
+                      <span style={{ fontSize: "0.75rem", fontWeight: 700, background: "#EFF6FF", color: "#2563EB", padding: "0.2rem 0.55rem", borderRadius: "6px" }}>
+                        {b.subject}
+                      </span>
+                      {isLive ? (
+                        <span style={{ fontSize: "0.7rem", fontWeight: 700, background: "#DC2626", color: "#FFFFFF", padding: "0.2rem 0.5rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#FFFFFF", display: "inline-block" }} />
+                          LIVE NOW
+                        </span>
+                      ) : (
+                        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "#16A34A", background: "#F0FDF4", padding: "0.2rem 0.55rem", borderRadius: "6px" }}>
+                          Confirmed
+                        </span>
+                      )}
+                    </div>
+
+                    <div>
+                      <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--wa-ink, #0F172A)", margin: 0 }}>
+                        {b.topic || `${b.subject} Practice`}
+                      </h3>
+                      <p style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #64748B)", margin: "0.25rem 0 0" }}>
+                        {isTutor ? `Student: ${partnerName}` : `Tutor: ${partnerName}`}
+                      </p>
+                    </div>
+
+                    <div style={{ fontSize: "0.8125rem", color: "var(--wa-text, #1E293B)", display: "flex", alignItems: "center", gap: "0.4rem", background: "var(--wa-paper, #F8FAFC)", padding: "0.5rem 0.75rem", borderRadius: "8px" }}>
+                      <Clock size={14} color="var(--wa-muted, #64748B)" />
+                      <FormattedDateTime date={b.startTime} />
+                    </div>
+
+                    <div style={{ display: "flex", gap: "0.5rem", marginTop: "auto", paddingTop: "0.5rem", borderTop: "1px solid var(--wa-border, #E2E8F0)" }}>
+                      <Link
+                        href={`/sessions/${b.id}`}
+                        style={{
+                          flex: 1,
+                          textAlign: "center",
+                          background: "var(--wa-forest, #2563EB)",
+                          color: "#FFFFFF",
+                          padding: "0.5rem 0.75rem",
+                          borderRadius: "8px",
+                          fontSize: "0.8125rem",
+                          fontWeight: 700,
+                          textDecoration: "none",
+                        }}
+                      >
+                        Enter Study Room
+                      </Link>
+                      {b.zoomLink && (
+                        <a
+                          href={b.zoomLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.25rem",
+                            background: "var(--wa-paper, #F8FAFC)",
+                            border: "1px solid var(--wa-border, #CBD5E1)",
+                            color: "var(--wa-ink, #1E293B)",
+                            padding: "0.5rem 0.75rem",
+                            borderRadius: "8px",
+                            fontSize: "0.8125rem",
+                            fontWeight: 600,
+                            textDecoration: "none",
+                          }}
+                        >
+                          <span>Video</span>
+                          <ExternalLink size={12} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {completedUserBookings.length > 0 && (
+            <div style={{ marginTop: "1rem", fontSize: "0.8125rem", color: "var(--wa-muted, #64748B)", textAlign: "right" }}>
+              <span>You have completed {completedUserBookings.length} verified sessions. Check <Link href="/dashboard" style={{ color: "var(--wa-forest, #2563EB)", fontWeight: 600, textDecoration: "underline" }}>My Study Progress</Link> for detailed instructional hours.</span>
+            </div>
+          )}
+        </section>
 
         {/* Dynamic Student Matching Notification Banner */}
         {isAutoMatched && (
@@ -487,80 +695,55 @@ export default async function SessionsPage({ searchParams }: Props) {
               </section>
             )}
 
-            {/* 2. 1-on-1 Tutors Section */}
-            {showTutors && tutors.length > 0 && (
-              <section aria-label="1-on-1 Verified Peer Tutors">
-                <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <Users size={18} color="var(--wa-forest)" />
-                    <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--wa-ink)", margin: 0, fontFamily: "var(--font-serif)" }}>
-                      1-on-1 Tutors Available ({tutors.length})
-                    </h2>
+            {/* 2. 1-on-1 Tutor Directory Spotlight */}
+            <section aria-label="1-on-1 Verified Peer Tutors Spotlight" style={{ background: "var(--wa-white, #FFFFFF)", border: "1px solid var(--wa-border, #E2E8F0)", borderRadius: 14, padding: "2rem", boxShadow: "var(--wa-shadow-sm)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.25rem" }}>
+                <div style={{ maxWidth: "600px" }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#EFF6FF", color: "#2563EB", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+                    <Compass size={13} />
+                    <span>Tutor Directory</span>
                   </div>
-                  <span style={{ fontSize: "0.8125rem", color: "#7A7169" }}>
-                    Book an individual session matching your schedule directly
-                  </span>
+                  <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--wa-ink, #0F172A)", margin: "0 0 0.4rem", fontFamily: "var(--font-serif)" }}>
+                    Looking for 1-on-1 Peer Tutoring?
+                  </h2>
+                  <p style={{ fontSize: "0.9rem", color: "var(--wa-muted, #64748B)", margin: 0, lineHeight: 1.5 }}>
+                    Search our full directory of certified high school and university volunteer tutors. Filter by subject, grade level, curriculum, and schedule a private 1-on-1 session at no cost.
+                  </p>
+                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
+                    <Link href="/find?subject=Mathematics" style={{ fontSize: "0.75rem", fontWeight: 600, background: "#F1F5F9", color: "#334155", padding: "0.25rem 0.65rem", borderRadius: "6px", textDecoration: "none" }}>
+                      Math Tutors
+                    </Link>
+                    <Link href="/find?subject=Science" style={{ fontSize: "0.75rem", fontWeight: 600, background: "#F1F5F9", color: "#334155", padding: "0.25rem 0.65rem", borderRadius: "6px", textDecoration: "none" }}>
+                      Science Tutors
+                    </Link>
+                    <Link href="/find?subject=Reading+%26+Writing" style={{ fontSize: "0.75rem", fontWeight: 600, background: "#F1F5F9", color: "#334155", padding: "0.25rem 0.65rem", borderRadius: "6px", textDecoration: "none" }}>
+                      Reading &amp; Writing Tutors
+                    </Link>
+                  </div>
                 </div>
 
-                <div className={styles.sessionsGrid}>
-                  {tutors.map((t) => {
-                    const name = t.user.name || "Tutor";
-                    const subjectName = t.subjects[0]?.name || activeSubject;
-                    const nextSlot = t.availabilities[0];
-                    const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-                    const dayLabel = nextSlot ? days[nextSlot.dayOfWeek] : null;
-                    const tutorCurriculum = t.curricula || t.user?.curriculum;
-
-                    return (
-                      <Link key={t.id} href={`/tutor/${t.id}`} className={styles.sessionCard}>
-                        <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
-                          <span style={{ fontSize: "0.75rem", fontWeight: 700, background: "#EAF3ED", color: "#235840", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
-                            {subjectName}
-                          </span>
-                          {tutorCurriculum && (
-                            <span style={{ fontSize: "0.75rem", fontWeight: 600, background: "#FDF3E3", color: "#8B5E10", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
-                              {tutorCurriculum}
-                            </span>
-                          )}
-                          {t.gradeLevels[0] && (
-                            <span style={{ fontSize: "0.75rem", background: "#F3EFE8", color: "#3D3831", padding: "0.2rem 0.55rem", borderRadius: 6 }}>
-                              {t.gradeLevels[0].name}
-                            </span>
-                          )}
-                        </div>
-
-                        <h3 className={styles.cardTitle}>{subjectName} with {name}</h3>
-                        {dayLabel ? (
-                          <p className={styles.cardTime}>Available {dayLabel}s at {nextSlot.startTime}</p>
-                        ) : (
-                          <p className={styles.cardTime} style={{ color: "#64748B" }}>Verified Volunteer Tutor</p>
-                        )}
-                        <p className={styles.cardDesc}>
-                          {t.bio ? t.bio.slice(0, 120) + "…" : `Book a free 1-on-1 session with ${name}.`}
-                        </p>
-                        <div className={styles.cardFooter}>
-                          <div className={styles.cardTutor}>
-                            <div
-                              className={styles.tutorAvatar}
-                              style={{ background: getAvatarColor(name) }}
-                              aria-hidden="true"
-                            >
-                              {getInitials(name)}
-                            </div>
-                            <span>{name}</span>
-                          </div>
-                          <div className={styles.cardAttendees}>
-                            <span style={{ fontSize: "0.84375rem", fontWeight: 700, color: "#2D6A4F", display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>
-                              Book 1-on-1 <ArrowRight size={13} />
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </section>
-            )}
+                <Link
+                  href="/find"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    background: "var(--wa-forest, #2563EB)",
+                    color: "#FFFFFF",
+                    padding: "0.75rem 1.5rem",
+                    borderRadius: "10px",
+                    fontWeight: 700,
+                    fontSize: "0.9375rem",
+                    textDecoration: "none",
+                    boxShadow: "0 3px 12px rgba(37, 99, 235, 0.25)",
+                    flexShrink: 0,
+                  }}
+                >
+                  <span>Explore Tutor Directory</span>
+                  <ArrowRight size={15} />
+                </Link>
+              </div>
+            </section>
           </div>
         )}
       </div>

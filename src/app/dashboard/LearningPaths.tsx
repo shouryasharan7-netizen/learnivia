@@ -10,7 +10,7 @@ export function LearningPaths() {
   const paths = [
     {
       id: "math",
-      title: "Mathematics & Logic",
+      title: "Math & Problem Solving",
       desc: "Arithmetic, algebra, geometry, trigonometry, and calculus prep.",
       href: `${ROUTES.find}?subject=Mathematics`,
       icon: Calculator,
@@ -18,24 +18,24 @@ export function LearningPaths() {
     },
     {
       id: "science",
-      title: "Natural Sciences",
-      desc: "Biology, chemistry, physics, and scientific method.",
+      title: "Science & Nature",
+      desc: "Biology, chemistry, physics, and scientific thinking.",
       href: `${ROUTES.find}?subject=Science`,
       icon: Atom,
       badge: "Sciences",
     },
     {
       id: "humanities",
-      title: "Reading & Humanities",
-      desc: "Reading comprehension, essay structure, and literary analysis.",
+      title: "Reading & Writing",
+      desc: "Reading comprehension, essay structure, and clear writing.",
       href: `${ROUTES.find}?subject=Reading+%26+Writing`,
       icon: BookOpen,
       badge: "Language",
     },
     {
       id: "dialogues",
-      title: "Peer Dialogues",
-      desc: "Moderated discussions, current topics, and roundtable ideas.",
+      title: "Student Discussions",
+      desc: "Ask questions, share study routines, and connect with peers.",
       href: ROUTES.community,
       icon: MessageSquare,
       badge: "Community",
@@ -47,10 +47,10 @@ export function LearningPaths() {
       <div className={styles.sectionHeader}>
         <h2 id="learning-paths-heading" className={styles.sectionTitle}>
           <Compass size={16} color="var(--wa-crimson, #8B263E)" />
-          <span>Study Horizons</span>
+          <span>Explore Subjects</span>
         </h2>
         <Link href={ROUTES.find} className={styles.sectionLink}>
-          Browse all <ArrowRight size={12} />
+          Browse all tutors <ArrowRight size={12} />
         </Link>
       </div>
 

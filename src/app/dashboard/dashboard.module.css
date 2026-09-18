@@ -75,7 +75,7 @@
 }
 
 .greetingTitle {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: clamp(1.75rem, 3vw, 2.35rem);
   line-height: 1.2;
   font-weight: 600;
@@ -117,7 +117,7 @@
 }
 
 .headerStatValue {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.35rem;
   font-weight: 600;
   color: var(--wa-ink, #1A1615);
@@ -255,7 +255,7 @@
 }
 
 .sectionTitle {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--wa-ink, #1A1615);
@@ -314,7 +314,7 @@
   border-radius: 50%;
   background: var(--wa-cream-dark, #F2ECE1);
   color: var(--wa-ink, #1A1615);
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-weight: 700;
   font-size: 1rem;
   display: flex;
@@ -444,7 +444,7 @@
 }
 
 .emptyDeskTitle {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--wa-ink, #1A1615);
@@ -577,7 +577,7 @@
 }
 
 .summaryNumber {
-  font-family: var(--font-serif, "Fraunces", Georgia, serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.85rem;
   font-weight: 600;
   color: var(--wa-ink, #1A1615);

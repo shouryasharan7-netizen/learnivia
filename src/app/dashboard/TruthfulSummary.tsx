@@ -34,38 +34,38 @@ export function TruthfulSummary({
       <div className={styles.sectionHeader}>
         <h2 id="learning-summary-heading" className={styles.sectionTitle}>
           <BookOpen size={16} color="var(--wa-crimson, #8B263E)" />
-          <span>Academic Ledger</span>
+          <span>My Study Progress</span>
         </h2>
       </div>
 
       <div className={styles.summaryLedger}>
         <div className={styles.summaryGrid}>
           <div className={styles.summaryCard}>
-            <span className={styles.summaryLabel}>Completed</span>
+            <span className={styles.summaryLabel}>Sessions Completed</span>
             <span className={styles.summaryNumber}>{completedSessionsCount}</span>
-            <span className={styles.summaryNote}>Verified sessions</span>
+            <span className={styles.summaryNote}>Verified peer sessions</span>
           </div>
 
           <div className={styles.summaryCard}>
-            <span className={styles.summaryLabel}>Total Time</span>
+            <span className={styles.summaryLabel}>Total Study Time</span>
             <span className={styles.summaryNumber}>{formattedDuration}</span>
-            <span className={styles.summaryNote}>Instructional time</span>
+            <span className={styles.summaryNote}>Time spent learning</span>
           </div>
 
           <div className={styles.summaryCard}>
-            <span className={styles.summaryLabel}>Grade Focus</span>
+            <span className={styles.summaryLabel}>Grade Level</span>
             <div style={{ marginTop: "0.2rem" }}>
               <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--wa-ink, #1A1615)", lineHeight: 1.2, display: "block" }}>
                 {gradeDisplay}
               </span>
             </div>
-            <span className={styles.summaryNote}>Academic track</span>
+            <span className={styles.summaryNote}>Active learning track</span>
           </div>
         </div>
 
         <p className={styles.ledgerFooterNote}>
           <ShieldCheck size={13} style={{ display: "inline", verticalAlign: "middle", marginRight: "4px" }} />
-          Truthful academic records verified through student & tutor attendance confirmation. Zero gamification.
+          Your study time and completed sessions are confirmed by you and your tutor after each meeting.
         </p>
       </div>
     </section>

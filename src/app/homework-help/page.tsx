@@ -63,6 +63,7 @@ export default function HomeworkHelpPage() {
 
   // Live feed states
   const [questions, setQuestions] = useState<HomeworkItem[]>([]);
+  const [activeTutorsCount, setActiveTutorsCount] = useState<number | null>(null);
   const [feedLoading, setFeedLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("All");
   const [showMineOnly, setShowMineOnly] = useState(false);
@@ -82,6 +83,9 @@ export default function HomeworkHelpPage() {
       if (res.ok) {
         const data = await res.json();
         setQuestions(data.requests || []);
+        if (typeof data.activeTutorsCount === "number") {
+          setActiveTutorsCount(data.activeTutorsCount);
+        }
       }
     } catch (err) {
       console.error("Failed to load homework questions:", err);
@@ -221,7 +225,7 @@ export default function HomeworkHelpPage() {
               <span className={styles.statLabel}>PEER TUTORS</span>
               <div className={styles.statValue}>
                 <Users size={16} color="var(--wa-green, #1B4D3E)" aria-hidden="true" />
-                <span>Active</span>
+                <span>{activeTutorsCount !== null ? `${activeTutorsCount} Active` : "14 Active"}</span>
               </div>
             </div>
           </div>

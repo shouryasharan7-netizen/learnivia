@@ -8,6 +8,124 @@
   font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
 }
 
+/* ── Revamped Academic Discussion Layout ── */
+.academicContainer {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.academicHeader {
+  background: var(--wa-white, #FFFFFF);
+  border: 1px solid var(--wa-border, #E2E8F0);
+  border-radius: var(--wa-radius-lg, 14px);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--wa-shadow-sm, 0 1px 3px rgba(15, 23, 42, 0.05));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.academicHeader::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563EB, #0284C7, #10B981);
+}
+
+.academicTitle {
+  font-family: var(--font-serif, "Times New Roman", Times, serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+  font-weight: 700;
+  color: var(--wa-ink, #0F172A);
+  margin: 0.35rem 0 0.25rem;
+  line-height: 1.2;
+}
+
+.academicSubtitle {
+  font-size: 0.9375rem;
+  color: var(--wa-muted, #64748B);
+  max-width: 680px;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.topicScrollRow {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: none;
+}
+.topicScrollRow::-webkit-scrollbar {
+  display: none;
+}
+
+.topicChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--wa-white, #FFFFFF);
+  border: 1px solid var(--wa-border, #E2E8F0);
+  color: var(--wa-text, #1E293B);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 150ms ease;
+  font-family: inherit;
+}
+.topicChip:hover {
+  background: var(--wa-paper, #F8FAFC);
+  border-color: #CBD5E1;
+}
+.topicChipActive {
+  background: #EFF6FF;
+  border-color: #93C5FD;
+  color: #1D4ED8;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.12);
+}
+
+.academicGrid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .academicGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feedColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.sideColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
 /* ==================================
    Channel Sub-Navigation
    ================================== */

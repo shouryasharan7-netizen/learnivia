@@ -214,9 +214,9 @@ export function SidebarNav({
               </div>
               <NavItem href={ROUTES.learner.home} label="Desk Overview" icon={Home} active={isLinkActive(ROUTES.learner.home)} />
               <NavItem href={ROUTES.find} label="Find a Peer Tutor" icon={Compass} active={isLinkActive(ROUTES.find)} />
-              <NavItem href={ROUTES.sessions} label="My Study Sessions" icon={CalendarCheck} active={isLinkActive(ROUTES.sessions)} />
+              <NavItem href={ROUTES.sessions} label="My Schedule & Sessions" icon={CalendarCheck} active={isLinkActive(ROUTES.sessions)} />
               <NavItem href={ROUTES.homeworkHelp} label="Homework Help" icon={HelpCircle} active={isLinkActive(ROUTES.homeworkHelp)} />
-              <NavItem href={ROUTES.community} label="Peer Dialogues" icon={MessageSquare} active={isLinkActive(ROUTES.community)} />
+              <NavItem href={ROUTES.community} label="Student Community" icon={MessageSquare} active={isLinkActive(ROUTES.community)} />
 
               <div
                 style={{

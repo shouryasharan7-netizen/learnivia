@@ -54,6 +54,9 @@
   --wa-navy-hover:     #100D0C;
   --wa-navy-light:     #F2ECE1;
 
+  /* ── Standard Human Typography (Basic Elegant Serif) ── */
+  --font-serif: "Times New Roman", Times, Georgia, serif;
+
   /* ── Core Precision Palette Tokens (Utility & Baseline Integrity) ── */
   --wa-cobalt-blue:    #2563EB;
   --wa-slate-paper:    #F8FAFC;
@@ -276,7 +279,7 @@ code, kbd, samp, pre, .font-mono, [data-mono="true"] {
 }
 
 .font-serif {
-  font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
 }
 
 .font-sans {

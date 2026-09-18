@@ -29,6 +29,8 @@ export async function GET(request: Request) {
       where.subject = { contains: subject, mode: "insensitive" };
     }
 
+    const activeTutorsCount = await prisma.tutorProfile.count({ where: { status: "APPROVED" } });
+
     if (user.isAdmin || user.isTutor) {
       // Tutors & admins see open questions, anonymized
       where.status = "OPEN";
@@ -57,7 +59,7 @@ export async function GET(request: Request) {
         take: 50,
       });
 
-      return NextResponse.json({ success: true, requests, viewMode: "tutor" });
+      return NextResponse.json({ success: true, requests, viewMode: "tutor", activeTutorsCount });
     } else {
       // Students see only their OWN questions with full detail
       where.studentId = user.id;
@@ -78,7 +80,7 @@ export async function GET(request: Request) {
         take: 50,
       });
 
-      return NextResponse.json({ success: true, requests, viewMode: "student" });
+      return NextResponse.json({ success: true, requests, viewMode: "student", activeTutorsCount });
     }
   } catch (error) {
     console.error("Error fetching homework requests:", error);
