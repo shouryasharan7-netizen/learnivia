@@ -20,8 +20,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: #E6F4EA;
-  color: #0E8345;
+  background: #EFF6FF;
+  color: #2563EB;
   padding: 0.2rem 0.625rem;
   border-radius: 9999px;
   margin-bottom: 0.75rem;
@@ -101,7 +101,7 @@
 .cardArrow {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #0E8345;
+  color: #2563EB;
   margin-top: 0.5rem;
 }
 

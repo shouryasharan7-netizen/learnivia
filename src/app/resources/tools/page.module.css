@@ -19,7 +19,7 @@
   margin-bottom: 1.5rem;
 }
 .breadcrumb a {
-  color: #0E8345;
+  color: #2563EB;
   font-weight: 500;
   text-decoration: none;
 }
@@ -102,7 +102,7 @@
   font-size: 3rem;
   font-weight: 800;
   font-family: monospace;
-  color: #0E8345;
+  color: #2563EB;
   letter-spacing: 0.05em;
 }
 
@@ -129,9 +129,9 @@
   background: #E2E8F0;
 }
 .presetBtnActive {
-  background: #E6F4EA;
-  border-color: #0E8345;
-  color: #0E8345;
+  background: #EFF6FF;
+  border-color: #2563EB;
+  color: #2563EB;
 }
 
 .timerControls {
@@ -141,7 +141,7 @@
 
 .startBtn {
   flex: 2;
-  background: #0E8345;
+  background: #2563EB;
   color: #FFFFFF;
   font-size: 0.9375rem;
   font-weight: 700;
@@ -152,7 +152,7 @@
   transition: background-color 150ms ease;
 }
 .startBtn:hover {
-  background: #0B6635;
+  background: #1D4ED8;
 }
 
 .resetBtn {
@@ -193,7 +193,7 @@
 }
 
 .nextPromptBtn {
-  background: #0E8345;
+  background: #2563EB;
   color: #FFFFFF;
   font-size: 0.9375rem;
   font-weight: 700;
@@ -205,7 +205,7 @@
   transition: background-color 150ms ease;
 }
 .nextPromptBtn:hover {
-  background: #0B6635;
+  background: #1D4ED8;
 }
 
 /* Scratchpad */
@@ -219,13 +219,13 @@
   outline: none;
   resize: vertical;
   line-height: 1.6;
-  background: #FAFDFB;
+  background: #FFFFFF;
   color: #1A1F2E;
   transition: border-color 150ms ease;
 }
 .scratchpad:focus {
-  border-color: #0E8345;
-  box-shadow: 0 0 0 3px rgba(14, 131, 69, 0.1);
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .scratchpadFooter {
