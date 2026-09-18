@@ -176,6 +176,7 @@ export default async function FindTutorPage({ searchParams }: Props) {
           },
         },
         orderBy: { volunteerHours: "desc" },
+        take: 36,
       });
 
       // Prioritize tutors who have the most completed classes/sessions

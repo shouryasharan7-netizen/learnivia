@@ -70,7 +70,13 @@ async function getCachedSessionsData(): Promise<CachedSessionsData> {
             tutor: { status: "APPROVED" },
           },
           include: {
-            tutor: { include: { user: true } },
+            tutor: {
+              select: {
+                id: true,
+                school: true,
+                user: { select: { id: true, name: true, image: true } },
+              },
+            },
             enrollments: true,
           },
           orderBy: { startTime: "asc" },

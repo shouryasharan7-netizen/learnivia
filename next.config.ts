@@ -42,8 +42,10 @@ const nextConfig: NextConfig = {
     // Tree-shake large packages — only import what's used
     optimizePackageImports: [
       "lucide-react",
-      "@radix-ui/react-icons",
-      "date-fns",
+      "motion",
+      "clsx",
+      "tailwind-merge",
+      "sonner",
     ],
     // optimizeCss disabled in dev to prevent critters regex hang
     optimizeCss: false,
@@ -96,8 +98,15 @@ const nextConfig: NextConfig = {
       ],
     },
     {
-      // Aggressively cache static assets (JS, CSS, images)
+      // Aggressively cache static assets (JS, CSS, images, fonts, media)
       source: "/(_next/static|images|favicon.ico)/:path*",
+      headers: [
+        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+      ],
+    },
+    {
+      // Aggressively cache public static media assets
+      source: "/:all*(svg|jpg|jpeg|png|webp|ico|woff|woff2|ttf|mp4)",
       headers: [
         { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
       ],

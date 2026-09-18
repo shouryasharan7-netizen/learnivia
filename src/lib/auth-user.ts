@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { getAdminEmails } from "@/auth.config";
@@ -13,11 +14,11 @@ export interface AuthenticatedUser extends User {
 /**
  * Resolves the currently authenticated user from the database.
  * Uses both session.user.id and session.user.email as fallbacks.
- * Ensures role synchronization (e.g. designated admin emails).
+ * Wrapped with React.cache() to deduplicate queries across layouts and components in the same server request.
  *
  * P0-5: Admin email check exclusively from ADMIN_EMAILS env var.
  */
-export async function getCurrentUser(): Promise<AuthenticatedUser | null> {
+export const getCurrentUser = cache(async function getCurrentUser(): Promise<AuthenticatedUser | null> {
   const session = await auth();
   if (!session?.user) return null;
 
@@ -71,7 +72,7 @@ export async function getCurrentUser(): Promise<AuthenticatedUser | null> {
     isTutor,
     isAdmin,
   };
-}
+});
 
 /**
  * Ensures user is authenticated; throws if not.

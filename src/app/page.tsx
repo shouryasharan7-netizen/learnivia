@@ -33,9 +33,26 @@ export default async function Home() {
             status: "UPCOMING",
             endTime: { gte: now },
           },
-          include: {
-            tutor: { include: { user: true } },
-            enrollments: true,
+          select: {
+            id: true,
+            title: true,
+            subject: true,
+            description: true,
+            startTime: true,
+            maxCapacity: true,
+            tutor: {
+              select: {
+                school: true,
+                user: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            _count: {
+              select: { enrollments: true },
+            },
           },
           orderBy: { startTime: "asc" },
         }),
@@ -64,10 +81,10 @@ export default async function Home() {
         title: nextWorkshop.title,
         subject: nextWorkshop.subject,
         description: nextWorkshop.description,
-        tutorName: nextWorkshop.tutor.user.name || "Volunteer Tutor",
-        tutorSchool: nextWorkshop.tutor.school || "Verified Peer Mentor",
+        tutorName: nextWorkshop.tutor?.user?.name || "Volunteer Tutor",
+        tutorSchool: nextWorkshop.tutor?.school || "Verified Peer Mentor",
         startTime: nextWorkshop.startTime.toISOString(),
-        openSeats: Math.max(0, nextWorkshop.maxCapacity - nextWorkshop.enrollments.length),
+        openSeats: Math.max(0, nextWorkshop.maxCapacity - (nextWorkshop._count?.enrollments ?? 0)),
         maxCapacity: nextWorkshop.maxCapacity,
       }
     : null;

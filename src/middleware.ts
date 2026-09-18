@@ -177,6 +177,8 @@ export default auth((req) => {
 })
 
 export const config = {
-  // Match all routes except static files and images
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|images/).*)",]
-}
+  // Match all routes except Next.js internals, images directory, and static file extensions
+  matcher: [
+    "/((?!_next/static|_next/image|favicon\\.ico|images/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|mp4|css|js)$).*)",
+  ],
+};

@@ -9,20 +9,15 @@ const sans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-sans",
   display: "swap",
-});
-
-const display = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  variable: "--font-serif",
-  display: "swap",
+  preload: true,
 });
 
 const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -46,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className={sans.className}>
         <Providers>
           <AppShell>

@@ -365,6 +365,8 @@
   padding: 6rem 0;
   border-bottom: 1px solid var(--wa-border);
   background: var(--wa-white);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
 }
 
 .sectionHeader {
@@ -454,6 +456,8 @@
   padding: 6rem 0;
   background-color: var(--wa-paper);
   border-bottom: 1px solid var(--wa-border);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
 }
 
 .pathwayPill {
@@ -563,6 +567,8 @@
   padding: 6rem 0;
   background: var(--wa-white);
   border-bottom: 1px solid var(--wa-border);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
 }
 
 .programTabsBar {
@@ -712,6 +718,8 @@
   padding: 6rem 0;
   border-bottom: 1px solid var(--wa-border);
   background: var(--wa-paper);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
 }
 
 .faqContainer {
@@ -779,6 +787,8 @@
 .bottomCtaSection {
   padding: 6rem 0;
   background: var(--wa-paper);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 400px;
 }
 
 .bottomCtaCard {
