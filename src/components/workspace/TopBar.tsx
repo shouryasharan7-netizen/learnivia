@@ -244,7 +244,7 @@ export function TopBar({ user }: TopBarProps) {
                     marginTop: "0.25rem",
                   }}
                 >
-                  {user.isAdmin ? "Administrator" : user.isTutor ? "Verified Tutor" : "K–10 Learner"}
+                  {user.isAdmin ? "Administrator" : user.isTutor ? "Verified Tutor" : "K-10 Learner"}
                 </span>
               </div>
 

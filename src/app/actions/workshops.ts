@@ -85,7 +85,7 @@ export async function createWorkshop(formData: FormData) {
       });
     } catch (err) {
       console.error("Zoom API unavailable during workshop creation:", err);
-      // Do NOT generate a fake Zoom URL — a fabricated zoom.us/j/RANDOMID
+      // Do NOT generate a fake Zoom URL - a fabricated zoom.us/j/RANDOMID
       // would give students a non-functional link.
       // Leave meetingUrl empty; admin can add the link after Zoom is configured.
       meetingUrl = "";

@@ -26,7 +26,7 @@ import styles from "./Navbar.module.css";
 
 const megaMenuPrograms = [
   {
-    title: "Early Elementary (K–Grade 2)",
+    title: "Early Elementary (K-Grade 2)",
     description: "Phonics, early math foundations, and reading comprehension for young learners.",
     href: "/find?grade=K-2",
     icon: (
@@ -34,10 +34,10 @@ const megaMenuPrograms = [
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
       </svg>
     ),
-    badge: "Ages 5–8",
+    badge: "Ages 5-8",
   },
   {
-    title: "Elementary (Grades 3–5)",
+    title: "Elementary (Grades 3-5)",
     description: "Math, reading & writing, and general science for growing minds.",
     href: "/find?grade=3-5",
     icon: (
@@ -45,10 +45,10 @@ const megaMenuPrograms = [
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
       </svg>
     ),
-    badge: "Ages 8–11",
+    badge: "Ages 8-11",
   },
   {
-    title: "Middle School (Grades 6–8)",
+    title: "Middle School (Grades 6-8)",
     description: "Pre-Algebra, English & Language Arts, Earth & Physical Science.",
     href: "/find?grade=6-8",
     icon: (
@@ -56,10 +56,10 @@ const megaMenuPrograms = [
         <line x1="4" y1="12" x2="20" y2="12"/><line x1="12" y1="4" x2="12" y2="20"/>
       </svg>
     ),
-    badge: "Ages 11–14",
+    badge: "Ages 11-14",
   },
   {
-    title: "Early High School (Grades 9–10)",
+    title: "Early High School (Grades 9-10)",
     description: "Algebra I, Geometry, Biology, Chemistry, and more with 1-on-1 support.",
     href: "/find?grade=9-10",
     icon: (
@@ -67,7 +67,7 @@ const megaMenuPrograms = [
         <path d="M9 3v6l-5 9a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-5-9V3"/><line x1="9" y1="3" x2="15" y2="3"/>
       </svg>
     ),
-    badge: "Ages 14–16",
+    badge: "Ages 14-16",
   },
 ];
 
@@ -175,7 +175,7 @@ export function Navbar() {
                   border: "1px solid #F59E0B",
                   color: "#92400E",
                   padding: "0.35rem 0.85rem",
-                  borderRadius: "9999px",
+                  borderRadius: "6px",
                   fontSize: "0.8125rem",
                   fontWeight: 800,
                   textDecoration: "none",
@@ -460,7 +460,7 @@ export function Navbar() {
                   <div className={styles.megaMenuFooter}>
                     <span>Not sure where to start?</span>
                     <Link href="/find" className={styles.megaFooterLink} onClick={() => setExploreOpen(false)}>
-                      Browse all K–10 tutors → free, 1-on-1, verified
+                      Browse all K-10 tutors → free, 1-on-1, verified
                     </Link>
                   </div>
                 </div>
@@ -530,7 +530,7 @@ export function Navbar() {
                 padding: "0.4rem 0.75rem",
                 fontSize: "0.8125rem",
                 fontWeight: 600,
-                borderRadius: "9999px",
+                borderRadius: "6px",
                 border: "1px solid var(--wa-border, #CBD5E1)",
                 background: "var(--wa-white, #FFFFFF)",
                 color: "var(--wa-ink, #0F172A)",
@@ -597,7 +597,7 @@ export function Navbar() {
             <span className={styles.mobileBrandText}>Learnivia</span>
           </div>
 
-          <p className={styles.mobileSection}>Grade Bands (K–10)</p>
+          <p className={styles.mobileSection}>Grade Bands (K-10)</p>
           {megaMenuPrograms.map((prog) => (
             <Link 
               key={prog.title} 
@@ -650,7 +650,7 @@ export function Navbar() {
                 padding: "0.4rem 0.85rem",
                 fontSize: "0.8125rem",
                 fontWeight: 600,
-                borderRadius: "9999px",
+                borderRadius: "6px",
                 border: "1px solid var(--wa-border, #CBD5E1)",
                 background: "var(--wa-white, #FFFFFF)",
                 color: "var(--wa-ink, #0F172A)",

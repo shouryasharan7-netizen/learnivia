@@ -1,6 +1,6 @@
-"use client";
 import { useState } from "react";
 import Link from "next/link";
+import { X } from "lucide-react";
 import styles from "./NoticeBanner.module.css";
 
 export function NoticeBanner() {
@@ -10,7 +10,7 @@ export function NoticeBanner() {
   return (
     <div className={styles.banner} role="banner" aria-label="Announcement">
       <p className={styles.text}>
-        Free 1-on-1 peer tutoring for Kindergarten through Grade 10 — book your session today!{" "}
+        Free 1-on-1 peer tutoring for Kindergarten through Grade 10, book your session today!{" "}
         <Link href="/find" className={styles.link}>Find a Tutor</Link>
       </p>
       <button
@@ -18,7 +18,7 @@ export function NoticeBanner() {
         onClick={() => setDismissed(true)}
         aria-label="Dismiss announcement"
       >
-        ✕
+        <X size={14} />
       </button>
     </div>
   );

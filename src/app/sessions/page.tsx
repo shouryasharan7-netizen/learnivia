@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 30; // ISR: 30s cache
 
 export const metadata = {
-  title: "My Schedule & Study Sessions — Learnivia",
+  title: "My Schedule & Study Sessions | Learnivia",
   description: "Manage your booked 1-on-1 peer tutoring sessions, join live study rooms, and explore upcoming group workshops.",
 };
 
@@ -306,7 +306,7 @@ export default async function SessionsPage({ searchParams }: Props) {
         {/* Page header */}
         <div className={styles.pageHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap" }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#EFF6FF", color: "#2563EB", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#EFF6FF", color: "#2563EB", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
               <CalendarCheck size={13} />
               <span>Personal Study Desk</span>
             </div>
@@ -451,7 +451,7 @@ export default async function SessionsPage({ searchParams }: Props) {
                         {b.subject}
                       </span>
                       {isLive ? (
-                        <span style={{ fontSize: "0.7rem", fontWeight: 700, background: "#DC2626", color: "#FFFFFF", padding: "0.2rem 0.5rem", borderRadius: "999px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                        <span style={{ fontSize: "0.7rem", fontWeight: 700, background: "#DC2626", color: "#FFFFFF", padding: "0.2rem 0.5rem", borderRadius: "4px", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
                           <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#FFFFFF", display: "inline-block" }} />
                           LIVE NOW
                         </span>
@@ -709,7 +709,7 @@ export default async function SessionsPage({ searchParams }: Props) {
             <section aria-label="1-on-1 Verified Peer Tutors Spotlight" style={{ background: "var(--wa-white, #FFFFFF)", border: "1px solid var(--wa-border, #E2E8F0)", borderRadius: 14, padding: "2rem", boxShadow: "var(--wa-shadow-sm)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.25rem" }}>
                 <div style={{ maxWidth: "600px" }}>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#EFF6FF", color: "#2563EB", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#EFF6FF", color: "#2563EB", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
                     <Compass size={13} />
                     <span>Tutor Directory</span>
                   </div>

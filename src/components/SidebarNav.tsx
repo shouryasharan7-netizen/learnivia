@@ -150,7 +150,7 @@ export function SidebarNav() {
                 </span>
               ) : (
                 <span className={styles.studentBadge}>
-                  <GraduationCap size={13} /> K–10 Learner
+                  <GraduationCap size={13} /> K-10 Learner
                 </span>
               )}
             </div>

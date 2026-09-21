@@ -77,7 +77,7 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.55rem 1rem;
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 0.8125rem;
   font-weight: 600;
   background: var(--wa-white, #FFFFFF);

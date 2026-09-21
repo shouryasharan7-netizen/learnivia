@@ -27,7 +27,7 @@ export function TruthfulSummary({
   const gradeDisplay =
     gradeBand && curriculum
       ? `${gradeBand} (${curriculum})`
-      : gradeBand || curriculum || "K–10 Peer Learning";
+      : gradeBand || curriculum || "K-10 Peer Learning";
 
   return (
     <section aria-labelledby="learning-summary-heading">

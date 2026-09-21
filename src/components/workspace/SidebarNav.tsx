@@ -344,7 +344,7 @@ function NavItem({ href, label, icon: Icon, active, locked, badge }: NavItemProp
             textTransform: "uppercase",
             letterSpacing: "0.04em",
             padding: "0.15rem 0.45rem",
-            borderRadius: "999px",
+            borderRadius: "4px",
             background: active ? "rgba(255,255,255,0.25)" : "#FEF3C7",
             color: active ? "#FFFFFF" : "#92400E",
           }}

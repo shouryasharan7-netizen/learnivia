@@ -290,7 +290,7 @@
   color: var(--wa-crimson, #2563EB);
   background: var(--wa-crimson-light, #EFF6FF);
   padding: 0.2rem 0.55rem;
-  border-radius: 999px;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -452,7 +452,7 @@
   gap: 0.5rem;
   background: #FAF8F5;
   border: 1px solid #DDD8D0;
-  border-radius: 999px;
+  border-radius: 6px;
   padding: 0.3rem 0.75rem 0.3rem 0.3rem;
   cursor: pointer;
   transition: all 150ms ease;
@@ -464,59 +464,57 @@
   box-shadow: 0 4px 12px rgba(45, 106, 79, 0.08);
 }
 
-.userAvatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--wa-green);
+.userCapsuleAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: var(--wa-green, #2563EB);
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8125rem;
   font-weight: 700;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  font-size: 0.75rem;
 }
 
-.userName {
-  font-size: 0.875rem;
+.userCapsuleName {
+  font-size: 0.8125rem;
   font-weight: 600;
-  color: #0F172A;
+  color: #141824;
 }
 
-.popoverMenu {
+/* Common Popover Overlay and Box */
+.popoverOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+}
+
+.popoverContent {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 0.5rem);
   right: 0;
-  width: 310px;
-  background: var(--wa-white, #FFFFFF);
+  background: #FFFFFF;
   border: 1px solid var(--wa-border, #E2E8F0);
-  border-radius: 14px;
-  box-shadow: var(--wa-shadow-lg);
-  z-index: 1000;
-  padding: 1rem;
-  animation: popoverFadeIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes popoverFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  border-radius: 8px;
+  box-shadow: var(--wa-shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1));
+  z-index: 110;
+  animation: popoverFadeIn 150ms ease-out;
 }
 
 .popoverHeader {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--wa-border, #E2E8F0);
+}
+
+.popoverTitle {
   font-weight: 700;
   color: var(--wa-ink, #0F172A);
-  margin-bottom: 0.75rem;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
+  margin: 0;
 }
 
 .popoverCount {
@@ -525,74 +523,12 @@
   color: var(--wa-muted, #64748B);
   font-weight: 700;
   padding: 0.15rem 0.5rem;
-  border-radius: 999px;
+  border-radius: 4px;
 }
 
 .popoverEmpty {
   text-align: center;
   padding: 1.25rem 0.5rem;
-}
-
-.popoverEmptyIcon {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  display: flex;
-  justify-content: center;
-}
-
-.popoverEmptyTitle {
-  font-weight: 600;
-  color: var(--wa-ink, #0F172A);
-  margin: 0 0 0.25rem 0;
-  font-size: 0.875rem;
-}
-
-.popoverEmptyText {
-  font-size: 0.8125rem;
-  color: var(--wa-muted, #64748B);
-  margin: 0;
-  line-height: 1.45;
-}
-
-.popoverFooterLink {
-  display: block;
-  text-align: center;
-  margin-top: 0.75rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid var(--wa-border, #E2E8F0);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--wa-crimson, #2563EB);
-  text-decoration: none;
-  transition: opacity 150ms ease;
-}
-.popoverFooterLink:hover {
-  opacity: 0.85;
-}
-
-.userProfileMenu {
-  width: 280px;
-  padding: 0.85rem;
-}
-
-.userInfoBlock {
-  padding: 0.25rem 0.4rem 0.75rem 0.4rem;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
-  margin-bottom: 0.5rem;
-}
-
-.userFullName {
-  font-weight: 700;
-  color: var(--wa-ink, #0F172A);
-  margin: 0;
-  font-size: 0.9375rem;
-}
-
-.userEmail {
-  font-size: 0.78125rem;
-  color: var(--wa-muted, #64748B);
-  margin: 0.15rem 0 0.45rem 0;
-  word-break: break-all;
 }
 
 .roleTag {
@@ -603,7 +539,7 @@
   color: var(--wa-ink, #0F172A);
   border: 1px solid var(--wa-border, #E2E8F0);
   padding: 0.15rem 0.55rem;
-  border-radius: 999px;
+  border-radius: 4px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -770,7 +706,7 @@
   display: block;
   text-align: center;
   padding: 0.75rem;
-  border-radius: 999px;
+  border-radius: 6px;
   border: 1px solid var(--wa-border);
   font-weight: 600;
   color: #0F172A;
@@ -787,7 +723,7 @@
   display: block;
   text-align: center;
   padding: 0.75rem;
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--wa-green);
   font-weight: 600;
   color: #FFFFFF;

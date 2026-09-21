@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, GraduationCap, ShieldCheck, ArrowRight } from "lucide-react";
+import { Users, GraduationCap, ShieldCheck, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "For Educators — Learnivia",
-  description: "How teachers and school counsellors can use Learnivia to supplement their students' learning with free peer tutoring.",
+  title: "For Educators | Learnivia",
+  description: "Learnivia works alongside schools, teachers, and educators to supplement learning and verify student volunteer hours.",
 };
 
 export default function EducatorsPage() {
   const items = [
     {
-      icon: BookOpen,
-      title: "Recommend Learnivia to students who need support",
-      content: "Students and parents can access free peer tutoring for core K–10 school subjects. For learners below Grade 9, parents create and manage accounts, while Grade 9–10 learners can participate with guardian awareness. Sessions cover foundational reading, mathematics, science, and learning support.",
+      icon: Users,
+      title: "Complementing, not competing with, classroom instruction",
+      content: "Students and parents can access free peer tutoring for core K-10 school subjects. For learners below Grade 9, parents create and manage accounts, while Grade 9-10 learners can participate with guardian awareness. Sessions cover foundational reading, mathematics, science, and learning support.",
     },
     {
       icon: GraduationCap,
-      title: "Encourage strong students to volunteer",
+      title: "Verified community service for student tutors",
       content: "Volunteering with Learnivia develops communication skills, empathy, and subject mastery. Tutors receive verified records of their volunteer service hours with cryptographic session verification IDs, which can support school service requirements, honour societies, and college applications.",
     },
     {
       icon: ShieldCheck,
       title: "Not a replacement for classroom or SEN support",
-      content: "Learnivia is a peer supplement — not a substitute for SENCO input, specialist learning support, or qualified teacher intervention. Students with formal IEP or 504 plans should continue working with their school's specialized educational professionals.",
+      content: "Learnivia is a peer supplement, not a substitute for SENCO input, specialist learning support, or qualified teacher intervention. Students with formal IEP or 504 plans should continue working with their school's specialized educational professionals.",
     },
   ];
 
@@ -30,7 +30,7 @@ export default function EducatorsPage() {
     <main style={{ background: "var(--wa-paper)", minHeight: "100vh", fontFamily: "var(--font-sans)", color: "var(--wa-ink)" }}>
       <section style={{ background: "var(--wa-white)", padding: "4.5rem 1.5rem 3.5rem", borderBottom: "1px solid var(--wa-border)", textAlign: "center" }}>
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <span style={{ display: "inline-block", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", color: "var(--wa-forest)", padding: "0.25rem 0.75rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600, marginBottom: "1rem" }}>
+          <span style={{ display: "inline-block", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", color: "var(--wa-forest)", padding: "0.25rem 0.75rem", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 600, marginBottom: "1rem" }}>
             School &amp; Classroom Partnerships
           </span>
           <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.25rem, 4.5vw, 3.25rem)", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "1rem", letterSpacing: "-0.02em" }}>

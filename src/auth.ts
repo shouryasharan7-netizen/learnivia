@@ -135,7 +135,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        // Success — clear failed attempts in memory & DB, record login timestamp
+        // Success - clear failed attempts in memory & DB, record login timestamp
         clearAttempts(email);
         await prisma.user.update({
           where: { id: user.id },

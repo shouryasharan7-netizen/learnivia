@@ -902,11 +902,11 @@ export default async function SessionDetailPage({
                         maxWidth: "320px",
                       }}
                     >
-                      <option value="5">5 ★ - Outstanding, clear and patient</option>
-                      <option value="4">4 ★ - Great session, very helpful</option>
-                      <option value="3">3 ★ - Good, answered core questions</option>
-                      <option value="2">2 ★ - Needed pacing or technical improvement</option>
-                      <option value="1">1 ★ - Poor session experience</option>
+                      <option value="5">5 / 5 - Outstanding, clear and patient</option>
+                      <option value="4">4 / 5 - Great session, very helpful</option>
+                      <option value="3">3 / 5 - Good, answered core questions</option>
+                      <option value="2">2 / 5 - Needed pacing or technical improvement</option>
+                      <option value="1">1 / 5 - Poor session experience</option>
                     </select>
                   </div>
 

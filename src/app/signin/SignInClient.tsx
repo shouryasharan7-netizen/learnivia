@@ -81,10 +81,10 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
           <p className={styles.leftTagline}>Real humans.</p>
           <p className={styles.leftTaglineAccent}>Zoom calls that click.</p>
           <p className={styles.leftSubtext}>
-            Verified volunteer tutors guide K–10 students through private 1-on-1 Zoom sessions — no cost, no sign-up fees, ever.
+            Verified volunteer tutors guide K-10 students through private 1-on-1 Zoom sessions, with no cost or sign-up fees ever.
           </p>
 
-          {/* How it works — 3 simple steps */}
+          {/* How it works - 3 simple steps */}
           <ol className={styles.leftSteps}>
             <li className={styles.leftStep}>
               <span className={styles.leftStepNum}>1</span>
@@ -96,7 +96,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
             </li>
             <li className={styles.leftStep}>
               <span className={styles.leftStepNum}>3</span>
-              <span className={styles.leftStepText}>Learn 1-on-1 — at your own pace</span>
+              <span className={styles.leftStepText}>Learn 1-on-1 at your own pace</span>
             </li>
           </ol>
         </div>
@@ -104,8 +104,8 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
         {/* Bottom trust line */}
         <div className={styles.leftFooter}>
           <span className={styles.leftFooterPill}>100% Free</span>
-          <span className={styles.leftFooterPill}>K–10 Students</span>
-          <span className={styles.leftFooterPill}>140+ Tutors</span>
+          <span className={styles.leftFooterPill}>K-10 Students</span>
+          <span className={styles.leftFooterPill}>Verified Mentors</span>
         </div>
       </aside>
 
@@ -210,9 +210,9 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                         <select id="grade" name="grade" required={isRegister} className={styles.selectInput}>
                           <option value="">Select grade…</option>
                           <option value="Kindergarten">Kindergarten</option>
-                          <option value="Grade 1-2">Grade 1–2</option>
-                          <option value="Grade 3-5">Grade 3–5</option>
-                          <option value="Grade 6-8">Grade 6–8</option>
+                          <option value="Grade 1-2">Grade 1-2</option>
+                          <option value="Grade 3-5">Grade 3-5</option>
+                          <option value="Grade 6-8">Grade 6-8</option>
                           <option value="Grade 9">Grade 9</option>
                           <option value="Grade 10">Grade 10</option>
                         </select>
@@ -244,7 +244,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                     <label htmlFor="educationLevel">Your Education Level</label>
                     <select id="educationLevel" name="educationLevel" required={isRegister} className={styles.selectInput}>
                       <option value="">Select standing…</option>
-                      <option value="High School (Grades 11-12)">High School (Grades 11–12)</option>
+                      <option value="High School (Grades 11-12)">High School (Grades 11-12)</option>
                       <option value="Undergraduate / College Student">Undergraduate / College</option>
                       <option value="Graduate / Master's / PhD">Graduate / Master's / PhD</option>
                       <option value="Certified Educator / Professional">Certified Educator</option>

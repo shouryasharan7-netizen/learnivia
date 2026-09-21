@@ -1,5 +1,5 @@
 /* ==========================================================================
-   TUTOR PROFILE PAGE — WARM ACADEMIC
+   TUTOR PROFILE PAGE: WARM ACADEMIC
    ========================================================================== */
 
 .main {
@@ -152,7 +152,7 @@
   color: #235840;
   border: 1px solid #B5D9C5;
   padding: 0.35rem 0.85rem;
-  border-radius: 999px;
+  border-radius: 4px;
   font-size: 0.8125rem;
   font-weight: 600;
 }

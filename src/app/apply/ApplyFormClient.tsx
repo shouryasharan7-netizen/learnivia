@@ -29,11 +29,11 @@ interface ApplyFormClientProps {
 }
 
 const GRADE_OPTIONS = [
-  { value: "kindergarten", label: "Kindergarten (Ages 5–6)" },
-  { value: "grade-1-2", label: "Early Elementary (Grades 1–2)" },
-  { value: "grade-3-5", label: "Elementary (Grades 3–5)" },
-  { value: "grade-6-8", label: "Middle School (Grades 6–8)" },
-  { value: "grade-9-10", label: "Early High School (Grades 9–10)" },
+  { value: "kindergarten", label: "Kindergarten (Ages 5-6)" },
+  { value: "grade-1-2", label: "Early Elementary (Grades 1-2)" },
+  { value: "grade-3-5", label: "Elementary (Grades 3-5)" },
+  { value: "grade-6-8", label: "Middle School (Grades 6-8)" },
+  { value: "grade-9-10", label: "Early High School (Grades 9-10)" },
 ];
 
 export default function ApplyFormClient({ user, existingProfile }: ApplyFormClientProps) {
@@ -186,7 +186,7 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
         </h2>
         <p style={{ color: "#475569", fontSize: "1rem", lineHeight: 1.6, maxWidth: "520px", margin: "0 auto 1.75rem" }}>
           Thank you for applying to be a volunteer peer tutor on Learnivia. Our academic moderation team reviews every
-          transcript and profile within <strong>24–48 hours</strong>.
+          transcript and profile within <strong>24-48 hours</strong>.
         </p>
 
         <div
@@ -268,7 +268,7 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
               <span
                 style={{
                   padding: "0.2rem 0.6rem",
-                  borderRadius: "999px",
+                  borderRadius: "4px",
                   fontSize: "0.75rem",
                   fontWeight: 800,
                   backgroundColor:
@@ -455,7 +455,7 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
 
         {/* 3. Grade Bands & Subjects */}
         <div className={styles.formSection}>
-          <h2 className={styles.formSectionTitle}>3. What You'll Teach (K–10)</h2>
+          <h2 className={styles.formSectionTitle}>3. What You'll Teach (K-10)</h2>
           <div className={styles.formGroup}>
             <label>Grade Levels You Can Support *</label>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.6rem", marginTop: "0.25rem" }}>

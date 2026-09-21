@@ -105,7 +105,7 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Users size={20} color="var(--color-forest, #234B3B)" />
             <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#0F172A", margin: 0 }}>
-              Parent Hub: Managed Child Profiles (K–10)
+              Parent Hub: Managed Child Profiles (K-10)
             </h2>
           </div>
           <p style={{ color: "#64748B", fontSize: "0.85rem", margin: "0.25rem 0 0 0" }}>
@@ -131,7 +131,7 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             transition: "all 150ms ease",
           }}
         >
-          {isOpen ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Add Child (K–10)</>}
+          {isOpen ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Add Child (K-10)</>}
         </button>
       </div>
 
@@ -237,7 +237,7 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
 
             <div>
               <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
-                Grade Level (K–10) *
+                Grade Level (K-10) *
               </label>
               <select
                 value={grade}
@@ -252,7 +252,7 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
                   background: "#FFFFFF",
                 }}
               >
-                <option value="Kindergarten">Kindergarten (Age 5–6)</option>
+                <option value="Kindergarten">Kindergarten (Age 5-6)</option>
                 <option value="Grade 1">Grade 1</option>
                 <option value="Grade 2">Grade 2</option>
                 <option value="Grade 3">Grade 3</option>

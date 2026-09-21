@@ -64,7 +64,7 @@
   font-size: 0.9375rem;
   font-family: inherit;
   border: 1.5px solid #DDD8D0;
-  border-radius: 9999px;
+  border-radius: 6px;
   background: #FFFFFF;
   color: #1C1A17;
   outline: none;
@@ -85,7 +85,7 @@
   font-size: 0.875rem;
   font-family: inherit;
   border: 1.5px solid #DDD8D0;
-  border-radius: 9999px;
+  border-radius: 6px;
   background: #FFFFFF;
   color: #1C1A17;
   cursor: pointer;
@@ -118,7 +118,7 @@
   background: #FFFFFF;
   border: 1.5px solid #DDD8D0;
   padding: 0.375rem 1rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   cursor: pointer;
   transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
   font-family: inherit;
@@ -144,7 +144,7 @@
   background: transparent;
   border: 1.5px dashed #C4BDB5;
   padding: 0.375rem 1rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   cursor: pointer;
   transition: border-color 120ms ease, color 120ms ease;
   font-family: inherit;

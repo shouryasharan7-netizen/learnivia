@@ -20,7 +20,7 @@ export default function FindError({
     <main style={{ maxWidth: 640, margin: "5rem auto", padding: "0 1.5rem" }}>
       <ErrorState
         title="We couldn't load the tutor list"
-        message="Something went wrong connecting to the tutor registry. This is likely temporary — please try again."
+        message="Something went wrong connecting to the tutor registry. This is likely temporary - please try again."
         onRetry={reset}
         homeLink={true}
       />

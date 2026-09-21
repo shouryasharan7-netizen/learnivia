@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import SignInClient from "./SignInClient";
 
 export const metadata = {
-  title: "Sign In — Learnivia",
+  title: "Sign In - Learnivia",
   description: "Sign in to your Learnivia account to join tutoring sessions and workshops.",
 };
 

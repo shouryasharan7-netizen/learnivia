@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Users, BookOpen, GraduationCap, Settings, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions — Learnivia",
-  description: "Frequently asked questions about Learnivia: free 1-on-1 Zoom tutoring for K–10 students, volunteer tutor requirements, parent safeguarding, learning preferences, and volunteer hours.",
+  title: "Frequently Asked Questions | Learnivia",
+  description: "Frequently asked questions about Learnivia: free 1-on-1 Zoom tutoring for K-10 students, volunteer tutor requirements, parent safeguarding, learning preferences, and volunteer hours.",
 };
 
 const FAQ_SECTIONS = [
@@ -14,11 +14,11 @@ const FAQ_SECTIONS = [
     questions: [
       {
         q: "Is Learnivia really 100% free?",
-        a: "Yes — completely free, with no hidden fees, subscriptions, or credit card required. Learnivia runs on a peer-volunteer model: student mentors help younger peers in exchange for verified community service hours.",
+        a: "Yes, completely free, with no hidden fees, subscriptions, or credit card required. Learnivia runs on a peer-volunteer model: student mentors help younger peers in exchange for verified community service hours.",
       },
       {
         q: "Who manages my child's account?",
-        a: "For students below Grade 9, the parent or guardian creates and manages the account. This protects younger learners and ensures a responsible adult oversees all bookings. Students in Grades 9–10 may manage their own accounts independently.",
+        a: "For students below Grade 9, the parent or guardian creates and manages the account. This protects younger learners and ensures a responsible adult oversees all bookings. Students in Grades 9-10 may manage their own accounts independently.",
       },
       {
         q: "Are sessions safe for my child?",
@@ -30,7 +30,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "How do I find a tutor for my child's grade?",
-        a: "Go to Find a Tutor (/find), select your child's grade band (K–10), then choose the subject. Only tutors approved for that specific grade band will appear in results.",
+        a: "Go to Find a Tutor (/find), select your child's grade band (K-10), then choose the subject. Only tutors approved for that specific grade band will appear in results.",
       },
       {
         q: "What if I have a concern about a session?",
@@ -70,7 +70,7 @@ const FAQ_SECTIONS = [
     questions: [
       {
         q: "Who can apply to be a volunteer tutor?",
-        a: "High school students (Grade 11+) and university students who excel in K–10 academic subjects can apply. You will need to provide an academic report card or marksheet and complete our 5 mandatory safeguarding modules before your first session.",
+        a: "High school students (Grade 11+) and university students who excel in K-10 academic subjects can apply. You will need to provide an academic report card or marksheet and complete our 5 mandatory safeguarding modules before your first session.",
       },
       {
         q: "What does tutor training entail?",
@@ -128,7 +128,7 @@ export default function FaqPage() {
               display: "inline-block",
               background: "var(--wa-paper)",
               border: "1px solid var(--wa-border)",
-              borderRadius: "999px",
+              borderRadius: "6px",
               padding: "0.3rem 0.85rem",
               fontSize: "0.8rem",
               fontWeight: 600,
@@ -152,7 +152,7 @@ export default function FaqPage() {
             Everything you need to know about Learnivia
           </h1>
           <p style={{ fontSize: "1.1rem", color: "var(--wa-muted)", maxWidth: "560px", margin: "0 auto", lineHeight: 1.65 }}>
-            Free 1-on-1 peer tutoring for K–10 learners. Transparent, honest answers for parents, learners, and volunteer tutors.
+            Free 1-on-1 peer tutoring for K-10 learners. Transparent, honest answers for parents, learners, and volunteer tutors.
           </p>
         </div>
       </section>
@@ -181,7 +181,7 @@ export default function FaqPage() {
               padding: "0.45rem 0.95rem",
               background: "var(--wa-paper)",
               border: "1px solid var(--wa-border)",
-              borderRadius: "999px",
+              borderRadius: "6px",
               textDecoration: "none",
               color: "var(--wa-ink)",
               fontSize: "0.85rem",

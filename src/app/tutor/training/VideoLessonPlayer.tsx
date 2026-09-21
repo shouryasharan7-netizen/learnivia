@@ -218,7 +218,7 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
                   border: isPlaying ? "1px solid #10B981" : "1px solid rgba(255, 255, 255, 0.2)",
                   fontSize: "0.65rem",
                   padding: "0.15rem 0.5rem",
-                  borderRadius: "999px",
+                  borderRadius: "4px",
                   fontWeight: 700,
                   textTransform: "uppercase",
                 }}
@@ -387,7 +387,7 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
                     width: "100%",
                     height: "6px",
                     background: "rgba(255, 255, 255, 0.2)",
-                    borderRadius: "999px",
+                    borderRadius: "3px",
                     overflow: "hidden",
                     position: "relative",
                   }}

@@ -97,7 +97,7 @@ export default async function AdminStoriesPage() {
                 <span style={{ 
                   background: story.isPublished ? "var(--color-success-bg)" : "var(--color-cream)", 
                   color: story.isPublished ? "var(--color-success)" : "var(--color-text-muted)", 
-                  padding: "0.25rem 0.75rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" 
+                  padding: "0.25rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" 
                 }}>
                   {story.isPublished ? "Published" : "Draft"}
                 </span>

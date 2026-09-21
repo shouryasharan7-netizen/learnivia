@@ -16,8 +16,8 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Safety & Safeguarding — Learnivia",
-  description: "How Learnivia keeps sessions safe: community guidelines, reporting, session rules, and guardian oversight for K–10 learners.",
+  title: "Safety & Safeguarding | Learnivia",
+  description: "How Learnivia keeps sessions safe: community guidelines, reporting, session rules, and guardian oversight for K-10 learners.",
 };
 
 const guidelines = [
@@ -181,7 +181,7 @@ export default function SafetyPage() {
                 </h3>
               </div>
               <p style={{ fontSize: "0.95rem", color: "var(--wa-ink)", lineHeight: 1.6, marginBottom: "1rem" }}>
-                If you experienced or witnessed anything that violated our community guidelines &mdash; during a session, in messages, or on a profile &mdash; report it immediately.
+                If you experienced or witnessed anything that violated our community guidelines (during a session, in messages, or on a profile), report it immediately.
               </p>
               <div className={styles.reportNote}>
                 <strong>Safeguarding advisory:</strong> If you believe someone is in immediate danger, contact your local emergency services first.
@@ -229,7 +229,7 @@ export default function SafetyPage() {
                   background: "var(--wa-green, #2563EB)",
                   color: "#FFFFFF",
                   padding: "0.75rem 1.5rem",
-                  borderRadius: "999px",
+                  borderRadius: "6px",
                   fontSize: "0.875rem",
                   fontWeight: 600,
                   textDecoration: "none",

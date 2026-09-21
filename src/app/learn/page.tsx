@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Learning Programs & Group Workshops",
-  description: "Browse all Learnivia programs and live group workshops — free, interactive tutoring from homework help to exam prep.",
+  description: "Browse all Learnivia programs and live group workshops, free interactive tutoring from homework help to exam prep.",
 };
 
 let learnCache: { programs: any[]; workshops: any[]; timestamp: number } | null = null;

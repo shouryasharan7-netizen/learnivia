@@ -11,7 +11,7 @@ export function QuickActions() {
     {
       id: "find",
       title: "Find a Peer Tutor",
-      desc: "Search 140+ verified volunteer tutors across K–10 Math, Sciences, and Humanities.",
+      desc: "Search verified volunteer tutors across K-10 Math, Science, and English.",
       href: ROUTES.find,
       icon: Compass,
     },

@@ -47,7 +47,7 @@ export default async function AdminApplicationsPage() {
                     Applied on {new Date(tutor.createdAt).toLocaleDateString()} • Email: {tutor.user.email}
                   </p>
                 </div>
-                <span style={{ background: "var(--wa-paper)", border: "1px solid var(--wa-border)", color: "var(--wa-ochre)", padding: "0.25rem 0.75rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" }}>
+                <span style={{ background: "var(--wa-paper)", border: "1px solid var(--wa-border)", color: "var(--wa-ochre)", padding: "0.25rem 0.75rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" }}>
                   Status: PENDING
                 </span>
               </div>
@@ -72,11 +72,11 @@ export default async function AdminApplicationsPage() {
                     </strong>
                   </div>
                   {(tutor.reportCardStorageKey || tutor.reportCardUrl) ? (
-                    <span style={{ color: "var(--wa-forest)", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                    <span style={{ color: "var(--wa-forest)", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
                       <CheckCircle2 size={12} aria-hidden="true" /> Document Attached
                     </span>
                   ) : (
-                    <span style={{ color: "var(--wa-terracotta)", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                    <span style={{ color: "var(--wa-terracotta)", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", padding: "0.2rem 0.6rem", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
                       <AlertCircle size={12} aria-hidden="true" /> No Document Uploaded
                     </span>
                   )}
@@ -217,7 +217,7 @@ export default async function AdminApplicationsPage() {
                       background: "var(--wa-paper)",
                       border: "1px solid var(--wa-border)",
                       padding: "0.2rem 0.65rem",
-                      borderRadius: "999px",
+                      borderRadius: "4px",
                       fontSize: "0.75rem",
                       fontWeight: 600,
                     }}
@@ -254,7 +254,7 @@ export default async function AdminApplicationsPage() {
                         }}
                         title={m.title}
                       >
-                        {completed ? "✓" : "○"} M{m.id}: {m.title}
+                        {completed ? "Completed" : "Pending"}: M{m.id} ({m.title})
                       </span>
                     );
                   })}
@@ -268,12 +268,12 @@ export default async function AdminApplicationsPage() {
                 </strong>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
                   {tutor.subjects.map(s => (
-                    <span key={s.id} style={{ background: "var(--wa-paper)", color: "var(--wa-forest)", border: "1px solid var(--wa-border)", padding: "0.25rem 0.65rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600 }}>
+                    <span key={s.id} style={{ background: "var(--wa-paper)", color: "var(--wa-forest)", border: "1px solid var(--wa-border)", padding: "0.25rem 0.65rem", borderRadius: "4px", fontSize: "0.8rem", fontWeight: 600 }}>
                       {s.name}
                     </span>
                   ))}
                   {tutor.gradeLevels.map(g => (
-                    <span key={g.id} style={{ background: "var(--wa-white)", color: "var(--wa-ink)", border: "1px solid var(--wa-border)", padding: "0.25rem 0.65rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600 }}>
+                    <span key={g.id} style={{ background: "var(--wa-white)", color: "var(--wa-ink)", border: "1px solid var(--wa-border)", padding: "0.25rem 0.65rem", borderRadius: "4px", fontSize: "0.8rem", fontWeight: 600 }}>
                       {g.name}
                     </span>
                   ))}

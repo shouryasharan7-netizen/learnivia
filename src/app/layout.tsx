@@ -32,14 +32,19 @@ const mono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: {
     template: "%s | Learnivia",
-    default: "Learnivia — Free Peer-to-Peer Online Tutoring",
+    default: "Learnivia - Free Peer-to-Peer Online Tutoring",
   },
   description: "Free 1-on-1 tutoring and interactive workshops led by high school and university peers. No subscriptions, zero fees.",
   keywords: ["free tutoring", "volunteer tutor", "online tutoring", "peer learning", "homework help", "K-10 tutoring"],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/images/logo.png",
+  },
   openGraph: {
     type: "website",
     siteName: "Learnivia",
-    title: "Learnivia — Free Peer-to-Peer Online Tutoring",
+    title: "Learnivia - Free Peer-to-Peer Online Tutoring",
     description: "Free 1-on-1 tutoring and interactive workshops led by high school and university peers. No subscriptions, zero fees.",
   },
 };

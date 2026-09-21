@@ -6,7 +6,7 @@ import { FileCheck, ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Volunteer Service Transcript — Learnivia",
+  title: "Volunteer Service Transcript | Learnivia",
   description: "Official, verifiable volunteer tutoring transcript and service hours certificate.",
 };
 

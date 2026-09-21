@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LEARNIVIA — PRESTIGE ACADEMIC EDITORIAL & SCHOLAR COMMONS DESIGN SYSTEM
+   LEARNIVIA - PRESTIGE ACADEMIC EDITORIAL & SCHOLAR COMMONS DESIGN SYSTEM
    Archival Vellum · Deep Literary Ink · Oxford Navy · Architectural Rules
    ========================================================================== */
 
@@ -108,7 +108,7 @@
   padding: 0.35rem 0.85rem;
   background: var(--wa-white, #FFFFFF);
   border: 1px solid var(--wa-border, #E5DDD2);
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 0.78rem;
   font-family: var(--font-mono, monospace);
   font-weight: 600;

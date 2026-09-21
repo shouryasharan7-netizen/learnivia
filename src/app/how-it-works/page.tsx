@@ -4,8 +4,8 @@ import { ArrowRight, Search, CalendarCheck, Video, Award, ShieldCheck, HeartHand
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "How Learnivia Works — Free K–10 Peer Tutoring",
-  description: "Learn how Learnivia connects verified student tutors with K–10 learners for free 1-on-1 Zoom tutoring sessions.",
+  title: "How Learnivia Works | Free K-10 Peer Tutoring",
+  description: "Learn how Learnivia connects verified student tutors with K-10 learners for free 1-on-1 Zoom tutoring sessions.",
 };
 
 export default function HowItWorksPage() {
@@ -16,7 +16,7 @@ export default function HowItWorksPage() {
           <span className={styles.badge}>Three Clear Pathways</span>
           <h1 className={styles.title}>How Learnivia Works</h1>
           <p className={styles.subtitle}>
-            A free, volunteer-powered learning commons connecting passionate student tutors with K–10 learners across the globe.
+            A free, volunteer-powered learning commons connecting passionate student tutors with K-10 learners across the globe.
           </p>
         </div>
       </section>
@@ -71,9 +71,9 @@ export default function HowItWorksPage() {
       <section className={`${styles.stepsSection} ${styles.altSection}`}>
         <div className={styles.sectionHeader}>
           <span className={styles.pathwayTag}>Pathway 2</span>
-          <h2 className={styles.sectionTitle}>For K–10 Learners</h2>
+          <h2 className={styles.sectionTitle}>For K-10 Learners</h2>
           <p className={styles.sectionLead}>
-            Patient peer tutors who explain concepts your way &mdash; with zero fees, no tests to qualify, and no judgment.
+            Patient peer tutors who explain concepts your way, with zero fees, no tests to qualify, and no judgment.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default function HowItWorksPage() {
             </div>
             <div className={styles.stepNumber}>02</div>
             <h3>Book an Open Slot</h3>
-            <p>Select a 30–60 min slot that fits your schedule. Describe your homework topic so your tutor can prepare.</p>
+            <p>Select a 30-60 min slot that fits your schedule. Describe your homework topic so your tutor can prepare.</p>
           </div>
 
           <div className={styles.stepCard}>
@@ -108,7 +108,7 @@ export default function HowItWorksPage() {
 
         <div className={styles.ctaWrapper}>
           <Link href="/find" className={styles.primaryBtn}>
-            Find a Tutor &mdash; It&apos;s Free <ArrowRight size={15} />
+            Find a Tutor, It&apos;s Free <ArrowRight size={15} />
           </Link>
         </div>
       </section>

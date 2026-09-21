@@ -211,7 +211,7 @@ export function BookingSlotSelector({
             const isSameTz = viewerTimezone === (tutorTimezone || "UTC");
             return (
               <option key={slot.id} value={slot.id}>
-                {c.viewerDay} {c.viewerStart} – {c.viewerEnd}
+                {c.viewerDay} {c.viewerStart} - {c.viewerEnd}
                 {isSameTz
                   ? ` (${viewerTimezone})`
                   : ` (Your time: ${viewerTimezone}) • Tutor: ${c.tutorDay} ${c.tutorStart}`}
@@ -229,7 +229,7 @@ export function BookingSlotSelector({
               <span className={styles.previewTitle}>Your Local Session Time</span>
               <span className={styles.previewTime}>
                 <strong>
-                  {selectedSlot.converted.viewerDay} {selectedSlot.converted.viewerStart} –{" "}
+                  {selectedSlot.converted.viewerDay} {selectedSlot.converted.viewerStart} -{" "}
                   {selectedSlot.converted.viewerEnd}
                 </strong>{" "}
                 ({viewerTimezone})
@@ -239,7 +239,7 @@ export function BookingSlotSelector({
           {viewerTimezone !== (tutorTimezone || "UTC") && (
             <div className={styles.tutorTzNote}>
               Tutor&apos;s local time: {selectedSlot.converted.tutorDay}{" "}
-              {selectedSlot.converted.tutorStart} – {selectedSlot.converted.tutorEnd} (
+              {selectedSlot.converted.tutorStart} - {selectedSlot.converted.tutorEnd} (
               {tutorTimezone || "Tutor Local"})
             </div>
           )}

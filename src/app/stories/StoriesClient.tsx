@@ -140,7 +140,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
           <h1 className={styles.title}>Learnivia Stories & Blog</h1>
           <p className={styles.subtitle}>
-            Explore real student breakthroughs, volunteer tutor journeys, K–10 study guides, and peer mentoring insights from our global learning community.
+            Explore real student breakthroughs, volunteer tutor journeys, K-10 study guides, and peer mentoring insights from our global learning community.
           </p>
 
           {/* Search Bar */}
@@ -281,7 +281,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
                   background: "#14243B",
                   color: "#FFFFFF",
                   padding: "0.6rem 1.25rem",
-                  borderRadius: "9999px",
+                  borderRadius: "6px",
                   border: "none",
                   fontWeight: 600,
                   cursor: "pointer",
@@ -396,7 +396,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
                   color: "#FFFFFF",
                   border: "none",
                   padding: "0.6rem 1.25rem",
-                  borderRadius: "9999px",
+                  borderRadius: "6px",
                   fontWeight: 600,
                   cursor: "pointer",
                 }}
@@ -538,7 +538,7 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
                   background: "#F1F5F9",
                   border: "none",
                   padding: "0.75rem 1.5rem",
-                  borderRadius: "9999px",
+                  borderRadius: "6px",
                   fontWeight: 600,
                   color: "#475569",
                   cursor: "pointer",

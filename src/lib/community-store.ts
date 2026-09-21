@@ -26,7 +26,7 @@ const DEFAULT_ANNOUNCEMENTS = [
     authorRole: "COMMUNITY LEAD" as const,
     authorInitials: "LT",
     authorColor: "#0E8345",
-    content: "🎉 Welcome to the Learnivia Community! This is your space to connect with fellow learners and volunteer tutors around the globe. Join live sessions, ask questions in Homework Help, and start study circles in the channels below.",
+    content: "Welcome to the Learnivia Community! This is your space to connect with fellow learners and volunteer tutors around the globe. Join live sessions, ask questions in Homework Help, and start study circles in the channels below.",
     reactions: { heart: 1, clap: 1, bulb: 1, fire: 1 },
   },
 ];

@@ -1,5 +1,5 @@
 /* =========================================
-   LEARNIVIA — MODERN ACADEMIC SALON SYSTEM
+   LEARNIVIA - MODERN ACADEMIC SALON SYSTEM
    "Warm Unbleached Paper, Literary Ink & Oxford Crimson"
    ========================================= */
 
@@ -85,14 +85,14 @@
   --wa-shadow-lg:      0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
   --wa-shadow-hover:   0 10px 20px -2px rgba(37, 99, 235, 0.1), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
 
-  /* ── Radius — Deliberate 8–14px geometry ─── */
+  /* ── Radius - Deliberate 8-14px geometry ─── */
   --wa-radius-sm:      8px;
   --wa-radius-md:      10px;
   --wa-radius-lg:      14px;
   --wa-radius-xl:      18px;
-  --wa-radius-pill:    999px;
+  --wa-radius-pill:    6px;
 
-  /* ── Transitions — Subtle 150–220ms ───────── */
+  /* ── Transitions - Subtle 150-220ms ───────── */
   --wa-transition:     180ms cubic-bezier(0.16, 1, 0.3, 1);
 
   /* ── Spacing Scale ──────────────────────── */
@@ -131,7 +131,7 @@
   /* ── Focus ───────────────────────────────── */
   --focus-ring: 0 0 0 2px var(--wa-paper), 0 0 0 4px var(--wa-forest);
 
-  /* ── Legacy aliases — preserve existing code ── */
+  /* ── Legacy aliases - preserve existing code ── */
   --sh-green:          var(--wa-green);
   --sh-green-hover:    var(--wa-green-hover);
   --sh-green-light:    var(--wa-green-light);
@@ -258,7 +258,7 @@ body {
 
 main { flex: 1; }
 
-/* Display & Section Headings — Clean, Human, Modern Sans */
+/* Display & Section Headings - Clean, Human, Modern Sans */
 h1, h2, h3 {
   font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif);
   font-weight: 700;
@@ -275,7 +275,7 @@ h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* Technical IDs, verification codes, timestamps — IBM Plex Mono */
+/* Technical IDs, verification codes, timestamps - IBM Plex Mono */
 code, kbd, samp, pre, .font-mono, [data-mono="true"] {
   font-family: var(--font-mono, 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace);
 }

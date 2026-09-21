@@ -1,15 +1,16 @@
 import styles from "./page.module.css";
 import { getLeaderboard } from "@/lib/stats";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { Trophy, Award, Medal } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60; // ISR: 60s cache
 
-export const metadata = {
-  title: "Leaderboard — Learnivia",
-  description: "Live real-time peer learning leaderboard computed from verified minutes, sessions, and reviews.",
+export const metadata: Metadata = {
+  title: "Leaderboard | Learnivia",
+  description: "View top learners and volunteer tutors on Learnivia by study points, learning minutes, and verified sessions.",
 };
 
 export default async function LeaderboardPage() {
@@ -143,7 +144,7 @@ export default async function LeaderboardPage() {
                         </span>
                       </td>
                       <td style={{ color: "#64748B", fontSize: "0.85rem" }}>
-                        {u.grade || "—"}
+                        {u.grade || "-"}
                       </td>
                       <td style={{ textAlign: "right", fontWeight: 600 }}>
                         {u.learningMinutes} min
@@ -170,7 +171,7 @@ export default async function LeaderboardPage() {
               background: "#F1F5F9",
               color: "#334155",
               padding: "0.65rem 1.5rem",
-              borderRadius: "9999px",
+              borderRadius: "6px",
               fontWeight: 700,
               textDecoration: "none",
             }}
@@ -183,7 +184,7 @@ export default async function LeaderboardPage() {
               background: "#0E8345",
               color: "#FFFFFF",
               padding: "0.65rem 1.5rem",
-              borderRadius: "9999px",
+              borderRadius: "6px",
               fontWeight: 700,
               textDecoration: "none",
             }}

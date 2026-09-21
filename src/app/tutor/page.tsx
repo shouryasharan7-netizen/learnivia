@@ -32,7 +32,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Tutor Workspace — Learnivia",
+  title: "Tutor Workspace - Learnivia",
   description: "Manage volunteer tutoring sessions, host live workshops, and view verified service hours.",
 };
 
@@ -178,7 +178,7 @@ export default async function TutorDashboard() {
                   {passedModules} of 5 Completed
                 </span>
               </div>
-              <div style={{ background: "var(--wa-border)", borderRadius: "999px", height: "6px", overflow: "hidden" }}>
+              <div style={{ background: "var(--wa-border)", borderRadius: "3px", height: "6px", overflow: "hidden" }}>
                 <div
                   style={{
                     background: passedModules === 5 ? "var(--wa-green)" : "#D97706",
@@ -275,7 +275,7 @@ export default async function TutorDashboard() {
                       </select>
                     </div>
                     <div>
-                      <label style={{ fontSize: "0.75rem", color: "#475569" }}>Time (Start – End)</label>
+                      <label style={{ fontSize: "0.75rem", color: "#475569" }}>Time (Start - End)</label>
                       <div style={{ display: "flex", gap: "0.25rem" }}>
                         <input type="time" name="startTime" defaultValue="16:00" style={{ width: "50%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.75rem" }} required />
                         <input type="time" name="endTime" defaultValue="17:00" style={{ width: "50%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #CBD5E1", fontSize: "0.75rem" }} required />
@@ -677,7 +677,7 @@ export default async function TutorDashboard() {
                       ) : (
                         day.slots.map((slot: { id: string; startTime: string; endTime: string }) => (
                           <span key={slot.id} className={styles.slotBadge}>
-                            {slot.startTime}–{slot.endTime}
+                            {slot.startTime}-{slot.endTime}
                             <form action={removeAvailability.bind(null, slot.id)}>
                               <button type="submit" className={styles.removeSlotBtn} title="Remove slot" aria-label={`Remove slot ${slot.startTime} to ${slot.endTime}`}>
                                 ×

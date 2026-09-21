@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Learnivia",
+  title: "Terms of Service - Learnivia",
   description: "Learnivia Terms of Service for K-10 free peer tutoring. Read our terms for students, parents, and volunteer tutors.",
 };
 
@@ -11,11 +11,11 @@ export default function TermsPage() {
   const sections = [
     {
       h: "1. About Learnivia",
-      p: `Learnivia is a free, volunteer-run peer tutoring platform exclusively serving students in Kindergarten through Grade 10 (K–10). All tutoring sessions are free of charge. Learnivia is not a commercial tutoring service.`,
+      p: `Learnivia is a free, volunteer-run peer tutoring platform exclusively serving students in Kindergarten through Grade 10 (K-10). All tutoring sessions are free of charge. Learnivia is not a commercial tutoring service.`,
     },
     {
       h: "2. Who Can Use Learnivia",
-      p: `Students: Learnivia is for K–10 learners (ages 5–16). Students under Grade 9 must have a parent or guardian create and manage their account. Students in Grade 9–10 may manage their own accounts independently. Tutors: Volunteer tutors must be in Grade 11 or above (high school or university students) and must complete our 5-module training and admin approval before hosting any sessions.`,
+      p: `Students: Learnivia is for K-10 learners (ages 5-16). Students under Grade 9 must have a parent or guardian create and manage their account. Students in Grade 9-10 may manage their own accounts independently. Tutors: Volunteer tutors must be in Grade 11 or above (high school or university students) and must complete our 5-module training and admin approval before hosting any sessions.`,
     },
     {
       h: "3. Parent & Guardian Responsibility",
@@ -58,8 +58,8 @@ export default function TermsPage() {
   return (
     <main style={{ maxWidth: 760, margin: "0 auto", padding: "4rem 1.5rem 6rem", fontFamily: "var(--font-body, Inter, sans-serif)" }}>
       <div style={{ marginBottom: "3rem" }}>
-        <div style={{ display: "inline-block", background: "#F0FDF4", color: "#0D683B", border: "1px solid #BBF7D0", borderRadius: "999px", padding: "0.3rem 0.9rem", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1rem" }}>
-          Free K–10 Tutoring Platform
+        <div style={{ display: "inline-block", background: "#F0FDF4", color: "#0D683B", border: "1px solid #BBF7D0", borderRadius: "6px", padding: "0.3rem 0.9rem", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1rem" }}>
+          Free K-10 Tutoring Platform
         </div>
         <h1 style={{ fontSize: "2.25rem", fontWeight: 900, color: "#111827", marginBottom: "0.5rem" }}>Terms of Service</h1>
         <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>Last updated: {LAST_UPDATED}</p>

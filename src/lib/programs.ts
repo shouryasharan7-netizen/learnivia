@@ -1,5 +1,5 @@
 /**
- * Static program data — typed repository.
+ * Static program data - typed repository.
  * Replace with DB fetch when Program model is added to Prisma schema.
  * All content marked [DEMO] is example content and must be verified before launch.
  */
@@ -21,15 +21,15 @@ export interface Program {
 export const PROGRAMS: Program[] = [
   {
     slug: "homework-help",
-    emoji: "📚",
+    emoji: "",
     title: "Homework Help",
-    shortDescription: "Get one-on-one support with any assignment, any subject — across all grade levels.",
+    shortDescription: "Get one-on-one support with any assignment, any subject across all grade levels.",
     longDescription:
       "Our Homework Help program matches you with a knowledgeable volunteer tutor who can walk through your specific assignment with you in real time. Sessions are flexible, free, and held online over Zoom.",
     subjects: ["Maths", "English", "Science", "History", "Geography", "Languages"],
-    gradeLevels: ["Primary (Years 1–6)", "Lower Secondary (Years 7–9)", "GCSE / O-Level", "A-Level / AP"],
+    gradeLevels: ["Primary (Years 1-6)", "Lower Secondary (Years 7-9)", "GCSE / O-Level", "A-Level / AP"],
     format: "One-on-one via Zoom",
-    duration: "30–60 minutes",
+    duration: "30-60 minutes",
     outcomes: [
       "Complete your current assignment with confidence",
       "Understand the underlying concept, not just the answer",
@@ -42,7 +42,7 @@ export const PROGRAMS: Program[] = [
   },
   {
     slug: "math-foundations",
-    emoji: "🔢",
+    emoji: "",
     title: "Math Foundations",
     shortDescription: "Build confidence in arithmetic, algebra, geometry, and beyond with patient, knowledgeable volunteers.",
     longDescription:
@@ -50,7 +50,7 @@ export const PROGRAMS: Program[] = [
     subjects: ["Arithmetic", "Algebra", "Geometry", "Trigonometry", "Statistics", "Calculus (introductory)"],
     gradeLevels: ["Primary", "Lower Secondary", "GCSE / O-Level", "A-Level / AP"],
     format: "One-on-one via Zoom",
-    duration: "45–60 minutes",
+    duration: "45-60 minutes",
     outcomes: [
       "Identify and address specific knowledge gaps",
       "Approach maths with greater confidence",
@@ -63,7 +63,7 @@ export const PROGRAMS: Program[] = [
   },
   {
     slug: "science-support",
-    emoji: "🔬",
+    emoji: "",
     title: "Science Support",
     shortDescription: "Explore biology, chemistry, physics, and earth science with tutors who love the subject.",
     longDescription:
@@ -71,7 +71,7 @@ export const PROGRAMS: Program[] = [
     subjects: ["Biology", "Chemistry", "Physics", "Earth & Environmental Science"],
     gradeLevels: ["Lower Secondary", "GCSE / O-Level", "A-Level / AP"],
     format: "One-on-one via Zoom",
-    duration: "45–60 minutes",
+    duration: "45-60 minutes",
     outcomes: [
       "Understand scientific principles, not just definitions",
       "Improve lab report and essay-style answers",
@@ -83,7 +83,7 @@ export const PROGRAMS: Program[] = [
   },
   {
     slug: "exam-prep",
-    emoji: "✏️",
+    emoji: "",
     title: "Exam Prep",
     shortDescription: "Focused preparation for standardised and school exams. Build strategies and fill knowledge gaps.",
     longDescription:
@@ -98,21 +98,21 @@ export const PROGRAMS: Program[] = [
       "Build a personalised revision plan",
     ],
     faq: [
-      { question: "How early should I start?", answer: "Ideally 6–8 weeks before exams, but we can help at any stage." },
+      { question: "How early should I start?", answer: "Ideally 6-8 weeks before exams, but we can help at any stage." },
       { question: "Can you help with exam anxiety?", answer: "Tutors can share strategies for managing nerves and building exam confidence." },
     ],
   },
   {
     slug: "writing-essays",
-    emoji: "📝",
+    emoji: "",
     title: "Writing & Essays",
-    shortDescription: "From brainstorming to final draft — get feedback on structure, clarity, argument, and grammar.",
+    shortDescription: "From brainstorming to final draft - get feedback on structure, clarity, argument, and grammar.",
     longDescription:
       "Writing sessions are collaborative. Share your draft or your brief, and your tutor will give direct, constructive feedback. Sessions cover academic essays, creative writing, college application personal statements, and more.",
     subjects: ["Academic essays", "Creative writing", "Personal statements", "Reports & coursework"],
     gradeLevels: ["Lower Secondary", "GCSE / O-Level", "A-Level / AP", "University applications"],
     format: "One-on-one via Zoom (document sharing recommended)",
-    duration: "45–60 minutes",
+    duration: "45-60 minutes",
     outcomes: [
       "Strengthen your argument and essay structure",
       "Improve clarity, grammar, and style",
@@ -124,7 +124,7 @@ export const PROGRAMS: Program[] = [
   },
   {
     slug: "study-skills",
-    emoji: "🧠",
+    emoji: "",
     title: "Study Skills",
     shortDescription: "Learn how to learn. Build note-taking, time management, and revision strategies that stick.",
     longDescription:

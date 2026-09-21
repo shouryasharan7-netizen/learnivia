@@ -5,13 +5,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin — Subject & Grade Configuration | Learnivia",
+  title: "Admin | Subject & Grade Configuration | Learnivia",
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminSubjectsPage() {
-  // P1-8: Use requireAdmin() — not inline email check — for consistent authorization
+  // P1-8: Use requireAdmin() - not inline email check - for consistent authorization
   try {
     await requireAdmin();
   } catch {
@@ -58,7 +58,7 @@ export default async function AdminSubjectsPage() {
         </div>
 
         <div style={{ background: "#FEF9C3", border: "1px solid #FDE047", borderRadius: "0.75rem", padding: "1rem 1.25rem", marginBottom: "2rem", fontSize: "0.875rem", color: "#713F12" }}>
-          <strong>K–10 Scope Lock:</strong> Learnivia exclusively supports Kindergarten through Grade 10. Do not add SAT, ACT, AP, A-Level, or college admissions subjects. Tutor applications listing out-of-scope subjects should be rejected.
+          <strong>K-10 Scope Lock:</strong> Learnivia exclusively supports Kindergarten through Grade 10. Do not add SAT, ACT, AP, A-Level, or college admissions subjects. Tutor applications listing out-of-scope subjects should be rejected.
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
@@ -70,7 +70,7 @@ export default async function AdminSubjectsPage() {
 
             <div style={{ marginBottom: "1rem" }}>
               <p style={{ fontSize: "0.8125rem", color: "#6B7280", marginBottom: "0.5rem" }}>
-                Canonical K–10 subjects (for reference):
+                Canonical K-10 subjects (for reference):
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
                 {K10_SUBJECTS.map((s) => (
@@ -80,7 +80,7 @@ export default async function AdminSubjectsPage() {
                       padding: "0.25rem 0.65rem",
                       background: "#F0FDF4",
                       color: "#0D683B",
-                      borderRadius: "999px",
+                      borderRadius: "4px",
                       fontSize: "0.8rem",
                       fontWeight: 600,
                       border: "1px solid #BBF7D0",
@@ -128,7 +128,7 @@ export default async function AdminSubjectsPage() {
                             padding: "0.15rem 0.5rem",
                             background: isK10 ? "#BBF7D0" : "#FECACA",
                             color: isK10 ? "#0D683B" : "#DC2626",
-                            borderRadius: "999px",
+                            borderRadius: "4px",
                             fontWeight: 700,
                           }}
                         >
@@ -150,7 +150,7 @@ export default async function AdminSubjectsPage() {
 
             <div style={{ marginBottom: "1rem" }}>
               <p style={{ fontSize: "0.8125rem", color: "#6B7280", marginBottom: "0.5rem" }}>
-                Required K–10 grade levels:
+                Required K-10 grade levels:
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                 {K10_GRADES.map((g) => {
@@ -185,7 +185,7 @@ export default async function AdminSubjectsPage() {
                           color: existsInDb ? "#0D683B" : "#B45309",
                         }}
                       >
-                        {existsInDb ? "✓ In DB" : "Not in DB"}
+                        {existsInDb ? "Active in DB" : "Missing from DB"}
                       </span>
                     </div>
                   );
@@ -209,7 +209,7 @@ export default async function AdminSubjectsPage() {
             Seed Missing Grade Levels
           </h2>
           <p style={{ fontSize: "0.875rem", color: "#6B7280", marginBottom: "1rem" }}>
-            If any K–10 grade levels are missing from the database, run the following seed command to add them. This is safe to run multiple times (idempotent).
+            If any K-10 grade levels are missing from the database, run the following seed command to add them. This is safe to run multiple times (idempotent).
           </p>
           <div
             style={{
@@ -224,7 +224,7 @@ export default async function AdminSubjectsPage() {
             npx prisma db seed
           </div>
           <p style={{ fontSize: "0.8125rem", color: "#9CA3AF", marginTop: "0.75rem" }}>
-            Or contact a developer to run a migration that seeds the canonical K–10 grade levels.
+            Or contact a developer to run a migration that seeds the canonical K-10 grade levels.
           </p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGN IN & SIGN UP — MODERN ACADEMIC SALON SPLIT LAYOUT
+   SIGN IN & SIGN UP - MODERN ACADEMIC SALON SPLIT LAYOUT
    Left: Deep Oxford Crimson scholarly panel with peer learning ethos
    Right: Luminous warm unbleached paper form container
    ========================================================================== */
@@ -151,7 +151,7 @@
   background: rgba(255, 255, 255, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 0.45rem 1rem;
-  border-radius: var(--wa-radius-pill, 999px);
+  border-radius: var(--wa-radius-pill, 6px);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -180,7 +180,7 @@
   box-shadow: var(--wa-shadow-md);
 }
 
-/* Mobile brand — visible only when left panel is hidden */
+/* Mobile brand - visible only when left panel is hidden */
 .mobileHeader {
   display: flex;
   align-items: center;

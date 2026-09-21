@@ -201,7 +201,16 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
                   <div key={r.id} className={styles.reviewItem}>
                     <div className={styles.reviewTop}>
                       <span className={styles.reviewAuthor}>{r.student.name || "Learner"}</span>
-                      <span className={styles.reviewStars}>{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
+                      <span className={styles.reviewStars} style={{ display: "inline-flex", alignItems: "center", gap: "2px" }}>
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star
+                            key={s}
+                            size={13}
+                            fill={s <= r.rating ? "#F59E0B" : "none"}
+                            stroke={s <= r.rating ? "#F59E0B" : "#CBD5E1"}
+                          />
+                        ))}
+                      </span>
                     </div>
                     {r.comment && <p className={styles.reviewComment}>&quot;{r.comment}&quot;</p>}
                   </div>

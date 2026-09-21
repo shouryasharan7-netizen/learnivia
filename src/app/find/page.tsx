@@ -202,11 +202,11 @@ export default async function FindTutorPage({ searchParams }: Props) {
       <div className={styles.header}>
         <div className={styles.kicker}>
           <GraduationCap size={14} color="#1B4D3E" />
-          <span>Verified Peer Mentors &middot; K–10</span>
+          <span>Verified Peer Mentors &middot; K-10</span>
         </div>
         <h1 className={styles.title}>Find a Volunteer Tutor</h1>
         <p className={styles.subtitle}>
-          Browse verified high school and university mentors approved for your grade level — free 1-on-1 Zoom sessions.
+          Browse verified high school and university mentors approved for your grade level, free 1-on-1 Zoom sessions.
         </p>
       </div>
 
@@ -284,7 +284,7 @@ export default async function FindTutorPage({ searchParams }: Props) {
         </select>
 
         <select name="grade" defaultValue={activeGrade || ""} className={styles.filterSelect}>
-          <option value="">All Grade Levels (K–10)</option>
+          <option value="">All Grade Levels (K-10)</option>
           <option value="Kindergarten">Kindergarten</option>
           <option value="Grade 1">Grade 1</option>
           <option value="Grade 2">Grade 2</option>
@@ -304,7 +304,7 @@ export default async function FindTutorPage({ searchParams }: Props) {
           <option value="CBSE">CBSE (India)</option>
           <option value="ICSE">ICSE (India)</option>
           <option value="IGCSE">IGCSE / GCSE (UK)</option>
-          <option value="IB">IB (K–10)</option>
+          <option value="IB">IB (K-10)</option>
           <option value="Other">Other</option>
         </select>
 

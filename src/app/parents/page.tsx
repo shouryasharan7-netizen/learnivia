@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck, HeartHandshake, Eye, FileText } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "For Parents & Guardians — Learnivia",
+  title: "For Parents & Guardians - Learnivia",
   description: "Everything parents and guardians need to know about how Learnivia works, who the tutors are, and how sessions are kept safe.",
 };
 
@@ -17,7 +17,7 @@ export default function ParentsPage() {
     {
       icon: HeartHandshake,
       title: "How do sessions work?",
-      content: "Sessions take place online via private 1-on-1 Zoom video calls with waiting rooms enabled. No in-person meetings are ever arranged or endorsed. Sessions last 30–60 minutes. We encourage parents of younger learners (under 13) to remain nearby during sessions.",
+      content: "Sessions take place online via private 1-on-1 Zoom video calls with waiting rooms enabled. No in-person meetings are ever arranged or endorsed. Sessions last 30-60 minutes. We encourage parents of younger learners (under 13) to remain nearby during sessions.",
     },
     {
       icon: FileText,
@@ -32,7 +32,7 @@ export default function ParentsPage() {
     {
       icon: ShieldCheck,
       title: "What if something goes wrong?",
-      content: "We maintain a direct, 24-hour reporting path for any concern — technical, behavioural, or safeguarding. Use the 'Report a Concern' button in your dashboard or email safety@learnivia.app. We respond to all inquiries within 24 hours.",
+      content: "We maintain a direct, 24-hour reporting path for any concern (technical, behavioural, or safeguarding). Use the 'Report a Concern' button in your dashboard or email safety@learnivia.app. We respond to all inquiries within 24 hours.",
     },
   ];
 
@@ -40,7 +40,7 @@ export default function ParentsPage() {
     <main style={{ background: "var(--wa-paper)", minHeight: "100vh", fontFamily: "var(--font-sans)", color: "var(--wa-ink)" }}>
       <section style={{ background: "var(--wa-white)", padding: "4.5rem 1.5rem 3.5rem", borderBottom: "1px solid var(--wa-border)", textAlign: "center" }}>
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <span style={{ display: "inline-block", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", color: "var(--wa-forest)", padding: "0.25rem 0.75rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600, marginBottom: "1rem" }}>
+          <span style={{ display: "inline-block", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", color: "var(--wa-forest)", padding: "0.25rem 0.75rem", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 600, marginBottom: "1rem" }}>
             Guardian Oversight &amp; Safeguarding
           </span>
           <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.25rem, 4.5vw, 3.25rem)", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "1rem", letterSpacing: "-0.02em" }}>

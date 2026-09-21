@@ -233,7 +233,7 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
                             fontSize: "0.75rem",
                             fontWeight: 800,
                             padding: "0.25rem 0.65rem",
-                            borderRadius: "999px",
+                            borderRadius: "4px",
                             display: "inline-block",
                           }}
                         >

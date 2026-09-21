@@ -52,7 +52,7 @@
   background: #F0FDF4;
   border: 1px solid #BBF7D0;
   padding: 0.25rem 0.65rem;
-  border-radius: 999px;
+  border-radius: 4px;
   letter-spacing: 0.02em;
 }
 
@@ -66,7 +66,7 @@
   background: #FDF3E3;
   border: 1px solid #E8C97A;
   padding: 0.25rem 0.65rem;
-  border-radius: 999px;
+  border-radius: 4px;
   letter-spacing: 0.02em;
 }
 
@@ -80,7 +80,7 @@
   background: #FEF3C7;
   border: 1px solid #FDE68A;
   padding: 0.25rem 0.65rem;
-  border-radius: 999px;
+  border-radius: 4px;
   letter-spacing: 0.02em;
 }
 
@@ -191,7 +191,7 @@
   background: linear-gradient(135deg, #2D6A4F 0%, #C9922A 100%);
   color: #FFFFFF;
   padding: 0.15rem 0.5rem;
-  border-radius: 999px;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   box-shadow: 0 2px 6px rgba(45, 106, 79, 0.3);

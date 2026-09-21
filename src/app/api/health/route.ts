@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const startMs = Date.now();
 
-  // Minimal DB ping — no user data, no secrets
+  // Minimal DB ping - no user data, no secrets
   let dbOk = false;
   let dbLatencyMs: number | null = null;
   try {
@@ -21,7 +21,7 @@ export async function GET() {
     dbLatencyMs = Date.now() - dbStart;
     dbOk = true;
   } catch {
-    // Intentionally swallowed — we only report ok/fail, not the error message
+    // Intentionally swallowed - we only report ok/fail, not the error message
     dbOk = false;
   }
 

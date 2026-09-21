@@ -74,7 +74,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
   {
     id: "homework",
     label: "Homework Help",
-    channel: "K–10 Homework Help",
+    channel: "K-10 Homework Help",
     icon: BookOpen,
     description: "Ask questions, share walkthrough steps, and collaborate on assignments.",
   },
@@ -289,7 +289,7 @@ export default function CommunityClient({
               background: "#EFF6FF",
               color: "#2563EB",
               padding: "0.2rem 0.6rem",
-              borderRadius: "999px",
+              borderRadius: "4px",
               fontSize: "0.75rem",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -434,7 +434,7 @@ export default function CommunityClient({
                     fontWeight: 700,
                     textTransform: "uppercase",
                     padding: "0.2rem 0.55rem",
-                    borderRadius: "999px",
+                    borderRadius: "4px",
                     letterSpacing: "0.05em",
                   }}
                 >
@@ -550,7 +550,7 @@ export default function CommunityClient({
                       >
                         <option value="General">General Discussion</option>
                         <option value="Math & Science Circles">Math &amp; Science</option>
-                        <option value="K–10 Homework Help">Homework Help</option>
+                        <option value="K-10 Homework Help">Homework Help</option>
                         <option value="Study Circles">Study Circles</option>
                         <option value="Introductions">Introductions</option>
                         {currentUser.isAdmin && <option value="Announcements">Announcements</option>}

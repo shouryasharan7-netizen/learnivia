@@ -130,7 +130,7 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
   const avgRating =
     tutor.reviews.length > 0
       ? (tutor.reviews.reduce((acc, r) => acc + r.rating, 0) / tutor.reviews.length).toFixed(1)
-      : "5.0";
+      : null;
 
   const certId = `TR-${tutor.id.toUpperCase().slice(0, 10)}`;
   const issueDate = new Date().toLocaleDateString("en-GB", {
@@ -224,8 +224,19 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
               <span className={styles.statLabel}>Students Helped</span>
             </div>
             <div className={styles.statCard}>
-              <span className={styles.statValue}>⭐ {avgRating}</span>
-              <span className={styles.statLabel}>Peer Rating ({tutor.reviews.length})</span>
+              <span className={styles.statValue} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.3rem" }}>
+                {avgRating ? (
+                  <>
+                    <Star size={16} fill="#F59E0B" color="#F59E0B" />
+                    <span>{avgRating}</span>
+                  </>
+                ) : (
+                  <span>New</span>
+                )}
+              </span>
+              <span className={styles.statLabel}>
+                {avgRating ? `Peer Rating (${tutor.reviews.length})` : "Peer Rating (Pending)"}
+              </span>
             </div>
           </div>
 
@@ -323,7 +334,7 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
                     <div key={r.id} className={styles.reviewQuote}>
                       <p className={styles.quoteText}>&quot;{r.comment || "Great session, really helpful!"}&quot;</p>
                       <div className={styles.quoteAuthor} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                        <span>— {displayName}</span>
+                        <span>- {displayName}</span>
                         <span>•</span>
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "0.15rem" }}>
                           {Array.from({ length: r.rating }).map((_, i) => (
@@ -345,7 +356,7 @@ export default async function TutorTranscriptPage({ params, searchParams }: Prop
                 <strong>Verification Statement:</strong> This transcript is a platform-generated service record issued by Learnivia reflecting sessions and workshops marked as completed within the Learnivia platform. Hours are computed from session start and end times recorded at time of booking.
               </p>
               <p style={{ marginTop: "0.5rem" }}>
-                Record ID: <code>{certId}</code> — Issued {issueDate}
+                Record ID: <code>{certId}</code> | Issued {issueDate}
               </p>
             </div>
 

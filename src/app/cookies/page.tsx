@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy — Learnivia",
-  description: "Learnivia strictly necessary cookies policy for free K–10 peer tutoring. No advertising or cross-site tracking cookies.",
+  title: "Cookie Policy - Learnivia",
+  description: "Learnivia strictly necessary cookies policy for free K-10 peer tutoring. No advertising or cross-site tracking cookies.",
 };
 
 const LAST_UPDATED = "September 2026";

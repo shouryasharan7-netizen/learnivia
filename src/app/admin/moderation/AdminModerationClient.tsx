@@ -327,7 +327,7 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                           fontSize: "0.75rem",
                           fontWeight: 700,
                           padding: "0.2rem 0.6rem",
-                          borderRadius: "999px",
+                          borderRadius: "4px",
                         }}
                       >
                         {h.subject}

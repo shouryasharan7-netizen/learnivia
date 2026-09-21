@@ -14,7 +14,7 @@ export function LearningPaths() {
       desc: "Arithmetic, algebra, geometry, trigonometry, and calculus prep.",
       href: `${ROUTES.find}?subject=Mathematics`,
       icon: Calculator,
-      badge: "K–10 Math",
+      badge: "K-10 Math",
     },
     {
       id: "science",

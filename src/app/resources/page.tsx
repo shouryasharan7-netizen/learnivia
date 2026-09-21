@@ -3,14 +3,14 @@ import { BookOpen, Wrench, FileCheck, ShieldCheck, ArrowRight } from "lucide-rea
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Learning Resources & Study Guides — Learnivia",
+  title: "Learning Resources & Study Guides | Learnivia",
   description: "Curated study guides, formula cheat sheets, and practice tools for students on Learnivia.",
 };
 
 const RESOURCE_SECTIONS = [
   {
     title: "Study Guides & Formula Sheets",
-    description: "Curated K–10 visual concept breakdowns, downloadable formula blueprints, and step-by-step problem guides across Math, Science, and English.",
+    description: "Curated K-10 visual concept breakdowns, downloadable formula blueprints, and step-by-step problem guides across Math, Science, and English.",
     href: "/resources/study-guides",
     icon: BookOpen,
     tag: "Guides & Formulas",
@@ -33,9 +33,9 @@ const RESOURCE_SECTIONS = [
 
 const DOWNLOADABLE_TOOLKITS = [
   {
-    title: "K–10 Math Formula Sheet",
+    title: "K-10 Math Formula Sheet",
     subject: "Mathematics",
-    grade: "Grades 5–10",
+    grade: "Grades 5-10",
     desc: "Comprehensive formulas for Area, Perimeter, Volume, Quadratic Equation, Slope, and Trigonometric Ratios.",
     format: "PDF Quick Sheet",
     badge: "Most Popular",
@@ -43,7 +43,7 @@ const DOWNLOADABLE_TOOLKITS = [
   {
     title: "PEEL Essay Writing Blueprint",
     subject: "English Language Arts",
-    grade: "Grades 6–10",
+    grade: "Grades 6-10",
     desc: "Point, Evidence, Explanation, Link scaffolded essay builder with transition words and analytical hooks.",
     format: "PDF Graphic Organizer",
     badge: "Writing Essential",
@@ -51,7 +51,7 @@ const DOWNLOADABLE_TOOLKITS = [
   {
     title: "Interactive Chemistry Periodic Guide",
     subject: "Physical Science",
-    grade: "Grades 7–10",
+    grade: "Grades 7-10",
     desc: "Atomic numbers, electron shells, element classifications, and oxidation states cheat sheet.",
     format: "Visual Guide",
     badge: "STEM Reference",
@@ -59,7 +59,7 @@ const DOWNLOADABLE_TOOLKITS = [
   {
     title: "Physics Mechanics & Kinematics",
     subject: "Science",
-    grade: "Grades 8–10",
+    grade: "Grades 8-10",
     desc: "Motion equations, Newton's Laws, work-energy theorem, and unit conversion tables.",
     format: "Formula Sheet",
     badge: "STEM Reference",
@@ -73,7 +73,7 @@ const QUICK_TIPS = [
   },
   {
     title: "Break Down Big Problems",
-    desc: "Tackle complex math and science equations in 2–3 smaller steps. Identify what is known, what is needed, and solve piece by piece.",
+    desc: "Tackle complex math and science equations in 2-3 smaller steps. Identify what is known, what is needed, and solve piece by piece.",
   },
   {
     title: "Focus on Understanding",

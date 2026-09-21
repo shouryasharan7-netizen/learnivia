@@ -46,7 +46,7 @@ export async function GET(request: Request) {
           status: true,
           createdAt: true,
           // Deliberately omit: question (full text), studentId, student details
-          // Tutors get a truncated preview only — full question revealed on accept
+          // Tutors get a truncated preview only - full question revealed on accept
           tutor: {
             select: {
               id: true,
@@ -125,7 +125,7 @@ export async function POST(request: Request) {
     const initials = nameParts.map((n) => n[0]).slice(0, 2).join("").toUpperCase();
 
     await addMessage({
-      channel: "K–10 Homework Help",
+      channel: "K-10 Homework Help",
       authorId: user.id,
       authorName: maskedAuthor,
       authorEmail: "", // never leak personal email addresses to community store

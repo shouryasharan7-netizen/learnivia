@@ -55,7 +55,7 @@ export function Footer() {
                 </div>
               </Link>
               <p className={styles.tagline}>
-                Free 1-on-1 peer tutoring for K–10 students, delivered by verified volunteer tutors on Zoom.
+                Free 1-on-1 peer tutoring for K-10 students, delivered by verified volunteer tutors on Zoom.
               </p>
               <div className={styles.missionPill}>
                 <span className={styles.missionDot} />

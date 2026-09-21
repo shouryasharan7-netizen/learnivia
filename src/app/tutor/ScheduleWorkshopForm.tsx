@@ -187,11 +187,11 @@ export function ScheduleWorkshopForm() {
             Grade Level *
           </label>
           <select name="grade" required className={styles.selectInput} style={{ width: "100%" }}>
-            <option value="All Levels">All K–10 Levels</option>
-            <option value="Early Elementary (K–2)">Early Elementary (K–2)</option>
-            <option value="Elementary (3–5)">Elementary (Grades 3–5)</option>
-            <option value="Middle School (6–8)">Middle School (Grades 6–8)</option>
-            <option value="Early High School (9–10)">Early High School (Grades 9–10)</option>
+            <option value="All Levels">All K-10 Levels</option>
+            <option value="Early Elementary (K-2)">Early Elementary (K-2)</option>
+            <option value="Elementary (3-5)">Elementary (Grades 3-5)</option>
+            <option value="Middle School (6-8)">Middle School (Grades 6-8)</option>
+            <option value="Early High School (9-10)">Early High School (Grades 9-10)</option>
           </select>
         </div>
       </div>

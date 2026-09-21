@@ -44,7 +44,7 @@ export async function createChildProfile(formData: FormData) {
     lastInitial = lastInitial.charAt(0) + ".";
 
     if (!VALID_GRADES.includes(grade)) {
-      return { success: false, error: "Please select a valid K–10 grade level." };
+      return { success: false, error: "Please select a valid K-10 grade level." };
     }
 
     let age: number | undefined = undefined;

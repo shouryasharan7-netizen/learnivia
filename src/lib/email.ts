@@ -225,7 +225,7 @@ export async function sendTutorTrainingReminder(tutorEmail: string, tutorName: s
             </p>
           </div>
 
-          <p>Completing your remaining modules takes around 15–20 minutes and ensures student safety and high-quality mentorship.</p>
+          <p>Completing your remaining modules takes around 15-20 minutes and ensures student safety and high-quality mentorship.</p>
           
           <a href="https://learnivia-green.vercel.app/tutor/training" style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin: 12px 0;">
             Complete Training Modules Now →
@@ -310,11 +310,11 @@ export async function sendPasswordResetEmail(recipientEmail: string, resetUrl: s
             </a>
           </div>
           <p style="font-size: 13px; color: #64748B; line-height: 1.5; margin: 24px 0 0;">
-            This link will expire in 1 hour. If you didn't request this password reset, you can safely ignore this email — your account remains completely secure.
+            This link will expire in 1 hour. If you didn't request this password reset, you can safely ignore this email, your account remains completely secure.
           </p>
           <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 28px 0 16px;" />
           <p style="font-size: 12px; color: #94A3B8; margin: 0;">
-            Learnivia — Free K–10 Peer Tutoring Platform
+            Learnivia: Free K-10 Peer Tutoring Platform
           </p>
         </div>
       `,
@@ -354,7 +354,7 @@ export async function sendEmailVerification(recipientEmail: string, verifyUrl: s
           </p>
           <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 28px 0 16px;" />
           <p style="font-size: 12px; color: #94A3B8; margin: 0;">
-            Learnivia — Free K–10 Peer Tutoring Platform
+            Learnivia: Free K-10 Peer Tutoring Platform
           </p>
         </div>
       `,

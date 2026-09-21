@@ -160,7 +160,7 @@ export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = fals
                     style={{
                       fontSize: "0.65rem",
                       padding: "0.1rem 0.4rem",
-                      borderRadius: "999px",
+                      borderRadius: "4px",
                       background: "#FEF3C7",
                       color: "#92400E",
                       fontWeight: 700,

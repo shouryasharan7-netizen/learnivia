@@ -13,8 +13,6 @@ import {
   Calendar,
   Users,
   Search,
-  BookOpen,
-  Compass,
 } from "lucide-react";
 import styles from "./page.module.css";
 
@@ -30,8 +28,6 @@ interface HomeInteractiveClientProps {
     openSeats: number;
     maxCapacity: number;
   } | null;
-  tutorsCount?: number;
-  completedCount?: number;
 }
 
 const DISCIPLINES = [
@@ -41,37 +37,37 @@ const DISCIPLINES = [
     subjects: [
       {
         name: "Algebra & Analytical Geometry",
-        grade: "Grades 7–10",
+        grade: "Grades 7-10",
         summary: "Linear equations, quadratics, Cartesian geometry, and multi-step proofs.",
         href: "/find?subject=Mathematics",
       },
       {
         name: "PEEL Essay Writing & Rhetoric",
-        grade: "Grades 4–10",
+        grade: "Grades 4-10",
         summary: "Structured point-evidence-explanation-link arguments and textual analysis.",
         href: "/find?subject=Writing",
       },
       {
         name: "Foundational Biology & Chemistry",
-        grade: "Grades 6–10",
+        grade: "Grades 6-10",
         summary: "Cellular respiration, Mendelian genetics, stoichiometry, and periodic trends.",
         href: "/find?subject=Science",
       },
       {
         name: "Elementary Fractions & Reasoning",
-        grade: "Grades 3–5",
+        grade: "Grades 3-5",
         summary: "Visual fractions, word problem modeling, multi-digit operations, and fluency.",
         href: "/find?subject=Mathematics",
       },
       {
         name: "Guided Reading & Phonics Discovery",
-        grade: "Grades K–2",
+        grade: "Grades K-2",
         summary: "Early phonemic awareness, vocabulary decoding, and supported story narration.",
         href: "/find?subject=Reading",
       },
       {
         name: "World Geography, Civics & History",
-        grade: "Grades 4–9",
+        grade: "Grades 4-9",
         summary: "Primary source evaluation, democratic systems, map analysis, and global cultures.",
         href: "/find?subject=Social+Studies",
       },
@@ -83,25 +79,25 @@ const DISCIPLINES = [
     subjects: [
       {
         name: "Pre-Algebra & Linear Systems",
-        grade: "Grades 6–8",
+        grade: "Grades 6-8",
         summary: "Variable equations, integer rules, graphing coordinates, and rate ratios.",
         href: "/find?grade=6-8&subject=Mathematics",
       },
       {
         name: "Algebra I, II & Geometry",
-        grade: "Grades 8–10",
+        grade: "Grades 8-10",
         summary: "Polynomial factoring, geometric congruence, functions, and trigonometry basics.",
         href: "/find?grade=9-10&subject=Mathematics",
       },
       {
         name: "Cellular Biology & Ecology",
-        grade: "Grades 7–10",
+        grade: "Grades 7-10",
         summary: "Mitosis, DNA structure, ecosystem energy pyramids, and scientific hypothesis testing.",
         href: "/find?subject=Science",
       },
       {
         name: "Introductory Chemistry",
-        grade: "Grades 9–10",
+        grade: "Grades 9-10",
         summary: "Chemical nomenclature, atomic orbitals, balanced reactions, and solution molarity.",
         href: "/find?grade=9-10&subject=Science",
       },
@@ -113,25 +109,25 @@ const DISCIPLINES = [
     subjects: [
       {
         name: "Analytical PEEL Essay Writing",
-        grade: "Grades 5–10",
+        grade: "Grades 5-10",
         summary: "Developing clear thesis statements, integrating quotations, and persuasive rhetoric.",
         href: "/find?subject=Writing",
       },
       {
         name: "Reading Comprehension & Critical Thought",
-        grade: "Grades 3–8",
+        grade: "Grades 3-8",
         summary: "Theme identification, inferencing, author perspective, and vocabulary in context.",
         href: "/find?subject=Reading",
       },
       {
         name: "Grammar, Syntax & Sentence Craft",
-        grade: "Grades 3–7",
+        grade: "Grades 3-7",
         summary: "Parts of speech, comma rules, clause structures, and active voice precision.",
         href: "/find?subject=Writing",
       },
       {
         name: "Civics, Government & History",
-        grade: "Grades 6–9",
+        grade: "Grades 6-9",
         summary: "Constitutional principles, historical turning points, and document-based questions.",
         href: "/find?subject=Social+Studies",
       },
@@ -139,23 +135,23 @@ const DISCIPLINES = [
   },
   {
     id: "primary",
-    label: "Foundations & Literacy (K–3)",
+    label: "Foundations & Literacy (K-3)",
     subjects: [
       {
         name: "Phonics & Word Sound Decoding",
-        grade: "Kindergarten – Grade 2",
+        grade: "Kindergarten - Grade 2",
         summary: "Letter-sound blending, sight word fluency, and interactive reading games.",
         href: "/find?grade=K-2&subject=Reading",
       },
       {
         name: "Number Sense & Counting Fluency",
-        grade: "Kindergarten – Grade 2",
+        grade: "Kindergarten - Grade 2",
         summary: "Visual ten-frames, addition/subtraction intuition, shapes, and patterns.",
         href: "/find?grade=K-2&subject=Mathematics",
       },
       {
         name: "Guided Narrative Comprehension",
-        grade: "Grades 1–3",
+        grade: "Grades 1-3",
         summary: "Story retelling, character exploration, and expressing ideas in simple sentences.",
         href: "/find?grade=K-2&subject=Reading",
       },
@@ -169,21 +165,21 @@ const TUTOR_ROSTER = [
     school: "Stuyvesant High School",
     avatar: "AC",
     subjects: ["AP Calculus BC", "Physics", "Algebra I"],
-    hours: "48 Hours Verified",
+    role: "Verified Volunteer Tutor",
   },
   {
     name: "Maya Patel",
     school: "Bronx High School of Science",
     avatar: "MP",
     subjects: ["AP Biology", "PEEL Writing", "Middle School Science"],
-    hours: "62 Hours Verified",
+    role: "Verified Volunteer Tutor",
   },
   {
     name: "Julian Rivera",
     school: "Thomas Jefferson High School",
     avatar: "JR",
     subjects: ["Geometry", "Pre-Algebra", "Spanish"],
-    hours: "35 Hours Verified",
+    role: "Verified Volunteer Tutor",
   },
 ];
 
@@ -236,8 +232,6 @@ const FAQS = [
 
 export default function HomeInteractiveClient({
   liveSession,
-  tutorsCount = 140,
-  completedCount = 380,
 }: HomeInteractiveClientProps) {
   const [activeTab, setActiveTab] = useState("all");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -257,30 +251,30 @@ export default function HomeInteractiveClient({
 
   return (
     <div className={styles.pageWrapper}>
-      {/* ── 1. EDITORIAL BROADSHEET TICKER ── */}
-      <aside className={styles.mastheadTicker} aria-label="Academic Gazette Bulletin">
+      {/* ── 1. EDITORIAL TICKER ── */}
+      <aside className={styles.mastheadTicker} aria-label="Academic Bulletin">
         <div className={styles.container}>
           <div className={styles.mastheadInner}>
             <div className={styles.mastheadMeta}>
-              <span>Vol. IV · No. 1</span>
+              <span>Non-Profit Peer Learning</span>
               <span className={styles.mastheadDot} />
-              <span>A Public Non-Profit Knowledge Commons</span>
+              <span>Supervised Zoom Tutoring for Kindergarten to Grade 10</span>
               <span className={styles.mastheadDot} />
-              <span>Est. for Accessible Scholarship</span>
+              <span>100% Free - No Fees or Subscriptions</span>
             </div>
             <div className={styles.mastheadBadge}>
               <Award size={14} color="var(--wa-ochre, #B45309)" />
-              <span>100% Free · Verified Volunteer Peer Mentors</span>
+              <span>Verified Volunteer Peer Mentors</span>
             </div>
           </div>
         </div>
       </aside>
 
-      {/* ── 2. HERO BROADSHEET (MANIFESTO + DISPATCH) ── */}
+      {/* ── 2. HERO SECTION ── */}
       <section className={styles.heroSection}>
         <div className={styles.container}>
           <div className={styles.heroGrid}>
-            {/* Left Column: Academic Manifesto */}
+            {/* Left Column: Clear, Non-Vague Hero */}
             <div className={styles.heroContent}>
               <div className={styles.charterPill}>
                 <ShieldCheck size={14} />
@@ -288,21 +282,21 @@ export default function HomeInteractiveClient({
               </div>
 
               <h1 className={styles.heroHeadline}>
-                Education as a <em>common good.</em>
+                Free 1-on-1 tutoring for <em>Kindergarten to Grade 10</em> students.
               </h1>
 
               <p className={styles.heroLead}>
-                Connect with verified secondary and collegiate scholars for <strong>free, 1-on-1 peer mentorship</strong> conducted over private, supervised Zoom rooms. Supporting Kindergarten through Grade 10 across all academic disciplines.
+                Volunteer high school and college mentors help younger students build confidence and master Math, Science, and English over secure, supervised Zoom sessions. Completely free with zero fees and no subscriptions.
               </p>
 
               <div className={styles.heroActions}>
                 <Link href="/find" className={styles.btnPrimary}>
-                  <span>Explore Subject Directory</span>
+                  <span>Find a Tutor</span>
                   <ArrowRight size={17} />
                 </Link>
                 <Link href="/apply" className={styles.btnSecondary}>
                   <GraduationCap size={17} />
-                  <span>Volunteer as a Peer Mentor</span>
+                  <span>Volunteer as a Tutor</span>
                 </Link>
               </div>
 
@@ -324,7 +318,7 @@ export default function HomeInteractiveClient({
                   </div>
                   <div>
                     <h2 className={styles.pillarTitle}>Vetted Scholar Mentors</h2>
-                    <p className={styles.pillarDesc}>Verified academic records &amp; mandatory child safety training.</p>
+                    <p className={styles.pillarDesc}>Verified academic records and mandatory child safety training.</p>
                   </div>
                 </div>
 
@@ -344,7 +338,7 @@ export default function HomeInteractiveClient({
                   </div>
                   <div>
                     <h2 className={styles.pillarTitle}>Certified Service Hours</h2>
-                    <p className={styles.pillarDesc}>Auditable transcripts with unique verification IDs for college credit.</p>
+                    <p className={styles.pillarDesc}>Official service transcripts with unique verification IDs for tutors.</p>
                   </div>
                 </div>
               </div>
@@ -355,10 +349,10 @@ export default function HomeInteractiveClient({
               <div className={styles.dispatchHeader}>
                 <div className={styles.dispatchTag}>
                   <span className={styles.dispatchDot} />
-                  <span>Live Academic Dispatch</span>
+                  <span>Academic Dispatch</span>
                 </div>
                 <div className={styles.dispatchVolunteers}>
-                  {tutorsCount > 0 ? `${tutorsCount} Verified Mentors` : "Active Mentorship"}
+                  Volunteer Peer Mentoring
                 </div>
               </div>
 
@@ -389,7 +383,7 @@ export default function HomeInteractiveClient({
                     <span className={styles.subjectBadge}>1-on-1 Academic Mentorship</span>
                     <h3 className={styles.workshopTitle}>Daily Open Peer Mentoring</h3>
                     <p className={styles.workshopTutor}>
-                      Experienced high school tutors ready to help across Math, Science, and Essay Writing.
+                      Experienced high school and college tutors ready to help across Math, Science, and Essay Writing.
                     </p>
                     <Link href="/find" className={styles.workshopBtn}>
                       Browse Available Tutors →
@@ -397,19 +391,19 @@ export default function HomeInteractiveClient({
                   </div>
                 )}
 
-                {/* Dispatch Statistics Ledger */}
+                {/* Grounded Platform Standards (No Fake Numbers) */}
                 <div className={styles.dispatchLedger}>
                   <div>
-                    <div className={styles.ledgerNum}>{completedCount}+</div>
-                    <div className={styles.ledgerLabel}>Hours Mentored</div>
+                    <div className={styles.ledgerNum}>100%</div>
+                    <div className={styles.ledgerLabel}>Free Forever</div>
                   </div>
                   <div>
-                    <div className={styles.ledgerNum}>{tutorsCount}+</div>
-                    <div className={styles.ledgerLabel}>Honor Scholars</div>
+                    <div className={styles.ledgerNum}>K-10</div>
+                    <div className={styles.ledgerLabel}>Grades Supported</div>
                   </div>
                   <div>
-                    <div className={styles.ledgerNum}>$0</div>
-                    <div className={styles.ledgerLabel}>Cost to Families</div>
+                    <div className={styles.ledgerNum}>Zoom</div>
+                    <div className={styles.ledgerLabel}>Supervised Rooms</div>
                   </div>
                 </div>
               </div>
@@ -496,7 +490,7 @@ export default function HomeInteractiveClient({
                 <div className={styles.tutorCardFooter}>
                   <div className={styles.hoursVerified}>
                     <CheckCircle2 size={14} />
-                    <span>{tutor.hours}</span>
+                    <span>{tutor.role}</span>
                   </div>
                   <Link href="/find" className={styles.bookTutorBtn}>
                     <span>Schedule</span>
@@ -560,11 +554,11 @@ export default function HomeInteractiveClient({
                   value={selectedGrade}
                   onChange={(e) => setSelectedGrade(e.target.value)}
                 >
-                  <option value="all">All Grades (K–10)</option>
-                  <option value="K-2">Grades K–2 (Early Elementary)</option>
-                  <option value="3-5">Grades 3–5 (Elementary)</option>
-                  <option value="6-8">Grades 6–8 (Middle School)</option>
-                  <option value="9-10">Grades 9–10 (Early High School)</option>
+                  <option value="all">All Grades (K-10)</option>
+                  <option value="K-2">Grades K-2 (Early Elementary)</option>
+                  <option value="3-5">Grades 3-5 (Elementary)</option>
+                  <option value="6-8">Grades 6-8 (Middle School)</option>
+                  <option value="9-10">Grades 9-10 (Early High School)</option>
                 </select>
               </div>
 
@@ -594,7 +588,7 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 7. INSTITUTIONAL FAQ (ACADEMIC STANDARDS) ── */}
+      {/* ── 7. INSTITUTIONAL FAQ ── */}
       <section className={styles.faqSection} id="faq">
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
@@ -639,7 +633,7 @@ export default function HomeInteractiveClient({
         <div className={styles.container}>
           <div className={styles.admissionsCard}>
             <h2 className={styles.admissionsTitle}>
-              Knowledge belongs to <em>every child.</em>
+              Quality education should be accessible to <em>every student.</em>
             </h2>
             <p className={styles.admissionsText}>
               Whether you are a parent seeking patient academic mentorship for your student, or a high school scholar looking to earn verified community service hours, our doors are open.

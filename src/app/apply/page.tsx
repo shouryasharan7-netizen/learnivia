@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
 import ApplyFormClient from "./ApplyFormClient";
 
 export const metadata: Metadata = {
-  title: "Volunteer Tutor Application & Academic Credentials — Learnivia",
+  title: "Volunteer Tutor Application & Academic Credentials | Learnivia",
   description: "Apply to become a volunteer tutor on Learnivia or submit your academic report card and scores for review.",
 };
 
@@ -22,7 +22,7 @@ export default async function ApplyPage() {
           <Image src="/images/become-a-tutor.png" alt="" width={120} height={150} className={styles.mascotImg} />
           <h1 className={styles.title}>Become a Volunteer Tutor</h1>
           <p className={styles.subtitle}>
-            Help K–10 students learn for free. Earn verified volunteer hours. Make a genuine community impact.
+            Help K-10 students learn for free. Earn verified volunteer hours. Make a genuine community impact.
           </p>
         </div>
 
@@ -58,7 +58,7 @@ export default async function ApplyPage() {
               </li>
               <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <CheckCircle2 size={16} color="var(--color-forest, #234B3B)" style={{ flexShrink: 0 }} />
-                <span>Complete schedule freedom — you set your own availability</span>
+                <span>Complete schedule freedom, you set your own availability</span>
               </li>
               <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <CheckCircle2 size={16} color="var(--color-forest, #234B3B)" style={{ flexShrink: 0 }} />
@@ -90,7 +90,7 @@ export default async function ApplyPage() {
         <p className={styles.subtitle}>
           {tutorProfile
             ? "Manage your credentials, update your subjects, and view your review status."
-            : "Share what you know with K–10 learners. Complete your application below to get started."}
+            : "Share what you know with K-10 learners. Complete your application below to get started."}
         </p>
       </div>
 

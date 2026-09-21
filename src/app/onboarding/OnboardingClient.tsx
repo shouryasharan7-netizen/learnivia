@@ -43,7 +43,7 @@ const CURRICULA = [
 ];
 
 const TUTOR_LEVELS = [
-  "High School (Grade 11–12)",
+  "High School (Grade 11-12)",
   "Undergraduate College / University",
   "Graduate Student",
   "Educator / Working Professional",
@@ -209,7 +209,7 @@ export default function OnboardingClient() {
                     </div>
                     <h3 className={styles.roleTitle}>Parent / Guardian</h3>
                     <p className={styles.roleDesc}>
-                      Managing 1-on-1 tutoring for a student (K–10) with verified progress reports.
+                      Managing 1-on-1 tutoring for a student (K-10) with verified progress reports.
                     </p>
                   </div>
 
@@ -227,7 +227,7 @@ export default function OnboardingClient() {
                     <div className={styles.roleIconWrap}>
                       <BookOpen size={20} />
                     </div>
-                    <h3 className={styles.roleTitle}>Student (K–10)</h3>
+                    <h3 className={styles.roleTitle}>Student (K-10)</h3>
                     <p className={styles.roleDesc}>
                       Looking for friendly homework help, exam prep, or concept reviews from peer tutors.
                     </p>

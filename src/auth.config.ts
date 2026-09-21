@@ -10,7 +10,7 @@ import GoogleProvider from "next-auth/providers/google"
  *
  * NOTE: This function is called at request time (not module init) so that
  * the env var is read fresh. In practice on Vercel, env vars are baked in
- * at deploy time, so this is equivalent — but makes the dependency explicit.
+ * at deploy time, so this is equivalent - but makes the dependency explicit.
  */
 export function getAdminEmails(): Set<string> {
   if (!process.env.ADMIN_EMAILS) {

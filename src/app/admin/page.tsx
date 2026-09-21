@@ -27,7 +27,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Admin Command Center — Learnivia",
+  title: "Admin Command Center | Learnivia",
   description: "Platform health monitoring, safeguarding incident triage, and administrative controls.",
 };
 

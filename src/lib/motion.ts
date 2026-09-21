@@ -1,7 +1,7 @@
 import type { Transition } from "motion/react";
 
 /**
- * Emil Kowalski Motion Presets — Physics-based springs
+ * Emil Kowalski Motion Presets - Physics-based springs
  * replacing linear/ease curves with natural, tangible physical motion.
  */
 export const springs = {

@@ -32,7 +32,7 @@
   background: #E6F4EA;
   color: #0E8345;
   padding: 0.35rem 1rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   font-size: 0.85rem;
   font-weight: 700;
   margin-bottom: 1.25rem;
@@ -90,7 +90,7 @@
   width: 100%;
   padding: 0.95rem 1.25rem 0.95rem 3.25rem;
   font-size: 1rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   border: 1.5px solid #CBD5E1;
   background: #FFFFFF;
   color: #1E293B;
@@ -128,7 +128,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.15rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 600;
   border: 1px solid #E2E8F0;
@@ -161,7 +161,7 @@
   opacity: 0.8;
   background: rgba(0, 0, 0, 0.08);
   padding: 0.1rem 0.45rem;
-  border-radius: 999px;
+  border-radius: 4px;
 }
 
 .categoryBtnActive .itemCount {
@@ -177,7 +177,7 @@
   font-weight: 700;
   font-size: 0.9rem;
   padding: 0.65rem 1.35rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
@@ -240,7 +240,7 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
+  border-radius: 4px;
 }
 
 .readTime {
@@ -354,7 +354,7 @@
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
+  border-radius: 4px;
   letter-spacing: 0.02em;
 }
 
@@ -457,7 +457,7 @@
   font-weight: 600;
   background: #E6F4EA;
   padding: 0.15rem 0.55rem;
-  border-radius: 9999px;
+  border-radius: 4px;
 }
 
 /* Share Your Story Form Drawer / Modal */
@@ -549,7 +549,7 @@
   font-weight: 700;
   font-size: 1rem;
   padding: 0.85rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
@@ -627,7 +627,7 @@
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.3rem 0.85rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   margin-bottom: 1rem;
 }
 
@@ -705,7 +705,7 @@
   background: var(--wa-green);
   color: #FFFFFF;
   padding: 0.8rem 1.75rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   font-weight: 700;
   text-decoration: none;
   font-size: 0.95rem;

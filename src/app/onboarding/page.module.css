@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LEARNIVIA — MODERN ACADEMIC SALON ONBOARDING FOLIO
+   LEARNIVIA: MODERN ACADEMIC SALON ONBOARDING FOLIO
    "Warm Unbleached Paper, Archival Slip Steps, Tactile Study Chips"
    ========================================================================== */
 
@@ -42,7 +42,7 @@
   background: var(--wa-crimson-light, #FDF2F4);
   border: 1px solid rgba(139, 38, 62, 0.2);
   padding: 0.3rem 0.8rem;
-  border-radius: var(--wa-radius-pill, 999px);
+  border-radius: var(--wa-radius-pill, 6px);
 }
 
 .folioTitle {

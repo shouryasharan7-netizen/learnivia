@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LEARNIVIA — LEARNER WORKSPACE (OPERATE MODE)
+   LEARNIVIA: LEARNER WORKSPACE (OPERATE MODE)
    Clean Academic Salon, Resilient Two-Column Desk, High-Legibility Tokens
    ========================================================================== */
 
@@ -53,7 +53,7 @@
   color: var(--wa-muted, #475569);
   background: var(--wa-paper, #F1F5F9);
   padding: 0.25rem 0.65rem;
-  border-radius: var(--wa-radius-pill, 999px);
+  border-radius: var(--wa-radius-pill, 6px);
   border: 1px solid var(--wa-border, #E2E8F0);
 }
 
@@ -463,7 +463,7 @@
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 0.45rem 0.85rem;
-  border-radius: var(--wa-radius-pill, 999px);
+  border-radius: var(--wa-radius-pill, 6px);
   background: var(--wa-paper, #F1F5F9);
   border: 1px solid var(--wa-border, #E2E8F0);
   color: var(--wa-text, #334155);

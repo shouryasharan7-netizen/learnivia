@@ -22,7 +22,7 @@ const MODULES = [
     content: [
       {
         heading: "The Role of a Volunteer Tutor",
-        body: "Your job is not to lecture — it's to guide. Ask questions instead of giving answers. Say 'What do you think comes next?' instead of 'The next step is...'. This builds confidence and independent thinking.",
+        body: "Your job is not to lecture, it's to guide. Ask questions instead of giving answers. Say 'What do you think comes next?' instead of 'The next step is...'. This builds confidence and independent thinking.",
       },
       {
         heading: "Active Listening",
@@ -34,14 +34,14 @@ const MODULES = [
       },
       {
         heading: "Handling Wrong Answers",
-        body: "Never say 'That's wrong'. Instead say 'Interesting — let's trace through that together and see where it leads.' This keeps students engaged and removes shame from making mistakes.",
+        body: "Never say 'That's wrong'. Instead say 'Interesting - let's trace through that together and see where it leads.' This keeps students engaged and removes shame from making mistakes.",
       },
     ],
     quiz: {
       question: "A student gives a wrong answer. What is the best response?",
       options: [
         "Tell them it's wrong and give the correct answer",
-        "Say 'Interesting — let's trace through that together'",
+        "Say 'Interesting - let's trace through that together'",
         "Skip and move to the next problem",
         "Ask them to try again without any guidance",
       ],
@@ -64,7 +64,7 @@ const MODULES = [
     content: [
       {
         heading: "Every Learner is Different",
-        body: "Some students need concepts explained visually with diagrams. Others need to hear it spoken aloud. Some need extra time to process. None of these differences require a formal diagnosis — they are simply different learning profiles.",
+        body: "Some students need concepts explained visually with diagrams. Others need to hear it spoken aloud. Some need extra time to process. None of these differences require a formal diagnosis: they are simply different learning profiles.",
       },
       {
         heading: "Visual Learners",
@@ -76,7 +76,7 @@ const MODULES = [
       },
       {
         heading: "Neurodiverse Learners",
-        body: "Students with ADHD may need shorter task chunks and more frequent check-ins ('Does that make sense so far?'). Students with dyslexia may struggle with reading speed — read problems aloud for them. Always follow the student's pace, not a pre-set speed.",
+        body: "Students with ADHD may need shorter task chunks and more frequent check-ins ('Does that make sense so far?'). Students with dyslexia may struggle with reading speed. Read problems aloud for them. Always follow the student's pace, not a pre-set speed.",
       },
       {
         heading: "No Diagnosis Required",
@@ -110,11 +110,11 @@ const MODULES = [
     content: [
       {
         heading: "Before Every Session",
-        body: "Test your audio and camera 5 minutes before the session. Have a clean, quiet background. Close unnecessary browser tabs. Open any materials you'll need — the whiteboard, a calculator, or a relevant document.",
+        body: "Test your audio and camera 5 minutes before the session. Have a clean, quiet background. Close unnecessary browser tabs. Open any materials you'll need: the whiteboard, a calculator, or a relevant document.",
       },
       {
         heading: "Using the Zoom Whiteboard",
-        body: "Zoom's whiteboard is your primary teaching tool. Use it to draw diagrams, write equations, create tables, and show step-by-step solutions. Ask the student to draw their thinking on the whiteboard too — this reveals misconceptions faster than words.",
+        body: "Zoom's whiteboard is your primary teaching tool. Use it to draw diagrams, write equations, create tables, and show step-by-step solutions. Ask the student to draw their thinking on the whiteboard too, as this reveals misconceptions faster than words.",
       },
       {
         heading: "Screen Sharing",
@@ -164,7 +164,7 @@ const MODULES = [
       },
       {
         heading: "Minor Protection",
-        body: "Students are K-10, which means many are under 13. Treat every interaction as if a parent is watching — because for young students, they may be. Keep all conversations strictly academic.",
+        body: "Students are K-10, which means many are under 13. Treat every interaction as if a parent is watching, because for young students, they may be. Keep all conversations strictly academic.",
       },
       {
         heading: "If a Student Discloses Something Concerning",
@@ -172,13 +172,13 @@ const MODULES = [
       },
       {
         heading: "Your Own Boundaries",
-        body: "You are not a counselor or parent. If a session goes off-topic to non-academic issues, gently redirect: 'I want to make sure we use our session time well — let's come back to your math problem.' You are allowed to end sessions early if you feel uncomfortable.",
+        body: "You are not a counselor or parent. If a session goes off-topic to non-academic issues, gently redirect: 'I want to make sure we use our session time well - let's come back to your math problem.' You are allowed to end sessions early if you feel uncomfortable.",
       },
     ],
     quiz: {
       question: "A parent asks for your personal phone number to schedule sessions directly. What do you do?",
       options: [
-        "Share it — it's easier for everyone",
+        "Share it: it's easier for everyone",
         "Politely decline and explain all scheduling must go through Learnivia",
         "Give them your email instead",
         "Block them on the platform",
@@ -329,7 +329,7 @@ export default function TutorTrainingPage() {
             style={{
               display: "inline-block",
               background: "rgba(255,255,255,0.2)",
-              borderRadius: "999px",
+              borderRadius: "6px",
               padding: "0.3rem 1rem",
               fontSize: "0.8rem",
               fontWeight: 700,
@@ -338,14 +338,14 @@ export default function TutorTrainingPage() {
               marginBottom: "0.75rem",
             }}
           >
-            Tutor Training — Required
+            Tutor Training - Required
           </div>
           <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, margin: "0 0 0.75rem" }}>
             Complete Your Training
           </h1>
           <p style={{ opacity: 0.9, fontSize: "1rem" }}>
             You must complete all 5 modules before receiving your first booking.
-            Training takes approximately 45–50 minutes total.
+            Training takes approximately 45-50 minutes total.
           </p>
           {/* Progress */}
           <div style={{ marginTop: "1.5rem" }}>
@@ -451,7 +451,7 @@ export default function TutorTrainingPage() {
                 background: "#0D683B",
                 color: "#fff",
                 padding: "0.75rem 2rem",
-                borderRadius: "999px",
+                borderRadius: "6px",
                 textDecoration: "none",
                 fontWeight: 700,
                 fontSize: "0.9375rem",
@@ -667,7 +667,7 @@ export default function TutorTrainingPage() {
                               background: mod.color,
                               color: "#fff",
                               border: "none",
-                              borderRadius: "999px",
+                              borderRadius: "6px",
                               padding: "0.55rem 1.5rem",
                               fontWeight: 700,
                               fontSize: "0.875rem",
@@ -687,7 +687,7 @@ export default function TutorTrainingPage() {
                                 </>
                               ) : (
                                 <>
-                                  <AlertCircle size={16} /> Not quite — review the notes and try again.
+                                  <AlertCircle size={16} /> Not quite - review the notes and try again.
                                 </>
                               )}
                             </div>

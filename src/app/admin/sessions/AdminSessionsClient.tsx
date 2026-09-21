@@ -154,7 +154,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                           style={{
                             display: "inline-block",
                             padding: "0.2rem 0.5rem",
-                            borderRadius: "999px",
+                            borderRadius: "4px",
                             fontSize: "0.75rem",
                             fontWeight: 700,
                             backgroundColor:
@@ -193,7 +193,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             Open Zoom
                           </a>
                         ) : (
-                          "—"
+                          "-"
                         )}
                       </td>
                       <td style={{ padding: "0.75rem", textAlign: "right" }}>
@@ -323,7 +323,7 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             <span>Open Zoom</span>
                           </a>
                         ) : (
-                          "—"
+                          "-"
                         )}
                       </td>
                       <td style={{ padding: "0.75rem", textAlign: "right" }}>

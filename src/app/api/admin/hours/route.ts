@@ -7,14 +7,14 @@ async function assertAdmin(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) return null;
   const email = session.user.email.trim().toLowerCase();
-  // P0-5: Admin check via env var only — no hardcoded email list
+  // P0-5: Admin check via env var only - no hardcoded email list
   const adminEmails = getAdminEmails();
   const isAdmin = session.user.role === "ADMIN" || adminEmails.has(email);
   if (!isAdmin) return null;
   return session.user;
 }
 
-// POST /api/admin/hours — Adjust tutor volunteer hours with audit trail
+// POST /api/admin/hours - Adjust tutor volunteer hours with audit trail
 export async function POST(req: NextRequest) {
   const admin = await assertAdmin(req);
   if (!admin) {
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Tutor profile not found." }, { status: 404 });
   }
 
-  // Run both updates in a transaction — audit record + actual hours update
+  // Run both updates in a transaction - audit record + actual hours update
   const [audit] = await prisma.$transaction([
     prisma.volunteerHourAudit.create({
       data: {
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
   });
 }
 
-// GET /api/admin/hours?tutorId=xxx — Get audit log for a tutor
+// GET /api/admin/hours?tutorId=xxx - Get audit log for a tutor
 export async function GET(req: NextRequest) {
   const admin = await assertAdmin(req);
   if (!admin) {

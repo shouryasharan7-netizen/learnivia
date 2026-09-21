@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Dashboard — Learnivia",
+  title: "Dashboard | Learnivia",
   description:
     "Your calm, focused peer learning workspace. Schedule 1-on-1 tutoring sessions, get homework guidance, and track verified academic progress.",
 };
@@ -278,10 +278,10 @@ export default async function StudentDashboard() {
                     </div>
                     <div className={styles.tutorBannerBody}>
                       <h2 className={styles.tutorBannerTitle}>
-                        Share Your Knowledge — Become a Peer Tutor
+                        Share Your Knowledge: Become a Peer Tutor
                       </h2>
                       <p className={styles.tutorBannerDesc}>
-                        Join 140+ high-achieving student volunteers. Mentor K–10 peers 1-on-1 and earn verified community service hours for university applications.
+                        Join high-achieving student volunteers. Mentor K-10 peers 1-on-1 and earn verified community service hours for university applications.
                       </p>
                     </div>
                   </div>

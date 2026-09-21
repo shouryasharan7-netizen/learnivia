@@ -8,10 +8,10 @@ import { validateDocumentFile, uploadReportCardToStorage } from "@/lib/storage";
 
 const GRADE_MAP: Record<string, string> = {
   kindergarten: "Kindergarten",
-  "grade-1-2": "Early Elementary (K–Grade 2)",
-  "grade-3-5": "Elementary (Grades 3–5)",
-  "grade-6-8": "Middle School (Grades 6–8)",
-  "grade-9-10": "Early High School (Grades 9–10)",
+  "grade-1-2": "Early Elementary (K-Grade 2)",
+  "grade-3-5": "Elementary (Grades 3-5)",
+  "grade-6-8": "Middle School (Grades 6-8)",
+  "grade-9-10": "Early High School (Grades 9-10)",
 };
 
 export async function submitApplication(formData: FormData) {

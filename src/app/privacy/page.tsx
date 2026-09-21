@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Learnivia",
+  title: "Privacy Policy - Learnivia",
   description: "How Learnivia collects, uses, and protects your data. K-10 child privacy protections, minor safeguarding, and user rights.",
 };
 
@@ -11,11 +11,11 @@ export default function PrivacyPage() {
   const sections = [
     {
       h: "1. Who We Are",
-      p: `Learnivia ("we", "us", "our") operates the Learnivia platform — a free peer tutoring service for Kindergarten through Grade 10 students. We are a volunteer-run platform, not a commercial data business.`,
+      p: `Learnivia ("we", "us", "our") operates the Learnivia platform, a free peer tutoring service for Kindergarten through Grade 10 students. We are a volunteer-run platform, not a commercial data business.`,
     },
     {
       h: "2. Children's Privacy & Safeguarding",
-      p: `Learnivia is designed with minor safeguarding at its foundation. For students below Grade 9 (typically under 13–14 years old): accounts are created and managed by a parent or legal guardian. We display students by first name and last initial only (e.g. "Priya K."). We do not allow students to share personal contact information on the platform. We do not show student profiles to other students — only to the tutor assigned to their session. We do not collect or process children's data for marketing or advertising purposes.`,
+      p: `Learnivia is designed with minor safeguarding at its foundation. For students below Grade 9 (typically under 13-14 years old): accounts are created and managed by a parent or legal guardian. We display students by first name and last initial only (e.g. "Priya K."). We do not allow students to share personal contact information on the platform. We do not show student profiles to other students, only to the tutor assigned to their session. We do not collect or process children's data for marketing or advertising purposes.`,
     },
     {
       h: "3. What Data We Collect",
@@ -58,11 +58,11 @@ export default function PrivacyPage() {
   return (
     <main style={{ maxWidth: 760, margin: "0 auto", padding: "4rem 1.5rem 6rem", fontFamily: "var(--font-body, Inter, sans-serif)" }}>
       <div style={{ marginBottom: "3rem" }}>
-        <div style={{ display: "inline-block", background: "#EFF6FF", color: "#1D4ED8", border: "1px solid #BFDBFE", borderRadius: "999px", padding: "0.3rem 0.9rem", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1rem" }}>
+        <div style={{ display: "inline-block", background: "#EFF6FF", color: "#1D4ED8", border: "1px solid #BFDBFE", borderRadius: "6px", padding: "0.3rem 0.9rem", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1rem" }}>
           Privacy-by-Design & Safeguarding-First
         </div>
         <h1 style={{ fontSize: "2.25rem", fontWeight: 900, color: "#111827", marginBottom: "0.5rem" }}>Privacy Policy</h1>
-        <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>Last updated: {LAST_UPDATED} · Free K–10 tutoring platform</p>
+        <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>Last updated: {LAST_UPDATED} · Free K-10 tutoring platform</p>
       </div>
 
       <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "0.75rem", padding: "1rem 1.25rem", marginBottom: "2.5rem", fontSize: "0.9rem", color: "#0D683B", lineHeight: 1.6 }}>

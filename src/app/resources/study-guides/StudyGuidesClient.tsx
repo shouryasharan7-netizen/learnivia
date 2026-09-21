@@ -55,14 +55,14 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "multiplication-fact-families",
     title: "Multiplication & Division Fact Families",
     subject: "Mathematics",
-    level: "Grade 3–5",
+    level: "Grade 3-5",
     gradeCategory: "elementary",
     summary: "Visual fact triangles, inverse relationships, distributive property, and long division algorithms.",
     keySnippet: "DMSB: Divide, Multiply, Subtract, Bring down • a × b = c ↔ c ÷ a = b",
     tags: ["Number Sense", "Multiplication", "Division", "Algorithms"],
     toolType: "fact-family",
     content: {
-      overview: "A fact family is a group of related mathematical equations created using the same three numbers. Multiplication and division are inverse operations—they reverse and check each other.",
+      overview: "A fact family is a group of related mathematical equations created using the same three numbers. Multiplication and division are inverse operations: they reverse and check each other.",
       coreRules: [
         {
           title: "Commutative Property",
@@ -110,7 +110,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "fractions-decimals-percentages",
     title: "Fractions, Decimals & Percentages",
     subject: "Mathematics",
-    level: "Grade 5–8",
+    level: "Grade 5-8",
     gradeCategory: "middle",
     summary: "Benchmark conversion tables, common denominators, and reciprocal division (Keep-Change-Flip).",
     keySnippet: "KCF: Keep, Change, Flip • 1/2 = 0.5 = 50% • 1/4 = 0.25 = 25% • 3/4 = 0.75 = 75%",
@@ -163,7 +163,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "algebra-basics-solving-for-x",
     title: "Algebra Basics: Solving for X",
     subject: "Mathematics",
-    level: "Grade 7–9",
+    level: "Grade 7-9",
     gradeCategory: "middle",
     summary: "Systematic multi-step equation solving, balance principle, distributive property, and verification.",
     keySnippet: "Golden Rule: Whatever operation you perform on one side, you must mirror on the other.",
@@ -219,7 +219,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "geometry-essentials",
     title: "Geometry Essentials & Formula Sheet",
     subject: "Mathematics",
-    level: "Grade 6–10",
+    level: "Grade 6-10",
     gradeCategory: "high",
     summary: "Area, perimeter, surface area, cylinder/cone volume, and the Pythagorean Theorem.",
     keySnippet: "Right Triangles: a² + b² = c² • Circle: A = πr², C = 2πr • Cylinder: V = πr²h",
@@ -273,7 +273,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "reading-comprehension-strategies",
     title: "Reading Comprehension & Critical Analysis",
     subject: "Reading & Writing",
-    level: "Grade 3–8",
+    level: "Grade 3-8",
     gradeCategory: "elementary",
     summary: "Main idea vs topic, context clues (IDEAS), author's purpose (PIE), and inference formulation.",
     keySnippet: "Inference Formula: Text Clues + Prior Schema = Valid Logical Deduction",
@@ -325,7 +325,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "essay-writing-peel-structure",
     title: "Essay Writing: The PEEL Blueprint",
     subject: "Reading & Writing",
-    level: "Grade 5–10",
+    level: "Grade 5-10",
     gradeCategory: "middle",
     summary: "Introductory thesis statements, body paragraph PEEL scaffold, and synthesis conclusions.",
     keySnippet: "P: Point • E: Evidence • E: Explanation (Analysis) • L: Link back to thesis",
@@ -344,7 +344,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
         },
         {
           title: "E - Explanation (The Analytical Engine)",
-          detail: "Explain HOW and WHY this evidence proves your point. Dedicate at least 2–3 sentences of original analytical thought per quote."
+          detail: "Explain HOW and WHY this evidence proves your point. Dedicate at least 2-3 sentences of original analytical thought per quote."
         },
         {
           title: "L - Link (Thesis Bridge)",
@@ -384,7 +384,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "earth-science-rocks-water-weather",
     title: "Earth Science: Rocks, Water & Weather",
     subject: "Science",
-    level: "Grade 4–6",
+    level: "Grade 4-6",
     gradeCategory: "elementary",
     summary: "The rock cycle triad, hydrologic cycle phases, atmospheric layers, and weather front mechanics.",
     keySnippet: "Igneous (Melted) ↔ Sedimentary (Compacted) ↔ Metamorphic (Heated & Pressured)",
@@ -436,7 +436,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "life-science-cells-ecosystems",
     title: "Life Science: Cells & Living Systems",
     subject: "Science",
-    level: "Grade 6–8",
+    level: "Grade 6-8",
     gradeCategory: "middle",
     summary: "Cellular organelles, plant vs animal cells, photosynthesis equations, and trophic energy webs.",
     keySnippet: "Plant Only: Cell Wall, Chloroplast, Large Vacuole • Both: Nucleus, Mitochondria, Membrane",
@@ -488,7 +488,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "chemistry-basics-atoms-elements",
     title: "Chemistry: Atoms & The Periodic Table",
     subject: "Science",
-    level: "Grade 8–10",
+    level: "Grade 8-10",
     gradeCategory: "high",
     summary: "Subatomic particle charges, atomic vs mass number, electron shell octets, and bonding types.",
     keySnippet: "Atomic # = Protons • Mass # = Protons + Neutrons • Octet Rule = 8 Valence Electrons",
@@ -543,7 +543,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "physics-mechanics-kinematics",
     title: "Physics: Kinematics & Newton's Laws",
     subject: "Science",
-    level: "Grade 8–10",
+    level: "Grade 8-10",
     gradeCategory: "high",
     summary: "Constant acceleration kinematics equations, Newton's 3 laws of motion, and work-energy theorem.",
     keySnippet: "v = v₀ + at • Δx = v₀t + 1/2at² • v² = v₀² + 2aΔx • F_net = ma • W = Fd",
@@ -596,7 +596,7 @@ export const STUDY_GUIDES: StudyGuide[] = [
     id: "social-studies-map-skills",
     title: "Social Studies: Map Skills & Geography",
     subject: "Social Studies",
-    level: "Grade 3–6",
+    level: "Grade 3-6",
     gradeCategory: "elementary",
     summary: "Latitude vs longitude, prime meridian, map legends, compass rose, and hemisphere divisions.",
     keySnippet: "Latitude = Flatitude (Equator 0°) • Longitude = Long vertical lines (Prime Meridian 0°)",
@@ -675,9 +675,9 @@ export default function StudyGuidesClient() {
   const subjects = ["All", "Mathematics", "Science", "Reading & Writing", "Social Studies"];
   const gradeFilters = [
     { id: "All", label: "All Grades" },
-    { id: "elementary", label: "Grades 3–5" },
-    { id: "middle", label: "Grades 6–8" },
-    { id: "high", label: "Grades 9–10" },
+    { id: "elementary", label: "Grades 3-5" },
+    { id: "middle", label: "Grades 6-8" },
+    { id: "high", label: "Grades 9-10" },
   ];
 
   const filteredGuides = useMemo(() => {
@@ -748,9 +748,9 @@ export default function StudyGuidesClient() {
         <div className={styles.heroSection}>
           <div className={styles.heroBadgeRow}>
             <span className={styles.heroBadge}>Free Academic Toolkit</span>
-            <span className={styles.heroSubBadge}>K–10 Standards Aligned</span>
+            <span className={styles.heroSubBadge}>K-10 Standards Aligned</span>
           </div>
-          <h1 className={styles.title}>K–10 Study Guides &amp; Subject Summaries</h1>
+          <h1 className={styles.title}>K-10 Study Guides &amp; Subject Summaries</h1>
           <p className={styles.subtitle}>
             Comprehensive printable study guides, formula blueprints, step-by-step concept breakdowns, and interactive self-checks across Mathematics, Science, English Language Arts, and Social Studies.
           </p>

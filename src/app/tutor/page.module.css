@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Learnivia — Tutor Workspace Styles
+   Learnivia: Tutor Workspace Styles
    Design Language: Warm Editorial Learning Workspace
    ========================================================================== */
 
@@ -113,7 +113,7 @@
   color: var(--wa-green);
   border: 1px solid var(--wa-border);
   padding: 0.2rem 0.6rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -126,7 +126,7 @@
   color: var(--wa-text);
   border: 1px solid var(--wa-border);
   padding: 0.2rem 0.6rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -303,7 +303,7 @@
   color: var(--wa-green);
   background: var(--wa-green-light);
   padding: 0.2rem 0.55rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   border: 1px solid var(--wa-border);
   white-space: nowrap;
 }

@@ -32,11 +32,11 @@ export interface LeaderboardEntry {
 // Fast memory cache for ranking and leaderboard to eliminate heavy relational DB scans
 let cachedUserScores: { id: string; points: number }[] | null = null;
 let lastUserScoresFetch = 0;
-const SCORES_CACHE_TTL = 120_000; // 2 minutes — ranking barely changes within 30s
+const SCORES_CACHE_TTL = 120_000; // 2 minutes - ranking barely changes within 30s
 
 let cachedLeaderboard: LeaderboardEntry[] | null = null;
 let lastLeaderboardFetch = 0;
-const LEADERBOARD_CACHE_TTL = 300_000; // 5 minutes — leaderboard is stable
+const LEADERBOARD_CACHE_TTL = 300_000; // 5 minutes - leaderboard is stable
 
 // Per-user stats cache: avoids re-querying the same user within a warm serverless instance
 const userStatsCache = new Map<string, { data: UserStats; fetchedAt: number }>();
@@ -323,7 +323,7 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
       (tutorWorkshops * 50) +
       Math.floor(tutoringMinutes / 2);
 
-    // P1-5: Privacy — display first name + last initial only (protects student identity)
+    // P1-5: Privacy - display first name + last initial only (protects student identity)
     // Never display: full name, email, school, or userId in public leaderboard
     const rawName = u.name || "Learner";
     const nameParts = rawName.trim().split(/\s+/);
