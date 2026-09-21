@@ -61,10 +61,7 @@ export function NextActionPanel({
             <AlertCircle size={20} />
           </div>
           <div className={styles.nextActionBody}>
-            <span className={`${styles.nextActionTag} ${styles.nextActionTagWarning}`}>
-              Guardian Consent Required
-            </span>
-            <h2 className={styles.nextActionTitle}>Consent invitation sent to your parent or guardian</h2>
+            <h2 className={styles.nextActionTitle}>Guardian consent invitation pending</h2>
             <p className={styles.nextActionDesc}>
               Under Learnivia child safeguarding policies, minor learners require guardian confirmation before scheduling 1-on-1 tutoring sessions.
             </p>
@@ -77,7 +74,6 @@ export function NextActionPanel({
     );
   }
 
-
   if (isNewLearner) {
     return (
       <aside className={styles.nextActionPanel} aria-label="Next recommended action">
@@ -86,7 +82,6 @@ export function NextActionPanel({
             <GraduationCap size={20} />
           </div>
           <div className={styles.nextActionBody}>
-            <span className={styles.nextActionTag}>Onboarding</span>
             <h2 className={styles.nextActionTitle}>Complete your student profile</h2>
             <p className={styles.nextActionDesc}>
               Tell us your grade level and preferred learning topics so our volunteer tutors can prepare personalized materials for your sessions.
@@ -109,7 +104,6 @@ export function NextActionPanel({
             <Video size={20} />
           </div>
           <div className={styles.nextActionBody}>
-            <span className={styles.nextActionTag}>Upcoming Tutoring Session</span>
             <h2 className={styles.nextActionTitle}>
               Prepare for {nextSession.subject} with {nextSession.tutorName}
             </h2>
@@ -141,16 +135,13 @@ export function NextActionPanel({
     return (
       <aside className={styles.nextActionPanel} aria-label="Tutor training required">
         <div className={styles.nextActionContent}>
-          <div className={styles.nextActionIcon} style={{ background: "#FEF3C7", color: "#92400E" }}>
+          <div className={styles.nextActionIcon} style={{ background: "rgba(217, 119, 6, 0.1)", color: "#D97706", borderColor: "rgba(217, 119, 6, 0.2)" }}>
             <ShieldCheck size={20} />
           </div>
           <div className={styles.nextActionBody}>
-            <span className={`${styles.nextActionTag} ${styles.nextActionTagWarning}`}>
-              Safeguarding Training Required
-            </span>
-            <h2 className={styles.nextActionTitle}>Complete mandatory tutor training</h2>
+            <h2 className={styles.nextActionTitle}>Complete mandatory safeguarding training</h2>
             <p className={styles.nextActionDesc}>
-              Your volunteer tutor application has been approved! Complete all 5 short safeguarding and mentorship modules to unlock session hosting and your full Tutor Workspace.
+              Your volunteer tutor application is approved! Complete all 5 short modules to unlock session hosting and your full Tutor Workspace.
             </p>
           </div>
         </div>
@@ -166,16 +157,13 @@ export function NextActionPanel({
     return (
       <aside className={styles.nextActionPanel} aria-label="Tutor application status">
         <div className={styles.nextActionContent}>
-          <div className={styles.nextActionIcon} style={{ background: "#FEF3C7", color: "#92400E" }}>
+          <div className={styles.nextActionIcon} style={{ background: "rgba(217, 119, 6, 0.1)", color: "#D97706", borderColor: "rgba(217, 119, 6, 0.2)" }}>
             <Clock size={20} />
           </div>
           <div className={styles.nextActionBody}>
-            <span className={`${styles.nextActionTag} ${styles.nextActionTagWarning}`}>
-              Application Under Review
-            </span>
-            <h2 className={styles.nextActionTitle}>Tutor application received</h2>
+            <h2 className={styles.nextActionTitle}>Volunteer tutor application under review</h2>
             <p className={styles.nextActionDesc}>
-              Our academic board is reviewing your volunteer tutor application. In the meantime, you can start reviewing the 5 safeguarding and mentorship training modules.
+              Our academic board is reviewing your application. You can preview the 5 safeguarding and mentorship training modules in the meantime.
             </p>
           </div>
         </div>
@@ -195,7 +183,6 @@ export function NextActionPanel({
             <ShieldCheck size={20} />
           </div>
           <div className={styles.nextActionBody}>
-            <span className={styles.nextActionTag}>Tutor Workspace</span>
             <h2 className={styles.nextActionTitle}>Your volunteer tutor profile is active</h2>
             <p className={styles.nextActionDesc}>
               Open your Tutor Workspace to update your weekly availability, host small-group workshops, and track verified service hours.
@@ -209,7 +196,7 @@ export function NextActionPanel({
     );
   }
 
-  // 4. Completed Session State
+  // 6. Completed Session State
   if (hasCompletedSession && lastCompletedSession) {
     return (
       <aside className={styles.nextActionPanel} aria-label="Recent session completed">
@@ -218,7 +205,6 @@ export function NextActionPanel({
             <CalendarCheck size={20} />
           </div>
           <div className={styles.nextActionBody}>
-            <span className={styles.nextActionTag}>Session Completed</span>
             <h2 className={styles.nextActionTitle}>
               Great work in {lastCompletedSession.subject}
             </h2>
@@ -234,7 +220,7 @@ export function NextActionPanel({
     );
   }
 
-  // 5. Default Active State: No booked session
+  // 7. Default Active State: No booked session
   return (
     <aside className={styles.nextActionPanel} aria-label="Get started with peer tutoring">
       <div className={styles.nextActionContent}>
@@ -242,7 +228,6 @@ export function NextActionPanel({
           <Compass size={20} />
         </div>
         <div className={styles.nextActionBody}>
-          <span className={styles.nextActionTag}>Start Learning</span>
           <h2 className={styles.nextActionTitle}>Find a verified volunteer tutor</h2>
           <p className={styles.nextActionDesc}>
             Connect 1-on-1 with student tutors across Mathematics, Sciences, and Humanities for free homework reviews and exam prep.

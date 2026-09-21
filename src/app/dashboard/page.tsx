@@ -219,13 +219,11 @@ export default async function StudentDashboard() {
 
         {/* Humanized Desk Header */}
         <header className={styles.deskHeader}>
-          <div className={styles.deskHeaderMain}>
-            <div className={styles.deskBreadcrumb}>
-              <span className={styles.deskBreadcrumbTag}>Learner Workspace</span>
-              <span className={styles.deskBreadcrumbDot}>•</span>
-              <span className={styles.deskBreadcrumbDate}>
+          <div className={styles.deskHeaderContent}>
+            <div className={styles.deskEyebrowRow}>
+              <span className={styles.datePill}>
                 {new Date().toLocaleDateString("en-US", {
-                  weekday: "short",
+                  weekday: "long",
                   month: "short",
                   day: "numeric",
                 })}
@@ -272,63 +270,22 @@ export default async function StudentDashboard() {
 
             {/* Volunteer as a Tutor card for learners */}
             {canApplyTutor && (
-              <section style={{ marginBottom: "1.75rem" }} aria-label="Volunteer as a Tutor">
-                <div
-                  style={{
-                    background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)",
-                    border: "1px solid #BFDBFE",
-                    borderRadius: "16px",
-                    padding: "1.35rem 1.6rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "1.25rem",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, minWidth: "260px" }}>
-                    <div
-                      style={{
-                        width: "44px",
-                        height: "44px",
-                        borderRadius: "12px",
-                        background: "#2563EB",
-                        color: "#FFFFFF",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        boxShadow: "0 4px 12px rgba(37, 99, 235, 0.25)",
-                      }}
-                    >
+              <section aria-label="Volunteer as a Tutor">
+                <div className={styles.tutorBannerCard}>
+                  <div className={styles.tutorBannerContent}>
+                    <div className={styles.tutorBannerIcon}>
                       <GraduationCap size={22} />
                     </div>
-                    <div>
-                      <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1E3A8A", fontFamily: "var(--font-serif)" }}>
+                    <div className={styles.tutorBannerBody}>
+                      <h2 className={styles.tutorBannerTitle}>
                         Share Your Knowledge — Become a Peer Tutor
-                      </div>
-                      <p style={{ margin: "0.25rem 0 0", fontSize: "0.85rem", color: "#1E40AF", lineHeight: 1.45 }}>
+                      </h2>
+                      <p className={styles.tutorBannerDesc}>
                         Join 140+ high-achieving student volunteers. Mentor K–10 peers 1-on-1 and earn verified community service hours for university applications.
                       </p>
                     </div>
                   </div>
-                  <Link
-                    href={ROUTES.tutor.apply}
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                      background: "#2563EB",
-                      color: "#FFFFFF",
-                      padding: "0.65rem 1.25rem",
-                      borderRadius: "10px",
-                      fontSize: "0.875rem",
-                      fontWeight: 700,
-                      textDecoration: "none",
-                      boxShadow: "0 2px 8px rgba(37, 99, 235, 0.25)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <Link href={ROUTES.tutor.apply} className={styles.tutorBannerBtn}>
                     <span>Apply to Tutor</span>
                     <ArrowRight size={14} />
                   </Link>

@@ -46,7 +46,7 @@ export function LearningPaths() {
     <section aria-labelledby="learning-paths-heading">
       <div className={styles.sectionHeader}>
         <h2 id="learning-paths-heading" className={styles.sectionTitle}>
-          <Compass size={16} color="var(--wa-crimson, #8B263E)" />
+          <Compass size={16} color="var(--wa-crimson, #2563EB)" />
           <span>Explore Subjects</span>
         </h2>
         <Link href={ROUTES.find} className={styles.sectionLink}>

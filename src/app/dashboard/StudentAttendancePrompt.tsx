@@ -51,7 +51,6 @@ export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePr
               <CheckCircle2 size={18} className={styles.headerIcon} />
             </div>
             <div className={styles.headerText}>
-              <span className={styles.eyebrow}>Session Attendance Check</span>
               <h3 className={styles.title}>
                 Did your tutoring session for <strong>{booking.subject}</strong> take place?
               </h3>

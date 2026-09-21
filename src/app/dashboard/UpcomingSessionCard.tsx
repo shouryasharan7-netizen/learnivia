@@ -187,7 +187,7 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
                   className={styles.secondaryBtn}
                   title="Copy Zoom link to clipboard"
                 >
-                  {copiedLink ? <Check size={14} color="var(--wa-success, #1E5A3E)" /> : <Copy size={14} />}
+                  {copiedLink ? <Check size={14} color="var(--wa-success, #059669)" /> : <Copy size={14} />}
                   <span>{copiedLink ? "Link Copied" : "Copy Zoom Link"}</span>
                 </button>
               </>
@@ -205,7 +205,7 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
             type="button"
             onClick={() => setDialogOpen(true)}
             className={styles.secondaryBtn}
-            style={{ color: "var(--wa-error, #9E2A2B)", borderColor: "var(--wa-border, #E6DFD5)" }}
+            style={{ color: "var(--wa-error, #DC2626)", borderColor: "var(--wa-border, #E2E8F0)" }}
           >
             Cancel Session
           </button>
