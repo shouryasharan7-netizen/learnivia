@@ -119,17 +119,17 @@
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  background: #F8FAFC;
-  border: 1px solid var(--wa-border);
-  color: #64748B;
+  background: var(--wa-cream-dark, #F4EFE6);
+  border: 1px solid var(--wa-border, #E5DDD2);
+  color: var(--wa-muted, #556377);
   text-decoration: none;
   transition: all 140ms ease;
 }
 
 .socialLink:hover {
-  background: var(--wa-forest-light);
-  color: var(--wa-forest);
-  border-color: rgba(37, 99, 235, 0.3);
+  background: var(--wa-forest-light, #F0F5F2);
+  color: var(--wa-forest, #1E3A2F);
+  border-color: var(--wa-border-strong, #C8BFB2);
   transform: translateY(-1px);
 }
 
@@ -145,7 +145,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #0F172A;
+  color: var(--wa-ink, #141824);
   margin: 0;
 }
 
@@ -160,14 +160,14 @@
 
 .footerLink {
   font-size: 0.875rem;
-  color: #64748B;
+  color: var(--wa-muted, #556377);
   text-decoration: none;
   transition: color 120ms ease;
   line-height: 1.5;
 }
 
 .footerLink:hover {
-  color: var(--wa-forest);
+  color: var(--wa-green, #1E3A8A);
 }
 
 /* Bottom strip */
@@ -182,13 +182,13 @@
 
 .copy {
   font-size: 0.8125rem;
-  color: #64748B;
+  color: var(--wa-muted, #556377);
   margin: 0;
 }
 
 .disclaimer {
   font-size: 0.8125rem;
-  color: #94A3B8;
+  color: var(--wa-subtle, #8291A5);
   text-align: right;
   flex: 1;
   margin: 0;

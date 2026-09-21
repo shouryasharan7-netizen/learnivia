@@ -4,36 +4,38 @@
    ========================================= */
 
 :root {
-  /* ── Precision Modern Surfaces (Crisp Slate Canvas) ── */
-  --wa-paper:          #F8FAFC;
-  --wa-cream:          #F8FAFC;
-  --wa-cream-dark:     #F1F5F9;
-  --wa-cream-mid:      #E2E8F0;
+  /* ── Prestige Academic Surfaces (Warm Archival Vellum & Paper) ── */
+  --wa-paper:          #FAF8F5;
+  --wa-cream:          #FAF8F5;
+  --wa-cream-dark:     #F4EFE6;
+  --wa-cream-mid:      #EDE5D8;
   --wa-white:          #FFFFFF;
 
-  /* ── Modern Human Typography (Deep Slate & Graphite) ── */
-  --wa-ink:            #0F172A;
-  --wa-text:           #1E293B;
-  --wa-muted:          #64748B;
-  --wa-subtle:         #94A3B8;
+  /* ── Archival Ink & Human Typography ── */
+  --wa-ink:            #141824;
+  --wa-text:           #283244;
+  --wa-muted:          #556377;
+  --wa-subtle:         #8291A5;
 
-  /* ── Precision Hairline Rules & Borders ──── */
-  --wa-border:         #E2E8F0;
-  --wa-border-hairline:#F1F5F9;
-  --wa-border-strong:  #CBD5E1;
+  /* ── Precision Architectural Hairlines & Rules ──── */
+  --wa-border:         #E5DDD2;
+  --wa-border-hairline:#EFEAE1;
+  --wa-border-strong:  #C8BFB2;
 
-  /* ── Royal Cobalt Blue — Signature Accent ──── */
-  --wa-crimson:        #2563EB;
-  --wa-crimson-hover:  #1D4ED8;
-  --wa-crimson-light:  #EFF6FF;
-  --wa-forest:         #2563EB;
-  --wa-forest-light:   #EFF6FF;
-  --wa-green:          #2563EB;
-  --wa-green-hover:    #1D4ED8;
-  --wa-green-active:   #1E40AF;
+  /* ── Signature Academic Accents ──── */
+  --wa-crimson:        #881337;
+  --wa-crimson-hover:  #700F2D;
+  --wa-crimson-light:  #FDF2F4;
+  
+  --wa-forest:         #1E3A2F;
+  --wa-forest-light:   #F0F5F2;
+  
+  --wa-green:          #1E3A8A;
+  --wa-green-hover:    #172554;
+  --wa-green-active:   #0F172A;
   --wa-green-light:    #EFF6FF;
-  --wa-green-mid:      #3B82F6;
-  --wa-green-muted:    rgba(37, 99, 235, 0.08);
+  --wa-green-mid:      #2563EB;
+  --wa-green-muted:    rgba(30, 58, 138, 0.08);
 
   /* ── Scholarly Forest / Antique Botanical Accent ────── */
   --wa-terra:          #1E3A2F;
@@ -43,16 +45,16 @@
   --wa-terra-muted:    rgba(30, 58, 47, 0.08);
 
   /* ── Bookplate Ochre / Gilt Gold Accent ───────── */
-  --wa-ochre:          #C28B2B;
-  --wa-ochre-hover:    #A0701F;
-  --wa-ochre-light:    #FCF6E9;
-  --wa-ochre-muted:    rgba(194, 139, 43, 0.08);
+  --wa-ochre:          #B45309;
+  --wa-ochre-hover:    #92400E;
+  --wa-ochre-light:    #FFFBEB;
+  --wa-ochre-muted:    rgba(180, 83, 9, 0.08);
 
   /* ── Library Slate / Dark Timber ────── */
-  --wa-slate-blue:     #3E3633;
-  --wa-navy:           #1A1615;
-  --wa-navy-hover:     #100D0C;
-  --wa-navy-light:     #F2ECE1;
+  --wa-slate-blue:     #1E293B;
+  --wa-navy:           #0F172A;
+  --wa-navy-hover:     #020617;
+  --wa-navy-light:     #F1F5F9;
 
   /* ── Standard Human Typography (Basic Elegant Serif) ── */
   --font-serif: "Times New Roman", Times, Georgia, serif;
@@ -67,13 +69,13 @@
   --wa-slate-steel:    #334155;
 
   /* ── Semantic Colors (Academic & Refined) ─────── */
-  --wa-success:        #059669;
-  --wa-success-bg:     #ECFDF5;
-  --wa-warning:        #D97706;
+  --wa-success:        #15803D;
+  --wa-success-bg:     #F0FDF4;
+  --wa-warning:        #B45309;
   --wa-warning-bg:     #FFFBEB;
-  --wa-error:          #DC2626;
+  --wa-error:          #991B1B;
   --wa-error-bg:       #FEF2F2;
-  --wa-info:           #2563EB;
+  --wa-info:           #1E3A8A;
   --wa-info-bg:        #EFF6FF;
 
   /* ── Soft Modern Diffused Shadows ─────────── */
@@ -377,43 +379,43 @@ textarea:focus-visible {
 
 :root,
 [data-theme="light"] {
-  --wa-paper:          #F8FAFC;
-  --wa-cream:          #F8FAFC;
-  --wa-cream-dark:     #F1F5F9;
-  --wa-cream-mid:      #E2E8F0;
+  --wa-paper:          #FAF8F5;
+  --wa-cream:          #FAF8F5;
+  --wa-cream-dark:     #F4EFE6;
+  --wa-cream-mid:      #EDE5D8;
   --wa-white:          #FFFFFF;
 
-  --wa-ink:            #0F172A;
-  --wa-text:           #1E293B;
-  --wa-muted:          #64748B;
-  --wa-subtle:         #94A3B8;
+  --wa-ink:            #141824;
+  --wa-text:           #283244;
+  --wa-muted:          #556377;
+  --wa-subtle:         #8291A5;
 
-  --wa-border:         #E2E8F0;
-  --wa-border-hairline:#F1F5F9;
-  --wa-border-strong:  #CBD5E1;
+  --wa-border:         #E5DDD2;
+  --wa-border-hairline:#EFEAE1;
+  --wa-border-strong:  #C8BFB2;
 
-  --wa-crimson:        #2563EB;
-  --wa-crimson-hover:  #1D4ED8;
-  --wa-crimson-light:  #EFF6FF;
+  --wa-crimson:        #881337;
+  --wa-crimson-hover:  #700F2D;
+  --wa-crimson-light:  #FDF2F4;
 
-  --wa-forest:         #2563EB;
-  --wa-forest-light:   #EFF6FF;
-  --wa-green:          #2563EB;
-  --wa-green-hover:    #1D4ED8;
+  --wa-forest:         #1E3A2F;
+  --wa-forest-light:   #F0F5F2;
+  --wa-green:          #1E3A8A;
+  --wa-green-hover:    #172554;
   --wa-green-light:    #EFF6FF;
-  --wa-green-mid:      #3B82F6;
+  --wa-green-mid:      #2563EB;
 
-  --wa-success:        #059669;
-  --wa-success-bg:     #ECFDF5;
-  --wa-warning:        #D97706;
+  --wa-success:        #15803D;
+  --wa-success-bg:     #F0FDF4;
+  --wa-warning:        #B45309;
   --wa-warning-bg:     #FFFBEB;
-  --wa-error:          #DC2626;
+  --wa-error:          #991B1B;
   --wa-error-bg:       #FEF2F2;
 
-  --wa-shadow-xs:      0 1px 2px rgba(15, 23, 42, 0.04);
-  --wa-shadow-sm:      0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --wa-shadow-md:      0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  --wa-shadow-lg:      0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --wa-shadow-xs:      0 1px 2px rgba(20, 24, 36, 0.04);
+  --wa-shadow-sm:      0 1px 3px rgba(20, 24, 36, 0.06), 0 1px 2px rgba(20, 24, 36, 0.03);
+  --wa-shadow-md:      0 4px 6px -1px rgba(20, 24, 36, 0.07), 0 2px 4px -2px rgba(20, 24, 36, 0.04);
+  --wa-shadow-lg:      0 10px 15px -3px rgba(20, 24, 36, 0.08), 0 4px 6px -4px rgba(20, 24, 36, 0.04);
 }
 
 /* =========================================
@@ -421,43 +423,43 @@ textarea:focus-visible {
    ========================================= */
 
 [data-theme="dark"] {
-  --wa-paper:          #0B0F17;
-  --wa-cream:          #0F172A;
-  --wa-cream-dark:     #1E293B;
-  --wa-cream-mid:      #334155;
-  --wa-white:          #161E2E;
+  --wa-paper:          #0D1117;
+  --wa-cream:          #11161F;
+  --wa-cream-dark:     #171F2C;
+  --wa-cream-mid:      #243044;
+  --wa-white:          #141B26;
 
   --wa-ink:            #F8FAFC;
   --wa-text:           #E2E8F0;
   --wa-muted:          #94A3B8;
   --wa-subtle:         #64748B;
 
-  --wa-border:         #1E293B;
-  --wa-border-hairline:#1E293B;
-  --wa-border-strong:  #334155;
+  --wa-border:         #232E3F;
+  --wa-border-hairline:#1B2533;
+  --wa-border-strong:  #37465D;
 
-  --wa-crimson:        #3B82F6;
-  --wa-crimson-hover:  #60A5FA;
-  --wa-crimson-light:  rgba(59, 130, 246, 0.15);
+  --wa-crimson:        #FB7185;
+  --wa-crimson-hover:  #F43F5E;
+  --wa-crimson-light:  rgba(251, 113, 133, 0.15);
 
-  --wa-forest:         #3B82F6;
-  --wa-forest-light:   rgba(59, 130, 246, 0.15);
+  --wa-forest:         #4ADE80;
+  --wa-forest-light:   rgba(74, 222, 128, 0.15);
   --wa-green:          #3B82F6;
   --wa-green-hover:    #60A5FA;
   --wa-green-light:    rgba(59, 130, 246, 0.15);
   --wa-green-mid:      #60A5FA;
 
-  --wa-success:        #10B981;
-  --wa-success-bg:     rgba(16, 185, 129, 0.15);
+  --wa-success:        #22C55E;
+  --wa-success-bg:     rgba(34, 197, 94, 0.15);
   --wa-warning:        #F59E0B;
   --wa-warning-bg:     rgba(245, 158, 11, 0.15);
   --wa-error:          #EF4444;
   --wa-error-bg:       rgba(239, 68, 68, 0.15);
 
-  --wa-shadow-xs:      0 1px 2px rgba(0, 0, 0, 0.3);
-  --wa-shadow-sm:      0 1px 3px rgba(0, 0, 0, 0.4);
-  --wa-shadow-md:      0 4px 8px rgba(0, 0, 0, 0.5);
-  --wa-shadow-lg:      0 12px 20px rgba(0, 0, 0, 0.6);
+  --wa-shadow-xs:      0 1px 2px rgba(0, 0, 0, 0.4);
+  --wa-shadow-sm:      0 1px 3px rgba(0, 0, 0, 0.5);
+  --wa-shadow-md:      0 4px 8px rgba(0, 0, 0, 0.6);
+  --wa-shadow-lg:      0 12px 20px rgba(0, 0, 0, 0.7);
 }
 
 @media (max-width: 640px) {

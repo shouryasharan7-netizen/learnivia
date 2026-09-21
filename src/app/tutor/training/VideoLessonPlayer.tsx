@@ -33,7 +33,7 @@ interface VideoLessonPlayerProps {
 export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [viewMode, setViewMode] = useState<"interactive" | "stream">("interactive");
+  const [viewMode, setViewMode] = useState<"interactive" | "stream">("stream");
   const [showTranscript, setShowTranscript] = useState(false);
   const [playbackSeconds, setPlaybackSeconds] = useState(0);
 
