@@ -10,7 +10,7 @@ export function TopBar() {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
+    const savedTheme = localStorage.getItem("learnivia-theme");
     if (savedTheme) {
       setTheme(savedTheme);
       document.documentElement.setAttribute("data-theme", savedTheme);
@@ -20,12 +20,12 @@ export function TopBar() {
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
+    localStorage.setItem("learnivia-theme", newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
   };
 
   return (
-    <div className={styles.topBar}>
+    <div className={styles.topBar} style={{ fontFamily: "var(--font-sans, sans-serif)" }}>
       <div className={styles.container}>
         <div className={styles.left}>
           {/* Social Icons */}
@@ -54,7 +54,7 @@ export function TopBar() {
           </button>
 
           {/* Student Login */}
-          <Link href="/login" className={styles.loginLink}>
+          <Link href="/signin" className={styles.loginLink}>
             Student Login
           </Link>
         </div>

@@ -76,7 +76,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={sans.className}>
+      <body className={sans.className} style={{ fontFamily: "'Proxima Nova', var(--font-sans)" }}>
         <Providers>
           <AppShell>
             {children}

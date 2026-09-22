@@ -264,14 +264,16 @@ export default function HomeInteractiveClient({
   
   // Carousel State
   const [currentTutorSlide, setCurrentTutorSlide] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   
   // Auto-play carousel
   useEffect(() => {
+    if (isHovered) return;
     const interval = setInterval(() => {
       setCurrentTutorSlide((prev) => (prev + 1) % TUTOR_ROSTER.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isHovered]);
 
   // Concierge Form State
   const [selectedGrade, setSelectedGrade] = useState("all");
@@ -530,7 +532,12 @@ export default function HomeInteractiveClient({
             </p>
           </div>
 
-          <div className={styles.tutorCarouselWrapper} style={{ position: "relative", overflow: "hidden", minHeight: "220px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div 
+            className={styles.tutorCarouselWrapper} 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            style={{ position: "relative", overflow: "hidden", display: "flex", alignItems: "stretch", justifyContent: "center" }}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentTutorSlide}

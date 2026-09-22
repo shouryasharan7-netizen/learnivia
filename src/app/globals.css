@@ -247,7 +247,7 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: 'Proxima Nova', var(--font-sans, 'Poppins', system-ui, -apple-system, sans-serif);
+  font-family: var(--font-sans, "Plus Jakarta Sans", system-ui, -apple-system, sans-serif);
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--wa-text);

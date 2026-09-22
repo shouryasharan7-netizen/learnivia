@@ -13,12 +13,12 @@ model Account {
   type               String
   provider           String
   providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
+  refresh_token      String?  
+  access_token       String?  
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String?  @db.Text
+  id_token           String?  
   session_state      String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -129,9 +129,9 @@ model TutorProfile {
   userId          String      @unique
   user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  bio             String?     @db.Text
+  bio             String?     
   school          String?
-  experience      String?     @db.Text
+  experience      String?     
   currentGrade    String?
   languages       String?     // Comma separated list for now
   teachingStyles  String?     // Comma separated tags
@@ -146,8 +146,8 @@ model TutorProfile {
   maxAge          Int?
   targetGrades    String?
 
-  academicScores       String?     @db.Text
-  reportCardUrl        String?     @db.Text
+  academicScores       String?     
+  reportCardUrl        String?     
   reportCardName       String?
   reportCardStorageKey String?
   reportCardMimeType   String?
@@ -225,7 +225,7 @@ model Booking {
   subject         String
   grade           String
   topic           String
-  helpNeeded      String?       @db.Text
+  helpNeeded      String?       
   
   startTime       DateTime      // Stored in UTC
   endTime         DateTime      // Stored in UTC
@@ -234,11 +234,11 @@ model Booking {
   studentAttended Boolean       @default(false)
   studentConfirmedAt DateTime?
   hoursCredited   Boolean       @default(false)
-  zoomLink        String?       @db.Text
-  recordingUrl    String?       @db.Text
-  checkUpNote     String?       @db.Text
+  zoomLink        String?       
+  recordingUrl    String?       
+  checkUpNote     String?       
   checkUpSent     Boolean       @default(false)
-  cancelReason    String?       @db.Text
+  cancelReason    String?       
   maxParticipants Int           @default(1)
   idempotencyKey  String?
   
@@ -254,7 +254,7 @@ model Program {
   emoji            String
   title            String
   shortDescription String
-  longDescription  String       @db.Text
+  longDescription  String       
   subjects         String[]
   gradeLevels      String[]
   format           String
@@ -270,7 +270,7 @@ model Program {
 model ProgramFaq {
   id         String   @id @default(cuid())
   question   String
-  answer     String   @db.Text
+  answer     String   
   
   programId  String
   program    Program  @relation(fields: [programId], references: [id], onDelete: Cascade)
@@ -278,7 +278,7 @@ model ProgramFaq {
 
 model Story {
   id          String   @id @default(cuid())
-  quote       String   @db.Text
+  quote       String   
   name        String
   subject     String
   isPublished Boolean  @default(false)
@@ -296,7 +296,7 @@ model Review {
   bookingId   String?
   
   rating      Int          // e.g. 1-5
-  comment     String?      @db.Text
+  comment     String?      
   
   createdAt   DateTime     @default(now())
 }
@@ -314,7 +314,7 @@ model Workshop {
   tutor       TutorProfile   @relation("TutorWorkshops", fields: [tutorId], references: [id], onDelete: Cascade)
   
   title       String
-  description String         @db.Text
+  description String         
   subject     String
   grade       String
   curriculum  String?
@@ -322,9 +322,9 @@ model Workshop {
   startTime   DateTime
   endTime     DateTime
   
-  zoomLink     String?        @db.Text
-  recordingUrl String?        @db.Text
-  checkUpNote  String?        @db.Text
+  zoomLink     String?        
+  recordingUrl String?        
+  checkUpNote  String?        
   maxCapacity  Int            @default(10)
   status       WorkshopStatus @default(UPCOMING)
   
@@ -363,9 +363,9 @@ model IncidentReport {
   
   bookingId      String?
   category       String       // e.g. "Inappropriate Behavior", "No-show", "Harassment", "Safety Concern"
-  description    String       @db.Text
+  description    String       
   status         ReportStatus @default(PENDING)
-  adminNotes     String?      @db.Text
+  adminNotes     String?      
   
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
@@ -377,18 +377,18 @@ model HomeworkRequest {
   student         User          @relation(fields: [studentId], references: [id], onDelete: Cascade)
   
   subject         String
-  question        String        @db.Text
+  question        String        
   preferredFormat String        @default("zoom") // "zoom" or "chat"
   grade           String?
   curriculum      String?
   
   status          String        @default("OPEN") // "OPEN", "ANSWERED", "RESOLVED"
-  answer          String?       @db.Text
+  answer          String?       
   
   tutorId         String?
   tutor           TutorProfile? @relation(fields: [tutorId], references: [id], onDelete: SetNull)
   
-  zoomLink        String?       @db.Text
+  zoomLink        String?       
   isPrivate       Boolean       @default(true)
   deletedAt       DateTime?
   
@@ -408,7 +408,7 @@ model CommunityMessage {
   authorInitials  String
   authorColor     String
   
-  content         String        @db.Text
+  content         String        
   reactions       Json?
   
   createdAt       DateTime      @default(now())
@@ -426,8 +426,8 @@ model ChildProfile {
   lastInitial         String   // Privacy: Only store last initial for display (e.g. "Priya K.")
   grade               String   // e.g. "Grade 4"
   age                 Int?
-  learningPreferences String?  @db.Text // JSON array of preferences e.g. ["visual", "step-by-step"]
-  notes               String?  @db.Text // Parent notes for tutors (no diagnosis required)
+  learningPreferences String?   // JSON array of preferences e.g. ["visual", "step-by-step"]
+  notes               String?   // Parent notes for tutors (no diagnosis required)
 
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
@@ -458,7 +458,7 @@ model VolunteerHourAudit {
   adjustedBy   String       // Admin user ID
   oldHours     Float
   newHours     Float
-  reason       String       @db.Text // Required reason for the adjustment
+  reason       String        // Required reason for the adjustment
 
   createdAt    DateTime     @default(now())
 }
