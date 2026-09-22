@@ -1,0 +1,77 @@
+.topBar {
+  background-color: var(--wa-paper);
+  border-bottom: 1px solid var(--wa-border);
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.8125rem;
+  color: var(--wa-muted);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 50;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.left a {
+  color: var(--wa-muted);
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.left a:hover {
+  color: var(--wa-ink);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.themeToggle {
+  background: none;
+  border: none;
+  color: var(--wa-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.themeToggle:hover {
+  color: var(--wa-ink);
+}
+
+.studentLogin {
+  color: var(--wa-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.studentLogin:hover {
+  color: var(--wa-ink);
+}
+
+@media (max-width: 768px) {
+  .topBar {
+    display: none;
+  }
+}

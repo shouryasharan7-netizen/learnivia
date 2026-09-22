@@ -7,6 +7,7 @@ import { SidebarNav } from "./SidebarNav";
 import { TopBar } from "./TopBar";
 import { MobileBottomNav } from "./MobileBottomNav";
 import { Navbar } from "@/components/Navbar";
+import { TopBar as TopBarPublic } from "@/components/TopBar";
 import { Footer } from "@/components/Footer";
 import styles from "./AppShell.module.css";
 
@@ -95,10 +96,10 @@ export function AppShell({ children }: AppShellProps) {
     );
   }
 
-  // Non-workspace pages: render calm public header + footer layout for guests or public docs
   if (!session?.user || isPublicRoute) {
     return (
       <div className={styles.publicWrapper}>
+        <TopBarPublic />
         <Navbar />
         <div className={styles.publicContent}>
           {children}

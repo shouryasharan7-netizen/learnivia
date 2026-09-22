@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Fraunces, IBM_Plex_Mono } from "next/font/google";
+import { Poppins, Playfair_Display, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { AppShell } from "@/components/workspace/AppShell";
 
-const serif = Fraunces({
+const serif = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
@@ -13,7 +13,7 @@ const serif = Fraunces({
   preload: true,
 });
 
-const sans = Plus_Jakarta_Sans({
+const sans = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-sans",

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ShieldCheck,
   Award,
@@ -260,6 +261,17 @@ export default function HomeInteractiveClient({
 }: HomeInteractiveClientProps) {
   const [activeTab, setActiveTab] = useState("all");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  
+  // Carousel State
+  const [currentTutorSlide, setCurrentTutorSlide] = useState(0);
+  
+  // Auto-play carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTutorSlide((prev) => (prev + 1) % TUTOR_ROSTER.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Concierge Form State
   const [selectedGrade, setSelectedGrade] = useState("all");
@@ -299,7 +311,12 @@ export default function HomeInteractiveClient({
         <div className={styles.container}>
           <div className={styles.heroGrid}>
             {/* Left Column: Clear, Non-Vague Hero */}
-            <div className={styles.heroContent}>
+            <motion.div 
+              className={styles.heroContent}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               <div className={styles.charterPill}>
                 <ShieldCheck size={14} />
                 <span>Safeguarded Child Protection Standard</span>
@@ -365,7 +382,7 @@ export default function HomeInteractiveClient({
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Column: Live Academic Dispatch Card */}
             <div className={styles.dispatchCard}>
@@ -513,20 +530,28 @@ export default function HomeInteractiveClient({
             </p>
           </div>
 
-          <div className={styles.tutorLedgerGrid}>
-            {TUTOR_ROSTER.map((tutor) => (
-              <div key={tutor.name} className={styles.tutorCard}>
+          <div className={styles.tutorCarouselWrapper} style={{ position: "relative", overflow: "hidden", minHeight: "220px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentTutorSlide}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className={styles.tutorCard}
+                style={{ width: "100%", maxWidth: "450px", margin: "0 auto" }}
+              >
                 <div>
                   <div className={styles.tutorCardHeader}>
-                    <div className={styles.tutorAvatar}>{tutor.avatar}</div>
+                    <div className={styles.tutorAvatar}>{TUTOR_ROSTER[currentTutorSlide].avatar}</div>
                     <div className={styles.tutorInfo}>
-                      <h3>{tutor.name}</h3>
-                      <p className={styles.tutorSchool}>{tutor.school}</p>
+                      <h3>{TUTOR_ROSTER[currentTutorSlide].name}</h3>
+                      <p className={styles.tutorSchool}>{TUTOR_ROSTER[currentTutorSlide].school}</p>
                     </div>
                   </div>
 
                   <div className={styles.tutorBadges}>
-                    {tutor.subjects.map((s) => (
+                    {TUTOR_ROSTER[currentTutorSlide].subjects.map((s) => (
                       <span key={s} className={styles.badgePill}>{s}</span>
                     ))}
                   </div>
@@ -535,14 +560,30 @@ export default function HomeInteractiveClient({
                 <div className={styles.tutorCardFooter}>
                   <div className={styles.hoursVerified}>
                     <CheckCircle2 size={14} />
-                    <span>{tutor.role}</span>
+                    <span>{TUTOR_ROSTER[currentTutorSlide].role}</span>
                   </div>
                   <Link href="/find" className={styles.bookTutorBtn}>
                     <span>Schedule</span>
                   </Link>
                 </div>
-              </div>
-            ))}
+              </motion.div>
+            </AnimatePresence>
+            
+            {/* Carousel Dots */}
+            <div style={{ position: "absolute", bottom: "-30px", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "8px" }}>
+              {TUTOR_ROSTER.map((_, idx) => (
+                <button 
+                  key={idx} 
+                  onClick={() => setCurrentTutorSlide(idx)}
+                  style={{ 
+                    width: "10px", height: "10px", borderRadius: "50%", 
+                    background: currentTutorSlide === idx ? "var(--wa-crimson)" : "var(--wa-border-strong)",
+                    border: "none", cursor: "pointer", transition: "background 0.3s"
+                  }}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -564,19 +605,32 @@ export default function HomeInteractiveClient({
               </div>
             </div>
 
-            <div className={styles.safeguardList}>
-              {SAFEGUARD_PILLARS.map((pt) => (
-                <div key={pt.id} className={styles.safeguardCard}>
-                  <div className={styles.safeguardIconWrap}>
-                    <ShieldCheck size={18} />
-                  </div>
-                  <div>
-                    <span className={styles.safeguardBadge}>{pt.badge}</span>
-                    <h3 className={styles.safeguardTitle}>{pt.title}</h3>
-                    <p className={styles.safeguardText}>{pt.desc}</p>
-                  </div>
-                </div>
-              ))}
+            <div className={styles.safeguardDiagram}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", position: "relative" }}>
+                {/* Vertical connecting line */}
+                <div style={{ position: "absolute", left: "24px", top: "24px", bottom: "24px", width: "2px", background: "var(--wa-border-strong)", zIndex: 0 }} />
+                
+                {SAFEGUARD_PILLARS.map((pt, idx) => (
+                  <motion.div 
+                    key={pt.id} 
+                    className={styles.safeguardCard}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: idx * 0.15 }}
+                    style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--wa-white)", border: "1px solid var(--wa-border)", padding: "1.5rem", borderRadius: "var(--wa-radius-md)", boxShadow: "var(--wa-shadow-sm)" }}
+                  >
+                    <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "var(--wa-crimson-light)", color: "var(--wa-crimson)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, border: "2px solid var(--wa-white)", boxShadow: "0 0 0 1px var(--wa-border)" }}>
+                      <ShieldCheck size={20} />
+                    </div>
+                    <div>
+                      <span className={styles.safeguardBadge} style={{ display: "inline-block", fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", color: "var(--wa-muted)", marginBottom: "0.25rem", letterSpacing: "0.05em" }}>{pt.badge}</span>
+                      <h3 className={styles.safeguardTitle} style={{ margin: "0 0 0.5rem 0", fontSize: "1.1rem", color: "var(--wa-ink)" }}>{pt.title}</h3>
+                      <p className={styles.safeguardText} style={{ margin: 0, fontSize: "0.9rem", color: "var(--wa-text)", lineHeight: 1.5 }}>{pt.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

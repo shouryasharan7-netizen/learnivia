@@ -80,7 +80,7 @@ const getInvolvedLinks = [
 
 const mainLinks = [
   { href: "/about", label: "About" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/faq", label: "FAQ & Support" },
 ];
 
 export function Navbar() {
@@ -493,26 +493,12 @@ export function Navbar() {
               href="/faq"
               className={`${styles.navLink} ${pathname === "/faq" ? styles.navLinkActive : ""}`}
             >
-              FAQ
+              FAQ & Support
             </Link>
           </nav>
 
           {/* Auth Controls */}
           <div className={styles.authControls}>
-            {/* Minimal Unbounding Theme Switcher */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              className={styles.themeToggle}
-            >
-              {theme === "dark" ? (
-                <Sun size={17} color="#F59E0B" />
-              ) : (
-                <Moon size={17} color="currentColor" />
-              )}
-            </button>
 
             {status === "loading" ? (
               <div className={styles.authSkeleton} aria-hidden="true" />
