@@ -2,18 +2,18 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import {
   Bell,
   Calendar,
+  MessageCircle,
   LogOut,
   ChevronDown,
   User,
   ShieldCheck,
-  GraduationCap,
   Sun,
   Moon,
+  X,
 } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 
@@ -29,9 +29,16 @@ interface TopBarProps {
   };
 }
 
+const ANNOUNCEMENT = {
+  show: true,
+  text: "New tutors are available for CBSE & ICSE K-10 sessions this week.",
+  linkText: "Browse now",
+  linkHref: "/find",
+};
+
 export function TopBar({ user }: TopBarProps) {
-  const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState(false);
+  const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -44,6 +51,8 @@ export function TopBar({ user }: TopBarProps) {
       setTheme("light");
       document.documentElement.setAttribute("data-theme", "light");
     }
+    const dismissed = sessionStorage.getItem("announcement-dismissed");
+    if (dismissed) setAnnouncementDismissed(true);
   }, []);
 
   const toggleTheme = () => {
@@ -53,258 +62,271 @@ export function TopBar({ user }: TopBarProps) {
     document.documentElement.setAttribute("data-theme", nextTheme);
   };
 
+  const dismissAnnouncement = () => {
+    setAnnouncementDismissed(true);
+    sessionStorage.setItem("announcement-dismissed", "1");
+  };
+
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setProfileOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
+    if (profileOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [profileOpen]);
 
-  // Compute breadcrumb title from pathname
-  let pageTitle = "Dashboard";
-  if (pathname === "/find") pageTitle = "Find a Peer Tutor";
-  else if (pathname === "/sessions") pageTitle = "Tutoring Sessions";
-  else if (pathname.startsWith("/sessions/")) pageTitle = "Session Room";
-  else if (pathname === "/homework-help") pageTitle = "Homework Queue";
-  else if (pathname === "/community") pageTitle = "Learning Community";
-  else if (pathname === "/resources") pageTitle = "Study Resources";
-  else if (pathname === "/tutor") pageTitle = "Tutor Workspace";
-  else if (pathname === "/tutor/transcript") pageTitle = "Verified Service Record";
-  else if (pathname === "/tutor/training") pageTitle = "Safeguarding Training";
-  else if (pathname === "/admin") pageTitle = "System Overview";
-  else if (pathname.startsWith("/admin/")) pageTitle = "Admin Center";
-
-  const userInitial = user.name ? user.name.trim()[0].toUpperCase() : "U";
+  const initials = (user.name || "U")
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
-    <header
-      style={{
-        height: "56px",
-        minHeight: "56px",
-        background: "var(--wa-white)",
-        borderBottom: "1px solid var(--wa-border)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 1.5rem",
-        position: "sticky",
-        top: 0,
-        zIndex: 30,
-      }}
-    >
-      {/* Left: Breadcrumb / Section context */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-        <span
+    <div style={{ position: "sticky", top: 0, zIndex: 30 }}>
+      {/* ── Announcement Bar ── */}
+      {ANNOUNCEMENT.show && !announcementDismissed && (
+        <div
           style={{
-            fontSize: "0.875rem",
-            fontWeight: 600,
-            color: "var(--wa-ink)",
-          }}
-        >
-          {pageTitle}
-        </span>
-      </div>
-
-      {/* Right: Quick links, User Menu */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-        {/* Sessions quick link */}
-        <Link
-          href={ROUTES.sessions}
-          style={{
-            padding: "0.4rem",
-            color: "var(--wa-muted)",
-            borderRadius: "var(--wa-radius-sm)",
+            background: "var(--announcement-bg, #FEF3C7)",
+            borderBottom: "1px solid rgba(245,158,11,0.25)",
+            padding: "0.55rem 1.25rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-          }}
-          title="View scheduled sessions"
-        >
-          <Calendar size={17} aria-hidden="true" />
-          <span className="sr-only">Scheduled sessions</span>
-        </Link>
-
-        {/* Direct One-Click Theme Switcher Button */}
-        <button
-          type="button"
-          onClick={toggleTheme}
-          title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "34px",
-            height: "34px",
-            borderRadius: "6px",
-            border: "1px solid var(--wa-border)",
-            background: "var(--wa-paper)",
-            color: "var(--wa-muted)",
-            cursor: "pointer",
-            transition: "all 0.15s ease",
+            gap: "0.5rem",
+            fontSize: "0.8375rem",
+            color: "var(--announcement-text, #92400E)",
+            position: "relative",
           }}
         >
-          {theme === "dark" ? (
-            <Sun size={16} color="#F59E0B" />
-          ) : (
-            <Moon size={16} color="currentColor" />
-          )}
-        </button>
-
-        {/* Profile Menu */}
-        <div ref={menuRef} style={{ position: "relative" }}>
+          <span>{ANNOUNCEMENT.text}</span>
+          <Link
+            href={ANNOUNCEMENT.linkHref}
+            style={{
+              color: "var(--announcement-link, #0D9488)",
+              fontWeight: 700,
+              textDecoration: "underline",
+              textUnderlineOffset: "2px",
+            }}
+          >
+            {ANNOUNCEMENT.linkText}
+          </Link>
           <button
-            type="button"
-            onClick={() => setProfileOpen(!profileOpen)}
+            onClick={dismissAnnouncement}
+            aria-label="Dismiss announcement"
+            style={{
+              position: "absolute",
+              right: "1rem",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "var(--announcement-text, #92400E)",
+              padding: "2px",
+              display: "flex",
+              alignItems: "center",
+              opacity: 0.6,
+            }}
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
+      {/* ── Utility Top Bar ── */}
+      <header
+        style={{
+          height: "52px",
+          background: "var(--surface-raised, #FFFFFF)",
+          borderBottom: "1px solid var(--border, #E2E8F0)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          padding: "0 1.25rem",
+          gap: "0.5rem",
+        }}
+        role="banner"
+      >
+        {/* Icon buttons */}
+        <IconBtn icon={MessageCircle} label="Messages" href="/community" />
+        <IconBtn icon={Bell} label="Notifications" href="#" badge={undefined} />
+        <IconBtn icon={Calendar} label="Calendar" href="/sessions" />
+
+        {/* Divider */}
+        <div
+          style={{
+            width: 1,
+            height: 22,
+            background: "var(--border, #E2E8F0)",
+            margin: "0 0.25rem",
+          }}
+        />
+
+        {/* Avatar / Profile menu */}
+        <div style={{ position: "relative" }} ref={menuRef}>
+          <button
+            onClick={() => setProfileOpen((v) => !v)}
             aria-expanded={profileOpen}
-            aria-haspopup="true"
+            aria-label="Open profile menu"
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "0.5rem",
-              background: "transparent",
+              gap: "0.45rem",
+              background: "none",
               border: "none",
-              padding: "0.25rem 0.5rem",
-              borderRadius: "var(--wa-radius-sm)",
               cursor: "pointer",
+              padding: "4px",
+              borderRadius: "var(--radius-pill, 9999px)",
             }}
           >
-            <div
+            {/* Avatar circle */}
+            {user.image ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={user.image}
+                alt={user.name || "User"}
+                width={34}
+                height={34}
+                style={{ borderRadius: "50%", objectFit: "cover" }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: "50%",
+                  background: "var(--primary, #0D9488)",
+                  color: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.02em",
+                }}
+              >
+                {initials}
+              </div>
+            )}
+            <ChevronDown
+              size={13}
+              color="var(--text-muted, #64748B)"
               style={{
-                width: 28,
-                height: 28,
-                borderRadius: "50%",
-                background: "var(--wa-cream-mid)",
-                border: "1px solid var(--wa-border)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 700,
-                fontSize: "0.8125rem",
-                color: "var(--wa-ink)",
+                transform: profileOpen ? "rotate(180deg)" : "rotate(0)",
+                transition: "transform 150ms",
               }}
-            >
-              {userInitial}
-            </div>
-            <span
-              style={{
-                fontSize: "0.8125rem",
-                fontWeight: 600,
-                color: "var(--wa-ink)",
-                maxWidth: 120,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {user.name || "Student"}
-            </span>
-            <ChevronDown size={13} color="var(--wa-muted)" />
+            />
           </button>
 
+          {/* Dropdown */}
           {profileOpen && (
             <div
               style={{
                 position: "absolute",
-                top: "calc(100% + 6px)",
+                top: "calc(100% + 8px)",
                 right: 0,
-                width: 220,
-                background: "var(--wa-white)",
-                border: "1px solid var(--wa-border)",
-                borderRadius: "var(--wa-radius-md)",
-                boxShadow: "var(--wa-shadow-md)",
+                width: 230,
+                background: "var(--surface-raised, #FFFFFF)",
+                border: "1px solid var(--border, #E2E8F0)",
+                borderRadius: "var(--radius-lg, 14px)",
+                boxShadow: "var(--shadow-lg)",
                 padding: "0.5rem",
-                zIndex: 50,
+                zIndex: 60,
               }}
             >
-              <div style={{ padding: "0.5rem 0.65rem", borderBottom: "1px solid var(--wa-border)", marginBottom: "0.35rem" }}>
-                <p style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--wa-ink)", margin: 0 }}>
-                  {user.name || "Student"}
+              {/* User info */}
+              <div
+                style={{
+                  padding: "0.6rem 0.75rem 0.6rem",
+                  borderBottom: "1px solid var(--border, #E2E8F0)",
+                  marginBottom: "0.35rem",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    fontWeight: 700,
+                    color: "var(--text-primary, #0C1B33)",
+                    margin: 0,
+                  }}
+                >
+                  {user.name || "Learner"}
                 </p>
-                <p style={{ fontSize: "0.75rem", color: "var(--wa-muted)", margin: 0 }}>
+                <p
+                  style={{
+                    fontSize: "0.775rem",
+                    color: "var(--text-muted, #64748B)",
+                    margin: "2px 0 0",
+                  }}
+                >
                   {user.email || ""}
                 </p>
                 <span
                   style={{
                     display: "inline-block",
-                    fontSize: "0.6875rem",
+                    marginTop: "4px",
+                    fontSize: "0.7rem",
                     fontWeight: 700,
                     textTransform: "uppercase",
-                    color: "var(--wa-green)",
-                    marginTop: "0.25rem",
+                    letterSpacing: "0.04em",
+                    color: "var(--primary, #0D9488)",
                   }}
                 >
-                  {user.isAdmin ? "Administrator" : user.isTutor ? "Verified Tutor" : "K-10 Learner"}
+                  {user.isAdmin
+                    ? "Administrator"
+                    : user.isTutor
+                    ? "Verified Tutor"
+                    : "K-10 Learner"}
                 </span>
               </div>
 
-              <Link
-                href={ROUTES.learner.home}
+              <MenuItem
+                href={ROUTES.learner?.home || "/dashboard"}
+                icon={User}
+                label="My Dashboard"
                 onClick={() => setProfileOpen(false)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.45rem 0.65rem",
-                  fontSize: "0.8125rem",
-                  color: "var(--wa-text)",
-                  borderRadius: "6px",
-                  textDecoration: "none",
-                }}
-              >
-                <User size={14} />
-                <span>My Dashboard</span>
-              </Link>
-
-              <Link
-                href={ROUTES.safety}
+              />
+              <MenuItem
+                href={ROUTES.safety || "/safety"}
+                icon={ShieldCheck}
+                label="Safety Standards"
                 onClick={() => setProfileOpen(false)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.45rem 0.65rem",
-                  fontSize: "0.8125rem",
-                  color: "var(--wa-text)",
-                  borderRadius: "6px",
-                  textDecoration: "none",
-                }}
-              >
-                <ShieldCheck size={14} />
-                <span>Safety Standards</span>
-              </Link>
+              />
 
+              {/* Theme toggle */}
               <button
                 type="button"
-                onClick={toggleTheme}
+                onClick={() => { toggleTheme(); setProfileOpen(false); }}
                 style={{
                   width: "100%",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "0.5rem",
-                  padding: "0.45rem 0.65rem",
-                  fontSize: "0.8125rem",
-                  color: "var(--wa-text)",
-                  borderRadius: "6px",
+                  gap: "0.6rem",
+                  padding: "0.45rem 0.75rem",
+                  fontSize: "0.8375rem",
+                  color: "var(--text-secondary, #475569)",
+                  borderRadius: "var(--radius-sm, 8px)",
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
+                  textAlign: "left",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-                  <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
-                </div>
-                <span style={{ fontSize: "0.7rem", color: "var(--wa-muted)", textTransform: "capitalize" }}>
-                  {theme}
-                </span>
+                {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+                <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
               </button>
 
-              <div style={{ borderTop: "1px solid var(--wa-border)", margin: "0.35rem 0" }} />
+              <div
+                style={{
+                  height: 1,
+                  background: "var(--border, #E2E8F0)",
+                  margin: "0.35rem 0",
+                }}
+              />
 
               <button
                 type="button"
@@ -313,13 +335,13 @@ export function TopBar({ user }: TopBarProps) {
                   width: "100%",
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.45rem 0.65rem",
-                  fontSize: "0.8125rem",
-                  color: "#991B1B",
+                  gap: "0.6rem",
+                  padding: "0.45rem 0.75rem",
+                  fontSize: "0.8375rem",
+                  color: "var(--error, #DC2626)",
+                  borderRadius: "var(--radius-sm, 8px)",
                   background: "transparent",
                   border: "none",
-                  borderRadius: "6px",
                   cursor: "pointer",
                   textAlign: "left",
                 }}
@@ -330,7 +352,102 @@ export function TopBar({ user }: TopBarProps) {
             </div>
           )}
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
+  );
+}
+
+function IconBtn({
+  icon: Icon,
+  label,
+  href,
+  badge,
+}: {
+  icon: React.ElementType;
+  label: string;
+  href: string;
+  badge?: number;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-label={label}
+      title={label}
+      style={{
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 36,
+        height: 36,
+        borderRadius: "var(--radius-sm, 8px)",
+        color: "var(--text-secondary, #475569)",
+        textDecoration: "none",
+        transition: "background var(--transition, 180ms ease)",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.background =
+          "var(--surface-subtle, #F1F5F9)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.background = "transparent";
+      }}
+    >
+      <Icon size={19} strokeWidth={1.75} />
+      {badge !== undefined && badge > 0 && (
+        <span
+          style={{
+            position: "absolute",
+            top: 5,
+            right: 5,
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: "var(--primary, #0D9488)",
+            border: "1.5px solid var(--surface-raised, #FFFFFF)",
+          }}
+        />
+      )}
+    </Link>
+  );
+}
+
+function MenuItem({
+  href,
+  icon: Icon,
+  label,
+  onClick,
+}: {
+  href: string;
+  icon: React.ElementType;
+  label: string;
+  onClick?: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "0.6rem",
+        padding: "0.45rem 0.75rem",
+        fontSize: "0.8375rem",
+        color: "var(--text-secondary, #475569)",
+        borderRadius: "var(--radius-sm, 8px)",
+        textDecoration: "none",
+        transition: "background var(--transition, 180ms)",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.background =
+          "var(--surface-subtle, #F1F5F9)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.background = "transparent";
+      }}
+    >
+      <Icon size={14} />
+      <span>{label}</span>
+    </Link>
   );
 }

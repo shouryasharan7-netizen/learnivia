@@ -1,101 +1,89 @@
 /* =========================================
-   LEARNIVIA - MODERN ACADEMIC SALON SYSTEM
-   "Warm Unbleached Paper, Literary Ink & Oxford Crimson"
+   LEARNIVIA — TEAL & DEEP NAVY DESIGN SYSTEM
+   Primary:   #0D9488 (Teal-600)
+   Secondary: #0C1B33 (Deep Navy)
+   Surface:   #FAF9F6 (Warm Vellum)
    ========================================= */
 
 :root {
-  /* ── Prestige Academic Surfaces (Warm Archival Vellum & Paper) ── */
-  --wa-paper:          #FAF9F6;
-  --wa-cream:          #FAF9F6;
-  --wa-cream-dark:     #F1F5F9;
-  --wa-cream-mid:      #E2E8F0;
-  --wa-white:          #FFFFFF;
+  /* ── Primary Teal ── */
+  --primary:         #0D9488;
+  --primary-hover:   #0F766E;
+  --primary-dark:    #115E59;
+  --primary-light:   #CCFBF1;
+  --primary-muted:   rgba(13, 148, 136, 0.10);
 
-  /* ── Archival Ink & Human Typography ── */
-  --wa-ink:            #0F172A;
-  --wa-text:           #334155;
-  --wa-muted:          #64748B;
-  --wa-subtle:         #94A3B8;
+  /* ── Deep Navy ── */
+  --navy:            #0C1B33;
+  --navy-hover:      #091426;
+  --navy-light:      #1A2E4A;
+  --navy-muted:      rgba(12, 27, 51, 0.06);
 
-  /* ── Precision Architectural Hairlines & Rules ──── */
-  --wa-border:         #E2E8F0;
-  --wa-border-hairline:#F1F5F9;
-  --wa-border-strong:  #CBD5E1;
+  /* ── Warm Surface & White ── */
+  --surface:         #FAF9F6;
+  --surface-raised:  #FFFFFF;
+  --surface-subtle:  #F1F5F9;
+  --surface-hover:   #F8FAFC;
 
-  /* ── Signature Academic Accents ──── */
-  --wa-crimson:        #881337;
-  --wa-crimson-hover:  #700F2D;
-  --wa-crimson-light:  #FDF2F4;
-  
-  --wa-forest:         #1E3A2F;
-  --wa-forest-light:   #F0F5F2;
-  
-  --wa-green:          #1E3A8A;
-  --wa-green-hover:    #172554;
-  --wa-green-active:   #0F172A;
-  --wa-green-light:    #EFF6FF;
-  --wa-green-mid:      #2563EB;
-  --wa-green-muted:    rgba(30, 58, 138, 0.08);
+  /* ── Typography ── */
+  --text-primary:    #0C1B33;
+  --text-secondary:  #475569;
+  --text-muted:      #64748B;
+  --text-subtle:     #94A3B8;
+  --text-inverse:    #FFFFFF;
 
-  /* ── Scholarly Forest / Antique Botanical Accent ────── */
-  --wa-terra:          #1E3A2F;
-  --wa-terracotta:     #1E3A2F;
-  --wa-terra-hover:    #162C23;
-  --wa-terra-light:    #F0F5F2;
-  --wa-terra-muted:    rgba(30, 58, 47, 0.08);
+  /* ── Borders ── */
+  --border:          #E2E8F0;
+  --border-strong:   #CBD5E1;
+  --border-hairline: #F1F5F9;
 
-  /* ── Bookplate Ochre / Gilt Gold Accent ───────── */
-  --wa-ochre:          #B45309;
-  --wa-ochre-hover:    #92400E;
-  --wa-ochre-light:    #FFFBEB;
-  --wa-ochre-muted:    rgba(180, 83, 9, 0.08);
+  /* ── Amber / Gold accent (badges, tags, "verified") ── */
+  --accent:          #F59E0B;
+  --accent-hover:    #D97706;
+  --accent-light:    #FEF3C7;
+  --accent-muted:    rgba(245, 158, 11, 0.10);
 
-  /* ── Library Slate / Dark Timber ────── */
-  --wa-slate-blue:     #1E293B;
-  --wa-navy:           #0F172A;
-  --wa-navy-hover:     #020617;
-  --wa-navy-light:     #F1F5F9;
+  /* ── Semantic ── */
+  --success:         #16A34A;
+  --success-bg:      #F0FDF4;
+  --warning:         #D97706;
+  --warning-bg:      #FFFBEB;
+  --error:           #DC2626;
+  --error-bg:        #FEF2F2;
+  --info:            #2563EB;
+  --info-bg:         #EFF6FF;
 
-  /* ── Standard Human Typography (Basic Elegant Serif) ── */
-  --font-serif: "Times New Roman", Times, Georgia, serif;
+  /* ── Sidebar ── */
+  --sidebar-bg:      #FFFFFF;
+  --sidebar-width:   64px;
+  --sidebar-active:  #0D9488;
+  --sidebar-active-bg: #CCFBF1;
+  --sidebar-text:    #475569;
+  --sidebar-muted:   #94A3B8;
 
-  /* ── Core Precision Palette Tokens (Utility & Baseline Integrity) ── */
-  --wa-cobalt-blue:    #2563EB;
-  --wa-slate-paper:    #F8FAFC;
-  --wa-pure-white:     #FFFFFF;
-  --wa-hairline-border:#E2E8F0;
-  --wa-sky-azure:      #0284C7;
-  --wa-amber-status:   #D97706;
-  --wa-slate-steel:    #334155;
+  /* ── Announcement bar ── */
+  --announcement-bg: #FEF3C7;
+  --announcement-text: #92400E;
+  --announcement-link: #0D9488;
 
-  /* ── Semantic Colors (Academic & Refined) ─────── */
-  --wa-success:        #15803D;
-  --wa-success-bg:     #F0FDF4;
-  --wa-warning:        #B45309;
-  --wa-warning-bg:     #FFFBEB;
-  --wa-error:          #991B1B;
-  --wa-error-bg:       #FEF2F2;
-  --wa-info:           #1E3A8A;
-  --wa-info-bg:        #EFF6FF;
+  /* ── Shadows ── */
+  --shadow-xs:   0 1px 2px rgba(12, 27, 51, 0.04);
+  --shadow-sm:   0 1px 3px rgba(12, 27, 51, 0.06), 0 1px 2px rgba(12, 27, 51, 0.04);
+  --shadow-md:   0 4px 6px -1px rgba(12, 27, 51, 0.07), 0 2px 4px -2px rgba(12, 27, 51, 0.05);
+  --shadow-lg:   0 10px 15px -3px rgba(12, 27, 51, 0.08), 0 4px 6px -4px rgba(12, 27, 51, 0.04);
+  --shadow-hover: 0 10px 20px -2px rgba(13, 148, 136, 0.12), 0 4px 8px -2px rgba(12, 27, 51, 0.06);
 
-  /* ── Soft Modern Diffused Shadows ─────────── */
-  --wa-shadow-xs:      0 1px 2px rgba(15, 23, 42, 0.04);
-  --wa-shadow-sm:      0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --wa-shadow-md:      0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  --wa-shadow-lg:      0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
-  --wa-shadow-hover:   0 10px 20px -2px rgba(37, 99, 235, 0.1), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
+  /* ── Radii ── */
+  --radius-sm:   8px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   18px;
+  --radius-pill: 9999px;
 
-  /* ── Radius - Deliberate 8-14px geometry ─── */
-  --wa-radius-sm:      8px;
-  --wa-radius-md:      10px;
-  --wa-radius-lg:      14px;
-  --wa-radius-xl:      18px;
-  --wa-radius-pill:    6px;
+  /* ── Transitions ── */
+  --transition:  180ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* ── Transitions - Subtle 150-220ms ───────── */
-  --wa-transition:     180ms cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* ── Spacing Scale ──────────────────────── */
+  /* ── Spacing Scale ── */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -107,13 +95,13 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
-  /* ── Learning Commons Typography Scale ──── */
-  --type-display:      clamp(2.8rem, 6vw, 5.8rem);
-  --type-page-title:   clamp(2.1rem, 4vw, 3.8rem);
-  --type-section-title:clamp(1.6rem, 2.5vw, 2.4rem);
-  --type-card-title:   clamp(1.15rem, 1.5vw, 1.35rem);
-  --type-body:         1.04rem;
-  --type-metadata:     0.84rem;
+  /* ── Type Scale ── */
+  --type-display:       clamp(2.8rem, 6vw, 5.8rem);
+  --type-page-title:    clamp(2.1rem, 4vw, 3.8rem);
+  --type-section-title: clamp(1.6rem, 2.5vw, 2.4rem);
+  --type-card-title:    clamp(1.1rem, 1.5vw, 1.3rem);
+  --type-body:          1.04rem;
+  --type-metadata:      0.84rem;
 
   --text-xs:   0.75rem;
   --text-sm:   0.84rem;
@@ -124,107 +112,170 @@
   --text-3xl:  2.1rem;
   --text-4xl:  2.8rem;
 
-  /* ── Layout ─────────────────────────────── */
+  /* ── Layout ── */
   --container-xl: 1180px;
   --container-lg: 960px;
 
-  /* ── Focus ───────────────────────────────── */
-  --focus-ring: 0 0 0 2px var(--wa-paper), 0 0 0 4px var(--wa-forest);
+  /* ── Focus ── */
+  --focus-ring: 0 0 0 2px var(--surface), 0 0 0 4px var(--primary);
 
-  /* ── Legacy aliases - preserve existing code ── */
-  --sh-green:          var(--wa-green);
-  --sh-green-hover:    var(--wa-green-hover);
-  --sh-green-light:    var(--wa-green-light);
-  --sh-green-mid:      var(--wa-green-mid);
-  --sh-green-muted:    var(--wa-green-muted);
-  --sh-bg:             var(--wa-cream);
-  --sh-surface:        var(--wa-white);
-  --sh-surface-2:      var(--wa-cream-dark);
-  --sh-border:         var(--wa-border);
-  --sh-border-strong:  var(--wa-border-strong);
-  --sh-navy:           var(--wa-ink);
-  --sh-text:           var(--wa-text);
-  --sh-text-muted:     var(--wa-muted);
-  --sh-text-light:     var(--wa-subtle);
-  --sh-nav-bg:         var(--wa-white);
-  --sh-nav-text:       var(--wa-ink);
-  --sh-nav-muted:      var(--wa-muted);
-  --sh-purple:         var(--wa-terra);
-  --sh-blue:           var(--wa-navy);
-  --sh-amber:          var(--wa-ochre);
-  --sh-teal:           var(--wa-green);
-  --sh-indigo:         var(--wa-navy);
+  /* ── BACKWARDS COMPATIBILITY ALIASES ── */
+  /* All legacy --wa-* and --lv-* tokens point to the new system */
+  --wa-paper:          var(--surface);
+  --wa-cream:          var(--surface);
+  --wa-cream-dark:     var(--surface-subtle);
+  --wa-cream-mid:      var(--border);
+  --wa-white:          var(--surface-raised);
+  --wa-ink:            var(--text-primary);
+  --wa-text:           var(--text-secondary);
+  --wa-muted:          var(--text-muted);
+  --wa-subtle:         var(--text-subtle);
+  --wa-border:         var(--border);
+  --wa-border-hairline: var(--border-hairline);
+  --wa-border-strong:  var(--border-strong);
+  --wa-crimson:        #881337;
+  --wa-forest:         var(--navy);
+  --wa-green:          var(--primary);
+  --wa-green-hover:    var(--primary-hover);
+  --wa-green-light:    var(--primary-light);
+  --wa-green-mid:      var(--primary);
+  --wa-green-muted:    var(--primary-muted);
+  --wa-terra:          var(--navy);
+  --wa-terracotta:     var(--navy);
+  --wa-terra-hover:    var(--navy-hover);
+  --wa-terra-light:    var(--navy-muted);
+  --wa-terra-muted:    var(--navy-muted);
+  --wa-ochre:          var(--accent);
+  --wa-ochre-hover:    var(--accent-hover);
+  --wa-ochre-light:    var(--accent-light);
+  --wa-ochre-muted:    var(--accent-muted);
+  --wa-slate-blue:     var(--navy-light);
+  --wa-navy:           var(--navy);
+  --wa-navy-hover:     var(--navy-hover);
+  --wa-navy-light:     var(--surface-subtle);
+  --wa-shadow-xs:      var(--shadow-xs);
+  --wa-shadow-sm:      var(--shadow-sm);
+  --wa-shadow-md:      var(--shadow-md);
+  --wa-shadow-lg:      var(--shadow-lg);
+  --wa-shadow-hover:   var(--shadow-hover);
+  --wa-radius-sm:      var(--radius-sm);
+  --wa-radius-md:      var(--radius-md);
+  --wa-radius-lg:      var(--radius-lg);
+  --wa-radius-xl:      var(--radius-xl);
+  --wa-radius-pill:    var(--radius-pill);
+  --wa-transition:     var(--transition);
+  --wa-success:        var(--success);
+  --wa-success-bg:     var(--success-bg);
+  --wa-warning:        var(--warning);
+  --wa-warning-bg:     var(--warning-bg);
+  --wa-error:          var(--error);
+  --wa-error-bg:       var(--error-bg);
+  --wa-info:           var(--info);
+  --wa-info-bg:        var(--info-bg);
+  --wa-cobalt-blue:    var(--info);
+  --wa-slate-paper:    var(--surface);
+  --wa-pure-white:     var(--surface-raised);
+  --wa-hairline-border: var(--border);
+  --wa-sky-azure:      var(--info);
+  --wa-amber-status:   var(--accent);
+  --wa-slate-steel:    var(--text-secondary);
+  --wa-crimson-hover:  #700F2D;
+  --wa-crimson-light:  #FDF2F4;
+  --wa-forest-light:   var(--primary-light);
+  --wa-slate-blue:     var(--navy-light);
+  --font-serif:        "Playfair Display", "Times New Roman", Georgia, serif;
 
-  --lv-primary:        var(--wa-green);
-  --lv-primary-hover:  var(--wa-green-hover);
-  --lv-primary-light:  var(--wa-green-light);
-  --lv-primary-mid:    var(--wa-green-mid);
-  --lv-primary-muted:  var(--wa-green-muted);
-  --lv-violet:         var(--wa-terra);
-  --lv-violet-hover:   var(--wa-terra-hover);
-  --lv-violet-light:   var(--wa-terra-light);
-  --lv-emerald:        var(--wa-green);
-  --lv-emerald-hover:  var(--wa-green-hover);
-  --lv-emerald-light:  var(--wa-green-light);
-  --lv-emerald-muted:  var(--wa-green-muted);
-  --lv-amber:          var(--wa-ochre);
-  --lv-amber-hover:    var(--wa-ochre-hover);
-  --lv-amber-light:    var(--wa-ochre-light);
-  --lv-rose:           var(--wa-terra);
-  --lv-cyan:           var(--wa-green-mid);
-  --lv-sky:            var(--wa-navy-light);
-  --lv-bg:             var(--wa-cream);
-  --lv-surface:        var(--wa-white);
-  --lv-surface-subtle: var(--wa-cream-dark);
-  --lv-border:         var(--wa-border);
-  --lv-border-hover:   var(--wa-border-strong);
-  --lv-border-glow:    rgba(45, 106, 79, 0.20);
-  --lv-obsidian:       var(--wa-ink);
-  --lv-obsidian-2:     var(--wa-text);
-  --lv-obsidian-border: var(--wa-border);
-  --lv-heading:        var(--wa-ink);
-  --lv-text:           var(--wa-text);
-  --lv-text-muted:     var(--wa-muted);
-  --lv-text-subtle:    var(--wa-subtle);
-  --lv-bento-radius:   var(--wa-radius-lg);
-  --lv-bento-shadow:   var(--wa-shadow-sm);
-  --lv-bento-hover-shadow: var(--wa-shadow-hover);
+  --lv-primary:        var(--primary);
+  --lv-primary-hover:  var(--primary-hover);
+  --lv-primary-light:  var(--primary-light);
+  --lv-primary-mid:    var(--primary);
+  --lv-primary-muted:  var(--primary-muted);
+  --lv-violet:         var(--navy);
+  --lv-violet-hover:   var(--navy-hover);
+  --lv-violet-light:   var(--navy-muted);
+  --lv-emerald:        var(--primary);
+  --lv-emerald-hover:  var(--primary-hover);
+  --lv-emerald-light:  var(--primary-light);
+  --lv-emerald-muted:  var(--primary-muted);
+  --lv-amber:          var(--accent);
+  --lv-amber-hover:    var(--accent-hover);
+  --lv-amber-light:    var(--accent-light);
+  --lv-rose:           #E11D48;
+  --lv-cyan:           var(--primary);
+  --lv-sky:            var(--surface-subtle);
+  --lv-bg:             var(--surface);
+  --lv-surface:        var(--surface-raised);
+  --lv-surface-subtle: var(--surface-subtle);
+  --lv-border:         var(--border);
+  --lv-border-hover:   var(--border-strong);
+  --lv-border-glow:    rgba(13, 148, 136, 0.20);
+  --lv-obsidian:       var(--text-primary);
+  --lv-obsidian-2:     var(--text-secondary);
+  --lv-obsidian-border: var(--border);
+  --lv-heading:        var(--text-primary);
+  --lv-text:           var(--text-secondary);
+  --lv-text-muted:     var(--text-muted);
+  --lv-text-subtle:    var(--text-subtle);
+  --lv-bento-radius:   var(--radius-lg);
+  --lv-bento-shadow:   var(--shadow-sm);
+  --lv-bento-hover-shadow: var(--shadow-hover);
   --lv-bento-bevel:    inset 0 1px 0 rgba(255, 255, 255, 0.90);
   --lv-focus-glow:     var(--focus-ring);
 
-  --color-navy:        var(--wa-ink);
-  --color-text:        var(--wa-text);
-  --color-text-muted:  var(--wa-muted);
-  --color-text-light:  var(--wa-subtle);
-  --color-border:      var(--wa-border);
-  --color-border-strong: var(--wa-border-strong);
-  --color-bg:          var(--wa-cream);
-  --color-bg-card:     var(--wa-white);
-  --color-bg-alt:      var(--wa-green-light);
-  --color-primary:     var(--wa-green);
-  --color-primary-hover: var(--wa-green-hover);
-  --color-sky:         var(--wa-navy-light);
-  --color-teal:        var(--wa-green);
-  --color-teal-dark:   var(--wa-green-hover);
-  --color-teal-light:  var(--wa-green-light);
-  --color-cream:       var(--wa-cream);
-  --color-cream-dark:  var(--wa-cream-dark);
-  --color-gold:        var(--wa-ochre);
-  --color-gold-dark:   var(--wa-ochre-hover);
-  --color-success:     var(--wa-success);
-  --color-success-bg:  var(--wa-success-bg);
-  --color-error:       #C1694F;
-  --color-error-bg:    #FAEDE9;
-  --color-warning:     var(--wa-warning);
-  --color-warning-bg:  var(--wa-warning-bg);
-  --color-info:        var(--wa-info);
-  --color-info-bg:     var(--wa-info-bg);
+  --color-navy:        var(--text-primary);
+  --color-text:        var(--text-secondary);
+  --color-text-muted:  var(--text-muted);
+  --color-text-light:  var(--text-subtle);
+  --color-border:      var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-bg:          var(--surface);
+  --color-bg-card:     var(--surface-raised);
+  --color-bg-alt:      var(--primary-light);
+  --color-primary:     var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-sky:         var(--surface-subtle);
+  --color-teal:        var(--primary);
+  --color-teal-dark:   var(--primary-hover);
+  --color-teal-light:  var(--primary-light);
+  --color-cream:       var(--surface);
+  --color-cream-dark:  var(--surface-subtle);
+  --color-gold:        var(--accent);
+  --color-gold-dark:   var(--accent-hover);
+  --color-success:     var(--success);
+  --color-success-bg:  var(--success-bg);
+  --color-error:       var(--error);
+  --color-error-bg:    var(--error-bg);
+  --color-warning:     var(--warning);
+  --color-warning-bg:  var(--warning-bg);
+  --color-info:        var(--info);
+  --color-info-bg:     var(--info-bg);
+  --sh-green:          var(--primary);
+  --sh-green-hover:    var(--primary-hover);
+  --sh-green-light:    var(--primary-light);
+  --sh-green-mid:      var(--primary);
+  --sh-green-muted:    var(--primary-muted);
+  --sh-bg:             var(--surface);
+  --sh-surface:        var(--surface-raised);
+  --sh-surface-2:      var(--surface-subtle);
+  --sh-border:         var(--border);
+  --sh-border-strong:  var(--border-strong);
+  --sh-navy:           var(--text-primary);
+  --sh-text:           var(--text-secondary);
+  --sh-text-muted:     var(--text-muted);
+  --sh-text-light:     var(--text-subtle);
+  --sh-nav-bg:         var(--surface-raised);
+  --sh-nav-text:       var(--text-primary);
+  --sh-nav-muted:      var(--text-muted);
+  --sh-purple:         #7C3AED;
+  --sh-blue:           var(--navy);
+  --sh-amber:          var(--accent);
+  --sh-teal:           var(--primary);
+  --sh-indigo:         var(--navy);
 }
 
 /* =========================================
    RESET & BASE
    ========================================= */
-
 *, *::before, *::after {
   box-sizing: border-box;
   padding: 0;

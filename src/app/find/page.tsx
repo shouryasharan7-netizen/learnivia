@@ -13,7 +13,9 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
+  Users,
 } from "lucide-react";
+
 
 export const dynamic = "force-dynamic";
 
@@ -197,222 +199,425 @@ export default async function FindTutorPage({ searchParams }: Props) {
 
   const isAutoMatched = Boolean(dbUser && (activeGrade || activeCurriculum) && !isAllGradesExplicit);
 
+  // Subject chip tabs (Schoolhouse-style horizontal filter row)
+  const SUBJECT_CHIPS = [
+    { label: "All", value: "" },
+    { label: "Mathematics", value: "Mathematics" },
+    { label: "Science", value: "Science" },
+    { label: "English", value: "English Language Arts" },
+    { label: "CBSE", value: "cbse" },
+    { label: "ICSE", value: "icse" },
+    { label: "IB", value: "ib" },
+    { label: "Social Studies", value: "Social Studies" },
+  ];
+
   return (
-    <main className={styles.main}>
-      <div className={styles.header}>
-        <div className={styles.kicker}>
-          <GraduationCap size={14} color="#1B4D3E" />
-          <span>Verified Peer Mentors &middot; K-10</span>
-        </div>
-        <h1 className={styles.title}>Find a Volunteer Tutor</h1>
-        <p className={styles.subtitle}>
-          Browse verified high school and university mentors approved for your grade level, free 1-on-1 Zoom sessions.
+    <div>
+      {/* ── Page Header ── */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <h1
+          style={{
+            fontSize: "1.6rem",
+            fontWeight: 800,
+            color: "var(--text-primary, #0C1B33)",
+            margin: "0 0 0.4rem",
+            fontFamily: "var(--font-serif, 'Playfair Display', serif)",
+          }}
+        >
+          Find a Peer Tutor
+        </h1>
+        <p style={{ fontSize: "0.9rem", color: "var(--text-secondary, #475569)", margin: 0 }}>
+          Verified volunteer tutors for K-10 students, free 1-on-1 Zoom sessions.
+          Filter by subject, board, or grade to find your perfect match.
         </p>
       </div>
 
-      {/* Auto-matching Notification Banner */}
+      {/* ── Full-width Search + Sort (Schoolhouse style) ── */}
+      <form method="GET" action="/find">
+        <div
+          style={{
+            display: "flex",
+            gap: "0.75rem",
+            marginBottom: "1rem",
+            alignItems: "center",
+          }}
+        >
+          {/* Search bar */}
+          <div
+            style={{
+              flex: 1,
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Search
+              size={16}
+              color="var(--text-muted, #64748B)"
+              style={{ position: "absolute", left: "0.875rem", pointerEvents: "none" }}
+            />
+            <input
+              type="text"
+              name="q"
+              defaultValue={q || ""}
+              placeholder="Search tutors, subjects, or boards…"
+              style={{
+                width: "100%",
+                padding: "0.7rem 1rem 0.7rem 2.5rem",
+                border: "1.5px solid var(--border, #E2E8F0)",
+                borderRadius: "var(--radius-md, 10px)",
+                fontSize: "0.9rem",
+                color: "var(--text-primary, #0C1B33)",
+                background: "var(--surface-raised, #FFFFFF)",
+                outline: "none",
+              }}
+            />
+          </div>
+          {/* Sort / Grade select */}
+          <select
+            name="grade"
+            defaultValue={activeGrade || ""}
+            style={{
+              padding: "0.7rem 1.1rem",
+              border: "1.5px solid var(--border, #E2E8F0)",
+              borderRadius: "var(--radius-md, 10px)",
+              fontSize: "0.875rem",
+              color: "var(--text-secondary, #475569)",
+              background: "var(--surface-raised, #FFFFFF)",
+              cursor: "pointer",
+            }}
+          >
+            <option value="">All Grades (K-10)</option>
+            <option value="Kindergarten">Kindergarten</option>
+            <option value="Grade 1">Grade 1</option>
+            <option value="Grade 2">Grade 2</option>
+            <option value="Grade 3">Grade 3</option>
+            <option value="Grade 4">Grade 4</option>
+            <option value="Grade 5">Grade 5</option>
+            <option value="Grade 6">Grade 6</option>
+            <option value="Grade 7">Grade 7</option>
+            <option value="Grade 8">Grade 8</option>
+            <option value="Grade 9">Grade 9</option>
+            <option value="Grade 10">Grade 10</option>
+          </select>
+          <button
+            type="submit"
+            style={{
+              padding: "0.7rem 1.25rem",
+              background: "var(--primary, #0D9488)",
+              color: "#fff",
+              border: "none",
+              borderRadius: "var(--radius-md, 10px)",
+              fontSize: "0.875rem",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            Search
+          </button>
+          {(q || grade || subject || curriculum || activeGrade) && (
+            <Link
+              href="/find?allGrades=true"
+              style={{
+                padding: "0.7rem 1rem",
+                border: "1.5px solid var(--border, #E2E8F0)",
+                borderRadius: "var(--radius-md, 10px)",
+                fontSize: "0.875rem",
+                color: "var(--text-muted, #64748B)",
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Clear
+            </Link>
+          )}
+        </div>
+
+        {/* ── Horizontal Filter Chips (Schoolhouse-style subject tabs) ── */}
+        <div
+          style={{
+            display: "flex",
+            gap: "0.5rem",
+            overflowX: "auto",
+            paddingBottom: "0.25rem",
+            scrollbarWidth: "none",
+            marginBottom: "1.5rem",
+          }}
+        >
+          {SUBJECT_CHIPS.map((chip) => {
+            const isChipActive = chip.value === "" ? !subject : subject === chip.value;
+            return (
+              <Link
+                key={chip.value}
+                href={`/find?allGrades=true${chip.value ? `&subject=${encodeURIComponent(chip.value)}` : ""}${activeGrade ? `&grade=${encodeURIComponent(activeGrade)}` : ""}`}
+                style={{
+                  flexShrink: 0,
+                  padding: "0.45rem 1rem",
+                  borderRadius: "var(--radius-pill, 9999px)",
+                  fontSize: "0.85rem",
+                  fontWeight: isChipActive ? 700 : 500,
+                  border: `1.5px solid ${isChipActive ? "var(--primary, #0D9488)" : "var(--border, #E2E8F0)"}`,
+                  background: isChipActive ? "var(--primary, #0D9488)" : "var(--surface-raised, #FFFFFF)",
+                  color: isChipActive ? "#fff" : "var(--text-secondary, #475569)",
+                  textDecoration: "none",
+                  transition: "all var(--transition, 180ms)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {chip.label}
+              </Link>
+            );
+          })}
+        </div>
+      </form>
+
+      {/* ── Auto-match banner ── */}
       {isAutoMatched && (
         <div
           style={{
-            maxWidth: 960,
-            margin: "0 auto 1.75rem",
-            background: "#EAF2EE",
-            border: "1px solid #C6DEC6",
-            borderRadius: 10,
-            padding: "0.85rem 1.25rem",
+            background: "var(--primary-light, #CCFBF1)",
+            border: "1px solid rgba(13,148,136,0.2)",
+            borderRadius: "var(--radius-md, 10px)",
+            padding: "0.75rem 1.1rem",
+            marginBottom: "1.25rem",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            flexWrap: "wrap",
             gap: "0.5rem",
+            fontSize: "0.875rem",
+            color: "var(--primary-dark, #115E59)",
           }}
         >
-          <div
-            style={{
-              fontSize: "0.875rem",
-              color: "#1B4D3E",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}
-          >
-            <Target size={16} color="#1B4D3E" />
-            <span>
-              Showing tutors matched for your profile:{" "}
-              <strong>{activeGrade || "Your Grade"}</strong>
-              {studentAge ? ` (Age ${studentAge})` : ""}
-              {activeCurriculum ? ` • ${activeCurriculum} Curriculum` : ""}
-            </span>
-          </div>
+          <span>
+            <GraduationCap size={15} style={{ marginRight: "0.5rem", verticalAlign: "middle" }} />
+            Showing tutors matched for: <strong>{activeGrade || "Your Grade"}</strong>
+            {activeCurriculum ? ` · ${activeCurriculum}` : ""}
+          </span>
           <Link
             href={`/find?allGrades=true${subject ? `&subject=${encodeURIComponent(subject)}` : ""}`}
-            style={{
-              fontSize: "0.825rem",
-              color: "#1B4D3E",
-              fontWeight: 700,
-              textDecoration: "underline",
-            }}
+            style={{ color: "var(--primary, #0D9488)", fontWeight: 700, textDecoration: "underline", fontSize: "0.825rem" }}
           >
-            Show All Tutors
+            Show All
           </Link>
         </div>
       )}
 
-      {/* Search & Filters Bar */}
-      <form method="GET" action="/find" className={styles.filters}>
-        <div className={styles.searchWrapper}>
-          <Search size={16} className={styles.searchIcon} />
-          <input
-            type="text"
-            name="q"
-            defaultValue={q || ""}
-            placeholder="Search by tutor name, subject, or school…"
-            className={styles.searchInput}
-          />
+      {/* ── Tutor Grid (3-col Schoolhouse card layout) ── */}
+      {tutors.length === 0 ? (
+        <div
+          style={{
+            textAlign: "center",
+            padding: "3rem 1.5rem",
+            background: "var(--surface-raised, #FFFFFF)",
+            border: "1px solid var(--border, #E2E8F0)",
+            borderRadius: "var(--radius-xl, 18px)",
+          }}
+        >
+          <BookOpen size={36} color="var(--text-subtle, #94A3B8)" style={{ marginBottom: "0.875rem" }} />
+          <p style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary, #0C1B33)", margin: "0 0 0.5rem" }}>
+            No tutors found for these filters
+          </p>
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted, #64748B)", margin: "0 0 1.25rem" }}>
+            Try broadening your search or removing some filters.
+          </p>
+          <Link
+            href="/find?allGrades=true"
+            style={{
+              display: "inline-block",
+              padding: "0.6rem 1.5rem",
+              background: "var(--primary, #0D9488)",
+              color: "#fff",
+              borderRadius: "var(--radius-sm, 8px)",
+              fontSize: "0.875rem",
+              fontWeight: 700,
+              textDecoration: "none",
+            }}
+          >
+            Browse All Tutors
+          </Link>
         </div>
-
-        <select name="subject" defaultValue={subject || ""} className={styles.filterSelect}>
-          <option value="">All Subjects</option>
-          <option value="Mathematics">Mathematics</option>
-          <option value="Reading &amp; Writing">Reading &amp; Writing</option>
-          <option value="English Language Arts">English Language Arts</option>
-          <option value="Science">Science</option>
-          <option value="Biology">Biology</option>
-          <option value="Chemistry">Chemistry</option>
-          <option value="Social Studies">Social Studies</option>
-          <option value="Learning Support">Learning Support</option>
-        </select>
-
-        <select name="grade" defaultValue={activeGrade || ""} className={styles.filterSelect}>
-          <option value="">All Grade Levels (K-10)</option>
-          <option value="Kindergarten">Kindergarten</option>
-          <option value="Grade 1">Grade 1</option>
-          <option value="Grade 2">Grade 2</option>
-          <option value="Grade 3">Grade 3</option>
-          <option value="Grade 4">Grade 4</option>
-          <option value="Grade 5">Grade 5</option>
-          <option value="Grade 6">Grade 6</option>
-          <option value="Grade 7">Grade 7</option>
-          <option value="Grade 8">Grade 8</option>
-          <option value="Grade 9">Grade 9</option>
-          <option value="Grade 10">Grade 10</option>
-        </select>
-
-        <select name="curriculum" defaultValue={activeCurriculum || ""} className={styles.filterSelect}>
-          <option value="">All Curricula</option>
-          <option value="US Common Core">US Common Core</option>
-          <option value="CBSE">CBSE (India)</option>
-          <option value="ICSE">ICSE (India)</option>
-          <option value="IGCSE">IGCSE / GCSE (UK)</option>
-          <option value="IB">IB (K-10)</option>
-          <option value="Other">Other</option>
-        </select>
-
-        <button type="submit" className={styles.searchBtn}>Filter</button>
-        {(q || grade || subject || curriculum || activeGrade) && (
-          <Link href="/find?allGrades=true" className={styles.clearBtn}>Clear</Link>
-        )}
-      </form>
-
-      <div className={styles.tutorGrid}>
-        {tutors.length === 0 ? (
-          <div className={styles.noTutors}>
-            <p style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#1C1917" }}>
-              No tutors matched your search criteria for {subject || "the selected filters"}.
-            </p>
-            <Link href="/find?allGrades=true" className={styles.clearBtn}>
-              Show All Available Tutors
-            </Link>
-          </div>
-        ) : (
-          tutors.map((tutor: any) => {
+      ) : (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))",
+            gap: "1rem",
+          }}
+        >
+          {tutors.map((tutor: any) => {
             const completedSessions = (tutor._count?.tutorBookings || 0) + (tutor._count?.workshops || 0);
             const avgRating =
               tutor.reviews?.length > 0
-                ? (tutor.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / tutor.reviews.length).toFixed(1)
+                ? (
+                    tutor.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) /
+                    tutor.reviews.length
+                  ).toFixed(1)
                 : null;
 
             return (
-              <div key={tutor.id} className={styles.tutorCard}>
-                <div className={styles.tutorHeader}>
-                  <div className={styles.avatarPlaceholder}>
+              <Link
+                key={tutor.id}
+                href={`/tutor/${tutor.id}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "1.1rem 1.1rem 1rem",
+                  background: "var(--surface-raised, #FFFFFF)",
+                  border: "1px solid var(--border, #E2E8F0)",
+                  borderRadius: "var(--radius-lg, 14px)",
+                  textDecoration: "none",
+                  transition: "box-shadow var(--transition, 180ms), transform var(--transition, 180ms)",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-md)";
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                }}
+              >
+                {/* Tutor header */}
+                <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>
+                  <div
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      background: "var(--primary, #0D9488)",
+                      color: "#fff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1rem",
+                      fontWeight: 700,
+                      flexShrink: 0,
+                    }}
+                  >
                     {tutor.user.name?.charAt(0).toUpperCase() || "T"}
                   </div>
-                  <div>
-                    <h2 className={styles.tutorName}>{tutor.user.name}</h2>
-                    <p className={styles.tutorTimezone}>
-                      {tutor.school ? (
-                        <>
-                          <GraduationCap size={13} color="#1B4D3E" />
-                          <span>{tutor.school}</span>
-                        </>
-                      ) : (
-                        <>
-                          <Globe size={13} color="#78716C" />
-                          <span>{tutor.user.timezone || "UTC"}</span>
-                        </>
-                      )}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p
+                      style={{
+                        fontSize: "0.9rem",
+                        fontWeight: 700,
+                        color: "var(--text-primary, #0C1B33)",
+                        margin: "0 0 2px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {tutor.user.name}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "0.775rem",
+                        color: "var(--text-muted, #64748B)",
+                        margin: 0,
+                      }}
+                    >
+                      {tutor.school || tutor.user.timezone || "Volunteer Tutor"}
                     </p>
                   </div>
+                  {avgRating && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "2px",
+                        fontSize: "0.775rem",
+                        color: "var(--accent, #F59E0B)",
+                        fontWeight: 700,
+                      }}
+                    >
+                      <Star size={12} fill="currentColor" />
+                      {avgRating}
+                    </div>
+                  )}
                 </div>
 
-                <p className={styles.tutorBio}>
-                  {(tutor.bio || "").length > 130
-                    ? `${(tutor.bio || "").substring(0, 130)}…`
-                    : (tutor.bio || "Volunteer tutor ready to help.")}
+                {/* Bio */}
+                <p
+                  style={{
+                    fontSize: "0.825rem",
+                    color: "var(--text-secondary, #475569)",
+                    margin: "0 0 0.875rem",
+                    lineHeight: 1.5,
+                    flex: 1,
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {tutor.bio || "Volunteer peer tutor ready to help you master the material."}
                 </p>
 
-                {/* Real subjects and grade levels */}
-                <div className={styles.tags}>
-                  {tutor.subjects?.length > 0 ? (
-                    tutor.subjects.slice(0, 3).map((s: any) => (
-                      <span key={s.id} className={`${styles.tag} ${styles.tagSubject}`}>
-                        {s.name}
-                      </span>
-                    ))
-                  ) : (
-                    <span className={styles.tag}>General Support</span>
-                  )}
-                  {tutor.gradeLevels?.slice(0, 1).map((g: any) => (
-                    <span key={g.id} className={styles.tag}>
-                      {g.name}
+                {/* Tags */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.875rem" }}>
+                  {tutor.subjects?.slice(0, 3).map((s: any) => (
+                    <span
+                      key={s.id}
+                      style={{
+                        padding: "0.2rem 0.6rem",
+                        background: "var(--primary-light, #CCFBF1)",
+                        color: "var(--primary-dark, #115E59)",
+                        borderRadius: "var(--radius-pill, 9999px)",
+                        fontSize: "0.7rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {s.name}
                     </span>
                   ))}
                   {tutor.curricula && (
-                    <span key="curr" className={styles.tag}>
+                    <span
+                      style={{
+                        padding: "0.2rem 0.6rem",
+                        background: "var(--accent-light, #FEF3C7)",
+                        color: "var(--accent-hover, #D97706)",
+                        borderRadius: "var(--radius-pill, 9999px)",
+                        fontSize: "0.7rem",
+                        fontWeight: 600,
+                      }}
+                    >
                       {tutor.curricula.split(",")[0].trim()}
                     </span>
                   )}
                 </div>
 
-                <div className={styles.tutorMeta}>
-                  {completedSessions > 0 && (
-                    <span className={styles.hoursBadge} style={{ background: "#F0FDF4", borderColor: "#BBF7D0", color: "#166534" }}>
-                      <CheckCircle2 size={13} color="#166534" />
-                      <span>{completedSessions} {completedSessions === 1 ? "class" : "classes"} taught</span>
+                {/* Footer: sessions + CTA */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    paddingTop: "0.75rem",
+                    borderTop: "1px solid var(--border, #E2E8F0)",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.775rem", color: "var(--text-muted, #64748B)" }}>
+                    <Users size={13} />
+                    <span>
+                      {completedSessions > 0 ? `${completedSessions} sessions` : `${tutor.volunteerHours || 0} hrs`}
                     </span>
-                  )}
-                  <span className={styles.hoursBadge}>
-                    <Clock size={13} color="#1B4D3E" />
-                    <span>{tutor.volunteerHours} hrs volunteered</span>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
+                      color: "var(--primary, #0D9488)",
+                    }}
+                  >
+                    View Profile →
                   </span>
-                  {avgRating && (
-                    <span className={styles.ratingBadge}>
-                      <Star size={13} color="#92400E" fill="#92400E" />
-                      <span>{avgRating} ({tutor.reviews.length})</span>
-                    </span>
-                  )}
                 </div>
-
-                <Link href={`/tutor/${tutor.id}`} className={styles.viewProfileBtn}>
-                  <span>View Profile &amp; Book</span>
-                  <ArrowRight size={14} />
-                </Link>
-              </div>
+              </Link>
             );
-          })
-        )}
-      </div>
-    </main>
+          })}
+        </div>
+      )}
+    </div>
   );
 }

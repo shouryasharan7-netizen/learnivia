@@ -3,7 +3,7 @@
 .shell {
   display: flex;
   min-height: 100vh;
-  background: var(--wa-cream);
+  background: var(--surface, #FAF9F6);
 }
 
 .mainContainer {
@@ -12,14 +12,15 @@
   flex-direction: column;
   min-width: 0;
   position: relative;
+  background: var(--surface, #FAF9F6);
 }
 
 .content {
   flex: 1;
   width: 100%;
-  max-width: 1140px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1.75rem 4rem;
+  padding: 1.5rem 2rem 4rem;
 }
 
 /* Public layout */
@@ -27,7 +28,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--wa-cream);
+  background: var(--surface, #FAF9F6);
 }
 
 .publicContent {
@@ -41,7 +42,7 @@
   }
 
   .content {
-    padding: 1.25rem 1rem 5.5rem; /* space for bottom nav */
+    padding: 1rem 1rem 5.5rem; /* space for bottom nav */
   }
 
   :global(.mobile-bottom-nav) {

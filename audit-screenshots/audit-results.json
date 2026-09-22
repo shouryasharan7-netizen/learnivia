@@ -1,0 +1,38 @@
+[
+  {
+    "role": "student",
+    "page": "Dashboard/Home",
+    "status": "Working",
+    "url": "https://learnivia-green.vercel.app/dashboard"
+  },
+  {
+    "role": "student",
+    "page": "Sessions",
+    "status": "Working",
+    "url": "https://learnivia-green.vercel.app/sessions"
+  },
+  {
+    "role": "student",
+    "page": "Dashboard",
+    "status": "Working",
+    "url": "https://learnivia-green.vercel.app/dashboard"
+  },
+  {
+    "role": "tutor",
+    "page": "Dashboard/Home",
+    "status": "Working",
+    "url": "https://learnivia-green.vercel.app/tutor/training?locked=1"
+  },
+  {
+    "role": "tutor",
+    "page": "Sessions",
+    "status": "Working",
+    "url": "https://learnivia-green.vercel.app/sessions"
+  },
+  {
+    "role": "tutor",
+    "page": "Dashboard",
+    "status": "Working",
+    "url": "https://learnivia-green.vercel.app/dashboard"
+  }
+]
