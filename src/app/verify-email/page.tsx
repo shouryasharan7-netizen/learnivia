@@ -47,7 +47,7 @@ export default async function VerifyEmailPage({
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(180deg, #FAF8F5 0%, #F5EFEB 100%)",
+        background: "var(--wa-paper)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

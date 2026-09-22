@@ -5,10 +5,10 @@
 }
 
 .header {
-  background: linear-gradient(135deg, var(--color-sky) 0%, white 100%);
+  background: var(--wa-paper, #FAF9F6);
   padding: var(--space-16) var(--space-6) var(--space-12);
   text-align: center;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--wa-border, #E2E8F0);
 }
 
 .mascotImg { object-fit: contain; margin: 0 auto var(--space-4); }

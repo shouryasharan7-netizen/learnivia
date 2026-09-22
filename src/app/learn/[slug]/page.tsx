@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, GraduationCap } from "lucide-react";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -34,7 +34,9 @@ export default async function ProgramDetailPage({ params }: Props) {
       <section className={styles.hero}>
         <div className={styles.inner}>
           <Link href="/learn" className={styles.backLink}>← All programs</Link>
-          <div className={styles.heroEmoji} aria-hidden="true">{program.emoji}</div>
+          <div className={styles.heroEmoji} aria-hidden="true">
+            <GraduationCap size={44} color="var(--wa-green, #1E3A8A)" />
+          </div>
           <h1 className={styles.title}>{program.title}</h1>
           <p className={styles.subtitle}>{program.longDescription}</p>
           <div className={styles.heroCtas}>

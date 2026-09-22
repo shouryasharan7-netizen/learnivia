@@ -16,23 +16,17 @@
 .leftPanel {
   display: none;
   flex: 0 0 44%;
-  background: linear-gradient(150deg, #0F172A 0%, #1E3A8A 55%, #2563EB 100%);
+  background: var(--wa-navy, #0F172A);
   flex-direction: column;
   justify-content: space-between;
   padding: 4rem 4.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.12);
+  border-right: 1px solid var(--wa-border);
 }
 
-/* Subtle modern radial highlights */
 .leftPanelBg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
-    radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
-  pointer-events: none;
+  display: none;
 }
 
 @media (min-width: 900px) {

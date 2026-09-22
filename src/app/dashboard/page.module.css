@@ -116,16 +116,16 @@
 
 /* Tutor Pending Banner */
 .tutorPendingBanner {
-  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-  border: 1.5px solid #FDE68A;
-  border-radius: 16px;
+  background: var(--wa-warning-bg, #FFFBEB);
+  border: 1px solid var(--wa-warning, #F59E0B);
+  border-radius: 8px;
   padding: 1.15rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1);
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.08);
 }
 
 .tutorPendingLeft {

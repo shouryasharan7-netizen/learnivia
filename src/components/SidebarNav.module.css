@@ -151,23 +151,23 @@
 }
 
 .navItemActive {
-  background: linear-gradient(135deg, #EAF3ED 0%, #D4EDDF 100%);
-  color: #235840;
-  border-color: rgba(45, 106, 79, 0.35);
+  background: var(--wa-green-light, #EFF6FF);
+  color: var(--wa-green, #1E3A8A);
+  border-color: rgba(30, 58, 138, 0.3);
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 3px rgba(30, 58, 138, 0.08);
   position: relative;
 }
 
 .navItemActive:hover {
-  background: linear-gradient(135deg, #D4EDDF 0%, #B5D9C5 100%);
-  color: #235840;
+  background: var(--wa-cream-dark, #F1F5F9);
+  color: var(--wa-green, #1E3A8A);
 }
 
 .navItemHighlight {
-  color: #2D6A4F;
+  color: var(--wa-green, #1E3A8A);
   font-weight: 700;
-  background: #EAF3ED;
+  background: var(--wa-green-light, #EFF6FF);
 }
 
 .navIcon {
@@ -188,13 +188,12 @@
 .itemBadge {
   font-size: 0.7rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #2D6A4F 0%, #C9922A 100%);
+  background: var(--wa-navy, #0F172A);
   color: #FFFFFF;
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  box-shadow: 0 2px 6px rgba(45, 106, 79, 0.3);
 }
 
 .expandChevron {

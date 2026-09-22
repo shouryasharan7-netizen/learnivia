@@ -415,8 +415,8 @@ export default function CommunityClient({
           {/* Pinned Socratic Roundtable Topic of the Week */}
           <div
             style={{
-              background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)",
-              border: "1px solid #BFDBFE",
+              background: "var(--wa-green-light, #EFF6FF)",
+              border: "1px solid var(--wa-border, #BFDBFE)",
               borderRadius: "12px",
               padding: "1.25rem 1.5rem",
               display: "flex",

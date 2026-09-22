@@ -318,7 +318,7 @@ export default function TutorTrainingPage() {
       {/* Header */}
       <div
         style={{
-          background: "linear-gradient(135deg, #0E8345, #1a6b3a)",
+          background: "var(--wa-navy, #0F172A)",
           padding: "3rem 1.5rem 2rem",
           color: "#fff",
           textAlign: "center",

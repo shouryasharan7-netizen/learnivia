@@ -136,28 +136,21 @@ export function TopBar({ user }: TopBarProps) {
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "0.45rem",
-            padding: "0.35rem 0.7rem",
-            fontSize: "0.8125rem",
-            fontWeight: 600,
+            justifyContent: "center",
+            width: "34px",
+            height: "34px",
             borderRadius: "6px",
-            border: "1px solid var(--wa-border, #CBD5E1)",
-            background: "var(--wa-cream-dark, #F1F5F9)",
-            color: "var(--wa-ink, #0F172A)",
+            border: "1px solid var(--wa-border)",
+            background: "var(--wa-paper)",
+            color: "var(--wa-muted)",
             cursor: "pointer",
             transition: "all 0.15s ease",
           }}
         >
           {theme === "dark" ? (
-            <>
-              <Sun size={15} color="#F59E0B" />
-              <span>Light Mode</span>
-            </>
+            <Sun size={16} color="#F59E0B" />
           ) : (
-            <>
-              <Moon size={15} color="#2563EB" />
-              <span>Dark Mode</span>
-            </>
+            <Moon size={16} color="currentColor" />
           )}
         </button>
 

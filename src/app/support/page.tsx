@@ -45,7 +45,7 @@ const FAQ_GROUPS = [
 export default function SupportPage() {
   return (
     <main>
-      <section style={{ background: "linear-gradient(135deg, var(--color-sky) 0%, var(--color-cream) 100%)", padding: "5rem 1.5rem", textAlign: "center" }}>
+      <section style={{ background: "var(--wa-paper, #FAF9F6)", borderBottom: "1px solid var(--wa-border, #E2E8F0)", padding: "5rem 1.5rem", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <h1 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "var(--color-navy)", marginBottom: "1rem", letterSpacing: "-0.03em" }}>
             Support & FAQ

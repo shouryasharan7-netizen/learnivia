@@ -169,7 +169,7 @@ export function VideoLessonPlayer({ video, color, bg, content }: VideoLessonPlay
         /* Interactive Master Lecture Player Screen */
         <div
           style={{
-            background: "linear-gradient(145deg, #0F172A 0%, #1E293B 100%)",
+            background: "#0F172A",
             color: "#FFFFFF",
             padding: "2rem 2.25rem",
             position: "relative",

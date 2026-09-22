@@ -425,17 +425,17 @@ export function Navbar() {
                 aria-haspopup="true"
                 onClick={() => { setExploreOpen(!exploreOpen); setInvolvedOpen(false); }}
               >
-                <span>explore programs</span>
+                <span>Explore Programs</span>
                 <span className={`${styles.chevron} ${exploreOpen ? styles.chevronOpen : ""}`} aria-hidden="true">
                   {exploreOpen ? "▲" : "▼"}
                 </span>
               </button>
 
-              {/* Full Featured Mega Menu matching Screenshot 1 */}
+              {/* Full Featured Mega Menu */}
               {exploreOpen && (
                 <div className={styles.megaMenu} role="dialog" aria-label="Explore programs">
                   <div className={styles.megaMenuHeader}>
-                    <h2 className={styles.megaMenuTitle}>Explore programs</h2>
+                    <h2 className={styles.megaMenuTitle}>Explore Programs</h2>
                     <p className={styles.megaMenuSubtitle}>Find the program that&apos;s right for you.</p>
                   </div>
 
@@ -460,106 +460,69 @@ export function Navbar() {
                   <div className={styles.megaMenuFooter}>
                     <span>Not sure where to start?</span>
                     <Link href="/find" className={styles.megaFooterLink} onClick={() => setExploreOpen(false)}>
-                      Browse all K-10 tutors → free, 1-on-1, verified
+                      Browse all K-10 tutors, free 1-on-1 verified
                     </Link>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Main Links */}
-            {mainLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`${styles.navLink} ${pathname === link.href ? styles.navLinkActive : ""}`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {/* Schoolhouse-style Direct Nav Links */}
+            <Link
+              href="/how-it-works"
+              className={`${styles.navLink} ${pathname === "/how-it-works" ? styles.navLinkActive : ""}`}
+            >
+              How It Works
+            </Link>
 
-            {/* Get Involved Dropdown */}
-            <div className={styles.dropdownWrapper} ref={involvedRef}>
-              <button
-                className={styles.navBtn}
-                aria-expanded={involvedOpen}
-                aria-haspopup="true"
-                onClick={() => { setInvolvedOpen(!involvedOpen); setExploreOpen(false); }}
-              >
-                <span>Get involved</span>
-                <span className={`${styles.chevron} ${involvedOpen ? styles.chevronOpen : ""}`} aria-hidden="true">
-                  {involvedOpen ? "▲" : "▼"}
-                </span>
-              </button>
+            <Link
+              href="/apply"
+              className={`${styles.navLink} ${pathname === "/apply" ? styles.navLinkActive : ""}`}
+            >
+              Become a Tutor
+            </Link>
 
-              {involvedOpen && (
-                <div className={styles.involvedDropdown} role="menu">
-                  {getInvolvedLinks.map((link) => (
-                    <Link 
-                      key={link.href} 
-                      href={link.href} 
-                      className={styles.dropdownItem} 
-                      role="menuitem"
-                      onClick={() => setInvolvedOpen(false)}
-                    >
-                      <div className={styles.dropdownItemTitle}>{link.label}</div>
-                      <div className={styles.dropdownItemDesc}>{link.desc}</div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            <Link
+              href="/about"
+              className={`${styles.navLink} ${pathname === "/about" ? styles.navLinkActive : ""}`}
+            >
+              About
+            </Link>
 
-            {/* Donate Pill Outline Button */}
-            <Link href="/about" className={styles.donateBtn}>
-              Donate
+            <Link
+              href="/faq"
+              className={`${styles.navLink} ${pathname === "/faq" ? styles.navLinkActive : ""}`}
+            >
+              FAQ
             </Link>
           </nav>
 
           {/* Auth Controls */}
           <div className={styles.authControls}>
+            {/* Minimal Unbounding Theme Switcher */}
             <button
               type="button"
               onClick={toggleTheme}
               title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
               aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.35rem",
-                padding: "0.4rem 0.75rem",
-                fontSize: "0.8125rem",
-                fontWeight: 600,
-                borderRadius: "6px",
-                border: "1px solid var(--wa-border, #CBD5E1)",
-                background: "var(--wa-white, #FFFFFF)",
-                color: "var(--wa-ink, #0F172A)",
-                cursor: "pointer",
-                marginRight: "0.4rem",
-                transition: "all 0.15s ease",
-              }}
+              className={styles.themeToggle}
             >
               {theme === "dark" ? (
-                <>
-                  <Sun size={14} color="#F59E0B" />
-                  <span>Light</span>
-                </>
+                <Sun size={17} color="#F59E0B" />
               ) : (
-                <>
-                  <Moon size={14} color="#2563EB" />
-                  <span>Dark</span>
-                </>
+                <Moon size={17} color="currentColor" />
               )}
             </button>
+
             {status === "loading" ? (
               <div className={styles.authSkeleton} aria-hidden="true" />
             ) : (
               <>
                 <Link href="/signin" className={styles.signInBtn}>
-                  Sign in
+                  Sign In
                 </Link>
                 <Link href="/signup" className={styles.signUpBtn}>
-                  Sign up
+                  Sign Up
                 </Link>
               </>
             )}

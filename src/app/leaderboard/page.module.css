@@ -75,9 +75,9 @@
 
 .firstPlaceCard {
   border-color: #FCD34D;
-  background: linear-gradient(180deg, #FFFDF5 0%, #FFFFFF 100%);
+  background: var(--wa-white, #FFFFFF);
   transform: translateY(-8px);
-  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.12);
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.1);
 }
 
 .medalIcon {

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  ArrowRight,
   ShieldCheck,
   Award,
   Lock,
@@ -13,6 +12,9 @@ import {
   Calendar,
   Users,
   Search,
+  BookOpen,
+  Clock,
+  Video,
 } from "lucide-react";
 import styles from "./page.module.css";
 
@@ -183,30 +185,53 @@ const TUTOR_ROSTER = [
   },
 ];
 
-const CHARTER_POINTS = [
+const HOW_IT_WORKS_STEPS = [
   {
-    num: "01",
+    step: 1,
+    title: "Select Subject and Grade",
+    desc: "Choose from our core K-10 curriculum across Mathematics, Reading Comprehension, PEEL Essay Writing, and Foundational Science.",
+  },
+  {
+    step: 2,
+    title: "Book a Supervised Zoom Slot",
+    desc: "Schedule a convenient 45-minute lesson. Automated calendar invites and private Zoom credentials are sent directly to the parent.",
+  },
+  {
+    step: 3,
+    title: "Meet Your Volunteer Mentor",
+    desc: "Connect 1-on-1 with an accomplished high school or college scholar. Parents are always welcome to observe and participate.",
+  },
+];
+
+const SAFEGUARD_PILLARS = [
+  {
+    id: "zoom-security",
+    badge: "Session Security",
     title: "Dual-Gate Supervised Zoom Protocol",
     desc: "Every session occurs in an isolated, private Zoom room with waiting room verification and passcode protection. Public links are strictly prohibited.",
   },
   {
-    num: "02",
+    id: "parental-rights",
+    badge: "Open Observation",
     title: "Full Parental Supervision Guarantee",
     desc: "Parents and guardians hold absolute rights to sit in, listen, and observe any session. Automated meeting confirmations and attendance receipts are sent immediately.",
   },
   {
-    num: "03",
+    id: "vetting",
+    badge: "Mentor Standards",
     title: "Comprehensive 5-Stage Mentor Vetting",
-    desc: "High school mentors must submit academic records, undergo identity checks, and complete mandatory Child Protection & Safeguarding certification.",
+    desc: "High school mentors must submit academic records, undergo identity checks, and complete mandatory Child Protection and Safeguarding certification.",
   },
   {
-    num: "04",
+    id: "audit-trail",
+    badge: "Verified Attendance",
     title: "Tamper-Evident Volunteer Records",
     desc: "Both tutor and learner dual-confirm completion. Attendance generates verified PDF transcripts equipped with cryptographic audit identifiers for school advisors.",
   },
   {
-    num: "05",
-    title: "Zero-Retention & Contact Privacy",
+    id: "privacy",
+    badge: "Direct Safeguards",
+    title: "Zero-Retention and Contact Privacy",
     desc: "Strict platform-only communication rules prohibit tutors from requesting or exchanging private phone numbers, social media, or off-platform addresses.",
   },
 ];
@@ -252,19 +277,18 @@ export default function HomeInteractiveClient({
   return (
     <div className={styles.pageWrapper}>
       {/* ── 1. EDITORIAL TICKER ── */}
-      <aside className={styles.mastheadTicker} aria-label="Academic Bulletin">
+      <aside className={styles.mastheadTicker} aria-label="Academic Notice">
         <div className={styles.container}>
           <div className={styles.mastheadInner}>
             <div className={styles.mastheadMeta}>
-              <span>Non-Profit Peer Learning</span>
-              <span className={styles.mastheadDot} />
-              <span>Supervised Zoom Tutoring for Kindergarten to Grade 10</span>
-              <span className={styles.mastheadDot} />
-              <span>100% Free - No Fees or Subscriptions</span>
+              <span className={styles.mastheadTag}>Non-Profit</span>
+              <span>Supervised 1-on-1 tutoring for Kindergarten to Grade 10</span>
+              <span className={styles.mastheadDivider} />
+              <span>100% Free with zero fees or subscriptions</span>
             </div>
             <div className={styles.mastheadBadge}>
               <Award size={14} color="var(--wa-ochre, #B45309)" />
-              <span>Verified Volunteer Peer Mentors</span>
+              <span>Verified High School and College Mentors</span>
             </div>
           </div>
         </div>
@@ -282,7 +306,7 @@ export default function HomeInteractiveClient({
               </div>
 
               <h1 className={styles.heroHeadline}>
-                Free 1-on-1 tutoring for <em>Kindergarten to Grade 10</em> students.
+                Free 1-on-1 tutoring for Kindergarten to Grade 10 students.
               </h1>
 
               <p className={styles.heroLead}>
@@ -292,7 +316,6 @@ export default function HomeInteractiveClient({
               <div className={styles.heroActions}>
                 <Link href="/find" className={styles.btnPrimary}>
                   <span>Find a Tutor</span>
-                  <ArrowRight size={17} />
                 </Link>
                 <Link href="/apply" className={styles.btnSecondary}>
                   <GraduationCap size={17} />
@@ -375,7 +398,7 @@ export default function HomeInteractiveClient({
                       </span>
                     </div>
                     <Link href={`/sessions/${liveSession.id}`} className={styles.workshopBtn}>
-                      Reserve Free Seat →
+                      Reserve Free Seat
                     </Link>
                   </div>
                 ) : (
@@ -386,7 +409,7 @@ export default function HomeInteractiveClient({
                       Experienced high school and college tutors ready to help across Math, Science, and Essay Writing.
                     </p>
                     <Link href="/find" className={styles.workshopBtn}>
-                      Browse Available Tutors →
+                      Browse Available Tutors
                     </Link>
                   </div>
                 )}
@@ -412,11 +435,34 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 3. THE ACADEMIC CURRICULUM (QUADRIVIUM) ── */}
+      {/* ── 3. HOW IT WORKS FOR FAMILIES (GENUINE 3-STEP PROCESS) ── */}
+      <section className={styles.howItWorksSection} id="how-it-works">
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionBadge}>Workflow</span>
+            <h2 className={styles.sectionTitle}>How 1-on-1 peer tutoring works for families</h2>
+            <p className={styles.sectionLead}>
+              Getting started is straightforward, safe, and transparent. We never ask for payment details or credit cards.
+            </p>
+          </div>
+
+          <div className={styles.howItWorksGrid}>
+            {HOW_IT_WORKS_STEPS.map((step) => (
+              <div key={step.step} className={styles.stepCard}>
+                <div className={styles.stepNumber}>{step.step}</div>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepText}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. THE ACADEMIC CURRICULUM ── */}
       <section className={styles.curriculumSection} id="curriculum">
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionEyebrow}>Academic Syllabus</span>
+            <span className={styles.sectionBadge}>Curriculum</span>
             <h2 className={styles.sectionTitle}>Rigorous disciplines. Patient peer guidance.</h2>
             <p className={styles.sectionLead}>
               Every lesson is structured around fundamental reasoning rather than rote memorization. Explore our core curriculum for Kindergarten through Grade 10.
@@ -449,7 +495,6 @@ export default function HomeInteractiveClient({
                 </div>
                 <div className={styles.subjectCardBottom}>
                   <span>Find a Mentor</span>
-                  <ArrowRight size={14} />
                 </div>
               </Link>
             ))}
@@ -457,14 +502,14 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 4. TRANSPARENT VOLUNTEER TUTOR ROSTER ── */}
+      {/* ── 5. VERIFIED VOLUNTEER TUTOR ROSTER ── */}
       <section className={styles.registrySection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionEyebrow}>Verified Mentor Registry</span>
-            <h2 className={styles.sectionTitle}>High-achieving scholars giving back.</h2>
+            <span className={styles.sectionBadge}>Scholars</span>
+            <h2 className={styles.sectionTitle}>High-achieving scholars giving back</h2>
             <p className={styles.sectionLead}>
-              Our volunteer tutors represent the finest secondary schools and university programs. Each is verified, safeguarded, and dedicated to empowering younger peers.
+              Our volunteer tutors represent rigorous secondary schools and university programs. Each is verified, safeguarded, and dedicated to empowering younger peers.
             </p>
           </div>
 
@@ -494,7 +539,6 @@ export default function HomeInteractiveClient({
                   </div>
                   <Link href="/find" className={styles.bookTutorBtn}>
                     <span>Schedule</span>
-                    <ArrowRight size={13} />
                   </Link>
                 </div>
               </div>
@@ -503,31 +547,33 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 5. THE 5-POINT CHILD SAFEGUARDING CHARTER ── */}
-      <section className={styles.charterSection} id="safety">
+      {/* ── 6. CHILD SAFEGUARDING STANDARDS (NON-NUMBERED PRINCIPLES) ── */}
+      <section className={styles.safeguardSection} id="safety">
         <div className={styles.container}>
-          <div className={styles.charterGrid}>
+          <div className={styles.safeguardGrid}>
             <div>
-              <span className={styles.sectionEyebrow}>Safety &amp; Compliance Protocol</span>
-              <h2 className={styles.sectionTitle}>Built from the ground up for student protection.</h2>
+              <span className={styles.sectionBadge}>Safeguarding Protocol</span>
+              <h2 className={styles.sectionTitle}>Built from the ground up for student protection</h2>
               <p className={styles.sectionLead}>
                 Learnivia operates under a strict Child Protection Charter designed to safeguard young learners and protect volunteer tutors.
               </p>
               <div style={{ marginTop: "2rem" }}>
                 <Link href="/parents" className={styles.btnPrimary}>
                   <span>Read Guardian Guidelines</span>
-                  <ArrowRight size={16} />
                 </Link>
               </div>
             </div>
 
-            <div className={styles.charterPoints}>
-              {CHARTER_POINTS.map((pt) => (
-                <div key={pt.num} className={styles.charterPointItem}>
-                  <div className={styles.charterNum}>{pt.num}</div>
+            <div className={styles.safeguardList}>
+              {SAFEGUARD_PILLARS.map((pt) => (
+                <div key={pt.id} className={styles.safeguardCard}>
+                  <div className={styles.safeguardIconWrap}>
+                    <ShieldCheck size={18} />
+                  </div>
                   <div>
-                    <h3 className={styles.charterPointTitle}>{pt.title}</h3>
-                    <p className={styles.charterPointText}>{pt.desc}</p>
+                    <span className={styles.safeguardBadge}>{pt.badge}</span>
+                    <h3 className={styles.safeguardTitle}>{pt.title}</h3>
+                    <p className={styles.safeguardText}>{pt.desc}</p>
                   </div>
                 </div>
               ))}
@@ -536,11 +582,11 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 6. INTERACTIVE MATCHING CONCIERGE ── */}
+      {/* ── 7. INTERACTIVE MATCHING CONCIERGE ── */}
       <section className={styles.conciergeSection}>
         <div className={styles.container}>
           <div className={styles.conciergeCard}>
-            <h2 className={styles.conciergeTitle}>Instant Subject &amp; Grade Matcher</h2>
+            <h2 className={styles.conciergeTitle}>Instant Subject and Grade Matcher</h2>
             <p className={styles.conciergeLead}>
               Select your child&apos;s grade and subject to immediately locate verified volunteer mentors available this week.
             </p>
@@ -571,11 +617,11 @@ export default function HomeInteractiveClient({
                   onChange={(e) => setSelectedSubject(e.target.value)}
                 >
                   <option value="all">All Subjects</option>
-                  <option value="Mathematics">Mathematics &amp; Problem Solving</option>
-                  <option value="Reading">Reading, Phonics &amp; Comprehension</option>
-                  <option value="Writing">PEEL Writing &amp; Composition</option>
-                  <option value="Science">Sciences (Biology &amp; Chemistry)</option>
-                  <option value="Social Studies">Social Studies, Civics &amp; History</option>
+                  <option value="Mathematics">Mathematics and Problem Solving</option>
+                  <option value="Reading">Reading, Phonics and Comprehension</option>
+                  <option value="Writing">PEEL Writing and Composition</option>
+                  <option value="Science">Sciences (Biology and Chemistry)</option>
+                  <option value="Social Studies">Social Studies, Civics and History</option>
                 </select>
               </div>
 
@@ -588,11 +634,11 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 7. INSTITUTIONAL FAQ ── */}
+      {/* ── 8. INSTITUTIONAL FAQ ── */}
       <section className={styles.faqSection} id="faq">
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionEyebrow}>Common Inquiries</span>
+            <span className={styles.sectionBadge}>Common Questions</span>
             <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
             <p className={styles.sectionLead}>
               Transparent answers regarding our zero-cost model, session supervision, and volunteer accreditation.
@@ -628,12 +674,12 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* ── 8. ADMISSIONS & VOLUNTEER CALL ── */}
+      {/* ── 9. ADMISSIONS AND VOLUNTEER CALL ── */}
       <section className={styles.admissionsSection}>
         <div className={styles.container}>
           <div className={styles.admissionsCard}>
             <h2 className={styles.admissionsTitle}>
-              Quality education should be accessible to <em>every student.</em>
+              Quality education should be accessible to every student.
             </h2>
             <p className={styles.admissionsText}>
               Whether you are a parent seeking patient academic mentorship for your student, or a high school scholar looking to earn verified community service hours, our doors are open.
@@ -642,7 +688,6 @@ export default function HomeInteractiveClient({
             <div className={styles.admissionsActions}>
               <Link href="/find" className={styles.btnPrimary}>
                 <span>Enroll a Learner for Free</span>
-                <ArrowRight size={17} />
               </Link>
               <Link href="/apply" className={styles.btnSecondary}>
                 <GraduationCap size={17} />

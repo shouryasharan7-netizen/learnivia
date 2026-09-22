@@ -7,15 +7,14 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(250, 247, 242, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--sh-nav-bg, var(--wa-white));
+  color: var(--wa-ink);
   border-bottom: 1px solid var(--wa-border);
-  height: 72px;
+  height: 70px;
   display: flex;
   align-items: center;
-  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px 0 rgba(26, 22, 21, 0.04), 0 4px 12px -2px rgba(26, 22, 21, 0.03);
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04);
 }
 
 .container {
@@ -49,28 +48,29 @@
 }
 
 .logoText {
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
-  font-weight: 700;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
   color: var(--wa-ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  transition: color 150ms ease;
 }
 
 /* Navigation Links */
 .nav {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .navLink {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--wa-muted);
   padding: 0.5rem 0.85rem;
-  border-radius: var(--wa-radius-pill);
+  border-radius: 6px;
   text-decoration: none;
-  transition: all 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
   white-space: nowrap;
 }
 .navLink:hover {
@@ -93,21 +93,20 @@
   align-items: center;
   gap: 0.4rem;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--wa-ink);
   background: transparent;
-  border: 1.5px solid transparent;
-  padding: 0.45rem 0.95rem;
-  border-radius: var(--wa-radius-pill);
+  border: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 180ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
   white-space: nowrap;
 }
 .exploreBtn:hover,
 .exploreBtnActive {
-  background: var(--wa-green-light);
-  border-color: rgba(37, 99, 235, 0.25);
+  background: var(--wa-paper);
   color: var(--wa-green);
 }
 
@@ -116,15 +115,15 @@
   align-items: center;
   gap: 0.4rem;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--wa-muted);
   background: transparent;
   border: none;
   padding: 0.5rem 0.85rem;
-  border-radius: var(--wa-radius-pill);
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
   white-space: nowrap;
 }
 .navBtn:hover {
@@ -138,69 +137,71 @@
   opacity: 0.8;
 }
 
-/* Donate Outline Button */
-.donateBtn {
+/* Theme Toggle Button (Minimal, Unbounding) */
+.themeToggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.925rem;
-  font-weight: 600;
-  color: var(--wa-ink);
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
   border: 1px solid var(--wa-border);
-  background: var(--wa-white);
-  padding: 0.45rem 1.25rem;
-  border-radius: var(--wa-radius-pill);
-  text-decoration: none;
-  transition: all 180ms ease;
-  white-space: nowrap;
-  box-shadow: var(--wa-shadow-xs);
+  background: var(--wa-paper);
+  color: var(--wa-muted);
+  cursor: pointer;
+  transition: all 150ms ease;
+  flex-shrink: 0;
 }
-.donateBtn:hover {
-  border-color: rgba(37, 99, 235, 0.35);
-  color: var(--wa-green);
-  background: var(--wa-green-light);
+.themeToggle:hover {
+  background: var(--wa-cream-dark);
+  color: var(--wa-ink);
+  border-color: var(--wa-border-strong);
 }
 
 /* Auth Controls */
 .authControls {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.75rem;
   flex-shrink: 0;
 }
 
 .signInBtn {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--wa-ink);
   text-decoration: none;
-  padding: 0.5rem 0.5rem;
-  transition: color 150ms ease;
+  padding: 0.5rem 0.85rem;
+  border-radius: 6px;
+  transition: all 150ms ease;
   white-space: nowrap;
 }
 .signInBtn:hover {
   color: var(--wa-green);
+  background: var(--wa-paper);
 }
 
 .signUpBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: #FFFFFF;
-  background: var(--wa-crimson);
-  padding: 0.55rem 1.45rem;
-  border-radius: var(--wa-radius-sm);
+  background: var(--wa-navy, #0F172A);
+  border: 1px solid var(--wa-navy, #0F172A);
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
   text-decoration: none;
-  transition: all 180ms ease;
+  transition: all 150ms ease;
   white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(139, 38, 62, 0.25);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 .signUpBtn:hover {
-  background: var(--wa-crimson-hover);
+  background: var(--wa-green, #1E3A8A);
+  border-color: var(--wa-green, #1E3A8A);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(139, 38, 62, 0.35);
+  box-shadow: 0 4px 10px rgba(30, 58, 138, 0.18);
   color: #FFFFFF;
 }
 
@@ -376,11 +377,13 @@
   position: sticky;
   top: 0;
   z-index: 90;
-  background: var(--wa-white, #FFFFFF);
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--sh-nav-bg, var(--wa-white));
+  color: var(--wa-ink);
+  border-bottom: 1px solid var(--wa-border);
   height: 60px;
   display: flex;
   align-items: center;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
 }
 
@@ -405,10 +408,10 @@
 }
 
 .authLogoText {
-  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
   font-size: 1.25rem;
   font-weight: 800;
-  color: #14243B;
+  color: var(--wa-ink);
   letter-spacing: -0.02em;
 }
 
@@ -430,19 +433,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
-  color: #3D3831;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: var(--wa-paper);
+  border: 1px solid var(--wa-border);
+  color: var(--wa-text);
   cursor: pointer;
   transition: all 150ms ease;
 }
 .iconBtn:hover {
-  background: #EAF3ED;
-  color: #2D6A4F;
-  border-color: #B5D9C5;
+  background: var(--wa-cream-dark);
+  color: var(--wa-ink);
+  border-color: var(--wa-border-strong);
   transform: translateY(-1px);
 }
 
@@ -450,25 +453,25 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
+  background: var(--wa-paper);
+  border: 1px solid var(--wa-border);
   border-radius: 6px;
   padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+  color: var(--wa-ink);
   cursor: pointer;
   transition: all 150ms ease;
 }
 .userCapsule:hover {
-  border-color: #B5D9C5;
-  background: #EAF3ED;
+  border-color: var(--wa-border-strong);
+  background: var(--wa-cream-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.08);
 }
 
 .userCapsuleAvatar {
   width: 28px;
   height: 28px;
   border-radius: 4px;
-  background: var(--wa-green, #2563EB);
+  background: var(--wa-green, #1E3A8A);
   color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -480,7 +483,7 @@
 .userCapsuleName {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #141824;
+  color: var(--wa-ink);
 }
 
 /* Common Popover Overlay and Box */
@@ -494,8 +497,9 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  background: #FFFFFF;
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-white);
+  color: var(--wa-ink);
+  border: 1px solid var(--wa-border);
   border-radius: 8px;
   box-shadow: var(--wa-shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1));
   z-index: 110;
@@ -507,7 +511,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.65rem 0.85rem;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-paper);
+  border-bottom: 1px solid var(--wa-border);
 }
 
 .popoverTitle {
@@ -609,7 +614,7 @@
 .hamburgerLine {
   width: 22px;
   height: 2px;
-  background: #0F172A;
+  background: var(--wa-ink);
   border-radius: 2px;
   transition: all 200ms ease;
 }
@@ -633,7 +638,9 @@
   bottom: 0;
   width: 320px;
   max-width: 85vw;
-  background: #FFFFFF;
+  background: var(--wa-white);
+  color: var(--wa-ink);
+  border-left: 1px solid var(--wa-border);
   z-index: 300;
   transform: translateX(100%);
   transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);

@@ -37,7 +37,7 @@ export default function ForgotPasswordClient() {
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(180deg, #FAF8F5 0%, #F5EFEB 100%)",
+        background: "var(--wa-paper)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

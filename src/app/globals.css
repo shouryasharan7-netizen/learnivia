@@ -5,22 +5,22 @@
 
 :root {
   /* ── Prestige Academic Surfaces (Warm Archival Vellum & Paper) ── */
-  --wa-paper:          #FAF8F5;
-  --wa-cream:          #FAF8F5;
-  --wa-cream-dark:     #F4EFE6;
-  --wa-cream-mid:      #EDE5D8;
+  --wa-paper:          #FAF9F6;
+  --wa-cream:          #FAF9F6;
+  --wa-cream-dark:     #F1F5F9;
+  --wa-cream-mid:      #E2E8F0;
   --wa-white:          #FFFFFF;
 
   /* ── Archival Ink & Human Typography ── */
-  --wa-ink:            #141824;
-  --wa-text:           #283244;
-  --wa-muted:          #556377;
-  --wa-subtle:         #8291A5;
+  --wa-ink:            #0F172A;
+  --wa-text:           #334155;
+  --wa-muted:          #64748B;
+  --wa-subtle:         #94A3B8;
 
   /* ── Precision Architectural Hairlines & Rules ──── */
-  --wa-border:         #E5DDD2;
-  --wa-border-hairline:#EFEAE1;
-  --wa-border-strong:  #C8BFB2;
+  --wa-border:         #E2E8F0;
+  --wa-border-hairline:#F1F5F9;
+  --wa-border-strong:  #CBD5E1;
 
   /* ── Signature Academic Accents ──── */
   --wa-crimson:        #881337;
@@ -381,18 +381,26 @@ textarea:focus-visible {
 [data-theme="light"] {
   --wa-paper:          #FAF8F5;
   --wa-cream:          #FAF8F5;
-  --wa-cream-dark:     #F4EFE6;
+  --wa-cream-dark:     #F1F5F9;
   --wa-cream-mid:      #EDE5D8;
   --wa-white:          #FFFFFF;
 
-  --wa-ink:            #141824;
-  --wa-text:           #283244;
-  --wa-muted:          #556377;
+  --wa-ink:            #0F172A;
+  --wa-text:           #334155;
+  --wa-muted:          #64748B;
   --wa-subtle:         #8291A5;
 
-  --wa-border:         #E5DDD2;
-  --wa-border-hairline:#EFEAE1;
-  --wa-border-strong:  #C8BFB2;
+  --wa-border:         #E2E8F0;
+  --wa-border-hairline:#F1F5F9;
+  --wa-border-strong:  #CBD5E1;
+
+  --wa-navy:           #0F172A;
+  --wa-navy-hover:     #020617;
+  --wa-navy-light:     #F1F5F9;
+
+  --sh-nav-bg:         #FFFFFF;
+  --sh-nav-text:       #0F172A;
+  --sh-nav-muted:      #64748B;
 
   --wa-crimson:        #881337;
   --wa-crimson-hover:  #700F2D;
@@ -427,7 +435,7 @@ textarea:focus-visible {
   --wa-cream:          #11161F;
   --wa-cream-dark:     #171F2C;
   --wa-cream-mid:      #243044;
-  --wa-white:          #141B26;
+  --wa-white:          #161B22;
 
   --wa-ink:            #F8FAFC;
   --wa-text:           #E2E8F0;
@@ -437,6 +445,14 @@ textarea:focus-visible {
   --wa-border:         #232E3F;
   --wa-border-hairline:#1B2533;
   --wa-border-strong:  #37465D;
+
+  --wa-navy:           #1E293B;
+  --wa-navy-hover:     #334155;
+  --wa-navy-light:     #1E293B;
+
+  --sh-nav-bg:         #161B22;
+  --sh-nav-text:       #F8FAFC;
+  --sh-nav-muted:      #94A3B8;
 
   --wa-crimson:        #FB7185;
   --wa-crimson-hover:  #F43F5E;
