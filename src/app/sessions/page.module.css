@@ -1,5 +1,5 @@
 .main {
-  background: #FAF8F5;
+  background: var(--background, #FAF9F6);
   min-height: 100vh;
   padding: 2rem 0 4rem;
 }
@@ -20,18 +20,19 @@
 
 .pageTitle {
   font-size: 1.875rem;
-  font-weight: 600;
-  color: #1C1A17;
+  font-weight: 700;
+  color: var(--text-primary, #0C1B33);
   margin-bottom: 0.5rem;
-  font-family: var(--font-serif, 'Times New Roman', Times, Georgia, serif);
+  font-family: var(--font-serif, 'Playfair Display', serif);
 }
 
 .pageSubtitle {
   font-size: 0.9375rem;
-  color: #7A7169;
+  color: var(--text-secondary, #475569);
   line-height: 1.65;
   max-width: 700px;
 }
+
 
 /* ==================
    Search Bar
