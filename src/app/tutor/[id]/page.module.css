@@ -1,9 +1,9 @@
 /* ==========================================================================
-   TUTOR PROFILE PAGE: WARM ACADEMIC
+   TUTOR PROFILE PAGE — LEARNIVIA TEAL / NAVY REDESIGN
    ========================================================================== */
 
 .main {
-  background: #FAF8F5;
+  background: var(--background, #FAF9F6);
   min-height: calc(100vh - 68px);
   padding: 2.5rem 1.5rem 4rem;
 }
@@ -19,18 +19,18 @@
   align-items: flex-start;
   gap: 1.75rem;
   margin-bottom: 2.5rem;
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
-  border-radius: 16px;
+  background: var(--surface-raised, #FFFFFF);
+  border: 1.5px solid var(--border, #E2E8F0);
+  border-radius: var(--radius-xl, 18px);
   padding: 2rem;
-  box-shadow: 0 2px 10px rgba(28, 26, 23, 0.06);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(12, 27, 51, 0.06));
 }
 
 .avatarLarge {
   width: 88px;
   height: 88px;
   min-width: 88px;
-  background: var(--wa-green);
+  background: var(--primary, #0D9488);
   color: #FFFFFF;
   border-radius: 50%;
   display: flex;
@@ -38,8 +38,8 @@
   justify-content: center;
   font-size: 2.25rem;
   font-weight: 700;
-  border: 3px solid var(--wa-green-light);
-  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
+  border: 3px solid var(--primary-light, #CCFBF1);
+  box-shadow: 0 2px 10px rgba(13, 148, 136, 0.25);
 }
 
 .headerInfo {
@@ -48,23 +48,23 @@
 }
 
 .name {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
-  color: #1C1A17;
+  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+  color: var(--text-primary, #0C1B33);
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.3rem;
   letter-spacing: -0.01em;
 }
 
 .grade {
-  color: #3D3831;
+  color: var(--text-secondary, #475569);
   font-size: 1rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
 }
 
 .timezone {
-  color: #7A7169;
+  color: var(--text-muted, #64748B);
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
@@ -78,6 +78,7 @@
 }
 
 .metaItem {
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;
