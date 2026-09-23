@@ -466,16 +466,9 @@ export default async function FindTutorPage({ searchParams }: Props) {
                   border: "1px solid var(--border, #E2E8F0)",
                   borderRadius: "var(--radius-lg, 14px)",
                   textDecoration: "none",
-                  transition: "box-shadow var(--transition, 180ms), transform var(--transition, 180ms)",
+                  transition: "box-shadow 180ms, transform 180ms",
                 }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-md)";
-                  (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                }}
+                className="tutor-card-link"
               >
                 {/* Tutor header */}
                 <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>

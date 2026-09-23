@@ -535,3 +535,9 @@ textarea:focus-visible {
     display: none !important;
   }
 }
+
+/* ── Global utility hover classes (used by Server Components) ── */
+.tutor-card-link:hover {
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
+  transform: translateY(-2px);
+}
