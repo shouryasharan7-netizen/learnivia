@@ -22,25 +22,26 @@ export function getAdminEmails(): Set<string> {
 }
 
 /**
- * Strict Admin Designation:
- * Only Ahmed and Shourya (or emails in ADMIN_EMAILS) qualify for the ADMIN role.
- * All other learners and tutors are strictly non-admins.
+ * Strict Admin Designation — EMAIL-ONLY, EXACT MATCH.
+ *
+ * Only emails listed in the ADMIN_EMAILS environment variable are admins.
+ * Set ADMIN_EMAILS in Vercel env vars (comma-separated):
+ *   ADMIN_EMAILS=shouryasharan7@gmail.com,ahmed@example.com
+ *
+ * WARNING: The previous implementation used substring name matching
+ * (name.includes("shourya")) which incorrectly elevated any user whose
+ * Google name contained those strings. Fixed to email-only exact matching.
  */
 export function isDesignatedAdmin(user?: { name?: string | null; email?: string | null } | null): boolean {
   if (!user) return false;
   const email = (user.email || "").trim().toLowerCase();
-  const name = (user.name || "").trim().toLowerCase();
+  if (!email) return false;
 
-  // Explicit check for Ahmed and Shourya
-  if (email.includes("shourya") || name.includes("shourya")) return true;
-  if (email.includes("ahmed") || name.includes("ahmed")) return true;
-
-  // Environment variable check
+  // Strict: ONLY exact email match from ADMIN_EMAILS env var
   const adminEmails = getAdminEmails();
-  if (email && adminEmails.has(email)) return true;
-
-  return false;
+  return adminEmails.has(email);
 }
+
 
 export const authConfig = {
   trustHost: true,

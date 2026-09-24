@@ -2,12 +2,12 @@
 
 import { useState, Suspense } from "react";
 import { loginWithEmail, loginWithGoogle } from "./actions";
-import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { GraduationCap, Leaf, AlertTriangle } from "lucide-react";
+import { AlertTriangle, BookOpen, Users, Shield, CheckCircle2 } from "lucide-react";
 
+/* ── Google Icon ─────────────────────────────────────────── */
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
     <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
@@ -20,6 +20,20 @@ const GoogleIcon = () => (
 interface SignInClientProps {
   initialIsRegister?: boolean;
 }
+
+const STUDENT_FEATURES = [
+  { icon: BookOpen, text: "Free 1-on-1 Zoom sessions with verified tutors" },
+  { icon: Users, text: "K-10 students supported across CBSE, ICSE, IB & more" },
+  { icon: Shield, text: "Supervised, safe learning environment" },
+  { icon: CheckCircle2, text: "No subscriptions, no fees — ever" },
+];
+
+const TUTOR_FEATURES = [
+  { icon: BookOpen, text: "Share your knowledge with K-10 students" },
+  { icon: CheckCircle2, text: "Earn certified volunteer service hours" },
+  { icon: Users, text: "Build your teaching portfolio & skills" },
+  { icon: Shield, text: "Verified & background-screened program" },
+];
 
 function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
   const searchParams = useSearchParams();
@@ -42,12 +56,9 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     const formData = new FormData(e.currentTarget);
     formData.append("action", isRegister ? "register" : "login");
     formData.append("callbackUrl", callbackUrl);
-    if (isRegister) {
-      formData.append("role", selectedRole);
-    }
+    if (isRegister) formData.append("role", selectedRole);
 
     const result = await loginWithEmail(formData);
-
     if (result?.error) {
       setError(result.error);
       setLoading(false);
@@ -63,274 +74,491 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     await loginWithGoogle(fd);
   }
 
+  const features = selectedRole === "TUTOR" ? TUTOR_FEATURES : STUDENT_FEATURES;
+
   return (
-    <main className={styles.main}>
-      {/* ── Left decorative panel ── */}
-      <aside className={styles.leftPanel} aria-hidden="true">
-        <div className={styles.leftPanelBg} />
+    <div style={{
+      minHeight: "100vh",
+      background: "#F8FAFC",
+      display: "flex",
+      flexDirection: "column",
+      fontFamily: "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif)",
+    }}>
 
-        {/* Brand */}
-        <div className={styles.leftBrandRow}>
-          <Image src="/images/logo.png" alt="Learnivia" width={36} height={36} style={{ borderRadius: "8px" }} />
-          <span className={styles.leftBrandName}>Learnivia</span>
-        </div>
+      {/* ── Top brand bar ── */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "1rem 2rem",
+        background: "#fff",
+        borderBottom: "1px solid #E2E8F0",
+      }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", textDecoration: "none" }}>
+          <Image src="/images/logo.png" alt="Learnivia" width={32} height={32} style={{ borderRadius: "8px" }} />
+          <span style={{ fontWeight: 800, fontSize: "1.15rem", color: "#0C1B33", letterSpacing: "-0.02em" }}>
+            Learnivia
+          </span>
+        </Link>
+        <span style={{ fontSize: "0.875rem", color: "#64748B" }}>
+          {isRegister ? "Already have an account? " : "New to Learnivia? "}
+          <button
+            onClick={() => setIsRegister(!isRegister)}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#0D9488",
+              fontWeight: 700,
+              cursor: "pointer",
+              fontSize: "0.875rem",
+              padding: 0,
+            }}
+          >
+            {isRegister ? "Sign in" : "Create account"}
+          </button>
+        </span>
+      </div>
 
-        {/* Central message */}
-        <div className={styles.leftContent}>
-          <p className={styles.leftTagline}>Free tutoring.</p>
-          <p className={styles.leftTagline}>Real humans.</p>
-          <p className={styles.leftTaglineAccent}>Zoom calls that click.</p>
-          <p className={styles.leftSubtext}>
-            Verified volunteer tutors guide K-10 students through private 1-on-1 Zoom sessions, with no cost or sign-up fees ever.
-          </p>
+      {/* ── Main content ── */}
+      <div style={{
+        flex: 1,
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        maxWidth: "1100px",
+        margin: "0 auto",
+        width: "100%",
+        padding: "3rem 2rem",
+        gap: "4rem",
+        alignItems: "center",
+      }}>
 
-          {/* How it works - 3 simple steps */}
-          <ol className={styles.leftSteps}>
-            <li className={styles.leftStep}>
-              <span className={styles.leftStepNum}>1</span>
-              <span className={styles.leftStepText}>Find a verified tutor by subject & grade</span>
-            </li>
-            <li className={styles.leftStep}>
-              <span className={styles.leftStepNum}>2</span>
-              <span className={styles.leftStepText}>Book a free private Zoom session</span>
-            </li>
-            <li className={styles.leftStep}>
-              <span className={styles.leftStepNum}>3</span>
-              <span className={styles.leftStepText}>Learn 1-on-1 at your own pace</span>
-            </li>
-          </ol>
-        </div>
-
-        {/* Bottom trust line */}
-        <div className={styles.leftFooter}>
-          <span className={styles.leftFooterPill}>100% Free</span>
-          <span className={styles.leftFooterPill}>K-10 Students</span>
-          <span className={styles.leftFooterPill}>Verified Mentors</span>
-        </div>
-      </aside>
-
-      {/* ── Right form panel ── */}
-      <div className={styles.rightPanel}>
-        <div className={styles.formContainer}>
-
-          {/* Mobile brand (hidden on desktop where left panel shows) */}
-          <div className={styles.mobileHeader}>
-            <Image src="/images/logo.png" alt="Learnivia" width={40} height={40} style={{ borderRadius: "8px" }} />
-            <span className={styles.mobileBrandName}>Learnivia</span>
-          </div>
-
-          <h1 className={styles.title}>
-            {isRegister
-              ? (selectedRole === "TUTOR" ? "Become a volunteer tutor" : "Start learning, free")
-              : "Welcome back"}
-          </h1>
-          <p className={styles.lead}>
-            {isRegister
-              ? (selectedRole === "TUTOR"
-                  ? "Share your knowledge. Earn certified service hours."
-                  : "Connect with a verified peer tutor. No cost, ever.")
-              : "Sign in to your Learnivia account."}
-          </p>
-
-          {/* Role switch (register only) */}
+        {/* ── Left: Info panel ── */}
+        <div>
+          {/* Role toggle — visible only on signup */}
           {isRegister && (
-            <div className={styles.roleSwitcher}>
-              <button
-                type="button"
-                className={`${styles.roleBtn} ${selectedRole === "STUDENT" ? styles.roleBtnActive : ""}`}
-                onClick={() => setSelectedRole("STUDENT")}
-              >
-                <GraduationCap size={15} /> I&apos;m a Student
-              </button>
-              <button
-                type="button"
-                className={`${styles.roleBtn} ${selectedRole === "TUTOR" ? styles.roleBtnActive : ""}`}
-                onClick={() => setSelectedRole("TUTOR")}
-              >
-                <Leaf size={15} /> I&apos;m a Tutor
-              </button>
+            <div style={{
+              display: "inline-flex",
+              background: "#E2E8F0",
+              borderRadius: "12px",
+              padding: "4px",
+              marginBottom: "2rem",
+              gap: "4px",
+            }}>
+              {(["STUDENT", "TUTOR"] as const).map((role) => (
+                <button
+                  key={role}
+                  onClick={() => setSelectedRole(role)}
+                  style={{
+                    padding: "0.5rem 1.25rem",
+                    borderRadius: "9px",
+                    border: "none",
+                    fontWeight: 600,
+                    fontSize: "0.875rem",
+                    cursor: "pointer",
+                    transition: "all 180ms",
+                    background: selectedRole === role ? "#fff" : "transparent",
+                    color: selectedRole === role ? "#0C1B33" : "#64748B",
+                    boxShadow: selectedRole === role ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
+                  }}
+                >
+                  {role === "STUDENT" ? "🎒 I'm a Learner" : "📚 I'm a Tutor"}
+                </button>
+              ))}
             </div>
           )}
 
-          {/* Google button */}
+          {/* Heading */}
+          <h1 style={{
+            fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
+            fontWeight: 800,
+            color: "#0C1B33",
+            lineHeight: 1.2,
+            letterSpacing: "-0.03em",
+            margin: "0 0 1rem",
+          }}>
+            {isRegister
+              ? selectedRole === "TUTOR"
+                ? "Volunteer to teach. Make a real difference."
+                : "Learn for free from verified peer tutors."
+              : "Welcome back to Learnivia."}
+          </h1>
+
+          <p style={{
+            fontSize: "1.05rem",
+            color: "#475569",
+            lineHeight: 1.65,
+            margin: "0 0 2rem",
+            maxWidth: "440px",
+          }}>
+            {isRegister
+              ? selectedRole === "TUTOR"
+                ? "Join hundreds of high school and college volunteers helping K-10 students build confidence in Math, Science, and English."
+                : "Connect with verified volunteer tutors for free 1-on-1 Zoom sessions. No subscriptions, no fees — ever."
+              : "Sign in to continue your learning journey or manage your tutoring sessions."}
+          </p>
+
+          {/* Features list */}
+          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+            {features.map(({ icon: Icon, text }) => (
+              <li key={text} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <div style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: "8px",
+                  background: "#F0FDFA",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}>
+                  <Icon size={16} color="#0D9488" strokeWidth={2} />
+                </div>
+                <span style={{ fontSize: "0.9rem", color: "#334155", fontWeight: 500 }}>{text}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Trust badges */}
+          <div style={{
+            display: "flex",
+            gap: "0.5rem",
+            marginTop: "2.5rem",
+            flexWrap: "wrap",
+          }}>
+            {["100% Free", "K–10 Students", "Verified Tutors", "Safe & Supervised"].map((b) => (
+              <span key={b} style={{
+                padding: "0.3rem 0.8rem",
+                borderRadius: "9999px",
+                background: "#F0FDFA",
+                color: "#0D9488",
+                fontSize: "0.775rem",
+                fontWeight: 700,
+                border: "1px solid #99F6E4",
+              }}>{b}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Right: Form card ── */}
+        <div style={{
+          background: "#fff",
+          border: "1px solid #E2E8F0",
+          borderRadius: "20px",
+          padding: "2.5rem 2.25rem",
+          boxShadow: "0 4px 24px rgba(12,27,51,0.07)",
+        }}>
+          <h2 style={{
+            fontSize: "1.375rem",
+            fontWeight: 800,
+            color: "#0C1B33",
+            margin: "0 0 0.35rem",
+            letterSpacing: "-0.02em",
+          }}>
+            {isRegister
+              ? selectedRole === "TUTOR" ? "Create tutor account" : "Create learner account"
+              : "Sign in to your account"}
+          </h2>
+          <p style={{ fontSize: "0.875rem", color: "#64748B", margin: "0 0 1.5rem" }}>
+            {isRegister ? "Free forever. No credit card required." : "Enter your credentials to continue."}
+          </p>
+
+          {/* ── Google button ── */}
           <form onSubmit={handleGoogleSignIn}>
             <input type="hidden" name="callbackUrl" value={callbackUrl} />
-            <button type="submit" className={styles.googleBtn}>
+            <button
+              type="submit"
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.65rem",
+                padding: "0.75rem 1.5rem",
+                border: "1.5px solid #E2E8F0",
+                borderRadius: "10px",
+                background: "#fff",
+                fontSize: "0.9375rem",
+                fontWeight: 600,
+                color: "#0C1B33",
+                cursor: "pointer",
+                transition: "all 150ms",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = "#CBD5E1";
+                (e.currentTarget as HTMLElement).style.background = "#F8FAFC";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = "#E2E8F0";
+                (e.currentTarget as HTMLElement).style.background = "#fff";
+              }}
+            >
               <GoogleIcon />
               Continue with Google
             </button>
           </form>
 
-          <div className={styles.divider} role="separator">
-            <span>or use email</span>
+          {/* ── Divider ── */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            margin: "1.25rem 0",
+          }}>
+            <div style={{ flex: 1, height: 1, background: "#E2E8F0" }} />
+            <span style={{ fontSize: "0.8rem", color: "#94A3B8", fontWeight: 500 }}>or continue with email</span>
+            <div style={{ flex: 1, height: 1, background: "#E2E8F0" }} />
           </div>
 
-          {/* Email form */}
-          <form onSubmit={handleSubmit} className={styles.emailForm} noValidate>
+          {/* ── Email form ── */}
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }} noValidate>
             {error && (
-              <div className={styles.errorBanner} role="alert" aria-live="polite" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <AlertTriangle size={15} style={{ flexShrink: 0 }} /> {error}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                padding: "0.65rem 0.875rem",
+                background: "#FEF2F2",
+                border: "1px solid #FECACA",
+                borderRadius: "8px",
+                fontSize: "0.8375rem",
+                color: "#DC2626",
+              }} role="alert">
+                <AlertTriangle size={14} />
+                {error}
               </div>
             )}
 
             {isRegister && (
               <>
                 <input type="hidden" name="role" value={selectedRole} />
-                <div className={styles.inputGroup}>
-                  <label htmlFor="name">Full Name</label>
-                  <input
-                    id="name"
-                    type="text"
-                    name="name"
-                    placeholder={selectedRole === "TUTOR" ? "e.g. Alex Morgan" : "e.g. Maya Lin"}
-                    required={isRegister}
-                    autoComplete="name"
-                  />
-                </div>
+                <Field id="name" label="Full Name" type="text"
+                  placeholder={selectedRole === "TUTOR" ? "e.g. Arjun Mehta" : "e.g. Maya Lin"}
+                  required autoComplete="name"
+                />
 
                 {selectedRole === "STUDENT" ? (
-                  <>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-                      <div className={styles.inputGroup}>
-                        <label htmlFor="age">Student Age</label>
-                        <input
-                          id="age"
-                          type="number"
-                          name="age"
-                          min="5"
-                          max="18"
-                          placeholder="e.g. 11"
-                          required={isRegister}
-                          value={studentAge}
-                          onChange={(e) => setStudentAge(e.target.value)}
-                        />
-                      </div>
-                      <div className={styles.inputGroup}>
-                        <label htmlFor="grade">Grade Level</label>
-                        <select id="grade" name="grade" required={isRegister} className={styles.selectInput}>
-                          <option value="">Select grade…</option>
-                          <option value="Kindergarten">Kindergarten</option>
-                          <option value="Grade 1-2">Grade 1-2</option>
-                          <option value="Grade 3-5">Grade 3-5</option>
-                          <option value="Grade 6-8">Grade 6-8</option>
-                          <option value="Grade 9">Grade 9</option>
-                          <option value="Grade 10">Grade 10</option>
-                        </select>
-                      </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                    <Field id="age" label="Age" type="number"
+                      placeholder="e.g. 12" required
+                      min="5" max="18"
+                      value={studentAge}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStudentAge(e.target.value)}
+                    />
+                    <div>
+                      <label htmlFor="grade" style={labelStyle}>Grade</label>
+                      <select id="grade" name="grade" required style={inputStyle}>
+                        <option value="">Select grade…</option>
+                        <option>Kindergarten</option>
+                        <option>Grade 1-2</option>
+                        <option>Grade 3-5</option>
+                        <option>Grade 6-8</option>
+                        <option>Grade 9</option>
+                        <option>Grade 10</option>
+                      </select>
                     </div>
-
-                    {/* Age Gate & Guardian Acknowledgment for under-13 */}
-                    {studentAge && parseInt(studentAge, 10) < 13 && (
-                      <div className={styles.inputGroup} style={{ marginTop: "0.5rem" }}>
-                        <label htmlFor="parentEmail" style={{ color: "var(--primary, #0D9488)", fontWeight: 700 }}>
-                          Parent / Guardian Email (Learners under 13)
-                        </label>
-                        <input
-                          id="parentEmail"
-                          type="email"
-                          name="parentEmail"
-                          required
-                          placeholder="parent@example.com"
-                          autoComplete="email"
-                        />
-                        <span style={{ fontSize: "0.75rem", color: "#78716C", marginTop: "0.25rem", display: "block" }}>
-                          Learnivia requires parent or guardian acknowledgment for learners under 13 before participating in sessions.
-                        </span>
-                      </div>
-                    )}
-                  </>
+                  </div>
                 ) : (
-                  <div className={styles.inputGroup}>
-                    <label htmlFor="educationLevel">Your Education Level</label>
-                    <select id="educationLevel" name="educationLevel" required={isRegister} className={styles.selectInput}>
+                  <div>
+                    <label htmlFor="educationLevel" style={labelStyle}>Education Level</label>
+                    <select id="educationLevel" name="educationLevel" required style={inputStyle}>
                       <option value="">Select standing…</option>
-                      <option value="High School (Grades 11-12)">High School (Grades 11-12)</option>
-                      <option value="Undergraduate / College Student">Undergraduate / College</option>
-                      <option value="Graduate / Master's / PhD">Graduate / Master's / PhD</option>
-                      <option value="Certified Educator / Professional">Certified Educator</option>
+                      <option>High School (Grades 11-12)</option>
+                      <option>Undergraduate / College</option>
+                      <option>Graduate / Master&apos;s / PhD</option>
+                      <option>Certified Educator</option>
                     </select>
+                  </div>
+                )}
+
+                {/* Under-13 parent email */}
+                {studentAge && parseInt(studentAge, 10) < 13 && (
+                  <div>
+                    <label htmlFor="parentEmail" style={{ ...labelStyle, color: "#0D9488" }}>
+                      Parent / Guardian Email <span style={{ fontWeight: 400, color: "#64748B" }}>(required for under 13)</span>
+                    </label>
+                    <input id="parentEmail" name="parentEmail" type="email"
+                      required placeholder="parent@example.com"
+                      autoComplete="email" style={inputStyle}
+                    />
                   </div>
                 )}
               </>
             )}
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="email">Email address</label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                required
-                autoComplete="email"
-              />
-            </div>
+            <Field id="email" label="Email address" type="email"
+              placeholder="you@example.com" required autoComplete="email"
+            />
 
-            <div className={styles.inputGroup}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <label htmlFor="password">Password</label>
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.35rem" }}>
+                <label htmlFor="password" style={labelStyle}>Password</label>
                 {!isRegister && (
-                  <Link
-                    href="/forgot-password"
-                    style={{
-                      fontSize: "0.8rem",
-                      color: "var(--primary, #0D9488)",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                    }}
-                  >
+                  <Link href="/forgot-password" style={{ fontSize: "0.8rem", color: "#0D9488", fontWeight: 600, textDecoration: "none" }}>
                     Forgot password?
                   </Link>
                 )}
               </div>
               <input
                 id="password"
-                type="password"
                 name="password"
-                placeholder={isRegister ? "Minimum 8 characters" : "Your password"}
+                type="password"
+                placeholder={isRegister ? "Create a strong password" : "Enter your password"}
                 required
+                minLength={isRegister ? 8 : 1}
                 autoComplete={isRegister ? "new-password" : "current-password"}
-                minLength={8}
+                style={inputStyle}
               />
+              {isRegister && (
+                <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "#94A3B8" }}>
+                  Minimum 8 characters
+                </p>
+              )}
             </div>
 
-            <button type="submit" className={styles.submitBtn} disabled={loading} aria-busy={loading}>
+            {/* Terms checkbox on signup */}
+            {isRegister && (
+              <label style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start", cursor: "pointer" }}>
+                <input type="checkbox" name="terms" required style={{ marginTop: "2px", accentColor: "#0D9488" }} />
+                <span style={{ fontSize: "0.8rem", color: "#64748B", lineHeight: 1.5 }}>
+                  I agree to Learnivia&apos;s{" "}
+                  <Link href="/terms" style={{ color: "#0D9488", fontWeight: 600 }}>Terms of Service</Link>{" "}
+                  and{" "}
+                  <Link href="/privacy" style={{ color: "#0D9488", fontWeight: 600 }}>Privacy Policy</Link>
+                </span>
+              </label>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: "100%",
+                padding: "0.8rem",
+                background: loading ? "#5EEAD4" : "#0D9488",
+                color: "#fff",
+                border: "none",
+                borderRadius: "10px",
+                fontSize: "0.9375rem",
+                fontWeight: 700,
+                cursor: loading ? "not-allowed" : "pointer",
+                transition: "background 150ms",
+                marginTop: "0.25rem",
+              }}
+              onMouseEnter={(e) => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#0F766E"; }}
+              onMouseLeave={(e) => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#0D9488"; }}
+            >
               {loading
                 ? "Please wait…"
                 : isRegister
-                ? (selectedRole === "TUTOR" ? "Join as Volunteer Tutor →" : "Create Free Account →")
-                : "Sign In →"}
+                ? `Create ${selectedRole === "TUTOR" ? "Tutor" : "Learner"} Account`
+                : "Sign In"}
             </button>
-          </form>
 
-          <div className={styles.footerLinks}>
-            <p className={styles.toggleText}>
-              {isRegister ? "Already have an account?" : "New to Learnivia?"}
+            <p style={{ textAlign: "center", fontSize: "0.8375rem", color: "#64748B", margin: "0.25rem 0 0" }}>
+              {isRegister ? "Already have an account? " : "Don't have an account? "}
               <button
-                className={styles.toggleBtn}
                 type="button"
-                onClick={() => { setIsRegister(!isRegister); setError(""); }}
+                onClick={() => setIsRegister(!isRegister)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "#0D9488",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontSize: "0.8375rem",
+                  padding: 0,
+                }}
               >
-                {isRegister ? "Sign in" : "Create a free account"}
+                {isRegister ? "Sign in" : "Create free account"}
               </button>
             </p>
-          </div>
-
-          <p className={styles.termsNote}>
-            By continuing, you agree to our{" "}
-            <a href="/terms">Terms of Service</a> and{" "}
-            <a href="/privacy">Privacy Policy</a>.
-          </p>
+          </form>
         </div>
       </div>
-    </main>
+
+      {/* ── Mobile layout override ── */}
+      <style>{`
+        @media (max-width: 768px) {
+          .sh-auth-grid { grid-template-columns: 1fr !important; gap: 2rem !important; padding: 1.5rem !important; }
+          .sh-auth-left { display: none; }
+        }
+      `}</style>
+    </div>
   );
 }
 
-export default function SignInClient({ initialIsRegister = false }: SignInClientProps) {
+/* ── Shared input styles ── */
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  fontSize: "0.8375rem",
+  fontWeight: 600,
+  color: "#334155",
+  marginBottom: "0.35rem",
+};
+
+const inputStyle: React.CSSProperties = {
+  display: "block",
+  width: "100%",
+  padding: "0.6rem 0.85rem",
+  border: "1.5px solid #E2E8F0",
+  borderRadius: "8px",
+  fontSize: "0.9rem",
+  color: "#0C1B33",
+  background: "#fff",
+  outline: "none",
+  transition: "border-color 150ms",
+  boxSizing: "border-box",
+};
+
+function Field({
+  id,
+  label,
+  type,
+  placeholder,
+  required,
+  autoComplete,
+  min,
+  max,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  type: string;
+  placeholder?: string;
+  required?: boolean;
+  autoComplete?: string;
+  min?: string;
+  max?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
   return (
-    <Suspense>
-      <SignInClientInner initialIsRegister={initialIsRegister} />
+    <div>
+      <label htmlFor={id} style={labelStyle}>{label}</label>
+      <input
+        id={id}
+        name={id}
+        type={type}
+        placeholder={placeholder}
+        required={required}
+        autoComplete={autoComplete}
+        min={min}
+        max={max}
+        value={value}
+        onChange={onChange}
+        style={inputStyle}
+        onFocus={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#0D9488"; }}
+        onBlur={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#E2E8F0"; }}
+      />
+    </div>
+  );
+}
+
+export default function SignInClient(props: SignInClientProps) {
+  return (
+    <Suspense fallback={<div style={{ minHeight: "100vh", background: "#F8FAFC" }} />}>
+      <SignInClientInner {...props} />
     </Suspense>
   );
 }

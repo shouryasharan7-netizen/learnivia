@@ -14,6 +14,11 @@ import {
   Sun,
   Moon,
   X,
+  CheckCheck,
+  BookOpen,
+  UserPlus,
+  Star,
+  AlertCircle,
 } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 
@@ -36,11 +41,54 @@ const ANNOUNCEMENT = {
   linkHref: "/find",
 };
 
+// Sample notifications — in production these would come from the API
+const SAMPLE_NOTIFICATIONS = [
+  {
+    id: "1",
+    icon: BookOpen,
+    color: "#0D9488",
+    title: "Session confirmed",
+    body: "Your Mathematics session is scheduled for tomorrow at 4 PM.",
+    time: "2 hrs ago",
+    unread: true,
+  },
+  {
+    id: "2",
+    icon: UserPlus,
+    color: "#6366F1",
+    title: "New tutor available",
+    body: "Riya Sharma is now accepting bookings for Grade 8 Science.",
+    time: "Yesterday",
+    unread: true,
+  },
+  {
+    id: "3",
+    icon: Star,
+    color: "#F59E0B",
+    title: "Leave a review",
+    body: "How was your session with Arjun Mehta? Share your feedback.",
+    time: "3 days ago",
+    unread: false,
+  },
+  {
+    id: "4",
+    icon: AlertCircle,
+    color: "#EF4444",
+    title: "Session reminder",
+    body: "You have a pending session request from a student.",
+    time: "4 days ago",
+    unread: false,
+  },
+];
+
 export function TopBar({ user }: TopBarProps) {
   const [profileOpen, setProfileOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [notifications, setNotifications] = useState(SAMPLE_NOTIFICATIONS);
   const menuRef = useRef<HTMLDivElement>(null);
+  const notifRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("learnivia-theme") as "light" | "dark" | null;
@@ -55,6 +103,20 @@ export function TopBar({ user }: TopBarProps) {
     if (dismissed) setAnnouncementDismissed(true);
   }, []);
 
+  // Close dropdowns on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setNotifOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
@@ -64,20 +126,14 @@ export function TopBar({ user }: TopBarProps) {
 
   const dismissAnnouncement = () => {
     setAnnouncementDismissed(true);
-    sessionStorage.setItem("announcement-dismissed", "1");
+    sessionStorage.setItem("announcement-dismissed", "true");
   };
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setProfileOpen(false);
-      }
-    }
-    if (profileOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [profileOpen]);
+  const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const markAllRead = () => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
+  };
 
   const initials = (user.name || "U")
     .split(" ")
@@ -153,7 +209,216 @@ export function TopBar({ user }: TopBarProps) {
       >
         {/* Icon buttons */}
         <IconBtn icon={MessageCircle} label="Messages" href="/community" />
-        <IconBtn icon={Bell} label="Notifications" href="#" badge={undefined} />
+
+        {/* Notification Bell with dropdown */}
+        <div style={{ position: "relative" }} ref={notifRef}>
+          <button
+            aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
+            onClick={() => {
+              setNotifOpen((v) => !v);
+              setProfileOpen(false);
+            }}
+            style={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 36,
+              height: 36,
+              borderRadius: "var(--radius-sm, 8px)",
+              color: notifOpen ? "var(--primary, #0D9488)" : "var(--text-secondary, #475569)",
+              background: notifOpen ? "var(--primary-subtle, #CCFBF1)" : "transparent",
+              border: "none",
+              cursor: "pointer",
+              transition: "background 180ms ease",
+            }}
+            onMouseEnter={(e) => {
+              if (!notifOpen) (e.currentTarget as HTMLElement).style.background = "var(--surface-subtle, #F1F5F9)";
+            }}
+            onMouseLeave={(e) => {
+              if (!notifOpen) (e.currentTarget as HTMLElement).style.background = "transparent";
+            }}
+          >
+            <Bell size={19} strokeWidth={1.75} />
+            {unreadCount > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: 6,
+                  right: 6,
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: "var(--primary, #0D9488)",
+                  border: "1.5px solid var(--surface-raised, #FFFFFF)",
+                }}
+              />
+            )}
+          </button>
+
+          {/* Notifications Dropdown */}
+          {notifOpen && (
+            <div
+              style={{
+                position: "absolute",
+                top: "calc(100% + 8px)",
+                right: 0,
+                width: 340,
+                background: "var(--surface-raised, #FFFFFF)",
+                border: "1px solid var(--border, #E2E8F0)",
+                borderRadius: "var(--radius-lg, 14px)",
+                boxShadow: "0 8px 32px rgba(12,27,51,0.12)",
+                zIndex: 60,
+                overflow: "hidden",
+              }}
+            >
+              {/* Header */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0.875rem 1rem 0.75rem",
+                  borderBottom: "1px solid var(--border, #E2E8F0)",
+                }}
+              >
+                <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--text-primary, #0C1B33)" }}>
+                  Notifications
+                  {unreadCount > 0 && (
+                    <span
+                      style={{
+                        marginLeft: "0.5rem",
+                        background: "var(--primary, #0D9488)",
+                        color: "#fff",
+                        fontSize: "0.65rem",
+                        fontWeight: 700,
+                        borderRadius: "9999px",
+                        padding: "1px 6px",
+                      }}
+                    >
+                      {unreadCount}
+                    </span>
+                  )}
+                </span>
+                {unreadCount > 0 && (
+                  <button
+                    onClick={markAllRead}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.3rem",
+                      fontSize: "0.775rem",
+                      color: "var(--primary, #0D9488)",
+                      fontWeight: 600,
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "2px 4px",
+                    }}
+                  >
+                    <CheckCheck size={13} />
+                    Mark all read
+                  </button>
+                )}
+              </div>
+
+              {/* Notification items */}
+              <div style={{ maxHeight: 320, overflowY: "auto" }}>
+                {notifications.length === 0 ? (
+                  <div style={{ padding: "2rem", textAlign: "center", color: "var(--text-muted, #64748B)", fontSize: "0.85rem" }}>
+                    No notifications yet
+                  </div>
+                ) : (
+                  notifications.map((n) => (
+                    <div
+                      key={n.id}
+                      style={{
+                        display: "flex",
+                        gap: "0.75rem",
+                        padding: "0.75rem 1rem",
+                        borderBottom: "1px solid var(--border, #F1F5F9)",
+                        background: n.unread ? "var(--primary-subtle, #F0FDFA)" : "transparent",
+                        cursor: "pointer",
+                        transition: "background 150ms",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.background = "var(--surface-subtle, #F8FAFC)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.background = n.unread ? "var(--primary-subtle, #F0FDFA)" : "transparent";
+                      }}
+                      onClick={() => {
+                        setNotifications((prev) =>
+                          prev.map((item) => item.id === n.id ? { ...item, unread: false } : item)
+                        );
+                      }}
+                    >
+                      {/* Icon */}
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: "50%",
+                          background: `${n.color}18`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <n.icon size={16} color={n.color} strokeWidth={2} />
+                      </div>
+
+                      {/* Text */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ margin: 0, fontSize: "0.8375rem", fontWeight: n.unread ? 700 : 500, color: "var(--text-primary, #0C1B33)" }}>
+                          {n.title}
+                        </p>
+                        <p style={{ margin: "2px 0 0", fontSize: "0.775rem", color: "var(--text-secondary, #475569)", lineHeight: 1.4 }}>
+                          {n.body}
+                        </p>
+                        <p style={{ margin: "4px 0 0", fontSize: "0.7rem", color: "var(--text-muted, #94A3B8)" }}>
+                          {n.time}
+                        </p>
+                      </div>
+
+                      {/* Unread dot */}
+                      {n.unread && (
+                        <div
+                          style={{
+                            width: 8,
+                            height: 8,
+                            borderRadius: "50%",
+                            background: "var(--primary, #0D9488)",
+                            alignSelf: "center",
+                            flexShrink: 0,
+                          }}
+                        />
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Footer */}
+              <div style={{ padding: "0.6rem", borderTop: "1px solid var(--border, #E2E8F0)", textAlign: "center" }}>
+                <Link
+                  href="/sessions"
+                  onClick={() => setNotifOpen(false)}
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "var(--primary, #0D9488)",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  View all activity →
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+
         <IconBtn icon={Calendar} label="Calendar" href="/sessions" />
 
         {/* Divider */}
@@ -169,7 +434,10 @@ export function TopBar({ user }: TopBarProps) {
         {/* Avatar / Profile menu */}
         <div style={{ position: "relative" }} ref={menuRef}>
           <button
-            onClick={() => setProfileOpen((v) => !v)}
+            onClick={() => {
+              setProfileOpen((v) => !v);
+              setNotifOpen(false);
+            }}
             aria-expanded={profileOpen}
             aria-label="Open profile menu"
             style={{
@@ -222,7 +490,7 @@ export function TopBar({ user }: TopBarProps) {
             />
           </button>
 
-          {/* Dropdown */}
+          {/* Profile Dropdown */}
           {profileOpen && (
             <div
               style={{
@@ -285,7 +553,13 @@ export function TopBar({ user }: TopBarProps) {
               </div>
 
               <MenuItem
-                href={ROUTES.learner?.home || "/dashboard"}
+                href={
+                  user.isAdmin
+                    ? "/admin"
+                    : user.isTutor
+                    ? ROUTES.tutor?.home || "/tutor"
+                    : ROUTES.learner?.home || "/dashboard"
+                }
                 icon={User}
                 label="My Dashboard"
                 onClick={() => setProfileOpen(false)}
