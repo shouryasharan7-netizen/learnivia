@@ -1,6 +1,6 @@
 import styles from "./page.module.css";
 import Link from "next/link";
-import { ArrowRight, Search, CalendarCheck, Video, Award, ShieldCheck, HeartHandshake } from "lucide-react";
+import { ArrowRight, Search, CalendarCheck, Video, ShieldCheck, HeartHandshake, UserPlus, BookOpen } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -21,141 +21,172 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* Pathway 1: For Parents & Guardians */}
+      {/* Pathway 1: For Learners */}
       <section className={styles.stepsSection}>
         <div className={styles.sectionHeader}>
           <span className={styles.pathwayTag}>Pathway 1</span>
-          <h2 className={styles.sectionTitle}>For Parents &amp; Guardians</h2>
-          <p className={styles.sectionLead}>
-            Full oversight of your child&apos;s learning journey, private accounts, and safe online sessions.
-          </p>
-        </div>
-
-        <div className={styles.stepsGrid}>
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <ShieldCheck size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
-            </div>
-            <div className={styles.stepNumber}>01</div>
-            <h3>Manage Child Profiles</h3>
-            <p>Create a parent account to safely manage profiles for learners below Grade 9. Personal data is never public.</p>
-          </div>
-
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <Search size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
-            </div>
-            <div className={styles.stepNumber}>02</div>
-            <h3>Filter Approved Tutors</h3>
-            <p>Select your child&apos;s exact grade band. Only tutors with verified qualifications in that curriculum appear.</p>
-          </div>
-
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <HeartHandshake size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
-            </div>
-            <div className={styles.stepNumber}>03</div>
-            <h3>Supervise &amp; Verify</h3>
-            <p>Sit in or supervise private Zoom sessions. Confirm attendance in one click to complete session records.</p>
-          </div>
-        </div>
-
-        <div className={styles.ctaWrapper}>
-          <Link href="/parents" className={styles.primaryBtn}>
-            Read Guardian Guide <ArrowRight size={15} />
-          </Link>
-        </div>
-      </section>
-
-      {/* Pathway 2: For Learners */}
-      <section className={`${styles.stepsSection} ${styles.altSection}`}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.pathwayTag}>Pathway 2</span>
-          <h2 className={styles.sectionTitle}>For K-10 Learners</h2>
+          <h2 className={styles.sectionTitle}>Student Flow</h2>
           <p className={styles.sectionLead}>
             Patient peer tutors who explain concepts your way, with zero fees, no tests to qualify, and no judgment.
           </p>
         </div>
 
-        <div className={styles.stepsGrid}>
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <Search size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+        <div className={styles.timelineContainer}>
+          {/* Step 1 */}
+          <div className={styles.timelineRow}>
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <Search size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>Step 01</div>
+              <h3>Pick Your Subject</h3>
+              <p>Browse math, reading, science, or learning support. Read tutor bios and see subjects they love teaching.</p>
             </div>
-            <div className={styles.stepNumber}>01</div>
-            <h3>Pick Your Subject</h3>
-            <p>Browse math, reading, science, or learning support. Read tutor bios and see subjects they love teaching.</p>
+            <div className={styles.timelineImage}>
+              <div className={styles.imagePlaceholder}>
+                <Search size={48} color="rgba(0,0,0,0.1)" />
+              </div>
+            </div>
           </div>
 
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <CalendarCheck size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+          {/* Step 2 */}
+          <div className={`${styles.timelineRow} ${styles.reverse}`}>
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <CalendarCheck size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>Step 02</div>
+              <h3>Book an Open Slot</h3>
+              <p>Select a 30-60 min slot that fits your schedule. Describe your homework topic so your tutor can prepare.</p>
             </div>
-            <div className={styles.stepNumber}>02</div>
-            <h3>Book an Open Slot</h3>
-            <p>Select a 30-60 min slot that fits your schedule. Describe your homework topic so your tutor can prepare.</p>
+            <div className={styles.timelineImage}>
+              <div className={styles.imagePlaceholder}>
+                <CalendarCheck size={48} color="rgba(0,0,0,0.1)" />
+              </div>
+            </div>
           </div>
 
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <Video size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+          {/* Step 3 */}
+          <div className={styles.timelineRow}>
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <Video size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>Step 03</div>
+              <h3>Learn & Grow</h3>
+              <p>Join a secure, private Zoom room. Work through problems together using screen sharing and whiteboards.</p>
             </div>
-            <div className={styles.stepNumber}>03</div>
-            <h3>Meet on Zoom</h3>
-            <p>Launch your secure 1-on-1 Zoom call directly from your Learnivia dashboard. Share screens and solve problems together.</p>
+            <div className={styles.timelineImage}>
+              <div className={styles.imagePlaceholder}>
+                <Video size={48} color="rgba(0,0,0,0.1)" />
+              </div>
+            </div>
           </div>
         </div>
 
         <div className={styles.ctaWrapper}>
-          <Link href="/find" className={styles.primaryBtn}>
-            Find a Tutor, It&apos;s Free <ArrowRight size={15} />
+          <Link href="/signin" className={styles.primaryBtn}>
+            Find a Tutor <ArrowRight size={18} />
           </Link>
         </div>
       </section>
 
-      {/* Pathway 3: For Volunteer Tutors */}
-      <section className={styles.stepsSection}>
+      {/* Pathway 2: For Tutors */}
+      <section className={`${styles.stepsSection} ${styles.altSection}`}>
         <div className={styles.sectionHeader}>
-          <span className={styles.pathwayTag}>Pathway 3</span>
-          <h2 className={styles.sectionTitle}>For Volunteer Student Tutors</h2>
+          <span className={styles.pathwayTag}>Pathway 2</span>
+          <h2 className={styles.sectionTitle}>Tutor Flow</h2>
           <p className={styles.sectionLead}>
-            Earn official community service hours with automated verifiable transcripts while mentoring younger peers.
+            Gain teaching experience, earn verified volunteer hours, and make a global impact from your bedroom.
           </p>
         </div>
 
-        <div className={styles.stepsGrid}>
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <ShieldCheck size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+        <div className={styles.timelineContainer}>
+          {/* Step 1 */}
+          <div className={`${styles.timelineRow} ${styles.reverse}`}>
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <UserPlus size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>Step 01</div>
+              <h3>Get Certified</h3>
+              <p>Pass our subject-knowledge tests and complete the mandatory child safeguarding module.</p>
             </div>
-            <div className={styles.stepNumber}>01</div>
-            <h3>Apply with Credentials</h3>
-            <p>High school (Grade 11+) and university students submit academic report cards and subject qualifications.</p>
+            <div className={styles.timelineImage}>
+              <div className={styles.imagePlaceholder}>
+                <UserPlus size={48} color="rgba(255,255,255,0.1)" />
+              </div>
+            </div>
           </div>
 
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <Award size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+          {/* Step 2 */}
+          <div className={styles.timelineRow}>
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <BookOpen size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>Step 02</div>
+              <h3>Host Sessions</h3>
+              <p>Set your availability calendar. Accept requests from K-10 learners who need your specific expertise.</p>
             </div>
-            <div className={styles.stepNumber}>02</div>
-            <h3>Complete Safeguarding Training</h3>
-            <p>Finish our 5 mandatory interactive modules on online boundaries, learning styles, and Zoom practices.</p>
+            <div className={styles.timelineImage}>
+              <div className={styles.imagePlaceholder}>
+                <BookOpen size={48} color="rgba(255,255,255,0.1)" />
+              </div>
+            </div>
           </div>
 
-          <div className={styles.stepCard}>
-            <div className={styles.stepIconWrap}>
-              <CalendarCheck size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+          {/* Step 3 */}
+          <div className={`${styles.timelineRow} ${styles.reverse}`}>
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <HeartHandshake size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>Step 03</div>
+              <h3>Earn Verified Hours</h3>
+              <p>After each successful session, receive verifiable volunteer hour certificates for college applications.</p>
             </div>
-            <div className={styles.stepNumber}>03</div>
-            <h3>Tutor &amp; Download Records</h3>
-            <p>Set weekly availability, host sessions, and download certified service transcripts with verification codes.</p>
+            <div className={styles.timelineImage}>
+              <div className={styles.imagePlaceholder}>
+                <HeartHandshake size={48} color="rgba(255,255,255,0.1)" />
+              </div>
+            </div>
           </div>
         </div>
 
         <div className={styles.ctaWrapper}>
           <Link href="/apply" className={styles.secondaryBtn}>
-            Apply to Tutor <ArrowRight size={15} />
+            Become a Tutor <ArrowRight size={18} />
           </Link>
+        </div>
+      </section>
+
+      {/* Pathway 3: Trust & Safety */}
+      <section className={styles.stepsSection}>
+        <div className={styles.sectionHeader}>
+          <span className={styles.pathwayTag}>Trust & Safety</span>
+          <h2 className={styles.sectionTitle}>For Parents & Guardians</h2>
+          <p className={styles.sectionLead}>
+            Full oversight of your child's learning journey, private accounts, and safe online sessions.
+          </p>
+        </div>
+
+        <div className={styles.timelineContainer}>
+          <div className={styles.timelineRow}>
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <ShieldCheck size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>01</div>
+              <h3>Supervise & Verify</h3>
+              <p>Create a parent account to safely manage profiles for learners below Grade 9. Sit in or supervise private Zoom sessions. Confirm attendance in one click to complete session records.</p>
+            </div>
+            <div className={styles.timelineImage}>
+              <div className={styles.imagePlaceholder}>
+                <ShieldCheck size={48} color="rgba(0,0,0,0.1)" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

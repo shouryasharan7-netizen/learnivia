@@ -214,236 +214,178 @@ export default async function FindTutorPage({ searchParams }: Props) {
   return (
     <div>
       {/* ── Page Header ── */}
-      <div style={{ marginBottom: "1.5rem" }}>
+      <div style={{ marginBottom: "2rem" }}>
         <h1
           style={{
-            fontSize: "1.6rem",
+            fontSize: "1.75rem",
             fontWeight: 800,
             color: "var(--text-primary, #0C1B33)",
-            margin: "0 0 0.4rem",
-            fontFamily: "var(--font-serif, 'Playfair Display', serif)",
+            margin: "0 0 0.5rem",
+            fontFamily: "var(--font-sans, system-ui, sans-serif)",
           }}
         >
           Find a Peer Tutor
         </h1>
-        <p style={{ fontSize: "0.9rem", color: "var(--text-secondary, #475569)", margin: 0 }}>
-          Verified volunteer tutors for K-10 students, free 1-on-1 Zoom sessions.
-          Filter by subject, board, or grade to find your perfect match.
+        <p style={{ fontSize: "0.95rem", color: "var(--text-secondary, #475569)", margin: 0, maxWidth: 600 }}>
+          Connect with verified volunteer tutors for K-10 students. 
+          Use the filters to find your perfect match.
         </p>
       </div>
 
-      {/* ── Full-width Search + Sort (Schoolhouse style) ── */}
-      <form method="GET" action="/find">
-        <div
-          style={{
-            display: "flex",
-            gap: "0.75rem",
-            marginBottom: "1rem",
-            alignItems: "center",
-          }}
-        >
-          {/* Search bar */}
-          <div
-            style={{
-              flex: 1,
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Search
-              size={16}
-              color="var(--text-muted, #64748B)"
-              style={{ position: "absolute", left: "0.875rem", pointerEvents: "none" }}
-            />
-            <input
-              type="text"
-              name="q"
-              defaultValue={q || ""}
-              placeholder="Search tutors, subjects, or boards…"
+      <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", flexDirection: "column", '@media (min-width: 768px)': { flexDirection: "row" } } as any}>
+        {/* ── Left Sidebar Filters ── */}
+        <aside style={{ width: "100%", maxWidth: "280px", flexShrink: 0 }}>
+          <form method="GET" action="/find" style={{ display: "flex", flexDirection: "column", gap: "1.5rem", background: "var(--surface-raised, #FFFFFF)", padding: "1.5rem", borderRadius: "var(--radius-lg, 12px)", border: "1px solid var(--border, #E2E8F0)" }}>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0, color: "var(--text-primary, #0C1B33)" }}>Filters</h2>
+            
+            {/* Search Input in Sidebar */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary, #475569)" }}>Search</label>
+              <div style={{ position: "relative" }}>
+                <Search size={14} color="var(--text-muted, #64748B)" style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} />
+                <input
+                  type="text"
+                  name="q"
+                  defaultValue={q || ""}
+                  placeholder="Name, keyword..."
+                  style={{ width: "100%", padding: "0.6rem 0.75rem 0.6rem 2.25rem", border: "1px solid var(--border, #E2E8F0)", borderRadius: "var(--radius-sm, 8px)", fontSize: "0.875rem" }}
+                />
+              </div>
+            </div>
+
+            {/* Subject Select */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary, #475569)" }}>Subject</label>
+              <select name="subject" defaultValue={subject || ""} style={{ width: "100%", padding: "0.6rem", border: "1px solid var(--border, #E2E8F0)", borderRadius: "var(--radius-sm, 8px)", fontSize: "0.875rem", background: "#fff" }}>
+                <option value="">All Subjects</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Science">Science</option>
+                <option value="English Language Arts">English Language Arts</option>
+                <option value="Social Studies">Social Studies</option>
+              </select>
+            </div>
+
+            {/* Grade Select */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary, #475569)" }}>Grade Level</label>
+              <select name="grade" defaultValue={activeGrade || ""} style={{ width: "100%", padding: "0.6rem", border: "1px solid var(--border, #E2E8F0)", borderRadius: "var(--radius-sm, 8px)", fontSize: "0.875rem", background: "#fff" }}>
+                <option value="">All Grades</option>
+                <option value="Kindergarten">Kindergarten</option>
+                <option value="Grade 1">Grade 1</option>
+                <option value="Grade 2">Grade 2</option>
+                <option value="Grade 3">Grade 3</option>
+                <option value="Grade 4">Grade 4</option>
+                <option value="Grade 5">Grade 5</option>
+                <option value="Grade 6">Grade 6</option>
+                <option value="Grade 7">Grade 7</option>
+                <option value="Grade 8">Grade 8</option>
+                <option value="Grade 9">Grade 9</option>
+                <option value="Grade 10">Grade 10</option>
+              </select>
+            </div>
+
+            {/* Board / Curriculum Select */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary, #475569)" }}>Board / Curriculum</label>
+              <select name="curriculum" defaultValue={activeCurriculum || ""} style={{ width: "100%", padding: "0.6rem", border: "1px solid var(--border, #E2E8F0)", borderRadius: "var(--radius-sm, 8px)", fontSize: "0.875rem", background: "#fff" }}>
+                <option value="">All Boards</option>
+                <option value="cbse">CBSE</option>
+                <option value="icse">ICSE</option>
+                <option value="ib">IB / International</option>
+                <option value="us">US Common Core</option>
+              </select>
+            </div>
+
+            <input type="hidden" name="allGrades" value="true" />
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "0.5rem" }}>
+              <button type="submit" style={{ width: "100%", padding: "0.75rem", background: "var(--primary, #0D9488)", color: "#fff", border: "none", borderRadius: "var(--radius-sm, 8px)", fontWeight: 700, cursor: "pointer" }}>
+                Apply Filters
+              </button>
+              {(q || grade || subject || curriculum || activeGrade) && (
+                <Link href="/find?allGrades=true" style={{ width: "100%", padding: "0.75rem", textAlign: "center", border: "1px solid var(--border, #E2E8F0)", borderRadius: "var(--radius-sm, 8px)", color: "var(--text-muted, #64748B)", textDecoration: "none", fontWeight: 600, fontSize: "0.875rem" }}>
+                  Clear All
+                </Link>
+              )}
+            </div>
+          </form>
+        </aside>
+
+        {/* ── Main Content Area ── */}
+        <div style={{ flex: 1, minWidth: 0, width: "100%" }}>
+          {/* ── Auto-match banner ── */}
+          {isAutoMatched && (
+            <div
               style={{
-                width: "100%",
-                padding: "0.7rem 1rem 0.7rem 2.5rem",
-                border: "1.5px solid var(--border, #E2E8F0)",
+                background: "var(--primary-light, #CCFBF1)",
+                border: "1px solid rgba(13,148,136,0.2)",
                 borderRadius: "var(--radius-md, 10px)",
+                padding: "0.85rem 1.25rem",
+                marginBottom: "1.5rem",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "0.5rem",
                 fontSize: "0.9rem",
-                color: "var(--text-primary, #0C1B33)",
-                background: "var(--surface-raised, #FFFFFF)",
-                outline: "none",
-              }}
-            />
-          </div>
-          {/* Sort / Grade select */}
-          <select
-            name="grade"
-            defaultValue={activeGrade || ""}
-            style={{
-              padding: "0.7rem 1.1rem",
-              border: "1.5px solid var(--border, #E2E8F0)",
-              borderRadius: "var(--radius-md, 10px)",
-              fontSize: "0.875rem",
-              color: "var(--text-secondary, #475569)",
-              background: "var(--surface-raised, #FFFFFF)",
-              cursor: "pointer",
-            }}
-          >
-            <option value="">All Grades (K-10)</option>
-            <option value="Kindergarten">Kindergarten</option>
-            <option value="Grade 1">Grade 1</option>
-            <option value="Grade 2">Grade 2</option>
-            <option value="Grade 3">Grade 3</option>
-            <option value="Grade 4">Grade 4</option>
-            <option value="Grade 5">Grade 5</option>
-            <option value="Grade 6">Grade 6</option>
-            <option value="Grade 7">Grade 7</option>
-            <option value="Grade 8">Grade 8</option>
-            <option value="Grade 9">Grade 9</option>
-            <option value="Grade 10">Grade 10</option>
-          </select>
-          <button
-            type="submit"
-            style={{
-              padding: "0.7rem 1.25rem",
-              background: "var(--primary, #0D9488)",
-              color: "#fff",
-              border: "none",
-              borderRadius: "var(--radius-md, 10px)",
-              fontSize: "0.875rem",
-              fontWeight: 700,
-              cursor: "pointer",
-            }}
-          >
-            Search
-          </button>
-          {(q || grade || subject || curriculum || activeGrade) && (
-            <Link
-              href="/find?allGrades=true"
-              style={{
-                padding: "0.7rem 1rem",
-                border: "1.5px solid var(--border, #E2E8F0)",
-                borderRadius: "var(--radius-md, 10px)",
-                fontSize: "0.875rem",
-                color: "var(--text-muted, #64748B)",
-                textDecoration: "none",
-                whiteSpace: "nowrap",
+                color: "var(--primary-dark, #115E59)",
               }}
             >
-              Clear
-            </Link>
-          )}
-        </div>
-
-        {/* ── Horizontal Filter Chips (Schoolhouse-style subject tabs) ── */}
-        <div
-          style={{
-            display: "flex",
-            gap: "0.5rem",
-            overflowX: "auto",
-            paddingBottom: "0.25rem",
-            scrollbarWidth: "none",
-            marginBottom: "1.5rem",
-          }}
-        >
-          {SUBJECT_CHIPS.map((chip) => {
-            const isChipActive = chip.value === "" ? !subject : subject === chip.value;
-            return (
+              <span style={{ display: "flex", alignItems: "center" }}>
+                <Target size={16} style={{ marginRight: "0.5rem" }} />
+                Showing tutors perfectly matched for: <strong style={{ marginLeft: "0.25rem" }}>{activeGrade || "Your Grade"}</strong>
+                {activeCurriculum ? ` · ${activeCurriculum}` : ""}
+              </span>
               <Link
-                key={chip.value}
-                href={`/find?allGrades=true${chip.value ? `&subject=${encodeURIComponent(chip.value)}` : ""}${activeGrade ? `&grade=${encodeURIComponent(activeGrade)}` : ""}`}
+                href={`/find?allGrades=true${subject ? `&subject=${encodeURIComponent(subject)}` : ""}`}
+                style={{ color: "var(--primary, #0D9488)", fontWeight: 700, textDecoration: "underline", fontSize: "0.85rem" }}
+              >
+                Clear Auto-match
+              </Link>
+            </div>
+          )}
+
+          {/* ── Tutor Grid (3-col Schoolhouse card layout) ── */}
+          {tutors.length === 0 ? (
+            <div
+              style={{
+                textAlign: "center",
+                padding: "4rem 2rem",
+                background: "var(--surface-raised, #FFFFFF)",
+                border: "1px solid var(--border, #E2E8F0)",
+                borderRadius: "var(--radius-lg, 12px)",
+              }}
+            >
+              <BookOpen size={48} color="var(--border, #E2E8F0)" style={{ marginBottom: "1rem" }} />
+              <p style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary, #0C1B33)", margin: "0 0 0.5rem" }}>
+                No tutors found for these filters
+              </p>
+              <p style={{ fontSize: "0.95rem", color: "var(--text-muted, #64748B)", margin: "0 0 1.5rem" }}>
+                Try broadening your search or clearing some filters.
+              </p>
+              <Link
+                href="/find?allGrades=true"
                 style={{
-                  flexShrink: 0,
-                  padding: "0.45rem 1rem",
-                  borderRadius: "var(--radius-pill, 9999px)",
-                  fontSize: "0.85rem",
-                  fontWeight: isChipActive ? 700 : 500,
-                  border: `1.5px solid ${isChipActive ? "var(--primary, #0D9488)" : "var(--border, #E2E8F0)"}`,
-                  background: isChipActive ? "var(--primary, #0D9488)" : "var(--surface-raised, #FFFFFF)",
-                  color: isChipActive ? "#fff" : "var(--text-secondary, #475569)",
+                  display: "inline-block",
+                  padding: "0.75rem 1.5rem",
+                  background: "var(--primary, #0D9488)",
+                  color: "#fff",
+                  borderRadius: "var(--radius-md, 10px)",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
                   textDecoration: "none",
-                  transition: "all var(--transition, 180ms)",
-                  whiteSpace: "nowrap",
                 }}
               >
-                {chip.label}
+                Browse All Tutors
               </Link>
-            );
-          })}
-        </div>
-      </form>
-
-      {/* ── Auto-match banner ── */}
-      {isAutoMatched && (
-        <div
-          style={{
-            background: "var(--primary-light, #CCFBF1)",
-            border: "1px solid rgba(13,148,136,0.2)",
-            borderRadius: "var(--radius-md, 10px)",
-            padding: "0.75rem 1.1rem",
-            marginBottom: "1.25rem",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontSize: "0.875rem",
-            color: "var(--primary-dark, #115E59)",
-          }}
-        >
-          <span>
-            <GraduationCap size={15} style={{ marginRight: "0.5rem", verticalAlign: "middle" }} />
-            Showing tutors matched for: <strong>{activeGrade || "Your Grade"}</strong>
-            {activeCurriculum ? ` · ${activeCurriculum}` : ""}
-          </span>
-          <Link
-            href={`/find?allGrades=true${subject ? `&subject=${encodeURIComponent(subject)}` : ""}`}
-            style={{ color: "var(--primary, #0D9488)", fontWeight: 700, textDecoration: "underline", fontSize: "0.825rem" }}
-          >
-            Show All
-          </Link>
-        </div>
-      )}
-
-      {/* ── Tutor Grid (3-col Schoolhouse card layout) ── */}
-      {tutors.length === 0 ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "3rem 1.5rem",
-            background: "var(--surface-raised, #FFFFFF)",
-            border: "1px solid var(--border, #E2E8F0)",
-            borderRadius: "var(--radius-xl, 18px)",
-          }}
-        >
-          <BookOpen size={36} color="var(--text-subtle, #94A3B8)" style={{ marginBottom: "0.875rem" }} />
-          <p style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary, #0C1B33)", margin: "0 0 0.5rem" }}>
-            No tutors found for these filters
-          </p>
-          <p style={{ fontSize: "0.875rem", color: "var(--text-muted, #64748B)", margin: "0 0 1.25rem" }}>
-            Try broadening your search or removing some filters.
-          </p>
-          <Link
-            href="/find?allGrades=true"
-            style={{
-              display: "inline-block",
-              padding: "0.6rem 1.5rem",
-              background: "var(--primary, #0D9488)",
-              color: "#fff",
-              borderRadius: "var(--radius-sm, 8px)",
-              fontSize: "0.875rem",
-              fontWeight: 700,
-              textDecoration: "none",
-            }}
-          >
-            Browse All Tutors
-          </Link>
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))",
-            gap: "1rem",
-          }}
-        >
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                gap: "1.25rem",
+              }}
+            >
           {tutors.map((tutor: any) => {
             const completedSessions = (tutor._count?.tutorBookings || 0) + (tutor._count?.workshops || 0);
             const avgRating =
@@ -611,6 +553,8 @@ export default async function FindTutorPage({ searchParams }: Props) {
           })}
         </div>
       )}
+      </div>
+      </div>
     </div>
   );
 }

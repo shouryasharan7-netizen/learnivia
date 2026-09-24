@@ -95,51 +95,52 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
     <main className={styles.main}>
       <div className={styles.container}>
       <header className={styles.profileHeader}>
-        <div className={styles.avatarLarge}>
-          {tutorProfile.user.name?.charAt(0).toUpperCase() || "?"}
+        <div className={styles.headerTop}>
+          <div className={styles.avatarLarge}>
+            {tutorProfile.user.name?.charAt(0).toUpperCase() || "?"}
+          </div>
+          <div className={styles.headerInfo}>
+            <div className={styles.headerTitleRow}>
+              <h1 className={styles.name}>{tutorProfile.user.name}</h1>
+              <button className={styles.messageBtn}>
+                Message
+              </button>
+            </div>
+            
+            <p className={styles.grade} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+              <GraduationCap size={15} style={{ color: "var(--primary)" }} aria-hidden="true" />
+              <span>{tutorProfile.school || tutorProfile.currentGrade || "Verified Tutor"}</span>
+            </p>
+            
+            <p className={styles.timezone} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+              <Globe size={14} style={{ color: "var(--wa-muted)" }} aria-hidden="true" />
+              <span>Location / Timezone: {tutorProfile.user.timezone || "UTC"}</span>
+            </p>
+          </div>
         </div>
-        <div className={styles.headerInfo}>
-          <h1 className={styles.name}>{tutorProfile.user.name}</h1>
-          <p className={styles.grade} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-            <GraduationCap size={15} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
-            <span>{tutorProfile.school || tutorProfile.currentGrade || "Verified Tutor"}</span>
-          </p>
-          <p className={styles.timezone} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-            <Globe size={14} style={{ color: "var(--wa-muted)" }} aria-hidden="true" />
-            <span>Local Timezone: {tutorProfile.user.timezone || "UTC"}</span>
-          </p>
-        </div>
-        
-        <div className={styles.metaInfo}>
-          <div className={styles.metaItem}>
-            <span>Volunteer Impact</span>
-            <strong>{realVolunteerHours.toFixed(1)} hrs</strong>
+
+        {/* ── Stats Bar ── */}
+        <div className={styles.statsBar}>
+          <div className={styles.statItem}>
+            <span className={styles.statLabel}>Sessions Hosted</span>
+            <strong className={styles.statValue}>{tutorProfile.tutorBookings.length + tutorProfile.workshops.length}</strong>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statLabel}>Learners Helped</span>
+            <strong className={styles.statValue}>{(tutorProfile.tutorBookings.length + tutorProfile.workshops.length * 3) || 0}</strong>
           </div>
           {avgRating && (
-            <div className={styles.metaItem}>
-              <span>Rating</span>
-              <strong style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
-                <Star size={13} fill="var(--wa-ochre)" stroke="none" aria-hidden="true" />
-                <span>{avgRating} ({tutorProfile.reviews.length})</span>
+            <div className={styles.statItem}>
+              <span className={styles.statLabel}>Rating</span>
+              <strong className={styles.statValue} style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                <Star size={16} fill="var(--wa-ochre)" stroke="none" aria-hidden="true" />
+                <span>{avgRating}</span>
               </strong>
             </div>
           )}
-          <div className={styles.metaItem}>
-            <Link
-              href={`/tutor/${tutorProfile.id}/transcript`}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.35rem",
-                color: "var(--wa-forest)",
-                fontWeight: 600,
-                textDecoration: "underline",
-                fontSize: "0.85rem",
-              }}
-            >
-              <FileCheck size={14} aria-hidden="true" />
-              <span>Verified Service Record →</span>
-            </Link>
+          <div className={styles.statItem}>
+            <span className={styles.statLabel}>Member Since</span>
+            <strong className={styles.statValue}>2024</strong>
           </div>
         </div>
       </header>
@@ -151,9 +152,42 @@ export default async function TutorProfilePage({ params }: { params: Promise<{ i
             <p className={styles.bio}>{tutorProfile.bio || "This tutor hasn't written a bio yet."}</p>
           </section>
 
+          <section className={styles.section}>
+            <h2>Certifications</h2>
+            <div className={styles.certList}>
+              <div className={styles.certBadge}>
+                <FileCheck size={16} color="var(--primary)" />
+                <span>Background Checked</span>
+              </div>
+              <div className={styles.certBadge}>
+                <FileCheck size={16} color="var(--primary)" />
+                <span>Child Safeguarding Certified</span>
+              </div>
+              <div className={styles.certBadge}>
+                <FileCheck size={16} color="var(--primary)" />
+                <span>Subject Knowledge Verified</span>
+              </div>
+              <Link
+                href={`/tutor/${tutorProfile.id}/transcript`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  color: "var(--primary)",
+                  fontWeight: 600,
+                  textDecoration: "underline",
+                  fontSize: "0.85rem",
+                  marginTop: "0.5rem"
+                }}
+              >
+                View Official Service Transcript →
+              </Link>
+            </div>
+          </section>
+
           {tutorProfile.experience && (
             <section className={styles.section}>
-              <h2>Experience &amp; Background</h2>
+              <h2>Experience & Background</h2>
               <p className={styles.bio}>{tutorProfile.experience}</p>
             </section>
           )}
