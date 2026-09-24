@@ -222,7 +222,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                     {/* Age Gate & Guardian Acknowledgment for under-13 */}
                     {studentAge && parseInt(studentAge, 10) < 13 && (
                       <div className={styles.inputGroup} style={{ marginTop: "0.5rem" }}>
-                        <label htmlFor="parentEmail" style={{ color: "#0E8345", fontWeight: 700 }}>
+                        <label htmlFor="parentEmail" style={{ color: "var(--primary, #0D9488)", fontWeight: 700 }}>
                           Parent / Guardian Email (Learners under 13)
                         </label>
                         <input
@@ -274,7 +274,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                     href="/forgot-password"
                     style={{
                       fontSize: "0.8rem",
-                      color: "#0E8345",
+                      color: "var(--primary, #0D9488)",
                       fontWeight: 600,
                       textDecoration: "none",
                     }}

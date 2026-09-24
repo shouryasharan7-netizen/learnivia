@@ -117,5 +117,14 @@ export const authConfig = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // If the caller provided an explicit callbackUrl (e.g. /dashboard or /admin), honour it
+      // as long as it stays on the same origin.
+      if (url.startsWith(baseUrl)) return url;
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Default: let the page-level redirect (page.tsx) handle role routing
+      return `${baseUrl}/dashboard`;
+    },
   },
 } satisfies NextAuthConfig
+

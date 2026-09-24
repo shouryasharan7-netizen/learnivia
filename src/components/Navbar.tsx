@@ -400,7 +400,29 @@ export function Navbar() {
   // Pre-login High-Fidelity Navbar (Matching Image 1 & 4)
   return (
     <>
+      {/* ── Slim Announcement Strip (replaces old TopBarPublic) ── */}
+      <div style={{
+        background: "var(--navy, #0C1B33)",
+        color: "#fff",
+        fontSize: "0.8rem",
+        fontWeight: 600,
+        textAlign: "center",
+        padding: "0.45rem 1rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "1rem",
+        flexWrap: "wrap",
+      }}>
+        <span style={{ opacity: 0.85 }}>Non-Profit · Supervised 1-on-1 tutoring for Kindergarten to Grade 10 · 100% Free</span>
+        <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", opacity: 0.9 }}>
+          <span style={{ background: "var(--primary, #0D9488)", borderRadius: "4px", padding: "1px 8px", fontSize: "0.7rem", fontWeight: 700 }}>✦ Verified</span>
+          High School &amp; College Mentors
+        </span>
+      </div>
+
       <header className={styles.header} role="banner">
+
         <div className={styles.container}>
           {/* Logo & Name */}
           <Link href="/" className={styles.logoLink} aria-label="Learnivia Home">

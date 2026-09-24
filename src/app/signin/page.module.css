@@ -16,7 +16,8 @@
 .leftPanel {
   display: none;
   flex: 0 0 44%;
-  background: var(--wa-navy, #0F172A);
+  background: var(--navy, #0C1B33);
+  background: linear-gradient(160deg, #0C1B33 0%, #0D4A42 100%);
   flex-direction: column;
   justify-content: space-between;
   padding: 4rem 4.5rem;
@@ -186,7 +187,7 @@
   font-family: var(--font-serif, "Times New Roman", Times, Georgia, serif);
   font-size: 1.35rem;
   font-weight: 700;
-  color: var(--wa-ink, #0F172A);
+  color: var(--text-primary, #0C1B33);
   letter-spacing: -0.02em;
 }
 
@@ -249,7 +250,7 @@
 
 .roleBtnActive {
   background: var(--wa-white, #FFFFFF);
-  color: var(--wa-crimson, #8B263E);
+  color: var(--primary, #0D9488);
   box-shadow: var(--wa-shadow-sm);
 }
 
@@ -346,7 +347,7 @@
 .inputGroup input:focus,
 .selectInput:focus {
   outline: none;
-  border-color: var(--wa-crimson, #8B263E);
+  border-color: var(--primary, #0D9488);
   background: var(--wa-white, #FFFFFF);
   box-shadow: 0 0 0 3px rgba(139, 38, 62, 0.12);
 }
@@ -357,7 +358,7 @@
 
 /* Submit button */
 .submitBtn {
-  background-color: var(--wa-crimson, #8B263E);
+  background-color: var(--primary, #0D9488);
   color: #FFFFFF;
   padding: 0.875rem;
   border: none;
@@ -372,7 +373,7 @@
 }
 
 .submitBtn:hover {
-  background-color: var(--wa-crimson-hover, #731E33);
+  background-color: var(--primary-dark, #0F766E);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(139, 38, 62, 0.35);
 }
@@ -412,7 +413,7 @@
 .toggleBtn {
   background: none;
   border: none;
-  color: var(--wa-crimson, #8B263E);
+  color: var(--primary, #0D9488);
   font-weight: 700;
   font-size: inherit;
   cursor: pointer;
@@ -422,7 +423,7 @@
 }
 
 .toggleBtn:hover {
-  color: var(--wa-crimson-hover, #731E33);
+  color: var(--primary-dark, #0F766E);
 }
 
 .termsNote {
@@ -434,7 +435,7 @@
 }
 
 .termsNote a {
-  color: var(--wa-crimson, #2563EB);
+  color: var(--primary, #0D9488);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
