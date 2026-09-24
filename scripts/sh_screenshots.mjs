@@ -6,8 +6,8 @@ const DIR = 'audit-screenshots-full/schoolhouse';
 if (!fs.existsSync(DIR)) fs.mkdirSync(DIR, { recursive: true });
 
 const pages = [
-  { url: 'https://schoolhouse.world', name: 'sh-homepage' },
   { url: 'https://schoolhouse.world/tutors', name: 'sh-tutors' },
+  { url: 'https://schoolhouse.world/about', name: 'sh-about' },
 ];
 
 const browser = await chromium.launch({ headless: true });

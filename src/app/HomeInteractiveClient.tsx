@@ -290,24 +290,6 @@ export default function HomeInteractiveClient({
 
   return (
     <div className={styles.pageWrapper}>
-      {/* ── 1. EDITORIAL TICKER ── */}
-      <aside className={styles.mastheadTicker} aria-label="Academic Notice">
-        <div className={styles.container}>
-          <div className={styles.mastheadInner}>
-            <div className={styles.mastheadMeta}>
-              <span className={styles.mastheadTag}>Non-Profit</span>
-              <span>Supervised 1-on-1 tutoring for Kindergarten to Grade 10</span>
-              <span className={styles.mastheadDivider} />
-              <span>100% Free with zero fees or subscriptions</span>
-            </div>
-            <div className={styles.mastheadBadge}>
-              <Award size={14} color="var(--wa-ochre, #B45309)" />
-              <span>Verified High School and College Mentors</span>
-            </div>
-          </div>
-        </div>
-      </aside>
-
       {/* ── 2. HERO SECTION ── */}
       <section style={{
         background: "var(--navy, #0C1B33)",
@@ -318,43 +300,25 @@ export default function HomeInteractiveClient({
       }}>
         {/* Subtle patterned background or floating avatars can go here */}
         
-        {/* Floating Avatars (Mimicking Schoolhouse) */}
-        <div style={{ position: "absolute", top: "15%", left: "5%", width: 60, height: 60, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.8 }}>
-           {/* eslint-disable-next-line @next/next/no-img-element */}
-           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" alt="avatar" />
-        </div>
-        <div style={{ position: "absolute", top: "60%", left: "10%", width: 70, height: 70, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.9 }}>
-           {/* eslint-disable-next-line @next/next/no-img-element */}
-           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&backgroundColor=c0aede" alt="avatar" />
-        </div>
-        <div style={{ position: "absolute", top: "20%", right: "10%", width: 65, height: 65, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.85 }}>
-           {/* eslint-disable-next-line @next/next/no-img-element */}
-           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tutor1&backgroundColor=ffdfbf" alt="avatar" />
-        </div>
-        <div style={{ position: "absolute", top: "70%", right: "5%", width: 80, height: 80, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.95 }}>
-           {/* eslint-disable-next-line @next/next/no-img-element */}
-           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Student2&backgroundColor=d1d4f9" alt="avatar" />
-        </div>
-
         <div style={{
-          maxWidth: 1200,
+          maxWidth: 900,
           margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "4rem",
+          display: "flex",
+          flexDirection: "column",
           alignItems: "center",
+          textAlign: "center",
+          gap: "2.5rem",
           position: "relative",
           zIndex: 2,
         }}>
-          {/* Left Column: Huge Headline */}
+          {/* Centered Headline */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{ maxWidth: 500 }}
           >
             <h1 style={{
-              fontSize: "clamp(3.5rem, 6vw, 4.8rem)",
+              fontSize: "clamp(3.5rem, 7vw, 5.5rem)",
               fontWeight: 800,
               lineHeight: 1.05,
               letterSpacing: "-0.03em",
@@ -363,50 +327,38 @@ export default function HomeInteractiveClient({
               fontFamily: "var(--font-sans, system-ui, sans-serif)",
             }}>
               Free Online Tutoring.<br/>
-              <span style={{ opacity: 0.9, fontWeight: 500, fontSize: "clamp(2.5rem, 4vw, 3rem)" }}>Real Human Connection.</span>
+              <span style={{ opacity: 0.9, fontWeight: 500, fontSize: "clamp(2.5rem, 5vw, 4rem)" }}>Real Human Connection.</span>
             </h1>
           </motion.div>
 
-          {/* Right Column: CTA Box */}
+          {/* Centered CTA Box Area */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            style={{ maxWidth: 600, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
-               {/* Small avatar group */}
-               <div style={{ display: "flex" }}>
-                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=A" alt="student" style={{ width: 40, height: 40, borderRadius: "50%", border: "2px solid #0C1B33", marginLeft: 0, background: "#fff" }} />
-                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=B" alt="student" style={{ width: 40, height: 40, borderRadius: "50%", border: "2px solid #0C1B33", marginLeft: -15, background: "#f0fdfa" }} />
-                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=C" alt="student" style={{ width: 40, height: 40, borderRadius: "50%", border: "2px solid #0C1B33", marginLeft: -15, background: "#fef3c7" }} />
-               </div>
-               <span style={{ fontWeight: 700, fontSize: "1.1rem" }}>Join our K-10 students</span>
-            </div>
-
             <p style={{
-              fontSize: "1.15rem",
+              fontSize: "1.25rem",
               lineHeight: 1.6,
               color: "rgba(255,255,255,0.85)",
-              margin: "0 0 2rem",
+              margin: "0 0 2.5rem",
             }}>
               Join our peer-led community for free 1-on-1 tutoring, homework help, and meaningful conversations with students across the globe.
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%", maxWidth: 400 }}>
               <Link href="/signin" style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 width: "100%",
-                padding: "1rem",
+                padding: "1.1rem",
                 background: "var(--primary, #0D9488)",
                 color: "#fff",
                 borderRadius: "9999px",
                 fontWeight: 700,
-                fontSize: "1.1rem",
+                fontSize: "1.15rem",
                 textDecoration: "none",
                 transition: "background 150ms",
               }} onMouseEnter={(e) => (e.currentTarget.style.background = "#0F766E")} onMouseLeave={(e) => (e.currentTarget.style.background = "#0D9488")}>
