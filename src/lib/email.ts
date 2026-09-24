@@ -163,6 +163,66 @@ export async function sendApplicationApproved(tutorEmail: string, tutorName: str
   }
 }
 
+export async function sendApplicationRejected(tutorEmail: string, tutorName: string) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping application rejected email.");
+    return;
+  }
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: tutorEmail,
+      subject: "Update on your Learnivia Volunteer Application",
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
+          <h2 style="color: #991b1b; font-size: 22px; margin-bottom: 16px;">Update on your application</h2>
+          <p>Hi ${tutorName},</p>
+          <p>Thank you for applying to be a volunteer tutor on Learnivia. We appreciate the time you took to submit your application and academic credentials.</p>
+          <p>After careful review by our Academic Board, we regret to inform you that we are unable to approve your application at this time. We receive many applications and must ensure all tutors meet specific academic and safeguarding criteria for peer mentorship.</p>
+          <p>We wish you the best in your future endeavors.</p>
+          <p style="margin-top: 24px;">Warm regards,<br><strong>The Learnivia Team</strong></p>
+        </div>
+      `,
+    });
+  } catch (error) {
+    console.error("Failed to send application rejected email:", error);
+  }
+}
+
+export async function sendTutorSuspended(tutorEmail: string, tutorName: string, reason: string) {
+  if (!resend) {
+    console.warn("RESEND_API_KEY is not configured; skipping tutor suspended email.");
+    return;
+  }
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: tutorEmail,
+      subject: "Important Notice: Your Learnivia Tutor Account has been Suspended",
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
+          <h2 style="color: #991b1b; font-size: 22px; margin-bottom: 16px;">Account Suspended</h2>
+          <p>Hi ${tutorName},</p>
+          <p>This email is to notify you that your volunteer tutor account on Learnivia has been suspended following an administrative review.</p>
+          
+          <div style="background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 18px; margin: 20px 0;">
+            <p style="margin: 0; font-size: 14px; color: #991b1b; font-weight: 500;">
+              Reason provided by administration:<br/><br/>
+              <strong>${reason || "Violation of platform safeguarding or tutoring guidelines."}</strong>
+            </p>
+          </div>
+
+          <p>As a result, any upcoming scheduled sessions have been automatically canceled, and your public profile is no longer visible to students.</p>
+          <p>If you believe this was in error or wish to appeal this decision, please reply directly to this email.</p>
+          <p style="margin-top: 24px;">Sincerely,<br><strong>Learnivia Trust &amp; Safety</strong></p>
+        </div>
+      `,
+    });
+  } catch (error) {
+    console.error("Failed to send tutor suspended email:", error);
+  }
+}
+
 export async function sendTutorAvailabilityReminder(tutorEmail: string, tutorName: string, daysRemaining: number) {
   if (!resend) {
     console.warn("RESEND_API_KEY is not configured; skipping availability reminder email.");

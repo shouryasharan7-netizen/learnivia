@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-user";
-import { sendApplicationApproved } from "@/lib/email";
+import { sendApplicationApproved, sendApplicationRejected, sendTutorSuspended } from "@/lib/email";
 import { revalidatePath } from "next/cache";
 import type { Role } from "@prisma/client";
 
@@ -44,10 +44,19 @@ export async function approveApplication(tutorId: string) {
 export async function rejectApplication(tutorId: string) {
   await requireAdmin();
 
-  await prisma.tutorProfile.update({
+  const profile = await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "REJECTED" },
+    include: { user: true }
   });
+
+  if (profile.user.email) {
+    try {
+      await sendApplicationRejected(profile.user.email, profile.user.name || "Tutor");
+    } catch (err) {
+      console.error("Non-blocking email error in rejectApplication:", err);
+    }
+  }
 
   revalidatePath("/admin/applications");
   revalidatePath("/admin");
@@ -106,6 +115,19 @@ export async function suspendTutor(tutorId: string) {
       checkUpNote: "Workshop automatically canceled: host is currently unavailable.",
     },
   });
+
+  const fullUser = await prisma.user.findUnique({
+    where: { id: tutor.userId },
+    select: { email: true, name: true }
+  });
+
+  if (fullUser?.email) {
+    try {
+      await sendTutorSuspended(fullUser.email, fullUser.name || "Tutor", "Tutor account suspended by administrator review.");
+    } catch (err) {
+      console.error("Non-blocking email error in suspendTutor:", err);
+    }
+  }
 
   revalidatePath("/admin/tutors");
   revalidatePath("/admin/reports");

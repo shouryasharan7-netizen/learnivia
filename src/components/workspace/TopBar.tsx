@@ -19,6 +19,7 @@ import {
   UserPlus,
   Star,
   AlertCircle,
+  Settings as SettingsIcon,
 } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 
@@ -570,6 +571,22 @@ export function TopBar({ user }: TopBarProps) {
                 href={ROUTES.safety || "/safety"}
                 icon={ShieldCheck}
                 label="Safety Standards"
+                onClick={() => setProfileOpen(false)}
+              />
+
+              {user.isAdmin && (
+                <MenuItem
+                  href="/admin"
+                  icon={ShieldCheck}
+                  label="Admin Center"
+                  onClick={() => setProfileOpen(false)}
+                />
+              )}
+
+              <MenuItem
+                href="/settings"
+                icon={SettingsIcon}
+                label="Settings"
                 onClick={() => setProfileOpen(false)}
               />
 

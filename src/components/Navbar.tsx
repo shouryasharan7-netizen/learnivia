@@ -163,30 +163,6 @@ export function Navbar() {
 
           {/* Right: action icons with working dropdowns */}
           <div className={styles.authActions} ref={popoverRef}>
-            {/* Admin Fast Button */}
-            {isAdmin && (
-              <Link
-                href="/admin"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  background: "#FFFBEB",
-                  border: "1px solid #F59E0B",
-                  color: "#92400E",
-                  padding: "0.35rem 0.85rem",
-                  borderRadius: "6px",
-                  fontSize: "0.8125rem",
-                  fontWeight: 800,
-                  textDecoration: "none",
-                  boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
-                }}
-              >
-                <ShieldAlert size={14} color="#D97706" />
-                <span>Admin Center</span>
-              </Link>
-            )}
-
             {/* Messages button */}
             <div className={styles.actionWrapper}>
               <button
