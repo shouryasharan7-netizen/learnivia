@@ -309,149 +309,155 @@ export default function HomeInteractiveClient({
       </aside>
 
       {/* ── 2. HERO SECTION ── */}
-      <section className={styles.heroSection}>
-        <div className={styles.container}>
-          <div className={styles.heroGrid}>
-            {/* Left Column: Clear, Non-Vague Hero */}
-            <motion.div 
-              className={styles.heroContent}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <div className={styles.charterPill}>
-                <ShieldCheck size={14} />
-                <span>Safeguarded Child Protection Standard</span>
-              </div>
+      <section style={{
+        background: "var(--navy, #0C1B33)",
+        color: "#fff",
+        padding: "6rem 2rem 5rem",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        {/* Subtle patterned background or floating avatars can go here */}
+        
+        {/* Floating Avatars (Mimicking Schoolhouse) */}
+        <div style={{ position: "absolute", top: "15%", left: "5%", width: 60, height: 60, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.8 }}>
+           {/* eslint-disable-next-line @next/next/no-img-element */}
+           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" alt="avatar" />
+        </div>
+        <div style={{ position: "absolute", top: "60%", left: "10%", width: 70, height: 70, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.9 }}>
+           {/* eslint-disable-next-line @next/next/no-img-element */}
+           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&backgroundColor=c0aede" alt="avatar" />
+        </div>
+        <div style={{ position: "absolute", top: "20%", right: "10%", width: 65, height: 65, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.85 }}>
+           {/* eslint-disable-next-line @next/next/no-img-element */}
+           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tutor1&backgroundColor=ffdfbf" alt="avatar" />
+        </div>
+        <div style={{ position: "absolute", top: "70%", right: "5%", width: 80, height: 80, borderRadius: "50%", background: "#E2E8F0", overflow: "hidden", border: "3px solid #0C1B33", opacity: 0.95 }}>
+           {/* eslint-disable-next-line @next/next/no-img-element */}
+           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Student2&backgroundColor=d1d4f9" alt="avatar" />
+        </div>
 
-              <h1 className={styles.heroHeadline}>
-                Free 1-on-1 tutoring for Kindergarten to Grade 10 students.
-              </h1>
+        <div style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "4rem",
+          alignItems: "center",
+          position: "relative",
+          zIndex: 2,
+        }}>
+          {/* Left Column: Huge Headline */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{ maxWidth: 500 }}
+          >
+            <h1 style={{
+              fontSize: "clamp(3.5rem, 6vw, 4.8rem)",
+              fontWeight: 800,
+              lineHeight: 1.05,
+              letterSpacing: "-0.03em",
+              margin: "0 0 1rem",
+              color: "#FFFFFF",
+              fontFamily: "var(--font-sans, system-ui, sans-serif)",
+            }}>
+              Free Online Tutoring.<br/>
+              <span style={{ opacity: 0.9, fontWeight: 500, fontSize: "clamp(2.5rem, 4vw, 3rem)" }}>Real Human Connection.</span>
+            </h1>
+          </motion.div>
 
-              <p className={styles.heroLead}>
-                Volunteer high school and college mentors help younger students build confidence and master Math, Science, and English over secure, supervised Zoom sessions. Completely free with zero fees and no subscriptions.
-              </p>
+          {/* Right Column: CTA Box */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
+               {/* Small avatar group */}
+               <div style={{ display: "flex" }}>
+                 {/* eslint-disable-next-line @next/next/no-img-element */}
+                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=A" alt="student" style={{ width: 40, height: 40, borderRadius: "50%", border: "2px solid #0C1B33", marginLeft: 0, background: "#fff" }} />
+                 {/* eslint-disable-next-line @next/next/no-img-element */}
+                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=B" alt="student" style={{ width: 40, height: 40, borderRadius: "50%", border: "2px solid #0C1B33", marginLeft: -15, background: "#f0fdfa" }} />
+                 {/* eslint-disable-next-line @next/next/no-img-element */}
+                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=C" alt="student" style={{ width: 40, height: 40, borderRadius: "50%", border: "2px solid #0C1B33", marginLeft: -15, background: "#fef3c7" }} />
+               </div>
+               <span style={{ fontWeight: 700, fontSize: "1.1rem" }}>Join our K-10 students</span>
+            </div>
 
-              <div className={styles.heroActions}>
-                <Link href="/find" className={styles.btnPrimary}>
-                  <span>Find a Tutor</span>
+            <p style={{
+              fontSize: "1.15rem",
+              lineHeight: 1.6,
+              color: "rgba(255,255,255,0.85)",
+              margin: "0 0 2rem",
+            }}>
+              Join our peer-led community for free 1-on-1 tutoring, homework help, and meaningful conversations with students across the globe.
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <Link href="/signin" style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                padding: "1rem",
+                background: "var(--primary, #0D9488)",
+                color: "#fff",
+                borderRadius: "9999px",
+                fontWeight: 700,
+                fontSize: "1.1rem",
+                textDecoration: "none",
+                transition: "background 150ms",
+              }} onMouseEnter={(e) => (e.currentTarget.style.background = "#0F766E")} onMouseLeave={(e) => (e.currentTarget.style.background = "#0D9488")}>
+                Start Learning!
+              </Link>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <Link href="/about" style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.875rem",
+                  border: "2px solid rgba(255,255,255,0.8)",
+                  color: "#fff",
+                  borderRadius: "9999px",
+                  fontWeight: 600,
+                  fontSize: "0.95rem",
+                  textDecoration: "none",
+                  transition: "all 150ms",
+                }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "#fff"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; }}>
+                  For Parents
                 </Link>
-                <Link href="/apply" className={styles.btnSecondary}>
-                  <GraduationCap size={17} />
-                  <span>Volunteer as a Tutor</span>
+                <Link href="/signin?role=tutor" style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.875rem",
+                  border: "2px solid rgba(255,255,255,0.8)",
+                  color: "#fff",
+                  borderRadius: "9999px",
+                  fontWeight: 600,
+                  fontSize: "0.95rem",
+                  textDecoration: "none",
+                  transition: "all 150ms",
+                }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "#fff"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; }}>
+                  For Educators
                 </Link>
-              </div>
-
-              {/* Institutional Standards Pillars */}
-              <div className={styles.trustPillars}>
-                <div className={styles.pillarItem}>
-                  <div className={styles.pillarIconWrap}>
-                    <CheckCircle2 size={16} />
-                  </div>
-                  <div>
-                    <h2 className={styles.pillarTitle}>100% Free Forever</h2>
-                    <p className={styles.pillarDesc}>Zero tuition, no payment methods, no hidden subscriptions.</p>
-                  </div>
-                </div>
-
-                <div className={styles.pillarItem}>
-                  <div className={styles.pillarIconWrap}>
-                    <ShieldCheck size={16} />
-                  </div>
-                  <div>
-                    <h2 className={styles.pillarTitle}>Vetted Scholar Mentors</h2>
-                    <p className={styles.pillarDesc}>Verified academic records and mandatory child safety training.</p>
-                  </div>
-                </div>
-
-                <div className={styles.pillarItem}>
-                  <div className={styles.pillarIconWrap}>
-                    <Lock size={16} />
-                  </div>
-                  <div>
-                    <h2 className={styles.pillarTitle}>Supervised Zoom Rooms</h2>
-                    <p className={styles.pillarDesc}>Private waiting-room protection with full parent observation rights.</p>
-                  </div>
-                </div>
-
-                <div className={styles.pillarItem}>
-                  <div className={styles.pillarIconWrap}>
-                    <Award size={16} />
-                  </div>
-                  <div>
-                    <h2 className={styles.pillarTitle}>Certified Service Hours</h2>
-                    <p className={styles.pillarDesc}>Official service transcripts with unique verification IDs for tutors.</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right Column: Live Academic Dispatch Card */}
-            <div className={styles.dispatchCard}>
-              <div className={styles.dispatchHeader}>
-                <div className={styles.dispatchTag}>
-                  <span className={styles.dispatchDot} />
-                  <span>Academic Dispatch</span>
-                </div>
-                <div className={styles.dispatchVolunteers}>
-                  Volunteer Peer Mentoring
-                </div>
-              </div>
-
-              <div className={styles.dispatchBody}>
-                {liveSession ? (
-                  <div className={styles.featuredWorkshop}>
-                    <span className={styles.subjectBadge}>{liveSession.subject}</span>
-                    <h3 className={styles.workshopTitle}>{liveSession.title}</h3>
-                    <p className={styles.workshopTutor}>
-                      Led by <strong>{liveSession.tutorName}</strong> ({liveSession.tutorSchool})
-                    </p>
-                    <div className={styles.workshopMeta}>
-                      <span className={styles.workshopMetaItem}>
-                        <Users size={14} />
-                        <span>{liveSession.openSeats} of {liveSession.maxCapacity} seats available</span>
-                      </span>
-                      <span className={styles.workshopMetaItem}>
-                        <Calendar size={14} />
-                        <span>Today</span>
-                      </span>
-                    </div>
-                    <Link href={`/sessions/${liveSession.id}`} className={styles.workshopBtn}>
-                      Reserve Free Seat
-                    </Link>
-                  </div>
-                ) : (
-                  <div className={styles.featuredWorkshop}>
-                    <span className={styles.subjectBadge}>1-on-1 Academic Mentorship</span>
-                    <h3 className={styles.workshopTitle}>Daily Open Peer Mentoring</h3>
-                    <p className={styles.workshopTutor}>
-                      Experienced high school and college tutors ready to help across Math, Science, and Essay Writing.
-                    </p>
-                    <Link href="/find" className={styles.workshopBtn}>
-                      Browse Available Tutors
-                    </Link>
-                  </div>
-                )}
-
-                {/* Grounded Platform Standards (No Fake Numbers) */}
-                <div className={styles.dispatchLedger}>
-                  <div>
-                    <div className={styles.ledgerNum}>100%</div>
-                    <div className={styles.ledgerLabel}>Free Forever</div>
-                  </div>
-                  <div>
-                    <div className={styles.ledgerNum}>K-10</div>
-                    <div className={styles.ledgerLabel}>Grades Supported</div>
-                  </div>
-                  <div>
-                    <div className={styles.ledgerNum}>Zoom</div>
-                    <div className={styles.ledgerLabel}>Supervised Rooms</div>
-                  </div>
-                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
+
+        {/* Media Query for mobile responsivenes */}
+        <style>{`
+          @media (max-width: 900px) {
+            section[style*="--navy"] > div:nth-of-type(5) {
+              grid-template-columns: 1fr !important;
+              gap: 2rem !important;
+            }
+          }
+        `}</style>
       </section>
 
       {/* ── 3. HOW IT WORKS FOR FAMILIES (GENUINE 3-STEP PROCESS) ── */}

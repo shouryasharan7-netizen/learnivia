@@ -214,7 +214,8 @@ export function TopBar({ user }: TopBarProps) {
         <div style={{ position: "relative" }} ref={notifRef}>
           <button
             aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setNotifOpen((v) => !v);
               setProfileOpen(false);
             }}
@@ -434,7 +435,8 @@ export function TopBar({ user }: TopBarProps) {
         {/* Avatar / Profile menu */}
         <div style={{ position: "relative" }} ref={menuRef}>
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setProfileOpen((v) => !v);
               setNotifOpen(false);
             }}
