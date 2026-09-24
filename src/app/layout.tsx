@@ -3,6 +3,7 @@ import { Poppins, Playfair_Display, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { AppShell } from "@/components/workspace/AppShell";
+import { Analytics } from "@vercel/analytics/react";
 
 const serif = Playfair_Display({
   subsets: ["latin"],
@@ -80,6 +81,7 @@ export default function RootLayout({
         <Providers>
           <AppShell>
             {children}
+            <Analytics />
           </AppShell>
         </Providers>
       </body>
