@@ -374,8 +374,6 @@ export default function HomeInteractiveClient({
             alignItems: "center",
             textAlign: "center",
             gap: "2.5rem",
-            position: "relative",
-            zIndex: 2,
           }}
         >
           {/* Centered Headline */}
