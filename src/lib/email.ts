@@ -108,11 +108,19 @@ export async function sendApplicationReceived(tutorEmail: string, tutorName: str
       to: tutorEmail,
       subject: "Volunteer Application Received - Learnivia",
       html: `
-        <h2>Application Received!</h2>
-        <p>Hi ${tutorName},</p>
-        <p>Thank you for applying to be a volunteer tutor on Learnivia. We have received your application.</p>
-        <p>Our team will review your details and get back to you within 3-5 working days.</p>
-        <p>Best,<br>The Learnivia Team</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 540px; margin: 0 auto; padding: 32px 24px; color: #1E293B; background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0;">
+          <div style="margin-bottom: 24px;">
+            <span style="font-size: 20px; font-weight: 800; color: #0E8345; letter-spacing: -0.02em;">Learnivia</span>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Application Received!</h2>
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 16px;">Hi ${tutorName},</p>
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 16px;">Thank you for applying to be a volunteer tutor on Learnivia. We have successfully received your application.</p>
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 24px;">Our Academic Board will carefully review your details and get back to you within 3-5 working days.</p>
+          <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 28px 0 16px;" />
+          <p style="font-size: 12px; color: #94A3B8; margin: 0;">
+            The Learnivia Team<br/>Free K-10 Peer Tutoring Platform
+          </p>
+        </div>
       `,
     });
   } catch (error) {
@@ -331,12 +339,27 @@ export async function sendBookingCancellation(
       to: recipientEmail,
       subject: `Session Canceled: ${details.subject} with ${details.otherPartyName}`,
       html: `
-        <h2>Tutoring Session Canceled</h2>
-        <p>Hi ${details.recipientName},</p>
-        <p>The session for <strong>${details.subject}</strong> scheduled with <strong>${details.otherPartyName}</strong> on <strong>${date}</strong> has been canceled.</p>
-        ${details.reason ? `<p><strong>Reason:</strong> ${details.reason}</p>` : ""}
-        <p>You can visit your dashboard to view your schedule or book another session.</p>
-        <p><a href="https://learnivia-green.vercel.app/dashboard">Go to Dashboard</a></p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 540px; margin: 0 auto; padding: 32px 24px; color: #1E293B; background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0;">
+          <div style="margin-bottom: 24px;">
+            <span style="font-size: 20px; font-weight: 800; color: #0E8345; letter-spacing: -0.02em;">Learnivia</span>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; color: #991B1B; margin: 0 0 16px;">Tutoring Session Canceled</h2>
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 16px;">Hi ${details.recipientName},</p>
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 16px;">
+            The session for <strong>${details.subject}</strong> scheduled with <strong>${details.otherPartyName}</strong> on <strong>${date}</strong> has been canceled.
+          </p>
+          ${details.reason ? `<div style="background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 16px; margin: 20px 0;"><p style="font-size: 14px; color: #991B1B; margin: 0;"><strong>Reason:</strong> ${details.reason}</p></div>` : ""}
+          <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 24px 0;">You can visit your dashboard to view your updated schedule or book another session.</p>
+          <div style="margin: 28px 0;">
+            <a href="https://learnivia-green.vercel.app/dashboard" style="background-color: #0E8345; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 12px 24px; border-radius: 8px; display: inline-block;">
+              Go to Dashboard →
+            </a>
+          </div>
+          <hr style="border: none; border-top: 1px solid #E2E8F0; margin: 28px 0 16px;" />
+          <p style="font-size: 12px; color: #94A3B8; margin: 0;">
+            Learnivia: Free K-10 Peer Tutoring Platform
+          </p>
+        </div>
       `,
     });
   } catch (error) {
