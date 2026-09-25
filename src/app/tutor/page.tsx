@@ -175,8 +175,8 @@ export default async function TutorDashboard() {
             <div
               style={{
                 margin: "1.5rem 0",
-                background: passedModules === 5 ? "var(--wa-green-light)" : "#FFFBEB",
-                border: `1px solid ${passedModules === 5 ? "var(--wa-border)" : "#FDE68A"}`,
+                background: passedModules === 3 ? "var(--wa-green-light)" : "#FFFBEB",
+                border: `1px solid ${passedModules === 3 ? "var(--wa-border)" : "#FDE68A"}`,
                 padding: "1.25rem",
                 borderRadius: "var(--wa-radius-md)",
                 textAlign: "left",
@@ -269,7 +269,7 @@ export default async function TutorDashboard() {
               {isIncompleteTraining ? (
                 <Link href={ROUTES.tutor.training} className={styles.primaryBtn} style={{ display: "inline-flex" }}>
                   <GraduationCap size={15} />
-                  <span>Complete Mandatory Training ({passedModules}/5)</span>
+                  <span>Complete Mandatory Training ({passedModules}/3)</span>
                 </Link>
               ) : (
                 <form action={addAvailability} style={{ display: "flex", flexDirection: "column", gap: "0.75rem", width: "100%", maxWidth: "420px", margin: "0 auto", textAlign: "left", background: "#FFFFFF", padding: "1.25rem", borderRadius: "10px", border: "1px solid #E2E8F0" }}>
@@ -372,14 +372,14 @@ export default async function TutorDashboard() {
     <main className={styles.page}>
       <div className={styles.container}>
         {/* Safeguarding & Training Progress Notification */}
-        {passedModules < 5 && (
+        {passedModules < 3 && (
           <div className={styles.trainingBanner}>
             <div className={styles.trainingBannerLeft}>
               <div className={styles.trainingBannerIcon}>
                 <ShieldCheck size={18} aria-hidden="true" />
               </div>
               <div className={styles.trainingBannerText}>
-                <strong>Training in progress ({passedModules}/5 completed):</strong> Complete all 5 safeguarding modules to verify your tutor credential and maintain session compliance.
+                <strong>Training in progress ({passedModules}/3 completed):</strong> Complete all 3 safeguarding modules to verify your tutor credential and maintain session compliance.
               </div>
             </div>
             <Link href={ROUTES.tutor.training} className={styles.trainingBannerAction}>

@@ -5,6 +5,8 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { Calendar, Clock, Users, ArrowLeft, CheckCircle2 } from "lucide-react";
 import WorkshopActionClient from "./WorkshopActionClient";
+import WorkshopClientDates from "./WorkshopClientDates";
+import WorkshopSidebarDates from "./WorkshopSidebarDates";
 
 export const dynamic = "force-dynamic";
 
@@ -58,8 +60,8 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
     .substring(0, 2)
     .toUpperCase();
 
-  const dateString = startDate.toLocaleDateString("en-US", { weekday: 'short', month: 'short', day: 'numeric' });
-  const timeString = startDate.toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit' });
+  const startTimeStr = workshop.startTime.toISOString();
+  const endTimeStr = workshop.endTime.toISOString();
 
   return (
     <div className={styles.mainWrapper}>
@@ -117,36 +119,12 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
               </div>
             </section>
 
-            <section className={styles.section}>
-              <div className={styles.sessionsHeader}>
-                <h2 className={styles.sectionTitle}>Sessions</h2>
-                <div className={styles.sessionTabs}>
-                  <span className={styles.activeTab}>Upcoming</span>
-                  <span className={styles.inactiveTab}>All</span>
-                </div>
-              </div>
-
-              <div className={styles.attendancePolicy}>
-                <span className={styles.handEmoji}>✋</span> 
-                <strong>ATTENDANCE POLICY</strong>
-                <p>Free to attend or skip any sessions</p>
-              </div>
-
-              <div className={styles.sessionBox}>
-                <div className={styles.sessionBoxLeft}>
-                  <span className={styles.sessionLabel}>SESSION 1</span>
-                  <span className={styles.sessionDateNum}>{startDate.getDate()}</span>
-                  <span className={styles.sessionMonth}>{startDate.toLocaleDateString("en-US", { month: "short" }).toUpperCase()}</span>
-                </div>
-                <div className={styles.sessionBoxRight}>
-                  <h4 className={styles.sessionTitle}>{workshop.title}</h4>
-                  <p className={styles.sessionTime}>
-                    {startDate.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()} {timeString}
-                  </p>
-                  <p className={styles.sessionDesc}>{workshop.description.length > 100 ? workshop.description.substring(0, 100) + "..." : workshop.description}</p>
-                </div>
-              </div>
-            </section>
+            <WorkshopClientDates 
+              startTime={startTimeStr}
+              endTime={endTimeStr}
+              title={workshop.title}
+              description={workshop.description}
+            />
 
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Public Discussion</h2>
@@ -163,22 +141,7 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
           {/* Right Sidebar */}
           <div className={styles.sidebar}>
             <div className={styles.stickyCard}>
-              <div className={styles.cardHeader}>
-                <h3>{startDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</h3>
-                <div className={styles.cardMeta}>
-                  <span><Calendar size={12} /> 1 week</span>
-                  <span><Clock size={12} /> 60 mins / session</span>
-                </div>
-                <p className={styles.nextSession}>Next session on {startDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
-              </div>
-              
-              <div className={styles.scheduleBox}>
-                <span className={styles.scheduleLabel}>SCHEDULE</span>
-                <div className={styles.scheduleTime}>
-                  <span>{dateString}</span>
-                  <span>{timeString}</span>
-                </div>
-              </div>
+              <WorkshopSidebarDates startTime={startTimeStr} endTime={endTimeStr} />
 
               <div className={styles.actionBox}>
                 <WorkshopActionClient 
