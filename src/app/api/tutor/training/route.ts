@@ -75,7 +75,22 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ success: true, training });
+    // Check total completed modules
+    const completedCount = await prisma.tutorTraining.count({
+      where: {
+        tutorId: tutorProfile.id,
+        quizPassed: true,
+      },
+    });
+
+    if (completedCount >= 5 && tutorProfile.status === "PENDING") {
+      await prisma.tutorProfile.update({
+        where: { id: tutorProfile.id },
+        data: { status: "APPROVED" },
+      });
+    }
+
+    return NextResponse.json({ success: true, training, isApproved: completedCount >= 5 });
   } catch (error: any) {
     console.error("POST /api/tutor/training error:", error);
     return NextResponse.json({ error: error.message || "Failed to save training progress" }, { status: 500 });

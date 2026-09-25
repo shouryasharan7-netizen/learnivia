@@ -144,6 +144,19 @@ export default async function TutorDashboard() {
 
   const passedModules = (tutor.trainingModules || []).filter((m: any) => m.quizPassed).length;
 
+  if (tutor.status === "PENDING" && passedModules >= 5) {
+    // Auto-approve if they have completed all training modules
+    tutor = await prisma.tutorProfile.update({
+      where: { id: tutor.id },
+      data: { status: "APPROVED" },
+      include: {
+        availabilities: true,
+        subjects: true,
+        trainingModules: true,
+      },
+    });
+  }
+
   if (tutor.status === "PENDING") {
     return (
       <main className={styles.page}>
