@@ -318,40 +318,43 @@ export default function HomeInteractiveClient({
           overflow: "hidden",
         }}
       >
-        {/* Floating Mascot Images in Background */}
+        {/* Floating Mascot Avatars in Background */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, overflow: "hidden", zIndex: 1, pointerEvents: "none" }}>
-          <motion.img 
-            src="/images/find-a-tutor.png" 
-            alt="Mascot" 
-            width="140" 
-            style={{ position: "absolute", top: "10%", left: "5%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.6 }}
-            animate={{ y: [0, -15, 0], rotate: [-2, 2, -2] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.img 
-            src="/images/book-a-session.png" 
-            alt="Mascot" 
-            width="120" 
-            style={{ position: "absolute", bottom: "15%", left: "10%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.5 }}
-            animate={{ y: [0, -12, 0], rotate: [1, -3, 1] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          />
-          <motion.img 
-            src="/images/volunteer-hours.png" 
-            alt="Mascot" 
-            width="130" 
-            style={{ position: "absolute", top: "20%", right: "8%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.7 }}
-            animate={{ y: [0, -20, 0], rotate: [2, -2, 2] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-          <motion.img 
-            src="/images/become-a-tutor.png" 
-            alt="Mascot" 
-            width="160" 
-            style={{ position: "absolute", bottom: "10%", right: "5%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.8 }}
-            animate={{ y: [0, -18, 0], rotate: [-1, 3, -1] }}
-            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          />
+          {[
+            { src: "/images/new_mascots/mascot-1.jpeg", top: "15%", left: "8%", delay: 0 },
+            { src: "/images/new_mascots/mascot-2.jpeg", top: "45%", left: "4%", delay: 1.5 },
+            { src: "/images/new_mascots/mascot-3.jpeg", bottom: "15%", left: "12%", delay: 0.8 },
+            { src: "/images/new_mascots/mascot-4.jpeg", top: "12%", right: "10%", delay: 2.2 },
+            { src: "/images/new_mascots/mascot-5.jpeg", top: "50%", right: "5%", delay: 0.5 },
+            { src: "/images/new_mascots/mascot-6.jpeg", bottom: "20%", right: "15%", delay: 1.2 },
+            { src: "/images/new_mascots/mascot-7.jpeg", top: "70%", left: "18%", delay: 2.8 },
+            { src: "/images/new_mascots/mascot-8.jpeg", top: "25%", left: "20%", delay: 0.3 },
+            { src: "/images/new_mascots/mascot-9.jpeg", top: "80%", right: "25%", delay: 1.8 },
+            { src: "/images/new_mascots/mascot-10.jpeg", top: "30%", right: "22%", delay: 0.9 },
+            { src: "/images/new_mascots/mascot-11.jpeg", top: "60%", left: "25%", delay: 1.1 },
+            { src: "/images/new_mascots/mascot-12.jpeg", top: "40%", right: "28%", delay: 2.5 },
+          ].map((avatar, idx) => (
+            <motion.img 
+              key={idx}
+              src={avatar.src} 
+              alt="Mascot Avatar" 
+              style={{ 
+                position: "absolute", 
+                top: avatar.top, 
+                left: avatar.left, 
+                right: avatar.right, 
+                bottom: avatar.bottom, 
+                width: "75px", 
+                height: "75px", 
+                borderRadius: "50%", 
+                objectFit: "cover", 
+                border: "3px solid rgba(255,255,255,0.15)",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.3)" 
+              }}
+              animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }}
+              transition={{ duration: 6 + (idx % 3), repeat: Infinity, ease: "easeInOut", delay: avatar.delay }}
+            />
+          ))}
         </div>
 
         <div

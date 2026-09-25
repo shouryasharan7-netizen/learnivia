@@ -21,7 +21,7 @@ const csp = [
   // Connections: own origin + NextAuth OAuth + Zoom API + Resend + Supabase + Vercel analytics
   "connect-src 'self' https://accounts.google.com https://api.zoom.us https://*.supabase.co https://vitals.vercel-insights.com https://va.vercel-scripts.com",
   // Frames: DENY embedding of our site + allow Zoom web client only
-  "frame-src https://zoom.us https://*.zoom.us",
+  "frame-src https://zoom.us https://*.zoom.us https://www.youtube.com https://www.youtube-nocookie.com",
   // Our pages cannot be embedded (anti-clickjacking backup to X-Frame-Options)
   "frame-ancestors 'none'",
   // Form submissions only to self
