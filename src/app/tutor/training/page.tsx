@@ -91,7 +91,7 @@ const MODULES = [
     video: {
       title: "Module 3 Video: Mentorship Mindset & Guided Learning",
       duration: "3:45",
-      embedUrl: "https://www.youtube.com/embed/mvDsLU_REfk", // How to Keep Students Engaged in Online Classes
+      embedUrl: "https://www.youtube.com/embed/RO09MR1Fpgk", // Full-length video: How to Keep Students Engaged in Online Classes
       summary: "Learn why guiding beats lecturing, how to ask discovery questions, and techniques for sincere praise.",
       keyPoints: ["Guide through questions, don't lecture", "Praise effort, not just intelligence", "Normalize mistakes as discoveries"],
     },
