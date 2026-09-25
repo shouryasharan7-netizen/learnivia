@@ -44,7 +44,7 @@ export function SidebarNav({
   const studentItems = [
     { href: ROUTES.learner.home, icon: Home, label: "Home" },
     { href: ROUTES.find, icon: Search, label: "Find a Tutor" },
-    { href: ROUTES.learn || "/learn", icon: GraduationCap, label: "Programs" },
+    { href: ROUTES.learn || "/learn", icon: GraduationCap, label: "Group Workshops" },
     { href: ROUTES.homeworkHelp || "/homework-help", icon: HelpCircle, label: "Homework Help" },
     { href: ROUTES.community || "/community", icon: Users, label: "Community" },
     { href: ROUTES.sessions || "/sessions", icon: BookOpen, label: "My Sessions" },

@@ -16,6 +16,19 @@
   margin: 0 auto 2.5rem;
 }
 
+.pageLayout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .pageLayout {
+    flex-direction: row;
+  }
+}
+
 .kicker {
   display: inline-flex;
   align-items: center;

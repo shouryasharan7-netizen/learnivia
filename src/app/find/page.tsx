@@ -233,7 +233,7 @@ export default async function FindTutorPage({ searchParams }: Props) {
         </p>
       </div>
 
-      <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", flexDirection: "column", '@media (min-width: 768px)': { flexDirection: "row" } } as any}>
+      <div className={styles.pageLayout}>
         {/* ── Left Sidebar Filters ── */}
         <FindFiltersClient />
 

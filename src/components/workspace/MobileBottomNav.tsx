@@ -14,7 +14,7 @@ export function MobileBottomNav() {
     { href: ROUTES.find, label: "Find", icon: Compass },
     { href: ROUTES.sessions, label: "Sessions", icon: CalendarCheck },
     { href: ROUTES.homeworkHelp, label: "Help", icon: HelpCircle },
-    { href: ROUTES.safety, label: "Safety", icon: User },
+    { href: ROUTES.learn || "/learn", label: "Workshops", icon: User },
   ];
 
   return (
