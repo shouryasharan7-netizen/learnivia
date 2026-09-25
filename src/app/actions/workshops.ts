@@ -111,6 +111,7 @@ export async function createWorkshop(formData: FormData) {
   revalidatePath("/dashboard");
   revalidatePath("/tutor");
   revalidatePath("/learn");
+  revalidatePath("/find");
   revalidatePath("/");
 }
 

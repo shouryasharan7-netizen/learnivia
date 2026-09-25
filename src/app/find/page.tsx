@@ -22,9 +22,6 @@ import { enrollInWorkshop } from "@/app/actions/workshops";
 
 export const dynamic = "force-dynamic";
 
-// Fast in-memory cache for tutor search to eliminate multi-second DB roundtrips
-const findTutorsMemoryCache = new Map<string, { tutors: any[]; workshops: any[]; timestamp: number }>();
-
 type Props = {
   searchParams: Promise<{
     q?: string;
@@ -134,9 +131,6 @@ export default async function FindTutorPage({ searchParams }: Props) {
     whereClause.AND = conditions;
   }
 
-  const cacheKey = `${subject || ""}:${activeCurriculum}:${activeGrade}:${studentAge || ""}:${q || ""}`;
-  const cached = findTutorsMemoryCache.get(cacheKey);
-
   let tutors: any[] = [];
   let workshops: any[] = [];
 
@@ -156,15 +150,11 @@ export default async function FindTutorPage({ searchParams }: Props) {
     workshopWhere.grade = { contains: activeGrade.replace(/[^a-zA-Z0-9\s]/g, "").trim(), mode: "insensitive" };
   }
 
-  if (cached && Date.now() - cached.timestamp < 60_000) {
-    tutors = cached.tutors;
-    workshops = cached.workshops;
-  } else {
-    try {
-      const results = await Promise.all([
-        prisma.tutorProfile.findMany({
-          where: whereClause,
-          select: {
+  try {
+    const results = await Promise.all([
+      prisma.tutorProfile.findMany({
+        where: whereClause,
+        select: {
           id: true,
           bio: true,
           school: true,
@@ -213,23 +203,20 @@ export default async function FindTutorPage({ searchParams }: Props) {
       })
     ]);
 
-      // Prioritize tutors who have the most completed classes/sessions
-      tutors = results[0];
-      tutors.sort((a, b) => {
-        const aCompleted = (a._count?.tutorBookings || 0) + (a._count?.workshops || 0);
-        const bCompleted = (b._count?.tutorBookings || 0) + (b._count?.workshops || 0);
-        if (bCompleted !== aCompleted) {
-          return bCompleted - aCompleted;
-        }
-        return (b.volunteerHours || 0) - (a.volunteerHours || 0);
-      });
+    // Prioritize tutors who have the most completed classes/sessions
+    tutors = results[0];
+    tutors.sort((a, b) => {
+      const aCompleted = (a._count?.tutorBookings || 0) + (a._count?.workshops || 0);
+      const bCompleted = (b._count?.tutorBookings || 0) + (b._count?.workshops || 0);
+      if (bCompleted !== aCompleted) {
+        return bCompleted - aCompleted;
+      }
+      return (b.volunteerHours || 0) - (a.volunteerHours || 0);
+    });
 
-      workshops = results[1];
-
-      findTutorsMemoryCache.set(cacheKey, { tutors, workshops, timestamp: Date.now() });
-    } catch (err) {
-      console.warn("Find page tutor lookup fallback triggered:", (err as Error)?.message);
-    }
+    workshops = results[1];
+  } catch (err) {
+    console.warn("Find page tutor lookup fallback triggered:", (err as Error)?.message);
   }
 
   const isAutoMatched = Boolean(dbUser && (activeGrade || activeCurriculum) && !isAllGradesExplicit);
