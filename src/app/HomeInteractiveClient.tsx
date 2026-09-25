@@ -365,6 +365,8 @@ export default function HomeInteractiveClient({
 
         <div
           style={{
+            position: "relative",
+            zIndex: 10,
             maxWidth: 900,
             margin: "0 auto",
             display: "flex",
