@@ -1,0 +1,685 @@
+.mainWrapper {
+  min-height: 100vh;
+  background-color: var(--wa-gray-50, #f8fafc);
+  padding: 1rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: transparent;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  color: #64748b;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #059669;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.backBtn:hover {
+  text-decoration: underline;
+}
+
+.crumbDivider {
+  color: #94a3b8;
+}
+
+.crumbSubject {
+  font-weight: 600;
+  color: #475569;
+}
+
+.crumbTitle {
+  color: var(--wa-ink);
+  font-weight: 700;
+}
+
+/* Header */
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--wa-ink);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.metaInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.dot {
+  color: #cbd5e1;
+}
+
+.tutorAvatarSmall {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #6366f1; /* Purple/Indigo color like screenshot */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.spotsLeft {
+  color: #ea580c;
+}
+
+.divider {
+  height: 1px;
+  background-color: #cbd5e1;
+  margin-bottom: 2rem;
+}
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Main Column */
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--wa-ink);
+  margin: 0;
+}
+
+/* Tutor Card */
+.tutorCard {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: white;
+}
+
+.tutorCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tutorAvatarLarge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #7c2d12; /* Dark red/brown like the screenshot */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.tutorDetails {
+  flex: 1;
+}
+
+.tutorName {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem 0;
+  color: var(--wa-ink);
+}
+
+.tutorBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.tutorBadge svg {
+  color: #3b82f6; /* Blue verified check */
+}
+
+.viewProfileBtn {
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: #059669;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.viewProfileBtn:hover {
+  background: #f8fafc;
+}
+
+.bioBubble {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  font-size: 0.95rem;
+  color: var(--wa-ink);
+  line-height: 1.5;
+}
+
+/* Little triangle for the speech bubble */
+.bioBubble::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 24px;
+  width: 14px;
+  height: 14px;
+  background: #f8fafc;
+  border-left: 1px solid #e2e8f0;
+  border-top: 1px solid #e2e8f0;
+  transform: rotate(45deg);
+}
+
+/* Sessions list */
+.sessionsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.sessionTabs {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.activeTab {
+  font-weight: 700;
+  color: #059669;
+  position: relative;
+}
+
+.activeTab::after {
+  content: "";
+  position: absolute;
+  bottom: -9px; /* Align with the border */
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #059669;
+}
+
+.inactiveTab {
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.attendancePolicy {
+  background: #e2e8f0; /* Light grayish blue */
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1rem;
+  color: var(--wa-ink);
+}
+
+.attendancePolicy strong {
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-left: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.attendancePolicy p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.95rem;
+  margin-left: 1.75rem; /* Indent under the strong text */
+}
+
+.sessionBox {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  background: white;
+  overflow: hidden;
+}
+
+.sessionBoxLeft {
+  background: #f8fafc;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #cbd5e1;
+  min-width: 100px;
+}
+
+.sessionLabel {
+  background: #e0e7ff;
+  color: #4f46e5;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.sessionDateNum {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--wa-ink);
+  line-height: 1;
+}
+
+.sessionMonth {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.05em;
+}
+
+.sessionBoxRight {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.sessionTitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  color: var(--wa-ink);
+}
+
+.sessionTime {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.sessionDesc {
+  font-size: 0.9rem;
+  color: var(--wa-ink);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Discussion */
+.discussionBox {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  padding: 1rem;
+}
+
+.discussionInput {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 1rem;
+  min-height: 80px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: none;
+  outline: none;
+}
+
+.discussionInput:focus {
+  border-color: #cbd5e1;
+}
+
+.discussionAction {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.commentBtn {
+  background: #e2e8f0;
+  color: #94a3b8;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: not-allowed;
+}
+
+/* Sidebar */
+.sidebar {
+  position: relative;
+}
+
+.stickyCard {
+  position: sticky;
+  top: 2rem;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cardHeader {
+  padding: 1.5rem;
+}
+
+.cardHeader h3 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0 0 0.5rem 0;
+  color: var(--wa-ink);
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.cardMeta span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nextSession {
+  font-size: 0.85rem;
+  color: #3b82f6;
+  font-weight: 600;
+  margin: 0;
+}
+
+.scheduleBox {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.scheduleLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.scheduleTime {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid #cbd5e1;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.actionBox {
+  padding: 1.5rem;
+}
+
+/* Buttons inside the action box */
+.registerBtn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #059669;
+  color: white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+.registerBtn:hover {
+  background: #047857;
+}
+
+.registeredState {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #ecfdf5;
+  color: #059669;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.disabledBtn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #94a3b8;
+  font-weight: 800;
+  font-size: 1.1rem;
+  border: 1px solid #e2e8f0;
+  cursor: not-allowed;
+}
+
+/* ── Modal Styles ── */
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.modalCloseBtn:hover {
+  color: var(--wa-ink);
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  color: var(--wa-ink);
+}
+
+.modalTutorBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modalAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #7c2d12;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.modalTutorName {
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--wa-ink);
+}
+
+.tutorLabel {
+  background: #dbeafe;
+  color: #2563eb;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.modalQuestionBox {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--wa-ink);
+}
+
+.policyBox {
+  background: #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.policyHeader {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  color: var(--wa-ink);
+}
+
+.policyText {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--wa-ink);
+}
+
+.modalLabel {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--wa-ink);
+}
+
+.required {
+  color: #ef4444;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+}
+
+.modalInput:focus {
+  border-color: #059669;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modalSubmitBtn {
+  background: #059669;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modalSubmitBtn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+}

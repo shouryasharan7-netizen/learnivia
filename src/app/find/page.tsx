@@ -114,27 +114,9 @@ export default async function FindSessionsPage({ searchParams }: Props) {
 
                     {/* Action Area */}
                     <div className={styles.cardAction}>
-                      {!session?.user ? (
-                        <Link href="/signin?callbackUrl=/find" className={styles.actionBtn}>
-                          Sign In to Register
-                        </Link>
-                      ) : isEnrolled ? (
-                        <div className={styles.enrolledState}>
-                          <CheckCircle2 size={16} style={{ marginRight: '4px' }} />
-                          Registered
-                        </div>
-                      ) : seatsLeft > 0 ? (
-                        <form action={enrollInWorkshop} style={{ width: '100%' }}>
-                          <input type="hidden" name="workshopId" value={w.id} />
-                          <button type="submit" className={styles.actionBtn}>
-                            Register Free Seat
-                          </button>
-                        </form>
-                      ) : (
-                        <button disabled className={styles.disabledBtn}>
-                          Workshop Full
-                        </button>
-                      )}
+                      <Link href={`/workshop/${w.id}`} className={styles.actionBtn}>
+                        {isEnrolled ? "View Registered Session" : "View Details & Register"}
+                      </Link>
                     </div>
                   </div>
                   

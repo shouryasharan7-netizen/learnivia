@@ -160,6 +160,8 @@ export async function enrollInWorkshop(formData: FormData) {
   revalidatePath("/dashboard");
   revalidatePath("/tutor");
   revalidatePath("/learn");
+  revalidatePath("/find");
+  revalidatePath("/", "layout");
 }
 
 export async function cancelWorkshopEnrollment(formData: FormData) {
