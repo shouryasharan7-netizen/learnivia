@@ -318,7 +318,10 @@ export default function HomeInteractiveClient({
           overflow: "hidden",
         }}
       >
-        {/* Subtle patterned background or floating avatars can go here */}
+        {/* Mascot Image */}
+        <div style={{ position: "absolute", bottom: -20, right: "5%", opacity: 0.8, zIndex: 1, pointerEvents: "none" }}>
+          <img src="/images/become-a-tutor.png" alt="Learnivia Mascot" width="220" style={{ filter: "drop-shadow(0 10px 25px rgba(0,0,0,0.3))" }} />
+        </div>
 
         <div
           style={{

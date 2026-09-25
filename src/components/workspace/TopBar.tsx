@@ -88,6 +88,7 @@ export function TopBar({ user }: TopBarProps) {
   const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [notifications, setNotifications] = useState(SAMPLE_NOTIFICATIONS);
+  const [notificationsLoaded, setNotificationsLoaded] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
@@ -100,8 +101,19 @@ export function TopBar({ user }: TopBarProps) {
       setTheme("light");
       document.documentElement.setAttribute("data-theme", "light");
     }
+    }
     const dismissed = sessionStorage.getItem("announcement-dismissed");
     if (dismissed) setAnnouncementDismissed(true);
+
+    const savedNotifs = localStorage.getItem("learnivia-notifications");
+    if (savedNotifs) {
+      try {
+        setNotifications(JSON.parse(savedNotifs));
+      } catch (e) {
+        console.error("Error parsing notifications", e);
+      }
+    }
+    setNotificationsLoaded(true);
   }, []);
 
   // Close dropdowns on outside click
@@ -133,7 +145,9 @@ export function TopBar({ user }: TopBarProps) {
   const unreadCount = notifications.filter((n) => n.unread).length;
 
   const markAllRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
+    const updated = notifications.map((n) => ({ ...n, unread: false }));
+    setNotifications(updated);
+    localStorage.setItem("learnivia-notifications", JSON.stringify(updated));
   };
 
   const initials = (user.name || "U")
@@ -350,9 +364,11 @@ export function TopBar({ user }: TopBarProps) {
                         (e.currentTarget as HTMLElement).style.background = n.unread ? "var(--primary-subtle, #F0FDFA)" : "transparent";
                       }}
                       onClick={() => {
-                        setNotifications((prev) =>
-                          prev.map((item) => item.id === n.id ? { ...item, unread: false } : item)
-                        );
+                        setNotifications((prev) => {
+                          const updated = prev.map((item) => item.id === n.id ? { ...item, unread: false } : item);
+                          localStorage.setItem("learnivia-notifications", JSON.stringify(updated));
+                          return updated;
+                        });
                       }}
                     >
                       {/* Icon */}
