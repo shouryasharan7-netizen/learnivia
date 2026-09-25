@@ -14,14 +14,16 @@ import {
   ShieldCheck,
   CheckCircle2,
   Users,
+  Calendar,
 } from "lucide-react";
 import FindFiltersClient from "./FindFiltersClient";
+import { enrollInWorkshop } from "@/app/actions/workshops";
 
 
 export const dynamic = "force-dynamic";
 
 // Fast in-memory cache for tutor search to eliminate multi-second DB roundtrips
-const findTutorsMemoryCache = new Map<string, { tutors: any[]; timestamp: number }>();
+const findTutorsMemoryCache = new Map<string, { tutors: any[]; workshops: any[]; timestamp: number }>();
 
 type Props = {
   searchParams: Promise<{
@@ -136,14 +138,33 @@ export default async function FindTutorPage({ searchParams }: Props) {
   const cached = findTutorsMemoryCache.get(cacheKey);
 
   let tutors: any[] = [];
+  let workshops: any[] = [];
+
+  // Build Workshop Query
+  const workshopWhere: any = {
+    status: "UPCOMING",
+    startTime: { gte: new Date() },
+  };
+  
+  if (q && q.trim()) {
+    workshopWhere.title = { contains: q.trim(), mode: "insensitive" };
+  }
+  if (subject && subject.trim() && subject !== "All") {
+    workshopWhere.subject = { contains: subject.trim(), mode: "insensitive" };
+  }
+  if (activeGrade && activeGrade.trim()) {
+    workshopWhere.grade = { contains: activeGrade.replace(/[^a-zA-Z0-9\s]/g, "").trim(), mode: "insensitive" };
+  }
 
   if (cached && Date.now() - cached.timestamp < 60_000) {
     tutors = cached.tutors;
+    workshops = cached.workshops;
   } else {
     try {
-      tutors = await prisma.tutorProfile.findMany({
-        where: whereClause,
-        select: {
+      const results = await Promise.all([
+        prisma.tutorProfile.findMany({
+          where: whereClause,
+          select: {
           id: true,
           bio: true,
           school: true,
@@ -180,9 +201,20 @@ export default async function FindTutorPage({ searchParams }: Props) {
         },
         orderBy: { volunteerHours: "desc" },
         take: 36,
-      });
+      }),
+      prisma.workshop.findMany({
+        where: workshopWhere,
+        include: {
+          tutor: { include: { user: true } },
+          enrollments: true,
+        },
+        orderBy: { startTime: "asc" },
+        take: 12,
+      })
+    ]);
 
       // Prioritize tutors who have the most completed classes/sessions
+      tutors = results[0];
       tutors.sort((a, b) => {
         const aCompleted = (a._count?.tutorBookings || 0) + (a._count?.workshops || 0);
         const bCompleted = (b._count?.tutorBookings || 0) + (b._count?.workshops || 0);
@@ -192,7 +224,9 @@ export default async function FindTutorPage({ searchParams }: Props) {
         return (b.volunteerHours || 0) - (a.volunteerHours || 0);
       });
 
-      findTutorsMemoryCache.set(cacheKey, { tutors, timestamp: Date.now() });
+      workshops = results[1];
+
+      findTutorsMemoryCache.set(cacheKey, { tutors, workshops, timestamp: Date.now() });
     } catch (err) {
       console.warn("Find page tutor lookup fallback triggered:", (err as Error)?.message);
     }
@@ -225,11 +259,10 @@ export default async function FindTutorPage({ searchParams }: Props) {
             fontFamily: "var(--font-sans, system-ui, sans-serif)",
           }}
         >
-          Find a Peer Tutor
+          Find a Peer Tutor &amp; Sessions
         </h1>
         <p style={{ fontSize: "0.95rem", color: "var(--text-secondary, #475569)", margin: 0, maxWidth: 600 }}>
-          Connect with verified volunteer tutors for K-10 students. 
-          Use the filters to find your perfect match.
+          Connect with verified volunteer tutors for 1-on-1 sessions, or join upcoming live group workshops matching your criteria.
         </p>
       </div>
 
@@ -270,7 +303,79 @@ export default async function FindTutorPage({ searchParams }: Props) {
             </div>
           )}
 
+          {/* ── Upcoming Group Sessions ── */}
+          {workshops.length > 0 && (
+            <div style={{ marginBottom: "3rem" }}>
+              <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "1rem" }}>
+                Live Group Sessions Matching Your Search
+              </h2>
+              <div className={styles.tutorGrid} style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+                {workshops.map((w) => {
+                  const seatsLeft = w.maxCapacity - w.enrollments.length;
+                  const isEnrolled = session?.user?.id
+                    ? w.enrollments.some((e: any) => e.studentId === session.user.id)
+                    : false;
+
+                  return (
+                    <div key={w.id} className={styles.tutorCard} style={{ display: "flex", flexDirection: "column" }}>
+                      <div className={styles.cardHeader} style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
+                        <div>
+                          <h3 className={styles.tutorName} style={{ fontSize: "1.1rem" }}>{w.title}</h3>
+                          <p className={styles.tutorBio} style={{ margin: "0.25rem 0 0" }}>
+                            Hosted by <strong>{w.tutor.user.name}</strong>
+                          </p>
+                        </div>
+                      </div>
+                      <div className={styles.cardBody} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                        <div style={{ marginBottom: "1rem", display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                          <span className={styles.tag}>{w.subject}</span>
+                          <span className={styles.tag} style={{ background: seatsLeft > 0 ? "#DCFCE7" : "#FEE2E2", color: seatsLeft > 0 ? "#166534" : "#991B1B" }}>
+                            {seatsLeft > 0 ? `${seatsLeft} seats left` : "Full"}
+                          </span>
+                        </div>
+                        <p style={{ fontSize: "0.85rem", color: "var(--wa-muted)", marginBottom: "1rem", flex: 1 }}>
+                          {w.description}
+                        </p>
+                        <div style={{ fontSize: "0.85rem", color: "var(--wa-forest)", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "1rem" }}>
+                          <Calendar size={14} />
+                          <span>
+                            {new Date(w.startTime).toLocaleDateString()} at {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          </span>
+                        </div>
+
+                        {!session?.user ? (
+                          <Link href="/signin?callbackUrl=/find" className={styles.secondaryBtn} style={{ textAlign: "center" }}>
+                            Sign In to Register
+                          </Link>
+                        ) : isEnrolled ? (
+                          <div style={{ textAlign: "center", padding: "0.75rem", background: "#F0FDF4", color: "#166534", borderRadius: "6px", fontSize: "0.85rem", fontWeight: 600 }}>
+                            <CheckCircle2 size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: "0.25rem" }} />
+                            Registered
+                          </div>
+                        ) : seatsLeft > 0 ? (
+                          <form action={enrollInWorkshop}>
+                            <input type="hidden" name="workshopId" value={w.id} />
+                            <button type="submit" className={styles.primaryBtn} style={{ width: "100%", justifyContent: "center" }}>
+                              Register Free Seat
+                            </button>
+                          </form>
+                        ) : (
+                          <button disabled className={styles.secondaryBtn} style={{ width: "100%", opacity: 0.5, cursor: "not-allowed" }}>
+                            Workshop Full
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* ── Tutor Grid (3-col Schoolhouse card layout) ── */}
+          <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "1rem" }}>
+            Available 1-on-1 Tutors
+          </h2>
           {tutors.length === 0 ? (
             <div
               style={{
