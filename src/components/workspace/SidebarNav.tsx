@@ -43,7 +43,7 @@ export function SidebarNav({
   // Build nav items based on role
   const studentItems = [
     { href: ROUTES.learner.home, icon: Home, label: "Home" },
-    { href: ROUTES.find, icon: Search, label: "Find a Tutor" },
+    { href: ROUTES.find, icon: Search, label: "Find Sessions" },
     { href: ROUTES.learn || "/learn", icon: GraduationCap, label: "Group Workshops" },
     { href: ROUTES.homeworkHelp || "/homework-help", icon: HelpCircle, label: "Homework Help" },
     { href: ROUTES.community || "/community", icon: Users, label: "Community" },
