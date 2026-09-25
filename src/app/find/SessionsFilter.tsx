@@ -30,7 +30,7 @@ export default function SessionsFilter({ currentQ, currentSubject, currentSort, 
   };
 
   // Combine standard subjects with DB subjects, keeping "All" first
-  const standardSubjects = ["SAT Prep", "College Prep", "Reading and Writing"];
+  const standardSubjects = ["Mathematics", "Science", "English & Writing", "Homework Help"];
   const allPills = ["All", ...Array.from(new Set([...standardSubjects, ...availableSubjects]))];
 
   return (
