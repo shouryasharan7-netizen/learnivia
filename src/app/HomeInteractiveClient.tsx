@@ -41,37 +41,43 @@ const DISCIPLINES = [
       {
         name: "Algebra & Analytical Geometry",
         grade: "Grades 7-10",
-        summary: "Linear equations, quadratics, Cartesian geometry, and multi-step proofs.",
+        summary:
+          "Linear equations, quadratics, Cartesian geometry, and multi-step proofs.",
         href: "/find?subject=Mathematics",
       },
       {
         name: "PEEL Essay Writing & Rhetoric",
         grade: "Grades 4-10",
-        summary: "Structured point-evidence-explanation-link arguments and textual analysis.",
+        summary:
+          "Structured point-evidence-explanation-link arguments and textual analysis.",
         href: "/find?subject=Writing",
       },
       {
         name: "Foundational Biology & Chemistry",
         grade: "Grades 6-10",
-        summary: "Cellular respiration, Mendelian genetics, stoichiometry, and periodic trends.",
+        summary:
+          "Cellular respiration, Mendelian genetics, stoichiometry, and periodic trends.",
         href: "/find?subject=Science",
       },
       {
         name: "Elementary Fractions & Reasoning",
         grade: "Grades 3-5",
-        summary: "Visual fractions, word problem modeling, multi-digit operations, and fluency.",
+        summary:
+          "Visual fractions, word problem modeling, multi-digit operations, and fluency.",
         href: "/find?subject=Mathematics",
       },
       {
         name: "Guided Reading & Phonics Discovery",
         grade: "Grades K-2",
-        summary: "Early phonemic awareness, vocabulary decoding, and supported story narration.",
+        summary:
+          "Early phonemic awareness, vocabulary decoding, and supported story narration.",
         href: "/find?subject=Reading",
       },
       {
         name: "World Geography, Civics & History",
         grade: "Grades 4-9",
-        summary: "Primary source evaluation, democratic systems, map analysis, and global cultures.",
+        summary:
+          "Primary source evaluation, democratic systems, map analysis, and global cultures.",
         href: "/find?subject=Social+Studies",
       },
     ],
@@ -83,25 +89,29 @@ const DISCIPLINES = [
       {
         name: "Pre-Algebra & Linear Systems",
         grade: "Grades 6-8",
-        summary: "Variable equations, integer rules, graphing coordinates, and rate ratios.",
+        summary:
+          "Variable equations, integer rules, graphing coordinates, and rate ratios.",
         href: "/find?grade=6-8&subject=Mathematics",
       },
       {
         name: "Algebra I, II & Geometry",
         grade: "Grades 8-10",
-        summary: "Polynomial factoring, geometric congruence, functions, and trigonometry basics.",
+        summary:
+          "Polynomial factoring, geometric congruence, functions, and trigonometry basics.",
         href: "/find?grade=9-10&subject=Mathematics",
       },
       {
         name: "Cellular Biology & Ecology",
         grade: "Grades 7-10",
-        summary: "Mitosis, DNA structure, ecosystem energy pyramids, and scientific hypothesis testing.",
+        summary:
+          "Mitosis, DNA structure, ecosystem energy pyramids, and scientific hypothesis testing.",
         href: "/find?subject=Science",
       },
       {
         name: "Introductory Chemistry",
         grade: "Grades 9-10",
-        summary: "Chemical nomenclature, atomic orbitals, balanced reactions, and solution molarity.",
+        summary:
+          "Chemical nomenclature, atomic orbitals, balanced reactions, and solution molarity.",
         href: "/find?grade=9-10&subject=Science",
       },
     ],
@@ -113,25 +123,29 @@ const DISCIPLINES = [
       {
         name: "Analytical PEEL Essay Writing",
         grade: "Grades 5-10",
-        summary: "Developing clear thesis statements, integrating quotations, and persuasive rhetoric.",
+        summary:
+          "Developing clear thesis statements, integrating quotations, and persuasive rhetoric.",
         href: "/find?subject=Writing",
       },
       {
         name: "Reading Comprehension & Critical Thought",
         grade: "Grades 3-8",
-        summary: "Theme identification, inferencing, author perspective, and vocabulary in context.",
+        summary:
+          "Theme identification, inferencing, author perspective, and vocabulary in context.",
         href: "/find?subject=Reading",
       },
       {
         name: "Grammar, Syntax & Sentence Craft",
         grade: "Grades 3-7",
-        summary: "Parts of speech, comma rules, clause structures, and active voice precision.",
+        summary:
+          "Parts of speech, comma rules, clause structures, and active voice precision.",
         href: "/find?subject=Writing",
       },
       {
         name: "Civics, Government & History",
         grade: "Grades 6-9",
-        summary: "Constitutional principles, historical turning points, and document-based questions.",
+        summary:
+          "Constitutional principles, historical turning points, and document-based questions.",
         href: "/find?subject=Social+Studies",
       },
     ],
@@ -143,19 +157,22 @@ const DISCIPLINES = [
       {
         name: "Phonics & Word Sound Decoding",
         grade: "Kindergarten - Grade 2",
-        summary: "Letter-sound blending, sight word fluency, and interactive reading games.",
+        summary:
+          "Letter-sound blending, sight word fluency, and interactive reading games.",
         href: "/find?grade=K-2&subject=Reading",
       },
       {
         name: "Number Sense & Counting Fluency",
         grade: "Kindergarten - Grade 2",
-        summary: "Visual ten-frames, addition/subtraction intuition, shapes, and patterns.",
+        summary:
+          "Visual ten-frames, addition/subtraction intuition, shapes, and patterns.",
         href: "/find?grade=K-2&subject=Mathematics",
       },
       {
         name: "Guided Narrative Comprehension",
         grade: "Grades 1-3",
-        summary: "Story retelling, character exploration, and expressing ideas in simple sentences.",
+        summary:
+          "Story retelling, character exploration, and expressing ideas in simple sentences.",
         href: "/find?grade=K-2&subject=Reading",
       },
     ],
@@ -261,11 +278,11 @@ export default function HomeInteractiveClient({
 }: HomeInteractiveClientProps) {
   const [activeTab, setActiveTab] = useState("all");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  
+
   // Carousel State
   const [currentTutorSlide, setCurrentTutorSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  
+
   // Auto-play carousel
   useEffect(() => {
     if (isHovered) return;
@@ -279,7 +296,8 @@ export default function HomeInteractiveClient({
   const [selectedGrade, setSelectedGrade] = useState("all");
   const [selectedSubject, setSelectedSubject] = useState("all");
 
-  const currentDiscipline = DISCIPLINES.find((d) => d.id === activeTab) || DISCIPLINES[0];
+  const currentDiscipline =
+    DISCIPLINES.find((d) => d.id === activeTab) || DISCIPLINES[0];
 
   const handleConciergeSearch = () => {
     const params = new URLSearchParams();
@@ -291,43 +309,58 @@ export default function HomeInteractiveClient({
   return (
     <div className={styles.pageWrapper}>
       {/* ── 2. HERO SECTION ── */}
-      <section style={{
-        background: "var(--navy, #0C1B33)",
-        color: "#fff",
-        padding: "6rem 2rem 5rem",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        {/* Subtle patterned background or floating avatars can go here */}
-        
-        <div style={{
-          maxWidth: 900,
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-          gap: "2.5rem",
+      <section
+        style={{
+          background: "var(--navy, #0C1B33)",
+          color: "#fff",
+          padding: "6rem 2rem 5rem",
           position: "relative",
-          zIndex: 2,
-        }}>
+          overflow: "hidden",
+        }}
+      >
+        {/* Subtle patterned background or floating avatars can go here */}
+
+        <div
+          style={{
+            maxWidth: 900,
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            gap: "2.5rem",
+            position: "relative",
+            zIndex: 2,
+          }}
+        >
           {/* Centered Headline */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <h1 style={{
-              fontSize: "clamp(3.5rem, 7vw, 5.5rem)",
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: "-0.03em",
-              margin: "0 0 1rem",
-              color: "#FFFFFF",
-              fontFamily: "var(--font-sans, system-ui, sans-serif)",
-            }}>
-              Free Online Tutoring.<br/>
-              <span style={{ opacity: 0.9, fontWeight: 500, fontSize: "clamp(2.5rem, 5vw, 4rem)" }}>Real Human Connection.</span>
+            <h1
+              style={{
+                fontSize: "clamp(3.5rem, 7vw, 5.5rem)",
+                fontWeight: 800,
+                lineHeight: 1.05,
+                letterSpacing: "-0.03em",
+                margin: "0 0 1rem",
+                color: "#FFFFFF",
+                fontFamily: "var(--font-sans, system-ui, sans-serif)",
+              }}
+            >
+              Free Online Tutoring.
+              <br />
+              <span
+                style={{
+                  opacity: 0.9,
+                  fontWeight: 500,
+                  fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                }}
+              >
+                Real Human Connection.
+              </span>
             </h1>
           </motion.div>
 
@@ -336,64 +369,118 @@ export default function HomeInteractiveClient({
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-            style={{ maxWidth: 600, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
+            style={{
+              maxWidth: 600,
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <p style={{
-              fontSize: "1.25rem",
-              lineHeight: 1.6,
-              color: "rgba(255,255,255,0.85)",
-              margin: "0 0 2.5rem",
-            }}>
-              Join our peer-led community for free 1-on-1 tutoring, homework help, and meaningful conversations with students across the globe.
+            <p
+              style={{
+                fontSize: "1.25rem",
+                lineHeight: 1.6,
+                color: "rgba(255,255,255,0.85)",
+                margin: "0 0 2.5rem",
+              }}
+            >
+              Join our peer-led community for free 1-on-1 tutoring, homework
+              help, and meaningful conversations with students across the globe.
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%", maxWidth: 400 }}>
-              <Link href="/signin" style={{
+            <div
+              style={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                flexDirection: "column",
+                gap: "1rem",
                 width: "100%",
-                padding: "1.1rem",
-                background: "var(--primary, #0D9488)",
-                color: "#fff",
-                borderRadius: "9999px",
-                fontWeight: 700,
-                fontSize: "1.15rem",
-                textDecoration: "none",
-                transition: "background 150ms",
-              }} onMouseEnter={(e) => (e.currentTarget.style.background = "#0F766E")} onMouseLeave={(e) => (e.currentTarget.style.background = "#0D9488")}>
+                maxWidth: 400,
+              }}
+            >
+              <Link
+                href="/signin"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                  padding: "1.1rem",
+                  background: "var(--primary, #0D9488)",
+                  color: "#fff",
+                  borderRadius: "9999px",
+                  fontWeight: 700,
+                  fontSize: "1.15rem",
+                  textDecoration: "none",
+                  transition: "background 150ms",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#0F766E")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "#0D9488")
+                }
+              >
                 Start Learning!
               </Link>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                <Link href="/about" style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0.875rem",
-                  border: "2px solid rgba(255,255,255,0.8)",
-                  color: "#fff",
-                  borderRadius: "9999px",
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  transition: "all 150ms",
-                }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "#fff"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; }}>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "1rem",
+                }}
+              >
+                <Link
+                  href="/about"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0.875rem",
+                    border: "2px solid rgba(255,255,255,0.8)",
+                    color: "#fff",
+                    borderRadius: "9999px",
+                    fontWeight: 600,
+                    fontSize: "0.95rem",
+                    textDecoration: "none",
+                    transition: "all 150ms",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                    e.currentTarget.style.borderColor = "#fff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)";
+                  }}
+                >
                   For Parents
                 </Link>
-                <Link href="/signin?role=tutor" style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0.875rem",
-                  border: "2px solid rgba(255,255,255,0.8)",
-                  color: "#fff",
-                  borderRadius: "9999px",
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  transition: "all 150ms",
-                }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "#fff"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; }}>
+                <Link
+                  href="/signin?role=tutor"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0.875rem",
+                    border: "2px solid rgba(255,255,255,0.8)",
+                    color: "#fff",
+                    borderRadius: "9999px",
+                    fontWeight: 600,
+                    fontSize: "0.95rem",
+                    textDecoration: "none",
+                    transition: "all 150ms",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                    e.currentTarget.style.borderColor = "#fff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)";
+                  }}
+                >
                   For Educators
                 </Link>
               </div>
@@ -417,9 +504,12 @@ export default function HomeInteractiveClient({
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <span className={styles.sectionBadge}>Workflow</span>
-            <h2 className={styles.sectionTitle}>How 1-on-1 peer tutoring works for families</h2>
+            <h2 className={styles.sectionTitle}>
+              How 1-on-1 peer tutoring works for families
+            </h2>
             <p className={styles.sectionLead}>
-              Getting started is straightforward, safe, and transparent. We never ask for payment details or credit cards.
+              Getting started is straightforward, safe, and transparent. We
+              never ask for payment details or credit cards.
             </p>
           </div>
 
@@ -440,9 +530,13 @@ export default function HomeInteractiveClient({
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <span className={styles.sectionBadge}>Curriculum</span>
-            <h2 className={styles.sectionTitle}>Rigorous disciplines. Patient peer guidance.</h2>
+            <h2 className={styles.sectionTitle}>
+              Rigorous disciplines. Patient peer guidance.
+            </h2>
             <p className={styles.sectionLead}>
-              Every lesson is structured around fundamental reasoning rather than rote memorization. Explore our core curriculum for Kindergarten through Grade 10.
+              Every lesson is structured around fundamental reasoning rather
+              than rote memorization. Explore our core curriculum for
+              Kindergarten through Grade 10.
             </p>
           </div>
 
@@ -464,7 +558,11 @@ export default function HomeInteractiveClient({
           {/* Subject Cards Grid */}
           <div className={styles.syllabusGrid}>
             {currentDiscipline.subjects.map((sub) => (
-              <Link key={sub.name} href={sub.href} className={styles.subjectCard}>
+              <Link
+                key={sub.name}
+                href={sub.href}
+                className={styles.subjectCard}
+              >
                 <div className={styles.subjectCardTop}>
                   <span className={styles.gradeTag}>{sub.grade}</span>
                   <h3 className={styles.subjectName}>{sub.name}</h3>
@@ -484,17 +582,27 @@ export default function HomeInteractiveClient({
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <span className={styles.sectionBadge}>Scholars</span>
-            <h2 className={styles.sectionTitle}>High-achieving scholars giving back</h2>
+            <h2 className={styles.sectionTitle}>
+              High-achieving scholars giving back
+            </h2>
             <p className={styles.sectionLead}>
-              Our volunteer tutors represent rigorous secondary schools and university programs. Each is verified, safeguarded, and dedicated to empowering younger peers.
+              Our volunteer tutors represent rigorous secondary schools and
+              university programs. Each is verified, safeguarded, and dedicated
+              to empowering younger peers.
             </p>
           </div>
 
-          <div 
-            className={styles.tutorCarouselWrapper} 
+          <div
+            className={styles.tutorCarouselWrapper}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            style={{ position: "relative", overflow: "hidden", display: "flex", alignItems: "stretch", justifyContent: "center" }}
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "stretch",
+              justifyContent: "center",
+            }}
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -508,16 +616,22 @@ export default function HomeInteractiveClient({
               >
                 <div>
                   <div className={styles.tutorCardHeader}>
-                    <div className={styles.tutorAvatar}>{TUTOR_ROSTER[currentTutorSlide].avatar}</div>
+                    <div className={styles.tutorAvatar}>
+                      {TUTOR_ROSTER[currentTutorSlide].avatar}
+                    </div>
                     <div className={styles.tutorInfo}>
                       <h3>{TUTOR_ROSTER[currentTutorSlide].name}</h3>
-                      <p className={styles.tutorSchool}>{TUTOR_ROSTER[currentTutorSlide].school}</p>
+                      <p className={styles.tutorSchool}>
+                        {TUTOR_ROSTER[currentTutorSlide].school}
+                      </p>
                     </div>
                   </div>
 
                   <div className={styles.tutorBadges}>
                     {TUTOR_ROSTER[currentTutorSlide].subjects.map((s) => (
-                      <span key={s} className={styles.badgePill}>{s}</span>
+                      <span key={s} className={styles.badgePill}>
+                        {s}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -533,17 +647,34 @@ export default function HomeInteractiveClient({
                 </div>
               </motion.div>
             </AnimatePresence>
-            
+
             {/* Carousel Dots */}
-            <div style={{ position: "absolute", bottom: "-30px", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "8px" }}>
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-30px",
+                left: 0,
+                right: 0,
+                display: "flex",
+                justifyContent: "center",
+                gap: "8px",
+              }}
+            >
               {TUTOR_ROSTER.map((_, idx) => (
-                <button 
-                  key={idx} 
+                <button
+                  key={idx}
                   onClick={() => setCurrentTutorSlide(idx)}
-                  style={{ 
-                    width: "10px", height: "10px", borderRadius: "50%", 
-                    background: currentTutorSlide === idx ? "var(--wa-crimson)" : "var(--wa-border-strong)",
-                    border: "none", cursor: "pointer", transition: "background 0.3s"
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50%",
+                    background:
+                      currentTutorSlide === idx
+                        ? "var(--wa-crimson)"
+                        : "var(--wa-border-strong)",
+                    border: "none",
+                    cursor: "pointer",
+                    transition: "background 0.3s",
                   }}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
@@ -559,9 +690,13 @@ export default function HomeInteractiveClient({
           <div className={styles.safeguardGrid}>
             <div>
               <span className={styles.sectionBadge}>Safeguarding Protocol</span>
-              <h2 className={styles.sectionTitle}>Built from the ground up for student protection</h2>
+              <h2 className={styles.sectionTitle}>
+                Built from the ground up for student protection
+              </h2>
               <p className={styles.sectionLead}>
-                Learnivia operates under a strict Child Protection Charter designed to safeguard young learners and protect volunteer tutors.
+                Learnivia operates under a strict Child Protection Charter
+                designed to safeguard young learners and protect volunteer
+                tutors.
               </p>
               <div style={{ marginTop: "2rem" }}>
                 <Link href="/parents" className={styles.btnPrimary}>
@@ -571,83 +706,105 @@ export default function HomeInteractiveClient({
             </div>
 
             <div className={styles.safeguardDiagram}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", position: "relative" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1.5rem",
+                  position: "relative",
+                }}
+              >
                 {/* Vertical connecting line */}
-                <div style={{ position: "absolute", left: "24px", top: "24px", bottom: "24px", width: "2px", background: "var(--wa-border-strong)", zIndex: 0 }} />
-                
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "24px",
+                    top: "24px",
+                    bottom: "24px",
+                    width: "2px",
+                    background: "var(--wa-border-strong)",
+                    zIndex: 0,
+                  }}
+                />
+
                 {SAFEGUARD_PILLARS.map((pt, idx) => (
-                  <motion.div 
-                    key={pt.id} 
+                  <motion.div
+                    key={pt.id}
                     className={styles.safeguardCard}
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.5, delay: idx * 0.15 }}
-                    style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--wa-white)", border: "1px solid var(--wa-border)", padding: "1.5rem", borderRadius: "var(--wa-radius-md)", boxShadow: "var(--wa-shadow-sm)" }}
+                    style={{
+                      position: "relative",
+                      zIndex: 1,
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "1rem",
+                      background: "var(--wa-white)",
+                      border: "1px solid var(--wa-border)",
+                      padding: "1.5rem",
+                      borderRadius: "var(--wa-radius-md)",
+                      boxShadow: "var(--wa-shadow-sm)",
+                    }}
                   >
-                    <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "var(--wa-crimson-light)", color: "var(--wa-crimson)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, border: "2px solid var(--wa-white)", boxShadow: "0 0 0 1px var(--wa-border)" }}>
+                    <div
+                      style={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "50%",
+                        background: "var(--wa-crimson-light)",
+                        color: "var(--wa-crimson)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                        border: "2px solid var(--wa-white)",
+                        boxShadow: "0 0 0 1px var(--wa-border)",
+                      }}
+                    >
                       <ShieldCheck size={20} />
                     </div>
                     <div>
-                      <span className={styles.safeguardBadge} style={{ display: "inline-block", fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", color: "var(--wa-muted)", marginBottom: "0.25rem", letterSpacing: "0.05em" }}>{pt.badge}</span>
-                      <h3 className={styles.safeguardTitle} style={{ margin: "0 0 0.5rem 0", fontSize: "1.1rem", color: "var(--wa-ink)" }}>{pt.title}</h3>
-                      <p className={styles.safeguardText} style={{ margin: 0, fontSize: "0.9rem", color: "var(--wa-text)", lineHeight: 1.5 }}>{pt.desc}</p>
+                      <span
+                        className={styles.safeguardBadge}
+                        style={{
+                          display: "inline-block",
+                          fontSize: "0.7rem",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          color: "var(--wa-muted)",
+                          marginBottom: "0.25rem",
+                          letterSpacing: "0.05em",
+                        }}
+                      >
+                        {pt.badge}
+                      </span>
+                      <h3
+                        className={styles.safeguardTitle}
+                        style={{
+                          margin: "0 0 0.5rem 0",
+                          fontSize: "1.1rem",
+                          color: "var(--wa-ink)",
+                        }}
+                      >
+                        {pt.title}
+                      </h3>
+                      <p
+                        className={styles.safeguardText}
+                        style={{
+                          margin: 0,
+                          fontSize: "0.9rem",
+                          color: "var(--wa-text)",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {pt.desc}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 7. INTERACTIVE MATCHING CONCIERGE ── */}
-      <section className={styles.conciergeSection}>
-        <div className={styles.container}>
-          <div className={styles.conciergeCard}>
-            <h2 className={styles.conciergeTitle}>Instant Subject and Grade Matcher</h2>
-            <p className={styles.conciergeLead}>
-              Select your child&apos;s grade and subject to immediately locate verified volunteer mentors available this week.
-            </p>
-
-            <div className={styles.conciergeControls}>
-              <div className={styles.selectGroup}>
-                <label htmlFor="grade-select" className={styles.selectLabel}>Grade Level</label>
-                <select
-                  id="grade-select"
-                  className={styles.selectInput}
-                  value={selectedGrade}
-                  onChange={(e) => setSelectedGrade(e.target.value)}
-                >
-                  <option value="all">All Grades (K-10)</option>
-                  <option value="K-2">Grades K-2 (Early Elementary)</option>
-                  <option value="3-5">Grades 3-5 (Elementary)</option>
-                  <option value="6-8">Grades 6-8 (Middle School)</option>
-                  <option value="9-10">Grades 9-10 (Early High School)</option>
-                </select>
-              </div>
-
-              <div className={styles.selectGroup}>
-                <label htmlFor="subject-select" className={styles.selectLabel}>Subject Area</label>
-                <select
-                  id="subject-select"
-                  className={styles.selectInput}
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value)}
-                >
-                  <option value="all">All Subjects</option>
-                  <option value="Mathematics">Mathematics and Problem Solving</option>
-                  <option value="Reading">Reading, Phonics and Comprehension</option>
-                  <option value="Writing">PEEL Writing and Composition</option>
-                  <option value="Science">Sciences (Biology and Chemistry)</option>
-                  <option value="Social Studies">Social Studies, Civics and History</option>
-                </select>
-              </div>
-
-              <Link href={handleConciergeSearch()} className={styles.findBtn}>
-                <Search size={16} />
-                <span>Find Free Mentors</span>
-              </Link>
             </div>
           </div>
         </div>
@@ -660,7 +817,8 @@ export default function HomeInteractiveClient({
             <span className={styles.sectionBadge}>Common Questions</span>
             <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
             <p className={styles.sectionLead}>
-              Transparent answers regarding our zero-cost model, session supervision, and volunteer accreditation.
+              Transparent answers regarding our zero-cost model, session
+              supervision, and volunteer accreditation.
             </p>
           </div>
 
@@ -701,7 +859,9 @@ export default function HomeInteractiveClient({
               Quality education should be accessible to every student.
             </h2>
             <p className={styles.admissionsText}>
-              Whether you are a parent seeking patient academic mentorship for your student, or a high school scholar looking to earn verified community service hours, our doors are open.
+              Whether you are a parent seeking patient academic mentorship for
+              your student, or a high school scholar looking to earn verified
+              community service hours, our doors are open.
             </p>
 
             <div className={styles.admissionsActions}>
