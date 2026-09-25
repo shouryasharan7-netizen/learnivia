@@ -29,6 +29,27 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
   const isEnrolled = session?.user?.id
     ? workshop.enrollments.some((e) => e.studentId === session.user.id)
     : false;
+    
+  let joinUrl = null;
+  const isHostTutor = workshop.tutor.userId === session?.user?.id;
+  const isAdmin = session?.user?.role === "ADMIN";
+
+  if (isEnrolled || isHostTutor || isAdmin) {
+    try {
+      const urls = JSON.parse(workshop.zoomLink || "{}");
+      if (isHostTutor) {
+         joinUrl = urls.startUrl || urls.joinUrl;
+      } else {
+         joinUrl = urls.joinUrl;
+      }
+    } catch (e) {}
+  }
+
+  const now = Date.now();
+  const startTimeMs = startDate.getTime();
+  const endTimeMs = new Date(workshop.endTime).getTime();
+  const isWithinJoinWindow = now >= (startTimeMs - 15 * 60 * 1000) && now <= endTimeMs;
+  const isLive = isWithinJoinWindow && joinUrl;
   
   const initials = (workshop.tutor.user.name || "T")
     .split(" ")
@@ -167,6 +188,8 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
                   seatsLeft={seatsLeft}
                   tutorName={workshop.tutor.user.name || "Tutor"}
                   tutorInitials={initials}
+                  isLive={!!isLive}
+                  joinUrl={joinUrl}
                 />
               </div>
             </div>

@@ -13,6 +13,8 @@ interface Props {
   seatsLeft: number;
   tutorName: string;
   tutorInitials: string;
+  isLive?: boolean;
+  joinUrl?: string | null;
 }
 
 export default function WorkshopActionClient({ 
@@ -21,7 +23,9 @@ export default function WorkshopActionClient({
   isLoggedIn, 
   seatsLeft,
   tutorName,
-  tutorInitials
+  tutorInitials,
+  isLive,
+  joinUrl
 }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,6 +38,13 @@ export default function WorkshopActionClient({
   }
 
   if (isEnrolled) {
+    if (isLive && joinUrl) {
+      return (
+        <a href={joinUrl} target="_blank" rel="noopener noreferrer" className={styles.registerBtn}>
+          Join Live Zoom
+        </a>
+      );
+    }
     return (
       <div className={styles.registeredState}>
         <CheckCircle2 size={18} />
