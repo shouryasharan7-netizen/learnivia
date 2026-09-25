@@ -101,7 +101,6 @@ export function TopBar({ user }: TopBarProps) {
       setTheme("light");
       document.documentElement.setAttribute("data-theme", "light");
     }
-    }
     const dismissed = sessionStorage.getItem("announcement-dismissed");
     if (dismissed) setAnnouncementDismissed(true);
 

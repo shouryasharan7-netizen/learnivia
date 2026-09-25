@@ -61,7 +61,6 @@ export function Footer() {
                 <span className={styles.missionDot} />
                 100% free · No subscriptions · No paywalls
               </div>
-              </div>
             </div>
 
             {/* Link columns */}
