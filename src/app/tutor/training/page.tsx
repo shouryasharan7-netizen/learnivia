@@ -15,7 +15,7 @@ const MODULES = [
     video: {
       title: "Module 1 Video: Online Tutoring Setup & Engagement",
       duration: "4:20",
-      embedUrl: "https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ", // Standard test video
+      embedUrl: "https://www.youtube.com/embed/Uy-8gOgvgbs", // Training video
       summary: "Learn how to prepare your workspace, use Zoom effectively, and engage students from minute one.",
       keyPoints: ["Check audio/video before starting", "Use the whiteboard for visual learning", "Set clear goals at the beginning"],
     },
@@ -53,7 +53,7 @@ const MODULES = [
     video: {
       title: "Module 2 Video: Identifying a Concern | Safeguarding",
       duration: "5:15",
-      embedUrl: "https://www.youtube-nocookie.com/embed/tgbNymZ7vqY",
+      embedUrl: "https://www.youtube.com/embed/bkQqMawi2-Y",
       summary: "Understand your role in child protection, how to identify signs of concern, and the strict zero-contact rule outside of sessions.",
       keyPoints: ["Never share personal contact info", "Observe but do not investigate", "Report concerns immediately"],
     },
@@ -91,7 +91,7 @@ const MODULES = [
     video: {
       title: "Module 3 Video: Mentorship Mindset & Guided Learning",
       duration: "3:45",
-      embedUrl: "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw",
+      embedUrl: "https://www.youtube.com/embed/CT-xzYXcffo",
       summary: "Learn why guiding beats lecturing, how to ask discovery questions, and techniques for sincere praise.",
       keyPoints: ["Guide through questions, don't lecture", "Praise effort, not just intelligence", "Normalize mistakes as discoveries"],
     },

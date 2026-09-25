@@ -318,9 +318,40 @@ export default function HomeInteractiveClient({
           overflow: "hidden",
         }}
       >
-        {/* Mascot Image */}
-        <div style={{ position: "absolute", bottom: -20, right: "5%", opacity: 0.8, zIndex: 1, pointerEvents: "none" }}>
-          <img src="/images/become-a-tutor.png" alt="Learnivia Mascot" width="220" style={{ filter: "drop-shadow(0 10px 25px rgba(0,0,0,0.3))" }} />
+        {/* Floating Mascot Images in Background */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, overflow: "hidden", zIndex: 1, pointerEvents: "none" }}>
+          <motion.img 
+            src="/images/find-a-tutor.png" 
+            alt="Mascot" 
+            width="140" 
+            style={{ position: "absolute", top: "10%", left: "5%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.6 }}
+            animate={{ y: [0, -15, 0], rotate: [-2, 2, -2] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.img 
+            src="/images/book-a-session.png" 
+            alt="Mascot" 
+            width="120" 
+            style={{ position: "absolute", bottom: "15%", left: "10%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.5 }}
+            animate={{ y: [0, -12, 0], rotate: [1, -3, 1] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          />
+          <motion.img 
+            src="/images/volunteer-hours.png" 
+            alt="Mascot" 
+            width="130" 
+            style={{ position: "absolute", top: "20%", right: "8%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.7 }}
+            animate={{ y: [0, -20, 0], rotate: [2, -2, 2] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+          <motion.img 
+            src="/images/become-a-tutor.png" 
+            alt="Mascot" 
+            width="160" 
+            style={{ position: "absolute", bottom: "10%", right: "5%", filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.25))", opacity: 0.8 }}
+            animate={{ y: [0, -18, 0], rotate: [-1, 3, -1] }}
+            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          />
         </div>
 
         <div
