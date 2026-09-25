@@ -144,7 +144,7 @@ export default async function TutorDashboard() {
 
   const passedModules = (tutor.trainingModules || []).filter((m: any) => m.quizPassed).length;
 
-  if (tutor.status === "PENDING" && passedModules >= 5) {
+  if (tutor.status === "PENDING" && passedModules >= 3) {
     // Auto-approve if they have completed all training modules
     tutor = await prisma.tutorProfile.update({
       where: { id: tutor.id },
@@ -169,7 +169,7 @@ export default async function TutorDashboard() {
               Application Pending Review
             </h1>
             <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
-              Your tutor application is currently being reviewed by the Learnivia Academic Board. To prepare for approval, please complete all 5 mandatory Safeguarding &amp; Tutoring training modules.
+              Your tutor application is currently being reviewed by the Learnivia Academic Board. To prepare for approval, please complete all 3 mandatory Safeguarding &amp; Tutoring training modules.
             </p>
 
             <div
@@ -187,16 +187,16 @@ export default async function TutorDashboard() {
                   <ShieldCheck size={16} color="var(--wa-green)" />
                   Safeguarding &amp; Tutoring Modules
                 </span>
-                <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: passedModules === 5 ? "var(--wa-green)" : "#92400E" }}>
-                  {passedModules} of 5 Completed
+                <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: passedModules === 3 ? "var(--wa-green)" : "#92400E" }}>
+                  {passedModules} of 3 Completed
                 </span>
               </div>
               <div style={{ background: "var(--wa-border)", borderRadius: "3px", height: "6px", overflow: "hidden" }}>
                 <div
                   style={{
-                    background: passedModules === 5 ? "var(--wa-green)" : "#D97706",
+                    background: passedModules === 3 ? "var(--wa-green)" : "#D97706",
                     width: "100%",
-                    transform: `scaleX(${passedModules / 5})`,
+                    transform: `scaleX(${passedModules / 3})`,
                     transformOrigin: "left",
                     height: "100%",
                     transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -208,7 +208,7 @@ export default async function TutorDashboard() {
             <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
               <Link href={ROUTES.tutor.training} className={styles.primaryBtn}>
                 <GraduationCap size={15} />
-                <span>Complete Training Modules ({passedModules}/5)</span>
+                <span>Complete Training Modules ({passedModules}/3)</span>
               </Link>
               <Link href={ROUTES.learner.home} className={styles.secondaryBtn}>
                 Return to Dashboard
@@ -245,7 +245,7 @@ export default async function TutorDashboard() {
 
   if (tutor.status === "SUSPENDED") {
     const isMissingAvailability = (tutor.availabilities || []).length === 0;
-    const isIncompleteTraining = passedModules < 5;
+    const isIncompleteTraining = passedModules < 3;
 
     return (
       <main className={styles.page}>

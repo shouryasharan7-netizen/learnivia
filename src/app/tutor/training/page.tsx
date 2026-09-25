@@ -232,7 +232,7 @@ export default function TutorTrainingPage() {
             Complete Your Training
           </h1>
           <p style={{ opacity: 0.9, fontSize: "1rem" }}>
-            You must complete all 5 modules before receiving your first booking.
+            You must complete all 3 modules before receiving your first booking.
             Training takes approximately 45-50 minutes total.
           </p>
           {/* Progress */}
@@ -330,7 +330,7 @@ export default function TutorTrainingPage() {
               Training Complete!
             </h2>
             <p style={{ color: "#166534", marginBottom: "1.25rem" }}>
-              You&apos;ve completed all 5 training modules. You&apos;re now eligible to receive your first booking.
+              You&apos;ve completed all 3 training modules. You&apos;re now eligible to receive your first booking.
             </p>
             <Link
               href="/tutor"
