@@ -337,7 +337,11 @@ export default function HomeInteractiveClient({
             <motion.img 
               key={idx}
               src={avatar.src} 
-              alt="Mascot Avatar" 
+              alt="Mascot Avatar"
+              drag
+              dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
+              whileDrag={{ scale: 1.2, cursor: "grabbing" }}
+              whileHover={{ cursor: "grab" }}
               style={{ 
                 position: "absolute", 
                 top: avatar.top, 
@@ -349,7 +353,9 @@ export default function HomeInteractiveClient({
                 borderRadius: "50%", 
                 objectFit: "cover", 
                 border: "3px solid rgba(255,255,255,0.15)",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.3)" 
+                boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
+                pointerEvents: "auto",
+                zIndex: 1
               }}
               animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }}
               transition={{ duration: 6 + (idx % 3), repeat: Infinity, ease: "easeInOut", delay: avatar.delay }}
