@@ -10,7 +10,7 @@
 
 .heroBanner {
   border-radius: var(--radius-xl, 18px);
-  background: linear-gradient(135deg, #eff6ff 0%, #ccfbf1 100%);
+  background: var(--hero-gradient, linear-gradient(135deg, #eff6ff 0%, #ccfbf1 100%));
   border: 1px solid var(--border, #e2e8f0);
   padding: 1.75rem 2rem;
   margin-bottom: 1.5rem;

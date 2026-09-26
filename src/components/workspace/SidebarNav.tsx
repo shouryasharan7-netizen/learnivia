@@ -150,7 +150,7 @@ export function SidebarNav({
       style={{
         width: "var(--sidebar-width, 64px)",
         minHeight: "100vh",
-        background: "var(--sidebar-bg, #FFFFFF)",
+        background: "var(--surface-raised, #FFFFFF)",
         borderRight: "1px solid var(--border, #E2E8F0)",
         display: "flex",
         flexDirection: "column",
@@ -367,9 +367,9 @@ function SidebarItem({
         borderRadius: "var(--radius-md, 10px)",
         color: active
           ? "var(--primary, #0D9488)"
-          : "var(--sidebar-text, #475569)",
+          : "var(--text-secondary, #475569)",
         background: active
-          ? "var(--sidebar-active-bg, #CCFBF1)"
+          ? "var(--primary-light, #CCFBF1)"
           : "transparent",
         textDecoration: "none",
         transition: "all var(--transition, 180ms ease)",
@@ -388,7 +388,7 @@ function SidebarItem({
         if (!active) {
           (e.currentTarget as HTMLElement).style.background = "transparent";
           (e.currentTarget as HTMLElement).style.color =
-            "var(--sidebar-text, #475569)";
+            "var(--text-secondary, #475569)";
         }
       }}
     >

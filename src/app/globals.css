@@ -482,6 +482,11 @@ textarea:focus-visible {
   --wa-shadow-lg:
     0 10px 15px -3px rgba(20, 24, 36, 0.08),
     0 4px 6px -4px rgba(20, 24, 36, 0.04);
+
+  --hero-gradient: linear-gradient(135deg, #eff6ff 0%, #ccfbf1 100%);
+  --announcement-bg: #FEF3C7;
+  --announcement-text: #92400E;
+  --announcement-link: #0D9488;
 }
 
 [data-theme="dark"] {
@@ -552,6 +557,11 @@ textarea:focus-visible {
   --wa-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
   --wa-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.6);
   --wa-shadow-lg: 0 12px 20px rgba(0, 0, 0, 0.7);
+
+  --hero-gradient: linear-gradient(135deg, #1e293b 0%, #020617 100%);
+  --announcement-bg: rgba(245, 158, 11, 0.15);
+  --announcement-text: #FCD34D;
+  --announcement-link: #FBBF24;
 }
 
 *:focus-visible {
