@@ -36,6 +36,19 @@ export function SidebarNav({
   className,
 }: SidebarNavProps) {
   const pathname = usePathname();
+  const [adminView, setAdminView] = React.useState<"ADMIN" | "TUTOR" | "STUDENT">("ADMIN");
+  
+  React.useEffect(() => {
+    if (isAdmin) {
+      const saved = localStorage.getItem("learnivia_admin_view") as "ADMIN" | "TUTOR" | "STUDENT";
+      if (saved) setAdminView(saved);
+    }
+  }, [isAdmin]);
+
+  const handleAdminViewChange = (view: "ADMIN" | "TUTOR" | "STUDENT") => {
+    setAdminView(view);
+    localStorage.setItem("learnivia_admin_view", view);
+  };
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
@@ -69,7 +82,7 @@ export function SidebarNav({
   ];
 
   const navItems = isAdmin
-    ? adminItems
+    ? (adminView === "STUDENT" ? studentItems : adminView === "TUTOR" ? tutorItems : adminItems)
     : isTutor
     ? tutorItems
     : studentItems;
@@ -154,6 +167,45 @@ export function SidebarNav({
           );
         })}
       </nav>
+
+      {/* Admin View Toggle */}
+      {isAdmin && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px", paddingBottom: "16px", alignItems: "center", borderTop: "1px solid var(--border)", width: "100%", paddingTop: "16px" }}>
+          <button 
+            onClick={() => handleAdminViewChange("ADMIN")} 
+            title="Admin View"
+            style={{
+              width: 40, height: 40, borderRadius: 8, border: "none", cursor: "pointer",
+              background: adminView === "ADMIN" ? "var(--primary-light, #CCFBF1)" : "transparent",
+              color: adminView === "ADMIN" ? "var(--primary, #0D9488)" : "var(--muted, #64748B)",
+              display: "flex", alignItems: "center", justifyContent: "center"
+            }}>
+            <LayoutDashboard size={20} />
+          </button>
+          <button 
+            onClick={() => handleAdminViewChange("TUTOR")}
+            title="Tutor View"
+            style={{
+              width: 40, height: 40, borderRadius: 8, border: "none", cursor: "pointer",
+              background: adminView === "TUTOR" ? "var(--primary-light, #CCFBF1)" : "transparent",
+              color: adminView === "TUTOR" ? "var(--primary, #0D9488)" : "var(--muted, #64748B)",
+              display: "flex", alignItems: "center", justifyContent: "center"
+            }}>
+            <ShieldCheck size={20} />
+          </button>
+          <button 
+            onClick={() => handleAdminViewChange("STUDENT")}
+            title="Student View"
+            style={{
+              width: 40, height: 40, borderRadius: 8, border: "none", cursor: "pointer",
+              background: adminView === "STUDENT" ? "var(--primary-light, #CCFBF1)" : "transparent",
+              color: adminView === "STUDENT" ? "var(--primary, #0D9488)" : "var(--muted, #64748B)",
+              display: "flex", alignItems: "center", justifyContent: "center"
+            }}>
+            <GraduationCap size={20} />
+          </button>
+        </div>
+      )}
 
       {/* Bottom: Safety badge */}
       <div

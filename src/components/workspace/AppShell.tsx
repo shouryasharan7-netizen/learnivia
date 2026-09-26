@@ -108,7 +108,11 @@ export function AppShell({ children }: AppShellProps) {
         <main id="main-content" className={styles.content}>
           {children}
         </main>
-        <MobileBottomNav />
+        <MobileBottomNav 
+          userRole={user.role}
+          isTutor={isTutor}
+          isAdmin={isAdmin}
+        />
       </div>
     </div>
   );

@@ -142,6 +142,27 @@ export const PROGRAMS: Program[] = [
       { question: "Is this only useful before exams?", answer: "No. Better study habits help throughout the year, not just at exam time." },
     ],
   },
+  {
+    slug: "standardized-testing",
+    emoji: "",
+    title: "Standardized Testing",
+    shortDescription: "Get tailored preparation for SAT, AP, TOEFL, and IELTS from experienced tutors.",
+    longDescription:
+      "Our Standardized Testing program matches you with a tutor who has mastered these critical exams. Whether you're aiming for top college admissions with the SAT or AP exams, or need to prove English proficiency via TOEFL or IELTS, our tutors will help you reach your target score.",
+    subjects: ["SAT", "AP", "TOEFL", "IELTS"],
+    gradeLevels: ["High School", "University applicants"],
+    format: "One-on-one via Zoom",
+    duration: "45-60 minutes",
+    outcomes: [
+      "Master exam formats and timing strategies",
+      "Focus on high-yield topics and question types",
+      "Achieve your target score for college admissions",
+    ],
+    faq: [
+      { question: "Do tutors provide practice materials?", answer: "Many tutors use official practice tests and will guide you on where to find the best resources." },
+      { question: "Is this for absolute beginners?", answer: "Yes, our tutors can help you start from scratch or refine your skills if you are close to your goal." },
+    ],
+  },
 ];
 
 export function getProgramBySlug(slug: string): Program | undefined {
