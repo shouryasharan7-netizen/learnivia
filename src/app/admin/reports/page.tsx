@@ -23,6 +23,7 @@ export default async function AdminReportsPage() {
       reportedUser: true,
     },
     orderBy: { createdAt: "desc" },
+    take: 100,
   });
 
   return (

@@ -34,7 +34,8 @@ async function purgeAllStories() {
 
 export default async function AdminStoriesPage() {
   const stories = await prisma.story.findMany({
-    orderBy: { createdAt: "desc" }
+    orderBy: { createdAt: "desc" },
+    take: 100
   });
 
   return (

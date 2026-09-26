@@ -27,6 +27,7 @@ export default async function AdminUsersPage() {
       },
     },
     orderBy: { id: "desc" },
+    take: 100,
   });
 
   const serializedUsers = users.map((u) => ({

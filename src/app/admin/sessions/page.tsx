@@ -23,6 +23,7 @@ export default async function AdminSessionsPage() {
         student: { select: { id: true, name: true, email: true } },
       },
       orderBy: { startTime: "desc" },
+      take: 100,
     }),
     prisma.workshop.findMany({
       include: {
@@ -30,6 +31,7 @@ export default async function AdminSessionsPage() {
         enrollments: { select: { id: true } },
       },
       orderBy: { startTime: "desc" },
+      take: 100,
     }),
   ]);
 

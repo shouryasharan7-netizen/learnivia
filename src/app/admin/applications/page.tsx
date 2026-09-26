@@ -11,7 +11,8 @@ export default async function AdminApplicationsPage() {
       gradeLevels: true,
       trainingModules: true,
     },
-    orderBy: { createdAt: "asc" }
+    orderBy: { createdAt: "asc" },
+    take: 100
   });
 
   return (

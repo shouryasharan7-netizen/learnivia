@@ -34,6 +34,7 @@ export default async function AdminTutorsPage() {
       reviews: true,
     },
     orderBy: { createdAt: "desc" },
+    take: 100,
   });
 
   return (
