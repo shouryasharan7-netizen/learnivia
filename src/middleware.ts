@@ -5,56 +5,19 @@ import { authConfig } from "./auth.config";
 
 const { auth } = NextAuth(authConfig);
 
-// NOTE: This works within a single edge instance. For production at scale,
-// replace with Upstash Redis (@upstash/ratelimit) for distributed rate limiting.
-// This is still meaningful protection since Vercel reuses warm instances.
-interface RateLimitEntry {
-  count: number;
-  windowStart: number;
-}
-const rateLimitMap = new Map<string, RateLimitEntry>();
+import { checkRateLimit } from "@/lib/rate-limit";
 
-const RATE_LIMITS: Record<string, { max: number; windowMs: number }> = {
-  "/signin": { max: 10, windowMs: 60_000 }, // 10 login attempts/min/IP
-  "/signup": { max: 5, windowMs: 60_000 }, // 5 signups/min/IP
-  "/api/community": { max: 15, windowMs: 60_000 }, // 15 community messages/min
-  "/api/homework": { max: 10, windowMs: 60_000 }, // 10 homework posts/min
-};
-
-function checkRateLimit(ip: string, path: string): boolean {
-  const limit = Object.entries(RATE_LIMITS).find(([prefix]) =>
-    path.startsWith(prefix),
-  );
-  if (!limit) return true; // No limit for this path
-
-  const [, { max, windowMs }] = limit;
-  const key = `${ip}:${path}`;
-  const now = Date.now();
-  const entry = rateLimitMap.get(key);
-
-  if (!entry || now - entry.windowStart > windowMs) {
-    rateLimitMap.set(key, { count: 1, windowStart: now });
-    return true;
+// Rate Limit logic uses Upstash Redis for distributed protection across Edge instances
+async function handleRateLimit(ip: string, path: string): Promise<boolean> {
+  let limiterType: "auth" | "api" | "global" = "global";
+  if (path.startsWith("/signin") || path.startsWith("/signup")) {
+    limiterType = "auth";
+  } else if (path.startsWith("/api/")) {
+    limiterType = "api";
   }
 
-  if (entry.count >= max) {
-    return false; // Rate limit exceeded
-  }
-
-  entry.count++;
-  return true;
-}
-
-// Clean up old entries to prevent memory leak (runs occasionally)
-function maybePruneRateLimitMap() {
-  if (rateLimitMap.size > 5000) {
-    const now = Date.now();
-    for (const [key, entry] of rateLimitMap.entries()) {
-      if (now - entry.windowStart > 120_000) {
-        rateLimitMap.delete(key);
-      }
-    }
-  }
+  const { success } = await checkRateLimit(limiterType, ip);
+  return success;
 }
 
 const publicPaths = [
@@ -94,18 +57,17 @@ const publicPaths = [
 
 const onboardingPaths = ["/onboarding"];
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
   // P0-4: Apply rate limiting before any auth checks
-  maybePruneRateLimitMap();
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     req.headers.get("x-real-ip") ||
     "unknown";
 
-  if (!checkRateLimit(ip, nextUrl.pathname)) {
+  if (!(await handleRateLimit(ip, nextUrl.pathname))) {
     return new NextResponse(
       JSON.stringify({
         error: "Too many requests. Please wait a moment and try again.",
