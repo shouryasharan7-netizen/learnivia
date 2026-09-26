@@ -44,7 +44,7 @@ export function SidebarNav() {
   useEffect(() => {
     const saved = localStorage.getItem("learnivia_sidebar_collapsed");
     if (saved === "true") {
-      setCollapsed(true);
+      setTimeout(() => setCollapsed(true), 0);
     }
   }, []);
 

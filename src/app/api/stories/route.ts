@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     }
 
     // Mask name for student privacy (First Name + Last Initial)
-    let rawName = (
+    const rawName = (
       name?.trim() ||
       session.user.name ||
       "Community Learner"

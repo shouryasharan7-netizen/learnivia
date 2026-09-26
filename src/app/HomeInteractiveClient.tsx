@@ -310,7 +310,7 @@ export default function HomeInteractiveClient({
     <div className={styles.pageWrapper}>
       <section
         style={{
-          background: "#0C1B33",
+          background: "radial-gradient(ellipse at top, #1e293b, #020617)",
           color: "#fff",
           padding: "6rem 2rem 5rem",
           position: "relative",
@@ -331,78 +331,28 @@ export default function HomeInteractiveClient({
           }}
         >
           {[
-            {
-              src: "/images/new_mascots/mascot-1.jpeg",
-              top: "15%",
-              left: "8%",
-              delay: 0,
-            },
-            {
-              src: "/images/new_mascots/mascot-2.jpeg",
-              top: "45%",
-              left: "4%",
-              delay: 1.5,
-            },
-            {
-              src: "/images/new_mascots/mascot-3.jpeg",
-              bottom: "15%",
-              left: "12%",
-              delay: 0.8,
-            },
-            {
-              src: "/images/new_mascots/mascot-4.jpeg",
-              top: "12%",
-              right: "10%",
-              delay: 2.2,
-            },
-            {
-              src: "/images/new_mascots/mascot-5.jpeg",
-              top: "50%",
-              right: "5%",
-              delay: 0.5,
-            },
-            {
-              src: "/images/new_mascots/mascot-6.jpeg",
-              bottom: "20%",
-              right: "15%",
-              delay: 1.2,
-            },
-            {
-              src: "/images/new_mascots/mascot-7.jpeg",
-              top: "70%",
-              left: "18%",
-              delay: 2.8,
-            },
-            {
-              src: "/images/new_mascots/mascot-8.jpeg",
-              top: "25%",
-              left: "20%",
-              delay: 0.3,
-            },
-            {
-              src: "/images/new_mascots/mascot-9.jpeg",
-              top: "80%",
-              right: "25%",
-              delay: 1.8,
-            },
-            {
-              src: "/images/new_mascots/mascot-10.jpeg",
-              top: "30%",
-              right: "22%",
-              delay: 0.9,
-            },
-            {
-              src: "/images/new_mascots/mascot-11.jpeg",
-              top: "60%",
-              left: "25%",
-              delay: 1.1,
-            },
-            {
-              src: "/images/new_mascots/mascot-12.jpeg",
-              top: "40%",
-              right: "28%",
-              delay: 2.5,
-            },
+            // Left Edge Foxes
+            { src: "/images/new_mascots/mascot-1.jpeg", top: "10%", left: "3%", delay: 0 },
+            { src: "/images/new_mascots/mascot-2.jpeg", top: "25%", left: "12%", delay: 1.5 },
+            { src: "/images/new_mascots/mascot-3.jpeg", top: "45%", left: "5%", delay: 0.8 },
+            { src: "/images/new_mascots/mascot-7.jpeg", top: "65%", left: "14%", delay: 2.8 },
+            { src: "/images/new_mascots/mascot-8.jpeg", top: "85%", left: "4%", delay: 0.3 },
+            { src: "/images/new_mascots/mascot-11.jpeg", top: "15%", left: "18%", delay: 1.1 },
+            { src: "/images/new_mascots/mascot-1.jpeg", top: "35%", left: "2%", delay: 2.0 },
+            { src: "/images/new_mascots/mascot-2.jpeg", top: "55%", left: "16%", delay: 0.6 },
+            { src: "/images/new_mascots/mascot-3.jpeg", top: "75%", left: "8%", delay: 1.4 },
+            { src: "/images/new_mascots/mascot-7.jpeg", top: "90%", left: "15%", delay: 2.3 },
+            // Right Edge Foxes
+            { src: "/images/new_mascots/mascot-4.jpeg", top: "12%", right: "8%", delay: 2.2 },
+            { src: "/images/new_mascots/mascot-5.jpeg", top: "28%", right: "18%", delay: 0.5 },
+            { src: "/images/new_mascots/mascot-6.jpeg", top: "48%", right: "4%", delay: 1.2 },
+            { src: "/images/new_mascots/mascot-9.jpeg", top: "68%", right: "14%", delay: 1.8 },
+            { src: "/images/new_mascots/mascot-10.jpeg", top: "82%", right: "6%", delay: 0.9 },
+            { src: "/images/new_mascots/mascot-12.jpeg", top: "18%", right: "3%", delay: 2.5 },
+            { src: "/images/new_mascots/mascot-4.jpeg", top: "38%", right: "12%", delay: 1.0 },
+            { src: "/images/new_mascots/mascot-5.jpeg", top: "58%", right: "19%", delay: 0.4 },
+            { src: "/images/new_mascots/mascot-6.jpeg", top: "78%", right: "2%", delay: 2.1 },
+            { src: "/images/new_mascots/mascot-9.jpeg", top: "92%", right: "16%", delay: 1.3 },
           ].map((avatar, idx) => (
             <motion.img
               key={idx}
@@ -516,31 +466,33 @@ export default function HomeInteractiveClient({
                 maxWidth: 400,
               }}
             >
-              <Link
-                href="/signin"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "100%",
-                  padding: "1.1rem",
-                  background: "var(--primary, #0D9488)",
-                  color: "#fff",
-                  borderRadius: "9999px",
-                  fontWeight: 700,
-                  fontSize: "1.15rem",
-                  textDecoration: "none",
-                  transition: "background 150ms",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#0F766E")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "#0D9488")
-                }
-              >
-                Start Learning!
-              </Link>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
+                <Link
+                  href="/signin"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "100%",
+                    padding: "1.1rem",
+                    background: "var(--primary, #0D9488)",
+                    color: "#fff",
+                    borderRadius: "9999px",
+                    fontWeight: 700,
+                    fontSize: "1.15rem",
+                    textDecoration: "none",
+                    transition: "background 150ms",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = "#0F766E")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "#0D9488")
+                  }
+                >
+                  Start Learning!
+                </Link>
+              </motion.div>
 
               <div
                 style={{
@@ -549,58 +501,62 @@ export default function HomeInteractiveClient({
                   gap: "1rem",
                 }}
               >
-                <Link
-                  href="/about"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "0.875rem",
-                    border: "2px solid rgba(255,255,255,0.8)",
-                    color: "#fff",
-                    borderRadius: "9999px",
-                    fontWeight: 600,
-                    fontSize: "0.95rem",
-                    textDecoration: "none",
-                    transition: "all 150ms",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.1)";
-                    e.currentTarget.style.borderColor = "#fff";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)";
-                  }}
-                >
-                  For Parents
-                </Link>
-                <Link
-                  href="/signin?role=tutor"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "0.875rem",
-                    border: "2px solid rgba(255,255,255,0.8)",
-                    color: "#fff",
-                    borderRadius: "9999px",
-                    fontWeight: 600,
-                    fontSize: "0.95rem",
-                    textDecoration: "none",
-                    transition: "all 150ms",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.1)";
-                    e.currentTarget.style.borderColor = "#fff";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)";
-                  }}
-                >
-                  For Educators
-                </Link>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
+                  <Link
+                    href="/about"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "0.875rem",
+                      border: "2px solid rgba(255,255,255,0.8)",
+                      color: "#fff",
+                      borderRadius: "9999px",
+                      fontWeight: 600,
+                      fontSize: "0.95rem",
+                      textDecoration: "none",
+                      transition: "all 150ms",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                      e.currentTarget.style.borderColor = "#fff";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)";
+                    }}
+                  >
+                    For Parents
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
+                  <Link
+                    href="/signin?role=tutor"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "0.875rem",
+                      border: "2px solid rgba(255,255,255,0.8)",
+                      color: "#fff",
+                      borderRadius: "9999px",
+                      fontWeight: 600,
+                      fontSize: "0.95rem",
+                      textDecoration: "none",
+                      transition: "all 150ms",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                      e.currentTarget.style.borderColor = "#fff";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)";
+                    }}
+                  >
+                    For Educators
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </motion.div>

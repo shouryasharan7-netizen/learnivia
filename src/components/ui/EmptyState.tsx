@@ -1,5 +1,6 @@
 import React from "react";
 import { LucideIcon } from "lucide-react";
+import { motion } from "motion/react";
 
 interface EmptyStateProps {
   icon?: LucideIcon;
@@ -19,7 +20,10 @@ export function EmptyState({
   className = "",
 }: EmptyStateProps) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.97, y: 10 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className={className}
       style={{
         display: "flex",
@@ -27,38 +31,42 @@ export function EmptyState({
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "3rem 1.5rem",
+        padding: "3.5rem 2rem",
         background: "var(--wa-white)",
-        border: "1px dashed var(--wa-border)",
-        borderRadius: "var(--wa-radius-md)",
+        border: "1px dashed var(--wa-border-strong)",
+        borderRadius: "var(--wa-radius-lg)",
+        boxShadow: "var(--wa-shadow-sm)",
       }}
     >
       {Icon && (
-        <div
+        <motion.div
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 15 }}
           style={{
-            width: 44,
-            height: 44,
-            borderRadius: "10px",
-            background: "var(--wa-cream-dark)",
+            width: 52,
+            height: 52,
+            borderRadius: "12px",
+            background: "var(--primary-light)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "var(--wa-muted)",
-            marginBottom: "1rem",
+            color: "var(--primary)",
+            marginBottom: "1.25rem",
           }}
           aria-hidden="true"
         >
-          <Icon size={20} strokeWidth={1.75} />
-        </div>
+          <Icon size={24} strokeWidth={1.75} />
+        </motion.div>
       )}
 
       <h2
         style={{
           fontFamily: "var(--font-serif, Newsreader, serif)",
-          fontSize: "1.25rem",
-          fontWeight: 600,
+          fontSize: "1.35rem",
+          fontWeight: 700,
           color: "var(--wa-ink)",
-          marginBottom: "0.35rem",
+          marginBottom: "0.5rem",
           margin: 0,
         }}
       >
@@ -67,12 +75,12 @@ export function EmptyState({
 
       <p
         style={{
-          fontSize: "0.875rem",
+          fontSize: "0.95rem",
           color: "var(--wa-muted)",
-          maxWidth: "400px",
-          lineHeight: 1.5,
+          maxWidth: "420px",
+          lineHeight: 1.6,
           marginTop: "0.25rem",
-          marginBottom: action || secondaryAction ? "1.25rem" : 0,
+          marginBottom: action || secondaryAction ? "1.5rem" : 0,
         }}
       >
         {description}
@@ -92,6 +100,6 @@ export function EmptyState({
           {secondaryAction}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

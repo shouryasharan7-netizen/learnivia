@@ -50,7 +50,7 @@ export const getCurrentUser = cache(
 
     // Strict designated admin check
     const isAdmin = isDesignatedAdmin(dbUser);
-    let role: Role = isAdmin
+    const role: Role = isAdmin
       ? "ADMIN"
       : dbUser.role === "ADMIN"
         ? "STUDENT"

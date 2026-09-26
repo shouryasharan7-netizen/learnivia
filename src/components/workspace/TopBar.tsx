@@ -105,7 +105,9 @@ export function TopBar({ user }: TopBarProps) {
       }
     }
     const dismissed = sessionStorage.getItem("announcement-dismissed");
-    if (dismissed) setAnnouncementDismissed(true);
+    if (dismissed && active) {
+      setTimeout(() => setAnnouncementDismissed(true), 0);
+    }
 
     const savedNotifs = localStorage.getItem("learnivia-notifications");
     if (savedNotifs && active) {

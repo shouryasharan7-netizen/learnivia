@@ -30,8 +30,8 @@ export interface LeaderboardEntry {
 }
 
 // Fast memory cache for ranking and leaderboard to eliminate heavy relational DB scans
-let cachedUserScores: { id: string; points: number }[] | null = null;
-let lastUserScoresFetch = 0;
+const cachedUserScores: { id: string; points: number }[] | null = null;
+const lastUserScoresFetch = 0;
 const SCORES_CACHE_TTL = 120_000; // 2 minutes - ranking barely changes within 30s
 
 let cachedLeaderboard: LeaderboardEntry[] | null = null;

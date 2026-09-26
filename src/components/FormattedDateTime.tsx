@@ -38,7 +38,7 @@ export function FormattedDateTime({
         timeZone,
       });
 
-      setClientText(`${datePart} at ${timePart}`);
+      setTimeout(() => setClientText(`${datePart} at ${timePart}`), 0);
     } catch {
       // Fallback if timezone string is invalid
       try {

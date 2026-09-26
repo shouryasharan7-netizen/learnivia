@@ -161,10 +161,10 @@ export function Navbar() {
     const saved = localStorage.getItem("learnivia-theme") as
       "light" | "dark" | null;
     if (saved === "dark" || saved === "light") {
-      setTheme(saved);
+      setTimeout(() => setTheme(saved), 0);
       document.documentElement.setAttribute("data-theme", saved);
     } else {
-      setTheme("light");
+      setTimeout(() => setTheme("light"), 0);
       document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);

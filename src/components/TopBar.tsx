@@ -12,7 +12,7 @@ export function TopBar() {
   useEffect(() => {
     const savedTheme = localStorage.getItem("learnivia-theme");
     if (savedTheme) {
-      setTheme(savedTheme);
+      setTimeout(() => setTheme(savedTheme), 0);
       document.documentElement.setAttribute("data-theme", savedTheme);
     }
   }, []);

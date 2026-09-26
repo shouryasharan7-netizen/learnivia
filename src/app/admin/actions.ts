@@ -12,8 +12,9 @@ import type { Role } from "@prisma/client";
 
 import { validateDocumentFile, uploadReportCardToStorage } from "@/lib/storage";
 
-export async function approveApplication(tutorId: string) {
-  await requireAdmin();
+export async function approveApplication(tutorId: string, formData?: FormData) {
+  const admin = await requireAdmin();
+  const reason = formData ? (formData.get("reason") as string)?.trim() : null;
 
   const profile = await prisma.tutorProfile.update({
     where: { id: tutorId },
@@ -22,6 +23,15 @@ export async function approveApplication(tutorId: string) {
       approvedAt: new Date(),
     },
     include: { user: true },
+  });
+
+  await prisma.applicationAuditLog.create({
+    data: {
+      tutorId: profile.id,
+      adminId: admin.id,
+      action: "APPROVED",
+      reason: reason || "Application manually approved by admin",
+    }
   });
 
   // Update user role to TUTOR if they were a STUDENT
@@ -48,13 +58,23 @@ export async function approveApplication(tutorId: string) {
   revalidatePath("/admin");
 }
 
-export async function rejectApplication(tutorId: string) {
-  await requireAdmin();
+export async function rejectApplication(tutorId: string, formData?: FormData) {
+  const admin = await requireAdmin();
+  const reason = formData ? (formData.get("reason") as string)?.trim() : null;
 
   const profile = await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "REJECTED" },
     include: { user: true },
+  });
+
+  await prisma.applicationAuditLog.create({
+    data: {
+      tutorId: profile.id,
+      adminId: admin.id,
+      action: "REJECTED",
+      reason: reason || "Application rejected by admin",
+    }
   });
 
   if (profile.user.email) {
@@ -72,12 +92,13 @@ export async function rejectApplication(tutorId: string) {
   revalidatePath("/admin");
 }
 
-export async function suspendTutor(tutorId: string) {
-  await requireAdmin();
+export async function suspendTutor(tutorId: string, formData?: FormData) {
+  const admin = await requireAdmin();
+  const reason = formData ? (formData.get("reason") as string)?.trim() : null;
 
   const tutor = await prisma.tutorProfile.findUnique({
     where: { id: tutorId },
-    select: { userId: true },
+    select: { userId: true, id: true },
   });
 
   if (!tutor) throw new Error("Tutor profile not found");
@@ -88,6 +109,15 @@ export async function suspendTutor(tutorId: string) {
   await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "SUSPENDED" },
+  });
+
+  await prisma.applicationAuditLog.create({
+    data: {
+      tutorId: tutor.id,
+      adminId: admin.id,
+      action: "SUSPENDED",
+      reason: reason || "Tutor suspended by administrator review",
+    }
   });
 
   // 2. Mark user account suspended
@@ -152,12 +182,13 @@ export async function suspendTutor(tutorId: string) {
   revalidatePath("/tutor");
 }
 
-export async function reactivateTutor(tutorId: string) {
-  await requireAdmin();
+export async function reactivateTutor(tutorId: string, formData?: FormData) {
+  const admin = await requireAdmin();
+  const reason = formData ? (formData.get("reason") as string)?.trim() : null;
 
   const tutor = await prisma.tutorProfile.findUnique({
     where: { id: tutorId },
-    select: { userId: true },
+    select: { userId: true, id: true },
   });
 
   if (!tutor) throw new Error("Tutor profile not found");
@@ -165,6 +196,15 @@ export async function reactivateTutor(tutorId: string) {
   await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "APPROVED" },
+  });
+
+  await prisma.applicationAuditLog.create({
+    data: {
+      tutorId: tutor.id,
+      adminId: admin.id,
+      action: "REACTIVATED",
+      reason: reason || "Tutor reactivated by administrator review",
+    }
   });
 
   await prisma.user.update({

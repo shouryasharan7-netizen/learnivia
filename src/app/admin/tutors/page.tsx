@@ -477,7 +477,18 @@ export default async function AdminTutorsPage() {
                     </td>
                     <td style={{ padding: "0.75rem" }}>
                       {tutor.status === "APPROVED" && (
-                        <form action={suspendTutor.bind(null, tutor.id)}>
+                        <form action={suspendTutor.bind(null, tutor.id)} style={{display: 'flex', flexDirection: 'column', gap: '0.4rem'}}>
+                          <input
+                            type="text"
+                            name="reason"
+                            placeholder="Reason for suspension"
+                            style={{
+                              padding: "0.25rem",
+                              borderRadius: "4px",
+                              border: "1px solid var(--color-border)",
+                              fontSize: "0.7rem",
+                            }}
+                          />
                           <button
                             type="submit"
                             style={{
@@ -506,7 +517,19 @@ export default async function AdminTutorsPage() {
                         >
                           <form
                             action={approveApplication.bind(null, tutor.id)}
+                            style={{display: 'flex', flexDirection: 'column', gap: '0.4rem'}}
                           >
+                            <input
+                              type="text"
+                              name="reason"
+                              placeholder="Audit note (optional)"
+                              style={{
+                                padding: "0.25rem",
+                                borderRadius: "4px",
+                                border: "1px solid var(--color-border)",
+                                fontSize: "0.7rem",
+                              }}
+                            />
                             <button
                               type="submit"
                               style={{
@@ -545,7 +568,18 @@ export default async function AdminTutorsPage() {
                       )}
 
                       {tutor.status === "SUSPENDED" && (
-                        <form action={reactivateTutor.bind(null, tutor.id)}>
+                        <form action={reactivateTutor.bind(null, tutor.id)} style={{display: 'flex', flexDirection: 'column', gap: '0.4rem'}}>
+                          <input
+                            type="text"
+                            name="reason"
+                            placeholder="Reason for reactivation"
+                            style={{
+                              padding: "0.25rem",
+                              borderRadius: "4px",
+                              border: "1px solid var(--color-border)",
+                              fontSize: "0.7rem",
+                            }}
+                          />
                           <button
                             type="submit"
                             style={{
@@ -565,7 +599,18 @@ export default async function AdminTutorsPage() {
                       )}
 
                       {tutor.status === "REJECTED" && (
-                        <form action={approveApplication.bind(null, tutor.id)}>
+                        <form action={approveApplication.bind(null, tutor.id)} style={{display: 'flex', flexDirection: 'column', gap: '0.4rem'}}>
+                          <input
+                            type="text"
+                            name="reason"
+                            placeholder="Audit note (optional)"
+                            style={{
+                              padding: "0.25rem",
+                              borderRadius: "4px",
+                              border: "1px solid var(--color-border)",
+                              fontSize: "0.7rem",
+                            }}
+                          />
                           <button
                             type="submit"
                             style={{

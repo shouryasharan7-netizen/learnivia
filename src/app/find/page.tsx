@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { enrollInWorkshop } from "@/app/actions/workshops";
 import SessionsFilter from "./SessionsFilter";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 export const dynamic = "force-dynamic";
 
@@ -169,16 +170,16 @@ export default async function FindSessionsPage({ searchParams }: Props) {
             })}
           </div>
         ) : (
-          <div className={styles.emptyState}>
-            <Calendar size={48} className={styles.emptyIcon} />
-            <h3 className={styles.emptyTitle}>No sessions found</h3>
-            <p className={styles.emptyText}>
-              Try adjusting your search or selecting a different subject.
-            </p>
-            <Link href="/find" className={styles.clearBtn}>
-              Clear Filters
-            </Link>
-          </div>
+          <EmptyState
+            icon={Search}
+            title="No sessions found"
+            description="Try adjusting your search or selecting a different subject."
+            action={
+              <Link href="/find" className={styles.clearBtn}>
+                Clear Filters
+              </Link>
+            }
+          />
         )}
       </div>
     </div>

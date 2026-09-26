@@ -20,8 +20,10 @@ export function LogoSplash({ onComplete, forceShow = false }: LogoSplashProps) {
     // Determine if splash should display
     const hasShown = sessionStorage.getItem("learnivia_splash_shown");
     if (!hasShown || forceShow) {
-      setVisible(true);
-      setMounted(true);
+      setTimeout(() => {
+        setVisible(true);
+        setMounted(true);
+      }, 0);
       sessionStorage.setItem("learnivia_splash_shown", "true");
 
       const fadeTimer = setTimeout(() => {

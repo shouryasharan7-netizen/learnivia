@@ -664,7 +664,18 @@ export default async function AdminApplicationsPage() {
                   </div>
                 )}
                 <div style={{ display: "flex", gap: "1rem" }}>
-                  <form action={approveApplication.bind(null, tutor.id)}>
+                  <form action={approveApplication.bind(null, tutor.id)} style={{display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1}}>
+                    <input
+                      type="text"
+                      name="reason"
+                      placeholder="Audit note (optional)"
+                      style={{
+                        padding: "0.4rem",
+                        borderRadius: "4px",
+                        border: "1px solid var(--color-border)",
+                        fontSize: "0.8rem",
+                      }}
+                    />
                     <button
                       type="submit"
                       style={{
@@ -681,7 +692,18 @@ export default async function AdminApplicationsPage() {
                       Approve Tutor Application
                     </button>
                   </form>
-                  <form action={rejectApplication.bind(null, tutor.id)}>
+                  <form action={rejectApplication.bind(null, tutor.id)} style={{display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1}}>
+                     <input
+                      type="text"
+                      name="reason"
+                      placeholder="Rejection reason for audit"
+                      style={{
+                        padding: "0.4rem",
+                        borderRadius: "4px",
+                        border: "1px solid var(--color-border)",
+                        fontSize: "0.8rem",
+                      }}
+                    />
                     <button
                       type="submit"
                       style={{
