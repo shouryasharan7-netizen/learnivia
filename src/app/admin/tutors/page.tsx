@@ -82,7 +82,7 @@ export default async function AdminTutorsPage() {
 
       <div
         style={{
-          background: "white",
+          background: "var(--surface-raised, #FFFFFF)",
           borderRadius: "12px",
           border: "1px solid var(--color-border)",
           padding: "1.5rem",
@@ -421,7 +421,7 @@ export default async function AdminTutorsPage() {
                               display: "flex",
                               flexDirection: "column",
                               gap: "0.3rem",
-                              background: "#F8FAFC",
+                              background: "var(--surface-subtle, #F8FAFC)",
                               padding: "0.5rem",
                               borderRadius: "6px",
                               border: "1px solid var(--color-border)",
@@ -554,7 +554,7 @@ export default async function AdminTutorsPage() {
                               textAlign: "center",
                               border: "1px solid var(--color-border)",
                               color: "var(--color-navy)",
-                              background: "white",
+                              background: "var(--surface-raised, #FFFFFF)",
                               padding: "0.25rem 0.5rem",
                               borderRadius: "6px",
                               fontSize: "0.7rem",

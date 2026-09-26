@@ -91,13 +91,13 @@ export default function AdminSessionsClient({
           style={{
             fontSize: "1.75rem",
             fontWeight: 800,
-            color: "#0F172A",
+            color: "var(--text-primary, #0C1B33)",
             marginBottom: "0.5rem",
           }}
         >
           Platform Tutoring Sessions &amp; Workshops
         </h1>
-        <p style={{ color: "#64748B", fontSize: "0.95rem", margin: 0 }}>
+        <p style={{ color: "var(--text-secondary, #475569)", fontSize: "0.95rem", margin: 0 }}>
           Master control over all scheduled 1-on-1 tutoring sessions and live
           group study circles.
         </p>
@@ -106,7 +106,7 @@ export default function AdminSessionsClient({
       {toastMsg && (
         <div
           style={{
-            background: "#ECFDF5",
+            background: "var(--success-bg, #ECFDF5)",
             border: "1px solid #A7F3D0",
             color: "#065F46",
             padding: "0.75rem 1.25rem",
@@ -127,9 +127,9 @@ export default function AdminSessionsClient({
       {/* 1-on-1 Sessions Table */}
       <div
         style={{
-          background: "#FFFFFF",
+          background: "var(--surface-raised, #FFFFFF)",
           borderRadius: "14px",
-          border: "1px solid #E2E8F0",
+          border: "1px solid var(--border, #E2E8F0)",
           padding: "1.5rem",
           marginBottom: "2.5rem",
         }}
@@ -138,7 +138,7 @@ export default function AdminSessionsClient({
           style={{
             fontSize: "1.25rem",
             fontWeight: 700,
-            color: "#0F172A",
+            color: "var(--text-primary, #0C1B33)",
             marginBottom: "1rem",
           }}
         >
@@ -146,7 +146,7 @@ export default function AdminSessionsClient({
         </h2>
 
         {bookings.length === 0 ? (
-          <p style={{ color: "#64748B", fontStyle: "italic" }}>
+          <p style={{ color: "var(--text-secondary, #475569)", fontStyle: "italic" }}>
             No bookings recorded yet.
           </p>
         ) : (
@@ -161,8 +161,8 @@ export default function AdminSessionsClient({
               <thead>
                 <tr
                   style={{
-                    background: "#F8FAFC",
-                    borderBottom: "1px solid #E2E8F0",
+                    background: "var(--surface-subtle, #F8FAFC)",
+                    borderBottom: "1px solid var(--border, #E2E8F0)",
                     textAlign: "left",
                   }}
                 >
@@ -273,7 +273,7 @@ export default function AdminSessionsClient({
                                 handleBookingStatus(b.id, "COMPLETED")
                               }
                               style={{
-                                background: "#ECFDF5",
+                                background: "var(--success-bg, #ECFDF5)",
                                 color: "#065F46",
                                 border: "1px solid #A7F3D0",
                                 padding: "0.25rem 0.5rem",
@@ -295,7 +295,7 @@ export default function AdminSessionsClient({
                                 handleBookingStatus(b.id, "COMPLETED")
                               }
                               style={{
-                                background: "#EFF6FF",
+                                background: "var(--primary-subtle, #EFF6FF)",
                                 color: "#1E40AF",
                                 border: "1px solid #BFDBFE",
                                 padding: "0.25rem 0.5rem",
@@ -317,7 +317,7 @@ export default function AdminSessionsClient({
                                 handleBookingStatus(b.id, "CANCELED")
                               }
                               style={{
-                                background: "#FEF2F2",
+                                background: "var(--error-bg, #FEF2F2)",
                                 color: "#991B1B",
                                 border: "1px solid #FECACA",
                                 padding: "0.25rem 0.5rem",
@@ -345,9 +345,9 @@ export default function AdminSessionsClient({
       {/* Group Workshops Table */}
       <div
         style={{
-          background: "#FFFFFF",
+          background: "var(--surface-raised, #FFFFFF)",
           borderRadius: "14px",
-          border: "1px solid #E2E8F0",
+          border: "1px solid var(--border, #E2E8F0)",
           padding: "1.5rem",
         }}
       >
@@ -355,7 +355,7 @@ export default function AdminSessionsClient({
           style={{
             fontSize: "1.25rem",
             fontWeight: 700,
-            color: "#0F172A",
+            color: "var(--text-primary, #0C1B33)",
             marginBottom: "1rem",
           }}
         >
@@ -363,7 +363,7 @@ export default function AdminSessionsClient({
         </h2>
 
         {workshops.length === 0 ? (
-          <p style={{ color: "#64748B", fontStyle: "italic" }}>
+          <p style={{ color: "var(--text-secondary, #475569)", fontStyle: "italic" }}>
             No workshops created yet.
           </p>
         ) : (
@@ -378,8 +378,8 @@ export default function AdminSessionsClient({
               <thead>
                 <tr
                   style={{
-                    background: "#F8FAFC",
-                    borderBottom: "1px solid #E2E8F0",
+                    background: "var(--surface-subtle, #F8FAFC)",
+                    borderBottom: "1px solid var(--border, #E2E8F0)",
                     textAlign: "left",
                   }}
                 >
@@ -410,7 +410,7 @@ export default function AdminSessionsClient({
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
-                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                        <div style={{ fontSize: "0.75rem", color: "var(--text-secondary, #475569)" }}>
                           {w.durationMinutes} mins
                         </div>
                       </td>
@@ -461,7 +461,7 @@ export default function AdminSessionsClient({
                           disabled={isBusy}
                           onClick={() => handleDeleteWorkshop(w.id, w.title)}
                           style={{
-                            background: "#FEE2E2",
+                            background: "var(--error-bg, #FEF2F2)",
                             color: "#991B1B",
                             border: "1px solid #FECACA",
                             padding: "0.25rem 0.55rem",

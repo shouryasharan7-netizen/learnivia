@@ -104,13 +104,13 @@ export default function AdminModerationClient({
           style={{
             fontSize: "1.75rem",
             fontWeight: 800,
-            color: "#0F172A",
+            color: "var(--text-primary, #0C1B33)",
             marginBottom: "0.5rem",
           }}
         >
           Content &amp; Community Moderation
         </h1>
-        <p style={{ color: "#64748B", fontSize: "0.95rem", margin: 0 }}>
+        <p style={{ color: "var(--text-secondary, #475569)", fontSize: "0.95rem", margin: 0 }}>
           Broadcast official announcements, purge inappropriate posts, and
           monitor homework inquiries.
         </p>
@@ -119,7 +119,7 @@ export default function AdminModerationClient({
       {toastMsg && (
         <div
           style={{
-            background: "#ECFDF5",
+            background: "var(--success-bg, #ECFDF5)",
             border: "1px solid #A7F3D0",
             color: "#065F46",
             padding: "0.75rem 1.25rem",
@@ -280,14 +280,14 @@ export default function AdminModerationClient({
       {activeTab === "community" && (
         <div
           style={{
-            background: "#FFFFFF",
+            background: "var(--surface-raised, #FFFFFF)",
             borderRadius: "14px",
-            border: "1px solid #E2E8F0",
+            border: "1px solid var(--border, #E2E8F0)",
             padding: "1.5rem",
           }}
         >
           {messages.length === 0 ? (
-            <p style={{ color: "#64748B", fontStyle: "italic" }}>
+            <p style={{ color: "var(--text-secondary, #475569)", fontStyle: "italic" }}>
               No community messages found.
             </p>
           ) : (
@@ -300,7 +300,7 @@ export default function AdminModerationClient({
                   style={{
                     padding: "1rem",
                     borderRadius: "10px",
-                    background: "#F8FAFC",
+                    background: "var(--surface-subtle, #F8FAFC)",
                     border: "1px solid #F1F5F9",
                     display: "flex",
                     justifyContent: "space-between",
@@ -318,16 +318,16 @@ export default function AdminModerationClient({
                         flexWrap: "wrap",
                       }}
                     >
-                      <span style={{ fontWeight: 700, color: "#0F172A" }}>
+                      <span style={{ fontWeight: 700, color: "var(--text-primary, #0C1B33)" }}>
                         {m.authorName}
                       </span>
-                      <span style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-secondary, #475569)" }}>
                         ({m.authorEmail})
                       </span>
                       <span
                         style={{
                           background: "#E2E8F0",
-                          color: "#475569",
+                          color: "var(--text-secondary, #475569)",
                           fontSize: "0.7rem",
                           fontWeight: 700,
                           padding: "0.15rem 0.5rem",
@@ -336,7 +336,7 @@ export default function AdminModerationClient({
                       >
                         #{m.channel}
                       </span>
-                      <span style={{ fontSize: "0.75rem", color: "#94A3B8" }}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-muted, #94A3B8)" }}>
                         {new Date(m.createdAt).toLocaleDateString()}{" "}
                         {new Date(m.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
@@ -359,7 +359,7 @@ export default function AdminModerationClient({
                     type="button"
                     onClick={() => handleDeleteMessage(m.id)}
                     style={{
-                      background: "#FEE2E2",
+                      background: "var(--error-bg, #FEF2F2)",
                       color: "#991B1B",
                       border: "1px solid #FECACA",
                       padding: "0.35rem 0.65rem",
@@ -388,14 +388,14 @@ export default function AdminModerationClient({
       {activeTab === "homework" && (
         <div
           style={{
-            background: "#FFFFFF",
+            background: "var(--surface-raised, #FFFFFF)",
             borderRadius: "14px",
-            border: "1px solid #E2E8F0",
+            border: "1px solid var(--border, #E2E8F0)",
             padding: "1.5rem",
           }}
         >
           {homework.length === 0 ? (
-            <p style={{ color: "#64748B", fontStyle: "italic" }}>
+            <p style={{ color: "var(--text-secondary, #475569)", fontStyle: "italic" }}>
               No homework inquiries recorded.
             </p>
           ) : (
@@ -408,7 +408,7 @@ export default function AdminModerationClient({
                   style={{
                     padding: "1rem",
                     borderRadius: "10px",
-                    background: "#F8FAFC",
+                    background: "var(--surface-subtle, #F8FAFC)",
                     border: "1px solid #F1F5F9",
                     display: "flex",
                     justifyContent: "space-between",
@@ -428,7 +428,7 @@ export default function AdminModerationClient({
                     >
                       <span
                         style={{
-                          background: "#EAF3ED",
+                          background: "var(--success-bg, #ECFDF5)",
                           color: "#C9922A",
                           fontSize: "0.75rem",
                           fontWeight: 700,
@@ -438,7 +438,7 @@ export default function AdminModerationClient({
                       >
                         {h.subject}
                       </span>
-                      <span style={{ fontWeight: 700, color: "#0F172A" }}>
+                      <span style={{ fontWeight: 700, color: "var(--text-primary, #0C1B33)" }}>
                         {h.studentName}
                       </span>
                       <span
@@ -455,7 +455,7 @@ export default function AdminModerationClient({
                       >
                         {h.status}
                       </span>
-                      <span style={{ fontSize: "0.75rem", color: "#94A3B8" }}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-muted, #94A3B8)" }}>
                         {new Date(h.createdAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -474,7 +474,7 @@ export default function AdminModerationClient({
                     type="button"
                     onClick={() => handleDeleteHomework(h.id)}
                     style={{
-                      background: "#FEE2E2",
+                      background: "var(--error-bg, #FEF2F2)",
                       color: "#991B1B",
                       border: "1px solid #FECACA",
                       padding: "0.35rem 0.65rem",

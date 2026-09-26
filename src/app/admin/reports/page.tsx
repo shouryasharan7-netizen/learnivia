@@ -88,7 +88,7 @@ export default async function AdminReportsPage() {
             <div
               key={report.id}
               style={{
-                background: "white",
+                background: "var(--surface-raised, #FFFFFF)",
                 padding: "1.5rem",
                 borderRadius: "12px",
                 border: "1px solid var(--color-border)",

@@ -24,7 +24,7 @@ export function ErrorState({
       className={className}
       style={{
         padding: "1.75rem",
-        background: "#FFFBF7",
+        background: "var(--warning-light, #FFFBF7)",
         border: "1px solid #F5D5C6",
         borderRadius: "var(--wa-radius-md)",
         display: "flex",

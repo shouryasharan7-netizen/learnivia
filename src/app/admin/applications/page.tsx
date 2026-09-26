@@ -321,7 +321,7 @@ export default async function AdminApplicationsPage() {
                       display: "flex",
                       flexDirection: "column",
                       gap: "0.5rem",
-                      background: "white",
+                      background: "var(--surface-raised, #FFFFFF)",
                       padding: "1rem",
                       borderRadius: "8px",
                       border: "1px solid var(--color-border)",

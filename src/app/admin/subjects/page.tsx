@@ -60,7 +60,7 @@ export default async function AdminSubjectsPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#F9FAFB",
+        background: "var(--surface-subtle, #F8FAFC)",
         padding: "2rem 1.5rem",
         fontFamily: "var(--font-body, Inter, sans-serif)",
       }}
@@ -88,7 +88,7 @@ export default async function AdminSubjectsPage() {
             style={{
               fontSize: "1.5rem",
               fontWeight: 800,
-              color: "#111827",
+              color: "var(--text-primary, #0C1B33)",
               margin: 0,
             }}
           >
@@ -98,7 +98,7 @@ export default async function AdminSubjectsPage() {
 
         <div
           style={{
-            background: "#FEF9C3",
+            background: "var(--warning-bg, #FEF9C3)",
             border: "1px solid #FDE047",
             borderRadius: "0.75rem",
             padding: "1rem 1.25rem",
@@ -123,7 +123,7 @@ export default async function AdminSubjectsPage() {
           {/* Subjects Panel */}
           <section
             style={{
-              background: "#fff",
+              background: "var(--surface-raised, #FFFFFF)",
               border: "1px solid #E5E7EB",
               borderRadius: "1rem",
               padding: "1.5rem",
@@ -133,7 +133,7 @@ export default async function AdminSubjectsPage() {
               style={{
                 fontSize: "1.125rem",
                 fontWeight: 800,
-                color: "#111827",
+                color: "var(--text-primary, #0C1B33)",
                 marginBottom: "1rem",
               }}
             >
@@ -156,7 +156,7 @@ export default async function AdminSubjectsPage() {
                     key={s}
                     style={{
                       padding: "0.25rem 0.65rem",
-                      background: "#F0FDF4",
+                      background: "var(--success-bg, #ECFDF5)",
                       color: "#0D683B",
                       borderRadius: "4px",
                       fontSize: "0.8rem",
@@ -248,7 +248,7 @@ export default async function AdminSubjectsPage() {
           {/* Grade Levels Panel */}
           <section
             style={{
-              background: "#fff",
+              background: "var(--surface-raised, #FFFFFF)",
               border: "1px solid #E5E7EB",
               borderRadius: "1rem",
               padding: "1.5rem",
@@ -258,7 +258,7 @@ export default async function AdminSubjectsPage() {
               style={{
                 fontSize: "1.125rem",
                 fontWeight: 800,
-                color: "#111827",
+                color: "var(--text-primary, #0C1B33)",
                 marginBottom: "1rem",
               }}
             >
@@ -304,7 +304,7 @@ export default async function AdminSubjectsPage() {
                           style={{
                             fontSize: "0.875rem",
                             fontWeight: 600,
-                            color: "#111827",
+                            color: "var(--text-primary, #0C1B33)",
                           }}
                         >
                           {g.name}
@@ -340,7 +340,7 @@ export default async function AdminSubjectsPage() {
         <div
           style={{
             marginTop: "2rem",
-            background: "#fff",
+            background: "var(--surface-raised, #FFFFFF)",
             border: "1px solid #E5E7EB",
             borderRadius: "1rem",
             padding: "1.5rem",
@@ -350,7 +350,7 @@ export default async function AdminSubjectsPage() {
             style={{
               fontSize: "1.125rem",
               fontWeight: 800,
-              color: "#111827",
+              color: "var(--text-primary, #0C1B33)",
               marginBottom: "0.5rem",
             }}
           >
@@ -369,7 +369,7 @@ export default async function AdminSubjectsPage() {
           </p>
           <div
             style={{
-              background: "#111827",
+              background: "var(--text-primary, #111827)",
               color: "#D1FAE5",
               padding: "1rem 1.25rem",
               borderRadius: "0.5rem",

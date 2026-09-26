@@ -150,7 +150,7 @@ export default async function AdminStoriesPage() {
             <div
               key={story.id}
               style={{
-                background: "white",
+                background: "var(--surface-raised, #FFFFFF)",
                 padding: "1.5rem",
                 borderRadius: "1rem",
                 border: "1px solid var(--color-border)",
@@ -258,7 +258,7 @@ export default async function AdminStoriesPage() {
                   <button
                     type="submit"
                     style={{
-                      background: "white",
+                      background: "var(--surface-raised, #FFFFFF)",
                       color: "var(--color-error)",
                       border: "1px solid var(--color-error)",
                       padding: "0.6rem 1.25rem",

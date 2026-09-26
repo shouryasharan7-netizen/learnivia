@@ -102,8 +102,8 @@ export default function AdjustHoursButton({
         onClick={handleOpen}
         type="button"
         style={{
-          background: "#F1F5F9",
-          border: "1px solid #CBD5E1",
+          background: "var(--surface-subtle, #F8FAFC)",
+          border: "1px solid var(--border, #E2E8F0)",
           color: "#334155",
           padding: "0.25rem 0.55rem",
           borderRadius: "6px",
@@ -137,7 +137,7 @@ export default function AdjustHoursButton({
         >
           <div
             style={{
-              background: "#FFFFFF",
+              background: "var(--surface-raised, #FFFFFF)",
               borderRadius: "14px",
               padding: "1.5rem",
               maxWidth: "500px",
@@ -161,7 +161,7 @@ export default function AdjustHoursButton({
                   margin: 0,
                   fontSize: "1.15rem",
                   fontWeight: 800,
-                  color: "#0F172A",
+                  color: "var(--text-primary, #0C1B33)",
                 }}
               >
                 Adjust Volunteer Hours
@@ -172,7 +172,7 @@ export default function AdjustHoursButton({
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
-                  color: "#94A3B8",
+                  color: "var(--text-muted, #94A3B8)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -186,7 +186,7 @@ export default function AdjustHoursButton({
 
             <div
               style={{
-                background: "#F8FAFC",
+                background: "var(--surface-subtle, #F8FAFC)",
                 padding: "0.75rem",
                 borderRadius: "8px",
                 marginBottom: "1rem",
@@ -205,9 +205,9 @@ export default function AdjustHoursButton({
             {errorMsg && (
               <div
                 style={{
-                  background: "#FEF2F2",
+                  background: "var(--error-bg, #FEF2F2)",
                   border: "1px solid #FCA5A5",
-                  color: "#B91C1C",
+                  color: "var(--error, #DC2626)",
                   padding: "0.6rem 0.75rem",
                   borderRadius: "6px",
                   fontSize: "0.8rem",
@@ -221,7 +221,7 @@ export default function AdjustHoursButton({
             {successMsg && (
               <div
                 style={{
-                  background: "#F0FDF4",
+                  background: "var(--success-bg, #ECFDF5)",
                   border: "1px solid #86EFAC",
                   color: "#15803D",
                   padding: "0.6rem 0.75rem",
@@ -266,7 +266,7 @@ export default function AdjustHoursButton({
                     width: "100%",
                     padding: "0.55rem 0.75rem",
                     borderRadius: "6px",
-                    border: "1px solid #CBD5E1",
+                    border: "1px solid var(--border, #E2E8F0)",
                     fontSize: "0.9rem",
                   }}
                 />
@@ -294,7 +294,7 @@ export default function AdjustHoursButton({
                     width: "100%",
                     padding: "0.55rem 0.75rem",
                     borderRadius: "6px",
-                    border: "1px solid #CBD5E1",
+                    border: "1px solid var(--border, #E2E8F0)",
                     fontSize: "0.85rem",
                     fontFamily: "inherit",
                   }}
@@ -314,12 +314,12 @@ export default function AdjustHoursButton({
                   onClick={() => setIsOpen(false)}
                   style={{
                     background: "transparent",
-                    border: "1px solid #CBD5E1",
+                    border: "1px solid var(--border, #E2E8F0)",
                     padding: "0.45rem 0.85rem",
                     borderRadius: "6px",
                     fontSize: "0.8rem",
                     fontWeight: 600,
-                    color: "#64748B",
+                    color: "var(--text-secondary, #475569)",
                     cursor: "pointer",
                   }}
                 >
@@ -349,7 +349,7 @@ export default function AdjustHoursButton({
             <div
               style={{
                 marginTop: "1.5rem",
-                borderTop: "1px solid #E2E8F0",
+                borderTop: "1px solid var(--border, #E2E8F0)",
                 paddingTop: "1rem",
               }}
             >
@@ -357,7 +357,7 @@ export default function AdjustHoursButton({
                 style={{
                   fontSize: "0.85rem",
                   fontWeight: 700,
-                  color: "#0F172A",
+                  color: "var(--text-primary, #0C1B33)",
                   marginBottom: "0.5rem",
                   display: "flex",
                   alignItems: "center",
@@ -368,7 +368,7 @@ export default function AdjustHoursButton({
                 <span>Audit Trail History</span>
               </div>
               {loadingAudits ? (
-                <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary, #475569)" }}>
                   Loading audit log...
                 </div>
               ) : audits && audits.length > 0 ? (
@@ -383,8 +383,8 @@ export default function AdjustHoursButton({
                     <div
                       key={a.id}
                       style={{
-                        background: "#F8FAFC",
-                        border: "1px solid #E2E8F0",
+                        background: "var(--surface-subtle, #F8FAFC)",
+                        border: "1px solid var(--border, #E2E8F0)",
                         borderRadius: "6px",
                         padding: "0.5rem 0.75rem",
                         fontSize: "0.75rem",
@@ -402,16 +402,16 @@ export default function AdjustHoursButton({
                           {a.oldHours.toFixed(1)} hrs → {a.newHours.toFixed(1)}{" "}
                           hrs
                         </span>
-                        <span style={{ color: "#64748B", fontWeight: 400 }}>
+                        <span style={{ color: "var(--text-secondary, #475569)", fontWeight: 400 }}>
                           {new Date(a.createdAt).toLocaleDateString()}
                         </span>
                       </div>
-                      <div style={{ color: "#475569", marginTop: "0.2rem" }}>
+                      <div style={{ color: "var(--text-secondary, #475569)", marginTop: "0.2rem" }}>
                         {a.reason}
                       </div>
                       <div
                         style={{
-                          color: "#94A3B8",
+                          color: "var(--text-muted, #94A3B8)",
                           fontSize: "0.7rem",
                           marginTop: "0.2rem",
                         }}
@@ -422,7 +422,7 @@ export default function AdjustHoursButton({
                   ))}
                 </div>
               ) : (
-                <div style={{ fontSize: "0.75rem", color: "#94A3B8" }}>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-muted, #94A3B8)" }}>
                   No manual hour adjustments recorded yet.
                 </div>
               )}

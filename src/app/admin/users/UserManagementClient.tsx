@@ -100,13 +100,13 @@ export default function UserManagementClient({
           style={{
             fontSize: "1.75rem",
             fontWeight: 800,
-            color: "#0F172A",
+            color: "var(--text-primary, #0C1B33)",
             marginBottom: "0.5rem",
           }}
         >
           User Accounts &amp; Access Controls
         </h1>
-        <p style={{ color: "#64748B", fontSize: "0.95rem", margin: 0 }}>
+        <p style={{ color: "var(--text-secondary, #475569)", fontSize: "0.95rem", margin: 0 }}>
           Manage all registered students, volunteer tutors, and platform
           administrators. Modify roles and enforce account standards.
         </p>
@@ -116,7 +116,7 @@ export default function UserManagementClient({
       {toastMsg && (
         <div
           style={{
-            background: "#ECFDF5",
+            background: "var(--success-bg, #ECFDF5)",
             border: "1px solid #A7F3D0",
             color: "#065F46",
             padding: "0.75rem 1.25rem",
@@ -137,10 +137,10 @@ export default function UserManagementClient({
       {/* Search and Filters Bar */}
       <div
         style={{
-          background: "#FFFFFF",
+          background: "var(--surface-raised, #FFFFFF)",
           padding: "1rem 1.25rem",
           borderRadius: "14px",
-          border: "1px solid #E2E8F0",
+          border: "1px solid var(--border, #E2E8F0)",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -180,7 +180,7 @@ export default function UserManagementClient({
           style={{
             padding: "0.5rem 1rem",
             borderRadius: "8px",
-            border: "1px solid #CBD5E1",
+            border: "1px solid var(--border, #E2E8F0)",
             fontSize: "0.875rem",
             width: 280,
             outline: "none",
@@ -191,9 +191,9 @@ export default function UserManagementClient({
       {/* Users Table */}
       <div
         style={{
-          background: "#FFFFFF",
+          background: "var(--surface-raised, #FFFFFF)",
           borderRadius: "14px",
-          border: "1px solid #E2E8F0",
+          border: "1px solid var(--border, #E2E8F0)",
           overflow: "hidden",
         }}
       >
@@ -208,15 +208,15 @@ export default function UserManagementClient({
             <thead>
               <tr
                 style={{
-                  background: "#F8FAFC",
-                  borderBottom: "1px solid #E2E8F0",
+                  background: "var(--surface-subtle, #F8FAFC)",
+                  borderBottom: "1px solid var(--border, #E2E8F0)",
                   textAlign: "left",
                 }}
               >
                 <th
                   style={{
                     padding: "0.875rem 1rem",
-                    color: "#475569",
+                    color: "var(--text-secondary, #475569)",
                     fontWeight: 700,
                   }}
                 >
@@ -225,7 +225,7 @@ export default function UserManagementClient({
                 <th
                   style={{
                     padding: "0.875rem 1rem",
-                    color: "#475569",
+                    color: "var(--text-secondary, #475569)",
                     fontWeight: 700,
                   }}
                 >
@@ -234,7 +234,7 @@ export default function UserManagementClient({
                 <th
                   style={{
                     padding: "0.875rem 1rem",
-                    color: "#475569",
+                    color: "var(--text-secondary, #475569)",
                     fontWeight: 700,
                   }}
                 >
@@ -243,7 +243,7 @@ export default function UserManagementClient({
                 <th
                   style={{
                     padding: "0.875rem 1rem",
-                    color: "#475569",
+                    color: "var(--text-secondary, #475569)",
                     fontWeight: 700,
                   }}
                 >
@@ -252,7 +252,7 @@ export default function UserManagementClient({
                 <th
                   style={{
                     padding: "0.875rem 1rem",
-                    color: "#475569",
+                    color: "var(--text-secondary, #475569)",
                     fontWeight: 700,
                     textAlign: "right",
                   }}
@@ -269,7 +269,7 @@ export default function UserManagementClient({
                     style={{
                       padding: "3rem",
                       textAlign: "center",
-                      color: "#64748B",
+                      color: "var(--text-secondary, #475569)",
                     }}
                   >
                     No users found matching your search.
@@ -286,16 +286,16 @@ export default function UserManagementClient({
                       style={{ borderBottom: "1px solid #F1F5F9" }}
                     >
                       <td style={{ padding: "0.875rem 1rem" }}>
-                        <div style={{ fontWeight: 700, color: "#0F172A" }}>
+                        <div style={{ fontWeight: 700, color: "var(--text-primary, #0C1B33)" }}>
                           {u.name || "Learner"}
                         </div>
-                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                        <div style={{ fontSize: "0.75rem", color: "var(--text-secondary, #475569)" }}>
                           {u.email}
                         </div>
                         <div
                           style={{
                             fontSize: "0.7rem",
-                            color: "#94A3B8",
+                            color: "var(--text-muted, #94A3B8)",
                             marginTop: "0.15rem",
                           }}
                         >
@@ -309,7 +309,7 @@ export default function UserManagementClient({
                         <div>
                           {u.curriculum ? `${u.curriculum}` : "General"}
                         </div>
-                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                        <div style={{ fontSize: "0.75rem", color: "var(--text-secondary, #475569)" }}>
                           {u.grade ? `Grade ${u.grade}` : "Grade unspecified"}
                           {u.age ? ` • Age ${u.age}` : ""}
                         </div>
@@ -319,7 +319,7 @@ export default function UserManagementClient({
                         <div style={{ fontWeight: 700, color: "#0E8345" }}>
                           {u.points} SP
                         </div>
-                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                        <div style={{ fontSize: "0.75rem", color: "var(--text-secondary, #475569)" }}>
                           {u.completedSessions} sessions
                           {u.tutorProfile &&
                             ` • ${u.tutorProfile.volunteerHours.toFixed(1)} hrs taught`}
@@ -375,10 +375,10 @@ export default function UserManagementClient({
                             style={{
                               padding: "0.35rem 0.6rem",
                               borderRadius: "6px",
-                              border: "1px solid #CBD5E1",
+                              border: "1px solid var(--border, #E2E8F0)",
                               fontSize: "0.8rem",
                               fontWeight: 600,
-                              background: "#FFFFFF",
+                              background: "var(--surface-raised, #FFFFFF)",
                               cursor: isCurrentAdmin
                                 ? "not-allowed"
                                 : "pointer",
@@ -401,8 +401,8 @@ export default function UserManagementClient({
                               disabled={isBusy}
                               onClick={() => handleDeleteUser(u.id, u.name)}
                               style={{
-                                background: "#FEE2E2",
-                                color: "#B91C1C",
+                                background: "var(--error-bg, #FEF2F2)",
+                                color: "var(--error, #DC2626)",
                                 border: "1px solid #FCA5A5",
                                 padding: "0.35rem 0.65rem",
                                 borderRadius: "6px",
