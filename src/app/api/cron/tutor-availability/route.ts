@@ -52,6 +52,7 @@ export async function GET(request: Request) {
           },
         },
       },
+      take: 50,
     });
 
     const availabilityResults = {
@@ -116,6 +117,7 @@ export async function GET(request: Request) {
           },
         },
       },
+      take: 50,
     });
 
     const trainingResults = {
