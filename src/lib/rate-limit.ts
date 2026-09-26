@@ -1,9 +1,12 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
+const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+
 // Only create limiters if env vars are present (to allow build/local dev without Redis)
-const hasRedis = !!process.env.UPSTASH_REDIS_REST_URL && !!process.env.UPSTASH_REDIS_REST_TOKEN;
-const redis = hasRedis ? Redis.fromEnv() : null;
+const hasRedis = !!url && !!token;
+const redis = hasRedis ? new Redis({ url: url!, token: token! }) : null;
 
 // Different limiters for different contexts
 export const rateLimiters = {
