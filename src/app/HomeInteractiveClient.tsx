@@ -353,7 +353,7 @@ export default function HomeInteractiveClient({
             { src: "/images/new_mascots/mascot-5.jpeg", top: "58%", right: "19%", delay: 0.4 },
             { src: "/images/new_mascots/mascot-6.jpeg", top: "78%", right: "2%", delay: 2.1 },
             { src: "/images/new_mascots/mascot-9.jpeg", top: "92%", right: "16%", delay: 1.3 },
-          ].map((avatar, idx) => (
+          ].map((avatar: any, idx) => (
             <motion.img
               key={idx}
               src={avatar.src}
