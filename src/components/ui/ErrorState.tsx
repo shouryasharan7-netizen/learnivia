@@ -25,7 +25,7 @@ export function ErrorState({
       style={{
         padding: "1.75rem",
         background: "var(--warning-light, #FFFBF7)",
-        border: "1px solid #F5D5C6",
+        border: "1px solid var(--warning, #F5D5C6)",
         borderRadius: "var(--wa-radius-md)",
         display: "flex",
         flexDirection: "column",
@@ -47,7 +47,7 @@ export function ErrorState({
             fontFamily: "var(--font-serif, Newsreader, serif)",
             fontSize: "1.125rem",
             fontWeight: 600,
-            color: "var(--wa-ink)",
+            color: "var(--text-primary, #0C1B33)",
             margin: 0,
           }}
         >
@@ -58,7 +58,7 @@ export function ErrorState({
       <p
         style={{
           fontSize: "0.875rem",
-          color: "var(--wa-text)",
+          color: "var(--text-secondary, #475569)",
           margin: 0,
           lineHeight: 1.5,
         }}
@@ -85,9 +85,9 @@ export function ErrorState({
                 gap: "0.4rem",
                 padding: "0.45rem 0.85rem",
                 borderRadius: "var(--wa-radius-sm)",
-                background: "var(--wa-white)",
-                border: "1px solid var(--wa-border)",
-                color: "var(--wa-ink)",
+                background: "var(--surface-raised, #FFFFFF)",
+                border: "1px solid var(--border, #E2E8F0)",
+                color: "var(--text-primary, #0C1B33)",
                 fontSize: "0.8125rem",
                 fontWeight: 600,
                 cursor: "pointer",

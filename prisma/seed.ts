@@ -132,6 +132,54 @@ async function main() {
         "Effective note-taking strategies",
         "Better focus and reduced procrastination"
       ],
+    },
+    {
+      slug: "sat-prep",
+      title: "SAT Preparation",
+      emoji: "📝",
+      shortDescription: "Comprehensive preparation for the SAT reading, writing, and math sections.",
+      longDescription: "Get ready for the SAT with our comprehensive preparation program. We cover all sections of the test, including reading comprehension, grammar, and mathematics, with practice tests and proven strategies.",
+      subjects: ["SAT Math", "SAT Reading", "SAT Writing"],
+      gradeLevels: ["Grade 10", "Grade 11", "Grade 12"],
+      format: "Small Group or 1-on-1",
+      duration: "8-12 Weeks",
+      outcomes: [
+        "Higher SAT scores",
+        "Familiarity with test format",
+        "Improved time management"
+      ],
+    },
+    {
+      slug: "toefl-prep",
+      title: "TOEFL Preparation",
+      emoji: "🗣️",
+      shortDescription: "Improve English proficiency for the TOEFL exam.",
+      longDescription: "Designed for non-native English speakers, this program helps students improve their reading, writing, listening, and speaking skills to achieve their target scores on the TOEFL exam.",
+      subjects: ["Reading", "Writing", "Listening", "Speaking"],
+      gradeLevels: ["All Ages"],
+      format: "1-on-1 Sessions",
+      duration: "Ongoing",
+      outcomes: [
+        "Improved English fluency",
+        "Higher TOEFL scores",
+        "Confidence in speaking and listening"
+      ],
+    },
+    {
+      slug: "ap-support",
+      title: "AP Course Support",
+      emoji: "🎓",
+      shortDescription: "Advanced Placement course support and exam preparation.",
+      longDescription: "Get help with challenging Advanced Placement (AP) courses. Our volunteer tutors provide subject-specific guidance and exam preparation strategies to help you succeed in your AP classes.",
+      subjects: ["AP Calculus", "AP Sciences", "AP Humanities"],
+      gradeLevels: ["Grade 10", "Grade 11", "Grade 12"],
+      format: "Small Group or 1-on-1",
+      duration: "Ongoing",
+      outcomes: [
+        "Better understanding of AP material",
+        "Preparation for AP exams",
+        "College readiness"
+      ],
     }
   ];
 

@@ -1,6 +1,6 @@
 .main {
   padding: 2.5rem 0 4rem;
-  background: #f8fafc;
+  background: var(--background, #f8fafc);
   min-height: calc(100vh - 56px);
 }
 
@@ -20,8 +20,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--surface-subtle, #eff6ff);
+  color: var(--primary, #2563eb);
   padding: 0.2rem 0.625rem;
   border-radius: 4px;
   margin-bottom: 0.75rem;
@@ -30,13 +30,13 @@
 .title {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #1a1f2e;
+  color: var(--text-primary, #1a1f2e);
   margin-bottom: 0.5rem;
 }
 
 .subtitle {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--text-secondary, #64748b);
   line-height: 1.6;
   max-width: 650px;
 }
@@ -49,8 +49,8 @@
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--surface-raised, #ffffff);
+  border: 1px solid var(--border, #e2e8f0);
   border-radius: 16px;
   padding: 1.75rem;
   text-decoration: none;
@@ -81,8 +81,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #64748b;
-  background: #f1f5f9;
+  color: var(--text-muted, #64748b);
+  background: var(--surface-subtle, #f1f5f9);
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
 }
@@ -90,12 +90,12 @@
 .cardTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1a1f2e;
+  color: var(--text-primary, #1a1f2e);
 }
 
 .cardDesc {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--text-muted, #64748b);
   line-height: 1.55;
   flex: 1;
 }
@@ -103,14 +103,14 @@
 .cardArrow {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #2563eb;
+  color: var(--primary, #2563eb);
   margin-top: 0.5rem;
 }
 
 /* Tips Section */
 .tipsSection {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--surface-raised, #ffffff);
+  border: 1px solid var(--border, #e2e8f0);
   border-radius: 20px;
   padding: 2rem;
 }
@@ -118,7 +118,7 @@
 .tipsHeading {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #1a1f2e;
+  color: var(--text-primary, #1a1f2e);
   margin-bottom: 1.5rem;
 }
 
@@ -129,8 +129,8 @@
 }
 
 .tipCard {
-  background: #f8fafc;
-  border: 1px solid #f1f5f9;
+  background: var(--surface-subtle, #f8fafc);
+  border: 1px solid var(--border, #f1f5f9);
   border-radius: 12px;
   padding: 1.25rem;
   display: flex;
@@ -141,12 +141,12 @@
 .tipTitle {
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1f2e;
+  color: var(--text-primary, #1a1f2e);
 }
 
 .tipDesc {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--text-secondary, #64748b);
   line-height: 1.55;
 }
 

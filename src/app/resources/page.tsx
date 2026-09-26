@@ -111,7 +111,7 @@ export default function ResourcesPage() {
               <Link key={res.title} href={res.href} className={styles.card}>
                 <div className={styles.cardTop}>
                   <span className={styles.icon} aria-hidden="true">
-                    <IconComponent size={24} />
+                    <IconComponent size={26} color="var(--primary, #0D9488)" strokeWidth={1.5} />
                   </span>
                   <span className={styles.tag}>{res.tag}</span>
                 </div>
@@ -150,7 +150,7 @@ export default function ResourcesPage() {
               <p
                 style={{
                   fontSize: "0.85rem",
-                  color: "var(--wa-muted, #64748B)",
+                  color: "var(--text-muted, #64748B)",
                   marginTop: "0.25rem",
                 }}
               >
@@ -181,8 +181,8 @@ export default function ResourcesPage() {
                 key={tool.title}
                 className={styles.card}
                 style={{
-                  background: "#FFFFFF",
-                  border: "1px solid var(--wa-border, #E2E8F0)",
+                  background: "var(--surface-raised, #ffffff)",
+                  border: "1px solid var(--border, #E2E8F0)",
                 }}
               >
                 <div
@@ -210,7 +210,7 @@ export default function ResourcesPage() {
                     style={{
                       fontSize: "0.75rem",
                       fontWeight: 600,
-                      color: "var(--wa-muted, #64748B)",
+                      color: "var(--text-muted, #64748B)",
                     }}
                   >
                     {tool.grade}
@@ -221,7 +221,7 @@ export default function ResourcesPage() {
                   style={{
                     fontSize: "1.05rem",
                     fontWeight: 700,
-                    color: "var(--wa-ink, #0F172A)",
+                    color: "var(--text-primary, #0c1b33)",
                     margin: "0.25rem 0",
                   }}
                 >
@@ -230,7 +230,7 @@ export default function ResourcesPage() {
                 <p
                   style={{
                     fontSize: "0.8125rem",
-                    color: "var(--wa-text, #334155)",
+                    color: "var(--text-secondary, #475569)",
                     lineHeight: 1.5,
                     margin: "0 0 1rem",
                   }}
@@ -245,13 +245,13 @@ export default function ResourcesPage() {
                     alignItems: "center",
                     justifyContent: "space-between",
                     paddingTop: "0.75rem",
-                    borderTop: "1px solid var(--wa-border, #F1F5F9)",
+                    borderTop: "1px solid var(--border, #E2E8F0)",
                   }}
                 >
                   <span
                     style={{
                       fontSize: "0.75rem",
-                      color: "var(--wa-muted, #64748B)",
+                      color: "var(--text-muted, #64748B)",
                     }}
                   >
                     {tool.format}

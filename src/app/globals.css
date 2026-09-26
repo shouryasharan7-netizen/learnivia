@@ -619,3 +619,8 @@ textarea:focus-visible {
   box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
   transform: translateY(-2px);
 }
+
+input, select, textarea {
+  color: var(--text-primary, #0c1b33);
+  background: var(--surface-raised, #ffffff);
+}

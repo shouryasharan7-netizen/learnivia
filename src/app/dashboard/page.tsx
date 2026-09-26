@@ -10,7 +10,9 @@ import { getCurrentUser } from "@/lib/auth-user";
 import { prisma } from "@/lib/prisma";
 import { ROUTES } from "@/lib/routes";
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
+import SessionsContent from "./SessionsContent";
 import {
   Trophy,
   Clock,
@@ -74,6 +76,14 @@ const PROGRAMS = [
     abbr: "HWK",
     href: "/homework-help",
   },
+  {
+    id: "standardized-testing",
+    label: "Standardized Testing",
+    sublabel: "SAT, TOEFL, AP Prep",
+    bg: "#DB2777",
+    abbr: "ST",
+    href: "/find?subject=Standardized+Testing",
+  },
 ];
 
 // Task cards data
@@ -105,7 +115,7 @@ const TASK_CARDS = [
   },
 ];
 
-export default async function StudentDashboard() {
+export default async function StudentDashboard({ searchParams }: { searchParams: Promise<any> }) {
   const user = await getCurrentUser();
 
   if (!user) {
@@ -181,7 +191,7 @@ export default async function StudentDashboard() {
           </Link>
         </div>
         <div className={styles.heroIllustration} aria-hidden="true">
-          <GraduationCap size={56} strokeWidth={1.25} />
+          <Image src="/images/logo.png" alt="Learnivia Fox" width={90} height={90} style={{ objectFit: 'contain' }} />
         </div>
       </div>
 
@@ -244,122 +254,7 @@ export default async function StudentDashboard() {
         </div>
       </div>
 
-      <div className={styles.twoCol}>
-        {/* Left column: sessions + quick actions */}
-        <div className={styles.colLeft}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Upcoming Sessions</h2>
-            <Link href="/sessions" className={styles.viewAllLink}>
-              View All <ChevronRight size={14} />
-            </Link>
-          </div>
-
-          {upcomingBookings.length === 0 ? (
-            <div className={styles.emptyState}>
-              📅 No upcoming sessions — find your next session below!
-            </div>
-          ) : (
-            <div className={styles.sessionList}>
-              {upcomingBookings.map((b: any) => {
-                const start = new Date(b.startTime);
-                const tutorName = b.tutor?.user?.name || "Your Tutor";
-                return (
-                  <Link
-                    key={b.id}
-                    href={`/sessions/${b.id}`}
-                    className={styles.sessionCard}
-                  >
-                    <BookOpen
-                      size={18}
-                      color="var(--primary, #0D9488)"
-                      style={{ flexShrink: 0 }}
-                    />
-                    <div className={styles.sessionInfo}>
-                      <p className={styles.sessionSubject}>{b.subject}</p>
-                      <p className={styles.sessionMeta}>
-                        {start.toLocaleDateString("en-US", {
-                          weekday: "short",
-                          month: "short",
-                          day: "numeric",
-                        })}{" "}
-                        {start.toLocaleTimeString("en-US", {
-                          hour: "numeric",
-                          minute: "2-digit",
-                        })}
-                        {" · "}
-                        {tutorName}
-                      </p>
-                    </div>
-                    <ArrowRight size={15} color="var(--text-muted, #64748B)" />
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Quick action links */}
-          <div className={styles.actionList}>
-            <Link href="/find" className={styles.actionLink}>
-              <GraduationCap size={18} color="var(--primary, #0D9488)" />
-              <span>Find a peer tutor for your subject</span>
-            </Link>
-            <Link href="/sessions" className={styles.actionLink}>
-              <Search size={18} color="var(--primary, #0D9488)" />
-              <span>Browse all available sessions</span>
-            </Link>
-            <Link href="/homework-help" className={styles.actionLink}>
-              <HelpCircle size={18} color="var(--primary, #0D9488)" />
-              <span>Get quick homework help</span>
-            </Link>
-          </div>
-
-          {/* Become-a-tutor promo */}
-          {canApplyTutor && (
-            <div className={styles.tutorPromo}>
-              <p className={styles.tutorPromoText}>
-                <strong>Want to mentor others?</strong> Become a tutor, give
-                back, and earn verified service hours.
-              </p>
-              <Link href="/apply" className={styles.tutorPromoBtn}>
-                Apply to Tutor
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Right column: task cards */}
-        <div className={styles.colRight}>
-          <h2
-            className={styles.sectionTitle}
-            style={{ marginBottom: "0.875rem" }}
-          >
-            Suggested Next Steps
-          </h2>
-          <div className={styles.taskList}>
-            {TASK_CARDS.map((task) => (
-              <Link
-                key={task.category}
-                href={task.href}
-                className={styles.taskCard}
-              >
-                <div
-                  className={styles.taskBadge}
-                  style={{ background: task.color }}
-                >
-                  <span>{task.category.slice(0, 3)}</span>
-                </div>
-                <div className={styles.taskBody}>
-                  <p className={styles.taskCategory}>{task.category}</p>
-                  <p className={styles.taskTitle}>{task.title}</p>
-                  {task.subtitle && (
-                    <span className={styles.taskSubtitle}>{task.subtitle}</span>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SessionsContent searchParams={searchParams} />
     </div>
   );
 }

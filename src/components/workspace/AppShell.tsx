@@ -21,7 +21,6 @@ const PUBLIC_ONLY_ROUTES = [
   "/how-it-works",
   "/parents",
   "/educators",
-  "/safety",
   "/faq",
   "/support",
   "/blog",
@@ -34,7 +33,6 @@ const PUBLIC_ONLY_ROUTES = [
   "/forgot-password",
   "/reset-password",
   "/verify-email",
-  "/apply",
 ];
 
 // All authenticated workspace route prefixes
@@ -59,9 +57,7 @@ export function AppShell({ children }: AppShellProps) {
   const isPublicRoute =
     PUBLIC_ONLY_ROUTES.includes(pathname) ||
     pathname.startsWith("/blog/") ||
-    pathname.startsWith("/safety/") ||
-    pathname.startsWith("/apply") ||
-    pathname.startsWith("/resources");
+    pathname.startsWith("/apply");
 
   const isWorkspaceRoute = WORKSPACE_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix),
