@@ -25,7 +25,11 @@ interface StatusBadgeProps {
   className?: string;
 }
 
-export function StatusBadge({ status, label, className = "" }: StatusBadgeProps) {
+export function StatusBadge({
+  status,
+  label,
+  className = "",
+}: StatusBadgeProps) {
   const normalized = status.toLowerCase();
 
   let text = label;

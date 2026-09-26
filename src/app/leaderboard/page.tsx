@@ -10,7 +10,8 @@ export const revalidate = 60; // ISR: 60s cache
 
 export const metadata: Metadata = {
   title: "Leaderboard | Learnivia",
-  description: "View top learners and volunteer tutors on Learnivia by study points, learning minutes, and verified sessions.",
+  description:
+    "View top learners and volunteer tutors on Learnivia by study points, learning minutes, and verified sessions.",
 };
 
 export default async function LeaderboardPage() {
@@ -36,7 +37,9 @@ export default async function LeaderboardPage() {
           </div>
           <h1 className={styles.title}>Learnivia Leaderboard</h1>
           <p className={styles.subtitle}>
-            Rankings are computed dynamically from actual learning minutes, completed sessions, and volunteer hours recorded in PostgreSQL. Zero mock data.
+            Rankings are computed dynamically from actual learning minutes,
+            completed sessions, and volunteer hours recorded in PostgreSQL. Zero
+            mock data.
           </p>
         </div>
 
@@ -44,7 +47,8 @@ export default async function LeaderboardPage() {
         {top3.length > 0 && (
           <div className={styles.podiumGrid}>
             {top3.map((entry, index) => {
-              const isCurrentUser = currentUserSlug && currentUserSlug === entry.publicSlug;
+              const isCurrentUser =
+                currentUserSlug && currentUserSlug === entry.publicSlug;
 
               return (
                 <div
@@ -57,27 +61,38 @@ export default async function LeaderboardPage() {
                     ) : index === 1 ? (
                       <Award size={28} color="var(--color-slate, #526B7A)" />
                     ) : (
-                      <Medal size={28} color="var(--color-terracotta, #B85A43)" />
+                      <Medal
+                        size={28}
+                        color="var(--color-terracotta, #B85A43)"
+                      />
                     )}
                   </div>
                   <div className={styles.avatarCircle}>{entry.initials}</div>
                   <h2 className={styles.podiumName}>
                     {entry.name}
-                    {isCurrentUser && <span className={styles.youBadge}> (You)</span>}
+                    {isCurrentUser && (
+                      <span className={styles.youBadge}> (You)</span>
+                    )}
                   </h2>
                   <span className={styles.roleBadge}>{entry.role}</span>
 
                   <div className={styles.podiumStats}>
                     <div>
-                      <span className={styles.podiumStatNum}>{entry.points}</span>
+                      <span className={styles.podiumStatNum}>
+                        {entry.points}
+                      </span>
                       <span className={styles.podiumStatLabel}>SP Points</span>
                     </div>
                     <div>
-                      <span className={styles.podiumStatNum}>{entry.learningMinutes}</span>
+                      <span className={styles.podiumStatNum}>
+                        {entry.learningMinutes}
+                      </span>
                       <span className={styles.podiumStatLabel}>Minutes</span>
                     </div>
                     <div>
-                      <span className={styles.podiumStatNum}>{entry.completedSessions}</span>
+                      <span className={styles.podiumStatNum}>
+                        {entry.completedSessions}
+                      </span>
                       <span className={styles.podiumStatLabel}>Sessions</span>
                     </div>
                   </div>
@@ -92,7 +107,8 @@ export default async function LeaderboardPage() {
           <div className={styles.tableHeader}>
             <h2 className={styles.tableTitle}>Global Rankings</h2>
             <span style={{ fontSize: "0.85rem", color: "#64748B" }}>
-              {leaderboard.length} active learner{leaderboard.length === 1 ? "" : "s"}
+              {leaderboard.length} active learner
+              {leaderboard.length === 1 ? "" : "s"}
             </span>
           </div>
 
@@ -111,20 +127,48 @@ export default async function LeaderboardPage() {
               </thead>
               <tbody>
                 {leaderboard.map((u) => {
-                  const isCurrent = currentUserSlug && currentUserSlug === u.publicSlug;
+                  const isCurrent =
+                    currentUserSlug && currentUserSlug === u.publicSlug;
                   return (
-                    <tr key={u.publicSlug} className={isCurrent ? styles.highlightRow : ""}>
+                    <tr
+                      key={u.publicSlug}
+                      className={isCurrent ? styles.highlightRow : ""}
+                    >
                       <td className={styles.rankCell}>
                         {u.rank === 1 ? (
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", color: "var(--color-ochre, #B18435)", fontWeight: 700 }}>
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.25rem",
+                              color: "var(--color-ochre, #B18435)",
+                              fontWeight: 700,
+                            }}
+                          >
                             <Trophy size={14} /> 1
                           </span>
                         ) : u.rank === 2 ? (
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", color: "var(--color-slate, #526B7A)", fontWeight: 700 }}>
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.25rem",
+                              color: "var(--color-slate, #526B7A)",
+                              fontWeight: 700,
+                            }}
+                          >
                             <Award size={14} /> 2
                           </span>
                         ) : u.rank === 3 ? (
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", color: "var(--color-terracotta, #B85A43)", fontWeight: 700 }}>
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.25rem",
+                              color: "var(--color-terracotta, #B85A43)",
+                              fontWeight: 700,
+                            }}
+                          >
                             <Medal size={14} /> 3
                           </span>
                         ) : (
@@ -135,11 +179,19 @@ export default async function LeaderboardPage() {
                         <div className={styles.tableAvatar}>{u.initials}</div>
                         <div>
                           <span className={styles.tableUserName}>{u.name}</span>
-                          {isCurrent && <span className={styles.youBadge}> (You)</span>}
+                          {isCurrent && (
+                            <span className={styles.youBadge}> (You)</span>
+                          )}
                         </div>
                       </td>
                       <td>
-                        <span className={u.role.includes("Tutor") ? styles.tutorPill : styles.studentPill}>
+                        <span
+                          className={
+                            u.role.includes("Tutor")
+                              ? styles.tutorPill
+                              : styles.studentPill
+                          }
+                        >
                           {u.role}
                         </span>
                       </td>
@@ -152,7 +204,13 @@ export default async function LeaderboardPage() {
                       <td style={{ textAlign: "right", color: "#64748B" }}>
                         {u.completedSessions}
                       </td>
-                      <td style={{ textAlign: "right", fontWeight: 800, color: "#0E8345" }}>
+                      <td
+                        style={{
+                          textAlign: "right",
+                          fontWeight: 800,
+                          color: "#0E8345",
+                        }}
+                      >
                         {u.points} SP
                       </td>
                     </tr>
@@ -164,7 +222,15 @@ export default async function LeaderboardPage() {
         </div>
 
         {/* Footer actions */}
-        <div style={{ marginTop: "2rem", textAlign: "center", display: "flex", gap: "1rem", justifyContent: "center" }}>
+        <div
+          style={{
+            marginTop: "2rem",
+            textAlign: "center",
+            display: "flex",
+            gap: "1rem",
+            justifyContent: "center",
+          }}
+        >
           <Link
             href="/dashboard"
             style={{

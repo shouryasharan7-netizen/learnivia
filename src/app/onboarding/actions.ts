@@ -16,8 +16,9 @@ export async function completeOnboarding(formData: FormData) {
     const grade = (formData.get("grade") as string) || undefined;
     const curriculum = (formData.get("curriculum") as string) || undefined;
     const school = (formData.get("school") as string) || undefined;
-    const educationLevel = (formData.get("educationLevel") as string) || undefined;
-    
+    const educationLevel =
+      (formData.get("educationLevel") as string) || undefined;
+
     await prisma.user.update({
       where: { id: session.user.id },
       data: {

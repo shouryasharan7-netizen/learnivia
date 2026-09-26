@@ -39,7 +39,10 @@ let lastLeaderboardFetch = 0;
 const LEADERBOARD_CACHE_TTL = 300_000; // 5 minutes - leaderboard is stable
 
 // Per-user stats cache: avoids re-querying the same user within a warm serverless instance
-const userStatsCache = new Map<string, { data: UserStats; fetchedAt: number }>();
+const userStatsCache = new Map<
+  string,
+  { data: UserStats; fetchedAt: number }
+>();
 const USER_STATS_TTL = 60_000; // 1 minute per-user stats cache
 
 /**
@@ -63,7 +66,9 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
         include: { tutor: { include: { user: true } } },
       },
       workshopEnrollments: {
-        include: { workshop: { include: { tutor: { include: { user: true } } } } },
+        include: {
+          workshop: { include: { tutor: { include: { user: true } } } },
+        },
       },
       reviewsGiven: true,
       homeworkRequests: true,
@@ -75,7 +80,6 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
       },
     },
   });
-
 
   if (!user) {
     return {
@@ -102,7 +106,10 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
     const end = new Date(b.endTime).getTime();
     const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
 
-    if (b.status === "COMPLETED" || (b.status === "CONFIRMED" && new Date(b.endTime) < now)) {
+    if (
+      b.status === "COMPLETED" ||
+      (b.status === "CONFIRMED" && new Date(b.endTime) < now)
+    ) {
       completed1on1 += 1;
       studentBookingMinutes += durationMins;
     } else if (b.status === "CONFIRMED" && new Date(b.endTime) >= now) {
@@ -123,7 +130,10 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
     const end = new Date(w.endTime).getTime();
     const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
 
-    if (w.status === "COMPLETED" || (w.status === "UPCOMING" && new Date(w.endTime) < now)) {
+    if (
+      w.status === "COMPLETED" ||
+      (w.status === "UPCOMING" && new Date(w.endTime) < now)
+    ) {
       completedWorkshops += 1;
       workshopMinutes += durationMins;
     } else if (w.status === "UPCOMING" && new Date(w.endTime) >= now) {
@@ -144,9 +154,15 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
       if (b.status === "CANCELED") continue;
       const start = new Date(b.startTime).getTime();
       const end = new Date(b.endTime).getTime();
-      const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
+      const durationMins = Math.max(
+        15,
+        Math.round((end - start) / (1000 * 60)),
+      );
 
-      if (b.status === "COMPLETED" || (b.status === "CONFIRMED" && new Date(b.endTime) < now)) {
+      if (
+        b.status === "COMPLETED" ||
+        (b.status === "CONFIRMED" && new Date(b.endTime) < now)
+      ) {
         tutoringMinutes += durationMins;
       }
     }
@@ -155,9 +171,15 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
       if (w.status === "CANCELED") continue;
       const start = new Date(w.startTime).getTime();
       const end = new Date(w.endTime).getTime();
-      const durationMins = Math.max(15, Math.round((end - start) / (1000 * 60)));
+      const durationMins = Math.max(
+        15,
+        Math.round((end - start) / (1000 * 60)),
+      );
 
-      if (w.status === "COMPLETED" || (w.status === "UPCOMING" && new Date(w.endTime) < now)) {
+      if (
+        w.status === "COMPLETED" ||
+        (w.status === "UPCOMING" && new Date(w.endTime) < now)
+      ) {
         tutoringMinutes += durationMins;
         completedTutorWorkshops += 1;
       }
@@ -177,9 +199,15 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
   const sessionPoints = completedSessions * 20;
   const reviewPoints = user.reviewsGiven.length * 15;
   const homeworkPoints = user.homeworkRequests.length * 10;
-  const tutorPoints = (completedTutorWorkshops * 50) + Math.floor(tutoringMinutes / 2);
+  const tutorPoints =
+    completedTutorWorkshops * 50 + Math.floor(tutoringMinutes / 2);
 
-  const totalPoints = learningPoints + sessionPoints + reviewPoints + homeworkPoints + tutorPoints;
+  const totalPoints =
+    learningPoints +
+    sessionPoints +
+    reviewPoints +
+    homeworkPoints +
+    tutorPoints;
 
   // 5. Calculate Real-Time Rank across all registered users in DB (fast indexed count)
   let rank = 1;
@@ -203,10 +231,12 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
 
   // Update user's synced points in DB in the background if changed
   if (user.points !== totalPoints) {
-    prisma.user.update({
-      where: { id: userId },
-      data: { points: totalPoints },
-    }).catch(() => {});
+    prisma.user
+      .update({
+        where: { id: userId },
+        data: { points: totalPoints },
+      })
+      .catch(() => {});
   }
 
   const result: UserStats = {
@@ -233,7 +263,9 @@ export async function calculateUserStats(userId: string): Promise<UserStats> {
  * Returns the verified real-time platform leaderboard.
  */
 export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
-  const isStale = !cachedLeaderboard || (Date.now() - lastLeaderboardFetch > LEADERBOARD_CACHE_TTL);
+  const isStale =
+    !cachedLeaderboard ||
+    Date.now() - lastLeaderboardFetch > LEADERBOARD_CACHE_TTL;
   if (!isStale && cachedLeaderboard) {
     return cachedLeaderboard.slice(0, limit);
   }
@@ -292,12 +324,25 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
     let completedSessions = 0;
 
     for (const b of u.studentBookings) {
-      learningMinutes += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+      learningMinutes += Math.max(
+        15,
+        Math.round(
+          (new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) /
+            60000,
+        ),
+      );
       completedSessions += 1;
     }
 
     for (const e of u.workshopEnrollments) {
-      learningMinutes += Math.max(15, Math.round((new Date(e.workshop.endTime).getTime() - new Date(e.workshop.startTime).getTime()) / 60000));
+      learningMinutes += Math.max(
+        15,
+        Math.round(
+          (new Date(e.workshop.endTime).getTime() -
+            new Date(e.workshop.startTime).getTime()) /
+            60000,
+        ),
+      );
       completedSessions += 1;
     }
 
@@ -306,10 +351,22 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
 
     if (u.tutorProfile) {
       for (const b of u.tutorProfile.tutorBookings) {
-        tutoringMinutes += Math.max(15, Math.round((new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / 60000));
+        tutoringMinutes += Math.max(
+          15,
+          Math.round(
+            (new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) /
+              60000,
+          ),
+        );
       }
       for (const w of u.tutorProfile.workshops) {
-        tutoringMinutes += Math.max(15, Math.round((new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / 60000));
+        tutoringMinutes += Math.max(
+          15,
+          Math.round(
+            (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) /
+              60000,
+          ),
+        );
         tutorWorkshops += 1;
       }
     }
@@ -317,19 +374,20 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
     const volunteerHours = Math.round((tutoringMinutes / 60) * 10) / 10;
     const pts =
       Math.floor(learningMinutes / 2) +
-      (completedSessions * 20) +
-      (u.reviewsGiven.length * 15) +
-      (u.homeworkRequests.length * 10) +
-      (tutorWorkshops * 50) +
+      completedSessions * 20 +
+      u.reviewsGiven.length * 15 +
+      u.homeworkRequests.length * 10 +
+      tutorWorkshops * 50 +
       Math.floor(tutoringMinutes / 2);
 
     // P1-5: Privacy - display first name + last initial only (protects student identity)
     // Never display: full name, email, school, or userId in public leaderboard
     const rawName = u.name || "Learner";
     const nameParts = rawName.trim().split(/\s+/);
-    const displayName = nameParts.length > 1
-      ? `${nameParts[0]} ${nameParts[nameParts.length - 1][0]}.`
-      : nameParts[0];
+    const displayName =
+      nameParts.length > 1
+        ? `${nameParts[0]} ${nameParts[nameParts.length - 1][0]}.`
+        : nameParts[0];
 
     const initials = nameParts
       .map((n) => n[0])
@@ -343,10 +401,13 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
 
     return {
       rank: 1,
-      publicSlug,    // Use this for "You" detection on the page (not raw userId)
+      publicSlug, // Use this for "You" detection on the page (not raw userId)
       name: displayName,
       initials,
-      role: u.role === "TUTOR" || u.tutorProfile?.status === "APPROVED" ? "Verified Tutor" : "Student",
+      role:
+        u.role === "TUTOR" || u.tutorProfile?.status === "APPROVED"
+          ? "Verified Tutor"
+          : "Student",
       grade: u.grade || u.tutorProfile?.currentGrade || null,
       // School intentionally excluded from public leaderboard (P1-5 privacy)
       points: pts,
@@ -356,7 +417,9 @@ export async function getLeaderboard(limit = 25): Promise<LeaderboardEntry[]> {
     };
   });
 
-  entries.sort((a, b) => b.points - a.points || b.learningMinutes - a.learningMinutes);
+  entries.sort(
+    (a, b) => b.points - a.points || b.learningMinutes - a.learningMinutes,
+  );
 
   entries.forEach((entry, idx) => {
     entry.rank = idx + 1;

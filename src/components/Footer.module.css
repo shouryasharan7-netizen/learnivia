@@ -1,8 +1,3 @@
-/* ==========================================================================
-   LEARNIVIA FOOTER: WARM INK · REVEAL EFFECT
-   Footer sticks to bottom; page content scrolls over it revealing the footer
-   ========================================================================== */
-
 /*
   REVEAL PATTERN:
   - .footerReveal is position: sticky bottom-0, z-0 (behind content)
@@ -119,17 +114,17 @@
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  background: var(--wa-cream-dark, #F4EFE6);
-  border: 1px solid var(--wa-border, #E5DDD2);
+  background: var(--wa-cream-dark, #f4efe6);
+  border: 1px solid var(--wa-border, #e5ddd2);
   color: var(--wa-muted, #556377);
   text-decoration: none;
   transition: all 140ms ease;
 }
 
 .socialLink:hover {
-  background: var(--wa-forest-light, #F0F5F2);
-  color: var(--wa-forest, #1E3A2F);
-  border-color: var(--wa-border-strong, #C8BFB2);
+  background: var(--wa-forest-light, #f0f5f2);
+  color: var(--wa-forest, #1e3a2f);
+  border-color: var(--wa-border-strong, #c8bfb2);
   transform: translateY(-1px);
 }
 
@@ -167,7 +162,7 @@
 }
 
 .footerLink:hover {
-  color: var(--wa-green, #1E3A8A);
+  color: var(--wa-green, #1e3a8a);
 }
 
 /* Bottom strip */
@@ -188,7 +183,7 @@
 
 .disclaimer {
   font-size: 0.8125rem;
-  color: var(--wa-subtle, #8291A5);
+  color: var(--wa-subtle, #8291a5);
   text-align: right;
   flex: 1;
   margin: 0;
@@ -196,15 +191,34 @@
 
 /* Responsive */
 @media (max-width: 960px) {
-  .grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .brand { grid-column: 1 / -1; }
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .brand {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 640px) {
-  .footerInner { padding: 2.5rem 0 1.5rem; }
-  .grid { grid-template-columns: 1fr; gap: 1.5rem; }
-  .brand { grid-column: auto; }
-  .bottom { flex-direction: column; align-items: flex-start; }
-  .disclaimer { text-align: left; }
-  .container { padding-inline: 1.25rem; }
+  .footerInner {
+    padding: 2.5rem 0 1.5rem;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .brand {
+    grid-column: auto;
+  }
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .disclaimer {
+    text-align: left;
+  }
+  .container {
+    padding-inline: 1.25rem;
+  }
 }

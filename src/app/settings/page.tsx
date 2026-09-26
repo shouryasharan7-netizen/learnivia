@@ -9,7 +9,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Account Settings | Learnivia",
-  description: "Manage your Learnivia account settings, profile, and preferences.",
+  description:
+    "Manage your Learnivia account settings, profile, and preferences.",
 };
 
 export default async function SettingsPage() {

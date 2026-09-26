@@ -2,7 +2,14 @@
 
 import React from "react";
 import Link from "next/link";
-import { Calculator, Atom, BookOpen, MessageSquare, ArrowRight, Compass } from "lucide-react";
+import {
+  Calculator,
+  Atom,
+  BookOpen,
+  MessageSquare,
+  ArrowRight,
+  Compass,
+} from "lucide-react";
 import styles from "./dashboard.module.css";
 import { ROUTES } from "@/lib/routes";
 
@@ -58,7 +65,12 @@ export function LearningPaths() {
         {paths.map((p) => {
           const Icon = p.icon;
           return (
-            <Link key={p.id} href={p.href} className={styles.pathCard} prefetch={false}>
+            <Link
+              key={p.id}
+              href={p.href}
+              className={styles.pathCard}
+              prefetch={false}
+            >
               <div className={styles.pathIcon}>
                 <Icon size={18} />
               </div>

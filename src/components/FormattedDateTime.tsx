@@ -44,7 +44,11 @@ export function FormattedDateTime({
       try {
         const d = new Date(date);
         const datePart = d.toLocaleDateString();
-        const timePart = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true });
+        const timePart = d.toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
         setClientText(`${datePart} at ${timePart}`);
       } catch {
         // Ignored
@@ -55,8 +59,18 @@ export function FormattedDateTime({
   if (!clientText) {
     const d = new Date(date);
     const datePart = !isNaN(d.getTime()) ? d.toLocaleDateString() : "";
-    const timePart = !isNaN(d.getTime()) ? d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true }) : "";
-    return <span className={className}>{fallbackText || (datePart ? `${datePart} at ${timePart}` : "")}</span>;
+    const timePart = !isNaN(d.getTime())
+      ? d.toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })
+      : "";
+    return (
+      <span className={className}>
+        {fallbackText || (datePart ? `${datePart} at ${timePart}` : "")}
+      </span>
+    );
   }
 
   return <span className={className}>{clientText}</span>;

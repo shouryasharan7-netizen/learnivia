@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, ArrowLeft, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import {
+  Mail,
+  ArrowLeft,
+  CheckCircle,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
 import { requestPasswordReset } from "./actions";
 
 export default function ForgotPasswordClient() {
@@ -53,7 +59,8 @@ export default function ForgotPasswordClient() {
           border: "1px solid #E5E0D8",
           borderRadius: "16px",
           padding: "2.5rem 2rem",
-          boxShadow: "0 10px 30px -5px rgba(28, 25, 23, 0.05), 0 4px 6px -2px rgba(28, 25, 23, 0.02)",
+          boxShadow:
+            "0 10px 30px -5px rgba(28, 25, 23, 0.05), 0 4px 6px -2px rgba(28, 25, 23, 0.02)",
         }}
       >
         {/* Logo & Header */}
@@ -98,7 +105,8 @@ export default function ForgotPasswordClient() {
               lineHeight: 1.5,
             }}
           >
-            Enter the email address linked to your account and we&apos;ll send you a secure link to reset it.
+            Enter the email address linked to your account and we&apos;ll send
+            you a secure link to reset it.
           </p>
         </div>
 
@@ -222,7 +230,8 @@ export default function ForgotPasswordClient() {
                   }}
                   onFocus={(e) => {
                     e.currentTarget.style.borderColor = "#0E8345";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(14, 131, 69, 0.12)";
+                    e.currentTarget.style.boxShadow =
+                      "0 0 0 3px rgba(14, 131, 69, 0.12)";
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = "#D6D3D1";

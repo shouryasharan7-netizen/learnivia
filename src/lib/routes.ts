@@ -43,7 +43,9 @@ export const ROUTES = {
   learnSlug: (slug: string) => `/learn/${slug}`,
   tutorProfile: (id: string) => `/tutor/${id}`,
   tutorTranscriptPublic: (id: string, token?: string) =>
-    token ? `/tutor/${id}/transcript?token=${encodeURIComponent(token)}` : `/tutor/${id}/transcript`,
+    token
+      ? `/tutor/${id}/transcript?token=${encodeURIComponent(token)}`
+      : `/tutor/${id}/transcript`,
 
   // Homework & Community
   homeworkHelp: "/homework-help",
@@ -89,7 +91,9 @@ export type AppRoute = typeof ROUTES;
 /**
  * Helper to determine the active workspace context based on the current pathname.
  */
-export function getActiveWorkspace(pathname: string): "learner" | "tutor" | "admin" | "public" {
+export function getActiveWorkspace(
+  pathname: string,
+): "learner" | "tutor" | "admin" | "public" {
   if (pathname.startsWith("/admin")) return "admin";
   if (pathname.startsWith("/tutor")) return "tutor";
   if (

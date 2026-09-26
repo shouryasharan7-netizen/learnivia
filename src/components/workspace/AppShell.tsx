@@ -64,10 +64,9 @@ export function AppShell({ children }: AppShellProps) {
     pathname.startsWith("/resources");
 
   const isWorkspaceRoute = WORKSPACE_PREFIXES.some((prefix) =>
-    pathname.startsWith(prefix)
+    pathname.startsWith(prefix),
   );
 
-  // ── PUBLIC LAYOUT ────────────────────────────────────────────────────────
   // Show public Navbar + Footer for:
   //   1. Anyone (logged-in or not) on a public marketing route
   //   2. Unauthenticated users on any route
@@ -81,7 +80,6 @@ export function AppShell({ children }: AppShellProps) {
     );
   }
 
-  // ── AUTHENTICATED WORKSPACE SHELL ────────────────────────────────────────
   const user = session.user;
   const isTutor = Boolean((user as any).isTutor);
   const isAdmin = Boolean((user as any).isAdmin || user.role === "ADMIN");
@@ -108,7 +106,7 @@ export function AppShell({ children }: AppShellProps) {
         <main id="main-content" className={styles.content}>
           {children}
         </main>
-        <MobileBottomNav 
+        <MobileBottomNav
           userRole={user.role}
           isTutor={isTutor}
           isAdmin={isAdmin}

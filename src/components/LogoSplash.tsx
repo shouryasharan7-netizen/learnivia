@@ -45,7 +45,7 @@ export function LogoSplash({ onComplete, forceShow = false }: LogoSplashProps) {
   if (!mounted || !visible) return null;
 
   return (
-    <div 
+    <div
       className={`${styles.splashOverlay} ${fadingOut ? styles.fadeOut : ""}`}
       onClick={() => {
         setFadingOut(true);
@@ -70,7 +70,7 @@ export function LogoSplash({ onComplete, forceShow = false }: LogoSplashProps) {
         </div>
         <h1 className={styles.brandTitle}>Learnivia</h1>
         <div className={styles.tagline}>Free Peer-to-Peer Learning</div>
-        
+
         {/* Subtle loading pulse bar */}
         <div className={styles.progressTrack}>
           <div className={styles.progressBar} />

@@ -1,7 +1,3 @@
-/* ==========================================================================
-   PRE-LOGIN & POST-LOGIN NAVBAR STYLES (Matching Screenshots 1 & 4)
-   ========================================================================== */
-
 /* ---------------- Pre-Login Clean Light Header ---------------- */
 .header {
   position: sticky;
@@ -13,7 +9,10 @@
   height: 70px;
   display: flex;
   align-items: center;
-  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
   box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04);
 }
 
@@ -70,7 +69,9 @@
   padding: 0.5rem 0.85rem;
   border-radius: 6px;
   text-decoration: none;
-  transition: color 150ms ease, background-color 150ms ease;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
   white-space: nowrap;
 }
 .navLink:hover {
@@ -101,7 +102,9 @@
   padding: 0.5rem 0.85rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: color 150ms ease, background-color 150ms ease;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
   white-space: nowrap;
 }
 .exploreBtn:hover,
@@ -123,7 +126,9 @@
   padding: 0.5rem 0.85rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: color 150ms ease, background-color 150ms ease;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
   white-space: nowrap;
 }
 .navBtn:hover {
@@ -187,9 +192,9 @@
   justify-content: center;
   font-size: 0.9375rem;
   font-weight: 600;
-  color: #FFFFFF;
-  background: var(--wa-navy, #0F172A);
-  border: 1px solid var(--wa-navy, #0F172A);
+  color: #ffffff;
+  background: var(--wa-navy, #0f172a);
+  border: 1px solid var(--wa-navy, #0f172a);
   padding: 0.5rem 1.25rem;
   border-radius: 6px;
   text-decoration: none;
@@ -198,23 +203,20 @@
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 .signUpBtn:hover {
-  background: var(--wa-green, #1E3A8A);
-  border-color: var(--wa-green, #1E3A8A);
+  background: var(--wa-green, #1e3a8a);
+  border-color: var(--wa-green, #1e3a8a);
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(30, 58, 138, 0.18);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
-/* ==========================================================================
-   EXPLORE PROGRAMS MEGA MENU (Matching Image 1)
-   ========================================================================== */
 .megaMenu {
   position: absolute;
   top: calc(100% + 14px);
   left: -20px;
   width: 580px;
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 14px;
   padding: 1.75rem;
   box-shadow: var(--wa-shadow-lg);
@@ -241,14 +243,14 @@
   font-family: var(--font-serif);
   font-size: 1.75rem;
   font-weight: 600;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   margin: 0 0 0.35rem 0;
   letter-spacing: -0.01em;
 }
 
 .megaMenuSubtitle {
   font-size: 1rem;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   margin: 0;
 }
 
@@ -260,8 +262,8 @@
 
 .megaCard {
   display: block;
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 12px;
   padding: 1.15rem 1.25rem;
   text-decoration: none;
@@ -269,8 +271,8 @@
   box-shadow: var(--wa-shadow-xs);
 }
 .megaCard:hover {
-  border-color: var(--wa-crimson, #2563EB);
-  background: var(--wa-cream-dark, #F1F5F9);
+  border-color: var(--wa-crimson, #2563eb);
+  background: var(--wa-cream-dark, #f1f5f9);
   box-shadow: var(--wa-shadow-md);
 }
 
@@ -288,8 +290,8 @@
 .megaCardBadge {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--wa-crimson, #2563EB);
-  background: var(--wa-crimson-light, #EFF6FF);
+  color: var(--wa-crimson, #2563eb);
+  background: var(--wa-crimson-light, #eff6ff);
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
   text-transform: uppercase;
@@ -299,13 +301,13 @@
 .megaCardHeading {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   margin: 0 0 0.25rem 0;
 }
 
 .megaCardDesc {
   font-size: 0.875rem;
-  color: var(--wa-text, #4B5563);
+  color: var(--wa-text, #4b5563);
   margin: 0;
   line-height: 1.4;
 }
@@ -316,13 +318,13 @@
   justify-content: space-between;
   margin-top: 1.25rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--wa-border, #E2E8F0);
+  border-top: 1px solid var(--wa-border, #e2e8f0);
   font-size: 0.85rem;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
 }
 
 .megaFooterLink {
-  color: var(--wa-crimson, #2563EB);
+  color: var(--wa-crimson, #2563eb);
   font-weight: 700;
   text-decoration: none;
   transition: opacity 150ms ease;
@@ -337,8 +339,8 @@
   top: calc(100% + 10px);
   left: 0;
   width: 280px;
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 14px;
   padding: 0.75rem;
   box-shadow: var(--wa-shadow-lg);
@@ -354,25 +356,22 @@
   transition: background-color 150ms ease;
 }
 .dropdownItem:hover {
-  background-color: var(--wa-cream-dark, #F1F5F9);
+  background-color: var(--wa-cream-dark, #f1f5f9);
 }
 
 .dropdownItemTitle {
   font-size: 0.925rem;
   font-weight: 600;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   margin-bottom: 0.15rem;
 }
 
 .dropdownItemDesc {
   font-size: 0.8rem;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   line-height: 1.35;
 }
 
-/* ==========================================================================
-   AUTHENTICATED SHELL HEADER
-   ========================================================================== */
 .authHeader {
   position: sticky;
   top: 0;
@@ -383,7 +382,10 @@
   height: 60px;
   display: flex;
   align-items: center;
-  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
 }
 
@@ -471,8 +473,8 @@
   width: 28px;
   height: 28px;
   border-radius: 4px;
-  background: var(--wa-green, #1E3A8A);
-  color: #FFFFFF;
+  background: var(--wa-green, #1e3a8a);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -517,15 +519,15 @@
 
 .popoverTitle {
   font-weight: 700;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   font-size: 0.875rem;
   margin: 0;
 }
 
 .popoverCount {
   font-size: 0.75rem;
-  background: var(--wa-cream-dark, #F1F5F9);
-  color: var(--wa-muted, #64748B);
+  background: var(--wa-cream-dark, #f1f5f9);
+  color: var(--wa-muted, #64748b);
   font-weight: 700;
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
@@ -540,9 +542,9 @@
   display: inline-block;
   font-size: 0.6875rem;
   font-weight: 700;
-  background: var(--wa-cream-dark, #F1F5F9);
-  color: var(--wa-ink, #0F172A);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-cream-dark, #f1f5f9);
+  color: var(--wa-ink, #0f172a);
+  border: 1px solid var(--wa-border, #e2e8f0);
   padding: 0.15rem 0.55rem;
   border-radius: 4px;
   letter-spacing: 0.04em;
@@ -565,16 +567,18 @@
   font-weight: 500;
   color: var(--wa-text, #334155);
   text-decoration: none;
-  transition: background-color 150ms ease, color 150ms ease;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 .userMenuItem:hover {
-  background-color: var(--wa-cream-dark, #F1F5F9);
-  color: var(--wa-ink, #0F172A);
+  background-color: var(--wa-cream-dark, #f1f5f9);
+  color: var(--wa-ink, #0f172a);
 }
 
 .userMenuDivider {
   height: 1px;
-  background: var(--wa-border, #E2E8F0);
+  background: var(--wa-border, #e2e8f0);
   margin: 0.35rem 0;
 }
 
@@ -590,17 +594,14 @@
   border-radius: 8px;
   font-size: 0.84375rem;
   font-weight: 600;
-  color: var(--wa-error, #DC2626);
+  color: var(--wa-error, #dc2626);
   cursor: pointer;
   transition: background-color 150ms ease;
 }
 .signOutMenuItem:hover {
-  background-color: var(--wa-error-bg, #FEF2F2);
+  background-color: var(--wa-error-bg, #fef2f2);
 }
 
-/* ==========================================================================
-   MOBILE HAMBURGER & DRAWER
-   ========================================================================== */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -619,9 +620,15 @@
   transition: all 200ms ease;
 }
 
-.hamburgerLineOpen1 { transform: translateY(7px) rotate(45deg); }
-.hamburgerLineOpen2 { opacity: 0; }
-.hamburgerLineOpen3 { transform: translateY(-7px) rotate(-45deg); }
+.hamburgerLineOpen1 {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburgerLineOpen2 {
+  opacity: 0;
+}
+.hamburgerLineOpen3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
 
 .mobileOverlay {
   position: fixed;
@@ -664,10 +671,14 @@
 }
 
 .mobileBrandText {
-  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-family:
+    "Outfit",
+    "Inter",
+    -apple-system,
+    sans-serif;
   font-size: 1.35rem;
   font-weight: 800;
-  color: #14243B;
+  color: #14243b;
 }
 
 .mobileSection {
@@ -675,7 +686,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #64748B;
+  color: #64748b;
   margin: 1.25rem 0 0.5rem 0;
 }
 
@@ -684,7 +695,7 @@
   padding: 0.65rem 0;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #14243B;
+  color: #14243b;
   text-decoration: none;
 }
 
@@ -692,13 +703,13 @@
   display: block;
   font-size: 0.8rem;
   font-weight: 400;
-  color: #64748B;
+  color: #64748b;
   margin-top: 0.15rem;
 }
 
 .mobileDivider {
   height: 1px;
-  background: #E2E8F0;
+  background: #e2e8f0;
   margin: 1.25rem 0;
 }
 
@@ -716,14 +727,14 @@
   border-radius: 6px;
   border: 1px solid var(--wa-border);
   font-weight: 600;
-  color: #0F172A;
-  background: #FFFFFF;
+  color: #0f172a;
+  background: #ffffff;
   text-decoration: none;
   transition: background 150ms ease;
 }
 
 .mobileSignIn:hover {
-  background: #F1F5F9;
+  background: #f1f5f9;
 }
 
 .mobileSignUp {
@@ -733,7 +744,7 @@
   border-radius: 6px;
   background: var(--wa-green);
   font-weight: 600;
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
   transition: background 150ms ease;

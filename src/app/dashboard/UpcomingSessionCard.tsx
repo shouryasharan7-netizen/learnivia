@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Calendar, Video, ArrowRight, Copy, Check, Compass, BookOpen } from "lucide-react";
+import {
+  Calendar,
+  Video,
+  ArrowRight,
+  Copy,
+  Check,
+  Compass,
+  BookOpen,
+} from "lucide-react";
 import styles from "./dashboard.module.css";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -32,7 +40,10 @@ interface UpcomingSessionCardProps {
   userTimezone?: string | null;
 }
 
-export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCardProps) {
+export function UpcomingSessionCard({
+  session,
+  userTimezone,
+}: UpcomingSessionCardProps) {
   const [isCancelling, setIsCancelling] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
@@ -67,21 +78,39 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
           <div className={styles.emptyDeskIcon}>
             <Calendar size={24} />
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.25rem",
+              alignItems: "center",
+            }}
+          >
             <h3 className={styles.emptyDeskTitle}>Your Study Desk is Open</h3>
             <p className={styles.emptyDeskDesc}>
-              You have no upcoming tutoring sessions booked. Select a subject below to connect 1-on-1 with an approved peer tutor for free guidance.
+              You have no upcoming tutoring sessions booked. Select a subject
+              below to connect 1-on-1 with an approved peer tutor for free
+              guidance.
             </p>
           </div>
 
           <div className={styles.subjectFilterRow}>
-            <Link href={`${ROUTES.find}?subject=Mathematics`} className={styles.subjectPill}>
+            <Link
+              href={`${ROUTES.find}?subject=Mathematics`}
+              className={styles.subjectPill}
+            >
               Mathematics
             </Link>
-            <Link href={`${ROUTES.find}?subject=Science`} className={styles.subjectPill}>
+            <Link
+              href={`${ROUTES.find}?subject=Science`}
+              className={styles.subjectPill}
+            >
               Natural Sciences
             </Link>
-            <Link href={`${ROUTES.find}?subject=Reading+%26+Writing`} className={styles.subjectPill}>
+            <Link
+              href={`${ROUTES.find}?subject=Reading+%26+Writing`}
+              className={styles.subjectPill}
+            >
               Essay & Reading
             </Link>
             <Link href={ROUTES.community} className={styles.subjectPill}>
@@ -89,7 +118,15 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
             </Link>
           </div>
 
-          <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem", flexWrap: "wrap", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              marginTop: "0.5rem",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
             <Link href={ROUTES.find} className={styles.joinBtn}>
               <Compass size={14} /> Find a Peer Tutor
             </Link>
@@ -108,20 +145,29 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
     nameParts.length > 1
       ? `${nameParts[0]} ${nameParts[nameParts.length - 1].charAt(0)}.`
       : tutorName;
-  const initials = nameParts.map((n) => n[0]).slice(0, 2).join("").toUpperCase();
+  const initials = nameParts
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   const handleCancel = async () => {
     setIsCancelling(true);
     try {
       const fd = new FormData();
       fd.append("bookingId", session.id);
-      fd.append("cancelReason", cancelReason || "Canceled by student from dashboard");
+      fd.append(
+        "cancelReason",
+        cancelReason || "Canceled by student from dashboard",
+      );
       await cancelBooking(fd);
       toast.success("Session canceled successfully");
       setDialogOpen(false);
       window.location.reload();
     } catch (err: any) {
-      toast.error(err?.message || "An unexpected error occurred while canceling");
+      toast.error(
+        err?.message || "An unexpected error occurred while canceling",
+      );
     } finally {
       setIsCancelling(false);
     }
@@ -146,7 +192,9 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
             </div>
             <div>
               <h3 className={styles.sessionSubject}>{session.subject}</h3>
-              <p className={styles.sessionTutor}>Mentorship with {displayTutor}</p>
+              <p className={styles.sessionTutor}>
+                Mentorship with {displayTutor}
+              </p>
             </div>
           </div>
           <StatusBadge status="confirmed" label="Confirmed Session" />
@@ -156,7 +204,10 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Scheduled Time</span>
             <span className={styles.detailValue}>
-              <FormattedDateTime date={session.startTime} userTimezone={userTimezone} />
+              <FormattedDateTime
+                date={session.startTime}
+                userTimezone={userTimezone}
+              />
             </span>
           </div>
           <div className={styles.detailItem}>
@@ -170,7 +221,14 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
         </div>
 
         <footer className={styles.sessionCardFooter}>
-          <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.65rem",
+              flexWrap: "wrap",
+              alignItems: "center",
+            }}
+          >
             {cleanJoinUrl ? (
               <>
                 <a
@@ -187,7 +245,11 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
                   className={styles.secondaryBtn}
                   title="Copy Zoom link to clipboard"
                 >
-                  {copiedLink ? <Check size={14} color="var(--wa-success, #059669)" /> : <Copy size={14} />}
+                  {copiedLink ? (
+                    <Check size={14} color="var(--wa-success, #059669)" />
+                  ) : (
+                    <Copy size={14} />
+                  )}
                   <span>{copiedLink ? "Link Copied" : "Copy Zoom Link"}</span>
                 </button>
               </>
@@ -196,7 +258,10 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
                 <Video size={16} /> Session Room Details
               </Link>
             )}
-            <Link href={`/sessions/${session.id}`} className={styles.secondaryBtn}>
+            <Link
+              href={`/sessions/${session.id}`}
+              className={styles.secondaryBtn}
+            >
               <BookOpen size={14} /> Notes
             </Link>
           </div>
@@ -205,7 +270,10 @@ export function UpcomingSessionCard({ session, userTimezone }: UpcomingSessionCa
             type="button"
             onClick={() => setDialogOpen(true)}
             className={styles.secondaryBtn}
-            style={{ color: "var(--wa-error, #DC2626)", borderColor: "var(--wa-border, #E2E8F0)" }}
+            style={{
+              color: "var(--wa-error, #DC2626)",
+              borderColor: "var(--wa-border, #E2E8F0)",
+            }}
           >
             Cancel Session
           </button>

@@ -66,7 +66,9 @@ export default async function SessionDetailPage({
       student: { select: { id: true, name: true, email: true } },
       tutor: {
         include: {
-          user: { select: { id: true, name: true, email: true, timezone: true } },
+          user: {
+            select: { id: true, name: true, email: true, timezone: true },
+          },
         },
       },
     },
@@ -83,15 +85,22 @@ export default async function SessionDetailPage({
   });
 
   const meetingUrls = getMeetingUrls(booking.zoomLink);
-  const activeMeetingLink = isTutor ? (meetingUrls.hostUrl || meetingUrls.joinUrl) : meetingUrls.joinUrl;
+  const activeMeetingLink = isTutor
+    ? meetingUrls.hostUrl || meetingUrls.joinUrl
+    : meetingUrls.joinUrl;
 
   const now = new Date();
   const start = new Date(booking.startTime);
   const end = new Date(booking.endTime);
 
   const zoomActivationTime = new Date(start.getTime() - 15 * 60 * 1000);
-  const zoomIsActive = now >= zoomActivationTime && now <= new Date(end.getTime() + 30 * 60 * 1000);
-  const minutesUntilZoom = Math.max(0, Math.round((zoomActivationTime.getTime() - now.getTime()) / 60000));
+  const zoomIsActive =
+    now >= zoomActivationTime &&
+    now <= new Date(end.getTime() + 30 * 60 * 1000);
+  const minutesUntilZoom = Math.max(
+    0,
+    Math.round((zoomActivationTime.getTime() - now.getTime()) / 60000),
+  );
 
   const isCompleted = booking.status === "COMPLETED" || now > end;
   const isCanceled = booking.status === "CANCELED";
@@ -159,7 +168,12 @@ export default async function SessionDetailPage({
   const tutorName = booking.tutor.user.name || "Peer Tutor";
   const studentName = booking.student.name || "Student";
   const otherPartyName = isStudent ? tutorName : studentName;
-  const otherPartyInitials = otherPartyName.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
+  const otherPartyInitials = otherPartyName
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   return (
     <main
@@ -216,13 +230,25 @@ export default async function SessionDetailPage({
             Sessions
           </Link>
           <span style={{ color: "var(--wa-border, #E5DFD5)" }}>/</span>
-          <span style={{ fontSize: "0.875rem", color: "var(--wa-ink, #1C1917)", fontWeight: 600 }}>
+          <span
+            style={{
+              fontSize: "0.875rem",
+              color: "var(--wa-ink, #1C1917)",
+              fontWeight: 600,
+            }}
+          >
             Session Detail
           </span>
         </div>
       </nav>
 
-      <div style={{ maxWidth: "760px", margin: "2rem auto 0", padding: "0 1.25rem" }}>
+      <div
+        style={{
+          maxWidth: "760px",
+          margin: "2rem auto 0",
+          padding: "0 1.25rem",
+        }}
+      >
         {/* Status Badge */}
         <div style={{ marginBottom: "1.25rem" }}>
           <div
@@ -262,11 +288,26 @@ export default async function SessionDetailPage({
           >
             <CheckCircle2 size={22} color="#16A34A" />
             <div>
-              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#166534" }}>
+              <div
+                style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  color: "#166534",
+                }}
+              >
                 Session Booked Smoothly &amp; Confirmed!
               </div>
-              <p style={{ fontSize: "0.8125rem", color: "#15803D", margin: "0.2rem 0 0", lineHeight: 1.4 }}>
-                We sent a calendar confirmation email with class details to your inbox. You can join the room below when your session starts, or chat with your tutor anytime.
+              <p
+                style={{
+                  fontSize: "0.8125rem",
+                  color: "#15803D",
+                  margin: "0.2rem 0 0",
+                  lineHeight: 1.4,
+                }}
+              >
+                We sent a calendar confirmation email with class details to your
+                inbox. You can join the room below when your session starts, or
+                chat with your tutor anytime.
               </p>
             </div>
           </div>
@@ -393,7 +434,13 @@ export default async function SessionDetailPage({
                 <BookOpen size={13} aria-hidden="true" />
                 <span>Subject</span>
               </div>
-              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+              <div
+                style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  color: "var(--wa-ink, #1C1917)",
+                }}
+              >
                 {booking.subject}
               </div>
             </div>
@@ -419,7 +466,13 @@ export default async function SessionDetailPage({
                 <GraduationCap size={13} aria-hidden="true" />
                 <span>Grade</span>
               </div>
-              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+              <div
+                style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  color: "var(--wa-ink, #1C1917)",
+                }}
+              >
                 {booking.grade}
               </div>
             </div>
@@ -445,7 +498,13 @@ export default async function SessionDetailPage({
                 <Clock size={13} aria-hidden="true" />
                 <span>Duration</span>
               </div>
-              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+              <div
+                style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  color: "var(--wa-ink, #1C1917)",
+                }}
+              >
                 {durationMinutes} minutes
               </div>
             </div>
@@ -471,7 +530,13 @@ export default async function SessionDetailPage({
                 <ShieldCheck size={13} aria-hidden="true" />
                 <span>Format</span>
               </div>
-              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+              <div
+                style={{
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  color: "var(--wa-ink, #1C1917)",
+                }}
+              >
                 1-on-1 Mentorship
               </div>
             </div>
@@ -503,11 +568,24 @@ export default async function SessionDetailPage({
               <Calendar size={14} aria-hidden="true" />
               <span>Scheduled Appointment</span>
             </div>
-            <div style={{ fontSize: "1rem", fontWeight: 700, color: "var(--wa-ink, #1C1917)" }}>
+            <div
+              style={{
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: "var(--wa-ink, #1C1917)",
+              }}
+            >
               <FormattedDateTime date={booking.startTime} />
             </div>
-            <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #78716C)", marginTop: "0.2rem" }}>
-              Displayed in your local timezone · {durationMinutes}-minute verified session
+            <div
+              style={{
+                fontSize: "0.8125rem",
+                color: "var(--wa-muted, #78716C)",
+                marginTop: "0.2rem",
+              }}
+            >
+              Displayed in your local timezone · {durationMinutes}-minute
+              verified session
             </div>
           </div>
 
@@ -538,7 +616,13 @@ export default async function SessionDetailPage({
                 <FileText size={14} aria-hidden="true" />
                 <span>Session Learning Goals</span>
               </div>
-              <div style={{ fontSize: "0.9375rem", color: "var(--wa-ink, #1C1917)", lineHeight: 1.6 }}>
+              <div
+                style={{
+                  fontSize: "0.9375rem",
+                  color: "var(--wa-ink, #1C1917)",
+                  lineHeight: 1.6,
+                }}
+              >
                 {booking.topic}
               </div>
               {booking.helpNeeded && (
@@ -569,7 +653,9 @@ export default async function SessionDetailPage({
                 padding: "1.5rem",
                 textAlign: "center",
                 marginBottom: "1.25rem",
-                border: zoomIsActive ? "none" : "1px solid var(--wa-border, #E5DFD5)",
+                border: zoomIsActive
+                  ? "none"
+                  : "1px solid var(--wa-border, #E5DFD5)",
               }}
             >
               {zoomIsActive && activeMeetingLink ? (
@@ -605,7 +691,9 @@ export default async function SessionDetailPage({
                     }}
                   >
                     <Video size={18} aria-hidden="true" />
-                    <span>{isTutor ? "Start Live Session" : "Join Session Now"}</span>
+                    <span>
+                      {isTutor ? "Start Live Session" : "Join Session Now"}
+                    </span>
                   </a>
                 </div>
               ) : zoomIsActive && !activeMeetingLink ? (
@@ -620,25 +708,62 @@ export default async function SessionDetailPage({
                   }}
                 >
                   <AlertTriangle size={16} color="#B45309" aria-hidden="true" />
-                  <span>Meeting link is being generated. Please refresh this page in a moment.</span>
+                  <span>
+                    Meeting link is being generated. Please refresh this page in
+                    a moment.
+                  </span>
                 </div>
               ) : isCompleted ? (
                 <div>
-                  <div style={{ fontWeight: 700, marginBottom: "0.35rem", fontSize: "0.9375rem" }}>
+                  <div
+                    style={{
+                      fontWeight: 700,
+                      marginBottom: "0.35rem",
+                      fontSize: "0.9375rem",
+                    }}
+                  >
                     Session Concluded
                   </div>
                   {isStudent && !booking.hoursCredited && (
-                    <div style={{ margin: "1rem 0", background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "8px", padding: "1rem", textAlign: "left" }}>
-                      <div style={{ fontWeight: 600, color: "#1E40AF", marginBottom: "0.35rem", fontSize: "0.875rem" }}>
+                    <div
+                      style={{
+                        margin: "1rem 0",
+                        background: "#EFF6FF",
+                        border: "1px solid #BFDBFE",
+                        borderRadius: "8px",
+                        padding: "1rem",
+                        textAlign: "left",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontWeight: 600,
+                          color: "#1E40AF",
+                          marginBottom: "0.35rem",
+                          fontSize: "0.875rem",
+                        }}
+                      >
                         Did this tutoring session take place?
                       </div>
-                      <p style={{ margin: "0 0 0.75rem", fontSize: "0.8125rem", color: "#3B82F6", lineHeight: 1.4 }}>
-                        Please confirm whether you and <strong>{tutorName}</strong> met for this lesson so we can keep your learning records and session history up to date.
+                      <p
+                        style={{
+                          margin: "0 0 0.75rem",
+                          fontSize: "0.8125rem",
+                          color: "#3B82F6",
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        Please confirm whether you and{" "}
+                        <strong>{tutorName}</strong> met for this lesson so we
+                        can keep your learning records and session history up to
+                        date.
                       </p>
-                      <form action={async () => {
-                        "use server";
-                        await confirmStudentAttendance(booking.id, true);
-                      }}>
+                      <form
+                        action={async () => {
+                          "use server";
+                          await confirmStudentAttendance(booking.id, true);
+                        }}
+                      >
                         <button
                           type="submit"
                           style={{
@@ -652,7 +777,13 @@ export default async function SessionDetailPage({
                             cursor: "pointer",
                           }}
                         >
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.4rem",
+                            }}
+                          >
                             <Check size={15} /> Confirm I Attended This Session
                           </span>
                         </button>
@@ -660,14 +791,39 @@ export default async function SessionDetailPage({
                     </div>
                   )}
                   {booking.hoursCredited && (
-                    <div style={{ margin: "0.6rem 0", color: "#166534", fontSize: "0.8125rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                    <div
+                      style={{
+                        margin: "0.6rem 0",
+                        color: "#166534",
+                        fontSize: "0.8125rem",
+                        fontWeight: 600,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.35rem",
+                      }}
+                    >
                       <CheckCircle2 size={15} color="#166534" />
-                      <span>{isStudent ? "Session completed • Attendance verified" : "Student attendance verified • Volunteer service hours accredited"}</span>
+                      <span>
+                        {isStudent
+                          ? "Session completed • Attendance verified"
+                          : "Student attendance verified • Volunteer service hours accredited"}
+                      </span>
                     </div>
                   )}
                   {isTutor && !booking.hoursCredited && (
-                    <div style={{ margin: "0.75rem 0", color: "#92400E", fontSize: "0.8125rem", fontWeight: 500, background: "#FEF3C7", padding: "0.5rem 0.75rem", borderRadius: "6px" }}>
-                      Awaiting student attendance confirmation before volunteer hours are accredited.
+                    <div
+                      style={{
+                        margin: "0.75rem 0",
+                        color: "#92400E",
+                        fontSize: "0.8125rem",
+                        fontWeight: 500,
+                        background: "#FEF3C7",
+                        padding: "0.5rem 0.75rem",
+                        borderRadius: "6px",
+                      }}
+                    >
+                      Awaiting student attendance confirmation before volunteer
+                      hours are accredited.
                     </div>
                   )}
                   {booking.recordingUrl ? (
@@ -689,7 +845,13 @@ export default async function SessionDetailPage({
                       <span>Watch Session Recording</span>
                     </a>
                   ) : (
-                    <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #78716C)", marginTop: "0.5rem" }}>
+                    <div
+                      style={{
+                        fontSize: "0.8125rem",
+                        color: "var(--wa-muted, #78716C)",
+                        marginTop: "0.5rem",
+                      }}
+                    >
                       No cloud recording attached for this private session.
                     </div>
                   )}
@@ -707,8 +869,8 @@ export default async function SessionDetailPage({
                     {minutesUntilZoom > 60
                       ? `Meeting room opens ${Math.floor(minutesUntilZoom / 60)}h ${minutesUntilZoom % 60}m before session start.`
                       : minutesUntilZoom > 0
-                      ? `Meeting room opens in ${minutesUntilZoom} minutes.`
-                      : "Meeting room opens 15 minutes before scheduled start time."}
+                        ? `Meeting room opens in ${minutesUntilZoom} minutes.`
+                        : "Meeting room opens 15 minutes before scheduled start time."}
                   </div>
                   <div
                     style={{
@@ -761,15 +923,22 @@ export default async function SessionDetailPage({
                 <MessageSquare size={14} aria-hidden="true" />
                 <span>Tutor Progress Note</span>
               </div>
-              <div style={{ fontSize: "0.9375rem", color: "#1E40AF", lineHeight: 1.6 }}>
+              <div
+                style={{
+                  fontSize: "0.9375rem",
+                  color: "#1E40AF",
+                  lineHeight: 1.6,
+                }}
+              >
                 {booking.checkUpNote}
               </div>
             </div>
           )}
 
           {/* Student Review Section (for completed sessions) */}
-          {isCompleted && isStudent && (
-            existingReview ? (
+          {isCompleted &&
+            isStudent &&
+            (existingReview ? (
               <div
                 style={{
                   background: "var(--wa-green-light, #EAF2EE)",
@@ -857,7 +1026,11 @@ export default async function SessionDetailPage({
                     marginBottom: "0.35rem",
                   }}
                 >
-                  <Star size={16} color="var(--wa-green, #1B4D3E)" aria-hidden="true" />
+                  <Star
+                    size={16}
+                    color="var(--wa-green, #1B4D3E)"
+                    aria-hidden="true"
+                  />
                   <span>Verify Volunteer Service &amp; Share Feedback</span>
                 </div>
                 <p
@@ -868,10 +1041,18 @@ export default async function SessionDetailPage({
                     lineHeight: 1.5,
                   }}
                 >
-                  Your feedback helps your tutor maintain their certified volunteer teaching record and informs future learners.
+                  Your feedback helps your tutor maintain their certified
+                  volunteer teaching record and informs future learners.
                 </p>
 
-                <form action={submitReview} style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+                <form
+                  action={submitReview}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.875rem",
+                  }}
+                >
                   <input type="hidden" name="bookingId" value={booking.id} />
                   <div>
                     <label
@@ -902,10 +1083,18 @@ export default async function SessionDetailPage({
                         maxWidth: "320px",
                       }}
                     >
-                      <option value="5">5 / 5 - Outstanding, clear and patient</option>
-                      <option value="4">4 / 5 - Great session, very helpful</option>
-                      <option value="3">3 / 5 - Good, answered core questions</option>
-                      <option value="2">2 / 5 - Needed pacing or technical improvement</option>
+                      <option value="5">
+                        5 / 5 - Outstanding, clear and patient
+                      </option>
+                      <option value="4">
+                        4 / 5 - Great session, very helpful
+                      </option>
+                      <option value="3">
+                        3 / 5 - Good, answered core questions
+                      </option>
+                      <option value="2">
+                        2 / 5 - Needed pacing or technical improvement
+                      </option>
                       <option value="1">1 / 5 - Poor session experience</option>
                     </select>
                   </div>
@@ -961,8 +1150,7 @@ export default async function SessionDetailPage({
                   </button>
                 </form>
               </div>
-            )
-          )}
+            ))}
 
           {/* Action Links */}
           <div
@@ -1040,7 +1228,17 @@ export default async function SessionDetailPage({
             color: "var(--wa-muted, #78716C)",
           }}
         >
-          Session Record ID: <code style={{ background: "var(--wa-contrast, #F3EFE8)", padding: "0.15rem 0.4rem", borderRadius: "4px" }}>{booking.id}</code> · Learnivia Safeguarding &amp; Verified Volunteer Record
+          Session Record ID:{" "}
+          <code
+            style={{
+              background: "var(--wa-contrast, #F3EFE8)",
+              padding: "0.15rem 0.4rem",
+              borderRadius: "4px",
+            }}
+          >
+            {booking.id}
+          </code>{" "}
+          · Learnivia Safeguarding &amp; Verified Volunteer Record
         </div>
       </div>
     </main>

@@ -28,7 +28,7 @@ export function VideoLessonPlayer({ video }: VideoLessonPlayerProps) {
         boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
         width: "100%",
         aspectRatio: "16 / 9",
-        position: "relative"
+        position: "relative",
       }}
     >
       <iframe

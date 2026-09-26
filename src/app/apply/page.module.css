@@ -5,13 +5,16 @@
 }
 
 .header {
-  background: var(--wa-paper, #FAF9F6);
+  background: var(--wa-paper, #faf9f6);
   padding: var(--space-16) var(--space-6) var(--space-12);
   text-align: center;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
 }
 
-.mascotImg { object-fit: contain; margin: 0 auto var(--space-4); }
+.mascotImg {
+  object-fit: contain;
+  margin: 0 auto var(--space-4);
+}
 
 .title {
   font-size: clamp(var(--text-2xl), 3vw, var(--text-4xl));
@@ -47,15 +50,32 @@
   text-align: center;
 }
 
-.loginPromptIcon { font-size: 2.5rem; margin-bottom: var(--space-4); }
+.loginPromptIcon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-4);
+}
 
-.loginPrompt h2 { font-size: var(--text-xl); font-weight: 800; color: var(--color-navy); margin-bottom: var(--space-3); }
+.loginPrompt h2 {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--color-navy);
+  margin-bottom: var(--space-3);
+}
 
-.loginPrompt p { color: var(--color-text-muted); line-height: var(--leading-relaxed); margin-bottom: var(--space-6); }
+.loginPrompt p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-6);
+}
 
-.loginActions { margin-bottom: var(--space-4); }
+.loginActions {
+  margin-bottom: var(--space-4);
+}
 
-.loginNote { font-size: var(--text-sm); color: var(--color-text-light); }
+.loginNote {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+}
 
 .benefitsList {
   background: var(--color-sky);
@@ -63,11 +83,24 @@
   padding: var(--space-6);
 }
 
-.benefitsList h3 { font-size: var(--text-base); font-weight: 700; color: var(--color-navy); margin-bottom: var(--space-4); }
+.benefitsList h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: var(--space-4);
+}
 
-.benefitsList ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-3); }
+.benefitsList ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
 
-.benefitsList li { font-size: var(--text-sm); color: var(--color-text-muted); }
+.benefitsList li {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
 
 /* Progress */
 .progressBar {
@@ -126,7 +159,11 @@
   gap: var(--space-8);
 }
 
-.formSection { display: flex; flex-direction: column; gap: var(--space-5); }
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
 
 .formSectionTitle {
   font-size: var(--text-lg);
@@ -157,7 +194,9 @@
   font-family: inherit;
   font-size: var(--text-base);
   color: var(--color-navy);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
   width: 100%;
   background: white;
 }
@@ -170,7 +209,9 @@
   box-shadow: 0 0 0 3px rgb(57 166 163 / 0.15);
 }
 
-.formGroup textarea { resize: vertical; }
+.formGroup textarea {
+  resize: vertical;
+}
 
 .disabledInput {
   background: var(--color-cream) !important;
@@ -178,7 +219,10 @@
   cursor: not-allowed;
 }
 
-.fieldHint { font-size: var(--text-xs); color: var(--color-text-light); }
+.fieldHint {
+  font-size: var(--text-xs);
+  color: var(--color-text-light);
+}
 
 .checkboxGroup {
   display: flex;
@@ -211,7 +255,9 @@
   line-height: var(--leading-relaxed);
 }
 
-.formNote strong { color: var(--color-navy); }
+.formNote strong {
+  color: var(--color-navy);
+}
 
 .submitBtn {
   display: block;
@@ -230,10 +276,18 @@
   font-family: inherit;
 }
 
-.submitBtn:hover { background: var(--color-teal-dark); }
+.submitBtn:hover {
+  background: var(--color-teal-dark);
+}
 
 @media (max-width: 640px) {
-  .formContainer { padding: 0 var(--space-4); }
-  .form { padding: var(--space-5); }
-  .loginPrompt { padding: var(--space-6); }
+  .formContainer {
+    padding: 0 var(--space-4);
+  }
+  .form {
+    padding: var(--space-5);
+  }
+  .loginPrompt {
+    padding: var(--space-6);
+  }
 }

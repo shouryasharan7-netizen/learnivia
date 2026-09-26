@@ -16,14 +16,14 @@ export async function updateSettings(formData: FormData) {
     const timezone = formData.get("timezone") as string;
     const primaryGoal = formData.get("primaryGoal") as string;
     const grade = formData.get("grade") as string;
-    
+
     // Tutor specific fields
     const bio = formData.get("bio") as string;
     const school = formData.get("school") as string;
 
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      include: { tutorProfile: true }
+      include: { tutorProfile: true },
     });
 
     if (!user) {
@@ -48,17 +48,20 @@ export async function updateSettings(formData: FormData) {
         data: {
           bio: bio?.trim() || undefined,
           school: school?.trim() || undefined,
-        }
+        },
       });
     }
 
     revalidatePath("/settings");
     revalidatePath("/dashboard");
     revalidatePath("/tutor");
-    
+
     return { success: true };
   } catch (error: any) {
     console.error("Settings update error:", error);
-    return { success: false, error: error.message || "Failed to update settings" };
+    return {
+      success: false,
+      error: error.message || "Failed to update settings",
+    };
   }
 }

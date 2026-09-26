@@ -20,7 +20,10 @@ export function generateTranscriptToken(tutorId: string): string {
 /**
  * Validates a given transcript token in constant time.
  */
-export function verifyTranscriptToken(tutorId: string, token: string | undefined | null): boolean {
+export function verifyTranscriptToken(
+  tutorId: string,
+  token: string | undefined | null,
+): boolean {
   if (!token || typeof token !== "string" || token.length !== 24) {
     return false;
   }

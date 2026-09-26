@@ -35,7 +35,10 @@ interface Props {
   initialWorkshops: WorkshopItem[];
 }
 
-export default function AdminSessionsClient({ initialBookings, initialWorkshops }: Props) {
+export default function AdminSessionsClient({
+  initialBookings,
+  initialWorkshops,
+}: Props) {
   const [bookings, setBookings] = useState<BookingItem[]>(initialBookings);
   const [workshops, setWorkshops] = useState<WorkshopItem[]>(initialWorkshops);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
@@ -46,14 +49,17 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
     setTimeout(() => setToastMsg(""), 3500);
   }
 
-  async function handleBookingStatus(bookingId: string, newStatus: "CONFIRMED" | "COMPLETED" | "CANCELED") {
+  async function handleBookingStatus(
+    bookingId: string,
+    newStatus: "CONFIRMED" | "COMPLETED" | "CANCELED",
+  ) {
     if (!confirm(`Change session status to ${newStatus}?`)) return;
 
     setIsUpdating(bookingId);
     try {
       await adminUpdateBookingStatus(bookingId, newStatus);
       setBookings((prev) =>
-        prev.map((b) => (b.id === bookingId ? { ...b, status: newStatus } : b))
+        prev.map((b) => (b.id === bookingId ? { ...b, status: newStatus } : b)),
       );
       showToast(`Session status updated to ${newStatus}.`);
     } catch (err: any) {
@@ -81,11 +87,19 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
   return (
     <div>
       <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "#0F172A", marginBottom: "0.5rem" }}>
+        <h1
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: 800,
+            color: "#0F172A",
+            marginBottom: "0.5rem",
+          }}
+        >
           Platform Tutoring Sessions &amp; Workshops
         </h1>
         <p style={{ color: "#64748B", fontSize: "0.95rem", margin: 0 }}>
-          Master control over all scheduled 1-on-1 tutoring sessions and live group study circles.
+          Master control over all scheduled 1-on-1 tutoring sessions and live
+          group study circles.
         </p>
       </div>
 
@@ -111,25 +125,56 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
       )}
 
       {/* 1-on-1 Sessions Table */}
-      <div style={{ background: "#FFFFFF", borderRadius: "14px", border: "1px solid #E2E8F0", padding: "1.5rem", marginBottom: "2.5rem" }}>
-        <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0F172A", marginBottom: "1rem" }}>
+      <div
+        style={{
+          background: "#FFFFFF",
+          borderRadius: "14px",
+          border: "1px solid #E2E8F0",
+          padding: "1.5rem",
+          marginBottom: "2.5rem",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "1.25rem",
+            fontWeight: 700,
+            color: "#0F172A",
+            marginBottom: "1rem",
+          }}
+        >
           1-on-1 Tutoring Bookings ({bookings.length})
         </h2>
 
         {bookings.length === 0 ? (
-          <p style={{ color: "#64748B", fontStyle: "italic" }}>No bookings recorded yet.</p>
+          <p style={{ color: "#64748B", fontStyle: "italic" }}>
+            No bookings recorded yet.
+          </p>
         ) : (
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                fontSize: "0.875rem",
+              }}
+            >
               <thead>
-                <tr style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0", textAlign: "left" }}>
+                <tr
+                  style={{
+                    background: "#F8FAFC",
+                    borderBottom: "1px solid #E2E8F0",
+                    textAlign: "left",
+                  }}
+                >
                   <th style={{ padding: "0.75rem" }}>Date &amp; Time</th>
                   <th style={{ padding: "0.75rem" }}>Subject</th>
                   <th style={{ padding: "0.75rem" }}>Tutor</th>
                   <th style={{ padding: "0.75rem" }}>Learner</th>
                   <th style={{ padding: "0.75rem" }}>Status</th>
                   <th style={{ padding: "0.75rem" }}>Meeting</th>
-                  <th style={{ padding: "0.75rem", textAlign: "right" }}>Admin Actions</th>
+                  <th style={{ padding: "0.75rem", textAlign: "right" }}>
+                    Admin Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -138,17 +183,35 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                   const isBusy = isUpdating === b.id;
 
                   return (
-                    <tr key={b.id} style={{ borderBottom: "1px solid #F1F5F9" }}>
+                    <tr
+                      key={b.id}
+                      style={{ borderBottom: "1px solid #F1F5F9" }}
+                    >
                       <td style={{ padding: "0.75rem", whiteSpace: "nowrap" }}>
-                        {new Date(b.startTime).toLocaleDateString()} {new Date(b.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {new Date(b.startTime).toLocaleDateString()}{" "}
+                        {new Date(b.startTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </td>
-                      <td style={{ padding: "0.75rem", fontWeight: 600 }}>{b.subject}</td>
+                      <td style={{ padding: "0.75rem", fontWeight: 600 }}>
+                        {b.subject}
+                      </td>
                       <td style={{ padding: "0.75rem" }}>
-                        <Link href={`/tutor/${b.tutor.id}`} style={{ color: "#0E8345", fontWeight: 600, textDecoration: "none" }}>
+                        <Link
+                          href={`/tutor/${b.tutor.id}`}
+                          style={{
+                            color: "#0E8345",
+                            fontWeight: 600,
+                            textDecoration: "none",
+                          }}
+                        >
                           {b.tutor.user.name || "Tutor"}
                         </Link>
                       </td>
-                      <td style={{ padding: "0.75rem" }}>{b.student.name || b.student.email}</td>
+                      <td style={{ padding: "0.75rem" }}>
+                        {b.student.name || b.student.email}
+                      </td>
                       <td style={{ padding: "0.75rem" }}>
                         <span
                           style={{
@@ -163,16 +226,16 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                                   ? "#D1FAE5"
                                   : "#FEF3C7"
                                 : b.status === "CONFIRMED"
-                                ? "#B5D9C5"
-                                : "#FEE2E2",
+                                  ? "#B5D9C5"
+                                  : "#FEE2E2",
                             color:
                               b.status === "COMPLETED"
                                 ? b.hoursCredited
                                   ? "#065F46"
                                   : "#92400E"
                                 : b.status === "CONFIRMED"
-                                ? "#1E40AF"
-                                : "#991B1B",
+                                  ? "#1E40AF"
+                                  : "#991B1B",
                           }}
                         >
                           {b.status === "COMPLETED"
@@ -188,7 +251,11 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             href={joinUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={{ color: "#2563EB", fontWeight: 600, textDecoration: "underline" }}
+                            style={{
+                              color: "#2563EB",
+                              fontWeight: 600,
+                              textDecoration: "underline",
+                            }}
                           >
                             Open Zoom
                           </a>
@@ -202,7 +269,9 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             <button
                               type="button"
                               disabled={isBusy}
-                              onClick={() => handleBookingStatus(b.id, "COMPLETED")}
+                              onClick={() =>
+                                handleBookingStatus(b.id, "COMPLETED")
+                              }
                               style={{
                                 background: "#ECFDF5",
                                 color: "#065F46",
@@ -222,7 +291,9 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             <button
                               type="button"
                               disabled={isBusy}
-                              onClick={() => handleBookingStatus(b.id, "COMPLETED")}
+                              onClick={() =>
+                                handleBookingStatus(b.id, "COMPLETED")
+                              }
                               style={{
                                 background: "#EFF6FF",
                                 color: "#1E40AF",
@@ -242,7 +313,9 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             <button
                               type="button"
                               disabled={isBusy}
-                              onClick={() => handleBookingStatus(b.id, "CANCELED")}
+                              onClick={() =>
+                                handleBookingStatus(b.id, "CANCELED")
+                              }
                               style={{
                                 background: "#FEF2F2",
                                 color: "#991B1B",
@@ -270,24 +343,54 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
       </div>
 
       {/* Group Workshops Table */}
-      <div style={{ background: "#FFFFFF", borderRadius: "14px", border: "1px solid #E2E8F0", padding: "1.5rem" }}>
-        <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0F172A", marginBottom: "1rem" }}>
+      <div
+        style={{
+          background: "#FFFFFF",
+          borderRadius: "14px",
+          border: "1px solid #E2E8F0",
+          padding: "1.5rem",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "1.25rem",
+            fontWeight: 700,
+            color: "#0F172A",
+            marginBottom: "1rem",
+          }}
+        >
           Group Workshops &amp; Study Circles ({workshops.length})
         </h2>
 
         {workshops.length === 0 ? (
-          <p style={{ color: "#64748B", fontStyle: "italic" }}>No workshops created yet.</p>
+          <p style={{ color: "#64748B", fontStyle: "italic" }}>
+            No workshops created yet.
+          </p>
         ) : (
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                fontSize: "0.875rem",
+              }}
+            >
               <thead>
-                <tr style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0", textAlign: "left" }}>
+                <tr
+                  style={{
+                    background: "#F8FAFC",
+                    borderBottom: "1px solid #E2E8F0",
+                    textAlign: "left",
+                  }}
+                >
                   <th style={{ padding: "0.75rem" }}>Date &amp; Time</th>
                   <th style={{ padding: "0.75rem" }}>Workshop Title</th>
                   <th style={{ padding: "0.75rem" }}>Host Tutor</th>
                   <th style={{ padding: "0.75rem" }}>Enrolled / Capacity</th>
                   <th style={{ padding: "0.75rem" }}>Meeting</th>
-                  <th style={{ padding: "0.75rem", textAlign: "right" }}>Admin Actions</th>
+                  <th style={{ padding: "0.75rem", textAlign: "right" }}>
+                    Admin Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -297,19 +400,38 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                   const isBusy = isUpdating === w.id;
 
                   return (
-                    <tr key={w.id} style={{ borderBottom: "1px solid #F1F5F9" }}>
+                    <tr
+                      key={w.id}
+                      style={{ borderBottom: "1px solid #F1F5F9" }}
+                    >
                       <td style={{ padding: "0.75rem", whiteSpace: "nowrap" }}>
-                        {new Date(w.startTime).toLocaleDateString()} {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>{w.durationMinutes} mins</div>
+                        {new Date(w.startTime).toLocaleDateString()}{" "}
+                        {new Date(w.startTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                          {w.durationMinutes} mins
+                        </div>
                       </td>
-                      <td style={{ padding: "0.75rem", fontWeight: 600 }}>{w.title}</td>
+                      <td style={{ padding: "0.75rem", fontWeight: 600 }}>
+                        {w.title}
+                      </td>
                       <td style={{ padding: "0.75rem" }}>
-                        <Link href={`/tutor/${w.tutor.id}`} style={{ color: "#0E8345", fontWeight: 600, textDecoration: "none" }}>
+                        <Link
+                          href={`/tutor/${w.tutor.id}`}
+                          style={{
+                            color: "#0E8345",
+                            fontWeight: 600,
+                            textDecoration: "none",
+                          }}
+                        >
                           {w.tutor.user.name || "Tutor"}
                         </Link>
                       </td>
                       <td style={{ padding: "0.75rem" }}>
-                        <strong>{w.enrollmentCount}</strong> / {w.capacity} seats
+                        <strong>{w.enrollmentCount}</strong> / {w.capacity}{" "}
+                        seats
                       </td>
                       <td style={{ padding: "0.75rem" }}>
                         {activeUrl ? (
@@ -317,7 +439,14 @@ export default function AdminSessionsClient({ initialBookings, initialWorkshops 
                             href={activeUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={{ color: "var(--wa-forest)", fontWeight: 600, textDecoration: "underline", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}
+                            style={{
+                              color: "var(--wa-forest)",
+                              fontWeight: 600,
+                              textDecoration: "underline",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.3rem",
+                            }}
                           >
                             <Video size={13} aria-hidden="true" />
                             <span>Open Zoom</span>

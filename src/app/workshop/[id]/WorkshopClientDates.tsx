@@ -15,7 +15,7 @@ export default function WorkshopClientDates({
   startTime,
   endTime,
   title,
-  description
+  description,
 }: WorkshopClientDatesProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [data, setData] = useState({
@@ -29,13 +29,17 @@ export default function WorkshopClientDates({
     try {
       const start = new Date(startTime);
       const end = new Date(endTime);
-      
+
       const dayNum = start.toLocaleDateString("en-US", { day: "numeric" });
-      const monthShort = start.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
-      const weekday = start.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase();
-      
+      const monthShort = start
+        .toLocaleDateString("en-US", { month: "short" })
+        .toUpperCase();
+      const weekday = start
+        .toLocaleDateString("en-US", { weekday: "short" })
+        .toUpperCase();
+
       const timeString = `${start.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })} - ${end.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZoneName: "short" })}`;
-      
+
       setData({
         dayNum,
         monthShort,
@@ -52,12 +56,7 @@ export default function WorkshopClientDates({
     return <div style={{ opacity: 0 }}>Loading...</div>;
   }
 
-  const {
-    dayNum,
-    monthShort,
-    weekday,
-    timeString,
-  } = data;
+  const { dayNum, monthShort, weekday, timeString } = data;
 
   return (
     <>
@@ -70,7 +69,7 @@ export default function WorkshopClientDates({
       </div>
 
       <div className={styles.attendancePolicy}>
-        <span className={styles.handEmoji}>✋</span> 
+        <span className={styles.handEmoji}>✋</span>
         <strong>ATTENDANCE POLICY</strong>
         <p>Free to attend or skip any sessions</p>
       </div>
@@ -86,7 +85,11 @@ export default function WorkshopClientDates({
           <p className={styles.sessionTime}>
             {weekday} {timeString}
           </p>
-          <p className={styles.sessionDesc}>{description.length > 100 ? description.substring(0, 100) + "..." : description}</p>
+          <p className={styles.sessionDesc}>
+            {description.length > 100
+              ? description.substring(0, 100) + "..."
+              : description}
+          </p>
         </div>
       </div>
     </>

@@ -9,7 +9,8 @@ export async function cancelBooking(formData: FormData) {
   const user = await requireAuth();
 
   const bookingId = formData.get("bookingId") as string;
-  const cancelReason = (formData.get("cancelReason") as string) || "No reason specified";
+  const cancelReason =
+    (formData.get("cancelReason") as string) || "No reason specified";
 
   if (!bookingId) {
     throw new Error("Booking ID is required.");
@@ -94,7 +95,9 @@ export async function completeSession(formData: FormData) {
   const isAdmin = user.isAdmin;
 
   if (!isTutor && !isAdmin) {
-    throw new Error("Only the tutor or an admin can mark a session as completed.");
+    throw new Error(
+      "Only the tutor or an admin can mark a session as completed.",
+    );
   }
 
   if (booking.status === "CANCELED") {
@@ -107,7 +110,9 @@ export async function completeSession(formData: FormData) {
 
   // Integrity check: session cannot be completed before it begins
   if (new Date() < booking.startTime) {
-    throw new Error("A session cannot be marked as completed before its scheduled start time.");
+    throw new Error(
+      "A session cannot be marked as completed before its scheduled start time.",
+    );
   }
 
   // Transition CONFIRMED → COMPLETED.
@@ -122,7 +127,10 @@ export async function completeSession(formData: FormData) {
   revalidatePath(`/sessions/${bookingId}`);
 }
 
-export async function confirmStudentAttendance(bookingId: string, attended: boolean) {
+export async function confirmStudentAttendance(
+  bookingId: string,
+  attended: boolean,
+) {
   const user = await requireAuth();
 
   const booking = await prisma.booking.findUnique({
@@ -138,11 +146,16 @@ export async function confirmStudentAttendance(bookingId: string, attended: bool
   const isAdmin = Boolean(user.role === "ADMIN" || user.isAdmin);
 
   if (!isStudent && !isAdmin) {
-    throw new Error("Only the student who attended this session (or an admin) can confirm attendance.");
+    throw new Error(
+      "Only the student who attended this session (or an admin) can confirm attendance.",
+    );
   }
 
   if (booking.hoursCredited) {
-    return { success: true, message: "Attendance and volunteer hours already confirmed." };
+    return {
+      success: true,
+      message: "Attendance and volunteer hours already confirmed.",
+    };
   }
 
   if (!attended) {
@@ -160,7 +173,10 @@ export async function confirmStudentAttendance(bookingId: string, attended: bool
 
   // Calculate duration in hours (minimum 0.5 hours)
   const durationMs = booking.endTime.getTime() - booking.startTime.getTime();
-  const durationHours = Math.max(0.5, Math.round((durationMs / (1000 * 60 * 60)) * 10) / 10);
+  const durationHours = Math.max(
+    0.5,
+    Math.round((durationMs / (1000 * 60 * 60)) * 10) / 10,
+  );
 
   // Atomically mark attended and credit volunteer hours to tutor
   await prisma.$transaction(async (tx) => {
@@ -186,7 +202,10 @@ export async function confirmStudentAttendance(bookingId: string, attended: bool
   revalidatePath("/tutor");
   revalidatePath("/admin/tutors");
   revalidatePath(`/sessions/${bookingId}`);
-  return { success: true, message: "Attendance confirmed and volunteer hours accredited!" };
+  return {
+    success: true,
+    message: "Attendance confirmed and volunteer hours accredited!",
+  };
 }
 
 export async function submitReview(formData: FormData) {

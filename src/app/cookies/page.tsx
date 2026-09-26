@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cookie Policy - Learnivia",
-  description: "Learnivia strictly necessary cookies policy for free K-10 peer tutoring. No advertising or cross-site tracking cookies.",
+  description:
+    "Learnivia strictly necessary cookies policy for free K-10 peer tutoring. No advertising or cross-site tracking cookies.",
 };
 
 const LAST_UPDATED = "September 2026";
@@ -36,9 +37,30 @@ export default function CookiesPage() {
   ];
 
   return (
-    <main style={{ maxWidth: 760, margin: "0 auto", padding: "5rem 1.5rem 6rem", fontFamily: "var(--font-sans)" }}>
-      <div style={{ marginBottom: "3rem", borderBottom: "1px solid var(--wa-border)", paddingBottom: "2rem" }}>
-        <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2.5rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "0.5rem" }}>
+    <main
+      style={{
+        maxWidth: 760,
+        margin: "0 auto",
+        padding: "5rem 1.5rem 6rem",
+        fontFamily: "var(--font-sans)",
+      }}
+    >
+      <div
+        style={{
+          marginBottom: "3rem",
+          borderBottom: "1px solid var(--wa-border)",
+          paddingBottom: "2rem",
+        }}
+      >
+        <h1
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "2.5rem",
+            fontWeight: 700,
+            color: "var(--wa-ink)",
+            marginBottom: "0.5rem",
+          }}
+        >
           Cookie Policy
         </h1>
         <p style={{ color: "var(--wa-muted)", fontSize: "0.9rem" }}>
@@ -49,10 +71,25 @@ export default function CookiesPage() {
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         {sections.map((s) => (
           <div key={s.h}>
-            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "0.5rem" }}>
+            <h2
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "1.25rem",
+                fontWeight: 700,
+                color: "var(--wa-ink)",
+                marginBottom: "0.5rem",
+              }}
+            >
               {s.h}
             </h2>
-            <p style={{ color: "var(--wa-muted)", lineHeight: 1.7, fontSize: "0.95rem", whiteSpace: "pre-line" }}>
+            <p
+              style={{
+                color: "var(--wa-muted)",
+                lineHeight: 1.7,
+                fontSize: "0.95rem",
+                whiteSpace: "pre-line",
+              }}
+            >
               {s.p}
             </p>
           </div>

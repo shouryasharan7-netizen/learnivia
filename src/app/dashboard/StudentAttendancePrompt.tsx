@@ -17,7 +17,9 @@ interface StudentAttendancePromptProps {
   pendingBookings: PendingAttendanceBooking[];
 }
 
-export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePromptProps) {
+export function StudentAttendancePrompt({
+  pendingBookings,
+}: StudentAttendancePromptProps) {
   const [list, setList] = useState<PendingAttendanceBooking[]>(pendingBookings);
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
@@ -29,9 +31,13 @@ export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePr
       const res = await confirmStudentAttendance(bookingId, attended);
       if (res.success) {
         if (attended) {
-          toast.success("Thank you! Your session attendance has been confirmed.");
+          toast.success(
+            "Thank you! Your session attendance has been confirmed.",
+          );
         } else {
-          toast.info("Thank you for letting us know. We have updated your session record.");
+          toast.info(
+            "Thank you for letting us know. We have updated your session record.",
+          );
         }
         setList((prev) => prev.filter((b) => b.id !== bookingId));
       }
@@ -52,10 +58,13 @@ export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePr
             </div>
             <div className={styles.headerText}>
               <h3 className={styles.title}>
-                Did your tutoring session for <strong>{booking.subject}</strong> take place?
+                Did your tutoring session for <strong>{booking.subject}</strong>{" "}
+                take place?
               </h3>
               <p className={styles.subtitle}>
-                Tutor: <strong>{booking.tutorName}</strong> &bull; Please let us know if you and your tutor met for this lesson so we can keep your learning records up to date.
+                Tutor: <strong>{booking.tutorName}</strong> &bull; Please let us
+                know if you and your tutor met for this lesson so we can keep
+                your learning records up to date.
               </p>
             </div>
           </div>
@@ -68,7 +77,11 @@ export function StudentAttendancePrompt({ pendingBookings }: StudentAttendancePr
               className={styles.confirmBtn}
             >
               <CheckCircle2 size={15} />
-              <span>{loadingId === booking.id ? "Verifying..." : "Yes, I attended this session"}</span>
+              <span>
+                {loadingId === booking.id
+                  ? "Verifying..."
+                  : "Yes, I attended this session"}
+              </span>
             </button>
             <button
               type="button"

@@ -82,7 +82,8 @@ export default function Unauthorized() {
             marginBottom: "2rem",
           }}
         >
-          Please sign in with your student or tutor account to access this workspace and view your scheduled sessions.
+          Please sign in with your student or tutor account to access this
+          workspace and view your scheduled sessions.
         </p>
 
         <Link

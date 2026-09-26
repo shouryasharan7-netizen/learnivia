@@ -15,7 +15,9 @@ export async function submitIncidentReport(formData: FormData) {
   const reportedUserId = (formData.get("reportedUserId") as string) || null;
 
   if (!description || description.trim().length < 10) {
-    throw new Error("Please provide a detailed description of the incident (at least 10 characters).");
+    throw new Error(
+      "Please provide a detailed description of the incident (at least 10 characters).",
+    );
   }
 
   await prisma.incidentReport.create({

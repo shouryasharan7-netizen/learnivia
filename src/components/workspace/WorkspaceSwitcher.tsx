@@ -18,7 +18,11 @@ interface WorkspaceSwitcherProps {
   isTrainingCompleted?: boolean;
 }
 
-export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = false }: WorkspaceSwitcherProps) {
+export function WorkspaceSwitcher({
+  isTutor,
+  isAdmin,
+  isTrainingCompleted = false,
+}: WorkspaceSwitcherProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -26,7 +30,10 @@ export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = fals
   // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -55,7 +62,10 @@ export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = fals
   }
 
   return (
-    <div ref={dropdownRef} style={{ position: "relative", width: "100%", marginBottom: "1rem" }}>
+    <div
+      ref={dropdownRef}
+      style={{ position: "relative", width: "100%", marginBottom: "1rem" }}
+    >
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -120,15 +130,22 @@ export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = fals
               justifyContent: "space-between",
               padding: "0.5rem 0.65rem",
               borderRadius: "6px",
-              background: isCurrentLearner ? "var(--wa-cream-dark)" : "transparent",
+              background: isCurrentLearner
+                ? "var(--wa-cream-dark)"
+                : "transparent",
               color: "var(--wa-ink)",
               fontSize: "0.8125rem",
               fontWeight: 600,
               textDecoration: "none",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <GraduationCap size={15} color={isCurrentLearner ? "var(--wa-green)" : "var(--wa-muted)"} />
+            <div
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <GraduationCap
+                size={15}
+                color={isCurrentLearner ? "var(--wa-green)" : "var(--wa-muted)"}
+              />
               <span>Learner Workspace</span>
             </div>
             {isCurrentLearner && <Check size={14} color="var(--wa-green)" />}
@@ -137,7 +154,9 @@ export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = fals
           {/* Tutor Option */}
           {isTutor && (
             <Link
-              href={isTrainingCompleted ? ROUTES.tutor.home : ROUTES.tutor.training}
+              href={
+                isTrainingCompleted ? ROUTES.tutor.home : ROUTES.tutor.training
+              }
               onClick={() => setIsOpen(false)}
               style={{
                 display: "flex",
@@ -145,15 +164,22 @@ export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = fals
                 justifyContent: "space-between",
                 padding: "0.5rem 0.65rem",
                 borderRadius: "6px",
-                background: isCurrentTutor ? "var(--wa-cream-dark)" : "transparent",
+                background: isCurrentTutor
+                  ? "var(--wa-cream-dark)"
+                  : "transparent",
                 color: "var(--wa-ink)",
                 fontSize: "0.8125rem",
                 fontWeight: 600,
                 textDecoration: "none",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <BookOpen size={15} color={isCurrentTutor ? "var(--wa-green)" : "var(--wa-muted)"} />
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <BookOpen
+                  size={15}
+                  color={isCurrentTutor ? "var(--wa-green)" : "var(--wa-muted)"}
+                />
                 <span>Tutor Workspace</span>
                 {!isTrainingCompleted && (
                   <span
@@ -185,15 +211,22 @@ export function WorkspaceSwitcher({ isTutor, isAdmin, isTrainingCompleted = fals
                 justifyContent: "space-between",
                 padding: "0.5rem 0.65rem",
                 borderRadius: "6px",
-                background: isCurrentAdmin ? "var(--wa-cream-dark)" : "transparent",
+                background: isCurrentAdmin
+                  ? "var(--wa-cream-dark)"
+                  : "transparent",
                 color: "var(--wa-ink)",
                 fontSize: "0.8125rem",
                 fontWeight: 600,
                 textDecoration: "none",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <ShieldCheck size={15} color={isCurrentAdmin ? "var(--wa-green)" : "var(--wa-muted)"} />
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <ShieldCheck
+                  size={15}
+                  color={isCurrentAdmin ? "var(--wa-green)" : "var(--wa-muted)"}
+                />
                 <span>Admin Center</span>
               </div>
               {isCurrentAdmin && <Check size={14} color="var(--wa-green)" />}

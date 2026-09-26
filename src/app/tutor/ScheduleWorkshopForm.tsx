@@ -101,10 +101,15 @@ export function ScheduleWorkshopForm() {
       startTransition(async () => {
         try {
           await createWorkshop(formData);
-          setSuccessMsg("Session published successfully. It is now open for learner enrollments.");
+          setSuccessMsg(
+            "Session published successfully. It is now open for learner enrollments.",
+          );
           form.reset();
         } catch (err: any) {
-          setErrorMsg(err?.message || "Failed to schedule workshop. Please check your details.");
+          setErrorMsg(
+            err?.message ||
+              "Failed to schedule workshop. Please check your details.",
+          );
         }
       });
     } catch (err: any) {
@@ -113,7 +118,10 @@ export function ScheduleWorkshopForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+    >
       {errorMsg && (
         <div
           role="alert"
@@ -154,9 +162,23 @@ export function ScheduleWorkshopForm() {
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1.2fr 1fr", gap: "0.75rem" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 1.2fr 1fr",
+          gap: "0.75rem",
+        }}
+      >
         <div>
-          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "var(--wa-ink)",
+              marginBottom: "0.25rem",
+            }}
+          >
             Workshop Title *
           </label>
           <input
@@ -169,35 +191,79 @@ export function ScheduleWorkshopForm() {
           />
         </div>
         <div>
-          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "var(--wa-ink)",
+              marginBottom: "0.25rem",
+            }}
+          >
             Subject *
           </label>
-          <select name="subject" required className={styles.selectInput} style={{ width: "100%" }}>
+          <select
+            name="subject"
+            required
+            className={styles.selectInput}
+            style={{ width: "100%" }}
+          >
             <option value="Mathematics">Mathematics</option>
             <option value="Science">Science (Bio / Chem / Physics)</option>
             <option value="Reading and Writing">Reading &amp; Writing</option>
             <option value="Social Studies">Social Studies / History</option>
-            <option value="Computer Science">Computer Science &amp; Coding</option>
+            <option value="Computer Science">
+              Computer Science &amp; Coding
+            </option>
             <option value="Homework Help">Homework Help</option>
-            <option value="Learning Support">Learning Support &amp; Study Skills</option>
+            <option value="Learning Support">
+              Learning Support &amp; Study Skills
+            </option>
           </select>
         </div>
         <div>
-          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "var(--wa-ink)",
+              marginBottom: "0.25rem",
+            }}
+          >
             Grade Level *
           </label>
-          <select name="grade" required className={styles.selectInput} style={{ width: "100%" }}>
+          <select
+            name="grade"
+            required
+            className={styles.selectInput}
+            style={{ width: "100%" }}
+          >
             <option value="All Levels">All K-10 Levels</option>
-            <option value="Early Elementary (K-2)">Early Elementary (K-2)</option>
+            <option value="Early Elementary (K-2)">
+              Early Elementary (K-2)
+            </option>
             <option value="Elementary (3-5)">Elementary (Grades 3-5)</option>
-            <option value="Middle School (6-8)">Middle School (Grades 6-8)</option>
-            <option value="Early High School (9-10)">Early High School (Grades 9-10)</option>
+            <option value="Middle School (6-8)">
+              Middle School (Grades 6-8)
+            </option>
+            <option value="Early High School (9-10)">
+              Early High School (Grades 9-10)
+            </option>
           </select>
         </div>
       </div>
 
       <div>
-        <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            color: "var(--wa-ink)",
+            marginBottom: "0.25rem",
+          }}
+        >
           Session Description &amp; Objectives *
         </label>
         <textarea
@@ -222,37 +288,110 @@ export function ScheduleWorkshopForm() {
           color: "var(--wa-muted)",
         }}
       >
-        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.35rem",
+          }}
+        >
           <Globe size={14} aria-hidden="true" />
           Timezone: <strong style={{ color: "var(--wa-ink)" }}>{userTz}</strong>
         </span>
         <span>Times adjust automatically for learners worldwide</span>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.75rem" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+          gap: "0.75rem",
+        }}
+      >
         <div>
-          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "var(--wa-ink)",
+              marginBottom: "0.25rem",
+            }}
+          >
             Date *
           </label>
-          <input type="date" name="date" defaultValue={defaultDate} required className={styles.textInput} style={{ width: "100%" }} />
+          <input
+            type="date"
+            name="date"
+            defaultValue={defaultDate}
+            required
+            className={styles.textInput}
+            style={{ width: "100%" }}
+          />
         </div>
         <div>
-          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "var(--wa-ink)",
+              marginBottom: "0.25rem",
+            }}
+          >
             Start Time *
           </label>
-          <input type="time" name="startTime" defaultValue={defaultStart} required className={styles.textInput} style={{ width: "100%" }} />
+          <input
+            type="time"
+            name="startTime"
+            defaultValue={defaultStart}
+            required
+            className={styles.textInput}
+            style={{ width: "100%" }}
+          />
         </div>
         <div>
-          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "var(--wa-ink)",
+              marginBottom: "0.25rem",
+            }}
+          >
             End Time *
           </label>
-          <input type="time" name="endTime" defaultValue={defaultEnd} required className={styles.textInput} style={{ width: "100%" }} />
+          <input
+            type="time"
+            name="endTime"
+            defaultValue={defaultEnd}
+            required
+            className={styles.textInput}
+            style={{ width: "100%" }}
+          />
         </div>
         <div>
-          <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.25rem" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "var(--wa-ink)",
+              marginBottom: "0.25rem",
+            }}
+          >
             Max Capacity
           </label>
-          <input type="number" name="maxCapacity" defaultValue={12} min={2} max={30} className={styles.textInput} style={{ width: "100%" }} />
+          <input
+            type="number"
+            name="maxCapacity"
+            defaultValue={12}
+            min={2}
+            max={30}
+            className={styles.textInput}
+            style={{ width: "100%" }}
+          />
         </div>
       </div>
 
@@ -265,28 +404,68 @@ export function ScheduleWorkshopForm() {
           padding: "0.85rem 1rem",
         }}
       >
-        <div style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--wa-ink)", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+        <div
+          style={{
+            fontSize: "0.8125rem",
+            fontWeight: 600,
+            color: "var(--wa-ink)",
+            marginBottom: "0.5rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.35rem",
+          }}
+        >
           <Video size={15} aria-hidden="true" />
           <span>Meeting Room Configuration</span>
         </div>
-        <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.8125rem", color: "var(--wa-text)", cursor: "pointer" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "1.5rem",
+            flexWrap: "wrap",
+            marginBottom: "0.5rem",
+          }}
+        >
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              fontSize: "0.8125rem",
+              color: "var(--wa-text)",
+              cursor: "pointer",
+            }}
+          >
             <input
               type="radio"
               name="meetingOption"
               checked={linkType === "auto"}
               onChange={() => setLinkType("auto")}
             />
-            <span><strong>Automatic Zoom Room</strong> (Verified Zoom meeting with instant host launch)</span>
+            <span>
+              <strong>Automatic Zoom Room</strong> (Verified Zoom meeting with
+              instant host launch)
+            </span>
           </label>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.8125rem", color: "var(--wa-text)", cursor: "pointer" }}>
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              fontSize: "0.8125rem",
+              color: "var(--wa-text)",
+              cursor: "pointer",
+            }}
+          >
             <input
               type="radio"
               name="meetingOption"
               checked={linkType === "custom"}
               onChange={() => setLinkType("custom")}
             />
-            <span><strong>Custom Link</strong> (Personal Zoom PMI or Google Meet)</span>
+            <span>
+              <strong>Custom Link</strong> (Personal Zoom PMI or Google Meet)
+            </span>
           </label>
         </div>
 
@@ -301,20 +480,46 @@ export function ScheduleWorkshopForm() {
               style={{ width: "100%" }}
               required={linkType === "custom"}
             />
-            <span style={{ fontSize: "0.75rem", color: "var(--wa-muted)", marginTop: "0.25rem", display: "block" }}>
-              Students and tutors will join your personal Zoom or Google Meet room directly.
+            <span
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--wa-muted)",
+                marginTop: "0.25rem",
+                display: "block",
+              }}
+            >
+              Students and tutors will join your personal Zoom or Google Meet
+              room directly.
             </span>
           </div>
         )}
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "0.5rem", flexWrap: "wrap", gap: "1rem" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "0.5rem",
+          flexWrap: "wrap",
+          gap: "1rem",
+        }}
+      >
         <span style={{ fontSize: "0.75rem", color: "var(--wa-muted)" }}>
-          Meeting room links are configured to start immediately without waiting room delays.
+          Meeting room links are configured to start immediately without waiting
+          room delays.
         </span>
-        <button type="submit" disabled={isPending} className={styles.primaryBtn}>
+        <button
+          type="submit"
+          disabled={isPending}
+          className={styles.primaryBtn}
+        >
           <PlusCircle size={15} aria-hidden="true" />
-          <span>{isPending ? "Publishing Session..." : "Publish Session to Directory"}</span>
+          <span>
+            {isPending
+              ? "Publishing Session..."
+              : "Publish Session to Directory"}
+          </span>
         </button>
       </div>
     </form>

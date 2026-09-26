@@ -7,7 +7,8 @@ import styles from "./page.module.css";
 
 export const metadata = {
   title: "Volunteer Service Transcript | Learnivia",
-  description: "Official, verifiable volunteer tutoring transcript and service hours certificate.",
+  description:
+    "Official, verifiable volunteer tutoring transcript and service hours certificate.",
 };
 
 export default async function VolunteerTranscriptRedirectPage() {
@@ -23,7 +24,9 @@ export default async function VolunteerTranscriptRedirectPage() {
   });
 
   if (profile) {
-    const passed = (profile.trainingModules || []).filter((m: any) => m.quizPassed).length;
+    const passed = (profile.trainingModules || []).filter(
+      (m: any) => m.quizPassed,
+    ).length;
     if (passed < 5) {
       redirect("/tutor/training?locked=1");
     }
@@ -40,17 +43,24 @@ export default async function VolunteerTranscriptRedirectPage() {
         </div>
         <h1 className={styles.title}>Volunteer Service Record</h1>
         <p className={styles.description}>
-          Verified service records detail your logged tutoring hours, student testimonials, and verified subjects. These documents feature cryptographic verification codes for school advisors, community service logs, and scholarship portfolios.
+          Verified service records detail your logged tutoring hours, student
+          testimonials, and verified subjects. These documents feature
+          cryptographic verification codes for school advisors, community
+          service logs, and scholarship portfolios.
         </p>
 
         <div className={styles.noticeBox}>
           <strong>You don&apos;t have an active tutor profile yet.</strong>
-          <p>Apply to become a volunteer tutor to start tutoring students and earning verified service hours.</p>
+          <p>
+            Apply to become a volunteer tutor to start tutoring students and
+            earning verified service hours.
+          </p>
         </div>
 
         <div className={styles.actions}>
           <Link href="/apply" className={styles.primaryBtn}>
-            Apply to Become a Tutor <ArrowRight size={15} style={{ marginLeft: 6 }} />
+            Apply to Become a Tutor{" "}
+            <ArrowRight size={15} style={{ marginLeft: 6 }} />
           </Link>
           <Link href="/sessions" className={styles.secondaryBtn}>
             Explore Learning Sessions

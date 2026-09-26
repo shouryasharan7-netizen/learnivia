@@ -26,10 +26,15 @@ interface Props {
   currentAdminId: string;
 }
 
-export default function UserManagementClient({ initialUsers, currentAdminId }: Props) {
+export default function UserManagementClient({
+  initialUsers,
+  currentAdminId,
+}: Props) {
   const [users, setUsers] = useState<SerializedUser[]>(initialUsers);
   const [searchQuery, setSearchQuery] = useState("");
-  const [roleFilter, setRoleFilter] = useState<"ALL" | "STUDENT" | "TUTOR" | "ADMIN">("ALL");
+  const [roleFilter, setRoleFilter] = useState<
+    "ALL" | "STUDENT" | "TUTOR" | "ADMIN"
+  >("ALL");
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState("");
 
@@ -48,12 +53,15 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
     setTimeout(() => setToastMsg(""), 3500);
   }
 
-  async function handleRoleChange(userId: string, newRole: "STUDENT" | "TUTOR" | "ADMIN") {
+  async function handleRoleChange(
+    userId: string,
+    newRole: "STUDENT" | "TUTOR" | "ADMIN",
+  ) {
     setIsUpdating(userId);
     try {
       await updateUserRole(userId, newRole);
       setUsers((prev) =>
-        prev.map((u) => (u.id === userId ? { ...u, role: newRole } : u))
+        prev.map((u) => (u.id === userId ? { ...u, role: newRole } : u)),
       );
       showToast(`User role successfully updated to ${newRole}.`);
     } catch (err: any) {
@@ -66,7 +74,7 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
   async function handleDeleteUser(userId: string, userName: string | null) {
     if (
       !confirm(
-        `Are you sure you want to permanently delete user "${userName || "User"}"? This will erase all their bookings, points, and records.`
+        `Are you sure you want to permanently delete user "${userName || "User"}"? This will erase all their bookings, points, and records.`,
       )
     ) {
       return;
@@ -88,11 +96,19 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
     <div>
       {/* Header */}
       <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "#0F172A", marginBottom: "0.5rem" }}>
+        <h1
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: 800,
+            color: "#0F172A",
+            marginBottom: "0.5rem",
+          }}
+        >
           User Accounts &amp; Access Controls
         </h1>
         <p style={{ color: "#64748B", fontSize: "0.95rem", margin: 0 }}>
-          Manage all registered students, volunteer tutors, and platform administrators. Modify roles and enforce account standards.
+          Manage all registered students, volunteer tutors, and platform
+          administrators. Modify roles and enforce account standards.
         </p>
       </div>
 
@@ -173,22 +189,89 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
       </div>
 
       {/* Users Table */}
-      <div style={{ background: "#FFFFFF", borderRadius: "14px", border: "1px solid #E2E8F0", overflow: "hidden" }}>
+      <div
+        style={{
+          background: "#FFFFFF",
+          borderRadius: "14px",
+          border: "1px solid #E2E8F0",
+          overflow: "hidden",
+        }}
+      >
         <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "0.875rem",
+            }}
+          >
             <thead>
-              <tr style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0", textAlign: "left" }}>
-                <th style={{ padding: "0.875rem 1rem", color: "#475569", fontWeight: 700 }}>User</th>
-                <th style={{ padding: "0.875rem 1rem", color: "#475569", fontWeight: 700 }}>Curriculum &amp; Grade</th>
-                <th style={{ padding: "0.875rem 1rem", color: "#475569", fontWeight: 700 }}>Points / Hours</th>
-                <th style={{ padding: "0.875rem 1rem", color: "#475569", fontWeight: 700 }}>Current Role</th>
-                <th style={{ padding: "0.875rem 1rem", color: "#475569", fontWeight: 700, textAlign: "right" }}>Actions</th>
+              <tr
+                style={{
+                  background: "#F8FAFC",
+                  borderBottom: "1px solid #E2E8F0",
+                  textAlign: "left",
+                }}
+              >
+                <th
+                  style={{
+                    padding: "0.875rem 1rem",
+                    color: "#475569",
+                    fontWeight: 700,
+                  }}
+                >
+                  User
+                </th>
+                <th
+                  style={{
+                    padding: "0.875rem 1rem",
+                    color: "#475569",
+                    fontWeight: 700,
+                  }}
+                >
+                  Curriculum &amp; Grade
+                </th>
+                <th
+                  style={{
+                    padding: "0.875rem 1rem",
+                    color: "#475569",
+                    fontWeight: 700,
+                  }}
+                >
+                  Points / Hours
+                </th>
+                <th
+                  style={{
+                    padding: "0.875rem 1rem",
+                    color: "#475569",
+                    fontWeight: 700,
+                  }}
+                >
+                  Current Role
+                </th>
+                <th
+                  style={{
+                    padding: "0.875rem 1rem",
+                    color: "#475569",
+                    fontWeight: 700,
+                    textAlign: "right",
+                  }}
+                >
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} style={{ padding: "3rem", textAlign: "center", color: "#64748B" }}>
+                  <td
+                    colSpan={5}
+                    style={{
+                      padding: "3rem",
+                      textAlign: "center",
+                      color: "#64748B",
+                    }}
+                  >
                     No users found matching your search.
                   </td>
                 </tr>
@@ -198,17 +281,34 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
                   const isBusy = isUpdating === u.id;
 
                   return (
-                    <tr key={u.id} style={{ borderBottom: "1px solid #F1F5F9" }}>
+                    <tr
+                      key={u.id}
+                      style={{ borderBottom: "1px solid #F1F5F9" }}
+                    >
                       <td style={{ padding: "0.875rem 1rem" }}>
-                        <div style={{ fontWeight: 700, color: "#0F172A" }}>{u.name || "Learner"}</div>
-                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>{u.email}</div>
-                        <div style={{ fontSize: "0.7rem", color: "#94A3B8", marginTop: "0.15rem" }}>
-                          {u.createdAt ? `Joined ${new Date(u.createdAt).toLocaleDateString()}` : "Active Member"}
+                        <div style={{ fontWeight: 700, color: "#0F172A" }}>
+                          {u.name || "Learner"}
+                        </div>
+                        <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                          {u.email}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.7rem",
+                            color: "#94A3B8",
+                            marginTop: "0.15rem",
+                          }}
+                        >
+                          {u.createdAt
+                            ? `Joined ${new Date(u.createdAt).toLocaleDateString()}`
+                            : "Active Member"}
                         </div>
                       </td>
 
                       <td style={{ padding: "0.875rem 1rem" }}>
-                        <div>{u.curriculum ? `${u.curriculum}` : "General"}</div>
+                        <div>
+                          {u.curriculum ? `${u.curriculum}` : "General"}
+                        </div>
                         <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
                           {u.grade ? `Grade ${u.grade}` : "Grade unspecified"}
                           {u.age ? ` • Age ${u.age}` : ""}
@@ -216,10 +316,13 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
                       </td>
 
                       <td style={{ padding: "0.875rem 1rem" }}>
-                        <div style={{ fontWeight: 700, color: "#0E8345" }}>{u.points} SP</div>
+                        <div style={{ fontWeight: 700, color: "#0E8345" }}>
+                          {u.points} SP
+                        </div>
                         <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
                           {u.completedSessions} sessions
-                          {u.tutorProfile && ` • ${u.tutorProfile.volunteerHours.toFixed(1)} hrs taught`}
+                          {u.tutorProfile &&
+                            ` • ${u.tutorProfile.volunteerHours.toFixed(1)} hrs taught`}
                         </div>
                       </td>
 
@@ -227,9 +330,17 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
                         <span
                           style={{
                             background:
-                              u.role === "ADMIN" ? "#FEF3C7" : u.role === "TUTOR" ? "#D1FAE5" : "#F1F5F9",
+                              u.role === "ADMIN"
+                                ? "#FEF3C7"
+                                : u.role === "TUTOR"
+                                  ? "#D1FAE5"
+                                  : "#F1F5F9",
                             color:
-                              u.role === "ADMIN" ? "#B45309" : u.role === "TUTOR" ? "#065F46" : "#475569",
+                              u.role === "ADMIN"
+                                ? "#B45309"
+                                : u.role === "TUTOR"
+                                  ? "#065F46"
+                                  : "#475569",
                             fontSize: "0.75rem",
                             fontWeight: 800,
                             padding: "0.25rem 0.65rem",
@@ -241,14 +352,25 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
                         </span>
                       </td>
 
-                      <td style={{ padding: "0.875rem 1rem", textAlign: "right" }}>
-                        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+                      <td
+                        style={{ padding: "0.875rem 1rem", textAlign: "right" }}
+                      >
+                        <div
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                          }}
+                        >
                           {/* Role Select */}
                           <select
                             disabled={isBusy || isCurrentAdmin}
                             value={u.role}
                             onChange={(e) =>
-                              handleRoleChange(u.id, e.target.value as "STUDENT" | "TUTOR" | "ADMIN")
+                              handleRoleChange(
+                                u.id,
+                                e.target.value as "STUDENT" | "TUTOR" | "ADMIN",
+                              )
                             }
                             style={{
                               padding: "0.35rem 0.6rem",
@@ -257,9 +379,15 @@ export default function UserManagementClient({ initialUsers, currentAdminId }: P
                               fontSize: "0.8rem",
                               fontWeight: 600,
                               background: "#FFFFFF",
-                              cursor: isCurrentAdmin ? "not-allowed" : "pointer",
+                              cursor: isCurrentAdmin
+                                ? "not-allowed"
+                                : "pointer",
                             }}
-                            title={isCurrentAdmin ? "You cannot modify your own role" : "Change user role"}
+                            title={
+                              isCurrentAdmin
+                                ? "You cannot modify your own role"
+                                : "Change user role"
+                            }
                           >
                             <option value="STUDENT">Student</option>
                             <option value="TUTOR">Tutor</option>

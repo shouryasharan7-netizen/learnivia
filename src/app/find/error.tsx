@@ -35,10 +35,19 @@ export default function FindError({
             borderRadius: 8,
           }}
         >
-          <summary style={{ cursor: "pointer", fontWeight: 600, color: "#C1694F" }}>
+          <summary
+            style={{ cursor: "pointer", fontWeight: 600, color: "#C1694F" }}
+          >
             Technical error details (development only)
           </summary>
-          <pre style={{ fontSize: "0.75rem", overflowX: "auto", marginTop: "0.5rem", whiteSpace: "pre-wrap" }}>
+          <pre
+            style={{
+              fontSize: "0.75rem",
+              overflowX: "auto",
+              marginTop: "0.5rem",
+              whiteSpace: "pre-wrap",
+            }}
+          >
             {error.message}
             {error.digest && `\nDigest: ${error.digest}`}
           </pre>

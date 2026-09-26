@@ -18,9 +18,7 @@ export function AuthShell({ children }: Props) {
     // can "reveal" as content scrolls away (sticky footer reveal pattern)
     return (
       <div className={styles.pageWrapper}>
-        <div className={styles.pageContent}>
-          {children}
-        </div>
+        <div className={styles.pageContent}>{children}</div>
         <Footer />
       </div>
     );
@@ -30,9 +28,7 @@ export function AuthShell({ children }: Props) {
   return (
     <div className={styles.shell}>
       <SidebarNav />
-      <div className={styles.content}>
-        {children}
-      </div>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }

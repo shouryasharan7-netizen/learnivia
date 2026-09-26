@@ -2,7 +2,8 @@ import { Resend } from "resend";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const FROM_EMAIL = process.env.FROM_EMAIL || "Learnivia <onboarding@resend.dev>";
+const FROM_EMAIL =
+  process.env.FROM_EMAIL || "Learnivia <onboarding@resend.dev>";
 
 export async function sendBookingConfirmation(
   studentEmail: string,
@@ -13,10 +14,12 @@ export async function sendBookingConfirmation(
     subject: string;
     startTime: string; // ISO string
     zoomLink: string;
-  }
+  },
 ) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping booking confirmation email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping booking confirmation email.",
+    );
     return;
   }
 
@@ -59,7 +62,10 @@ export async function sendBookingConfirmation(
       `,
     });
     if (studentRes.error) {
-      console.warn("Resend booking email delivery note (Student):", studentRes.error);
+      console.warn(
+        "Resend booking email delivery note (Student):",
+        studentRes.error,
+      );
     }
 
     // Send to Tutor
@@ -90,16 +96,24 @@ export async function sendBookingConfirmation(
       `,
     });
     if (tutorRes.error) {
-      console.warn("Resend booking email delivery note (Tutor):", tutorRes.error);
+      console.warn(
+        "Resend booking email delivery note (Tutor):",
+        tutorRes.error,
+      );
     }
   } catch (error) {
     console.error("Failed to send booking confirmation emails:", error);
   }
 }
 
-export async function sendApplicationReceived(tutorEmail: string, tutorName: string) {
+export async function sendApplicationReceived(
+  tutorEmail: string,
+  tutorName: string,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping application received email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping application received email.",
+    );
     return;
   }
   try {
@@ -128,16 +142,22 @@ export async function sendApplicationReceived(tutorEmail: string, tutorName: str
   }
 }
 
-export async function sendApplicationApproved(tutorEmail: string, tutorName: string) {
+export async function sendApplicationApproved(
+  tutorEmail: string,
+  tutorName: string,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping application approved email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping application approved email.",
+    );
     return;
   }
   try {
     const res = await resend.emails.send({
       from: FROM_EMAIL,
       to: tutorEmail,
-      subject: "You're Approved! Complete Your Tutoring Training Course - Learnivia",
+      subject:
+        "You're Approved! Complete Your Tutoring Training Course - Learnivia",
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
           <h2 style="color: #1b4d3e; font-size: 24px; margin-bottom: 16px;">Welcome to Learnivia, ${tutorName}!</h2>
@@ -171,9 +191,14 @@ export async function sendApplicationApproved(tutorEmail: string, tutorName: str
   }
 }
 
-export async function sendApplicationRejected(tutorEmail: string, tutorName: string) {
+export async function sendApplicationRejected(
+  tutorEmail: string,
+  tutorName: string,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping application rejected email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping application rejected email.",
+    );
     return;
   }
   try {
@@ -197,16 +222,23 @@ export async function sendApplicationRejected(tutorEmail: string, tutorName: str
   }
 }
 
-export async function sendTutorSuspended(tutorEmail: string, tutorName: string, reason: string) {
+export async function sendTutorSuspended(
+  tutorEmail: string,
+  tutorName: string,
+  reason: string,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping tutor suspended email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping tutor suspended email.",
+    );
     return;
   }
   try {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: tutorEmail,
-      subject: "Important Notice: Your Learnivia Tutor Account has been Suspended",
+      subject:
+        "Important Notice: Your Learnivia Tutor Account has been Suspended",
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
           <h2 style="color: #991b1b; font-size: 22px; margin-bottom: 16px;">Account Suspended</h2>
@@ -231,16 +263,23 @@ export async function sendTutorSuspended(tutorEmail: string, tutorName: string, 
   }
 }
 
-export async function sendTutorAvailabilityReminder(tutorEmail: string, tutorName: string, daysRemaining: number) {
+export async function sendTutorAvailabilityReminder(
+  tutorEmail: string,
+  tutorName: string,
+  daysRemaining: number,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping availability reminder email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping availability reminder email.",
+    );
     return;
   }
   try {
     const res = await resend.emails.send({
       from: FROM_EMAIL,
       to: tutorEmail,
-      subject: "Action Required: Set Your Weekly Tutoring Availability - Learnivia",
+      subject:
+        "Action Required: Set Your Weekly Tutoring Availability - Learnivia",
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
           <h2 style="color: #2563eb; font-size: 22px; margin-bottom: 16px;">Reminder: Please add your available tutoring hours</h2>
@@ -271,16 +310,24 @@ export async function sendTutorAvailabilityReminder(tutorEmail: string, tutorNam
   }
 }
 
-export async function sendTutorTrainingReminder(tutorEmail: string, tutorName: string, completedCount: number, daysRemaining: number) {
+export async function sendTutorTrainingReminder(
+  tutorEmail: string,
+  tutorName: string,
+  completedCount: number,
+  daysRemaining: number,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping training reminder email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping training reminder email.",
+    );
     return;
   }
   try {
     const res = await resend.emails.send({
       from: FROM_EMAIL,
       to: tutorEmail,
-      subject: "Action Required: Complete Tutor Training (15-Day Policy) - Learnivia",
+      subject:
+        "Action Required: Complete Tutor Training (15-Day Policy) - Learnivia",
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1c1917; line-height: 1.6;">
           <h2 style="color: #2563eb; font-size: 22px; margin-bottom: 16px;">Action Required: Complete Mandatory Tutor Training</h2>
@@ -319,10 +366,12 @@ export async function sendBookingCancellation(
     subject: string;
     startTime: string;
     reason?: string;
-  }
+  },
 ) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping booking cancellation email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping booking cancellation email.",
+    );
     return;
   }
   const date = new Date(details.startTime).toLocaleString("en-GB", {
@@ -367,9 +416,14 @@ export async function sendBookingCancellation(
   }
 }
 
-export async function sendPasswordResetEmail(recipientEmail: string, resetUrl: string) {
+export async function sendPasswordResetEmail(
+  recipientEmail: string,
+  resetUrl: string,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping password reset email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping password reset email.",
+    );
     return;
   }
 
@@ -407,9 +461,14 @@ export async function sendPasswordResetEmail(recipientEmail: string, resetUrl: s
   }
 }
 
-export async function sendEmailVerification(recipientEmail: string, verifyUrl: string) {
+export async function sendEmailVerification(
+  recipientEmail: string,
+  verifyUrl: string,
+) {
   if (!resend) {
-    console.warn("RESEND_API_KEY is not configured; skipping email verification email.");
+    console.warn(
+      "RESEND_API_KEY is not configured; skipping email verification email.",
+    );
     return;
   }
 

@@ -4,12 +4,12 @@
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 56px);
-  background: var(--bg-canvas, #F4F0E8);
+  background: var(--bg-canvas, #f4f0e8);
 }
 
 .card {
-  background: var(--bg-card, #FBFAF7);
-  border: 1px solid var(--border-hairline, #D9D3C8);
+  background: var(--bg-card, #fbfaf7);
+  border: 1px solid var(--border-hairline, #d9d3c8);
   border-radius: 12px;
   max-width: 600px;
   width: 100%;
@@ -26,7 +26,7 @@
   height: 56px;
   border-radius: 50%;
   background: rgba(35, 75, 59, 0.08);
-  color: var(--color-forest, #234B3B);
+  color: var(--color-forest, #234b3b);
   margin: 0 auto 1.25rem auto;
 }
 
@@ -34,20 +34,20 @@
   font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--text-ink, #1E2722);
+  color: var(--text-ink, #1e2722);
   margin-bottom: 0.75rem;
 }
 
 .description {
   font-size: 0.9375rem;
-  color: var(--text-muted, #66716A);
+  color: var(--text-muted, #66716a);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
 
 .noticeBox {
-  background: var(--bg-canvas, #F4F0E8);
-  border: 1px dashed var(--border-hairline, #D9D3C8);
+  background: var(--bg-canvas, #f4f0e8);
+  border: 1px dashed var(--border-hairline, #d9d3c8);
   border-radius: 8px;
   padding: 1.25rem;
   margin-bottom: 1.75rem;
@@ -57,13 +57,13 @@
 .noticeBox strong {
   display: block;
   font-size: 0.9375rem;
-  color: var(--text-ink, #1E2722);
+  color: var(--text-ink, #1e2722);
   margin-bottom: 0.25rem;
 }
 
 .noticeBox p {
   font-size: 0.875rem;
-  color: var(--text-muted, #66716A);
+  color: var(--text-muted, #66716a);
   margin: 0;
   line-height: 1.5;
 }
@@ -78,8 +78,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-forest, #234B3B);
-  color: #FBFAF7;
+  background: var(--color-forest, #234b3b);
+  color: #fbfaf7;
   font-weight: 600;
   font-size: 0.9375rem;
   padding: 0.75rem 1.5rem;
@@ -95,9 +95,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-canvas, #F4F0E8);
-  color: var(--text-ink, #1E2722);
-  border: 1px solid var(--border-hairline, #D9D3C8);
+  background: var(--bg-canvas, #f4f0e8);
+  color: var(--text-ink, #1e2722);
+  border: 1px solid var(--border-hairline, #d9d3c8);
   font-weight: 600;
   font-size: 0.9375rem;
   padding: 0.75rem 1.5rem;
@@ -106,7 +106,7 @@
   transition: background-color 150ms ease;
 }
 .secondaryBtn:hover {
-  background: #EAE4D9;
+  background: #eae4d9;
 }
 
 @media (max-width: 640px) {

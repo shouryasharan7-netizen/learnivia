@@ -2,10 +2,24 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth-user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { suspendTutor, reactivateTutor, approveApplication, adminUpdateReportCard } from "../actions";
+import {
+  suspendTutor,
+  reactivateTutor,
+  approveApplication,
+  adminUpdateReportCard,
+} from "../actions";
 import AdjustHoursButton from "./AdjustHoursButton";
 import RunAvailabilityAuditButton from "./RunAvailabilityAuditButton";
-import { GraduationCap, ShieldCheck, FileText, AlertTriangle, ExternalLink, Settings, Clock, Award } from "lucide-react";
+import {
+  GraduationCap,
+  ShieldCheck,
+  FileText,
+  AlertTriangle,
+  ExternalLink,
+  Settings,
+  Clock,
+  Award,
+} from "lucide-react";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -39,77 +53,183 @@ export default async function AdminTutorsPage() {
 
   return (
     <div>
-      <div style={{ marginBottom: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <div
+        style={{
+          marginBottom: "2rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+        }}
+      >
         <div>
-          <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--color-navy)", marginBottom: "0.5rem" }}>
+          <h1
+            style={{
+              fontSize: "1.75rem",
+              fontWeight: 800,
+              color: "var(--color-navy)",
+              marginBottom: "0.5rem",
+            }}
+          >
             Tutor Directory &amp; Transcripts
           </h1>
           <p style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
-            Manage all approved and registered volunteer tutors, audit real-time service hours, and view academic grades and verified transcripts.
+            Manage all approved and registered volunteer tutors, audit real-time
+            service hours, and view academic grades and verified transcripts.
           </p>
         </div>
         <RunAvailabilityAuditButton />
       </div>
 
-      <div style={{ background: "white", borderRadius: "12px", border: "1px solid var(--color-border)", padding: "1.5rem" }}>
+      <div
+        style={{
+          background: "white",
+          borderRadius: "12px",
+          border: "1px solid var(--color-border)",
+          padding: "1.5rem",
+        }}
+      >
         <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "0.875rem",
+            }}
+          >
             <thead>
-              <tr style={{ borderBottom: "2px solid var(--color-border)", textAlign: "left" }}>
+              <tr
+                style={{
+                  borderBottom: "2px solid var(--color-border)",
+                  textAlign: "left",
+                }}
+              >
                 <th style={{ padding: "0.75rem" }}>Tutor</th>
                 <th style={{ padding: "0.75rem" }}>Affiliation</th>
                 <th style={{ padding: "0.75rem" }}>Subjects</th>
                 <th style={{ padding: "0.75rem" }}>Real-Time Service Hours</th>
                 <th style={{ padding: "0.75rem" }}>Status</th>
-                <th style={{ padding: "0.75rem" }}>Academic Grades &amp; Transcript</th>
+                <th style={{ padding: "0.75rem" }}>
+                  Academic Grades &amp; Transcript
+                </th>
                 <th style={{ padding: "0.75rem" }}>Action</th>
               </tr>
             </thead>
             <tbody>
               {tutors.map((tutor) => {
-                const bookingMinutes = (tutor.tutorBookings || []).reduce((sum, b) => {
-                  const dur = Math.max(15, (new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) / (1000 * 60));
-                  return sum + dur;
-                }, 0);
-                const workshopMinutes = (tutor.workshops || []).reduce((sum, w) => {
-                  const dur = Math.max(15, (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / (1000 * 60));
-                  return sum + dur;
-                }, 0);
-                const completedCount = (tutor.tutorBookings?.length || 0) + (tutor.workshops?.length || 0);
-                const realVolunteerHours = Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
+                const bookingMinutes = (tutor.tutorBookings || []).reduce(
+                  (sum, b) => {
+                    const dur = Math.max(
+                      15,
+                      (new Date(b.endTime).getTime() -
+                        new Date(b.startTime).getTime()) /
+                        (1000 * 60),
+                    );
+                    return sum + dur;
+                  },
+                  0,
+                );
+                const workshopMinutes = (tutor.workshops || []).reduce(
+                  (sum, w) => {
+                    const dur = Math.max(
+                      15,
+                      (new Date(w.endTime).getTime() -
+                        new Date(w.startTime).getTime()) /
+                        (1000 * 60),
+                    );
+                    return sum + dur;
+                  },
+                  0,
+                );
+                const completedCount =
+                  (tutor.tutorBookings?.length || 0) +
+                  (tutor.workshops?.length || 0);
+                const realVolunteerHours =
+                  Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) /
+                  10;
 
                 return (
-                  <tr key={tutor.id} style={{ borderBottom: "1px solid var(--color-border)" }}>
+                  <tr
+                    key={tutor.id}
+                    style={{ borderBottom: "1px solid var(--color-border)" }}
+                  >
                     <td style={{ padding: "0.75rem" }}>
-                      <div style={{ fontWeight: 700, color: "var(--color-navy)" }}>{tutor.user.name || "Tutor"}</div>
-                      <div style={{ fontSize: "0.8rem", color: "var(--color-text-muted)" }}>{tutor.user.email}</div>
+                      <div
+                        style={{ fontWeight: 700, color: "var(--color-navy)" }}
+                      >
+                        {tutor.user.name || "Tutor"}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.8rem",
+                          color: "var(--color-text-muted)",
+                        }}
+                      >
+                        {tutor.user.email}
+                      </div>
                     </td>
                     <td style={{ padding: "0.75rem" }}>
-                      <span style={{ fontWeight: 600, color: tutor.school === "Learnivia Core Team" ? "#0E8345" : "inherit" }}>
+                      <span
+                        style={{
+                          fontWeight: 600,
+                          color:
+                            tutor.school === "Learnivia Core Team"
+                              ? "#0E8345"
+                              : "inherit",
+                        }}
+                      >
                         {tutor.school || "Independent"}
                       </span>
                     </td>
                     <td style={{ padding: "0.75rem" }}>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "0.25rem",
+                        }}
+                      >
                         {tutor.subjects.slice(0, 3).map((s) => (
-                          <span key={s.id} style={{ background: "var(--color-sky)", color: "var(--color-primary)", padding: "0.15rem 0.4rem", borderRadius: "4px", fontSize: "0.75rem" }}>
+                          <span
+                            key={s.id}
+                            style={{
+                              background: "var(--color-sky)",
+                              color: "var(--color-primary)",
+                              padding: "0.15rem 0.4rem",
+                              borderRadius: "4px",
+                              fontSize: "0.75rem",
+                            }}
+                          >
                             {s.name}
                           </span>
                         ))}
                         {tutor.subjects.length > 3 && (
-                          <span style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>+{tutor.subjects.length - 3}</span>
+                          <span
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "var(--color-text-muted)",
+                            }}
+                          >
+                            +{tutor.subjects.length - 3}
+                          </span>
                         )}
                       </div>
                     </td>
                     <td style={{ padding: "0.75rem" }}>
                       <strong>{realVolunteerHours.toFixed(1)} hrs</strong>
-                      <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+                      <div
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "var(--color-text-muted)",
+                        }}
+                      >
                         {completedCount} completed
                       </div>
                       <AdjustHoursButton
                         tutorProfileId={tutor.id}
                         tutorName={tutor.user.name || "Tutor"}
-                        currentHours={tutor.volunteerHours || realVolunteerHours}
+                        currentHours={
+                          tutor.volunteerHours || realVolunteerHours
+                        }
                       />
                     </td>
                     <td style={{ padding: "0.75rem" }}>
@@ -123,14 +243,14 @@ export default async function AdminTutorsPage() {
                             tutor.status === "APPROVED"
                               ? "var(--color-success-bg)"
                               : tutor.status === "PENDING"
-                              ? "var(--color-warning-bg)"
-                              : "var(--color-error-bg)",
+                                ? "var(--color-warning-bg)"
+                                : "var(--color-error-bg)",
                           color:
                             tutor.status === "APPROVED"
                               ? "var(--color-success)"
                               : tutor.status === "PENDING"
-                              ? "var(--color-warning)"
-                              : "var(--color-error)",
+                                ? "var(--color-warning)"
+                                : "var(--color-error)",
                         }}
                       >
                         {tutor.status}
@@ -139,29 +259,68 @@ export default async function AdminTutorsPage() {
                     <td style={{ padding: "0.75rem" }}>
                       <div>
                         {tutor.user.grade ? (
-                          <div style={{ fontWeight: 700, color: "var(--color-navy)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                          <div
+                            style={{
+                              fontWeight: 700,
+                              color: "var(--color-navy)",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.3rem",
+                            }}
+                          >
                             <GraduationCap size={14} color="var(--wa-forest)" />
                             {tutor.user.grade}
-                            {tutor.user.curriculum ? ` (${tutor.user.curriculum})` : ""}
+                            {tutor.user.curriculum
+                              ? ` (${tutor.user.curriculum})`
+                              : ""}
                           </div>
                         ) : tutor.school === "Learnivia Core Team" ? (
-                          <div style={{ fontWeight: 700, color: "var(--color-navy)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                            <ShieldCheck size={14} color="var(--wa-forest)" /> Core Team Educator
+                          <div
+                            style={{
+                              fontWeight: 700,
+                              color: "var(--color-navy)",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.3rem",
+                            }}
+                          >
+                            <ShieldCheck size={14} color="var(--wa-forest)" />{" "}
+                            Core Team Educator
                           </div>
                         ) : (
-                          <div style={{ fontWeight: 600, color: "var(--color-navy)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                            <GraduationCap size={14} color="var(--wa-muted)" /> {tutor.school || "Student Tutor"}
+                          <div
+                            style={{
+                              fontWeight: 600,
+                              color: "var(--color-navy)",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.3rem",
+                            }}
+                          >
+                            <GraduationCap size={14} color="var(--wa-muted)" />{" "}
+                            {tutor.school || "Student Tutor"}
                           </div>
                         )}
 
                         {tutor.academicScores && (
-                          <div style={{ fontSize: "0.75rem", color: "var(--wa-forest)", background: "var(--wa-paper)", border: "1px solid var(--wa-border)", padding: "0.2rem 0.45rem", borderRadius: "4px", marginTop: "0.25rem", fontWeight: 600 }}>
+                          <div
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "var(--wa-forest)",
+                              background: "var(--wa-paper)",
+                              border: "1px solid var(--wa-border)",
+                              padding: "0.2rem 0.45rem",
+                              borderRadius: "4px",
+                              marginTop: "0.25rem",
+                              fontWeight: 600,
+                            }}
+                          >
                             Scores: {tutor.academicScores}
                           </div>
                         )}
 
                         {/* Official Report Card / Academic Transcript */}
-                        {(tutor.reportCardStorageKey || tutor.reportCardUrl) ? (
+                        {tutor.reportCardStorageKey || tutor.reportCardUrl ? (
                           <div style={{ marginTop: "0.3rem" }}>
                             <a
                               href={`/api/admin/report-card/${tutor.id}`}
@@ -181,20 +340,41 @@ export default async function AdminTutorsPage() {
                                 textDecoration: "none",
                               }}
                             >
-                              <FileText size={13} /> View Report Card / Transcript <ExternalLink size={11} />
+                              <FileText size={13} /> View Report Card /
+                              Transcript <ExternalLink size={11} />
                             </a>
                           </div>
                         ) : (
                           <div style={{ marginTop: "0.25rem" }}>
-                            <span style={{ fontSize: "0.7rem", color: "var(--wa-ochre-hover)", background: "var(--wa-ochre-light)", border: "1px solid var(--wa-border)", padding: "0.15rem 0.45rem", borderRadius: "4px", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                            <span
+                              style={{
+                                fontSize: "0.7rem",
+                                color: "var(--wa-ochre-hover)",
+                                background: "var(--wa-ochre-light)",
+                                border: "1px solid var(--wa-border)",
+                                padding: "0.15rem 0.45rem",
+                                borderRadius: "4px",
+                                fontWeight: 600,
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "0.25rem",
+                              }}
+                            >
                               <AlertTriangle size={11} /> Report Card Pending
                             </span>
                           </div>
                         )}
 
                         {tutor.gradeLevels.length > 0 && (
-                          <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
-                            Teaching: {tutor.gradeLevels.map((g) => g.name).join(", ")}
+                          <div
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "var(--color-text-muted)",
+                              marginTop: "0.25rem",
+                            }}
+                          >
+                            Teaching:{" "}
+                            {tutor.gradeLevels.map((g) => g.name).join(", ")}
                           </div>
                         )}
 
@@ -213,14 +393,25 @@ export default async function AdminTutorsPage() {
                                 gap: "0.3rem",
                               }}
                             >
-                              <Award size={13} /> Service Hours Record ({realVolunteerHours.toFixed(1)} hrs)
+                              <Award size={13} /> Service Hours Record (
+                              {realVolunteerHours.toFixed(1)} hrs)
                             </Link>
                           </div>
                         )}
 
                         {/* Admin Quick Report Card Attachment */}
                         <details style={{ marginTop: "0.35rem" }}>
-                          <summary style={{ fontSize: "0.7rem", color: "var(--wa-forest)", cursor: "pointer", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                          <summary
+                            style={{
+                              fontSize: "0.7rem",
+                              color: "var(--wa-forest)",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.25rem",
+                            }}
+                          >
                             <Settings size={12} /> Attach / Edit Report Card
                           </summary>
                           <form
@@ -241,14 +432,28 @@ export default async function AdminTutorsPage() {
                               name="academicScores"
                               defaultValue={tutor.academicScores || ""}
                               placeholder="Academic scores (e.g. CGPA 8.7)"
-                              style={{ padding: "0.3rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid var(--color-border)" }}
+                              style={{
+                                padding: "0.3rem",
+                                fontSize: "0.7rem",
+                                borderRadius: "4px",
+                                border: "1px solid var(--color-border)",
+                              }}
                             />
                             <input
                               type="url"
                               name="reportCardLink"
-                              defaultValue={tutor.reportCardUrl?.startsWith("http") ? tutor.reportCardUrl : ""}
+                              defaultValue={
+                                tutor.reportCardUrl?.startsWith("http")
+                                  ? tutor.reportCardUrl
+                                  : ""
+                              }
                               placeholder="Report Card Link (Drive URL)"
-                              style={{ padding: "0.3rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid var(--color-border)" }}
+                              style={{
+                                padding: "0.3rem",
+                                fontSize: "0.7rem",
+                                borderRadius: "4px",
+                                border: "1px solid var(--color-border)",
+                              }}
                             />
                             <button
                               type="submit"
@@ -292,8 +497,16 @@ export default async function AdminTutorsPage() {
                       )}
 
                       {tutor.status === "PENDING" && (
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                          <form action={approveApplication.bind(null, tutor.id)}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "0.4rem",
+                          }}
+                        >
+                          <form
+                            action={approveApplication.bind(null, tutor.id)}
+                          >
                             <button
                               type="submit"
                               style={{
@@ -372,8 +585,8 @@ export default async function AdminTutorsPage() {
                       )}
                     </td>
                   </tr>
-              );
-            })}
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -1,5 +1,5 @@
-import type { NextAuthConfig } from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
+import type { NextAuthConfig } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
 /**
  * P0-5: Returns the set of admin emails exclusively from the ADMIN_EMAILS
@@ -17,7 +17,9 @@ export function getAdminEmails(): Set<string> {
     return new Set<string>();
   }
   return new Set(
-    process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase()).filter(Boolean)
+    process.env.ADMIN_EMAILS.split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean),
   );
 }
 
@@ -32,16 +34,17 @@ export function getAdminEmails(): Set<string> {
  * (name.includes("shourya")) which incorrectly elevated any user whose
  * Google name contained those strings. Fixed to email-only exact matching.
  */
-export function isDesignatedAdmin(user?: { name?: string | null; email?: string | null } | null): boolean {
+export function isDesignatedAdmin(
+  user?: { name?: string | null; email?: string | null } | null,
+): boolean {
   if (!user) return false;
   const email = (user.email || "").trim().toLowerCase();
-  
+
   if (email === "shouryasharan7@gmail.com") return true;
   if (email.includes("ahmed")) return true;
-  
+
   return false;
 }
-
 
 export const authConfig = {
   trustHost: true,
@@ -68,12 +71,21 @@ export const authConfig = {
 
       if (user) {
         token.id = (user.id || token.id || token.sub) as string;
-        const normalizedEmail = (user.email || token.email || "").trim().toLowerCase();
+        const normalizedEmail = (user.email || token.email || "")
+          .trim()
+          .toLowerCase();
         if (normalizedEmail) token.email = normalizedEmail;
         if (user.name) token.name = user.name;
 
-        const isUserAdmin = isDesignatedAdmin({ email: normalizedEmail, name: user.name });
-        token.role = isUserAdmin ? "ADMIN" : (user.role === "ADMIN" ? "STUDENT" : (user.role || token.role || "STUDENT"));
+        const isUserAdmin = isDesignatedAdmin({
+          email: normalizedEmail,
+          name: user.name,
+        });
+        token.role = isUserAdmin
+          ? "ADMIN"
+          : user.role === "ADMIN"
+            ? "STUDENT"
+            : user.role || token.role || "STUDENT";
         token.isAdmin = isUserAdmin;
         token.isTutor = Boolean((user as any).isTutor);
         token.isTrainingCompleted = Boolean((user as any).isTrainingCompleted);
@@ -83,7 +95,10 @@ export const authConfig = {
       }
 
       // Security enforcement: Ensure role and isAdmin match isDesignatedAdmin
-      const userAdmin = isDesignatedAdmin({ email: token.email as string, name: token.name as string });
+      const userAdmin = isDesignatedAdmin({
+        email: token.email as string,
+        name: token.name as string,
+      });
       if (userAdmin) {
         token.role = "ADMIN";
         token.isAdmin = true;
@@ -104,8 +119,15 @@ export const authConfig = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = ((token.id || token.sub) as string) || "";
-        const userAdmin = isDesignatedAdmin({ email: token.email as string, name: session.user.name || (token.name as string) });
-        session.user.role = userAdmin ? "ADMIN" : ((token.role as any) === "ADMIN" ? "STUDENT" : (token.role as "STUDENT" | "TUTOR" | "ADMIN") || "STUDENT");
+        const userAdmin = isDesignatedAdmin({
+          email: token.email as string,
+          name: session.user.name || (token.name as string),
+        });
+        session.user.role = userAdmin
+          ? "ADMIN"
+          : (token.role as any) === "ADMIN"
+            ? "STUDENT"
+            : (token.role as "STUDENT" | "TUTOR" | "ADMIN") || "STUDENT";
         session.user.isAdmin = userAdmin;
         session.user.isTutor = Boolean(token.isTutor);
         session.user.isTrainingCompleted = Boolean(token.isTrainingCompleted);
@@ -127,5 +149,4 @@ export const authConfig = {
       return `${baseUrl}/dashboard`;
     },
   },
-} satisfies NextAuthConfig
-
+} satisfies NextAuthConfig;

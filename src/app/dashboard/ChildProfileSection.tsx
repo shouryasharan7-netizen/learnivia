@@ -19,7 +19,9 @@ interface ChildProfileSectionProps {
   initialProfiles: ChildProfile[];
 }
 
-export default function ChildProfileSection({ initialProfiles }: ChildProfileSectionProps) {
+export default function ChildProfileSection({
+  initialProfiles,
+}: ChildProfileSectionProps) {
   const [profiles, setProfiles] = useState<ChildProfile[]>(initialProfiles);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -49,7 +51,9 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
       const res = await createChildProfile(formData);
       if (res.success && res.profile) {
         setProfiles((prev) => [res.profile as ChildProfile, ...prev]);
-        setSuccessMsg(`Added ${res.profile.firstName} ${res.profile.lastInitial} successfully!`);
+        setSuccessMsg(
+          `Added ${res.profile.firstName} ${res.profile.lastInitial} successfully!`,
+        );
         setFirstName("");
         setLastInitial("");
         setAge("");
@@ -104,13 +108,27 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Users size={20} color="var(--color-forest, #234B3B)" />
-            <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#0F172A", margin: 0 }}>
+            <h2
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: 800,
+                color: "#0F172A",
+                margin: 0,
+              }}
+            >
               Parent Hub: Managed Child Profiles (K-10)
             </h2>
           </div>
-          <p style={{ color: "#64748B", fontSize: "0.85rem", margin: "0.25rem 0 0 0" }}>
-            Safely register your children to book personalized 1-on-1 tutoring sessions and live workshops.
-            For minor privacy protection, only First Name + Last Initial are displayed to tutors.
+          <p
+            style={{
+              color: "#64748B",
+              fontSize: "0.85rem",
+              margin: "0.25rem 0 0 0",
+            }}
+          >
+            Safely register your children to book personalized 1-on-1 tutoring
+            sessions and live workshops. For minor privacy protection, only
+            First Name + Last Initial are displayed to tutors.
           </p>
         </div>
 
@@ -131,7 +149,15 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             transition: "all 150ms ease",
           }}
         >
-          {isOpen ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Add Child (K-10)</>}
+          {isOpen ? (
+            <>
+              <X size={14} /> Cancel
+            </>
+          ) : (
+            <>
+              <Plus size={14} /> Add Child (K-10)
+            </>
+          )}
         </button>
       </div>
 
@@ -182,7 +208,9 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             gap: "1rem",
           }}
         >
-          <div style={{ fontWeight: 700, color: "#0F172A", fontSize: "0.95rem" }}>
+          <div
+            style={{ fontWeight: 700, color: "#0F172A", fontSize: "0.95rem" }}
+          >
             Add a New Student Profile
           </div>
 
@@ -194,7 +222,15 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             }}
           >
             <div>
-              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: "#334155",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 First Name *
               </label>
               <input
@@ -215,7 +251,15 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: "#334155",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 Last Initial * (Privacy Protected)
               </label>
               <input
@@ -236,7 +280,15 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: "#334155",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 Grade Level (K-10) *
               </label>
               <select
@@ -267,7 +319,15 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: "#334155",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 Age (Optional)
               </label>
               <input
@@ -289,7 +349,15 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                color: "#334155",
+                marginBottom: "0.25rem",
+              }}
+            >
               Parent Notes & Focus Areas (Shared with tutors)
             </label>
             <textarea
@@ -308,7 +376,13 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             />
           </div>
 
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "0.75rem",
+            }}
+          >
             <button
               type="button"
               onClick={() => setIsOpen(false)}
@@ -359,12 +433,25 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
             fontSize: "0.9rem",
           }}
         >
-          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 48, height: 48, borderRadius: "50%", background: "var(--bg-canvas, #F4F0E8)", color: "var(--text-muted, #66716A)", margin: "0 auto 0.75rem auto" }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 48,
+              height: 48,
+              borderRadius: "50%",
+              background: "var(--bg-canvas, #F4F0E8)",
+              color: "var(--text-muted, #66716A)",
+              margin: "0 auto 0.75rem auto",
+            }}
+          >
             <GraduationCap size={24} />
           </div>
           <strong>No child profiles registered yet.</strong>
           <p style={{ margin: "0.25rem 0 0 0", fontSize: "0.825rem" }}>
-            Add your child's profile above so you can book 1-on-1 tutoring or workshops on their behalf.
+            Add your child's profile above so you can book 1-on-1 tutoring or
+            workshops on their behalf.
           </p>
         </div>
       ) : (
@@ -388,8 +475,20 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
                 gap: "0.5rem",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.6rem",
+                  }}
+                >
                   <div
                     style={{
                       width: "36px",
@@ -407,10 +506,24 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
                     {child.firstName.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <h3 style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: "#0F172A" }}>
+                    <h3
+                      style={{
+                        margin: 0,
+                        fontSize: "1rem",
+                        fontWeight: 700,
+                        color: "#0F172A",
+                      }}
+                    >
                       {child.firstName} {child.lastInitial}
                     </h3>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "0.15rem" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.4rem",
+                        marginTop: "0.15rem",
+                      }}
+                    >
                       <span
                         style={{
                           background: "#E6F4EA",
@@ -433,7 +546,12 @@ export default function ChildProfileSection({ initialProfiles }: ChildProfileSec
                 </div>
 
                 <button
-                  onClick={() => handleDeleteChild(child.id, `${child.firstName} ${child.lastInitial}`)}
+                  onClick={() =>
+                    handleDeleteChild(
+                      child.id,
+                      `${child.firstName} ${child.lastInitial}`,
+                    )
+                  }
                   title="Remove child profile"
                   style={{
                     display: "inline-flex",

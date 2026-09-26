@@ -1,10 +1,17 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Users, BookOpen, GraduationCap, Settings, ArrowRight } from "lucide-react";
+import {
+  Users,
+  BookOpen,
+  GraduationCap,
+  Settings,
+  ArrowRight,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Learnivia",
-  description: "Frequently asked questions about Learnivia: free 1-on-1 Zoom tutoring for K-10 students, volunteer tutor requirements, parent safeguarding, learning preferences, and volunteer hours.",
+  description:
+    "Frequently asked questions about Learnivia: free 1-on-1 Zoom tutoring for K-10 students, volunteer tutor requirements, parent safeguarding, learning preferences, and volunteer hours.",
 };
 
 const FAQ_SECTIONS = [
@@ -112,7 +119,14 @@ const FAQ_SECTIONS = [
 
 export default function FaqPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "var(--wa-paper)", fontFamily: "var(--font-sans)", color: "var(--wa-ink)" }}>
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "var(--wa-paper)",
+        fontFamily: "var(--font-sans)",
+        color: "var(--wa-ink)",
+      }}
+    >
       {/* Hero */}
       <section
         style={{
@@ -151,8 +165,17 @@ export default function FaqPage() {
           >
             Everything you need to know about Learnivia
           </h1>
-          <p style={{ fontSize: "1.1rem", color: "var(--wa-muted)", maxWidth: "560px", margin: "0 auto", lineHeight: 1.65 }}>
-            Free 1-on-1 peer tutoring for K-10 learners. Transparent, honest answers for parents, learners, and volunteer tutors.
+          <p
+            style={{
+              fontSize: "1.1rem",
+              color: "var(--wa-muted)",
+              maxWidth: "560px",
+              margin: "0 auto",
+              lineHeight: 1.65,
+            }}
+          >
+            Free 1-on-1 peer tutoring for K-10 learners. Transparent, honest
+            answers for parents, learners, and volunteer tutors.
           </p>
         </div>
       </section>
@@ -188,14 +211,24 @@ export default function FaqPage() {
               fontWeight: 600,
             }}
           >
-            <s.icon size={15} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+            <s.icon
+              size={15}
+              style={{ color: "var(--wa-forest)" }}
+              aria-hidden="true"
+            />
             <span>{s.category}</span>
           </a>
         ))}
       </nav>
 
       {/* FAQ Sections */}
-      <div style={{ maxWidth: "820px", margin: "0 auto", padding: "3.5rem 1.5rem 5rem" }}>
+      <div
+        style={{
+          maxWidth: "820px",
+          margin: "0 auto",
+          padding: "3.5rem 1.5rem 5rem",
+        }}
+      >
         {FAQ_SECTIONS.map((section) => (
           <section
             key={section.category}
@@ -212,7 +245,11 @@ export default function FaqPage() {
                 borderBottom: "1px solid var(--wa-border)",
               }}
             >
-              <section.icon size={22} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
+              <section.icon
+                size={22}
+                style={{ color: "var(--wa-forest)" }}
+                aria-hidden="true"
+              />
               <h2
                 style={{
                   fontFamily: "var(--font-serif)",
@@ -226,7 +263,9 @@ export default function FaqPage() {
               </h2>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            >
               {section.questions.map((faq) => (
                 <div
                   key={faq.q}
@@ -274,13 +313,34 @@ export default function FaqPage() {
             textAlign: "center",
           }}
         >
-          <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.35rem", fontWeight: 700, color: "var(--wa-ink)", marginBottom: "0.5rem" }}>
+          <h3
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "1.35rem",
+              fontWeight: 700,
+              color: "var(--wa-ink)",
+              marginBottom: "0.5rem",
+            }}
+          >
             Have a question not listed here?
           </h3>
-          <p style={{ color: "var(--wa-muted)", fontSize: "0.95rem", marginBottom: "1.5rem" }}>
+          <p
+            style={{
+              color: "var(--wa-muted)",
+              fontSize: "0.95rem",
+              marginBottom: "1.5rem",
+            }}
+          >
             Our team and volunteer tutors are always here to help.
           </p>
-          <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
             <Link
               href="/find"
               style={{

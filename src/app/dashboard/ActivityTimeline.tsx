@@ -22,7 +22,10 @@ interface ActivityTimelineProps {
   userTimezone?: string | null;
 }
 
-export function ActivityTimeline({ items, userTimezone }: ActivityTimelineProps) {
+export function ActivityTimeline({
+  items,
+  userTimezone,
+}: ActivityTimelineProps) {
   return (
     <section aria-labelledby="recent-activity-heading">
       <div className={styles.sectionHeader}>
@@ -38,10 +41,17 @@ export function ActivityTimeline({ items, userTimezone }: ActivityTimelineProps)
 
       <div className={styles.timelineCard}>
         {items.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "1.5rem 1rem", color: "var(--wa-muted)" }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "1.5rem 1rem",
+              color: "var(--wa-muted)",
+            }}
+          >
             <Clock size={28} style={{ opacity: 0.4, marginBottom: "0.5rem" }} />
             <p style={{ margin: 0, fontSize: "0.875rem" }}>
-              Your completed tutoring sessions and submitted homework questions will appear here.
+              Your completed tutoring sessions and submitted homework questions
+              will appear here.
             </p>
           </div>
         ) : (
@@ -63,7 +73,10 @@ export function ActivityTimeline({ items, userTimezone }: ActivityTimelineProps)
                       <h3 className={styles.timelineTitle}>{item.title}</h3>
                     </Link>
                     <span className={styles.timelineDate}>
-                      <FormattedDateTime date={item.date} userTimezone={userTimezone} />
+                      <FormattedDateTime
+                        date={item.date}
+                        userTimezone={userTimezone}
+                      />
                     </span>
                   </div>
                   <p className={styles.timelineSub}>{item.subtitle}</p>

@@ -25,7 +25,7 @@ export async function addAvailability(formData: FormData) {
 
   // Verify tutor profile
   const tutor = await prisma.tutorProfile.findUnique({
-    where: { userId }
+    where: { userId },
   });
 
   if (!tutor || (tutor.status !== "APPROVED" && tutor.status !== "SUSPENDED")) {
@@ -42,8 +42,8 @@ export async function addAvailability(formData: FormData) {
       dayOfWeek,
       startTime,
       endTime,
-      timezone: session.user.timezone || "UTC"
-    }
+      timezone: session.user.timezone || "UTC",
+    },
   });
 
   // Automatically reactivate suspended tutor profile once they set their available time
@@ -80,7 +80,7 @@ export async function removeAvailability(id: string) {
   }
 
   const tutor = await prisma.tutorProfile.findUnique({
-    where: { userId }
+    where: { userId },
   });
 
   if (!tutor) {
@@ -89,12 +89,12 @@ export async function removeAvailability(id: string) {
 
   // Ensure this availability belongs to this tutor
   const availability = await prisma.availability.findUnique({
-    where: { id }
+    where: { id },
   });
 
   if (availability?.tutorId === tutor.id) {
     await prisma.availability.delete({
-      where: { id }
+      where: { id },
     });
   }
 

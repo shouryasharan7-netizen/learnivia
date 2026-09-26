@@ -1,49 +1,35 @@
-/* =========================================
-   LEARNIVIA — TEAL & DEEP NAVY DESIGN SYSTEM
-   Primary:   #0D9488 (Teal-600)
-   Secondary: #0C1B33 (Deep Navy)
-   Surface:   #FAF9F6 (Warm Vellum)
-   ========================================= */
-
 :root {
-  /* ── Primary Teal ── */
   --primary: #0d9488;
   --primary-hover: #0f766e;
   --primary-dark: #115e59;
   --primary-light: #ccfbf1;
   --primary-muted: rgba(13, 148, 136, 0.1);
 
-  /* ── Deep Navy ── */
   --navy: #0c1b33;
   --navy-hover: #091426;
   --navy-light: #1a2e4a;
   --navy-muted: rgba(12, 27, 51, 0.06);
 
-  /* ── Warm Surface & White ── */
   --surface: #faf9f6;
   --surface-raised: #ffffff;
   --surface-subtle: #f1f5f9;
   --surface-hover: #f8fafc;
 
-  /* ── Typography ── */
   --text-primary: #0c1b33;
   --text-secondary: #475569;
   --text-muted: #64748b;
   --text-subtle: #94a3b8;
   --text-inverse: #ffffff;
 
-  /* ── Borders ── */
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
   --border-hairline: #f1f5f9;
 
-  /* ── Amber / Gold accent (badges, tags, "verified") ── */
   --accent: #f59e0b;
   --accent-hover: #d97706;
   --accent-light: #fef3c7;
   --accent-muted: rgba(245, 158, 11, 0.1);
 
-  /* ── Semantic ── */
   --success: #16a34a;
   --success-bg: #f0fdf4;
   --warning: #d97706;
@@ -53,7 +39,6 @@
   --info: #2563eb;
   --info-bg: #eff6ff;
 
-  /* ── Sidebar ── */
   --sidebar-bg: #ffffff;
   --sidebar-width: 64px;
   --sidebar-active: #0d9488;
@@ -61,12 +46,10 @@
   --sidebar-text: #475569;
   --sidebar-muted: #94a3b8;
 
-  /* ── Announcement bar ── */
   --announcement-bg: #fef3c7;
   --announcement-text: #92400e;
   --announcement-link: #0d9488;
 
-  /* ── Shadows ── */
   --shadow-xs: 0 1px 2px rgba(12, 27, 51, 0.04);
   --shadow-sm:
     0 1px 3px rgba(12, 27, 51, 0.06), 0 1px 2px rgba(12, 27, 51, 0.04);
@@ -79,17 +62,14 @@
     0 10px 20px -2px rgba(13, 148, 136, 0.12),
     0 4px 8px -2px rgba(12, 27, 51, 0.06);
 
-  /* ── Radii ── */
   --radius-sm: 8px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 18px;
   --radius-pill: 9999px;
 
-  /* ── Transitions ── */
   --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* ── Spacing Scale ── */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -101,7 +81,6 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
-  /* ── Type Scale ── */
   --type-display: clamp(2.8rem, 6vw, 5.8rem);
   --type-page-title: clamp(2.1rem, 4vw, 3.8rem);
   --type-section-title: clamp(1.6rem, 2.5vw, 2.4rem);
@@ -118,14 +97,11 @@
   --text-3xl: 2.1rem;
   --text-4xl: 2.8rem;
 
-  /* ── Layout ── */
   --container-xl: 1180px;
   --container-lg: 960px;
 
-  /* ── Focus ── */
   --focus-ring: 0 0 0 2px var(--surface), 0 0 0 4px var(--primary);
 
-  /* ── BACKWARDS COMPATIBILITY ALIASES ── */
   /* All legacy --wa-* and --lv-* tokens point to the new system */
   --wa-paper: var(--surface);
   --wa-cream: var(--surface);
@@ -279,9 +255,6 @@
   --sh-indigo: var(--navy);
 }
 
-/* =========================================
-   RESET & BASE
-   ========================================= */
 *,
 *::before,
 *::after {
@@ -390,10 +363,6 @@ textarea:focus-visible {
   box-shadow: var(--focus-ring);
 }
 
-/* =========================================
-   UTILITY CLASSES
-   ========================================= */
-
 .container {
   width: 100%;
   max-width: var(--container-xl);
@@ -441,10 +410,6 @@ textarea:focus-visible {
   box-shadow: var(--focus-ring);
 }
 
-/* =========================================
-   MOTION PREFERENCES (WCAG AA INTENTIONAL)
-   ========================================= */
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -465,10 +430,6 @@ textarea:focus-visible {
       opacity, color, background-color, border-color !important;
   }
 }
-
-/* =========================================
-   LIGHT THEME TOKENS (DEFAULT & EXPLICIT)
-   ========================================= */
 
 :root,
 [data-theme="light"] {
@@ -523,12 +484,7 @@ textarea:focus-visible {
     0 4px 6px -4px rgba(20, 24, 36, 0.04);
 }
 
-/* =========================================
-   DARK THEME TOKENS (EXPLICIT USER TOGGLE)
-   ========================================= */
-
 [data-theme="dark"] {
-  /* ── Base overrides ── */
   --primary: #3b82f6;
   --primary-hover: #60a5fa;
   --primary-dark: #2563eb;
@@ -551,7 +507,6 @@ textarea:focus-visible {
 
   --accent: #f59e0b;
 
-  /* ── Legacy Aliases ── */
   --wa-paper: #0d1117;
   --wa-cream: #11161f;
   --wa-cream-dark: #171f2c;
@@ -599,10 +554,6 @@ textarea:focus-visible {
   --wa-shadow-lg: 0 12px 20px rgba(0, 0, 0, 0.7);
 }
 
-/* =========================================
-   GLOBAL FOCUS RINGS
-   ========================================= */
-
 *:focus-visible {
   outline: none;
   box-shadow: var(--focus-ring, 0 0 0 2px #fff, 0 0 0 4px #0d9488);
@@ -613,13 +564,12 @@ textarea:focus-visible {
   .topbar-search-kbd {
     display: none !important;
   }
-  
+
   .mobile-bottom-nav {
     display: flex !important;
   }
 }
 
-/* ── Mobile Bottom Nav ── */
 .mobile-bottom-nav {
   display: none; /* hidden on desktop */
   position: fixed;
@@ -655,7 +605,6 @@ textarea:focus-visible {
   font-weight: 700;
 }
 
-/* ── Global utility hover classes (used by Server Components) ── */
 .tutor-card-link:hover {
   box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
   transform: translateY(-2px);

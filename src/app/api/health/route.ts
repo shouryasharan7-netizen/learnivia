@@ -48,6 +48,6 @@ export async function GET() {
         // Health checks should not be cached
         "Cache-Control": "no-store, no-cache, must-revalidate",
       },
-    }
+    },
   );
 }

@@ -62,7 +62,13 @@ export default async function AdminSessionsPage() {
     id: w.id,
     title: w.title,
     startTime: w.startTime.toISOString(),
-    durationMinutes: Math.max(15, Math.round((new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) / (1000 * 60))),
+    durationMinutes: Math.max(
+      15,
+      Math.round(
+        (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) /
+          (1000 * 60),
+      ),
+    ),
     capacity: w.maxCapacity,
     zoomLink: w.zoomLink,
     tutor: {

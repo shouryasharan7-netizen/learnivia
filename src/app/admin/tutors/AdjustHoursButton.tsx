@@ -142,13 +142,28 @@ export default function AdjustHoursButton({
               padding: "1.5rem",
               maxWidth: "500px",
               width: "100%",
-              boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              boxShadow:
+                "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
               maxHeight: "90vh",
               overflowY: "auto",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-              <h3 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 800, color: "#0F172A" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              <h3
+                style={{
+                  margin: 0,
+                  fontSize: "1.15rem",
+                  fontWeight: 800,
+                  color: "#0F172A",
+                }}
+              >
                 Adjust Volunteer Hours
               </h3>
               <button
@@ -169,28 +184,74 @@ export default function AdjustHoursButton({
               </button>
             </div>
 
-            <div style={{ background: "#F8FAFC", padding: "0.75rem", borderRadius: "8px", marginBottom: "1rem", fontSize: "0.85rem" }}>
-              <div><strong>Tutor:</strong> {tutorName}</div>
+            <div
+              style={{
+                background: "#F8FAFC",
+                padding: "0.75rem",
+                borderRadius: "8px",
+                marginBottom: "1rem",
+                fontSize: "0.85rem",
+              }}
+            >
+              <div>
+                <strong>Tutor:</strong> {tutorName}
+              </div>
               <div style={{ marginTop: "0.25rem" }}>
-                <strong>Current Recorded Hours:</strong> {currentHours.toFixed(1)} hrs
+                <strong>Current Recorded Hours:</strong>{" "}
+                {currentHours.toFixed(1)} hrs
               </div>
             </div>
 
             {errorMsg && (
-              <div style={{ background: "#FEF2F2", border: "1px solid #FCA5A5", color: "#B91C1C", padding: "0.6rem 0.75rem", borderRadius: "6px", fontSize: "0.8rem", marginBottom: "0.75rem" }}>
+              <div
+                style={{
+                  background: "#FEF2F2",
+                  border: "1px solid #FCA5A5",
+                  color: "#B91C1C",
+                  padding: "0.6rem 0.75rem",
+                  borderRadius: "6px",
+                  fontSize: "0.8rem",
+                  marginBottom: "0.75rem",
+                }}
+              >
                 {errorMsg}
               </div>
             )}
 
             {successMsg && (
-              <div style={{ background: "#F0FDF4", border: "1px solid #86EFAC", color: "#15803D", padding: "0.6rem 0.75rem", borderRadius: "6px", fontSize: "0.8rem", marginBottom: "0.75rem" }}>
+              <div
+                style={{
+                  background: "#F0FDF4",
+                  border: "1px solid #86EFAC",
+                  color: "#15803D",
+                  padding: "0.6rem 0.75rem",
+                  borderRadius: "6px",
+                  fontSize: "0.8rem",
+                  marginBottom: "0.75rem",
+                }}
+              >
                 {successMsg}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.85rem",
+              }}
+            >
               <div>
-                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "#334155",
+                    marginBottom: "0.25rem",
+                  }}
+                >
                   New Volunteer Hours Total *
                 </label>
                 <input
@@ -212,7 +273,15 @@ export default function AdjustHoursButton({
               </div>
 
               <div>
-                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, color: "#334155", marginBottom: "0.25rem" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "#334155",
+                    marginBottom: "0.25rem",
+                  }}
+                >
                   Reason for Adjustment (Audit Log Required) *
                 </label>
                 <textarea
@@ -232,7 +301,14 @@ export default function AdjustHoursButton({
                 />
               </div>
 
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem", marginTop: "0.5rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: "0.5rem",
+                  marginTop: "0.5rem",
+                }}
+              >
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
@@ -270,15 +346,39 @@ export default function AdjustHoursButton({
             </form>
 
             {/* Audit Trail History */}
-            <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E2E8F0", paddingTop: "1rem" }}>
-              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0F172A", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <div
+              style={{
+                marginTop: "1.5rem",
+                borderTop: "1px solid #E2E8F0",
+                paddingTop: "1rem",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 700,
+                  color: "#0F172A",
+                  marginBottom: "0.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}
+              >
                 <History size={14} aria-hidden="true" />
                 <span>Audit Trail History</span>
               </div>
               {loadingAudits ? (
-                <div style={{ fontSize: "0.75rem", color: "#64748B" }}>Loading audit log...</div>
+                <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                  Loading audit log...
+                </div>
               ) : audits && audits.length > 0 ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.5rem",
+                  }}
+                >
                   {audits.map((a) => (
                     <div
                       key={a.id}
@@ -290,14 +390,32 @@ export default function AdjustHoursButton({
                         fontSize: "0.75rem",
                       }}
                     >
-                      <div style={{ display: "flex", justifyContent: "space-between", color: "#334155", fontWeight: 700 }}>
-                        <span>{a.oldHours.toFixed(1)} hrs → {a.newHours.toFixed(1)} hrs</span>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          color: "#334155",
+                          fontWeight: 700,
+                        }}
+                      >
+                        <span>
+                          {a.oldHours.toFixed(1)} hrs → {a.newHours.toFixed(1)}{" "}
+                          hrs
+                        </span>
                         <span style={{ color: "#64748B", fontWeight: 400 }}>
                           {new Date(a.createdAt).toLocaleDateString()}
                         </span>
                       </div>
-                      <div style={{ color: "#475569", marginTop: "0.2rem" }}>{a.reason}</div>
-                      <div style={{ color: "#94A3B8", fontSize: "0.7rem", marginTop: "0.2rem" }}>
+                      <div style={{ color: "#475569", marginTop: "0.2rem" }}>
+                        {a.reason}
+                      </div>
+                      <div
+                        style={{
+                          color: "#94A3B8",
+                          fontSize: "0.7rem",
+                          marginTop: "0.2rem",
+                        }}
+                      >
                         By: {a.adjustedBy}
                       </div>
                     </div>

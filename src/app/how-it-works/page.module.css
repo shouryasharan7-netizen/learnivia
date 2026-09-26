@@ -59,10 +59,10 @@
   color: #fff;
 }
 .altSection .sectionLead {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .altSection .stepIconWrap {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
 .altSection .stepNumber {
@@ -72,7 +72,7 @@
   color: #fff;
 }
 .altSection .stepCard p {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .sectionHeader {
@@ -151,8 +151,8 @@
   position: relative;
 }
 .altSection .imagePlaceholder {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .stepIconWrap {
@@ -200,7 +200,7 @@
 
 .primaryBtn {
   background-color: var(--primary);
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 1rem 2rem;
   border-radius: 9999px;
   font-weight: 700;
@@ -213,14 +213,14 @@
 }
 
 .primaryBtn:hover {
-  background-color: #0F766E;
+  background-color: #0f766e;
   transform: translateY(-1px);
 }
 
 .secondaryBtn {
   background-color: transparent;
   color: #fff;
-  border: 2px solid rgba(255,255,255,0.8);
+  border: 2px solid rgba(255, 255, 255, 0.8);
   padding: 1rem 2rem;
   border-radius: 9999px;
   font-weight: 700;
@@ -233,13 +233,14 @@
 }
 
 .secondaryBtn:hover {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   border-color: #fff;
   transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
-  .timelineRow, .timelineRow.reverse {
+  .timelineRow,
+  .timelineRow.reverse {
     flex-direction: column;
     text-align: center;
     gap: 2rem;

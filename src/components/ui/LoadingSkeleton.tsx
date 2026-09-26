@@ -51,7 +51,14 @@ export function CardSkeleton() {
         borderRadius: "var(--wa-radius-md)",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+          marginBottom: "1rem",
+        }}
+      >
         <LoadingSkeleton width={36} height={36} borderRadius="8px" />
         <div style={{ flex: 1 }}>
           <LoadingSkeleton width="40%" height="0.875rem" />

@@ -2,7 +2,13 @@ import styles from "./page.module.css";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { auth } from "@/auth";
-import { Search, Users, Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
+import {
+  Search,
+  Users,
+  Calendar,
+  ArrowRight,
+  CheckCircle2,
+} from "lucide-react";
 import { enrollInWorkshop } from "@/app/actions/workshops";
 import SessionsFilter from "./SessionsFilter";
 
@@ -25,7 +31,7 @@ export default async function FindSessionsPage({ searchParams }: Props) {
     status: "UPCOMING",
     startTime: { gte: new Date() },
   };
-  
+
   if (q && q.trim()) {
     workshopWhere.title = { contains: q.trim(), mode: "insensitive" };
   }
@@ -53,11 +59,11 @@ export default async function FindSessionsPage({ searchParams }: Props) {
   let allSubjects: string[] = [];
   try {
     const uniqueSubjects = await prisma.workshop.groupBy({
-      by: ['subject'],
+      by: ["subject"],
       where: { status: "UPCOMING", startTime: { gte: new Date() } },
-      orderBy: { _count: { subject: 'desc' } }
+      orderBy: { _count: { subject: "desc" } },
     });
-    allSubjects = uniqueSubjects.map(s => s.subject).filter(Boolean);
+    allSubjects = uniqueSubjects.map((s) => s.subject).filter(Boolean);
   } catch (err) {}
 
   return (
@@ -66,13 +72,15 @@ export default async function FindSessionsPage({ searchParams }: Props) {
         <div className={styles.header}>
           <h1 className={styles.title}>All Sessions</h1>
           <p className={styles.subtitle}>
-            These are small-group sessions run by Learnivia peer tutors on topics of their choosing! They are typically shorter and more focused than programs, and you can join them at any time.
+            These are small-group sessions run by Learnivia peer tutors on
+            topics of their choosing! They are typically shorter and more
+            focused than programs, and you can join them at any time.
           </p>
         </div>
 
-        <SessionsFilter 
-          currentQ={q || ""} 
-          currentSubject={subject || "All"} 
+        <SessionsFilter
+          currentQ={q || ""}
+          currentSubject={subject || "All"}
           currentSort={sort || "soon"}
           availableSubjects={allSubjects}
         />
@@ -82,9 +90,11 @@ export default async function FindSessionsPage({ searchParams }: Props) {
             {workshops.map((w) => {
               const seatsLeft = w.maxCapacity - w.enrollments.length;
               const isEnrolled = session?.user?.id
-                ? w.enrollments.some((e: any) => e.studentId === session.user.id)
+                ? w.enrollments.some(
+                    (e: any) => e.studentId === session.user.id,
+                  )
                 : false;
-              
+
               // Get initials for avatar
               const initials = (w.tutor.user.name || "T")
                 .split(" ")
@@ -95,8 +105,15 @@ export default async function FindSessionsPage({ searchParams }: Props) {
 
               // Date formatting
               const startDate = new Date(w.startTime);
-              const dateString = startDate.toLocaleDateString("en-US", { weekday: 'short', month: 'short', day: 'numeric' });
-              const timeString = startDate.toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit' });
+              const dateString = startDate.toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              });
+              const timeString = startDate.toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+              });
               const displayDate = `Starts ${dateString}, ${timeString}`;
 
               return (
@@ -105,33 +122,46 @@ export default async function FindSessionsPage({ searchParams }: Props) {
                   <div className={styles.cardContent}>
                     <h3 className={styles.cardTitle}>{w.title}</h3>
                     <p className={styles.cardTime}>{displayDate}</p>
-                    
+
                     <p className={styles.cardDesc}>
-                      {w.description.length > 120 
-                        ? w.description.substring(0, 120) + "..." 
+                      {w.description.length > 120
+                        ? w.description.substring(0, 120) + "..."
                         : w.description}
                     </p>
 
                     {/* Action Area */}
                     <div className={styles.cardAction}>
-                      <Link href={`/workshop/${w.id}`} className={styles.actionBtn}>
-                        {isEnrolled ? "View Registered Session" : "View Details & Register"}
+                      <Link
+                        href={`/workshop/${w.id}`}
+                        className={styles.actionBtn}
+                      >
+                        {isEnrolled
+                          ? "View Registered Session"
+                          : "View Details & Register"}
                       </Link>
                     </div>
                   </div>
-                  
+
                   <div className={styles.cardFooter}>
                     <div className={styles.tutorInfo}>
                       {w.tutor.user.image ? (
-                        <img src={w.tutor.user.image} alt={w.tutor.user.name || "Tutor"} className={styles.avatar} />
+                        <img
+                          src={w.tutor.user.image}
+                          alt={w.tutor.user.name || "Tutor"}
+                          className={styles.avatar}
+                        />
                       ) : (
                         <div className={styles.avatarFallback}>{initials}</div>
                       )}
-                      <span className={styles.tutorName}>{w.tutor.user.name}</span>
+                      <span className={styles.tutorName}>
+                        {w.tutor.user.name}
+                      </span>
                     </div>
                     <div className={styles.attendance}>
                       <Users size={16} />
-                      <span>{w.enrollments.length}/{w.maxCapacity}</span>
+                      <span>
+                        {w.enrollments.length}/{w.maxCapacity}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -142,8 +172,12 @@ export default async function FindSessionsPage({ searchParams }: Props) {
           <div className={styles.emptyState}>
             <Calendar size={48} className={styles.emptyIcon} />
             <h3 className={styles.emptyTitle}>No sessions found</h3>
-            <p className={styles.emptyText}>Try adjusting your search or selecting a different subject.</p>
-            <Link href="/find" className={styles.clearBtn}>Clear Filters</Link>
+            <p className={styles.emptyText}>
+              Try adjusting your search or selecting a different subject.
+            </p>
+            <Link href="/find" className={styles.clearBtn}>
+              Clear Filters
+            </Link>
           </div>
         )}
       </div>

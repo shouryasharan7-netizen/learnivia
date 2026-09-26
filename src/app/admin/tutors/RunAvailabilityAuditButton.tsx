@@ -50,7 +50,14 @@ export default function RunAvailabilityAuditButton() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+          flexWrap: "wrap",
+        }}
+      >
         <button
           onClick={handleRunAudit}
           disabled={loading}
@@ -72,15 +79,23 @@ export default function RunAvailabilityAuditButton() {
           }}
         >
           {loading ? (
-            <RefreshCw size={15} style={{ animation: "spin 1s linear infinite" }} />
+            <RefreshCw
+              size={15}
+              style={{ animation: "spin 1s linear infinite" }}
+            />
           ) : (
             <Clock size={15} />
           )}
-          <span>{loading ? "Auditing Compliance..." : "Run Compliance & Inactivity Audit"}</span>
+          <span>
+            {loading
+              ? "Auditing Compliance..."
+              : "Run Compliance & Inactivity Audit"}
+          </span>
         </button>
 
         <span style={{ fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
-          Automatically enforces 3-day availability removal &amp; 15-day incomplete training removal.
+          Automatically enforces 3-day availability removal &amp; 15-day
+          incomplete training removal.
         </span>
       </div>
 
@@ -100,7 +115,11 @@ export default function RunAvailabilityAuditButton() {
             maxWidth: "fit-content",
           }}
         >
-          {result.success ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
+          {result.success ? (
+            <CheckCircle2 size={16} />
+          ) : (
+            <AlertTriangle size={16} />
+          )}
           <span>{result.message}</span>
         </div>
       )}

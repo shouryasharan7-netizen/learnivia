@@ -25,7 +25,10 @@ export function TopBar() {
   };
 
   return (
-    <div className={styles.topBar} style={{ fontFamily: "var(--font-sans, sans-serif)" }}>
+    <div
+      className={styles.topBar}
+      style={{ fontFamily: "var(--font-sans, sans-serif)" }}
+    >
       <div className={styles.container}>
         <div className={styles.left}>
           {/* Social Icons */}
@@ -42,11 +45,11 @@ export function TopBar() {
             <FaFacebook size={14} />
           </a>
         </div>
-        
+
         <div className={styles.right}>
           {/* Theme Toggle */}
-          <button 
-            className={styles.themeToggle} 
+          <button
+            className={styles.themeToggle}
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
           >

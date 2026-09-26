@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Service - Learnivia",
-  description: "Learnivia Terms of Service for K-10 free peer tutoring. Read our terms for students, parents, and volunteer tutors.",
+  description:
+    "Learnivia Terms of Service for K-10 free peer tutoring. Read our terms for students, parents, and volunteer tutors.",
 };
 
 const LAST_UPDATED = "September 2026";
@@ -56,19 +57,75 @@ export default function TermsPage() {
   ];
 
   return (
-    <main style={{ maxWidth: 760, margin: "0 auto", padding: "4rem 1.5rem 6rem", fontFamily: "var(--font-body, Inter, sans-serif)" }}>
+    <main
+      style={{
+        maxWidth: 760,
+        margin: "0 auto",
+        padding: "4rem 1.5rem 6rem",
+        fontFamily: "var(--font-body, Inter, sans-serif)",
+      }}
+    >
       <div style={{ marginBottom: "3rem" }}>
-        <div style={{ display: "inline-block", background: "#F0FDF4", color: "#0D683B", border: "1px solid #BBF7D0", borderRadius: "6px", padding: "0.3rem 0.9rem", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1rem" }}>
+        <div
+          style={{
+            display: "inline-block",
+            background: "#F0FDF4",
+            color: "#0D683B",
+            border: "1px solid #BBF7D0",
+            borderRadius: "6px",
+            padding: "0.3rem 0.9rem",
+            fontSize: "0.8rem",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.06em",
+            marginBottom: "1rem",
+          }}
+        >
           Free K-10 Tutoring Platform
         </div>
-        <h1 style={{ fontSize: "2.25rem", fontWeight: 900, color: "#111827", marginBottom: "0.5rem" }}>Terms of Service</h1>
-        <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>Last updated: {LAST_UPDATED}</p>
+        <h1
+          style={{
+            fontSize: "2.25rem",
+            fontWeight: 900,
+            color: "#111827",
+            marginBottom: "0.5rem",
+          }}
+        >
+          Terms of Service
+        </h1>
+        <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>
+          Last updated: {LAST_UPDATED}
+        </p>
       </div>
 
       {sections.map((s) => (
-        <div key={s.h} style={{ marginBottom: "2rem", paddingBottom: "2rem", borderBottom: "1px solid #F3F4F6" }}>
-          <h2 style={{ fontSize: "1.05rem", fontWeight: 800, color: "#111827", marginBottom: "0.6rem" }}>{s.h}</h2>
-          <p style={{ color: "#374151", lineHeight: 1.75, fontSize: "0.9375rem" }}>{s.p}</p>
+        <div
+          key={s.h}
+          style={{
+            marginBottom: "2rem",
+            paddingBottom: "2rem",
+            borderBottom: "1px solid #F3F4F6",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "1.05rem",
+              fontWeight: 800,
+              color: "#111827",
+              marginBottom: "0.6rem",
+            }}
+          >
+            {s.h}
+          </h2>
+          <p
+            style={{
+              color: "#374151",
+              lineHeight: 1.75,
+              fontSize: "0.9375rem",
+            }}
+          >
+            {s.p}
+          </p>
         </div>
       ))}
     </main>

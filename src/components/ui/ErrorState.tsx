@@ -33,7 +33,14 @@ export function ErrorState({
         gap: "0.75rem",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#C1694F" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          color: "#C1694F",
+        }}
+      >
         <AlertCircle size={18} strokeWidth={2} aria-hidden="true" />
         <h2
           style={{
@@ -48,12 +55,26 @@ export function ErrorState({
         </h2>
       </div>
 
-      <p style={{ fontSize: "0.875rem", color: "var(--wa-text)", margin: 0, lineHeight: 1.5 }}>
+      <p
+        style={{
+          fontSize: "0.875rem",
+          color: "var(--wa-text)",
+          margin: 0,
+          lineHeight: 1.5,
+        }}
+      >
         {message}
       </p>
 
       {(onRetry || homeLink) && (
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginTop: "0.5rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            marginTop: "0.5rem",
+          }}
+        >
           {onRetry && (
             <button
               type="button"

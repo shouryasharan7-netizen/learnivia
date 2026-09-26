@@ -44,7 +44,7 @@ export function validateMeetingUrl(url: string | null | undefined): {
 
     // Check against approved domain list (allow subdomains of approved domains)
     const isApproved = APPROVED_MEETING_DOMAINS.some(
-      (domain) => hostname === domain || hostname.endsWith(`.${domain}`)
+      (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
     );
 
     if (!isApproved) {

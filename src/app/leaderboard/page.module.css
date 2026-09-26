@@ -1,5 +1,5 @@
 .main {
-  background: #F8FAFC;
+  background: #f8fafc;
   min-height: 100vh;
   padding: 3rem 0 5rem;
 }
@@ -19,8 +19,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: #DCFCE7;
-  color: #15803D;
+  background: #dcfce7;
+  color: #15803d;
   font-size: 0.725rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -33,20 +33,20 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #15803D;
+  background: #15803d;
 }
 
 .title {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #0F172A;
+  color: #0f172a;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
 
 .subtitle {
   font-size: 1rem;
-  color: #64748B;
+  color: #64748b;
   max-width: 620px;
   margin: 0 auto;
   line-height: 1.6;
@@ -61,8 +61,8 @@
 }
 
 .podiumCard {
-  background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
   border-radius: 20px;
   padding: 2rem 1.25rem;
   text-align: center;
@@ -74,8 +74,8 @@
 }
 
 .firstPlaceCard {
-  border-color: #FCD34D;
-  background: var(--wa-white, #FFFFFF);
+  border-color: #fcd34d;
+  background: var(--wa-white, #ffffff);
   transform: translateY(-8px);
   box-shadow: 0 4px 16px rgba(217, 119, 6, 0.1);
 }
@@ -90,7 +90,7 @@
   height: 54px;
   border-radius: 50%;
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,15 +102,15 @@
 .podiumName {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #1E293B;
+  color: #1e293b;
   margin-bottom: 0.25rem;
 }
 
 .roleBadge {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #0E8345;
-  background: #E6F4EA;
+  color: #0e8345;
+  background: #e6f4ea;
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
   margin-bottom: 1.25rem;
@@ -120,7 +120,7 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
-  border-top: 1px solid #F1F5F9;
+  border-top: 1px solid #f1f5f9;
   padding-top: 1rem;
 }
 
@@ -128,26 +128,26 @@
   display: block;
   font-size: 1.15rem;
   font-weight: 800;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .podiumStatLabel {
   font-size: 0.7rem;
-  color: #64748B;
+  color: #64748b;
   text-transform: uppercase;
   font-weight: 600;
 }
 
 .youBadge {
-  color: #0E8345;
+  color: #0e8345;
   font-weight: 700;
   font-size: 0.85rem;
 }
 
 /* Table Card */
 .tableCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
@@ -155,7 +155,7 @@
 
 .tableHeader {
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #F1F5F9;
+  border-bottom: 1px solid #f1f5f9;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -164,7 +164,7 @@
 .tableTitle {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #1E293B;
+  color: #1e293b;
 }
 
 .tableWrap {
@@ -178,25 +178,25 @@
 }
 
 .table th {
-  background: #F8FAFC;
+  background: #f8fafc;
   padding: 0.85rem 1.25rem;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #64748B;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .table td {
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid #F1F5F9;
+  border-bottom: 1px solid #f1f5f9;
   font-size: 0.9rem;
-  color: #1E293B;
+  color: #1e293b;
 }
 
 .highlightRow {
-  background: #F0FDF4;
+  background: #f0fdf4;
 }
 
 .rankCell {
@@ -215,7 +215,7 @@
   height: 34px;
   border-radius: 50%;
   background: var(--wa-green);
-  color: #FFF;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,14 +226,14 @@
 
 .tableUserName {
   font-weight: 700;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .tutorPill {
   font-size: 0.75rem;
   font-weight: 700;
-  background: #E6F4EA;
-  color: #0E8345;
+  background: #e6f4ea;
+  color: #0e8345;
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
 }
@@ -241,8 +241,8 @@
 .studentPill {
   font-size: 0.75rem;
   font-weight: 700;
-  background: #EAF3ED;
-  color: #2563EB;
+  background: #eaf3ed;
+  color: #2563eb;
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
 }

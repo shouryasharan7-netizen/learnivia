@@ -13,7 +13,10 @@ export async function createWorkshop(formData: FormData) {
   const description = (formData.get("description") as string)?.trim();
   const subject = (formData.get("subject") as string)?.trim();
   const grade = ((formData.get("grade") as string) || "All Levels").trim();
-  const maxCapacity = Math.max(1, parseInt((formData.get("maxCapacity") as string) || "10", 10));
+  const maxCapacity = Math.max(
+    1,
+    parseInt((formData.get("maxCapacity") as string) || "10", 10),
+  );
   const customMeetingUrl = (formData.get("customMeetingUrl") as string)?.trim();
 
   const startUtc = formData.get("startUtc") as string;
@@ -30,7 +33,14 @@ export async function createWorkshop(formData: FormData) {
     const startTimeStr = formData.get("startTime") as string;
     const endTimeStr = formData.get("endTime") as string;
 
-    if (!title || !description || !subject || !dateStr || !startTimeStr || !endTimeStr) {
+    if (
+      !title ||
+      !description ||
+      !subject ||
+      !dateStr ||
+      !startTimeStr ||
+      !endTimeStr
+    ) {
       throw new Error("Please fill in all required fields.");
     }
 
@@ -57,7 +67,10 @@ export async function createWorkshop(formData: FormData) {
     throw new Error("End time must be after start time.");
   }
 
-  const durationMinutes = Math.max(15, Math.round((endDateTime.getTime() - startDateTime.getTime()) / (1000 * 60)));
+  const durationMinutes = Math.max(
+    15,
+    Math.round((endDateTime.getTime() - startDateTime.getTime()) / (1000 * 60)),
+  );
 
   let meetingUrl = "";
   if (customMeetingUrl) {
@@ -76,7 +89,7 @@ export async function createWorkshop(formData: FormData) {
       const zoomMeeting = await createZoomMeeting(
         `Learnivia Workshop: ${title}`,
         startDateTime.toISOString(),
-        durationMinutes
+        durationMinutes,
       );
       meetingUrl = JSON.stringify({
         joinUrl: zoomMeeting.join_url,
@@ -142,7 +155,7 @@ export async function enrollInWorkshop(formData: FormData) {
 
   // Check if already enrolled
   const existingEnrollment = workshop.enrollments.find(
-    (e) => e.studentId === user.id
+    (e) => e.studentId === user.id,
   );
 
   if (existingEnrollment) {
@@ -211,11 +224,16 @@ export async function completeWorkshop(formData: FormData) {
   }
 
   if (new Date() < workshop.startTime) {
-    throw new Error("A workshop cannot be marked completed before its scheduled start time.");
+    throw new Error(
+      "A workshop cannot be marked completed before its scheduled start time.",
+    );
   }
 
   const durationMs = workshop.endTime.getTime() - workshop.startTime.getTime();
-  const durationHours = Math.max(0.5, Math.round((durationMs / (1000 * 60 * 60)) * 10) / 10);
+  const durationHours = Math.max(
+    0.5,
+    Math.round((durationMs / (1000 * 60 * 60)) * 10) / 10,
+  );
 
   // Atomically transition from UPCOMING -> COMPLETED to prevent duplicate volunteer hour credits
   const updateResult = await prisma.workshop.updateMany({

@@ -12,7 +12,9 @@ export async function bookSession(formData: FormData) {
 
   // P0-7: Email verification check
   if (user.email && !user.emailVerified) {
-    throw new Error("Please verify your email address before booking a tutoring session. Check your dashboard for the verification link.");
+    throw new Error(
+      "Please verify your email address before booking a tutoring session. Check your dashboard for the verification link.",
+    );
   }
 
   const tutorId = formData.get("tutorId") as string;
@@ -78,14 +80,17 @@ export async function bookSession(formData: FormData) {
   const [endHours, endMinutes] = slot.endTime.split(":").map(Number);
   endDate.setHours(endHours, endMinutes, 0, 0);
 
-  const durationMinutes = Math.max(30, Math.round((endDate.getTime() - targetDate.getTime()) / 60000));
+  const durationMinutes = Math.max(
+    30,
+    Math.round((endDate.getTime() - targetDate.getTime()) / 60000),
+  );
 
   let meetingUrl = "";
   try {
     const zoomMeeting = await createZoomMeeting(
       `Learnivia: ${subject} with ${user.name || "Student"}`,
       targetDate.toISOString(),
-      durationMinutes
+      durationMinutes,
     );
     meetingUrl = JSON.stringify({
       joinUrl: zoomMeeting.join_url,
@@ -93,7 +98,10 @@ export async function bookSession(formData: FormData) {
       isCustom: false,
     });
   } catch (err) {
-    console.log("Zoom API unavailable or unconfigured, assigning Learnivia session room link:", err);
+    console.log(
+      "Zoom API unavailable or unconfigured, assigning Learnivia session room link:",
+      err,
+    );
     // Honest session link rather than a fabricated random Zoom meeting ID and password
     const sessionRoomUrl = `https://learnivia-green.vercel.app/learn?session=lv-${Date.now().toString(36)}`;
     meetingUrl = JSON.stringify({
@@ -118,7 +126,9 @@ export async function bookSession(formData: FormData) {
     });
 
     if (tutorConflict) {
-      throw new Error("This time slot is already booked. Please choose another available slot.");
+      throw new Error(
+        "This time slot is already booked. Please choose another available slot.",
+      );
     }
 
     // Overlap conflict protection: verify student has no overlapping bookings
@@ -132,7 +142,9 @@ export async function bookSession(formData: FormData) {
     });
 
     if (studentConflict) {
-      throw new Error("You already have another confirmed tutoring session during this time window.");
+      throw new Error(
+        "You already have another confirmed tutoring session during this time window.",
+      );
     }
 
     return tx.booking.create({

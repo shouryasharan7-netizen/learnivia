@@ -25,7 +25,10 @@ export async function GET() {
     return NextResponse.json({ completedModules: completed });
   } catch (error: any) {
     console.error("GET /api/tutor/training error:", error);
-    return NextResponse.json({ error: error.message || "Failed to fetch training progress" }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Failed to fetch training progress" },
+      { status: 500 },
+    );
   }
 }
 
@@ -41,7 +44,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!tutorProfile) {
-      return NextResponse.json({ error: "Tutor profile not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Tutor profile not found" },
+        { status: 404 },
+      );
     }
 
     const body = await req.json();
@@ -53,7 +59,10 @@ export async function POST(req: NextRequest) {
     }
 
     if (!quizPassed) {
-      return NextResponse.json({ error: "Quiz must be passed to complete module" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Quiz must be passed to complete module" },
+        { status: 400 },
+      );
     }
 
     const training = await prisma.tutorTraining.upsert({
@@ -90,9 +99,16 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    return NextResponse.json({ success: true, training, isApproved: completedCount >= 3 });
+    return NextResponse.json({
+      success: true,
+      training,
+      isApproved: completedCount >= 3,
+    });
   } catch (error: any) {
     console.error("POST /api/tutor/training error:", error);
-    return NextResponse.json({ error: error.message || "Failed to save training progress" }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Failed to save training progress" },
+      { status: 500 },
+    );
   }
 }

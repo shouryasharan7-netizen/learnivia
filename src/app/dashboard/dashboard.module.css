@@ -8,7 +8,6 @@
   margin: 0 auto;
 }
 
-/* ── Hero Banner ── */
 .heroBanner {
   border-radius: var(--radius-xl, 18px);
   background: linear-gradient(135deg, #eff6ff 0%, #ccfbf1 100%);
@@ -83,7 +82,6 @@
   opacity: 0.7;
 }
 
-/* ── Program Cards Row ── */
 .programRow {
   display: flex;
   gap: 0.75rem;
@@ -104,7 +102,9 @@
   border: 1px solid var(--border, #e2e8f0);
   border-radius: var(--radius-lg, 14px);
   text-decoration: none;
-  transition: box-shadow 180ms, transform 180ms;
+  transition:
+    box-shadow 180ms,
+    transform 180ms;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -142,7 +142,6 @@
   line-height: 1.35;
 }
 
-/* ── User Stats Bar ── */
 .statsBar {
   display: flex;
   align-items: center;
@@ -226,7 +225,6 @@
   color: var(--text-muted, #64748b);
 }
 
-/* ── Two-Column Grid ── */
 .twoCol {
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -247,7 +245,6 @@
   gap: 0;
 }
 
-/* ── Section Headers ── */
 .sectionHeader {
   display: flex;
   align-items: center;
@@ -275,7 +272,6 @@
   text-decoration: underline;
 }
 
-/* ── Empty State ── */
 .emptyState {
   padding: 1rem 1.25rem;
   background: var(--surface-subtle, #f1f5f9);
@@ -285,7 +281,6 @@
   margin-bottom: 0.75rem;
 }
 
-/* ── Session List ── */
 .sessionList {
   display: flex;
   flex-direction: column;
@@ -330,7 +325,6 @@
   font-weight: 600;
 }
 
-/* ── Quick Action Links ── */
 .actionList {
   display: flex;
   flex-direction: column;
@@ -356,7 +350,6 @@
   box-shadow: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.07));
 }
 
-/* ── Tutor Promo Banner ── */
 .tutorPromo {
   padding: 1rem 1.25rem;
   background: var(--surface-subtle, #f1f5f9);
@@ -391,7 +384,6 @@
   background: var(--primary-dark, #0f766e);
 }
 
-/* ── Task Cards ── */
 .taskList {
   display: flex;
   flex-direction: column;

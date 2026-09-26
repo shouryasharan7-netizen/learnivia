@@ -8,7 +8,10 @@ interface SafetyNoticeProps {
   className?: string;
 }
 
-export function SafetyNotice({ compact = false, className = "" }: SafetyNoticeProps) {
+export function SafetyNotice({
+  compact = false,
+  className = "",
+}: SafetyNoticeProps) {
   if (compact) {
     return (
       <div
@@ -25,7 +28,11 @@ export function SafetyNotice({ compact = false, className = "" }: SafetyNoticePr
         <span>Child-safe peer learning space.</span>
         <Link
           href={ROUTES.safety}
-          style={{ color: "var(--wa-green)", fontWeight: 600, textDecoration: "underline" }}
+          style={{
+            color: "var(--wa-green)",
+            fontWeight: 600,
+            textDecoration: "underline",
+          }}
         >
           Standards
         </Link>
@@ -84,13 +91,28 @@ export function SafetyNotice({ compact = false, className = "" }: SafetyNoticePr
           >
             Safe, Supervised Learning Environment
           </p>
-          <p style={{ fontSize: "0.75rem", color: "#3B5E4F", margin: 0, marginTop: "0.15rem" }}>
-            All sessions use verified waiting rooms. Private contact information is never shared between minors.
+          <p
+            style={{
+              fontSize: "0.75rem",
+              color: "#3B5E4F",
+              margin: 0,
+              marginTop: "0.15rem",
+            }}
+          >
+            All sessions use verified waiting rooms. Private contact information
+            is never shared between minors.
           </p>
         </div>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", fontSize: "0.8125rem" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.85rem",
+          fontSize: "0.8125rem",
+        }}
+      >
         <Link
           href={ROUTES.safety}
           style={{

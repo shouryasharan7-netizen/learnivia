@@ -41,7 +41,11 @@ export function Footer() {
           <div className={styles.grid}>
             {/* Brand column */}
             <div className={styles.brand}>
-              <Link href="/" className={styles.logoLink} aria-label="Learnivia Home">
+              <Link
+                href="/"
+                className={styles.logoLink}
+                aria-label="Learnivia Home"
+              >
                 <div className={styles.brandRow}>
                   <Image
                     src="/images/logo.png"
@@ -55,7 +59,8 @@ export function Footer() {
                 </div>
               </Link>
               <p className={styles.tagline}>
-                Free 1-on-1 peer tutoring for K-10 students, delivered by verified volunteer tutors on Zoom.
+                Free 1-on-1 peer tutoring for K-10 students, delivered by
+                verified volunteer tutors on Zoom.
               </p>
               <div className={styles.missionPill}>
                 <span className={styles.missionDot} />
@@ -70,7 +75,9 @@ export function Footer() {
                 <ul className={styles.linkList}>
                   {col.links.map((l) => (
                     <li key={l.href}>
-                      <Link href={l.href} className={styles.footerLink}>{l.label}</Link>
+                      <Link href={l.href} className={styles.footerLink}>
+                        {l.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -83,7 +90,8 @@ export function Footer() {
               © {new Date().getFullYear()} Learnivia. All rights reserved.
             </p>
             <p className={styles.disclaimer}>
-              A free volunteer peer-tutoring platform. Not affiliated with any academic institution.
+              A free volunteer peer-tutoring platform. Not affiliated with any
+              academic institution.
             </p>
           </div>
         </div>

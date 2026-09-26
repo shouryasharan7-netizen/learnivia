@@ -1,20 +1,17 @@
-/* ==========================================================================
-   LOGO SPLASH ANIMATION (Website Opening Overlay - Matching Image 5)
-   ========================================================================== */
-
 .splashOverlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: var(--wa-paper, #FAF9F6);
+  background: var(--wa-paper, #faf9f6);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 1;
   visibility: visible;
-  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), 
-              visibility 500ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 500ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -30,8 +27,9 @@
 .splashCard {
   background: rgba(255, 255, 255, 0.88);
   border: 1.5px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 24px 60px -12px rgba(30, 41, 59, 0.25),
-              0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  box-shadow:
+    0 24px 60px -12px rgba(30, 41, 59, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
   border-radius: 28px;
   padding: 3rem 3.5rem;
   display: flex;
@@ -87,10 +85,14 @@
 }
 
 .brandTitle {
-  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-family:
+    "Outfit",
+    "Inter",
+    -apple-system,
+    sans-serif;
   font-size: 2.25rem;
   font-weight: 800;
-  color: #14243B;
+  color: #14243b;
   letter-spacing: -0.03em;
   margin: 0 0 0.25rem 0;
   line-height: 1.1;
@@ -99,7 +101,7 @@
 .tagline {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #0E8345;
+  color: #0e8345;
   letter-spacing: 0.02em;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
@@ -120,7 +122,7 @@
   left: 0;
   height: 100%;
   width: 0%;
-  background: var(--wa-green, #1E3A8A);
+  background: var(--wa-green, #1e3a8a);
   border-radius: 4px;
   animation: loadFill 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }

@@ -27,13 +27,16 @@ export async function POST(req: NextRequest) {
   if (!tutorProfileId || newHours === undefined || !reason?.trim()) {
     return NextResponse.json(
       { error: "tutorProfileId, newHours, and reason are required." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   const parsed = parseFloat(newHours);
   if (isNaN(parsed) || parsed < 0) {
-    return NextResponse.json({ error: "newHours must be a non-negative number." }, { status: 400 });
+    return NextResponse.json(
+      { error: "newHours must be a non-negative number." },
+      { status: 400 },
+    );
   }
 
   const tutor = await prisma.tutorProfile.findUnique({
@@ -42,7 +45,10 @@ export async function POST(req: NextRequest) {
   });
 
   if (!tutor) {
-    return NextResponse.json({ error: "Tutor profile not found." }, { status: 404 });
+    return NextResponse.json(
+      { error: "Tutor profile not found." },
+      { status: 404 },
+    );
   }
 
   // Run both updates in a transaction - audit record + actual hours update
@@ -79,7 +85,10 @@ export async function GET(req: NextRequest) {
 
   const tutorId = req.nextUrl.searchParams.get("tutorId");
   if (!tutorId) {
-    return NextResponse.json({ error: "tutorId query param required." }, { status: 400 });
+    return NextResponse.json(
+      { error: "tutorId query param required." },
+      { status: 400 },
+    );
   }
 
   const audits = await prisma.volunteerHourAudit.findMany({

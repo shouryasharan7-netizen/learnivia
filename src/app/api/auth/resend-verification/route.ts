@@ -23,12 +23,13 @@ export async function POST(req: Request) {
     if (user.emailVerified) {
       return NextResponse.json(
         { success: true, verified: true, message: "Email is already verified" },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
     const body = await req.json().catch(() => ({}));
-    const shouldInstantVerify = body.action === "instant" || !process.env.RESEND_API_KEY;
+    const shouldInstantVerify =
+      body.action === "instant" || !process.env.RESEND_API_KEY;
 
     if (shouldInstantVerify) {
       await prisma.user.update({
@@ -76,7 +77,7 @@ export async function POST(req: Request) {
     console.error("Error in resend-verification API:", error);
     return NextResponse.json(
       { error: "Failed to process verification request" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

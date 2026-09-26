@@ -1,8 +1,3 @@
-/* ==========================================================================
-   Learnivia : Admin Command Center Styles
-   Design Language: Warm Editorial Administrative Oversight
-   ========================================================================== */
-
 .page {
   padding: 2rem 0 4rem;
   background: var(--wa-cream);
@@ -87,7 +82,7 @@
 
 .primaryBtn {
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 0.55rem 1.1rem;
@@ -130,8 +125,8 @@
    Operational Triage Alert
    ============================ */
 .triageBanner {
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
   border-radius: var(--wa-radius-md);
   padding: 1rem 1.25rem;
   display: flex;
@@ -142,8 +137,8 @@
 }
 
 .triageBannerCritical {
-  background: #FEF2F2;
-  border: 1px solid #FECACA;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
   border-radius: var(--wa-radius-md);
   padding: 1rem 1.25rem;
   display: flex;
@@ -165,8 +160,8 @@
   width: 32px;
   height: 32px;
   border-radius: var(--wa-radius-sm);
-  background: #FEF3C7;
-  color: #92400E;
+  background: #fef3c7;
+  color: #92400e;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -177,8 +172,8 @@
   width: 32px;
   height: 32px;
   border-radius: var(--wa-radius-sm);
-  background: #FEE2E2;
-  color: #991B1B;
+  background: #fee2e2;
+  color: #991b1b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,19 +182,19 @@
 
 .triageTextAmber {
   font-size: 0.875rem;
-  color: #92400E;
+  color: #92400e;
   line-height: 1.45;
 }
 
 .triageTextRed {
   font-size: 0.875rem;
-  color: #991B1B;
+  color: #991b1b;
   line-height: 1.45;
 }
 
 .triageBtnAmber {
-  background: #B45309;
-  color: #FFFFFF;
+  background: #b45309;
+  color: #ffffff;
   padding: 0.45rem 0.95rem;
   border-radius: var(--wa-radius-sm);
   font-size: 0.8125rem;
@@ -212,12 +207,12 @@
 }
 
 .triageBtnAmber:hover {
-  background: #92400E;
+  background: #92400e;
 }
 
 .triageBtnRed {
-  background: #DC2626;
-  color: #FFFFFF;
+  background: #dc2626;
+  color: #ffffff;
   padding: 0.45rem 0.95rem;
   border-radius: var(--wa-radius-sm);
   font-size: 0.8125rem;
@@ -230,7 +225,7 @@
 }
 
 .triageBtnRed:hover {
-  background: #B91C1C;
+  background: #b91c1c;
 }
 
 /* ============================
@@ -270,13 +265,13 @@
 }
 
 .statCardHighlight {
-  border-color: #FCD34D;
-  background: #FFFDF7;
+  border-color: #fcd34d;
+  background: #fffdf7;
 }
 
 .statCardCritical {
-  border-color: #FCA5A5;
-  background: #FFFBFB;
+  border-color: #fca5a5;
+  background: #fffbfb;
 }
 
 .statCardTop {

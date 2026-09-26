@@ -1,20 +1,22 @@
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
-import bcrypt from "bcryptjs"
-import { authConfig, getAdminEmails, isDesignatedAdmin } from "./auth.config"
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/lib/prisma";
+import bcrypt from "bcryptjs";
+import { authConfig, getAdminEmails, isDesignatedAdmin } from "./auth.config";
 
-// ── P0-12: Brute-force protection ────────────────────────────────────────
 // In-memory rate limiting for credential login attempts.
 // NOTE: For multi-instance production, wire this to Redis (Upstash) or
 // use the failedLoginCount field in the DB (requires the migration to be run).
-interface BFEntry { count: number; lockedUntil: number | null }
+interface BFEntry {
+  count: number;
+  lockedUntil: number | null;
+}
 const loginAttemptMap = new Map<string, BFEntry>();
 
-const MAX_ATTEMPTS = 10;           // 10 failures before lockout
+const MAX_ATTEMPTS = 10; // 10 failures before lockout
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
-const ATTEMPT_WINDOW_MS = 10 * 60 * 1000;   // Reset counter after 10 minutes of inactivity
+const ATTEMPT_WINDOW_MS = 10 * 60 * 1000; // Reset counter after 10 minutes of inactivity
 
 function getBFKey(email: string) {
   return `bf:${email.trim().toLowerCase()}`;
@@ -62,8 +64,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         // Fast-path bypass exclusively for demo accounts
-        const demoEmail = (credentials?.email as string || "").trim().toLowerCase();
-        if (demoEmail === "shourya@test.com" && credentials?.password === "password123") {
+        const demoEmail = ((credentials?.email as string) || "")
+          .trim()
+          .toLowerCase();
+        if (
+          demoEmail === "shourya@test.com" &&
+          credentials?.password === "password123"
+        ) {
           const user = await prisma.user.findUnique({
             where: { email: demoEmail },
             include: { tutorProfile: { include: { trainingModules: true } } },
@@ -71,8 +78,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
           if (user) {
             const isAdminEmail = isDesignatedAdmin(user);
-            const isApprovedTutor = Boolean(user.tutorProfile && user.tutorProfile.status === "APPROVED");
-            const isTrainingDone = Boolean(user.tutorProfile?.trainingModules?.filter((m: any) => m.quizPassed).length === 5);
+            const isApprovedTutor = Boolean(
+              user.tutorProfile && user.tutorProfile.status === "APPROVED",
+            );
+            const isTrainingDone = Boolean(
+              user.tutorProfile?.trainingModules?.filter(
+                (m: any) => m.quizPassed,
+              ).length === 5,
+            );
             return {
               id: user.id,
               name: user.name,
@@ -90,7 +103,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
 
         if (!credentials?.email || !credentials?.password) return null;
-        
+
         const email = (credentials.email as string).trim().toLowerCase();
 
         // P0-12: Check memory lockout first as quick filter
@@ -115,9 +128,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
 
         // P0-12: Always run bcrypt compare (even for non-existent users) to prevent timing attacks
-        const dummyHash = "$2a$12$dummyhashfortimingnnn.aaaaabbbbccccddddeeeefffff";
+        const dummyHash =
+          "$2a$12$dummyhashfortimingnnn.aaaaabbbbccccddddeeeefffff";
         const passwordToCheck = user?.password || dummyHash;
-        const isValid = await bcrypt.compare(credentials.password as string, passwordToCheck);
+        const isValid = await bcrypt.compare(
+          credentials.password as string,
+          passwordToCheck,
+        );
 
         if (!user || !user.password || !isValid) {
           recordFailedAttempt(email);
@@ -128,7 +145,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               where: { id: user.id },
               data: {
                 failedLoginCount: newFailCount,
-                lockedUntil: willLock ? new Date(Date.now() + 15 * 60 * 1000) : null,
+                lockedUntil: willLock
+                  ? new Date(Date.now() + 15 * 60 * 1000)
+                  : null,
               },
             });
           }
@@ -148,8 +167,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         // Strict Admin check: exclusively Ahmed and Shourya (or ADMIN_EMAILS)
         const isAdminUser = isDesignatedAdmin(user);
-        const isApprovedTutor = Boolean(user.tutorProfile && user.tutorProfile.status === "APPROVED");
-        const isTrainingDone = Boolean(user.tutorProfile?.trainingModules?.filter((m: any) => m.quizPassed).length === 5);
+        const isApprovedTutor = Boolean(
+          user.tutorProfile && user.tutorProfile.status === "APPROVED",
+        );
+        const isTrainingDone = Boolean(
+          user.tutorProfile?.trainingModules?.filter((m: any) => m.quizPassed)
+            .length === 5,
+        );
 
         if (isAdminUser && user.role !== "ADMIN") {
           await prisma.user.update({
@@ -168,7 +192,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           email: user.email,
           image: user.image,
-          role: isAdminUser ? "ADMIN" : (user.role === "ADMIN" ? "STUDENT" : user.role),
+          role: isAdminUser
+            ? "ADMIN"
+            : user.role === "ADMIN"
+              ? "STUDENT"
+              : user.role,
           isAdmin: isAdminUser,
           isTutor: isApprovedTutor,
           isTrainingCompleted: isTrainingDone,
@@ -183,7 +211,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user }) {
       if (user.email) {
         const normalizedEmail = user.email.trim().toLowerCase();
-        const isAdminEmail = isDesignatedAdmin({ email: normalizedEmail, name: user.name });
+        const isAdminEmail = isDesignatedAdmin({
+          email: normalizedEmail,
+          name: user.name,
+        });
 
         if (isAdminEmail) {
           try {

@@ -42,7 +42,12 @@ export function QuickActions() {
         {actions.map((act) => {
           const Icon = act.icon;
           return (
-            <Link key={act.id} href={act.href} className={styles.actionCard} prefetch={false}>
+            <Link
+              key={act.id}
+              href={act.href}
+              className={styles.actionCard}
+              prefetch={false}
+            >
               <div className={styles.actionIconWrap}>
                 <Icon size={18} />
               </div>

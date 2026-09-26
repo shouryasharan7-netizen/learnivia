@@ -2,18 +2,18 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { 
-  GraduationCap, 
-  UserCheck, 
-  BookOpen, 
-  Megaphone, 
-  PenTool, 
-  Clock, 
-  Search, 
-  CheckCircle2, 
-  X, 
-  Calendar, 
-  Lightbulb 
+import {
+  GraduationCap,
+  UserCheck,
+  BookOpen,
+  Megaphone,
+  PenTool,
+  Clock,
+  Search,
+  CheckCircle2,
+  X,
+  Calendar,
+  Lightbulb,
 } from "lucide-react";
 import styles from "./stories.module.css";
 import { STORIES_AND_BLOG, type ArticleOrStory } from "./data";
@@ -37,10 +37,14 @@ const CATEGORIES = [
   { id: "COMMUNITY_NEWS", label: "Platform News" },
 ] as const;
 
-export default function StoriesClient({ initialDbStories }: StoriesClientProps) {
+export default function StoriesClient({
+  initialDbStories,
+}: StoriesClientProps) {
   const [activeCategory, setActiveCategory] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeArticle, setActiveArticle] = useState<ArticleOrStory | null>(null);
+  const [activeArticle, setActiveArticle] = useState<ArticleOrStory | null>(
+    null,
+  );
 
   // Community user-submitted stories state
   const [dbStories, setDbStories] = useState<DbStory[]>(initialDbStories);
@@ -140,7 +144,9 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
           <h1 className={styles.title}>Learnivia Stories & Blog</h1>
           <p className={styles.subtitle}>
-            Explore real student breakthroughs, volunteer tutor journeys, K-10 study guides, and peer mentoring insights from our global learning community.
+            Explore real student breakthroughs, volunteer tutor journeys, K-10
+            study guides, and peer mentoring insights from our global learning
+            community.
           </p>
 
           {/* Search Bar */}
@@ -174,12 +180,17 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
       {/* 2. Category Filter Navigation Bar */}
       <div className={styles.filterSection}>
-        <div className={styles.categoryPills} role="tablist" aria-label="Article categories">
+        <div
+          className={styles.categoryPills}
+          role="tablist"
+          aria-label="Article categories"
+        >
           {CATEGORIES.map((cat) => {
             const count =
               cat.id === "ALL"
                 ? STORIES_AND_BLOG.length
-                : STORIES_AND_BLOG.filter((item) => item.category === cat.id).length;
+                : STORIES_AND_BLOG.filter((item) => item.category === cat.id)
+                    .length;
 
             return (
               <button
@@ -201,7 +212,11 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
         <a
           href="#share-story"
           className={styles.shareActionBtn}
-          style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4rem",
+          }}
         >
           <PenTool size={14} /> Share Your Story
         </a>
@@ -216,7 +231,9 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
             tabIndex={0}
             role="button"
             aria-label={`Read featured story: ${featuredArticle.title}`}
-            onKeyDown={(e) => e.key === "Enter" && setActiveArticle(featuredArticle)}
+            onKeyDown={(e) =>
+              e.key === "Enter" && setActiveArticle(featuredArticle)
+            }
           >
             <div className={styles.featuredHeader}>
               <div className={styles.featuredTagRow}>
@@ -234,7 +251,14 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
                   {featuredArticle.badge}
                 </span>
               </div>
-              <span className={styles.readTime} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+              <span
+                className={styles.readTime}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.3rem",
+                }}
+              >
                 <Clock size={13} /> {featuredArticle.readTime}
               </span>
             </div>
@@ -244,11 +268,16 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
             <div className={styles.authorRow}>
               <div className={styles.authorMeta}>
-                <div className={styles.avatar}>{featuredArticle.authorAvatar}</div>
+                <div className={styles.avatar}>
+                  {featuredArticle.authorAvatar}
+                </div>
                 <div>
-                  <div className={styles.authorName}>{featuredArticle.authorName}</div>
+                  <div className={styles.authorName}>
+                    {featuredArticle.authorName}
+                  </div>
                   <div className={styles.authorRole}>
-                    {featuredArticle.authorRole} • {featuredArticle.authorInstitution}
+                    {featuredArticle.authorRole} •{" "}
+                    {featuredArticle.authorInstitution}
                   </div>
                 </div>
               </div>
@@ -263,13 +292,42 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
         {/* 4. Article & Story Grid */}
         <section aria-label="Articles list">
           {gridArticles.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "4rem 1rem", background: "#FFFFFF", borderRadius: "1.25rem", border: "1px solid #E2E8F0" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: "50%", background: "var(--bg-canvas, #F4F0E8)", color: "var(--text-muted, #66716A)", margin: "0 auto 1rem auto" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "4rem 1rem",
+                background: "#FFFFFF",
+                borderRadius: "1.25rem",
+                border: "1px solid #E2E8F0",
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 52,
+                  height: 52,
+                  borderRadius: "50%",
+                  background: "var(--bg-canvas, #F4F0E8)",
+                  color: "var(--text-muted, #66716A)",
+                  margin: "0 auto 1rem auto",
+                }}
+              >
                 <Search size={26} />
               </div>
-              <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#1E293B" }}>No matching stories found</h3>
+              <h3
+                style={{
+                  fontSize: "1.25rem",
+                  fontWeight: 700,
+                  color: "#1E293B",
+                }}
+              >
+                No matching stories found
+              </h3>
               <p style={{ color: "#64748B", marginTop: "0.5rem" }}>
-                Try searching for different keywords or clear your category filter.
+                Try searching for different keywords or clear your category
+                filter.
               </p>
               <button
                 onClick={() => {
@@ -322,20 +380,32 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
                   <div className={styles.cardFooter}>
                     <div className={styles.authorMeta}>
-                      <div className={styles.avatar} style={{ width: 34, height: 34, fontSize: "1.1rem" }}>
+                      <div
+                        className={styles.avatar}
+                        style={{ width: 34, height: 34, fontSize: "1.1rem" }}
+                      >
                         {item.authorAvatar}
                       </div>
                       <div>
-                        <div className={styles.authorName} style={{ fontSize: "0.875rem" }}>
+                        <div
+                          className={styles.authorName}
+                          style={{ fontSize: "0.875rem" }}
+                        >
                           {item.authorName}
                         </div>
-                        <div className={styles.authorRole} style={{ fontSize: "0.75rem" }}>
+                        <div
+                          className={styles.authorRole}
+                          style={{ fontSize: "0.75rem" }}
+                        >
                           {item.authorInstitution || item.authorRole}
                         </div>
                       </div>
                     </div>
 
-                    <span className={styles.readMoreBtn} style={{ fontSize: "0.85rem" }}>
+                    <span
+                      className={styles.readMoreBtn}
+                      style={{ fontSize: "0.85rem" }}
+                    >
                       Read <span>→</span>
                     </span>
                   </div>
@@ -347,12 +417,22 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
         {/* 5. Community Testimonials & Voices */}
         {dbStories.length > 0 && (
-          <section className={styles.testimonialsSection} aria-label="Community voices">
+          <section
+            className={styles.testimonialsSection}
+            aria-label="Community voices"
+          >
             <div className={styles.sectionHeader}>
               <div>
                 <h2 className={styles.sectionTitle}>Community Voices</h2>
-                <p style={{ color: "#64748B", fontSize: "0.95rem", marginTop: "0.25rem" }}>
-                  Short notes and experiences sent in directly by students, tutors, and parents.
+                <p
+                  style={{
+                    color: "#64748B",
+                    fontSize: "0.95rem",
+                    marginTop: "0.25rem",
+                  }}
+                >
+                  Short notes and experiences sent in directly by students,
+                  tutors, and parents.
                 </p>
               </div>
             </div>
@@ -373,19 +453,61 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
         {/* 6. Interactive "Share Your Story" Form */}
         <section id="share-story" className={styles.shareStoryBox}>
-          <h2 className={styles.shareStoryTitle}>Have a Learnivia Experience to Share?</h2>
+          <h2 className={styles.shareStoryTitle}>
+            Have a Learnivia Experience to Share?
+          </h2>
           <p className={styles.shareStorySub}>
-            Whether you reached a new personal best on an exam, found mentorship with an inspiring tutor, or loved volunteering, your story inspires thousands of fellow learners worldwide.
+            Whether you reached a new personal best on an exam, found mentorship
+            with an inspiring tutor, or loved volunteering, your story inspires
+            thousands of fellow learners worldwide.
           </p>
 
           {submissionSuccess ? (
-            <div style={{ background: "rgba(35, 75, 59, 0.08)", border: "1.5px solid var(--color-forest, #234B3B)", borderRadius: "1rem", padding: "2rem", maxWidth: 540, margin: "0 auto", textAlign: "center" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 48, height: 48, borderRadius: "50%", background: "var(--color-forest, #234B3B)", color: "#FBFAF7", margin: "0 auto 0.75rem auto" }}>
+            <div
+              style={{
+                background: "rgba(35, 75, 59, 0.08)",
+                border: "1.5px solid var(--color-forest, #234B3B)",
+                borderRadius: "1rem",
+                padding: "2rem",
+                maxWidth: 540,
+                margin: "0 auto",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  background: "var(--color-forest, #234B3B)",
+                  color: "#FBFAF7",
+                  margin: "0 auto 0.75rem auto",
+                }}
+              >
                 <CheckCircle2 size={24} />
               </div>
-              <h3 style={{ color: "var(--text-ink, #1E2722)", fontSize: "1.25rem", fontWeight: 700 }}>Thank You for Sharing!</h3>
-              <p style={{ color: "#E2E8F0", marginTop: "0.5rem", fontSize: "0.95rem" }}>
-                Your story has been submitted for moderation review. Once verified by our safety team, it will appear in our community voices!
+              <h3
+                style={{
+                  color: "var(--text-ink, #1E2722)",
+                  fontSize: "1.25rem",
+                  fontWeight: 700,
+                }}
+              >
+                Thank You for Sharing!
+              </h3>
+              <p
+                style={{
+                  color: "#E2E8F0",
+                  marginTop: "0.5rem",
+                  fontSize: "0.95rem",
+                }}
+              >
+                Your story has been submitted for moderation review. Once
+                verified by our safety team, it will appear in our community
+                voices!
               </p>
               <button
                 type="button"
@@ -405,7 +527,10 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
               </button>
             </div>
           ) : (
-            <form onSubmit={handleStorySubmit} className={styles.submissionForm}>
+            <form
+              onSubmit={handleStorySubmit}
+              className={styles.submissionForm}
+            >
               <div className={styles.formRow}>
                 <div>
                   <label className={styles.formLabel}>Your Name *</label>
@@ -432,7 +557,9 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Your Story or Quote *</label>
+                <label className={styles.formLabel}>
+                  Your Story or Quote *
+                </label>
                 <textarea
                   required
                   rows={4}
@@ -492,20 +619,46 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
 
             <div className={styles.modalAuthorStrip}>
               <div className={styles.authorMeta}>
-                <div className={styles.avatar}>{activeArticle.authorAvatar}</div>
+                <div className={styles.avatar}>
+                  {activeArticle.authorAvatar}
+                </div>
                 <div>
-                  <div className={styles.authorName}>{activeArticle.authorName}</div>
+                  <div className={styles.authorName}>
+                    {activeArticle.authorName}
+                  </div>
                   <div className={styles.authorRole}>
-                    {activeArticle.authorRole} • {activeArticle.authorInstitution}
+                    {activeArticle.authorRole} •{" "}
+                    {activeArticle.authorInstitution}
                   </div>
                 </div>
               </div>
-              <div style={{ color: "#64748B", fontSize: "0.85rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+              <div
+                style={{
+                  color: "#64748B",
+                  fontSize: "0.85rem",
+                  fontWeight: 500,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.3rem",
+                  }}
+                >
                   <Calendar size={13} /> {activeArticle.publishedDate}
                 </span>
                 <span>•</span>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.3rem",
+                  }}
+                >
                   <Clock size={13} /> {activeArticle.readTime}
                 </span>
               </div>
@@ -517,18 +670,26 @@ export default function StoriesClient({ initialDbStories }: StoriesClientProps) 
               ))}
             </div>
 
-            {activeArticle.keyTakeaways && activeArticle.keyTakeaways.length > 0 && (
-              <div className={styles.takeawaysCard}>
-                <div className={styles.takeawaysTitle} style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  <Lightbulb size={16} /> Key Takeaways & Action Points
+            {activeArticle.keyTakeaways &&
+              activeArticle.keyTakeaways.length > 0 && (
+                <div className={styles.takeawaysCard}>
+                  <div
+                    className={styles.takeawaysTitle}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                    }}
+                  >
+                    <Lightbulb size={16} /> Key Takeaways & Action Points
+                  </div>
+                  <ul className={styles.takeawaysList}>
+                    {activeArticle.keyTakeaways.map((point, idx) => (
+                      <li key={idx}>{point}</li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className={styles.takeawaysList}>
-                  {activeArticle.keyTakeaways.map((point, idx) => (
-                    <li key={idx}>{point}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+              )}
 
             <div className={styles.modalCtaRow}>
               <button

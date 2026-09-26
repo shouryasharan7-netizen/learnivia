@@ -1,10 +1,5 @@
-/* ==========================================================================
-   LEARNIVIA - PRESTIGE ACADEMIC EDITORIAL & SCHOLAR COMMONS DESIGN SYSTEM
-   Archival Vellum · Deep Literary Ink · Oxford Navy · Architectural Rules
-   ========================================================================== */
-
 .pageWrapper {
-  background-color: var(--wa-paper, #FAF8F5);
+  background-color: var(--wa-paper, #faf8f5);
   color: var(--wa-ink, #141824);
   font-family: var(--font-sans, "Plus Jakarta Sans", system-ui, sans-serif);
   min-height: 100vh;
@@ -27,11 +22,11 @@
    1. EDITORIAL BROADSHEET MASTHEAD (TOP TICKER)
    ────────────────────────────────────────────────────────────────────────── */
 .mastheadTicker {
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
-  background: var(--wa-paper, #FAF9F6);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
+  background: var(--wa-paper, #faf9f6);
   padding: 0.6rem 0;
   font-size: 0.82rem;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
 }
 
 .mastheadInner {
@@ -52,7 +47,7 @@
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--wa-ink, var(--wa-ink));
-  background: var(--wa-cream-mid, #E2E8F0);
+  background: var(--wa-cream-mid, #e2e8f0);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
 }
@@ -61,7 +56,7 @@
   display: inline-block;
   width: 1px;
   height: 12px;
-  background: var(--wa-border-strong, #CBD5E1);
+  background: var(--wa-border-strong, #cbd5e1);
 }
 
 .mastheadBadge {
@@ -111,7 +106,7 @@
   gap: 0.5rem;
   padding: 0.35rem 0.85rem;
   background: var(--wa-white, var(--wa-white));
-  border: 1px solid var(--wa-border, #E5DDD2);
+  border: 1px solid var(--wa-border, #e5ddd2);
   border-radius: 6px;
   font-size: 0.78rem;
   font-family: var(--font-mono, monospace);
@@ -171,8 +166,8 @@
 }
 
 .btnPrimary:hover {
-  background: var(--wa-green, #1E3A8A);
-  border-color: var(--wa-green, #1E3A8A);
+  background: var(--wa-green, #1e3a8a);
+  border-color: var(--wa-green, #1e3a8a);
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(30, 58, 138, 0.18);
 }
@@ -188,15 +183,15 @@
   font-weight: 600;
   padding: 0.95rem 1.75rem;
   border-radius: 6px;
-  border: 1px solid var(--wa-border, #E5DDD2);
+  border: 1px solid var(--wa-border, #e5ddd2);
   text-decoration: none;
   transition: all 180ms ease;
   box-shadow: var(--wa-shadow-xs);
 }
 
 .btnSecondary:hover {
-  background: var(--wa-cream-dark, #F4EFE6);
-  border-color: var(--wa-border-strong, #C8BFB2);
+  background: var(--wa-cream-dark, #f4efe6);
+  border-color: var(--wa-border-strong, #c8bfb2);
   transform: translateY(-1px);
 }
 
@@ -206,7 +201,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
   width: 100%;
-  border-top: 1px solid var(--wa-border, #E5DDD2);
+  border-top: 1px solid var(--wa-border, #e5ddd2);
   padding-top: 1.75rem;
 }
 
@@ -226,9 +221,9 @@
   width: 32px;
   height: 32px;
   border-radius: 6px;
-  background: var(--wa-cream-dark, #F4EFE6);
-  border: 1px solid var(--wa-border, #E5DDD2);
-  color: var(--wa-green, #1E3A8A);
+  background: var(--wa-cream-dark, #f4efe6);
+  border: 1px solid var(--wa-border, #e5ddd2);
+  color: var(--wa-green, #1e3a8a);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,7 +249,7 @@
    ────────────────────────────────────────────────────────────────────────── */
 .dispatchCard {
   background: var(--wa-white, var(--wa-white));
-  border: 1px solid var(--wa-border, #E5DDD2);
+  border: 1px solid var(--wa-border, #e5ddd2);
   border-radius: 8px;
   box-shadow:
     0 1px 2px rgba(20, 24, 36, 0.04),
@@ -264,8 +259,8 @@
 
 .dispatchHeader {
   padding: 1rem 1.35rem;
-  background: var(--wa-cream-dark, #F4EFE6);
-  border-bottom: 1px solid var(--wa-border, #E5DDD2);
+  background: var(--wa-cream-dark, #f4efe6);
+  border-bottom: 1px solid var(--wa-border, #e5ddd2);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -277,7 +272,7 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--wa-green, #1E3A8A);
+  color: var(--wa-green, #1e3a8a);
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -287,7 +282,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--wa-success, #15803D);
+  background: var(--wa-success, #15803d);
   box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.2);
 }
 
@@ -302,7 +297,7 @@
 }
 
 .featuredWorkshop {
-  border-left: 3px solid var(--wa-green, #1E3A8A);
+  border-left: 3px solid var(--wa-green, #1e3a8a);
   padding-left: 1.15rem;
   margin-bottom: 1.5rem;
 }
@@ -313,7 +308,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--wa-green, #1E3A8A);
+  color: var(--wa-green, #1e3a8a);
   margin-bottom: 0.45rem;
 }
 
@@ -356,7 +351,7 @@
 .workshopBtn {
   display: block;
   text-align: center;
-  background: var(--wa-green, #1E3A8A);
+  background: var(--wa-green, #1e3a8a);
   color: var(--wa-white);
   padding: 0.75rem 1.25rem;
   border-radius: 6px;
@@ -372,7 +367,7 @@
 
 /* Dispatch Stats Ledger */
 .dispatchLedger {
-  border-top: 1px solid var(--wa-border, #E5DDD2);
+  border-top: 1px solid var(--wa-border, #e5ddd2);
   padding-top: 1.25rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -400,7 +395,7 @@
    ────────────────────────────────────────────────────────────────────────── */
 .howItWorksSection {
   padding: 5rem 0;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
   background: var(--wa-white, var(--wa-white));
 }
 
@@ -418,8 +413,8 @@
 }
 
 .stepCard {
-  background: var(--wa-paper, #FAF9F6);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-paper, #faf9f6);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 8px;
   padding: 1.85rem 1.6rem;
   display: flex;
@@ -428,13 +423,13 @@
 }
 
 .stepCard:hover {
-  border-color: var(--wa-cobalt-blue, #2563EB);
+  border-color: var(--wa-cobalt-blue, #2563eb);
 }
 
 .stepNumber {
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--wa-cobalt-blue, #2563EB);
+  color: var(--wa-cobalt-blue, #2563eb);
   background: rgba(37, 99, 235, 0.08);
   border: 1px solid rgba(37, 99, 235, 0.2);
   width: 28px;
@@ -466,8 +461,8 @@
    ────────────────────────────────────────────────────────────────────────── */
 .curriculumSection {
   padding: 5rem 0;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
-  background: var(--wa-paper, #FAF9F6);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
+  background: var(--wa-paper, #faf9f6);
 }
 
 .sectionHeader {
@@ -480,7 +475,7 @@
   display: inline-block;
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--wa-cobalt-blue, #2563EB);
+  color: var(--wa-cobalt-blue, #2563eb);
   background: rgba(37, 99, 235, 0.08);
   border: 1px solid rgba(37, 99, 235, 0.2);
   padding: 0.2rem 0.65rem;
@@ -519,15 +514,15 @@
   padding: 0.65rem 1.25rem;
   border-radius: 6px;
   background: var(--wa-white, var(--wa-white));
-  border: 1px solid var(--wa-border, #E5DDD2);
+  border: 1px solid var(--wa-border, #e5ddd2);
   color: var(--wa-text, #283244);
   cursor: pointer;
   transition: all 150ms ease;
 }
 
 .tabBtn:hover {
-  background: var(--wa-cream-dark, #F4EFE6);
-  border-color: var(--wa-border-strong, #C8BFB2);
+  background: var(--wa-cream-dark, #f4efe6);
+  border-color: var(--wa-border-strong, #c8bfb2);
 }
 
 .tabBtnActive {
@@ -560,19 +555,21 @@
 
 .subjectCard {
   background: var(--wa-white, var(--wa-white));
-  border: 1px solid var(--wa-border, #E2E8F0);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 8px;
   padding: 1.65rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-decoration: none;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
   box-shadow: var(--wa-shadow-xs);
 }
 
 .subjectCard:hover {
-  border-color: var(--wa-cobalt-blue, #2563EB);
+  border-color: var(--wa-cobalt-blue, #2563eb);
   box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
 }
 
@@ -584,7 +581,7 @@
   font-family: var(--font-mono, monospace);
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   margin-bottom: 0.45rem;
   display: block;
 }
@@ -609,11 +606,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid var(--wa-border, #E2E8F0);
+  border-top: 1px solid var(--wa-border, #e2e8f0);
   padding-top: 1rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--wa-cobalt-blue, #2563EB);
+  color: var(--wa-cobalt-blue, #2563eb);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -621,8 +618,8 @@
    ────────────────────────────────────────────────────────────────────────── */
 .registrySection {
   padding: 5rem 0;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
-  background: var(--wa-paper, #FAF9F6);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
+  background: var(--wa-paper, #faf9f6);
 }
 
 .tutorLedgerGrid {
@@ -645,7 +642,7 @@
 
 .tutorCard {
   background: var(--wa-white, var(--wa-white));
-  border: 1px solid var(--wa-border, #E2E8F0);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 8px;
   padding: 1.75rem 1.5rem;
   display: flex;
@@ -656,7 +653,7 @@
 }
 
 .tutorCard:hover {
-  border-color: var(--wa-border-strong, #CBD5E1);
+  border-color: var(--wa-border-strong, #cbd5e1);
 }
 
 .tutorCardHeader {
@@ -670,8 +667,8 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--wa-cream-dark, #F1F5F9);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-cream-dark, #f1f5f9);
+  border: 1px solid var(--wa-border, #e2e8f0);
   color: var(--wa-navy, var(--wa-ink));
   font-family: var(--font-serif, serif);
   font-size: 1.15rem;
@@ -691,7 +688,7 @@
 
 .tutorSchool {
   font-size: 0.78rem;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   margin: 0;
 }
 
@@ -706,14 +703,14 @@
   font-size: 0.72rem;
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
-  background: var(--wa-cream-dark, #F1F5F9);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-cream-dark, #f1f5f9);
+  border: 1px solid var(--wa-border, #e2e8f0);
   color: var(--wa-text, #334155);
   font-weight: 500;
 }
 
 .tutorCardFooter {
-  border-top: 1px solid var(--wa-border, #E2E8F0);
+  border-top: 1px solid var(--wa-border, #e2e8f0);
   padding-top: 1rem;
   display: flex;
   align-items: center;
@@ -724,7 +721,7 @@
   font-family: var(--font-mono, monospace);
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--wa-success, #15803D);
+  color: var(--wa-success, #15803d);
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -733,7 +730,7 @@
 .bookTutorBtn {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--wa-cobalt-blue, #2563EB);
+  color: var(--wa-cobalt-blue, #2563eb);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -748,8 +745,8 @@
    ────────────────────────────────────────────────────────────────────────── */
 .safeguardSection {
   padding: 5.5rem 0;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
-  background: var(--wa-paper, #FAF9F6);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
+  background: var(--wa-paper, #faf9f6);
 }
 
 .safeguardGrid {
@@ -778,13 +775,13 @@
   gap: 1.15rem;
   padding: 1.2rem 1.35rem;
   background: var(--wa-white, var(--wa-white));
-  border: 1px solid var(--wa-border, #E2E8F0);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 8px;
   transition: border-color 150ms ease;
 }
 
 .safeguardCard:hover {
-  border-color: var(--wa-border-strong, #CBD5E1);
+  border-color: var(--wa-border-strong, #cbd5e1);
 }
 
 .safeguardIconWrap {
@@ -793,7 +790,7 @@
   border-radius: 6px;
   background: rgba(21, 128, 61, 0.08);
   border: 1px solid rgba(21, 128, 61, 0.18);
-  color: var(--wa-success, #15803D);
+  color: var(--wa-success, #15803d);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -804,7 +801,7 @@
 .safeguardBadge {
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   margin-bottom: 0.2rem;
   display: block;
 }
@@ -828,7 +825,7 @@
    ────────────────────────────────────────────────────────────────────────── */
 .conciergeSection {
   padding: 5rem 0;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
   background: var(--wa-navy, var(--wa-ink));
   color: var(--wa-white);
 }
@@ -849,7 +846,7 @@
 
 .conciergeLead {
   font-size: 1.05rem;
-  color: #94A3B8;
+  color: #94a3b8;
   margin: 0 0 2.5rem 0;
 }
 
@@ -884,7 +881,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #CBD5E1;
+  color: #cbd5e1;
 }
 
 .selectInput {
@@ -906,7 +903,7 @@
 
 .findBtn {
   padding: 0.85rem 1.75rem;
-  background: var(--wa-cobalt-blue, #2563EB);
+  background: var(--wa-cobalt-blue, #2563eb);
   color: var(--wa-white);
   font-size: 0.95rem;
   font-weight: 600;
@@ -922,7 +919,7 @@
 }
 
 .findBtn:hover {
-  background: #1D4ED8;
+  background: #1d4ed8;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -930,8 +927,8 @@
    ────────────────────────────────────────────────────────────────────────── */
 .faqSection {
   padding: 5.5rem 0;
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
-  background: var(--wa-paper, #FAF9F6);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
+  background: var(--wa-paper, #faf9f6);
 }
 
 .faqList {
@@ -944,14 +941,14 @@
 
 .faqItem {
   background: var(--wa-white, var(--wa-white));
-  border: 1px solid var(--wa-border, #E2E8F0);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 8px;
   overflow: hidden;
   transition: border-color 150ms ease;
 }
 
 .faqItem:hover {
-  border-color: var(--wa-border-strong, #CBD5E1);
+  border-color: var(--wa-border-strong, #cbd5e1);
 }
 
 .faqQuestion {
@@ -983,8 +980,8 @@
    ────────────────────────────────────────────────────────────────────────── */
 .admissionsSection {
   padding: 5.5rem 0 6.5rem;
-  background: var(--wa-paper, #FAF9F6);
-  border-top: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-paper, #faf9f6);
+  border-top: 1px solid var(--wa-border, #e2e8f0);
   text-align: center;
 }
 

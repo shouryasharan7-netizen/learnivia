@@ -25,7 +25,10 @@ export default async function VerifyEmailPage({
     });
 
     if (user) {
-      if (user.emailVerificationExpires && user.emailVerificationExpires > new Date()) {
+      if (
+        user.emailVerificationExpires &&
+        user.emailVerificationExpires > new Date()
+      ) {
         // Valid token: verify user and clear token
         await prisma.user.update({
           where: { id: user.id },
@@ -123,7 +126,9 @@ export default async function VerifyEmailPage({
                 marginBottom: "1.75rem",
               }}
             >
-              Thank you{verifiedEmail ? ` (${verifiedEmail})` : ""}. Your email address has been confirmed. You now have full access to peer tutoring sessions and learning resources.
+              Thank you{verifiedEmail ? ` (${verifiedEmail})` : ""}. Your email
+              address has been confirmed. You now have full access to peer
+              tutoring sessions and learning resources.
             </p>
             <Link
               href="/dashboard"
@@ -185,7 +190,8 @@ export default async function VerifyEmailPage({
                 marginBottom: "1.75rem",
               }}
             >
-              This verification link has expired. Please log in to your dashboard and request a new verification email.
+              This verification link has expired. Please log in to your
+              dashboard and request a new verification email.
             </p>
             <Link
               href="/signin"
@@ -243,7 +249,8 @@ export default async function VerifyEmailPage({
                 marginBottom: "1.75rem",
               }}
             >
-              The verification link provided is invalid or has already been used.
+              The verification link provided is invalid or has already been
+              used.
             </p>
             <Link
               href="/dashboard"

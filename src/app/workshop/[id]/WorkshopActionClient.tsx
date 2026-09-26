@@ -17,21 +17,24 @@ interface Props {
   joinUrl?: string | null;
 }
 
-export default function WorkshopActionClient({ 
-  workshopId, 
-  isEnrolled, 
-  isLoggedIn, 
+export default function WorkshopActionClient({
+  workshopId,
+  isEnrolled,
+  isLoggedIn,
   seatsLeft,
   tutorName,
   tutorInitials,
   isLive,
-  joinUrl
+  joinUrl,
 }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!isLoggedIn) {
     return (
-      <Link href={`/signin?callbackUrl=/workshop/${workshopId}`} className={styles.registerBtn}>
+      <Link
+        href={`/signin?callbackUrl=/workshop/${workshopId}`}
+        className={styles.registerBtn}
+      >
         Sign In to Register
       </Link>
     );
@@ -40,7 +43,12 @@ export default function WorkshopActionClient({
   if (isEnrolled) {
     if (isLive && joinUrl) {
       return (
-        <a href={joinUrl} target="_blank" rel="noopener noreferrer" className={styles.registerBtn}>
+        <a
+          href={joinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.registerBtn}
+        >
           Join Live Zoom
         </a>
       );
@@ -63,12 +71,15 @@ export default function WorkshopActionClient({
 
   return (
     <>
-      <button onClick={() => setIsModalOpen(true)} className={styles.registerBtn}>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className={styles.registerBtn}
+      >
         + Register
       </button>
-      <RegistrationModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <RegistrationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         workshopId={workshopId}
         tutorName={tutorName}
         tutorInitials={tutorInitials}

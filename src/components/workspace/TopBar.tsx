@@ -93,7 +93,8 @@ export function TopBar({ user }: TopBarProps) {
 
   useEffect(() => {
     let active = true;
-    const saved = localStorage.getItem("learnivia-theme") as "light" | "dark" | null;
+    const saved = localStorage.getItem("learnivia-theme") as
+      "light" | "dark" | null;
     if (active) {
       if (saved === "dark" || saved === "light") {
         setTimeout(() => setTheme(saved), 0);
@@ -114,8 +115,10 @@ export function TopBar({ user }: TopBarProps) {
         console.error("Error parsing notifications", e);
       }
     }
-    
-    return () => { active = false; };
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   // Close dropdowns on outside click
@@ -161,7 +164,6 @@ export function TopBar({ user }: TopBarProps) {
 
   return (
     <div style={{ position: "sticky", top: 0, zIndex: 30 }}>
-      {/* ── Announcement Bar ── */}
       {ANNOUNCEMENT.show && !announcementDismissed && (
         <div
           style={{
@@ -210,7 +212,6 @@ export function TopBar({ user }: TopBarProps) {
         </div>
       )}
 
-      {/* ── Utility Top Bar ── */}
       <header
         style={{
           height: "52px",
@@ -244,17 +245,25 @@ export function TopBar({ user }: TopBarProps) {
               width: 36,
               height: 36,
               borderRadius: "var(--radius-sm, 8px)",
-              color: notifOpen ? "var(--primary, #0D9488)" : "var(--text-secondary, #475569)",
-              background: notifOpen ? "var(--primary-subtle, #CCFBF1)" : "transparent",
+              color: notifOpen
+                ? "var(--primary, #0D9488)"
+                : "var(--text-secondary, #475569)",
+              background: notifOpen
+                ? "var(--primary-subtle, #CCFBF1)"
+                : "transparent",
               border: "none",
               cursor: "pointer",
               transition: "background 180ms ease",
             }}
             onMouseEnter={(e) => {
-              if (!notifOpen) (e.currentTarget as HTMLElement).style.background = "var(--surface-subtle, #F1F5F9)";
+              if (!notifOpen)
+                (e.currentTarget as HTMLElement).style.background =
+                  "var(--surface-subtle, #F1F5F9)";
             }}
             onMouseLeave={(e) => {
-              if (!notifOpen) (e.currentTarget as HTMLElement).style.background = "transparent";
+              if (!notifOpen)
+                (e.currentTarget as HTMLElement).style.background =
+                  "transparent";
             }}
           >
             <Bell size={19} strokeWidth={1.75} />
@@ -300,7 +309,13 @@ export function TopBar({ user }: TopBarProps) {
                   borderBottom: "1px solid var(--border, #E2E8F0)",
                 }}
               >
-                <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--text-primary, #0C1B33)" }}>
+                <span
+                  style={{
+                    fontWeight: 700,
+                    fontSize: "0.9rem",
+                    color: "var(--text-primary, #0C1B33)",
+                  }}
+                >
                   Notifications
                   {unreadCount > 0 && (
                     <span
@@ -343,7 +358,14 @@ export function TopBar({ user }: TopBarProps) {
               {/* Notification items */}
               <div style={{ maxHeight: 320, overflowY: "auto" }}>
                 {notifications.length === 0 ? (
-                  <div style={{ padding: "2rem", textAlign: "center", color: "var(--text-muted, #64748B)", fontSize: "0.85rem" }}>
+                  <div
+                    style={{
+                      padding: "2rem",
+                      textAlign: "center",
+                      color: "var(--text-muted, #64748B)",
+                      fontSize: "0.85rem",
+                    }}
+                  >
                     No notifications yet
                   </div>
                 ) : (
@@ -355,20 +377,33 @@ export function TopBar({ user }: TopBarProps) {
                         gap: "0.75rem",
                         padding: "0.75rem 1rem",
                         borderBottom: "1px solid var(--border, #F1F5F9)",
-                        background: n.unread ? "var(--primary-subtle, #F0FDFA)" : "transparent",
+                        background: n.unread
+                          ? "var(--primary-subtle, #F0FDFA)"
+                          : "transparent",
                         cursor: "pointer",
                         transition: "background 150ms",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = "var(--surface-subtle, #F8FAFC)";
+                        (e.currentTarget as HTMLElement).style.background =
+                          "var(--surface-subtle, #F8FAFC)";
                       }}
                       onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = n.unread ? "var(--primary-subtle, #F0FDFA)" : "transparent";
+                        (e.currentTarget as HTMLElement).style.background =
+                          n.unread
+                            ? "var(--primary-subtle, #F0FDFA)"
+                            : "transparent";
                       }}
                       onClick={() => {
                         setNotifications((prev) => {
-                          const updated = prev.map((item) => item.id === n.id ? { ...item, unread: false } : item);
-                          localStorage.setItem("learnivia-notifications", JSON.stringify(updated));
+                          const updated = prev.map((item) =>
+                            item.id === n.id
+                              ? { ...item, unread: false }
+                              : item,
+                          );
+                          localStorage.setItem(
+                            "learnivia-notifications",
+                            JSON.stringify(updated),
+                          );
                           return updated;
                         });
                       }}
@@ -391,13 +426,33 @@ export function TopBar({ user }: TopBarProps) {
 
                       {/* Text */}
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <p style={{ margin: 0, fontSize: "0.8375rem", fontWeight: n.unread ? 700 : 500, color: "var(--text-primary, #0C1B33)" }}>
+                        <p
+                          style={{
+                            margin: 0,
+                            fontSize: "0.8375rem",
+                            fontWeight: n.unread ? 700 : 500,
+                            color: "var(--text-primary, #0C1B33)",
+                          }}
+                        >
                           {n.title}
                         </p>
-                        <p style={{ margin: "2px 0 0", fontSize: "0.775rem", color: "var(--text-secondary, #475569)", lineHeight: 1.4 }}>
+                        <p
+                          style={{
+                            margin: "2px 0 0",
+                            fontSize: "0.775rem",
+                            color: "var(--text-secondary, #475569)",
+                            lineHeight: 1.4,
+                          }}
+                        >
                           {n.body}
                         </p>
-                        <p style={{ margin: "4px 0 0", fontSize: "0.7rem", color: "var(--text-muted, #94A3B8)" }}>
+                        <p
+                          style={{
+                            margin: "4px 0 0",
+                            fontSize: "0.7rem",
+                            color: "var(--text-muted, #94A3B8)",
+                          }}
+                        >
                           {n.time}
                         </p>
                       </div>
@@ -421,7 +476,13 @@ export function TopBar({ user }: TopBarProps) {
               </div>
 
               {/* Footer */}
-              <div style={{ padding: "0.6rem", borderTop: "1px solid var(--border, #E2E8F0)", textAlign: "center" }}>
+              <div
+                style={{
+                  padding: "0.6rem",
+                  borderTop: "1px solid var(--border, #E2E8F0)",
+                  textAlign: "center",
+                }}
+              >
                 <Link
                   href="/sessions"
                   onClick={() => setNotifOpen(false)}
@@ -568,8 +629,8 @@ export function TopBar({ user }: TopBarProps) {
                   {user.isAdmin
                     ? "Administrator"
                     : user.isTutor
-                    ? "Verified Tutor"
-                    : "K-10 Learner"}
+                      ? "Verified Tutor"
+                      : "K-10 Learner"}
                 </span>
               </div>
 
@@ -578,8 +639,8 @@ export function TopBar({ user }: TopBarProps) {
                   user.isAdmin
                     ? "/admin"
                     : user.isTutor
-                    ? ROUTES.tutor?.home || "/tutor"
-                    : ROUTES.learner?.home || "/dashboard"
+                      ? ROUTES.tutor?.home || "/tutor"
+                      : ROUTES.learner?.home || "/dashboard"
                 }
                 icon={User}
                 label="My Dashboard"
@@ -611,7 +672,10 @@ export function TopBar({ user }: TopBarProps) {
               {/* Theme toggle */}
               <button
                 type="button"
-                onClick={() => { toggleTheme(); setProfileOpen(false); }}
+                onClick={() => {
+                  toggleTheme();
+                  setProfileOpen(false);
+                }}
                 style={{
                   width: "100%",
                   display: "flex",

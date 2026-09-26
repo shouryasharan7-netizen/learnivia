@@ -4,11 +4,15 @@ export async function getZoomAccessToken(): Promise<string> {
   const clientSecret = process.env.ZOOM_CLIENT_SECRET;
 
   if (!accountId || !clientId || !clientSecret) {
-    throw new Error("Zoom credentials are not configured in environment variables.");
+    throw new Error(
+      "Zoom credentials are not configured in environment variables.",
+    );
   }
 
   const tokenUrl = `https://zoom.us/oauth/token?grant_type=account_credentials&account_id=${accountId}`;
-  const authHeader = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+  const authHeader = Buffer.from(`${clientId}:${clientSecret}`).toString(
+    "base64",
+  );
 
   const response = await fetch(tokenUrl, {
     method: "POST",
@@ -30,7 +34,7 @@ export async function getZoomAccessToken(): Promise<string> {
 export async function createZoomMeeting(
   topic: string,
   startTimeUtc: string,
-  durationMinutes: number
+  durationMinutes: number,
 ): Promise<{ join_url: string; start_url: string }> {
   try {
     const token = await getZoomAccessToken();

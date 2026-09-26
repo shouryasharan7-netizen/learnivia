@@ -10,10 +10,15 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Learning Programs & Group Workshops",
-  description: "Browse all Learnivia programs and live group workshops, free interactive tutoring from homework help to exam prep.",
+  description:
+    "Browse all Learnivia programs and live group workshops, free interactive tutoring from homework help to exam prep.",
 };
 
-let learnCache: { programs: any[]; workshops: any[]; timestamp: number } | null = null;
+let learnCache: {
+  programs: any[];
+  workshops: any[];
+  timestamp: number;
+} | null = null;
 
 export default async function LearnPage() {
   const session = await auth();
@@ -59,9 +64,12 @@ export default async function LearnPage() {
     <main>
       <section className={styles.hero}>
         <div className={styles.heroInner}>
-          <h1 className={styles.title}>Explore learning &amp; group workshops</h1>
+          <h1 className={styles.title}>
+            Explore learning &amp; group workshops
+          </h1>
           <p className={styles.subtitle}>
-            100% free peer-learning. Join live small-group study bootcamps or book 1-on-1 tutoring sessions with verified volunteers.
+            100% free peer-learning. Join live small-group study bootcamps or
+            book 1-on-1 tutoring sessions with verified volunteers.
           </p>
         </div>
       </section>
@@ -71,9 +79,12 @@ export default async function LearnPage() {
         <section className={styles.workshopsSection}>
           <div className={styles.inner}>
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>Live Group Workshops &amp; Study Rooms</h2>
+              <h2 className={styles.sectionTitle}>
+                Live Group Workshops &amp; Study Rooms
+              </h2>
               <p className={styles.sectionSubtitle}>
-                Small group sessions hosted by verified tutors over Zoom. Reserve your seat for free.
+                Small group sessions hosted by verified tutors over Zoom.
+                Reserve your seat for free.
               </p>
             </div>
 
@@ -81,7 +92,9 @@ export default async function LearnPage() {
               {workshops.map((w) => {
                 const seatsLeft = w.maxCapacity - w.enrollments.length;
                 const isEnrolled = session?.user?.id
-                  ? w.enrollments.some((e: any) => e.studentId === session.user.id)
+                  ? w.enrollments.some(
+                      (e: any) => e.studentId === session.user.id,
+                    )
                   : false;
 
                 return (
@@ -90,7 +103,8 @@ export default async function LearnPage() {
                       <div>
                         <h3 className={styles.workshopTitle}>{w.title}</h3>
                         <p className={styles.workshopTutor}>
-                          Hosted by <strong>{w.tutor.user.name}</strong> • {w.subject}
+                          Hosted by <strong>{w.tutor.user.name}</strong> •{" "}
+                          {w.subject}
                         </p>
                       </div>
                       <span className={styles.capacityBadge}>
@@ -98,36 +112,83 @@ export default async function LearnPage() {
                       </span>
                     </div>
 
-                    <p style={{ fontSize: "0.875rem", color: "var(--color-text)", lineHeight: 1.5 }}>
+                    <p
+                      style={{
+                        fontSize: "0.875rem",
+                        color: "var(--color-text)",
+                        lineHeight: 1.5,
+                      }}
+                    >
                       {w.description}
                     </p>
 
-                    <div style={{ fontSize: "0.85rem", color: "var(--color-primary)", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <div
+                      style={{
+                        fontSize: "0.85rem",
+                        color: "var(--color-primary)",
+                        fontWeight: 600,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.4rem",
+                      }}
+                    >
                       <Calendar size={14} />
                       <span>
                         {new Date(w.startTime).toLocaleDateString()} at{" "}
-                        {new Date(w.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {new Date(w.startTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </span>
                     </div>
 
                     <div style={{ marginTop: "auto" }}>
                       {!session?.user ? (
-                        <Link href={`/signin?callbackUrl=/learn`} className={styles.rsvpBtn} style={{ display: "block", textAlign: "center", textDecoration: "none" }}>
+                        <Link
+                          href={`/signin?callbackUrl=/learn`}
+                          className={styles.rsvpBtn}
+                          style={{
+                            display: "block",
+                            textAlign: "center",
+                            textDecoration: "none",
+                          }}
+                        >
                           Sign In to Reserve Seat
                         </Link>
                       ) : isEnrolled ? (
-                        <div className={styles.enrolledBadge} style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
-                          <CheckCircle2 size={13} /> Seat Reserved (View in Dashboard)
+                        <div
+                          className={styles.enrolledBadge}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.35rem",
+                          }}
+                        >
+                          <CheckCircle2 size={13} /> Seat Reserved (View in
+                          Dashboard)
                         </div>
                       ) : seatsLeft > 0 ? (
                         <form action={enrollInWorkshop}>
                           <input type="hidden" name="workshopId" value={w.id} />
-                          <button type="submit" className={styles.rsvpBtn} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.35rem" }}>
+                          <button
+                            type="submit"
+                            className={styles.rsvpBtn}
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              gap: "0.35rem",
+                            }}
+                          >
                             RSVP Free Seat <ArrowRight size={13} />
                           </button>
                         </form>
                       ) : (
-                        <button disabled className={styles.rsvpBtn} style={{ opacity: 0.5, cursor: "not-allowed" }}>
+                        <button
+                          disabled
+                          className={styles.rsvpBtn}
+                          style={{ opacity: 0.5, cursor: "not-allowed" }}
+                        >
                           Workshop Full
                         </button>
                       )}
@@ -143,14 +204,22 @@ export default async function LearnPage() {
       <section className={styles.catalogSection}>
         <div className={styles.inner}>
           <div className={styles.grid}>
-            {programs.map(p => (
-              <Link key={p.slug} href={`/learn/${p.slug}`} className={styles.card}>
-                <span className={styles.emoji} aria-hidden="true">{p.emoji}</span>
+            {programs.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/learn/${p.slug}`}
+                className={styles.card}
+              >
+                <span className={styles.emoji} aria-hidden="true">
+                  {p.emoji}
+                </span>
                 <h2 className={styles.cardTitle}>{p.title}</h2>
                 <p className={styles.cardDesc}>{p.shortDescription}</p>
                 <div className={styles.tags}>
                   {p.gradeLevels.slice(0, 2).map((g: any) => (
-                    <span key={g} className={styles.tag}>{g}</span>
+                    <span key={g} className={styles.tag}>
+                      {g}
+                    </span>
                   ))}
                 </div>
                 <span className={styles.learnMore}>Explore program →</span>
@@ -160,7 +229,9 @@ export default async function LearnPage() {
 
           <div className={styles.findCta}>
             <p>Already know what you need?</p>
-            <Link href="/find" className={styles.findBtn}>Browse all tutors directly →</Link>
+            <Link href="/find" className={styles.findBtn}>
+              Browse all tutors directly →
+            </Link>
           </div>
         </div>
       </section>

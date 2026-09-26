@@ -58,7 +58,8 @@ export async function resetPassword(formData: FormData) {
   } catch (error: any) {
     console.error("Error in resetPassword action:", error);
     return {
-      error: "An error occurred while resetting your password. Please try again.",
+      error:
+        "An error occurred while resetting your password. Please try again.",
     };
   }
 }

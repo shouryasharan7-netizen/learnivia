@@ -2,7 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, ArrowRight, ClipboardList, BookOpen, AlertTriangle, CheckSquare, Square, Check } from "lucide-react";
+import {
+  CheckCircle2,
+  ArrowRight,
+  ClipboardList,
+  BookOpen,
+  AlertTriangle,
+  CheckSquare,
+  Square,
+  Check,
+} from "lucide-react";
 import styles from "./page.module.css";
 import { submitApplication } from "./actions";
 
@@ -36,7 +45,10 @@ const GRADE_OPTIONS = [
   { value: "grade-9-10", label: "Early High School (Grades 9-10)" },
 ];
 
-export default function ApplyFormClient({ user, existingProfile }: ApplyFormClientProps) {
+export default function ApplyFormClient({
+  user,
+  existingProfile,
+}: ApplyFormClientProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -44,29 +56,37 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
   // Form State
   const [school, setSchool] = useState(existingProfile?.school || "");
   const [timezone, setTimezone] = useState(user.timezone || "Asia/Kolkata");
-  const [academicScores, setAcademicScores] = useState(existingProfile?.academicScores || "");
+  const [academicScores, setAcademicScores] = useState(
+    existingProfile?.academicScores || "",
+  );
   const [reportCardLink, setReportCardLink] = useState(
-    existingProfile?.reportCardUrl?.startsWith("http") ? existingProfile.reportCardUrl : ""
+    existingProfile?.reportCardUrl?.startsWith("http")
+      ? existingProfile.reportCardUrl
+      : "",
   );
   const [reportCardFile, setReportCardFile] = useState<File | null>(null);
 
   // Initial grade levels match
   const initialGrades = GRADE_OPTIONS.filter((g) =>
-    existingProfile?.gradeLevels.some((gl) =>
-      gl.name.toLowerCase().includes(g.value.replace("-", " ")) ||
-      gl.name.toLowerCase().includes(g.label.toLowerCase())
-    )
+    existingProfile?.gradeLevels.some(
+      (gl) =>
+        gl.name.toLowerCase().includes(g.value.replace("-", " ")) ||
+        gl.name.toLowerCase().includes(g.label.toLowerCase()),
+    ),
   ).map((g) => g.value);
 
   const [selectedGrades, setSelectedGrades] = useState<string[]>(
-    initialGrades.length > 0 ? initialGrades : ["grade-3-5", "grade-6-8"]
+    initialGrades.length > 0 ? initialGrades : ["grade-3-5", "grade-6-8"],
   );
 
   const [subjects, setSubjects] = useState(
-    existingProfile?.subjects.map((s) => s.name).join(", ") || "Mathematics, Science"
+    existingProfile?.subjects.map((s) => s.name).join(", ") ||
+      "Mathematics, Science",
   );
   const [bio, setBio] = useState(existingProfile?.bio || "");
-  const [experience, setExperience] = useState(existingProfile?.experience || "");
+  const [experience, setExperience] = useState(
+    existingProfile?.experience || "",
+  );
 
   const [agreedGuidelines, setAgreedGuidelines] = useState(true);
   const [agreedSafeguarding, setAgreedSafeguarding] = useState(true);
@@ -74,7 +94,7 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
 
   const handleGradeToggle = (val: string) => {
     setSelectedGrades((prev) =>
-      prev.includes(val) ? prev.filter((g) => g !== val) : [...prev, val]
+      prev.includes(val) ? prev.filter((g) => g !== val) : [...prev, val],
     );
   };
 
@@ -82,7 +102,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       if (file.size > 4 * 1024 * 1024) {
-        setErrorMsg("File is larger than 4MB. Please upload a smaller file or paste a Google Drive link.");
+        setErrorMsg(
+          "File is larger than 4MB. Please upload a smaller file or paste a Google Drive link.",
+        );
         e.target.value = "";
         setReportCardFile(null);
         return;
@@ -98,7 +120,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
 
     // Real-time client checks
     if (!bio.trim() || bio.trim().length < 20) {
-      setErrorMsg("Please write at least 20 characters in your bio describing yourself and your teaching approach.");
+      setErrorMsg(
+        "Please write at least 20 characters in your bio describing yourself and your teaching approach.",
+      );
       return;
     }
 
@@ -116,15 +140,19 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
       reportCardFile ||
       reportCardLink.trim() ||
       existingProfile?.reportCardStorageKey ||
-      existingProfile?.reportCardUrl
+      existingProfile?.reportCardUrl,
     );
     if (!hasReportCard) {
-      setErrorMsg("An academic report card or marksheet document is strictly required to sign up as a tutor. Please upload your document or provide a share link.");
+      setErrorMsg(
+        "An academic report card or marksheet document is strictly required to sign up as a tutor. Please upload your document or provide a share link.",
+      );
       return;
     }
 
     if (!agreedGuidelines || !agreedSafeguarding || !agreedPrivacy) {
-      setErrorMsg("Please acknowledge and agree to the community, safeguarding, and privacy terms.");
+      setErrorMsg(
+        "Please acknowledge and agree to the community, safeguarding, and privacy terms.",
+      );
       return;
     }
 
@@ -151,7 +179,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
       const res = await submitApplication(formData);
 
       if (res && !res.success) {
-        setErrorMsg(res.error || "Failed to submit application. Please try again.");
+        setErrorMsg(
+          res.error || "Failed to submit application. Please try again.",
+        );
         setIsSubmitting(false);
       } else {
         setIsSuccess(true);
@@ -159,7 +189,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
       }
     } catch (err: any) {
       console.error("Submission error:", err);
-      setErrorMsg(err.message || "A network or server error occurred. Please try again.");
+      setErrorMsg(
+        err.message || "A network or server error occurred. Please try again.",
+      );
       setIsSubmitting(false);
     }
   };
@@ -178,15 +210,43 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
           margin: "0 auto",
         }}
       >
-        <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 64, height: 64, borderRadius: "50%", background: "rgba(35, 75, 59, 0.1)", color: "var(--color-forest, #234B3B)", margin: "0 auto 1.25rem auto" }}>
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 64,
+            height: 64,
+            borderRadius: "50%",
+            background: "rgba(35, 75, 59, 0.1)",
+            color: "var(--color-forest, #234B3B)",
+            margin: "0 auto 1.25rem auto",
+          }}
+        >
           <CheckCircle2 size={36} />
         </div>
-        <h2 style={{ fontSize: "1.75rem", fontWeight: 800, color: "#0F172A", margin: "0 0 0.75rem" }}>
+        <h2
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: 800,
+            color: "#0F172A",
+            margin: "0 0 0.75rem",
+          }}
+        >
           Application Submitted Successfully!
         </h2>
-        <p style={{ color: "#475569", fontSize: "1rem", lineHeight: 1.6, maxWidth: "520px", margin: "0 auto 1.75rem" }}>
-          Thank you for applying to be a volunteer peer tutor on Learnivia. Our academic moderation team reviews every
-          transcript and profile within <strong>24-48 hours</strong>.
+        <p
+          style={{
+            color: "#475569",
+            fontSize: "1rem",
+            lineHeight: 1.6,
+            maxWidth: "520px",
+            margin: "0 auto 1.75rem",
+          }}
+        >
+          Thank you for applying to be a volunteer peer tutor on Learnivia. Our
+          academic moderation team reviews every transcript and profile within{" "}
+          <strong>24-48 hours</strong>.
         </p>
 
         <div
@@ -199,16 +259,41 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
             textAlign: "left",
           }}
         >
-          <div style={{ fontWeight: 800, color: "#0D683B", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+          <div
+            style={{
+              fontWeight: 800,
+              color: "#0D683B",
+              marginBottom: "0.5rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+            }}
+          >
             <ArrowRight size={16} /> Next Step: Complete Your Required Training
           </div>
-          <p style={{ fontSize: "0.875rem", color: "#166534", margin: 0, lineHeight: 1.5 }}>
-            While your credentials are being verified, you can complete the 5 required tutor training modules (safeguarding,
-            active listening, and Zoom tools). Once finished, you will be immediately eligible to accept bookings.
+          <p
+            style={{
+              fontSize: "0.875rem",
+              color: "#166534",
+              margin: 0,
+              lineHeight: 1.5,
+            }}
+          >
+            While your credentials are being verified, you can complete the 5
+            required tutor training modules (safeguarding, active listening, and
+            Zoom tools). Once finished, you will be immediately eligible to
+            accept bookings.
           </p>
         </div>
 
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "1rem",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <Link
             href="/tutor/training"
             style={{
@@ -262,9 +347,13 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
           }}
         >
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <div
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
               <ClipboardList size={18} color="var(--color-forest, #234B3B)" />
-              <strong style={{ fontSize: "1rem", color: "#0F172A" }}>Application Status:</strong>
+              <strong style={{ fontSize: "1rem", color: "#0F172A" }}>
+                Application Status:
+              </strong>
               <span
                 style={{
                   padding: "0.2rem 0.6rem",
@@ -275,25 +364,31 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
                     existingProfile.status === "APPROVED"
                       ? "#DCFCE7"
                       : existingProfile.status === "PENDING"
-                      ? "#FEF3C7"
-                      : "#FEE2E2",
+                        ? "#FEF3C7"
+                        : "#FEE2E2",
                   color:
                     existingProfile.status === "APPROVED"
                       ? "#15803D"
                       : existingProfile.status === "PENDING"
-                      ? "#B45309"
-                      : "#B91C1C",
+                        ? "#B45309"
+                        : "#B91C1C",
                 }}
               >
                 {existingProfile.status}
               </span>
             </div>
-            <p style={{ margin: "0.25rem 0 0", color: "#64748B", fontSize: "0.825rem" }}>
+            <p
+              style={{
+                margin: "0.25rem 0 0",
+                color: "#64748B",
+                fontSize: "0.825rem",
+              }}
+            >
               {existingProfile.status === "PENDING"
                 ? "Your application is currently being reviewed by our academic board. You can update your details below anytime."
                 : existingProfile.status === "APPROVED"
-                ? "You are an approved volunteer tutor! You can update your profile details and subjects below."
-                : "Your application is under review."}
+                  ? "You are an approved volunteer tutor! You can update your profile details and subjects below."
+                  : "Your application is under review."}
             </p>
           </div>
 
@@ -342,11 +437,22 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
           <h2 className={styles.formSectionTitle}>1. Personal Details</h2>
           <div className={styles.formGroup}>
             <label>Full Name</label>
-            <input type="text" value={user.name || "Volunteer Tutor"} disabled className={styles.disabledInput} />
+            <input
+              type="text"
+              value={user.name || "Volunteer Tutor"}
+              disabled
+              className={styles.disabledInput}
+            />
             <span className={styles.fieldHint}>From your account profile</span>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1rem" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "1rem",
+            }}
+          >
             <div className={styles.formGroup}>
               <label htmlFor="school">School / University / Affiliation</label>
               <input
@@ -374,7 +480,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
                   <option value="Australia/Sydney">Sydney (AEST)</option>
                 </optgroup>
                 <optgroup label="Americas">
-                  <option value="America/New_York">Eastern Time (US & Canada)</option>
+                  <option value="America/New_York">
+                    Eastern Time (US & Canada)
+                  </option>
                   <option value="America/Chicago">Central Time (US)</option>
                   <option value="America/Denver">Mountain Time (US)</option>
                   <option value="America/Los_Angeles">Pacific Time (US)</option>
@@ -391,13 +499,24 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
 
         {/* 2. Academic Credentials & Report Card */}
         <div className={styles.formSection}>
-          <h2 className={styles.formSectionTitle}>2. Academic Scores &amp; Report Card</h2>
-          <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", margin: 0 }}>
-            Our academic verification team checks report cards or certificates to ensure quality peer tutoring for our learners.
+          <h2 className={styles.formSectionTitle}>
+            2. Academic Scores &amp; Report Card
+          </h2>
+          <p
+            style={{
+              fontSize: "0.85rem",
+              color: "var(--color-text-muted)",
+              margin: 0,
+            }}
+          >
+            Our academic verification team checks report cards or certificates
+            to ensure quality peer tutoring for our learners.
           </p>
 
           <div className={styles.formGroup}>
-            <label htmlFor="academicScores">Academic Results / Scores (CGPA, Marks or GPA) *</label>
+            <label htmlFor="academicScores">
+              Academic Results / Scores (CGPA, Marks or GPA) *
+            </label>
             <input
               id="academicScores"
               type="text"
@@ -406,13 +525,27 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
               placeholder="e.g. Class 10 CGPA: 8.7, or 95% in CBSE / GCSE 9s / GPA 3.9"
               required
             />
-            <span className={styles.fieldHint}>Summarize your latest official marks in the subjects you plan to teach</span>
+            <span className={styles.fieldHint}>
+              Summarize your latest official marks in the subjects you plan to
+              teach
+            </span>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1rem" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "1rem",
+            }}
+          >
             <div className={styles.formGroup}>
               <label htmlFor="reportCardFile">
-                Upload Report Card / Marksheet (PDF or Image) <span style={{ color: "var(--wa-error, #dc2626)", fontWeight: 700 }}>* Required</span>
+                Upload Report Card / Marksheet (PDF or Image){" "}
+                <span
+                  style={{ color: "var(--wa-error, #dc2626)", fontWeight: 700 }}
+                >
+                  * Required
+                </span>
               </label>
               <input
                 id="reportCardFile"
@@ -434,7 +567,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="reportCardLink">Or Provide Document Link (Google Drive / Cloud Share)</label>
+              <label htmlFor="reportCardLink">
+                Or Provide Document Link (Google Drive / Cloud Share)
+              </label>
               <input
                 id="reportCardLink"
                 type="url"
@@ -442,23 +577,48 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
                 onChange={(e) => setReportCardLink(e.target.value)}
                 placeholder="https://drive.google.com/file/d/..."
               />
-              <span className={styles.fieldHint}>Make sure link sharing is set to 'Anyone with the link can view'</span>
+              <span className={styles.fieldHint}>
+                Make sure link sharing is set to 'Anyone with the link can view'
+              </span>
             </div>
           </div>
 
           {existingProfile?.reportCardUrl && (
-            <div style={{ fontSize: "0.85rem", color: "#0D683B", background: "#F0FDF4", padding: "0.6rem 0.9rem", borderRadius: "8px", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-              <Check size={14} /> Previously submitted: <strong>{existingProfile.reportCardName || "Academic Document"}</strong>
+            <div
+              style={{
+                fontSize: "0.85rem",
+                color: "#0D683B",
+                background: "#F0FDF4",
+                padding: "0.6rem 0.9rem",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+              }}
+            >
+              <Check size={14} /> Previously submitted:{" "}
+              <strong>
+                {existingProfile.reportCardName || "Academic Document"}
+              </strong>
             </div>
           )}
         </div>
 
         {/* 3. Grade Bands & Subjects */}
         <div className={styles.formSection}>
-          <h2 className={styles.formSectionTitle}>3. What You'll Teach (K-10)</h2>
+          <h2 className={styles.formSectionTitle}>
+            3. What You'll Teach (K-10)
+          </h2>
           <div className={styles.formGroup}>
             <label>Grade Levels You Can Support *</label>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.6rem", marginTop: "0.25rem" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "0.6rem",
+                marginTop: "0.25rem",
+              }}
+            >
               {GRADE_OPTIONS.map((g) => {
                 const isSelected = selectedGrades.includes(g.value);
                 return (
@@ -472,7 +632,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
                       gap: "0.5rem",
                       padding: "0.65rem 0.85rem",
                       borderRadius: "8px",
-                      border: isSelected ? "2px solid #0E8345" : "1.5px solid #CBD5E1",
+                      border: isSelected
+                        ? "2px solid #0E8345"
+                        : "1.5px solid #CBD5E1",
                       background: isSelected ? "#F0FDF4" : "#FFFFFF",
                       color: isSelected ? "#0D683B" : "#334155",
                       fontWeight: isSelected ? 700 : 500,
@@ -482,8 +644,17 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
                       transition: "all 150ms ease",
                     }}
                   >
-                    <span style={{ display: "inline-flex", alignItems: "center" }}>
-                      {isSelected ? <CheckSquare size={16} color="var(--color-forest, #234B3B)" /> : <Square size={16} color="#94A3B8" />}
+                    <span
+                      style={{ display: "inline-flex", alignItems: "center" }}
+                    >
+                      {isSelected ? (
+                        <CheckSquare
+                          size={16}
+                          color="var(--color-forest, #234B3B)"
+                        />
+                      ) : (
+                        <Square size={16} color="#94A3B8" />
+                      )}
                     </span>
                     <span>{g.label}</span>
                   </button>
@@ -502,7 +673,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
               placeholder="e.g. Mathematics, Science, Reading & Writing, Social Studies"
               required
             />
-            <span className={styles.fieldHint}>Comma-separated list (e.g. Pre-Algebra, Biology, English Grammar)</span>
+            <span className={styles.fieldHint}>
+              Comma-separated list (e.g. Pre-Algebra, Biology, English Grammar)
+            </span>
           </div>
         </div>
 
@@ -512,7 +685,12 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
           <div className={styles.formGroup}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <label htmlFor="bio">Tell students about yourself *</label>
-              <span style={{ fontSize: "0.75rem", color: bio.length >= 20 ? "#0E8345" : "#94A3B8" }}>
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  color: bio.length >= 20 ? "#0E8345" : "#94A3B8",
+                }}
+              >
                 {bio.length}/600 characters
               </span>
             </div>
@@ -541,7 +719,9 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
 
         {/* 5. Acknowledgements */}
         <div className={styles.formSection}>
-          <h2 className={styles.formSectionTitle}>5. Community Standards & Safeguarding</h2>
+          <h2 className={styles.formSectionTitle}>
+            5. Community Standards & Safeguarding
+          </h2>
           <div className={styles.checkboxGroup}>
             <label className={styles.checkboxLabel}>
               <input
@@ -552,7 +732,11 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
               />
               <span>
                 I agree to uphold the{" "}
-                <Link href="/safety" target="_blank" style={{ color: "#0E8345", fontWeight: 700 }}>
+                <Link
+                  href="/safety"
+                  target="_blank"
+                  style={{ color: "#0E8345", fontWeight: 700 }}
+                >
                   Learnivia Community Guidelines
                 </Link>
                 .
@@ -566,7 +750,10 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
                 onChange={(e) => setAgreedSafeguarding(e.target.checked)}
                 required
               />
-              <span>I understand that sessions are with real students and I will maintain classroom-safe professionalism at all times.</span>
+              <span>
+                I understand that sessions are with real students and I will
+                maintain classroom-safe professionalism at all times.
+              </span>
             </label>
 
             <label className={styles.checkboxLabel}>
@@ -578,7 +765,11 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
               />
               <span>
                 I agree to the{" "}
-                <Link href="/privacy" target="_blank" style={{ color: "#0E8345", fontWeight: 700 }}>
+                <Link
+                  href="/privacy"
+                  target="_blank"
+                  style={{ color: "#0E8345", fontWeight: 700 }}
+                >
                   Privacy Policy
                 </Link>
                 .
@@ -628,11 +819,23 @@ export default function ApplyFormClient({ user, existingProfile }: ApplyFormClie
             ) : (
               <span>
                 {existingProfile ? (
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                    }}
+                  >
                     <Check size={16} /> Save &amp; Update Application Details
                   </span>
                 ) : (
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                    }}
+                  >
                     Submit Volunteer Tutor Application <ArrowRight size={16} />
                   </span>
                 )}

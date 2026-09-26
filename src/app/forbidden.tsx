@@ -82,7 +82,8 @@ export default function Forbidden() {
             marginBottom: "2rem",
           }}
         >
-          You do not have permission to access this area. This workspace is reserved for authorized platform administrators or verified tutors.
+          You do not have permission to access this area. This workspace is
+          reserved for authorized platform administrators or verified tutors.
         </p>
 
         <Link

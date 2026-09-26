@@ -28,7 +28,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Admin Command Center | Learnivia",
-  description: "Platform health monitoring, safeguarding incident triage, and administrative controls.",
+  description:
+    "Platform health monitoring, safeguarding incident triage, and administrative controls.",
 };
 
 export default async function AdminOverviewPage() {
@@ -169,12 +170,17 @@ export default async function AdminOverviewPage() {
             </div>
             <h1 className={styles.title}>System Command &amp; Oversight</h1>
             <p className={styles.subtitle}>
-              Master administrative control over learner accounts, volunteer tutor vetting, session activity, community moderation, and child safeguarding.
+              Master administrative control over learner accounts, volunteer
+              tutor vetting, session activity, community moderation, and child
+              safeguarding.
             </p>
           </div>
 
           <div className={styles.headerActions}>
-            <Link href={ROUTES.admin.moderation} className={styles.secondaryBtn}>
+            <Link
+              href={ROUTES.admin.moderation}
+              className={styles.secondaryBtn}
+            >
               <Radio size={15} aria-hidden="true" />
               <span>Broadcast Notice</span>
             </Link>
@@ -193,7 +199,12 @@ export default async function AdminOverviewPage() {
                 <ShieldAlert size={18} aria-hidden="true" />
               </div>
               <div className={styles.triageTextRed}>
-                <strong>Child Safeguarding Alert ({openReports} open report{openReports > 1 ? "s" : ""}):</strong> A safety incident or policy escalation requires prompt review by an administrator.
+                <strong>
+                  Child Safeguarding Alert ({openReports} open report
+                  {openReports > 1 ? "s" : ""}):
+                </strong>{" "}
+                A safety incident or policy escalation requires prompt review by
+                an administrator.
               </div>
             </div>
             <Link href={ROUTES.admin.reports} className={styles.triageBtnRed}>
@@ -209,10 +220,18 @@ export default async function AdminOverviewPage() {
                 <ClipboardList size={18} aria-hidden="true" />
               </div>
               <div className={styles.triageTextAmber}>
-                <strong>Volunteer Applications Pending ({pendingApplications} awaiting review):</strong> New tutor candidate applications and background document credentials require academic verification.
+                <strong>
+                  Volunteer Applications Pending ({pendingApplications} awaiting
+                  review):
+                </strong>{" "}
+                New tutor candidate applications and background document
+                credentials require academic verification.
               </div>
             </div>
-            <Link href={ROUTES.admin.applications} className={styles.triageBtnAmber}>
+            <Link
+              href={ROUTES.admin.applications}
+              className={styles.triageBtnAmber}
+            >
               Review Applications <ArrowRight size={13} aria-hidden="true" />
             </Link>
           </div>
@@ -227,8 +246,8 @@ export default async function AdminOverviewPage() {
               const cardClass = card.critical
                 ? `${styles.statCard} ${styles.statCardCritical}`
                 : card.highlight
-                ? `${styles.statCard} ${styles.statCardHighlight}`
-                : styles.statCard;
+                  ? `${styles.statCard} ${styles.statCardHighlight}`
+                  : styles.statCard;
 
               return (
                 <Link key={card.label} href={card.href} className={cardClass}>
@@ -257,7 +276,10 @@ export default async function AdminOverviewPage() {
         {/* Two-Column Operational Activity */}
         <div className={styles.twoColGrid}>
           {/* Recent Registrations Panel */}
-          <section className={styles.panel} aria-labelledby="registrations-heading">
+          <section
+            className={styles.panel}
+            aria-labelledby="registrations-heading"
+          >
             <div className={styles.panelHeader}>
               <h2 id="registrations-heading" className={styles.panelTitle}>
                 Recent User Registrations
@@ -269,18 +291,30 @@ export default async function AdminOverviewPage() {
             </div>
 
             {recentUsers.length === 0 ? (
-              <p style={{ color: "var(--wa-muted)", fontSize: "0.8125rem", margin: "1rem 0" }}>
+              <p
+                style={{
+                  color: "var(--wa-muted)",
+                  fontSize: "0.8125rem",
+                  margin: "1rem 0",
+                }}
+              >
                 No recent user registrations found.
               </p>
             ) : (
               <div className={styles.itemsList}>
                 {recentUsers.map((u) => {
                   const roleBadgeType =
-                    u.role === "ADMIN" ? "info" : u.role === "TUTOR" ? "completed" : "pending";
+                    u.role === "ADMIN"
+                      ? "info"
+                      : u.role === "TUTOR"
+                        ? "completed"
+                        : "pending";
                   return (
                     <div key={u.id} className={styles.itemRow}>
                       <div>
-                        <div className={styles.itemPrimary}>{u.name || "Learner"}</div>
+                        <div className={styles.itemPrimary}>
+                          {u.name || "Learner"}
+                        </div>
                         <div className={styles.itemSecondary}>{u.email}</div>
                       </div>
                       <StatusBadge status={roleBadgeType} label={u.role} />
@@ -304,7 +338,13 @@ export default async function AdminOverviewPage() {
             </div>
 
             {recentBookings.length === 0 ? (
-              <p style={{ color: "var(--wa-muted)", fontSize: "0.8125rem", margin: "1rem 0" }}>
+              <p
+                style={{
+                  color: "var(--wa-muted)",
+                  fontSize: "0.8125rem",
+                  margin: "1rem 0",
+                }}
+              >
                 No recent sessions found.
               </p>
             ) : (
@@ -314,15 +354,16 @@ export default async function AdminOverviewPage() {
                     b.status === "COMPLETED"
                       ? "completed"
                       : b.status === "CONFIRMED"
-                      ? "scheduled"
-                      : "cancelled";
+                        ? "scheduled"
+                        : "cancelled";
 
                   return (
                     <div key={b.id} className={styles.itemRow}>
                       <div>
                         <div className={styles.itemPrimary}>{b.subject}</div>
                         <div className={styles.itemSecondary}>
-                          {b.tutor?.user?.name || "Tutor"} → {b.student?.name || b.student?.email || "Student"}
+                          {b.tutor?.user?.name || "Tutor"} →{" "}
+                          {b.student?.name || b.student?.email || "Student"}
                         </div>
                       </div>
                       <StatusBadge status={sessionBadgeType} label={b.status} />

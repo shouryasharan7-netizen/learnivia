@@ -7,7 +7,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Learnivia - Free Online Peer Tutoring for K-10 Students",
-  description: "Free 1-on-1 peer tutoring for Kindergarten through Grade 10. Verified volunteer tutors, private Zoom sessions, every learning style supported. No cost, ever.",
+  description:
+    "Free 1-on-1 peer tutoring for Kindergarten through Grade 10. Verified volunteer tutors, private Zoom sessions, every learning style supported. No cost, ever.",
 };
 
 export default async function Home() {
@@ -55,13 +56,19 @@ export default async function Home() {
         orderBy: { startTime: "asc" },
       }),
       new Promise<null>((_, reject) =>
-        setTimeout(() => reject(new Error("Home page DB lookup timed out after 2000ms")), 2000)
+        setTimeout(
+          () => reject(new Error("Home page DB lookup timed out after 2000ms")),
+          2000,
+        ),
       ),
     ]);
 
     nextWorkshop = await fetchWithTimeout;
   } catch (err) {
-    console.warn("Home page live workshop DB lookup fallback triggered:", (err as Error)?.message);
+    console.warn(
+      "Home page live workshop DB lookup fallback triggered:",
+      (err as Error)?.message,
+    );
   }
 
   const liveSession = nextWorkshop
@@ -73,7 +80,10 @@ export default async function Home() {
         tutorName: nextWorkshop.tutor?.user?.name || "Volunteer Tutor",
         tutorSchool: nextWorkshop.tutor?.school || "Verified Peer Mentor",
         startTime: nextWorkshop.startTime.toISOString(),
-        openSeats: Math.max(0, nextWorkshop.maxCapacity - (nextWorkshop._count?.enrollments ?? 0)),
+        openSeats: Math.max(
+          0,
+          nextWorkshop.maxCapacity - (nextWorkshop._count?.enrollments ?? 0),
+        ),
         maxCapacity: nextWorkshop.maxCapacity,
       }
     : null;

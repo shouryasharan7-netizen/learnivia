@@ -1,9 +1,5 @@
-/* ==========================================================================
-   TUTOR PROFILE PAGE — LEARNIVIA TEAL / NAVY REDESIGN
-   ========================================================================== */
-
 .main {
-  background: var(--background, #FAF9F6);
+  background: var(--background, #faf9f6);
   min-height: calc(100vh - 68px);
   padding: 2.5rem 1.5rem 4rem;
 }
@@ -13,13 +9,12 @@
   margin: 0 auto;
 }
 
-/* ─── Profile Header ────────────────────────── */
 .profileHeader {
   display: flex;
   flex-direction: column;
   margin-bottom: 2.5rem;
-  background: var(--surface-raised, #FFFFFF);
-  border: 1.5px solid var(--border, #E2E8F0);
+  background: var(--surface-raised, #ffffff);
+  border: 1.5px solid var(--border, #e2e8f0);
   border-radius: var(--radius-xl, 18px);
   padding: 2rem;
   box-shadow: var(--shadow-sm, 0 2px 8px rgba(12, 27, 51, 0.06));
@@ -30,7 +25,7 @@
   align-items: flex-start;
   gap: 1.75rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border, #E2E8F0);
+  border-bottom: 1px solid var(--border, #e2e8f0);
   margin-bottom: 1.5rem;
 }
 
@@ -38,15 +33,15 @@
   width: 96px;
   height: 96px;
   min-width: 96px;
-  background: var(--primary, #0D9488);
-  color: #FFFFFF;
+  background: var(--primary, #0d9488);
+  color: #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2.5rem;
   font-weight: 700;
-  border: 3px solid var(--primary-light, #CCFBF1);
+  border: 3px solid var(--primary-light, #ccfbf1);
   box-shadow: 0 2px 10px rgba(13, 148, 136, 0.25);
 }
 
@@ -63,8 +58,8 @@
 }
 
 .name {
-  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
-  color: var(--text-primary, #0C1B33);
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  color: var(--text-primary, #0c1b33);
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -73,8 +68,8 @@
 
 .messageBtn {
   background: #fff;
-  border: 2px solid var(--primary, #0D9488);
-  color: var(--primary, #0D9488);
+  border: 2px solid var(--primary, #0d9488);
+  color: var(--primary, #0d9488);
   font-weight: 700;
   border-radius: 9999px;
   padding: 0.5rem 1.25rem;
@@ -83,7 +78,7 @@
   transition: all 150ms ease;
 }
 .messageBtn:hover {
-  background: var(--primary, #0D9488);
+  background: var(--primary, #0d9488);
   color: #fff;
 }
 
@@ -95,11 +90,10 @@
 }
 
 .timezone {
-  color: var(--text-muted, #64748B);
+  color: var(--text-muted, #64748b);
   font-size: 0.9rem;
 }
 
-/* ─── Stats Bar ────────────────────────── */
 .statsBar {
   display: flex;
   align-items: center;
@@ -114,7 +108,7 @@
 
 .statLabel {
   font-size: 0.75rem;
-  color: var(--text-muted, #64748B);
+  color: var(--text-muted, #64748b);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 600;
@@ -122,11 +116,10 @@
 
 .statValue {
   font-size: 1.25rem;
-  color: var(--text-primary, #0C1B33);
+  color: var(--text-primary, #0c1b33);
   font-weight: 700;
 }
 
-/* ─── Certifications ────────────────────────── */
 .certList {
   display: flex;
   flex-direction: column;
@@ -138,11 +131,10 @@
   align-items: center;
   gap: 0.75rem;
   font-weight: 600;
-  color: var(--text-primary, #0C1B33);
+  color: var(--text-primary, #0c1b33);
   font-size: 0.95rem;
 }
 
-/* ─── Content Grid ───────────────────────────── */
 .contentGrid {
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -151,17 +143,28 @@
 }
 
 @media (max-width: 860px) {
-  .contentGrid { grid-template-columns: 1fr; }
-  .profileHeader { flex-wrap: wrap; }
-  .metaInfo { flex-direction: row; align-items: center; width: 100%; }
-  .metaItem { align-items: flex-start; }
-  .name { font-size: 1.6rem; }
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+  .profileHeader {
+    flex-wrap: wrap;
+  }
+  .metaInfo {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+  .metaItem {
+    align-items: flex-start;
+  }
+  .name {
+    font-size: 1.6rem;
+  }
 }
 
-/* ─── Main Col Sections ──────────────────────── */
 .section {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 14px;
   padding: 1.5rem;
   margin-bottom: 1.25rem;
@@ -169,22 +172,21 @@
 }
 
 .section h2 {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
-  color: #1C1A17;
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
+  color: #1c1a17;
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0 0 1rem 0;
   padding-bottom: 0.65rem;
-  border-bottom: 1.5px solid #EDE9E1;
+  border-bottom: 1.5px solid #ede9e1;
 }
 
 .bio {
-  color: #3D3831;
+  color: #3d3831;
   line-height: 1.7;
   font-size: 0.9375rem;
 }
 
-/* ─── Tags ───────────────────────────────────── */
 .tags {
   display: flex;
   gap: 0.6rem;
@@ -192,16 +194,15 @@
 }
 
 .tag {
-  background: #EAF3ED;
+  background: #eaf3ed;
   color: #235840;
-  border: 1px solid #B5D9C5;
+  border: 1px solid #b5d9c5;
   padding: 0.35rem 0.85rem;
   border-radius: 4px;
   font-size: 0.8125rem;
   font-weight: 600;
 }
 
-/* ─── Reviews ────────────────────────────────── */
 .reviewsList {
   display: flex;
   flex-direction: column;
@@ -209,8 +210,8 @@
 }
 
 .reviewItem {
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
+  background: #faf8f5;
+  border: 1px solid #ddd8d0;
   border-radius: 10px;
   padding: 1rem 1.15rem;
 }
@@ -224,34 +225,33 @@
 
 .reviewAuthor {
   font-weight: 700;
-  color: #1C1A17;
+  color: #1c1a17;
   font-size: 0.875rem;
 }
 
 .reviewStars {
-  color: #C9922A;
+  color: #c9922a;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
 }
 
 .reviewComment {
   font-size: 0.875rem;
-  color: #3D3831;
+  color: #3d3831;
   line-height: 1.55;
   font-style: italic;
 }
 
-/* ─── Booking Sidebar Card ───────────────────── */
 .sidebar {
   display: flex;
   flex-direction: column;
 }
 
 .bookingCard {
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 1.75rem;
   border-radius: 14px;
-  border: 1.5px solid #DDD8D0;
+  border: 1.5px solid #ddd8d0;
   box-shadow: 0 2px 10px rgba(28, 26, 23, 0.07);
   text-align: center;
   position: sticky;
@@ -259,15 +259,15 @@
 }
 
 .bookingCard h2 {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
-  color: #1C1A17;
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
+  color: #1c1a17;
   font-size: 1.35rem;
   font-weight: 600;
   margin-bottom: 0.35rem;
 }
 
 .bookingDesc {
-  color: #7A7169;
+  color: #7a7169;
   margin-bottom: 1.5rem;
   font-size: 0.875rem;
   line-height: 1.55;
@@ -291,14 +291,16 @@
   display: block;
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
-.loginBtn:hover { background: var(--wa-green-hover); }
+.loginBtn:hover {
+  background: var(--wa-green-hover);
+}
 
 .noAvailability {
-  color: #7A7169;
+  color: #7a7169;
   font-style: italic;
   padding: 1rem;
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
+  background: #faf8f5;
+  border: 1px solid #ddd8d0;
   border-radius: 8px;
   font-size: 0.875rem;
 }
@@ -318,7 +320,7 @@
 
 .formGroup label {
   font-weight: 600;
-  color: #3D3831;
+  color: #3d3831;
   font-size: 0.8125rem;
 }
 
@@ -326,14 +328,16 @@
 .formGroup select,
 .formGroup textarea {
   padding: 0.65rem 0.875rem;
-  border: 1.5px solid #DDD8D0;
+  border: 1.5px solid #ddd8d0;
   border-radius: 8px;
   font-family: inherit;
   font-size: 0.9375rem;
-  color: #1C1A17;
-  background: #FAF8F5;
+  color: #1c1a17;
+  background: #faf8f5;
   width: 100%;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .formGroup input:focus,
@@ -342,12 +346,12 @@
   outline: none;
   border-color: var(--wa-green);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .formGroup input::placeholder,
 .formGroup textarea::placeholder {
-  color: #A89F94;
+  color: #a89f94;
 }
 
 .bookBtn {
@@ -359,7 +363,9 @@
   font-weight: 700;
   font-size: 0.9375rem;
   cursor: pointer;
-  transition: background 150ms ease, transform 150ms ease;
+  transition:
+    background 150ms ease,
+    transform 150ms ease;
   font-family: inherit;
   width: 100%;
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);

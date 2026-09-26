@@ -2,7 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, ShieldCheck, BookOpen, ArrowRight, Users, Video, Clock, RotateCcw, AlertCircle, ChevronDown, Check, Play } from "lucide-react";
+import {
+  CheckCircle2,
+  ShieldCheck,
+  BookOpen,
+  ArrowRight,
+  Users,
+  Video,
+  Clock,
+  RotateCcw,
+  AlertCircle,
+  ChevronDown,
+  Check,
+  Play,
+} from "lucide-react";
 import { VideoLessonPlayer } from "./VideoLessonPlayer";
 
 const MODULES = [
@@ -16,8 +29,13 @@ const MODULES = [
       title: "Module 1 Video: Online Tutoring Setup & Engagement",
       duration: "4:20",
       embedUrl: "https://www.youtube.com/embed/rptGUV59u_o", // Helpful setup video
-      summary: "Learn how to prepare your workspace, use Zoom effectively, and engage students from minute one.",
-      keyPoints: ["Check audio/video before starting", "Use the whiteboard for visual learning", "Set clear goals at the beginning"],
+      summary:
+        "Learn how to prepare your workspace, use Zoom effectively, and engage students from minute one.",
+      keyPoints: [
+        "Check audio/video before starting",
+        "Use the whiteboard for visual learning",
+        "Set clear goals at the beginning",
+      ],
     },
     content: [
       {
@@ -54,8 +72,13 @@ const MODULES = [
       title: "Module 2 Video: Identifying a Concern | Safeguarding",
       duration: "5:15",
       embedUrl: "https://www.youtube.com/embed/bkQqMawi2-Y",
-      summary: "Understand your role in child protection, how to identify signs of concern, and the strict zero-contact rule outside of sessions.",
-      keyPoints: ["Never share personal contact info", "Observe but do not investigate", "Report concerns immediately"],
+      summary:
+        "Understand your role in child protection, how to identify signs of concern, and the strict zero-contact rule outside of sessions.",
+      keyPoints: [
+        "Never share personal contact info",
+        "Observe but do not investigate",
+        "Report concerns immediately",
+      ],
     },
     content: [
       {
@@ -72,7 +95,8 @@ const MODULES = [
       },
     ],
     quiz: {
-      question: "A student asks for your Instagram to ask a quick math question later. What should you do?",
+      question:
+        "A student asks for your Instagram to ask a quick math question later. What should you do?",
       options: [
         "Give them a fake Instagram handle",
         "Share it only if their parent is in the room",
@@ -92,8 +116,13 @@ const MODULES = [
       title: "Module 3 Video: Mentorship Mindset & Guided Learning",
       duration: "3:45",
       embedUrl: "https://www.youtube.com/embed/RO09MR1Fpgk", // Full-length video: How to Keep Students Engaged in Online Classes
-      summary: "Learn why guiding beats lecturing, how to ask discovery questions, and techniques for sincere praise.",
-      keyPoints: ["Guide through questions, don't lecture", "Praise effort, not just intelligence", "Normalize mistakes as discoveries"],
+      summary:
+        "Learn why guiding beats lecturing, how to ask discovery questions, and techniques for sincere praise.",
+      keyPoints: [
+        "Guide through questions, don't lecture",
+        "Praise effort, not just intelligence",
+        "Normalize mistakes as discoveries",
+      ],
     },
     content: [
       {
@@ -110,7 +139,8 @@ const MODULES = [
       },
     ],
     quiz: {
-      question: "A student gives a wrong answer to a problem. What is the best response?",
+      question:
+        "A student gives a wrong answer to a problem. What is the best response?",
       options: [
         "Tell them it's wrong and give the correct answer",
         "Say 'Interesting - let's trace through that together'",
@@ -123,9 +153,13 @@ const MODULES = [
 ];
 
 export default function TutorTrainingPage() {
-  const [completedModules, setCompletedModules] = useState<Set<number>>(new Set());
+  const [completedModules, setCompletedModules] = useState<Set<number>>(
+    new Set(),
+  );
   const [activeModule, setActiveModule] = useState<number | null>(null);
-  const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>({});
+  const [quizAnswers, setQuizAnswers] = useState<Record<number, number | null>>(
+    {},
+  );
   const [quizSubmitted, setQuizSubmitted] = useState<Set<number>>(new Set());
   const [savingModule, setSavingModule] = useState<number | null>(null);
   const [isLockedNotice, setIsLockedNotice] = useState(false);
@@ -228,7 +262,13 @@ export default function TutorTrainingPage() {
           >
             Tutor Training - Required
           </div>
-          <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, margin: "0 0 0.75rem" }}>
+          <h1
+            style={{
+              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+              fontWeight: 800,
+              margin: "0 0 0.75rem",
+            }}
+          >
             Complete Your Training
           </h1>
           <p style={{ opacity: 0.9, fontSize: "1rem" }}>
@@ -240,7 +280,9 @@ export default function TutorTrainingPage() {
             <div style={{ fontSize: "1.5rem", fontWeight: 800 }}>
               {completedModules.size} / {MODULES.length}
             </div>
-            <div style={{ fontSize: "0.875rem", opacity: 0.8 }}>Modules completed</div>
+            <div style={{ fontSize: "0.875rem", opacity: 0.8 }}>
+              Modules completed
+            </div>
             <div
               style={{
                 height: "8px",
@@ -276,14 +318,21 @@ export default function TutorTrainingPage() {
                   fontWeight: 500,
                 }}
               >
-                <BookOpen size={14} /> Review Official Tutoring Guide &amp; Resources →
+                <BookOpen size={14} /> Review Official Tutoring Guide &amp;
+                Resources →
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "2.5rem 1.5rem 5rem" }}>
+      <div
+        style={{
+          maxWidth: "800px",
+          margin: "0 auto",
+          padding: "2.5rem 1.5rem 5rem",
+        }}
+      >
         {/* Locked Notice if redirected from other tutor features */}
         {isLockedNotice && !allDone && (
           <div
@@ -299,13 +348,29 @@ export default function TutorTrainingPage() {
               boxShadow: "0 2px 8px rgba(217, 119, 6, 0.08)",
             }}
           >
-            <AlertCircle size={24} color="#D97706" style={{ flexShrink: 0, marginTop: "2px" }} />
+            <AlertCircle
+              size={24}
+              color="#D97706"
+              style={{ flexShrink: 0, marginTop: "2px" }}
+            />
             <div>
-              <div style={{ fontWeight: 700, color: "#92400E", fontSize: "1rem" }}>
+              <div
+                style={{ fontWeight: 700, color: "#92400E", fontSize: "1rem" }}
+              >
                 Safeguarding Training Required
               </div>
-              <p style={{ margin: "0.35rem 0 0", color: "#78350F", fontSize: "0.875rem", lineHeight: 1.55 }}>
-                Tutor Overview, verified service records, upcoming sessions, and student inquiries are locked until all 5 safeguarding training modules below are passed. Complete each module and pass its short quiz to unlock full access.
+              <p
+                style={{
+                  margin: "0.35rem 0 0",
+                  color: "#78350F",
+                  fontSize: "0.875rem",
+                  lineHeight: 1.55,
+                }}
+              >
+                Tutor Overview, verified service records, upcoming sessions, and
+                student inquiries are locked until all 5 safeguarding training
+                modules below are passed. Complete each module and pass its
+                short quiz to unlock full access.
               </p>
             </div>
           </div>
@@ -323,14 +388,27 @@ export default function TutorTrainingPage() {
               marginBottom: "2.5rem",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.75rem" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "0.75rem",
+              }}
+            >
               <CheckCircle2 size={44} color="#0D683B" />
             </div>
-            <h2 style={{ color: "#0D683B", fontWeight: 800, margin: "0 0 0.5rem" }}>
+            <h2
+              style={{
+                color: "#0D683B",
+                fontWeight: 800,
+                margin: "0 0 0.5rem",
+              }}
+            >
               Training Complete!
             </h2>
             <p style={{ color: "#166534", marginBottom: "1.25rem" }}>
-              You&apos;ve completed all 3 training modules. You&apos;re now eligible to receive your first booking.
+              You&apos;ve completed all 3 training modules. You&apos;re now
+              eligible to receive your first booking.
             </p>
             <Link
               href="/tutor"
@@ -389,7 +467,9 @@ export default function TutorTrainingPage() {
                       width: "40px",
                       height: "40px",
                       borderRadius: "var(--wa-radius-md)",
-                      background: isCompleted ? "var(--wa-forest-light)" : "var(--wa-paper)",
+                      background: isCompleted
+                        ? "var(--wa-forest-light)"
+                        : "var(--wa-paper)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -416,16 +496,31 @@ export default function TutorTrainingPage() {
                       style={{
                         fontSize: "1rem",
                         fontWeight: 700,
-                        color: isCompleted ? "var(--wa-forest)" : "var(--wa-ink)",
+                        color: isCompleted
+                          ? "var(--wa-forest)"
+                          : "var(--wa-ink)",
                       }}
                     >
                       Module {mod.id}: {mod.title}
                     </div>
-                    <div style={{ fontSize: "0.8125rem", color: "var(--wa-muted)", marginTop: "0.2rem" }}>
-                      ~{mod.estimatedMinutes} min · {isCompleted ? "Completed" : "Not started"}
+                    <div
+                      style={{
+                        fontSize: "0.8125rem",
+                        color: "var(--wa-muted)",
+                        marginTop: "0.2rem",
+                      }}
+                    >
+                      ~{mod.estimatedMinutes} min ·{" "}
+                      {isCompleted ? "Completed" : "Not started"}
                     </div>
                   </div>
-                  <div style={{ color: "var(--wa-muted)", display: "flex", alignItems: "center" }}>
+                  <div
+                    style={{
+                      color: "var(--wa-muted)",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     <ChevronDown
                       size={18}
                       style={{
@@ -438,7 +533,12 @@ export default function TutorTrainingPage() {
 
                 {/* Module Content */}
                 {isOpen && (
-                  <div style={{ padding: "0 1.5rem 1.5rem", borderTop: "1px solid #F3F4F6" }}>
+                  <div
+                    style={{
+                      padding: "0 1.5rem 1.5rem",
+                      borderTop: "1px solid #F3F4F6",
+                    }}
+                  >
                     {/* Resilient Video Training Walkthrough Player */}
                     <div style={{ marginTop: "1.25rem" }}>
                       <VideoLessonPlayer
@@ -460,7 +560,13 @@ export default function TutorTrainingPage() {
                         >
                           {section.heading}
                         </h3>
-                        <p style={{ fontSize: "0.9125rem", color: "#374151", lineHeight: 1.7 }}>
+                        <p
+                          style={{
+                            fontSize: "0.9125rem",
+                            color: "#374151",
+                            lineHeight: 1.7,
+                          }}
+                        >
                           {section.body}
                         </p>
                       </div>
@@ -488,11 +594,24 @@ export default function TutorTrainingPage() {
                       >
                         Quick Check
                       </div>
-                      <p style={{ fontWeight: 600, fontSize: "0.9375rem", color: "#111827", marginBottom: "1rem" }}>
+                      <p
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "0.9375rem",
+                          color: "#111827",
+                          marginBottom: "1rem",
+                        }}
+                      >
                         {mod.quiz.question}
                       </p>
 
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.5rem",
+                        }}
+                      >
                         {mod.quiz.options.map((opt, optIdx) => {
                           const isSelected = quizAnswer === optIdx;
                           const isCorrectOpt = optIdx === mod.quiz.correct;
@@ -501,8 +620,15 @@ export default function TutorTrainingPage() {
                           let optColor = "#374151";
 
                           if (quizDone) {
-                            if (isCorrectOpt) { optBg = "#F0FDF4"; optBorder = "#0D683B"; optColor = "#0D683B"; }
-                            else if (isSelected && !isCorrectOpt) { optBg = "#FEF2F2"; optBorder = "#EF4444"; optColor = "#DC2626"; }
+                            if (isCorrectOpt) {
+                              optBg = "#F0FDF4";
+                              optBorder = "#0D683B";
+                              optColor = "#0D683B";
+                            } else if (isSelected && !isCorrectOpt) {
+                              optBg = "#FEF2F2";
+                              optBorder = "#EF4444";
+                              optColor = "#DC2626";
+                            }
                           } else if (isSelected) {
                             optBg = mod.bg;
                             optBorder = mod.color;
@@ -512,7 +638,9 @@ export default function TutorTrainingPage() {
                           return (
                             <button
                               key={optIdx}
-                              onClick={() => !quizDone && handleQuizAnswer(mod.id, optIdx)}
+                              onClick={() =>
+                                !quizDone && handleQuizAnswer(mod.id, optIdx)
+                              }
                               disabled={quizDone}
                               style={{
                                 display: "flex",
@@ -525,7 +653,10 @@ export default function TutorTrainingPage() {
                                 cursor: quizDone ? "default" : "pointer",
                                 textAlign: "left",
                                 color: optColor,
-                                fontWeight: isSelected || (quizDone && isCorrectOpt) ? 700 : 400,
+                                fontWeight:
+                                  isSelected || (quizDone && isCorrectOpt)
+                                    ? 700
+                                    : 400,
                                 fontSize: "0.875rem",
                                 transition: "all 0.15s",
                               }}
@@ -536,7 +667,9 @@ export default function TutorTrainingPage() {
                                   height: "18px",
                                   borderRadius: "50%",
                                   border: `2px solid ${optBorder}`,
-                                  background: isSelected ? optBorder : "transparent",
+                                  background: isSelected
+                                    ? optBorder
+                                    : "transparent",
                                   flexShrink: 0,
                                 }}
                               />
@@ -546,11 +679,20 @@ export default function TutorTrainingPage() {
                         })}
                       </div>
 
-                      <div style={{ marginTop: "1rem", display: "flex", gap: "0.75rem", alignItems: "center" }}>
+                      <div
+                        style={{
+                          marginTop: "1rem",
+                          display: "flex",
+                          gap: "0.75rem",
+                          alignItems: "center",
+                        }}
+                      >
                         {!quizDone && (
                           <button
                             onClick={() => handleQuizSubmit(mod.id)}
-                            disabled={quizAnswer === undefined || quizAnswer === null}
+                            disabled={
+                              quizAnswer === undefined || quizAnswer === null
+                            }
                             style={{
                               background: mod.color,
                               color: "#fff",
@@ -559,7 +701,8 @@ export default function TutorTrainingPage() {
                               padding: "0.55rem 1.5rem",
                               fontWeight: 700,
                               fontSize: "0.875rem",
-                              cursor: quizAnswer !== null ? "pointer" : "not-allowed",
+                              cursor:
+                                quizAnswer !== null ? "pointer" : "not-allowed",
                               opacity: quizAnswer !== null ? 1 : 0.5,
                             }}
                           >
@@ -567,15 +710,35 @@ export default function TutorTrainingPage() {
                           </button>
                         )}
                         {quizDone && (
-                          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-                            <div style={{ color: quizCorrect ? "var(--wa-forest)" : "var(--wa-terra)", fontWeight: 700, fontSize: "0.9rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "1rem",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <div
+                              style={{
+                                color: quizCorrect
+                                  ? "var(--wa-forest)"
+                                  : "var(--wa-terra)",
+                                fontWeight: 700,
+                                fontSize: "0.9rem",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.4rem",
+                              }}
+                            >
                               {quizCorrect ? (
                                 <>
-                                  <CheckCircle2 size={16} /> Correct! Great understanding.
+                                  <CheckCircle2 size={16} /> Correct! Great
+                                  understanding.
                                 </>
                               ) : (
                                 <>
-                                  <AlertCircle size={16} /> Not quite - review the notes and try again.
+                                  <AlertCircle size={16} /> Not quite - review
+                                  the notes and try again.
                                 </>
                               )}
                             </div>
@@ -609,28 +772,34 @@ export default function TutorTrainingPage() {
                     {!isCompleted && (
                       <button
                         onClick={() => handleModuleComplete(mod.id)}
-                        disabled={!quizDone || !quizCorrect || savingModule === mod.id}
+                        disabled={
+                          !quizDone || !quizCorrect || savingModule === mod.id
+                        }
                         style={{
                           marginTop: "1.5rem",
                           width: "100%",
-                          background: quizDone && quizCorrect ? "#0E8345" : "#E5E7EB",
+                          background:
+                            quizDone && quizCorrect ? "#0E8345" : "#E5E7EB",
                           color: quizDone && quizCorrect ? "#fff" : "#9CA3AF",
                           border: "none",
                           borderRadius: "0.75rem",
                           padding: "0.85rem",
                           fontWeight: 800,
                           fontSize: "0.9375rem",
-                          cursor: quizDone && quizCorrect && savingModule !== mod.id ? "pointer" : "not-allowed",
+                          cursor:
+                            quizDone && quizCorrect && savingModule !== mod.id
+                              ? "pointer"
+                              : "not-allowed",
                           transition: "background 0.2s",
                         }}
                       >
                         {savingModule === mod.id
                           ? "Saving progress..."
                           : quizDone && quizCorrect
-                          ? `Save & Mark Module ${mod.id} Complete`
-                          : quizDone && !quizCorrect
-                          ? "Must pass quiz check to proceed"
-                          : "Complete the quiz above to continue"}
+                            ? `Save & Mark Module ${mod.id} Complete`
+                            : quizDone && !quizCorrect
+                              ? "Must pass quiz check to proceed"
+                              : "Complete the quiz above to continue"}
                       </button>
                     )}
 
@@ -661,7 +830,11 @@ export default function TutorTrainingPage() {
         <div style={{ marginTop: "2rem", textAlign: "center" }}>
           <Link
             href="/tutor"
-            style={{ color: "#6B7280", fontSize: "0.875rem", textDecoration: "none" }}
+            style={{
+              color: "#6B7280",
+              fontSize: "0.875rem",
+              textDecoration: "none",
+            }}
           >
             ← Back to Tutor Dashboard
           </Link>

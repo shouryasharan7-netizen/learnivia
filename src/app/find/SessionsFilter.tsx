@@ -12,7 +12,12 @@ interface Props {
   availableSubjects: string[];
 }
 
-export default function SessionsFilter({ currentQ, currentSubject, currentSort, availableSubjects }: Props) {
+export default function SessionsFilter({
+  currentQ,
+  currentSubject,
+  currentSort,
+  availableSubjects,
+}: Props) {
   const router = useRouter();
   const [search, setSearch] = useState(currentQ);
 
@@ -30,8 +35,16 @@ export default function SessionsFilter({ currentQ, currentSubject, currentSort, 
   };
 
   // Combine standard subjects with DB subjects, keeping "All" first
-  const standardSubjects = ["Mathematics", "Science", "English & Writing", "Homework Help"];
-  const allPills = ["All", ...Array.from(new Set([...standardSubjects, ...availableSubjects]))];
+  const standardSubjects = [
+    "Mathematics",
+    "Science",
+    "English & Writing",
+    "Homework Help",
+  ];
+  const allPills = [
+    "All",
+    ...Array.from(new Set([...standardSubjects, ...availableSubjects])),
+  ];
 
   return (
     <div className={styles.filterContainer}>
@@ -46,10 +59,12 @@ export default function SessionsFilter({ currentQ, currentSubject, currentSort, 
             className={styles.searchInput}
           />
         </form>
-        
-        <select 
+
+        <select
           value={currentSort}
-          onChange={(e) => updateFilters(search, currentSubject, e.target.value)}
+          onChange={(e) =>
+            updateFilters(search, currentSubject, e.target.value)
+          }
           className={styles.sortSelect}
         >
           <option value="soon">Starting Soon</option>

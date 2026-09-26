@@ -90,7 +90,8 @@ export default function GlobalError({ error, reset }: ErrorProps) {
             marginBottom: "2rem",
           }}
         >
-          We encountered an unexpected issue while loading this page. You can try refreshing the component or return to your student dashboard.
+          We encountered an unexpected issue while loading this page. You can
+          try refreshing the component or return to your student dashboard.
         </p>
 
         {error?.digest && (

@@ -20,7 +20,12 @@ export const metadata: Metadata = {
 };
 
 export default async function StoriesPage() {
-  let initialStories: Array<{ id: string; name: string; subject: string; quote: string }> = [];
+  let initialStories: Array<{
+    id: string;
+    name: string;
+    subject: string;
+    quote: string;
+  }> = [];
 
   try {
     const dbStories = await prisma.story.findMany({

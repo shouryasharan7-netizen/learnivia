@@ -40,7 +40,9 @@ export function SessionChat({
   // Resource sharing panel state
   const [showResourceModal, setShowResourceModal] = useState(false);
   const [resourceTitle, setResourceTitle] = useState("");
-  const [resourceCategory, setResourceCategory] = useState("Study Guide & Notes");
+  const [resourceCategory, setResourceCategory] = useState(
+    "Study Guide & Notes",
+  );
   const [resourceContent, setResourceContent] = useState("");
   const [resourceError, setResourceError] = useState("");
   const [resourceSuccess, setResourceSuccess] = useState(false);
@@ -82,7 +84,9 @@ export function SessionChat({
   const handleShareResource = (e: React.FormEvent) => {
     e.preventDefault();
     if (!resourceTitle.trim() || !resourceContent.trim()) {
-      setResourceError("Please fill in both the title and the resource details or link.");
+      setResourceError(
+        "Please fill in both the title and the resource details or link.",
+      );
       return;
     }
 
@@ -92,7 +96,7 @@ export function SessionChat({
         bookingId,
         resourceTitle,
         resourceContent,
-        resourceCategory
+        resourceCategory,
       );
       if (res.success) {
         setResourceSuccess(true);
@@ -117,9 +121,11 @@ export function SessionChat({
     let details = "";
 
     for (const line of lines) {
-      if (line.startsWith("Category: ")) category = line.replace("Category: ", "");
+      if (line.startsWith("Category: "))
+        category = line.replace("Category: ", "");
       else if (line.startsWith("Title: ")) title = line.replace("Title: ", "");
-      else if (line.startsWith("Details: ")) details = line.replace("Details: ", "");
+      else if (line.startsWith("Details: "))
+        details = line.replace("Details: ", "");
     }
 
     return { category, title, details };
@@ -175,7 +181,13 @@ export function SessionChat({
             >
               Session Discussion &amp; Resources
             </h3>
-            <p style={{ fontSize: "0.75rem", color: "var(--wa-muted, #64748B)", margin: 0 }}>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--wa-muted, #64748B)",
+                margin: 0,
+              }}
+            >
               Direct private study circle for {studentName} and {tutorName}
             </p>
           </div>
@@ -243,14 +255,32 @@ export function SessionChat({
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
             <FolderOpen size={16} color="var(--wa-green, #2563EB)" />
-            <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--wa-ink, #0F172A)" }}>
+            <span
+              style={{
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                color: "var(--wa-ink, #0F172A)",
+              }}
+            >
               Share Post-Class Notes &amp; Practice Materials
             </span>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0.75rem",
+            }}
+          >
             <div>
-              <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-muted, #64748B)" }}>
+              <label
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "var(--wa-muted, #64748B)",
+                }}
+              >
                 Resource Title
               </label>
               <input
@@ -271,7 +301,13 @@ export function SessionChat({
             </div>
 
             <div>
-              <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-muted, #64748B)" }}>
+              <label
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "var(--wa-muted, #64748B)",
+                }}
+              >
                 Category
               </label>
               <select
@@ -287,17 +323,33 @@ export function SessionChat({
                   background: "#FFFFFF",
                 }}
               >
-                <option value="Study Guide & Notes">Study Guide &amp; Notes</option>
-                <option value="Formula Sheet & Reference">Formula Sheet &amp; Reference</option>
-                <option value="Homework Practice Problems">Homework Practice Problems</option>
-                <option value="Recommended Video / Link">Recommended Video / Link</option>
-                <option value="Post-Session Feedback">Post-Session Feedback</option>
+                <option value="Study Guide & Notes">
+                  Study Guide &amp; Notes
+                </option>
+                <option value="Formula Sheet & Reference">
+                  Formula Sheet &amp; Reference
+                </option>
+                <option value="Homework Practice Problems">
+                  Homework Practice Problems
+                </option>
+                <option value="Recommended Video / Link">
+                  Recommended Video / Link
+                </option>
+                <option value="Post-Session Feedback">
+                  Post-Session Feedback
+                </option>
               </select>
             </div>
           </div>
 
           <div>
-            <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--wa-muted, #64748B)" }}>
+            <label
+              style={{
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                color: "var(--wa-muted, #64748B)",
+              }}
+            >
               Notes, Steps, or Resource URL
             </label>
             <textarea
@@ -319,16 +371,32 @@ export function SessionChat({
           </div>
 
           {resourceError && (
-            <div style={{ fontSize: "0.75rem", color: "#DC2626" }}>{resourceError}</div>
+            <div style={{ fontSize: "0.75rem", color: "#DC2626" }}>
+              {resourceError}
+            </div>
           )}
 
           {resourceSuccess && (
-            <div style={{ fontSize: "0.75rem", color: "#166534", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+            <div
+              style={{
+                fontSize: "0.75rem",
+                color: "#166534",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.3rem",
+              }}
+            >
               <CheckCircle2 size={14} /> Shared with student!
             </div>
           )}
 
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "0.5rem",
+            }}
+          >
             <button
               type="button"
               onClick={() => setShowResourceModal(false)}
@@ -377,7 +445,14 @@ export function SessionChat({
         }}
       >
         {loading ? (
-          <div style={{ textAlign: "center", padding: "2rem 0", color: "var(--wa-muted, #64748B)", fontSize: "0.8125rem" }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "2rem 0",
+              color: "var(--wa-muted, #64748B)",
+              fontSize: "0.8125rem",
+            }}
+          >
             Loading session discussion...
           </div>
         ) : messages.length === 0 ? (
@@ -388,12 +463,30 @@ export function SessionChat({
               color: "var(--wa-muted, #64748B)",
             }}
           >
-            <BookOpen size={28} color="#94A3B8" style={{ margin: "0 auto 0.5rem" }} />
-            <div style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--wa-ink, #0F172A)" }}>
+            <BookOpen
+              size={28}
+              color="#94A3B8"
+              style={{ margin: "0 auto 0.5rem" }}
+            />
+            <div
+              style={{
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                color: "var(--wa-ink, #0F172A)",
+              }}
+            >
               Session Discussion is Open
             </div>
-            <p style={{ fontSize: "0.8125rem", margin: "0.25rem auto 0", maxWidth: "380px", lineHeight: 1.5 }}>
-              Use this private space to ask clarifying questions before class, share problem files, or review study notes together.
+            <p
+              style={{
+                fontSize: "0.8125rem",
+                margin: "0.25rem auto 0",
+                maxWidth: "380px",
+                lineHeight: 1.5,
+              }}
+            >
+              Use this private space to ask clarifying questions before class,
+              share problem files, or review study notes together.
             </p>
           </div>
         ) : (
@@ -412,7 +505,14 @@ export function SessionChat({
                     margin: "0.25rem 0",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
                     <span
                       style={{
                         fontSize: "0.6875rem",
@@ -426,14 +526,33 @@ export function SessionChat({
                     >
                       {resource.category}
                     </span>
-                    <span style={{ fontSize: "0.75rem", color: "var(--wa-muted, #64748B)" }}>
+                    <span
+                      style={{
+                        fontSize: "0.75rem",
+                        color: "var(--wa-muted, #64748B)",
+                      }}
+                    >
                       Shared by {m.authorName}
                     </span>
                   </div>
-                  <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#14532D", marginBottom: "0.35rem" }}>
+                  <div
+                    style={{
+                      fontSize: "0.9375rem",
+                      fontWeight: 700,
+                      color: "#14532D",
+                      marginBottom: "0.35rem",
+                    }}
+                  >
                     {resource.title}
                   </div>
-                  <div style={{ fontSize: "0.8125rem", color: "#1E293B", whiteSpace: "pre-wrap", lineHeight: 1.5 }}>
+                  <div
+                    style={{
+                      fontSize: "0.8125rem",
+                      color: "#1E293B",
+                      whiteSpace: "pre-wrap",
+                      lineHeight: 1.5,
+                    }}
+                  >
                     {resource.details}
                   </div>
                 </div>
@@ -459,7 +578,11 @@ export function SessionChat({
                     color: "var(--wa-muted, #64748B)",
                   }}
                 >
-                  <span style={{ fontWeight: 600, color: "var(--wa-ink, #0F172A)" }}>{m.authorName}</span>
+                  <span
+                    style={{ fontWeight: 600, color: "var(--wa-ink, #0F172A)" }}
+                  >
+                    {m.authorName}
+                  </span>
                   <span>•</span>
                   <span>{m.authorRole}</span>
                 </div>
@@ -468,9 +591,15 @@ export function SessionChat({
                   style={{
                     maxWidth: "80%",
                     padding: "0.6rem 0.9rem",
-                    borderRadius: m.isCurrentUser ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
-                    background: m.isCurrentUser ? "var(--wa-green, #2563EB)" : "#F1F5F9",
-                    color: m.isCurrentUser ? "#FFFFFF" : "var(--wa-ink, #0F172A)",
+                    borderRadius: m.isCurrentUser
+                      ? "12px 12px 2px 12px"
+                      : "12px 12px 12px 2px",
+                    background: m.isCurrentUser
+                      ? "var(--wa-green, #2563EB)"
+                      : "#F1F5F9",
+                    color: m.isCurrentUser
+                      ? "#FFFFFF"
+                      : "var(--wa-ink, #0F172A)",
                     fontSize: "0.85rem",
                     lineHeight: 1.45,
                     boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
@@ -520,7 +649,9 @@ export function SessionChat({
           disabled={!inputMessage.trim() || isPending}
           style={{
             padding: "0.6rem 1.15rem",
-            background: inputMessage.trim() ? "var(--wa-green, #2563EB)" : "#CBD5E1",
+            background: inputMessage.trim()
+              ? "var(--wa-green, #2563EB)"
+              : "#CBD5E1",
             color: "#FFFFFF",
             border: "none",
             borderRadius: "8px",
@@ -529,7 +660,8 @@ export function SessionChat({
             display: "inline-flex",
             alignItems: "center",
             gap: "0.4rem",
-            cursor: inputMessage.trim() && !isPending ? "pointer" : "not-allowed",
+            cursor:
+              inputMessage.trim() && !isPending ? "pointer" : "not-allowed",
             transition: "background 0.15s ease",
           }}
         >

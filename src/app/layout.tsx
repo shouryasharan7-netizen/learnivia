@@ -35,8 +35,16 @@ export const metadata: Metadata = {
     template: "%s | Learnivia",
     default: "Learnivia - Free Peer-to-Peer Online Tutoring",
   },
-  description: "Free 1-on-1 tutoring and interactive workshops led by high school and university peers. No subscriptions, zero fees.",
-  keywords: ["free tutoring", "volunteer tutor", "online tutoring", "peer learning", "homework help", "K-10 tutoring"],
+  description:
+    "Free 1-on-1 tutoring and interactive workshops led by high school and university peers. No subscriptions, zero fees.",
+  keywords: [
+    "free tutoring",
+    "volunteer tutor",
+    "online tutoring",
+    "peer learning",
+    "homework help",
+    "K-10 tutoring",
+  ],
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
@@ -46,7 +54,8 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Learnivia",
     title: "Learnivia - Free Peer-to-Peer Online Tutoring",
-    description: "Free 1-on-1 tutoring and interactive workshops led by high school and university peers. No subscriptions, zero fees.",
+    description:
+      "Free 1-on-1 tutoring and interactive workshops led by high school and university peers. No subscriptions, zero fees.",
   },
 };
 
@@ -56,7 +65,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      data-theme="light"
+      suppressHydrationWarning
+      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -77,7 +91,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={sans.className} style={{ fontFamily: "'Proxima Nova', var(--font-sans)" }}>
+      <body
+        className={sans.className}
+        style={{ fontFamily: "'Proxima Nova', var(--font-sans)" }}
+      >
         <Providers>
           <AppShell>
             {children}

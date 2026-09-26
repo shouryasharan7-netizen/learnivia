@@ -1,10 +1,6 @@
-/* ==========================================================================
-   LEARNIVIA 21ST.DEV BENTO GRID & AURORA INDIGO DESIGN SYSTEM
-   ========================================================================== */
-
 .main {
   padding: 1.5rem 0 4.5rem;
-  background-color: #FAF8F5;
+  background-color: #faf8f5;
   min-height: calc(100vh - 60px);
 }
 
@@ -17,12 +13,9 @@
   gap: 2rem;
 }
 
-/* ==========================================================================
-   0. Executive Administrator Compact Toolbar
-   ========================================================================== */
 .compactAdminBar {
-  background: #FDF3E3;
-  border: 1px solid #E8C97A;
+  background: #fdf3e3;
+  border: 1px solid #e8c97a;
   border-radius: 12px;
   padding: 0.55rem 1.15rem;
   display: flex;
@@ -30,7 +23,7 @@
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
-  box-shadow: 0 2px 8px rgba(201, 146, 42, 0.10);
+  box-shadow: 0 2px 8px rgba(201, 146, 42, 0.1);
 }
 
 .compactAdminLeft {
@@ -41,20 +34,20 @@
 }
 
 .compactAdminShield {
-  color: #B07A1F;
+  color: #b07a1f;
   flex-shrink: 0;
 }
 
 .compactAdminTitle {
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #6B4C10;
+  color: #6b4c10;
 }
 
 .compactAdminPill {
   background: rgba(201, 146, 42, 0.12);
   border: 1px solid rgba(201, 146, 42, 0.3);
-  color: #8B5E10;
+  color: #8b5e10;
   font-size: 0.6875rem;
   font-weight: 700;
   padding: 0.15rem 0.55rem;
@@ -78,8 +71,8 @@
 }
 
 .compactAdminBtnPrimary {
-  background: #C9922A;
-  color: #FFFFFF;
+  background: #c9922a;
+  color: #ffffff;
   padding: 0.35rem 0.85rem;
   border-radius: 8px;
   font-size: 0.75rem;
@@ -93,14 +86,14 @@
 }
 
 .compactAdminBtnPrimary:hover {
-  background: #B07A1F;
+  background: #b07a1f;
   transform: translateY(-1px);
 }
 
 .compactAdminBtnSecondary {
-  background: rgba(201, 146, 42, 0.10);
+  background: rgba(201, 146, 42, 0.1);
   border: 1px solid rgba(201, 146, 42, 0.25);
-  color: #6B4C10;
+  color: #6b4c10;
   padding: 0.35rem 0.75rem;
   border-radius: 8px;
   font-size: 0.75rem;
@@ -110,14 +103,14 @@
 }
 
 .compactAdminBtnSecondary:hover {
-  background: rgba(201, 146, 42, 0.20);
-  color: #4D3608;
+  background: rgba(201, 146, 42, 0.2);
+  color: #4d3608;
 }
 
 /* Tutor Pending Banner */
 .tutorPendingBanner {
-  background: var(--wa-warning-bg, #FFFBEB);
-  border: 1px solid var(--wa-warning, #F59E0B);
+  background: var(--wa-warning-bg, #fffbeb);
+  border: 1px solid var(--wa-warning, #f59e0b);
   border-radius: 8px;
   padding: 1.15rem 1.5rem;
   display: flex;
@@ -144,12 +137,12 @@
 .tutorPendingTitle {
   font-size: 0.95rem;
   font-weight: 800;
-  color: #92400E;
+  color: #92400e;
 }
 
 .tutorPendingPill {
-  background: #F59E0B;
-  color: #FFFFFF;
+  background: #f59e0b;
+  color: #ffffff;
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -158,7 +151,7 @@
 }
 
 .tutorPendingDesc {
-  color: #78350F;
+  color: #78350f;
   font-size: 0.8125rem;
   margin: 0;
   line-height: 1.45;
@@ -166,8 +159,8 @@
 }
 
 .tutorPendingBtn {
-  background: #D97706;
-  color: #FFFFFF;
+  background: #d97706;
+  color: #ffffff;
   padding: 0.55rem 1.15rem;
   border-radius: 10px;
   font-weight: 700;
@@ -181,13 +174,10 @@
 }
 
 .tutorPendingBtn:hover {
-  background: #B45309;
+  background: #b45309;
   transform: translateY(-1px);
 }
 
-/* ==========================================================================
-   1. Bento Deck 1: Hero Command Hub + Streak + Mastery Deck
-   ========================================================================== */
 .bentoHeroDeck {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
@@ -203,11 +193,11 @@
 
 /* Hero Command Card */
 .heroCommandCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 16px;
   padding: 2.25rem 2.5rem;
-  color: #3D3831;
+  color: #3d3831;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -219,8 +209,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #EAF3ED;
-  border: 1px solid #B5D9C5;
+  background: #eaf3ed;
+  border: 1px solid #b5d9c5;
   padding: 0.35rem 0.85rem;
   border-radius: 6px;
   font-size: 0.725rem;
@@ -238,10 +228,10 @@
 }
 
 .heroGreetingTitle {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
   font-size: 2rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   letter-spacing: -0.01em;
   margin: 0.15rem 0 0.4rem;
   line-height: 1.2;
@@ -249,7 +239,7 @@
 
 .heroGreetingDesc {
   font-size: 0.9375rem;
-  color: #7A7169;
+  color: #7a7169;
   margin: 0;
   line-height: 1.65;
   max-width: 540px;
@@ -264,7 +254,7 @@
 
 .heroLaunchBtnPrimary {
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 0.875rem;
   font-weight: 700;
   padding: 0.65rem 1.35rem;
@@ -284,9 +274,9 @@
 }
 
 .heroLaunchBtnSecondary {
-  background: #FAF8F5;
-  border: 1.5px solid #DDD8D0;
-  color: #3D3831;
+  background: #faf8f5;
+  border: 1.5px solid #ddd8d0;
+  color: #3d3831;
   font-size: 0.85rem;
   font-weight: 600;
   padding: 0.65rem 1.15rem;
@@ -299,16 +289,16 @@
 }
 
 .heroLaunchBtnSecondary:hover {
-  background: #EAF3ED;
-  border-color: #B5D9C5;
-  color: #2D6A4F;
+  background: #eaf3ed;
+  border-color: #b5d9c5;
+  color: #2d6a4f;
   transform: translateY(-1px);
 }
 
 /* Daily Study Goals (Tile B) */
 .bentoStreakCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 16px;
   padding: 1.4rem 1.35rem;
   display: flex;
@@ -328,21 +318,21 @@
 }
 
 .streakFlameIcon {
-  color: var(--wa-warning, #D97706);
+  color: var(--wa-warning, #d97706);
 }
 
 .bentoTileTitle {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .streakCountBadge {
-  background: #FDF3E3;
-  color: #8B5E10;
-  border: 1px solid #E8C97A;
+  background: #fdf3e3;
+  color: #8b5e10;
+  border: 1px solid #e8c97a;
   font-size: 0.6875rem;
   font-weight: 700;
   padding: 0.2rem 0.55rem;
@@ -352,7 +342,7 @@
 
 .bentoTileDesc {
   font-size: 0.8125rem;
-  color: #7A7169;
+  color: #7a7169;
   margin: 0;
   line-height: 1.5;
 }
@@ -378,27 +368,27 @@
 .dayLabel {
   font-size: 0.65rem;
   font-weight: 700;
-  color: #7A7169;
+  color: #7a7169;
 }
 
 .dayDot {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #F3EFE8;
-  border: 1.5px solid #DDD8D0;
+  background: #f3efe8;
+  border: 1.5px solid #ddd8d0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.65rem;
-  color: #7A7169;
+  color: #7a7169;
   transition: all 160ms ease;
 }
 
 .dayDotDone {
   background: var(--wa-green);
   border-color: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .dayDotToday {
@@ -411,8 +401,8 @@
 
 /* Scholar Mastery & Level (Tile C) */
 .bentoMasteryCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 16px;
   padding: 1.4rem 1.35rem;
   display: flex;
@@ -425,9 +415,9 @@
 .masteryTitle {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .masteryBadge {
@@ -455,13 +445,13 @@
   justify-content: space-between;
   font-size: 0.775rem;
   font-weight: 600;
-  color: #3D3831;
+  color: #3d3831;
 }
 
 .xpTrack {
   width: 100%;
   height: 8px;
-  background: #EDE9E1;
+  background: #ede9e1;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -477,8 +467,8 @@
 .perkPreviewBox {
   font-size: 0.725rem;
   color: #235840;
-  background: #EAF3ED;
-  border: 1px dashed #B5D9C5;
+  background: #eaf3ed;
+  border: 1px dashed #b5d9c5;
   padding: 0.45rem 0.65rem;
   border-radius: 8px;
   display: flex;
@@ -492,8 +482,8 @@
   display: flex;
   align-items: center;
   gap: 0;
-  background: #FAF8F5;
-  border: 1.5px solid #EDE9E1;
+  background: #faf8f5;
+  border: 1.5px solid #ede9e1;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -508,17 +498,17 @@
 }
 
 .statPairNum {
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
   font-size: 1.75rem;
   font-weight: 700;
-  color: #1C1A17;
+  color: #1c1a17;
   line-height: 1;
 }
 
 .statPairLabel {
   font-size: 0.6875rem;
   font-weight: 600;
-  color: #A89F94;
+  color: #a89f94;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -526,14 +516,10 @@
 .statPairDivider {
   width: 1px;
   height: 48px;
-  background: #EDE9E1;
+  background: #ede9e1;
   flex-shrink: 0;
 }
 
-
-/* ==========================================================================
-   2. Bento Deck 2: Pathways Matrix (21st.dev Style Cards)
-   ========================================================================== */
 .bentoPathwaysGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -553,8 +539,8 @@
 }
 
 .pathwayCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 14px;
   padding: 1.4rem 1.25rem;
   text-decoration: none;
@@ -568,8 +554,8 @@
 
 .pathwayCard:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(28, 26, 23, 0.10);
-  border-color: #B5D9C5;
+  box-shadow: 0 8px 24px rgba(28, 26, 23, 0.1);
+  border-color: #b5d9c5;
 }
 
 .pathwayBadgeIcon {
@@ -590,15 +576,15 @@
 .pathwayTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
   line-height: 1.25;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .pathwayDesc {
   font-size: 0.8125rem;
-  color: #7A7169;
+  color: #7a7169;
   line-height: 1.5;
   margin: 0;
   flex: 1;
@@ -609,18 +595,15 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 0.65rem;
-  border-top: 1px solid #EDE9E1;
+  border-top: 1px solid #ede9e1;
   font-size: 0.775rem;
   font-weight: 700;
-  color: #2D6A4F;
+  color: #2d6a4f;
 }
 
-/* ==========================================================================
-   4. User Progress & Real-Time Stats Strip
-   ========================================================================== */
 .userStrip {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 14px;
   padding: 1.15rem 1.6rem;
   display: flex;
@@ -642,7 +625,7 @@
   height: 48px;
   border-radius: 50%;
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.1rem;
   font-weight: 700;
   display: flex;
@@ -661,9 +644,9 @@
 .userDisplayName {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .userLinks {
@@ -676,7 +659,7 @@
 .metaLink {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #2D6A4F;
+  color: #2d6a4f;
   text-decoration: none;
 }
 
@@ -693,9 +676,9 @@
 }
 
 .rankPill {
-  background: #FDF3E3;
-  border: 1px solid #E8C97A;
-  color: #8B5E10;
+  background: #fdf3e3;
+  border: 1px solid #e8c97a;
+  color: #8b5e10;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -709,8 +692,8 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
+  background: #faf8f5;
+  border: 1px solid #ddd8d0;
   padding: 0.55rem 0.95rem;
   border-radius: 10px;
 }
@@ -724,38 +707,35 @@
 .statNumber {
   font-size: 1rem;
   font-weight: 700;
-  color: #1C1A17;
+  color: #1c1a17;
 }
 
 .statUnit {
   font-size: 0.6875rem;
   font-weight: 600;
-  color: #7A7169;
+  color: #7a7169;
 }
 
 .leaderboardLink {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: #EAF3ED;
-  border: 1px solid #B5D9C5;
+  background: #eaf3ed;
+  border: 1px solid #b5d9c5;
   padding: 0.55rem 0.95rem;
   border-radius: 10px;
   text-decoration: none;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #2D6A4F;
+  color: #2d6a4f;
   transition: all 140ms ease;
 }
 
 .leaderboardLink:hover {
-  background: #D4EDDF;
+  background: #d4eddf;
   transform: translateY(-1px);
 }
 
-/* ==========================================================================
-   5. Bento Main Deck: Sessions & Tasks Two-Column Grid
-   ========================================================================== */
 .twoColGrid {
   display: grid;
   grid-template-columns: 2fr 1.05fr;
@@ -768,7 +748,8 @@
   }
 }
 
-.sessionsCol, .tasksCol {
+.sessionsCol,
+.tasksCol {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -784,15 +765,15 @@
 .colTitle {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .viewAllLink {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #2D6A4F;
+  color: #2d6a4f;
   text-decoration: none;
 }
 
@@ -803,8 +784,8 @@
 
 /* Empty State Interactive Discovery Card */
 .emptyCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 14px;
   padding: 2.25rem 1.75rem;
   text-align: center;
@@ -819,8 +800,8 @@
   width: 54px;
   height: 54px;
   border-radius: 14px;
-  background: #EAF3ED;
-  color: #2D6A4F;
+  background: #eaf3ed;
+  color: #2d6a4f;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -829,14 +810,14 @@
 .emptyTitle {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .emptyText {
   font-size: 0.85rem;
-  color: #64748B;
+  color: #64748b;
   line-height: 1.5;
   max-width: 440px;
   margin: 0;
@@ -844,7 +825,7 @@
 
 .browseBtn {
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.65rem 1.25rem;
   border-radius: 10px;
   font-weight: 700;
@@ -864,9 +845,9 @@
 }
 
 .promoSecondaryBtn {
-  background: #FAF8F5;
-  border: 1.5px solid #DDD8D0;
-  color: #3D3831;
+  background: #faf8f5;
+  border: 1.5px solid #ddd8d0;
+  color: #3d3831;
   padding: 0.65rem 1.15rem;
   border-radius: 10px;
   font-weight: 700;
@@ -879,16 +860,16 @@
 }
 
 .promoSecondaryBtn:hover {
-  background: #EAF3ED;
-  border-color: #B5D9C5;
-  color: #2D6A4F;
+  background: #eaf3ed;
+  border-color: #b5d9c5;
+  color: #2d6a4f;
 }
 
 /* Empty State Subject Chips */
 .emptySubjectSection {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #EDE9E1;
+  border-top: 1px solid #ede9e1;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -899,7 +880,7 @@
 .emptySubjectPrompt {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #7A7169;
+  color: #7a7169;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0;
@@ -914,9 +895,9 @@
 }
 
 .subjectChip {
-  background: #FAF8F5;
-  border: 1.5px solid #DDD8D0;
-  color: #3D3831;
+  background: #faf8f5;
+  border: 1.5px solid #ddd8d0;
+  color: #3d3831;
   font-size: 0.785rem;
   font-weight: 600;
   padding: 0.4rem 0.8rem;
@@ -929,9 +910,9 @@
 }
 
 .subjectChip:hover {
-  background: #EAF3ED;
-  border-color: #B5D9C5;
-  color: #2D6A4F;
+  background: #eaf3ed;
+  border-color: #b5d9c5;
+  color: #2d6a4f;
   transform: translateY(-1px);
 }
 
@@ -943,8 +924,8 @@
 }
 
 .bookingCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 12px;
   padding: 1.25rem 1.4rem;
   display: flex;
@@ -966,8 +947,8 @@
   font-size: 0.6875rem;
   font-weight: 700;
   color: #235840;
-  background: #EAF3ED;
-  border: 1px solid #B5D9C5;
+  background: #eaf3ed;
+  border: 1px solid #b5d9c5;
   padding: 0.15rem 0.55rem;
   border-radius: 6px;
   width: fit-content;
@@ -976,9 +957,9 @@
 .workshopBadge {
   font-size: 0.6875rem;
   font-weight: 700;
-  color: #8B5E10;
-  background: #FDF3E3;
-  border: 1px solid #E8C97A;
+  color: #8b5e10;
+  background: #fdf3e3;
+  border: 1px solid #e8c97a;
   padding: 0.15rem 0.55rem;
   border-radius: 6px;
   width: fit-content;
@@ -987,20 +968,20 @@
 .bookingTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .bookingTime {
   font-size: 0.8125rem;
-  color: #7A7169;
+  color: #7a7169;
   margin: 0;
 }
 
 .bookingTopic {
   font-size: 0.8rem;
-  color: #3D3831;
+  color: #3d3831;
   margin: 0;
 }
 
@@ -1012,7 +993,7 @@
 
 .zoomBtn {
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 700;
   padding: 0.55rem 1rem;
@@ -1021,7 +1002,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.20);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
   transition: all 140ms ease;
 }
 
@@ -1033,7 +1014,7 @@
 .cancelLink {
   background: transparent;
   border: none;
-  color: #A89F94;
+  color: #a89f94;
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
@@ -1043,8 +1024,8 @@
 }
 
 .cancelLink:hover {
-  color: #C1694F;
-  background: #FAEDE9;
+  color: #c1694f;
+  background: #faede9;
 }
 
 /* Completed Sessions Block */
@@ -1058,8 +1039,8 @@
 .subHeading {
   font-size: 1rem;
   font-weight: 600;
-  color: #1C1A17;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  color: #1c1a17;
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .completedList {
@@ -1069,8 +1050,8 @@
 }
 
 .completedRow {
-  background: #FFFFFF;
-  border: 1px solid #DDD8D0;
+  background: #ffffff;
+  border: 1px solid #ddd8d0;
   border-radius: 12px;
   padding: 1.15rem 1.35rem;
   display: flex;
@@ -1089,13 +1070,13 @@
 
 .completedDate {
   font-size: 0.775rem;
-  color: #7A7169;
+  color: #7a7169;
 }
 
 .durationBadge {
-  background: #F3EFE8;
-  color: #3D3831;
-  border: 1px solid #DDD8D0;
+  background: #f3efe8;
+  color: #3d3831;
+  border: 1px solid #ddd8d0;
   font-size: 0.725rem;
   font-weight: 700;
   padding: 0.2rem 0.6rem;
@@ -1103,12 +1084,12 @@
 }
 
 .checkUpBox {
-  background: #EAF3ED;
+  background: #eaf3ed;
   border: 1px solid rgba(45, 106, 79, 0.2);
   padding: 0.6rem 0.85rem;
   border-radius: 8px;
   font-size: 0.8rem;
-  color: #3D3831;
+  color: #3d3831;
 }
 
 .completedActions {
@@ -1120,8 +1101,8 @@
 }
 
 .bookAgainBtn {
-  background: #EAF3ED;
-  border: 1px solid #B5D9C5;
+  background: #eaf3ed;
+  border: 1px solid #b5d9c5;
   color: #235840;
   font-size: 0.775rem;
   font-weight: 700;
@@ -1135,13 +1116,13 @@
 }
 
 .bookAgainBtn:hover {
-  background: #D4EDDF;
+  background: #d4eddf;
 }
 
 .recordingBtn {
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
-  color: #3D3831;
+  background: #faf8f5;
+  border: 1px solid #ddd8d0;
+  color: #3d3831;
   font-size: 0.775rem;
   font-weight: 700;
   padding: 0.45rem 0.85rem;
@@ -1153,30 +1134,27 @@
 }
 
 .viewTutorBtn {
-  color: #7A7169;
+  color: #7a7169;
   font-size: 0.775rem;
   font-weight: 600;
   text-decoration: none;
 }
 
 .viewTutorBtn:hover {
-  color: #1C1A17;
+  color: #1c1a17;
 }
 
-/* ==========================================================================
-   6. Tasks Column & Task Meter
-   ========================================================================== */
 .tasksCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 14px;
   padding: 1.35rem 1.4rem;
   box-shadow: 0 2px 8px rgba(28, 26, 23, 0.06);
 }
 
 .taskProgressWrap {
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
+  background: #faf8f5;
+  border: 1px solid #ddd8d0;
   border-radius: 10px;
   padding: 0.75rem 0.95rem;
   margin-bottom: 1rem;
@@ -1191,13 +1169,13 @@
   justify-content: space-between;
   font-size: 0.775rem;
   font-weight: 700;
-  color: #3D3831;
+  color: #3d3831;
 }
 
 .taskProgressBar {
   width: 100%;
   height: 7px;
-  background: #EDE9E1;
+  background: #ede9e1;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -1237,14 +1215,14 @@
 .taskTitle {
   font-size: 0.875rem;
   font-weight: 700;
-  color: #1C1A17;
+  color: #1c1a17;
   display: block;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .taskDesc {
   font-size: 0.785rem;
-  color: #7A7169;
+  color: #7a7169;
   margin: 0.2rem 0 0;
   line-height: 1.5;
 }
@@ -1253,7 +1231,7 @@
   display: inline-block;
   font-size: 0.775rem;
   font-weight: 700;
-  color: #2D6A4F;
+  color: #2d6a4f;
   text-decoration: none;
   margin-top: 0.35rem;
 }
@@ -1265,8 +1243,8 @@
 
 /* Role-Specific Side Cards */
 .sideCard {
-  background: #FFFFFF;
-  border: 1.5px solid #DDD8D0;
+  background: #ffffff;
+  border: 1.5px solid #ddd8d0;
   border-radius: 14px;
   padding: 1.35rem 1.4rem;
   box-shadow: 0 2px 8px rgba(28, 26, 23, 0.06);
@@ -1278,14 +1256,14 @@
 .sideCardTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   margin: 0;
-  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-family: var(--font-serif, "Newsreader", Georgia, serif);
 }
 
 .sideCardText {
   font-size: 0.8125rem;
-  color: #7A7169;
+  color: #7a7169;
   line-height: 1.55;
   margin: 0;
 }
@@ -1299,9 +1277,9 @@
 }
 
 .reportLink {
-  background: #FAF8F5;
-  border: 1px solid #DDD8D0;
-  color: #3D3831;
+  background: #faf8f5;
+  border: 1px solid #ddd8d0;
+  color: #3d3831;
   font-size: 0.785rem;
   font-weight: 700;
   padding: 0.5rem 0.95rem;
@@ -1311,14 +1289,14 @@
 }
 
 .reportLink:hover {
-  background: #EDE9E1;
-  color: #1C1A17;
+  background: #ede9e1;
+  color: #1c1a17;
 }
 
 .resourcesLink {
   font-size: 0.785rem;
   font-weight: 700;
-  color: #2D6A4F;
+  color: #2d6a4f;
   text-decoration: none;
 }
 
@@ -1329,8 +1307,8 @@
 
 /* Unauth fallback */
 .unauthCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 20px;
   padding: 3rem 2rem;
   text-align: center;

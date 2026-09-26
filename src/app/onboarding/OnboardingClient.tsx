@@ -55,7 +55,9 @@ export default function OnboardingClient() {
   const [age, setAge] = useState("12");
   const [grade, setGrade] = useState("Grade 7");
   const [curriculum, setCurriculum] = useState("US Common Core");
-  const [educationLevel, setEducationLevel] = useState("Undergraduate College / University");
+  const [educationLevel, setEducationLevel] = useState(
+    "Undergraduate College / University",
+  );
   const [school, setSchool] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -170,11 +172,11 @@ export default function OnboardingClient() {
           <div
             className={`${styles.stepTab} ${step === 3 ? styles.activeStepTab : ""}`}
           >
-            <div className={styles.stepTabNum}>
-              03
-            </div>
+            <div className={styles.stepTabNum}>03</div>
             <div className={styles.stepTabLabel}>
-              <span className={styles.stepTabTitle}>Community &amp; Safety</span>
+              <span className={styles.stepTabTitle}>
+                Community &amp; Safety
+              </span>
               <span className={styles.stepTabSubtitle}>Safety Guidelines</span>
             </div>
           </div>
@@ -182,14 +184,18 @@ export default function OnboardingClient() {
 
         {/* Main Card Surface */}
         <div className={styles.folioCard}>
-          {/* ── STEP 1: Profile & Role ── */}
           {step === 1 && (
             <>
               {/* Role Selection */}
               <div className={styles.fieldSection}>
                 <span className={styles.fieldLabel}>
-                  <span>How will you be using Learnivia? <span className={styles.requiredStar}>*</span></span>
-                  <span className={styles.fieldHint}>Choose your primary role</span>
+                  <span>
+                    How will you be using Learnivia?{" "}
+                    <span className={styles.requiredStar}>*</span>
+                  </span>
+                  <span className={styles.fieldHint}>
+                    Choose your primary role
+                  </span>
                 </span>
 
                 <div className={styles.roleGrid}>
@@ -199,17 +205,22 @@ export default function OnboardingClient() {
                     onClick={() => setGoal("parent_child")}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={(e) => e.key === "Enter" && setGoal("parent_child")}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && setGoal("parent_child")
+                    }
                   >
                     <div className={styles.roleIndicator}>
-                      {goal === "parent_child" && <div className={styles.roleIndicatorDot} />}
+                      {goal === "parent_child" && (
+                        <div className={styles.roleIndicatorDot} />
+                      )}
                     </div>
                     <div className={styles.roleIconWrap}>
                       <Users size={20} />
                     </div>
                     <h3 className={styles.roleTitle}>Parent / Guardian</h3>
                     <p className={styles.roleDesc}>
-                      Managing 1-on-1 tutoring for a student (K-10) with verified progress reports.
+                      Managing 1-on-1 tutoring for a student (K-10) with
+                      verified progress reports.
                     </p>
                   </div>
 
@@ -219,17 +230,22 @@ export default function OnboardingClient() {
                     onClick={() => setGoal("student_9_10")}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={(e) => e.key === "Enter" && setGoal("student_9_10")}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && setGoal("student_9_10")
+                    }
                   >
                     <div className={styles.roleIndicator}>
-                      {goal === "student_9_10" && <div className={styles.roleIndicatorDot} />}
+                      {goal === "student_9_10" && (
+                        <div className={styles.roleIndicatorDot} />
+                      )}
                     </div>
                     <div className={styles.roleIconWrap}>
                       <BookOpen size={20} />
                     </div>
                     <h3 className={styles.roleTitle}>Student (K-10)</h3>
                     <p className={styles.roleDesc}>
-                      Looking for friendly homework help, exam prep, or concept reviews from peer tutors.
+                      Looking for friendly homework help, exam prep, or concept
+                      reviews from peer tutors.
                     </p>
                   </div>
 
@@ -239,17 +255,22 @@ export default function OnboardingClient() {
                     onClick={() => setGoal("become_tutor")}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={(e) => e.key === "Enter" && setGoal("become_tutor")}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && setGoal("become_tutor")
+                    }
                   >
                     <div className={styles.roleIndicator}>
-                      {goal === "become_tutor" && <div className={styles.roleIndicatorDot} />}
+                      {goal === "become_tutor" && (
+                        <div className={styles.roleIndicatorDot} />
+                      )}
                     </div>
                     <div className={styles.roleIconWrap}>
                       <GraduationCap size={20} />
                     </div>
                     <h3 className={styles.roleTitle}>Volunteer Tutor</h3>
                     <p className={styles.roleDesc}>
-                      High school senior, university student or educator ready to teach peers &amp; earn service hours.
+                      High school senior, university student or educator ready
+                      to teach peers &amp; earn service hours.
                     </p>
                   </div>
                 </div>
@@ -261,7 +282,10 @@ export default function OnboardingClient() {
                   {/* Education Level */}
                   <div className={styles.fieldSection}>
                     <span className={styles.fieldLabel}>
-                      <span>Your Current Education Level <span className={styles.requiredStar}>*</span></span>
+                      <span>
+                        Your Current Education Level{" "}
+                        <span className={styles.requiredStar}>*</span>
+                      </span>
                     </span>
                     <div className={styles.chipGrid}>
                       {TUTOR_LEVELS.map((lvl) => (
@@ -281,8 +305,13 @@ export default function OnboardingClient() {
                   {/* School / University */}
                   <div className={styles.fieldSection}>
                     <span className={styles.fieldLabel}>
-                      <span>Your School or Institution <span className={styles.requiredStar}>*</span></span>
-                      <span className={styles.fieldHint}>Verified on your tutor transcript</span>
+                      <span>
+                        Your School or Institution{" "}
+                        <span className={styles.requiredStar}>*</span>
+                      </span>
+                      <span className={styles.fieldHint}>
+                        Verified on your tutor transcript
+                      </span>
                     </span>
                     <input
                       type="text"
@@ -297,7 +326,10 @@ export default function OnboardingClient() {
                   {/* Curriculum Expertise */}
                   <div className={styles.fieldSection}>
                     <span className={styles.fieldLabel}>
-                      <span>Curriculum Specialty <span className={styles.requiredStar}>*</span></span>
+                      <span>
+                        Curriculum Specialty{" "}
+                        <span className={styles.requiredStar}>*</span>
+                      </span>
                     </span>
                     <div className={styles.chipGrid}>
                       {CURRICULA.map((c) => (
@@ -319,8 +351,13 @@ export default function OnboardingClient() {
                   {/* Grade Level Chips */}
                   <div className={styles.fieldSection}>
                     <span className={styles.fieldLabel}>
-                      <span>Student Grade Level <span className={styles.requiredStar}>*</span></span>
-                      <span className={styles.fieldHint}>Matches curriculum standards</span>
+                      <span>
+                        Student Grade Level{" "}
+                        <span className={styles.requiredStar}>*</span>
+                      </span>
+                      <span className={styles.fieldHint}>
+                        Matches curriculum standards
+                      </span>
                     </span>
                     <div className={styles.chipGrid}>
                       {GRADES.map((g) => (
@@ -338,10 +375,18 @@ export default function OnboardingClient() {
                   </div>
 
                   {/* Age Input & Curriculum Grid */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "1.25rem" }}>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 2fr",
+                      gap: "1.25rem",
+                    }}
+                  >
                     <div className={styles.fieldSection}>
                       <span className={styles.fieldLabel}>
-                        <span>Age <span className={styles.requiredStar}>*</span></span>
+                        <span>
+                          Age <span className={styles.requiredStar}>*</span>
+                        </span>
                         <span className={styles.fieldHint}>5 to 16 yrs</span>
                       </span>
                       <input
@@ -357,7 +402,10 @@ export default function OnboardingClient() {
 
                     <div className={styles.fieldSection}>
                       <span className={styles.fieldLabel}>
-                        <span>Curriculum Framework <span className={styles.requiredStar}>*</span></span>
+                        <span>
+                          Curriculum Framework{" "}
+                          <span className={styles.requiredStar}>*</span>
+                        </span>
                       </span>
                       <div className={styles.chipGrid}>
                         {CURRICULA.slice(0, 4).map((c) => (
@@ -379,7 +427,6 @@ export default function OnboardingClient() {
             </>
           )}
 
-          {/* ── STEP 2: Pedagogy & Ethos ── */}
           {step === 2 && (
             <div className={styles.pedagogyDeck}>
               <div className={styles.pedagogyCard}>
@@ -387,9 +434,14 @@ export default function OnboardingClient() {
                   <HeartHandshake size={22} />
                 </div>
                 <div className={styles.pedagogyBody}>
-                  <h3 className={styles.pedagogyTitle}>100% Free & Peer-to-Peer</h3>
+                  <h3 className={styles.pedagogyTitle}>
+                    100% Free & Peer-to-Peer
+                  </h3>
                   <p className={styles.pedagogyDesc}>
-                    Learnivia is built on pure volunteer stewardship. We never charge subscription fees, sell study packs, or trade in virtual coins. Knowledge is shared freely between curious learners and passionate student tutors.
+                    Learnivia is built on pure volunteer stewardship. We never
+                    charge subscription fees, sell study packs, or trade in
+                    virtual coins. Knowledge is shared freely between curious
+                    learners and passionate student tutors.
                   </p>
                 </div>
               </div>
@@ -399,9 +451,14 @@ export default function OnboardingClient() {
                   <Compass size={22} />
                 </div>
                 <div className={styles.pedagogyBody}>
-                  <h3 className={styles.pedagogyTitle}>Real Humans, Zero AI Substitutes</h3>
+                  <h3 className={styles.pedagogyTitle}>
+                    Real Humans, Zero AI Substitutes
+                  </h3>
                   <p className={styles.pedagogyDesc}>
-                    Every tutoring session happens in a live, monitored 1-on-1 Zoom study room with an authentic volunteer mentor. We encourage real discussion, screen sharing, notebook diagrams, and patient step-by-step guidance.
+                    Every tutoring session happens in a live, monitored 1-on-1
+                    Zoom study room with an authentic volunteer mentor. We
+                    encourage real discussion, screen sharing, notebook
+                    diagrams, and patient step-by-step guidance.
                   </p>
                 </div>
               </div>
@@ -411,9 +468,14 @@ export default function OnboardingClient() {
                   <ShieldCheck size={22} />
                 </div>
                 <div className={styles.pedagogyBody}>
-                  <h3 className={styles.pedagogyTitle}>Strict Child Safeguarding</h3>
+                  <h3 className={styles.pedagogyTitle}>
+                    Strict Child Safeguarding
+                  </h3>
                   <p className={styles.pedagogyDesc}>
-                    Minor protection is fundamental: parents receive session confirmations, volunteer tutors undergo safety training, and personal contact exchanges outside the platform are strictly prohibited.
+                    Minor protection is fundamental: parents receive session
+                    confirmations, volunteer tutors undergo safety training, and
+                    personal contact exchanges outside the platform are strictly
+                    prohibited.
                   </p>
                 </div>
               </div>
@@ -421,23 +483,28 @@ export default function OnboardingClient() {
               <div className={styles.fellowshipNote}>
                 <HeartHandshake size={18} style={{ flexShrink: 0 }} />
                 <span>
-                  <strong>Our Promise:</strong> Whether you are working through quadratic equations or drafting an essay, you learn at your own pace with encouraging, patient student mentors.
+                  <strong>Our Promise:</strong> Whether you are working through
+                  quadratic equations or drafting an essay, you learn at your
+                  own pace with encouraging, patient student mentors.
                 </span>
               </div>
             </div>
           )}
 
-          {/* ── STEP 3: Community Code & Safety ── */}
           {step === 3 && (
             <div className={styles.covenantFrame}>
               <div className={styles.covenantPillars}>
                 <div className={styles.pillarItem}>
                   <div className={styles.pillarHeader}>
-                    <HeartHandshake size={16} color="var(--wa-green, #2563EB)" />
+                    <HeartHandshake
+                      size={16}
+                      color="var(--wa-green, #2563EB)"
+                    />
                     <span>Mutual Respect</span>
                   </div>
                   <p className={styles.pillarText}>
-                    Treat every learner and tutor with dignity, patience, and warmth. Language is always classroom-appropriate.
+                    Treat every learner and tutor with dignity, patience, and
+                    warmth. Language is always classroom-appropriate.
                   </p>
                 </div>
 
@@ -447,7 +514,8 @@ export default function OnboardingClient() {
                     <span>Personal Privacy</span>
                   </div>
                   <p className={styles.pillarText}>
-                    Never share phone numbers, social media handles, or home addresses. All sessions occur in secure video rooms.
+                    Never share phone numbers, social media handles, or home
+                    addresses. All sessions occur in secure video rooms.
                   </p>
                 </div>
 
@@ -457,7 +525,9 @@ export default function OnboardingClient() {
                     <span>Active Learning</span>
                   </div>
                   <p className={styles.pillarText}>
-                    Tutors guide students to discover solutions themselves rather than simply giving answers. Effort and growth come first.
+                    Tutors guide students to discover solutions themselves
+                    rather than simply giving answers. Effort and growth come
+                    first.
                   </p>
                 </div>
               </div>
@@ -472,10 +542,14 @@ export default function OnboardingClient() {
                 />
                 <div className={styles.agreementTextWrap}>
                   <span className={styles.agreementTitle}>
-                    I agree to Learnivia&apos;s Community Guidelines &amp; Safety Standards <span className={styles.requiredStar}>*</span>
+                    I agree to Learnivia&apos;s Community Guidelines &amp;
+                    Safety Standards{" "}
+                    <span className={styles.requiredStar}>*</span>
                   </span>
                   <span className={styles.agreementSubtext}>
-                    By checking this box, you agree to follow our Child Safeguarding Standards, Community Honor Code, and Session Guidelines.
+                    By checking this box, you agree to follow our Child
+                    Safeguarding Standards, Community Honor Code, and Session
+                    Guidelines.
                   </span>
                 </div>
               </label>
@@ -535,8 +609,8 @@ export default function OnboardingClient() {
                   {loading
                     ? "Setting up your account..."
                     : isTutor
-                    ? "Continue to Tutor Application"
-                    : "Complete Setup & Go to Dashboard"}
+                      ? "Continue to Tutor Application"
+                      : "Complete Setup & Go to Dashboard"}
                 </span>
                 <ArrowRight size={16} />
               </button>

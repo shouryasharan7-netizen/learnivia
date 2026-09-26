@@ -32,15 +32,15 @@
   width: 100%;
   padding: 0.7rem 2.25rem 0.7rem 1rem;
   border-radius: 10px;
-  border: 1.5px solid #DDD8D0;
-  background-color: #FFFFFF;
+  border: 1.5px solid #ddd8d0;
+  background-color: #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237A7169'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 1rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #1C1A17;
+  color: #1c1a17;
   cursor: pointer;
   appearance: none;
   transition: all 150ms ease;
@@ -48,14 +48,14 @@
 }
 
 .curriculumSelect:hover {
-  border-color: #C4BDB5;
-  background-color: #FAF8F5;
+  border-color: #c4bdb5;
+  background-color: #faf8f5;
 }
 
 .curriculumSelect:focus {
   outline: none;
-  border-color: #2D6A4F;
-  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.10);
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
 }
 
 .searchWrap {
@@ -69,7 +69,7 @@
 .searchIcon {
   position: absolute;
   left: 1rem;
-  color: #94A3B8;
+  color: #94a3b8;
   pointer-events: none;
 }
 
@@ -77,26 +77,26 @@
   width: 100%;
   padding: 0.7rem 2.5rem 0.7rem 2.75rem;
   border-radius: 10px;
-  border: 1.5px solid #DDD8D0;
-  background: #FFFFFF;
+  border: 1.5px solid #ddd8d0;
+  background: #ffffff;
   font-size: 0.875rem;
-  color: #1C1A17;
+  color: #1c1a17;
   transition: all 150ms ease;
   box-shadow: 0 1px 2px rgba(28, 26, 23, 0.04);
 }
 
 .searchInput::placeholder {
-  color: #A89F94;
+  color: #a89f94;
 }
 
 .searchInput:hover {
-  border-color: #C4BDB5;
+  border-color: #c4bdb5;
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: #2D6A4F;
-  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.10);
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
 }
 
 .clearSearchBtn {
@@ -104,7 +104,7 @@
   right: 0.85rem;
   background: none;
   border: none;
-  color: #94A3B8;
+  color: #94a3b8;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -123,7 +123,7 @@
   align-items: center;
   gap: 0.5rem;
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
   border: none;
   padding: 0.7rem 1.35rem;
   border-radius: 10px;
@@ -137,7 +137,7 @@
 .filterSubmitBtn:hover {
   background: var(--wa-green-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.30);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
 }
 
 .filterSubmitBtn:active {
@@ -153,9 +153,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: #FAF8F5;
-  color: #7A7169;
-  border: 1px solid #DDD8D0;
+  background: #faf8f5;
+  color: #7a7169;
+  border: 1px solid #ddd8d0;
   padding: 0.7rem 1rem;
   border-radius: 10px;
   font-size: 0.8125rem;
@@ -165,8 +165,8 @@
 }
 
 .resetFiltersBtn:hover {
-  background: #EDE9E1;
-  color: #3D3831;
+  background: #ede9e1;
+  color: #3d3831;
 }
 
 /* Subject Filter Pills */
@@ -188,24 +188,24 @@
   white-space: nowrap;
   padding: 0.45rem 1rem;
   border-radius: 6px;
-  border: 1px solid #DDD8D0;
-  background: #FFFFFF;
+  border: 1px solid #ddd8d0;
+  background: #ffffff;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #3D3831;
+  color: #3d3831;
   cursor: pointer;
   transition: all 150ms ease;
 }
 
 .subjectPill:hover {
-  border-color: #B5D9C5;
-  background: #EAF3ED;
+  border-color: #b5d9c5;
+  background: #eaf3ed;
   color: #235840;
 }
 
 .subjectPillActive {
-  background: #EAF3ED;
-  border-color: #2D6A4F;
+  background: #eaf3ed;
+  border-color: #2d6a4f;
   color: #235840;
   font-weight: 700;
   box-shadow: 0 1px 4px rgba(45, 106, 79, 0.12);
@@ -219,12 +219,12 @@
   flex-wrap: wrap;
   gap: 1rem;
   padding-top: 0.5rem;
-  border-top: 1px solid #F1F5F9;
+  border-top: 1px solid #f1f5f9;
 }
 
 .tabsList {
   display: flex;
-  background: #EDE9E1;
+  background: #ede9e1;
   padding: 0.25rem;
   border-radius: 10px;
   gap: 0.25rem;
@@ -240,18 +240,18 @@
   background: transparent;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #7A7169;
+  color: #7a7169;
   cursor: pointer;
   transition: all 150ms ease;
 }
 
 .tabBtn:hover {
-  color: #1C1A17;
+  color: #1c1a17;
 }
 
 .tabBtnActive {
-  background: #FFFFFF;
-  color: #1C1A17;
+  background: #ffffff;
+  color: #1c1a17;
   font-weight: 700;
   box-shadow: 0 2px 6px rgba(28, 26, 23, 0.08);
 }
@@ -267,16 +267,16 @@
 
 .tabBtnActive .tabBadge {
   background: var(--wa-green);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .matchCountLabel {
   font-size: 0.8125rem;
-  color: #7A7169;
+  color: #7a7169;
 }
 
 .matchCountLabel strong {
-  color: #1C1A17;
+  color: #1c1a17;
 }
 
 @media (max-width: 640px) {

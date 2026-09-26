@@ -10,7 +10,11 @@ import WorkshopSidebarDates from "./WorkshopSidebarDates";
 
 export const dynamic = "force-dynamic";
 
-export default async function WorkshopDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function WorkshopDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const session = await auth();
 
@@ -25,13 +29,13 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
   if (!workshop) notFound();
 
   const startDate = new Date(workshop.startTime);
-  
+
   // Stats
   const seatsLeft = workshop.maxCapacity - workshop.enrollments.length;
   const isEnrolled = session?.user?.id
     ? workshop.enrollments.some((e) => e.studentId === session.user.id)
     : false;
-    
+
   let joinUrl = null;
   const isHostTutor = workshop.tutor.userId === session?.user?.id;
   const isAdmin = session?.user?.role === "ADMIN";
@@ -40,9 +44,9 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
     try {
       const urls = JSON.parse(workshop.zoomLink || "{}");
       if (isHostTutor) {
-         joinUrl = urls.startUrl || urls.joinUrl;
+        joinUrl = urls.startUrl || urls.joinUrl;
       } else {
-         joinUrl = urls.joinUrl;
+        joinUrl = urls.joinUrl;
       }
     } catch (e) {}
   }
@@ -50,9 +54,10 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
   const now = Date.now();
   const startTimeMs = startDate.getTime();
   const endTimeMs = new Date(workshop.endTime).getTime();
-  const isWithinJoinWindow = now >= (startTimeMs - 15 * 60 * 1000) && now <= endTimeMs;
+  const isWithinJoinWindow =
+    now >= startTimeMs - 15 * 60 * 1000 && now <= endTimeMs;
   const isLive = isWithinJoinWindow && joinUrl;
-  
+
   const initials = (workshop.tutor.user.name || "T")
     .split(" ")
     .map((n) => n[0])
@@ -66,10 +71,11 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.container}>
-        
         {/* Top bar / Breadcrumb */}
         <div className={styles.breadcrumb}>
-          <Link href="/find" className={styles.backBtn}><ArrowLeft size={16} /> Back to Sessions</Link>
+          <Link href="/find" className={styles.backBtn}>
+            <ArrowLeft size={16} /> Back to Sessions
+          </Link>
           <span className={styles.crumbDivider}>/</span>
           <span className={styles.crumbSubject}>{workshop.subject}</span>
           <span className={styles.crumbDivider}>/</span>
@@ -91,10 +97,8 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
         <div className={styles.divider}></div>
 
         <div className={styles.layout}>
-          
           {/* Main Content Column */}
           <div className={styles.mainColumn}>
-            
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>About</h2>
               <p className={styles.description}>{workshop.description}</p>
@@ -106,10 +110,19 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
                 <div className={styles.tutorCardHeader}>
                   <div className={styles.tutorAvatarLarge}>{initials}</div>
                   <div className={styles.tutorDetails}>
-                    <h3 className={styles.tutorName}>{workshop.tutor.user.name}</h3>
-                    <div className={styles.tutorBadge}><CheckCircle2 size={12}/> Certified Tutor</div>
+                    <h3 className={styles.tutorName}>
+                      {workshop.tutor.user.name}
+                    </h3>
+                    <div className={styles.tutorBadge}>
+                      <CheckCircle2 size={12} /> Certified Tutor
+                    </div>
                   </div>
-                  <Link href={`/tutor/${workshop.tutor.id}`} className={styles.viewProfileBtn}>View Profile</Link>
+                  <Link
+                    href={`/tutor/${workshop.tutor.id}`}
+                    className={styles.viewProfileBtn}
+                  >
+                    View Profile
+                  </Link>
                 </div>
                 {workshop.tutor.bio && (
                   <div className={styles.bioBubble}>
@@ -119,7 +132,7 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
               </div>
             </section>
 
-            <WorkshopClientDates 
+            <WorkshopClientDates
               startTime={startTimeStr}
               endTime={endTimeStr}
               title={workshop.title}
@@ -129,22 +142,29 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Public Discussion</h2>
               <div className={styles.discussionBox}>
-                <textarea className={styles.discussionInput} placeholder="Add a comment..."></textarea>
+                <textarea
+                  className={styles.discussionInput}
+                  placeholder="Add a comment..."
+                ></textarea>
                 <div className={styles.discussionAction}>
-                  <button className={styles.commentBtn} disabled>Add Comment</button>
+                  <button className={styles.commentBtn} disabled>
+                    Add Comment
+                  </button>
                 </div>
               </div>
             </section>
-            
           </div>
 
           {/* Right Sidebar */}
           <div className={styles.sidebar}>
             <div className={styles.stickyCard}>
-              <WorkshopSidebarDates startTime={startTimeStr} endTime={endTimeStr} />
+              <WorkshopSidebarDates
+                startTime={startTimeStr}
+                endTime={endTimeStr}
+              />
 
               <div className={styles.actionBox}>
-                <WorkshopActionClient 
+                <WorkshopActionClient
                   workshopId={workshop.id}
                   isEnrolled={isEnrolled}
                   isLoggedIn={!!session?.user?.id}
@@ -157,7 +177,6 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

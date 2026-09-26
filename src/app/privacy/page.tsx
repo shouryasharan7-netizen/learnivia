@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy - Learnivia",
-  description: "How Learnivia collects, uses, and protects your data. K-10 child privacy protections, minor safeguarding, and user rights.",
+  description:
+    "How Learnivia collects, uses, and protects your data. K-10 child privacy protections, minor safeguarding, and user rights.",
 };
 
 const LAST_UPDATED = "September 2026";
@@ -56,23 +57,92 @@ export default function PrivacyPage() {
   ];
 
   return (
-    <main style={{ maxWidth: 760, margin: "0 auto", padding: "4rem 1.5rem 6rem", fontFamily: "var(--font-body, Inter, sans-serif)" }}>
+    <main
+      style={{
+        maxWidth: 760,
+        margin: "0 auto",
+        padding: "4rem 1.5rem 6rem",
+        fontFamily: "var(--font-body, Inter, sans-serif)",
+      }}
+    >
       <div style={{ marginBottom: "3rem" }}>
-        <div style={{ display: "inline-block", background: "#EFF6FF", color: "#1D4ED8", border: "1px solid #BFDBFE", borderRadius: "6px", padding: "0.3rem 0.9rem", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "1rem" }}>
+        <div
+          style={{
+            display: "inline-block",
+            background: "#EFF6FF",
+            color: "#1D4ED8",
+            border: "1px solid #BFDBFE",
+            borderRadius: "6px",
+            padding: "0.3rem 0.9rem",
+            fontSize: "0.8rem",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.06em",
+            marginBottom: "1rem",
+          }}
+        >
           Privacy-by-Design & Safeguarding-First
         </div>
-        <h1 style={{ fontSize: "2.25rem", fontWeight: 900, color: "#111827", marginBottom: "0.5rem" }}>Privacy Policy</h1>
-        <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>Last updated: {LAST_UPDATED} · Free K-10 tutoring platform</p>
+        <h1
+          style={{
+            fontSize: "2.25rem",
+            fontWeight: 900,
+            color: "#111827",
+            marginBottom: "0.5rem",
+          }}
+        >
+          Privacy Policy
+        </h1>
+        <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>
+          Last updated: {LAST_UPDATED} · Free K-10 tutoring platform
+        </p>
       </div>
 
-      <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "0.75rem", padding: "1rem 1.25rem", marginBottom: "2.5rem", fontSize: "0.9rem", color: "#0D683B", lineHeight: 1.6 }}>
-        <strong>Our commitment:</strong> We will never sell your data. We will never advertise to students or parents. Minor learner identities are protected at all times.
+      <div
+        style={{
+          background: "#F0FDF4",
+          border: "1px solid #BBF7D0",
+          borderRadius: "0.75rem",
+          padding: "1rem 1.25rem",
+          marginBottom: "2.5rem",
+          fontSize: "0.9rem",
+          color: "#0D683B",
+          lineHeight: 1.6,
+        }}
+      >
+        <strong>Our commitment:</strong> We will never sell your data. We will
+        never advertise to students or parents. Minor learner identities are
+        protected at all times.
       </div>
 
       {sections.map((s) => (
-        <div key={s.h} style={{ marginBottom: "2rem", paddingBottom: "2rem", borderBottom: "1px solid #F3F4F6" }}>
-          <h2 style={{ fontSize: "1.05rem", fontWeight: 800, color: "#111827", marginBottom: "0.6rem" }}>{s.h}</h2>
-          <p style={{ color: "#374151", lineHeight: 1.75, fontSize: "0.9375rem" }}>{s.p}</p>
+        <div
+          key={s.h}
+          style={{
+            marginBottom: "2rem",
+            paddingBottom: "2rem",
+            borderBottom: "1px solid #F3F4F6",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "1.05rem",
+              fontWeight: 800,
+              color: "#111827",
+              marginBottom: "0.6rem",
+            }}
+          >
+            {s.h}
+          </h2>
+          <p
+            style={{
+              color: "#374151",
+              lineHeight: 1.75,
+              fontSize: "0.9375rem",
+            }}
+          >
+            {s.p}
+          </p>
         </div>
       ))}
     </main>

@@ -6,8 +6,8 @@
 }
 
 .attendanceCard {
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: var(--wa-radius-lg, 14px);
   padding: 1.25rem 1.5rem;
   display: flex;
@@ -47,7 +47,7 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   line-height: 1.35;
 }
 
@@ -64,7 +64,7 @@
   gap: 0.75rem;
   flex-wrap: wrap;
   padding-top: 0.75rem;
-  border-top: 1px dashed var(--wa-border, #E2E8F0);
+  border-top: 1px dashed var(--wa-border, #e2e8f0);
 }
 
 .confirmBtn {
@@ -107,7 +107,7 @@
   gap: 0.45rem;
   background: var(--wa-white, #ffffff);
   color: var(--wa-text, #334155);
-  border: 1px solid var(--wa-border, #CBD5E1);
+  border: 1px solid var(--wa-border, #cbd5e1);
   border-radius: var(--wa-radius-sm, 8px);
   padding: 0.55rem 1rem;
   font-size: 0.85rem;
@@ -118,9 +118,9 @@
 }
 
 .declineBtn:hover:not(:disabled) {
-  background: var(--wa-paper, #F1F5F9);
-  color: var(--wa-ink, #0F172A);
-  border-color: var(--wa-border-strong, #94A3B8);
+  background: var(--wa-paper, #f1f5f9);
+  color: var(--wa-ink, #0f172a);
+  border-color: var(--wa-border-strong, #94a3b8);
 }
 
 .declineBtn:active:not(:disabled) {
@@ -128,7 +128,7 @@
 }
 
 .declineBtn:focus-visible {
-  outline: 2px solid var(--wa-crimson, #2563EB);
+  outline: 2px solid var(--wa-crimson, #2563eb);
   outline-offset: 2px;
 }
 

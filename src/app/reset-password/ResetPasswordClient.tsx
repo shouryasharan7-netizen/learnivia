@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
+import {
+  Lock,
+  Eye,
+  EyeOff,
+  CheckCircle,
+  AlertCircle,
+  ArrowLeft,
+  Loader2,
+} from "lucide-react";
 import { resetPassword } from "./actions";
 
 export default function ResetPasswordClient() {
@@ -67,8 +75,16 @@ export default function ResetPasswordClient() {
           >
             Invalid Reset Link
           </h1>
-          <p style={{ fontSize: "0.9rem", color: "#78716C", lineHeight: 1.5, marginBottom: "1.75rem" }}>
-            The reset token is missing. Please request a new password reset link.
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "#78716C",
+              lineHeight: 1.5,
+              marginBottom: "1.75rem",
+            }}
+          >
+            The reset token is missing. Please request a new password reset
+            link.
           </p>
           <Link
             href="/forgot-password"
@@ -240,7 +256,8 @@ export default function ResetPasswordClient() {
                 marginBottom: "1.75rem",
               }}
             >
-              Your password has been securely updated. You can now sign in with your new credentials.
+              Your password has been securely updated. You can now sign in with
+              your new credentials.
             </p>
             <Link
               href="/signin"

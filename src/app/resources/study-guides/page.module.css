@@ -1,6 +1,6 @@
 .main {
   padding: 2rem 0 5rem;
-  background: var(--wa-bg, #F8FAFC);
+  background: var(--wa-bg, #f8fafc);
   min-height: calc(100vh - 56px);
   font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
 }
@@ -16,11 +16,11 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.8125rem;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   margin-bottom: 1.5rem;
 }
 .breadcrumb a {
-  color: var(--wa-green, #2563EB);
+  color: var(--wa-green, #2563eb);
   font-weight: 600;
   text-decoration: none;
 }
@@ -46,23 +46,23 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  background: var(--wa-green-surface, #EFF6FF);
-  color: var(--wa-green, #2563EB);
+  background: var(--wa-green-surface, #eff6ff);
+  color: var(--wa-green, #2563eb);
   padding: 0.25rem 0.65rem;
   border-radius: 4px;
-  border: 1px solid #BFDBFE;
+  border: 1px solid #bfdbfe;
 }
 
 .heroSubBadge {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
 }
 
 .title {
   font-size: clamp(1.75rem, 3.5vw, 2.35rem);
   font-weight: 800;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   letter-spacing: -0.025em;
   line-height: 1.25;
   margin: 0 0 0.65rem;
@@ -78,8 +78,8 @@
 
 /* Tools Banner */
 .toolsBanner {
-  background: #FFFFFF;
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: #ffffff;
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   display: flex;
@@ -100,8 +100,8 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #EFF6FF;
-  color: var(--wa-green, #2563EB);
+  background: #eff6ff;
+  color: var(--wa-green, #2563eb);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,13 +111,13 @@
 .toolsBannerHeading {
   font-size: 0.9375rem;
   font-weight: 700;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   margin: 0 0 0.15rem;
 }
 
 .toolsBannerText {
   font-size: 0.8125rem;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   margin: 0;
 }
 
@@ -125,9 +125,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: var(--wa-green-surface, #EFF6FF);
-  color: var(--wa-green, #2563EB);
-  border: 1px solid #BFDBFE;
+  background: var(--wa-green-surface, #eff6ff);
+  color: var(--wa-green, #2563eb);
+  border: 1px solid #bfdbfe;
   font-size: 0.8125rem;
   font-weight: 700;
   padding: 0.5rem 0.9rem;
@@ -137,13 +137,13 @@
   transition: all 140ms ease;
 }
 .toolsBannerBtn:hover {
-  background: #DBEAFE;
+  background: #dbeafe;
 }
 
 /* Filter Bar */
 .filterBar {
-  background: #FFFFFF;
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: #ffffff;
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 14px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -161,25 +161,25 @@
 .searchIcon {
   position: absolute;
   left: 1rem;
-  color: var(--wa-muted, #94A3B8);
+  color: var(--wa-muted, #94a3b8);
   pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
   padding: 0.7rem 2.5rem 0.7rem 2.6rem;
-  border: 1px solid var(--wa-border, #CBD5E1);
+  border: 1px solid var(--wa-border, #cbd5e1);
   border-radius: 10px;
   font-size: 0.9rem;
   font-family: inherit;
-  color: var(--wa-ink, #0F172A);
-  background: #F8FAFC;
+  color: var(--wa-ink, #0f172a);
+  background: #f8fafc;
   outline: none;
   transition: all 140ms ease;
 }
 .searchInput:focus {
-  background: #FFFFFF;
-  border-color: var(--wa-green, #2563EB);
+  background: #ffffff;
+  border-color: var(--wa-green, #2563eb);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
@@ -188,7 +188,7 @@
   right: 0.85rem;
   background: none;
   border: none;
-  color: var(--wa-muted, #94A3B8);
+  color: var(--wa-muted, #94a3b8);
   cursor: pointer;
   padding: 0.25rem;
   display: flex;
@@ -205,23 +205,23 @@
   font-size: 0.8125rem;
   font-weight: 600;
   border-radius: 6px;
-  border: 1px solid var(--wa-border, #E2E8F0);
-  background: #F8FAFC;
+  border: 1px solid var(--wa-border, #e2e8f0);
+  background: #f8fafc;
   color: var(--wa-text, #334155);
   cursor: pointer;
   transition: all 130ms ease;
 }
 .subjectTab:hover {
-  background: #F1F5F9;
-  border-color: #CBD5E1;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
 }
 .subjectTabActive {
-  background: var(--wa-green, #2563EB);
-  color: #FFFFFF;
-  border-color: var(--wa-green, #2563EB);
+  background: var(--wa-green, #2563eb);
+  color: #ffffff;
+  border-color: var(--wa-green, #2563eb);
 }
 .subjectTabActive:hover {
-  background: var(--wa-green-hover, #1D4ED8);
+  background: var(--wa-green-hover, #1d4ed8);
 }
 
 .gradeFilterRow {
@@ -230,14 +230,14 @@
   gap: 0.5rem;
   flex-wrap: wrap;
   padding-top: 0.75rem;
-  border-top: 1px solid #F1F5F9;
+  border-top: 1px solid #f1f5f9;
 }
 
 .gradeFilterLabel {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   letter-spacing: 0.05em;
   margin-right: 0.25rem;
 }
@@ -247,25 +247,25 @@
   font-weight: 600;
   padding: 0.25rem 0.65rem;
   border-radius: 6px;
-  border: 1px solid var(--wa-border, #E2E8F0);
-  background: #FFFFFF;
+  border: 1px solid var(--wa-border, #e2e8f0);
+  background: #ffffff;
   color: var(--wa-text, #475569);
   cursor: pointer;
   transition: all 120ms ease;
 }
 .gradeBtn:hover {
-  background: #F1F5F9;
+  background: #f1f5f9;
 }
 .gradeBtnActive {
-  background: #0F172A;
-  color: #FFFFFF;
-  border-color: #0F172A;
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
 }
 
 .resultsCountBar {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   margin-bottom: 1rem;
 }
 
@@ -277,8 +277,8 @@
 }
 
 .guideCard {
-  background: #FFFFFF;
-  border: 1px solid var(--wa-border, #E2E8F0);
+  background: #ffffff;
+  border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 14px;
   padding: 1.35rem;
   display: flex;
@@ -290,7 +290,7 @@
 .guideCard:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08);
-  border-color: #CBD5E1;
+  border-color: #cbd5e1;
 }
 
 .cardHeader {
@@ -303,7 +303,7 @@
 .badge {
   font-size: 0.6875rem;
   font-weight: 700;
-  background: #F1F5F9;
+  background: #f1f5f9;
   color: #334155;
   padding: 0.2rem 0.55rem;
   border-radius: 6px;
@@ -314,8 +314,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--wa-green, #2563EB);
-  background: #EFF6FF;
+  color: var(--wa-green, #2563eb);
+  background: #eff6ff;
   padding: 0.2rem 0.55rem;
   border-radius: 6px;
 }
@@ -323,7 +323,7 @@
 .guideTitle {
   font-size: 1.05rem;
   font-weight: 750;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   margin: 0;
   line-height: 1.35;
 }
@@ -336,8 +336,8 @@
 }
 
 .keySnippetBox {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
   display: flex;
@@ -349,7 +349,7 @@
   font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--wa-muted, #64748B);
+  color: var(--wa-muted, #64748b);
   letter-spacing: 0.04em;
 }
 
@@ -357,7 +357,7 @@
   font-size: 0.75rem;
   font-family: ui-monospace, monospace;
   font-weight: 600;
-  color: var(--wa-ink, #0F172A);
+  color: var(--wa-ink, #0f172a);
   word-break: break-word;
 }
 
@@ -371,8 +371,8 @@
 .tagPill {
   font-size: 0.6875rem;
   font-weight: 500;
-  background: #F1F5F9;
-  color: #64748B;
+  background: #f1f5f9;
+  color: #64748b;
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
 }
@@ -383,12 +383,12 @@
   gap: 0.5rem;
   margin-top: 0.5rem;
   padding-top: 0.85rem;
-  border-top: 1px solid #F1F5F9;
+  border-top: 1px solid #f1f5f9;
 }
 
 .primaryGuideBtn {
-  background: var(--wa-green, #2563EB);
-  color: #FFFFFF;
+  background: var(--wa-green, #2563eb);
+  color: #ffffff;
   border: none;
   padding: 0.55rem 0.75rem;
   border-radius: 8px;
@@ -402,13 +402,13 @@
   transition: background-color 130ms ease;
 }
 .primaryGuideBtn:hover {
-  background: var(--wa-green-hover, #1D4ED8);
+  background: var(--wa-green-hover, #1d4ed8);
 }
 
 .secondaryGuideBtn {
-  background: #F8FAFC;
+  background: #f8fafc;
   color: var(--wa-text, #334155);
-  border: 1px solid #E2E8F0;
+  border: 1px solid #e2e8f0;
   padding: 0.55rem 0.65rem;
   border-radius: 8px;
   font-size: 0.75rem;
@@ -421,14 +421,14 @@
   transition: all 130ms ease;
 }
 .secondaryGuideBtn:hover {
-  background: #F1F5F9;
-  border-color: #CBD5E1;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
 }
 
 /* Empty State */
 .emptyState {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 3.5rem 1.5rem;
   text-align: center;
@@ -441,19 +441,19 @@
 .emptyTitle {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #0F172A;
+  color: #0f172a;
   margin: 0;
 }
 
 .emptyDesc {
   font-size: 0.875rem;
-  color: #64748B;
+  color: #64748b;
   margin: 0;
   max-width: 400px;
 }
 
 .resetFiltersBtn {
-  background: var(--wa-green, #2563EB);
+  background: var(--wa-green, #2563eb);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -478,7 +478,7 @@
 }
 
 .modalContent {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 18px;
   width: 100%;
   max-width: 780px;
@@ -507,8 +507,8 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1.5rem 1.75rem;
-  border-bottom: 1px solid #E2E8F0;
-  background: #FFFFFF;
+  border-bottom: 1px solid #e2e8f0;
+  background: #ffffff;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -524,7 +524,7 @@
 .modalTitle {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #0F172A;
+  color: #0f172a;
   margin: 0;
   line-height: 1.3;
 }
@@ -537,9 +537,9 @@
 }
 
 .modalPrintBtn {
-  background: #EFF6FF;
-  color: var(--wa-green, #2563EB);
-  border: 1px solid #BFDBFE;
+  background: #eff6ff;
+  color: var(--wa-green, #2563eb);
+  border: 1px solid #bfdbfe;
   padding: 0.45rem 0.85rem;
   border-radius: 8px;
   font-size: 0.8125rem;
@@ -551,13 +551,13 @@
   transition: all 130ms ease;
 }
 .modalPrintBtn:hover {
-  background: #DBEAFE;
+  background: #dbeafe;
 }
 
 .modalCloseBtn {
-  background: #F1F5F9;
+  background: #f1f5f9;
   border: none;
-  color: #64748B;
+  color: #64748b;
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -568,8 +568,8 @@
   transition: background-color 130ms ease;
 }
 .modalCloseBtn:hover {
-  background: #E2E8F0;
-  color: #0F172A;
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 .modalBody {
@@ -581,8 +581,8 @@
 }
 
 .copyToast {
-  background: #0F172A;
-  color: #FFFFFF;
+  background: #0f172a;
+  color: #ffffff;
   padding: 0.6rem 1rem;
   border-radius: 8px;
   font-size: 0.8125rem;
@@ -603,7 +603,7 @@
   font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #0F172A;
+  color: #0f172a;
   margin: 0;
   display: flex;
   align-items: center;
@@ -625,8 +625,8 @@
 }
 
 .ruleCard {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 0.9rem 1rem;
 }
@@ -634,7 +634,7 @@
 .ruleTitle {
   font-size: 0.875rem;
   font-weight: 700;
-  color: #0F172A;
+  color: #0f172a;
   margin: 0 0 0.3rem;
 }
 
@@ -647,8 +647,8 @@
 
 /* Interactive Mini-Tools inside Modal */
 .interactiveToolSection {
-  background: #F8FAFC;
-  border: 1.5px solid #BFDBFE;
+  background: #f8fafc;
+  border: 1.5px solid #bfdbfe;
   border-radius: 12px;
   padding: 1.25rem;
   display: flex;
@@ -658,7 +658,7 @@
 
 .toolSubtext {
   font-size: 0.8125rem;
-  color: #64748B;
+  color: #64748b;
   margin: -0.35rem 0 0.25rem;
 }
 
@@ -677,28 +677,28 @@
 
 .calcInput {
   padding: 0.5rem 0.75rem;
-  border: 1px solid #CBD5E1;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 0.875rem;
   font-family: inherit;
   width: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 .calcInput:focus {
-  border-color: #2563EB;
+  border-color: #2563eb;
   outline: none;
 }
 
 .calcResultsBox {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.85rem 1rem;
 }
 
 .factTriangleHeader {
   font-size: 0.875rem;
-  color: #0F172A;
+  color: #0f172a;
   margin-bottom: 0.5rem;
 }
 
@@ -712,8 +712,8 @@
   font-family: monospace;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #2563EB;
-  background: #EFF6FF;
+  color: #2563eb;
+  background: #eff6ff;
   padding: 0.35rem 0.6rem;
   border-radius: 6px;
 }
@@ -725,8 +725,8 @@
 }
 
 .calcResultCard {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.75rem;
   text-align: center;
@@ -737,14 +737,14 @@
   font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #64748B;
+  color: #64748b;
   margin-bottom: 0.25rem;
 }
 
 .calcResultValue {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #0F172A;
+  color: #0f172a;
   font-family: monospace;
 }
 
@@ -756,17 +756,17 @@
 .elementInput {
   width: 100%;
   padding: 0.55rem 0.85rem;
-  border: 1px solid #CBD5E1;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 0.875rem;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .elementCard {
   display: flex;
   gap: 1.25rem;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1rem;
   align-items: center;
@@ -775,8 +775,8 @@
 .elementTile {
   width: 80px;
   height: 80px;
-  background: #EFF6FF;
-  border: 2px solid #2563EB;
+  background: #eff6ff;
+  border: 2px solid #2563eb;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -787,26 +787,26 @@
 
 .elementNum {
   font-size: 0.6875rem;
-  color: #64748B;
+  color: #64748b;
   font-weight: 600;
 }
 
 .elementSym {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #2563EB;
+  color: #2563eb;
   line-height: 1;
 }
 
 .elementName {
   font-size: 0.6875rem;
   font-weight: 600;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .elementMass {
   font-size: 0.625rem;
-  color: #64748B;
+  color: #64748b;
 }
 
 .elementDetails {
@@ -830,8 +830,8 @@
 }
 
 .peelOutputBox {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.85rem;
 }
@@ -843,13 +843,13 @@
   margin-bottom: 0.4rem;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #64748B;
+  color: #64748b;
 }
 
 .copyBtn {
   background: none;
   border: none;
-  color: #2563EB;
+  color: #2563eb;
   font-size: 0.75rem;
   font-weight: 600;
   display: inline-flex;
@@ -861,15 +861,15 @@
 .peelOutputText {
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #0F172A;
+  color: #0f172a;
   margin: 0;
   font-style: italic;
 }
 
 /* Worked Example */
 .workedExampleBox {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.25rem;
   display: flex;
@@ -879,7 +879,7 @@
 
 .workedExampleProblem {
   font-size: 0.9375rem;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .workedStepsList {
@@ -901,7 +901,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #E2E8F0;
+  background: #e2e8f0;
   color: #334155;
   font-size: 0.6875rem;
   font-weight: 700;
@@ -917,9 +917,9 @@
   align-items: center;
   gap: 0.5rem;
   padding-top: 0.65rem;
-  border-top: 1px solid #E2E8F0;
+  border-top: 1px solid #e2e8f0;
   font-size: 0.875rem;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 /* Traps List */
@@ -939,8 +939,8 @@
 
 /* Practice Section */
 .practiceSection {
-  background: #FFFFFF;
-  border: 2px solid #E2E8F0;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.25rem;
   display: flex;
@@ -957,7 +957,7 @@
 .practiceTitle {
   font-size: 0.9375rem;
   font-weight: 750;
-  color: #0F172A;
+  color: #0f172a;
   margin: 0;
   display: flex;
   align-items: center;
@@ -965,9 +965,9 @@
 }
 
 .revealBtn {
-  background: #EFF6FF;
-  color: #2563EB;
-  border: 1px solid #BFDBFE;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -978,20 +978,20 @@
   gap: 0.35rem;
 }
 .revealBtn:hover {
-  background: #DBEAFE;
+  background: #dbeafe;
 }
 
 .practiceQuestion {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: #0F172A;
+  color: #0f172a;
   margin: 0;
   line-height: 1.5;
 }
 
 .practiceSolutionBox {
-  background: #F8FAFC;
-  border: 1px solid #CBD5E1;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
   padding: 0.85rem 1rem;
   display: flex;
@@ -1001,8 +1001,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .solutionAnswer {
@@ -1044,7 +1050,7 @@
 /* Print Optimization */
 @media print {
   body {
-    background: #FFFFFF !important;
+    background: #ffffff !important;
   }
   .breadcrumb,
   .toolsBanner,

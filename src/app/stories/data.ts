@@ -2,7 +2,8 @@ export interface ArticleOrStory {
   id: string;
   slug: string;
   title: string;
-  category: "STUDENT_SUCCESS" | "TUTOR_SPOTLIGHT" | "STUDY_GUIDE" | "COMMUNITY_NEWS";
+  category:
+    "STUDENT_SUCCESS" | "TUTOR_SPOTLIGHT" | "STUDY_GUIDE" | "COMMUNITY_NEWS";
   categoryLabel: string;
   categoryColor: string;
   categoryBg: string;
@@ -89,7 +90,8 @@ export const STORIES_AND_BLOG: ArticleOrStory[] = [
   {
     id: "story-3",
     slug: "learning-support-no-diagnosis",
-    title: "My Son Doesn't Have a Diagnosis - and That's OK. Learnivia Helped Anyway.",
+    title:
+      "My Son Doesn't Have a Diagnosis - and That's OK. Learnivia Helped Anyway.",
     category: "COMMUNITY_NEWS",
     categoryLabel: "Parent Perspective",
     categoryColor: "#1D4ED8",

@@ -20,7 +20,9 @@ export default function ResetPasswordPage() {
             background: "#FAF8F5",
           }}
         >
-          <div style={{ color: "#78716C", fontSize: "0.95rem" }}>Loading...</div>
+          <div style={{ color: "#78716C", fontSize: "0.95rem" }}>
+            Loading...
+          </div>
         </div>
       }
     >

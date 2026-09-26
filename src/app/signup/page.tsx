@@ -4,7 +4,8 @@ import SignUpClient from "./SignUpClient";
 
 export const metadata = {
   title: "Sign Up | Learnivia",
-  description: "Create your free Learnivia account for peer-to-peer tutoring and learning.",
+  description:
+    "Create your free Learnivia account for peer-to-peer tutoring and learning.",
 };
 
 export default async function SignUpPage() {

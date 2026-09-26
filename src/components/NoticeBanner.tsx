@@ -10,8 +10,11 @@ export function NoticeBanner() {
   return (
     <div className={styles.banner} role="banner" aria-label="Announcement">
       <p className={styles.text}>
-        Free 1-on-1 peer tutoring for Kindergarten through Grade 10, book your session today!{" "}
-        <Link href="/find" className={styles.link}>Find a Tutor</Link>
+        Free 1-on-1 peer tutoring for Kindergarten through Grade 10, book your
+        session today!{" "}
+        <Link href="/find" className={styles.link}>
+          Find a Tutor
+        </Link>
       </p>
       <button
         className={styles.close}

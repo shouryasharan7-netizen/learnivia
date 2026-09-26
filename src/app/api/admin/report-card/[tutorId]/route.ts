@@ -5,7 +5,7 @@ import { getReportCardSignedUrl } from "@/lib/storage";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ tutorId: string }> }
+  { params }: { params: Promise<{ tutorId: string }> },
 ) {
   try {
     // 1. Strict admin authentication gate
@@ -30,14 +30,17 @@ export async function GET(
     });
 
     if (!tutor) {
-      return NextResponse.json({ error: "Tutor profile not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Tutor profile not found" },
+        { status: 404 },
+      );
     }
 
     // 3. If stored in private object storage, redirect to signed URL
     if (tutor.reportCardStorageKey) {
       const { signedUrl, error } = await getReportCardSignedUrl(
         tutor.reportCardStorageKey,
-        3600 // 1 hour validity
+        3600, // 1 hour validity
       );
 
       if (signedUrl) {
@@ -47,7 +50,10 @@ export async function GET(
     }
 
     // 4. If an external URL was saved (e.g. Google Drive link)
-    if (tutor.reportCardUrl?.startsWith("http://") || tutor.reportCardUrl?.startsWith("https://")) {
+    if (
+      tutor.reportCardUrl?.startsWith("http://") ||
+      tutor.reportCardUrl?.startsWith("https://")
+    ) {
       return NextResponse.redirect(tutor.reportCardUrl);
     }
 
@@ -55,11 +61,15 @@ export async function GET(
     if (tutor.reportCardUrl?.startsWith("data:")) {
       const match = tutor.reportCardUrl.match(/^data:([^;]+);base64,(.*)$/);
       if (match) {
-        const contentType = match[1] || tutor.reportCardMimeType || "application/pdf";
+        const contentType =
+          match[1] || tutor.reportCardMimeType || "application/pdf";
         const base64Data = match[2];
         const buffer = Buffer.from(base64Data, "base64");
 
-        const filename = (tutor.reportCardName || "report-card").replace(/[^a-zA-Z0-9._-]/g, "_");
+        const filename = (tutor.reportCardName || "report-card").replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_",
+        );
 
         return new NextResponse(buffer, {
           status: 200,
@@ -75,13 +85,22 @@ export async function GET(
 
     return NextResponse.json(
       { error: "No report card document available for this tutor." },
-      { status: 404 }
+      { status: 404 },
     );
   } catch (err: any) {
     console.error("Error in admin report card proxy:", err);
-    if (err.message?.includes("Forbidden") || err.message?.includes("Unauthorized")) {
-      return NextResponse.json({ error: "Unauthorized access" }, { status: 403 });
+    if (
+      err.message?.includes("Forbidden") ||
+      err.message?.includes("Unauthorized")
+    ) {
+      return NextResponse.json(
+        { error: "Unauthorized access" },
+        { status: 403 },
+      );
     }
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

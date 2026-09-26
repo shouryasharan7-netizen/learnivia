@@ -17,37 +17,55 @@ const GRADE_MAP: Record<string, string> = {
 export async function submitApplication(formData: FormData) {
   try {
     const session = await auth();
-    
+
     if (!session?.user?.id) {
-      return { success: false, error: "You must be signed in to submit a volunteer application." };
+      return {
+        success: false,
+        error: "You must be signed in to submit a volunteer application.",
+      };
     }
 
-    const bio = (formData.get("bio") as string || "").trim();
-    const timezone = (formData.get("timezone") as string || "").trim();
-    const school = (formData.get("school") as string || "").trim() || null;
-    const experience = (formData.get("experience") as string || "").trim() || null;
-    const subjectsInput = (formData.get("subjects") as string || "").trim();
+    const bio = ((formData.get("bio") as string) || "").trim();
+    const timezone = ((formData.get("timezone") as string) || "").trim();
+    const school = ((formData.get("school") as string) || "").trim() || null;
+    const experience =
+      ((formData.get("experience") as string) || "").trim() || null;
+    const subjectsInput = ((formData.get("subjects") as string) || "").trim();
     const grades = formData.getAll("grades") as string[];
 
     if (!bio || bio.length < 20) {
-      return { success: false, error: "Please write a brief bio (at least 20 characters) describing yourself." };
+      return {
+        success: false,
+        error:
+          "Please write a brief bio (at least 20 characters) describing yourself.",
+      };
     }
 
     if (!subjectsInput) {
-      return { success: false, error: "Please list at least one subject you can teach." };
+      return {
+        success: false,
+        error: "Please list at least one subject you can teach.",
+      };
     }
 
     if (grades.length === 0) {
-      return { success: false, error: "Please select at least one grade level you can support." };
+      return {
+        success: false,
+        error: "Please select at least one grade level you can support.",
+      };
     }
 
     // Report Card & Academic Scores
-    const academicScores = (formData.get("academicScores") as string || "").trim() || null;
-    const reportCardLink = (formData.get("reportCardLink") as string || "").trim() || null;
+    const academicScores =
+      ((formData.get("academicScores") as string) || "").trim() || null;
+    const reportCardLink =
+      ((formData.get("reportCardLink") as string) || "").trim() || null;
     const reportCardFile = formData.get("reportCardFile") as File | null;
 
     let reportCardUrl: string | null = reportCardLink;
-    let reportCardName: string | null = reportCardLink ? "Academic Report Card Document" : null;
+    let reportCardName: string | null = reportCardLink
+      ? "Academic Report Card Document"
+      : null;
     let reportCardStorageKey: string | null = null;
     let reportCardMimeType: string | null = null;
 
@@ -89,13 +107,14 @@ export async function submitApplication(formData: FormData) {
       reportCardStorageKey ||
       reportCardUrl ||
       existingTutorCheck?.reportCardStorageKey ||
-      existingTutorCheck?.reportCardUrl
+      existingTutorCheck?.reportCardUrl,
     );
 
     if (!hasReportCardDoc) {
       return {
         success: false,
-        error: "An academic report card or marksheet document is strictly required to sign up as a tutor.",
+        error:
+          "An academic report card or marksheet document is strictly required to sign up as a tutor.",
       };
     }
 
@@ -110,16 +129,18 @@ export async function submitApplication(formData: FormData) {
     });
 
     // 2. Prepare deduplicated subjects & grades
-    const subjectNames = Array.from(new Set(
-      subjectsInput
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean)
-    ));
+    const subjectNames = Array.from(
+      new Set(
+        subjectsInput
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+      ),
+    );
 
-    const gradeNames = Array.from(new Set(
-      grades.map((g) => GRADE_MAP[g] || g)
-    ));
+    const gradeNames = Array.from(
+      new Set(grades.map((g) => GRADE_MAP[g] || g)),
+    );
 
     // 3. Upsert Tutor Profile (Status is PENDING awaiting review)
     await prisma.tutorProfile.upsert({
@@ -179,7 +200,7 @@ export async function submitApplication(formData: FormData) {
       try {
         await sendApplicationReceived(
           session.user.email,
-          session.user.name || "Tutor"
+          session.user.name || "Tutor",
         );
       } catch (err) {
         console.error("Non-blocking email error in submitApplication:", err);
@@ -195,7 +216,12 @@ export async function submitApplication(formData: FormData) {
     return { success: true };
   } catch (error: any) {
     console.error("Error in submitApplication:", error);
-    return { success: false, error: error.message || "An unexpected error occurred while saving your application." };
+    return {
+      success: false,
+      error:
+        error.message ||
+        "An unexpected error occurred while saving your application.",
+    };
   }
 }
 
@@ -203,15 +229,22 @@ export async function updateReportCard(formData: FormData) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return { success: false, error: "You must be signed in to update your report card." };
+      return {
+        success: false,
+        error: "You must be signed in to update your report card.",
+      };
     }
 
-    const academicScores = (formData.get("academicScores") as string || "").trim() || null;
-    const reportCardLink = (formData.get("reportCardLink") as string || "").trim() || null;
+    const academicScores =
+      ((formData.get("academicScores") as string) || "").trim() || null;
+    const reportCardLink =
+      ((formData.get("reportCardLink") as string) || "").trim() || null;
     const reportCardFile = formData.get("reportCardFile") as File | null;
 
     let reportCardUrl: string | null = reportCardLink;
-    let reportCardName: string | null = reportCardLink ? "Academic Report Card Document" : null;
+    let reportCardName: string | null = reportCardLink
+      ? "Academic Report Card Document"
+      : null;
     let reportCardStorageKey: string | null = null;
     let reportCardMimeType: string | null = null;
 
@@ -272,6 +305,9 @@ export async function updateReportCard(formData: FormData) {
     return { success: true };
   } catch (error: any) {
     console.error("Error in updateReportCard:", error);
-    return { success: false, error: error.message || "Failed to update report card." };
+    return {
+      success: false,
+      error: error.message || "Failed to update report card.",
+    };
   }
 }

@@ -1,11 +1,6 @@
-/* ==========================================================================
-   LEARNIVIA: MODERN ACADEMIC SALON ONBOARDING FOLIO
-   "Warm Unbleached Paper, Archival Slip Steps, Tactile Study Chips"
-   ========================================================================== */
-
 .main {
   min-height: calc(100vh - 60px);
-  background-color: var(--wa-paper, #FAF7F2);
+  background-color: var(--wa-paper, #faf7f2);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -20,7 +15,6 @@
   gap: 2rem;
 }
 
-/* ── Archival Folio Header & Steps Ribbon ────────────────────────────────── */
 .folioHeader {
   text-align: center;
   display: flex;
@@ -38,8 +32,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--wa-crimson, #8B263E);
-  background: var(--wa-crimson-light, #FDF2F4);
+  color: var(--wa-crimson, #8b263e);
+  background: var(--wa-crimson-light, #fdf2f4);
   border: 1px solid rgba(139, 38, 62, 0.2);
   padding: 0.3rem 0.8rem;
   border-radius: var(--wa-radius-pill, 6px);
@@ -50,7 +44,7 @@
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   line-height: 1.15;
   font-weight: 600;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #1a1615);
   letter-spacing: -0.02em;
   margin: 0.25rem 0 0;
 }
@@ -58,12 +52,11 @@
 .folioSubtitle {
   font-size: 1rem;
   line-height: 1.55;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #685e5a);
   max-width: 600px;
   margin: 0;
 }
 
-/* ── Ribbon Progress Tabs ─────────────────────────────────────────────────── */
 .stepsRibbon {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -76,22 +69,22 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1rem;
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e6dfd5);
   border-radius: var(--wa-radius-md, 10px);
   box-shadow: var(--wa-shadow-xs, 0 1px 2px rgba(26, 22, 21, 0.04));
   transition: all var(--wa-transition, 180ms ease);
 }
 
 .activeStepTab {
-  border-color: var(--wa-crimson, #8B263E);
-  background: var(--wa-crimson-light, #FDF2F4);
+  border-color: var(--wa-crimson, #8b263e);
+  background: var(--wa-crimson-light, #fdf2f4);
   box-shadow: var(--wa-shadow-sm, 0 1px 3px rgba(26, 22, 21, 0.06));
 }
 
 .completedStepTab {
-  border-color: var(--wa-terra, #1E3A2F);
-  background: var(--wa-terra-light, #F0F5F2);
+  border-color: var(--wa-terra, #1e3a2f);
+  background: var(--wa-terra-light, #f0f5f2);
 }
 
 .stepTabNum {
@@ -104,19 +97,19 @@
   font-family: var(--font-mono, monospace);
   font-size: 0.75rem;
   font-weight: 700;
-  background: var(--wa-cream-dark, #F2ECE1);
-  color: var(--wa-muted, #685E5A);
+  background: var(--wa-cream-dark, #f2ece1);
+  color: var(--wa-muted, #685e5a);
   flex-shrink: 0;
 }
 
 .activeStepTab .stepTabNum {
-  background: var(--wa-crimson, #8B263E);
-  color: #FFFFFF;
+  background: var(--wa-crimson, #8b263e);
+  color: #ffffff;
 }
 
 .completedStepTab .stepTabNum {
-  background: var(--wa-terra, #1E3A2F);
-  color: #FFFFFF;
+  background: var(--wa-terra, #1e3a2f);
+  color: #ffffff;
 }
 
 .stepTabLabel {
@@ -127,20 +120,19 @@
 .stepTabTitle {
   font-size: 0.825rem;
   font-weight: 700;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #1a1615);
   line-height: 1.2;
 }
 
 .stepTabSubtitle {
   font-size: 0.6875rem;
-  color: var(--wa-subtle, #9E948F);
+  color: var(--wa-subtle, #9e948f);
   margin-top: 0.15rem;
 }
 
-/* ── Main Folio Card Surface ─────────────────────────────────────────────── */
 .folioCard {
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e6dfd5);
   border-radius: var(--wa-radius-lg, 14px);
   padding: 2.25rem 2.5rem;
   box-shadow: var(--wa-shadow-sm, 0 1px 3px rgba(26, 22, 21, 0.05));
@@ -150,7 +142,6 @@
   position: relative;
 }
 
-/* ── Section Dividers & Labels ───────────────────────────────────────────── */
 .fieldSection {
   display: flex;
   flex-direction: column;
@@ -160,7 +151,7 @@
 .fieldLabel {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #1a1615);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -169,14 +160,13 @@
 .fieldHint {
   font-size: 0.75rem;
   font-weight: 400;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #685e5a);
 }
 
 .requiredStar {
-  color: var(--wa-crimson, #8B263E);
+  color: var(--wa-crimson, #8b263e);
 }
 
-/* ── Step 1: Role Calling Cards ──────────────────────────────────────────── */
 .roleGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -184,8 +174,8 @@
 }
 
 .roleCard {
-  background: var(--wa-paper, #FAF7F2);
-  border: 1.5px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-paper, #faf7f2);
+  border: 1.5px solid var(--wa-border, #e6dfd5);
   border-radius: var(--wa-radius-md, 10px);
   padding: 1.25rem 1rem;
   display: flex;
@@ -200,41 +190,43 @@
 }
 
 .roleCard:hover {
-  border-color: var(--wa-border-strong, #C8BFAF);
-  background: var(--wa-white, #FFFFFF);
+  border-color: var(--wa-border-strong, #c8bfaf);
+  background: var(--wa-white, #ffffff);
   transform: translateY(-2px);
   box-shadow: var(--wa-shadow-sm);
 }
 
 .activeRoleCard {
-  border-color: var(--wa-crimson, #8B263E);
-  background: var(--wa-crimson-light, #FDF2F4);
-  box-shadow: 0 0 0 1px var(--wa-crimson, #8B263E), var(--wa-shadow-sm);
+  border-color: var(--wa-crimson, #8b263e);
+  background: var(--wa-crimson-light, #fdf2f4);
+  box-shadow:
+    0 0 0 1px var(--wa-crimson, #8b263e),
+    var(--wa-shadow-sm);
 }
 
 .roleIconWrap {
   width: 38px;
   height: 38px;
   border-radius: var(--wa-radius-sm, 8px);
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e6dfd5);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--wa-crimson, #8B263E);
+  color: var(--wa-crimson, #8b263e);
   transition: background var(--wa-transition);
 }
 
 .activeRoleCard .roleIconWrap {
-  background: var(--wa-crimson, #8B263E);
-  color: #FFFFFF;
-  border-color: var(--wa-crimson, #8B263E);
+  background: var(--wa-crimson, #8b263e);
+  color: #ffffff;
+  border-color: var(--wa-crimson, #8b263e);
 }
 
 .roleTitle {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #1a1615);
   margin: 0;
   line-height: 1.25;
 }
@@ -242,7 +234,7 @@
 .roleDesc {
   font-size: 0.775rem;
   line-height: 1.45;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #685e5a);
   margin: 0;
 }
 
@@ -253,26 +245,25 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 1.5px solid var(--wa-border-strong, #C8BFAF);
-  background: var(--wa-white, #FFFFFF);
+  border: 1.5px solid var(--wa-border-strong, #c8bfaf);
+  background: var(--wa-white, #ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .activeRoleCard .roleIndicator {
-  border-color: var(--wa-crimson, #8B263E);
-  background: var(--wa-crimson, #8B263E);
+  border-color: var(--wa-crimson, #8b263e);
+  background: var(--wa-crimson, #8b263e);
 }
 
 .roleIndicatorDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
-/* ── Interactive Tactile Chips (Grade / Curriculum / Level) ───────────────── */
 .chipGrid {
   display: flex;
   flex-wrap: wrap;
@@ -285,9 +276,9 @@
   font-weight: 600;
   padding: 0.5rem 0.85rem;
   border-radius: var(--wa-radius-sm, 8px);
-  border: 1.5px solid var(--wa-border, #E6DFD5);
-  background: var(--wa-paper, #FAF7F2);
-  color: var(--wa-text, #2C2422);
+  border: 1.5px solid var(--wa-border, #e6dfd5);
+  background: var(--wa-paper, #faf7f2);
+  color: var(--wa-text, #2c2422);
   cursor: pointer;
   transition: all var(--wa-transition, 180ms ease);
   display: inline-flex;
@@ -296,18 +287,17 @@
 }
 
 .chipBtn:hover {
-  background: var(--wa-white, #FFFFFF);
-  border-color: var(--wa-border-strong, #C8BFAF);
+  background: var(--wa-white, #ffffff);
+  border-color: var(--wa-border-strong, #c8bfaf);
   transform: translateY(-1px);
 }
 
 .activeChipBtn {
-  background: var(--wa-ink, #1A1615);
-  color: #FFFFFF;
-  border-color: var(--wa-ink, #1A1615);
+  background: var(--wa-ink, #1a1615);
+  color: #ffffff;
+  border-color: var(--wa-ink, #1a1615);
 }
 
-/* ── Styled Form Inputs ──────────────────────────────────────────────────── */
 .inputWrapper {
   display: flex;
   flex-direction: column;
@@ -319,21 +309,20 @@
   font-size: 0.95rem;
   padding: 0.75rem 1rem;
   border-radius: var(--wa-radius-sm, 8px);
-  border: 1.5px solid var(--wa-border, #E6DFD5);
-  background: var(--wa-paper, #FAF7F2);
-  color: var(--wa-ink, #1A1615);
+  border: 1.5px solid var(--wa-border, #e6dfd5);
+  background: var(--wa-paper, #faf7f2);
+  color: var(--wa-ink, #1a1615);
   width: 100%;
   transition: all var(--wa-transition, 180ms ease);
 }
 
 .paperInput:focus {
   outline: none;
-  background: var(--wa-white, #FFFFFF);
-  border-color: var(--wa-crimson, #8B263E);
+  background: var(--wa-white, #ffffff);
+  border-color: var(--wa-crimson, #8b263e);
   box-shadow: 0 0 0 3px rgba(139, 38, 62, 0.12);
 }
 
-/* ── Step 2: Pedagogy Deck ───────────────────────────────────────────────── */
 .pedagogyDeck {
   display: flex;
   flex-direction: column;
@@ -345,27 +334,27 @@
   align-items: flex-start;
   gap: 1.25rem;
   padding: 1.25rem 1.5rem;
-  background: var(--wa-paper, #FAF7F2);
-  border: 1px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-paper, #faf7f2);
+  border: 1px solid var(--wa-border, #e6dfd5);
   border-radius: var(--wa-radius-md, 10px);
   transition: transform var(--wa-transition);
 }
 
 .pedagogyCard:hover {
   transform: translateX(4px);
-  border-color: var(--wa-border-strong, #C8BFAF);
+  border-color: var(--wa-border-strong, #c8bfaf);
 }
 
 .pedagogyIcon {
   width: 44px;
   height: 44px;
   border-radius: var(--wa-radius-md, 10px);
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e6dfd5);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--wa-crimson, #8B263E);
+  color: var(--wa-crimson, #8b263e);
   flex-shrink: 0;
   box-shadow: var(--wa-shadow-xs);
 }
@@ -379,14 +368,14 @@
 .pedagogyTitle {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #1a1615);
   margin: 0;
 }
 
 .pedagogyDesc {
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #685e5a);
   margin: 0;
 }
 
@@ -395,7 +384,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  background: var(--wa-ochre-light, #FCF6E9);
+  background: var(--wa-ochre-light, #fcf6e9);
   border: 1px solid rgba(194, 139, 43, 0.3);
   border-radius: var(--wa-radius-md, 10px);
   font-size: 0.85rem;
@@ -403,10 +392,9 @@
   line-height: 1.45;
 }
 
-/* ── Step 3: Academic Covenant Certificate ───────────────────────────────── */
 .covenantFrame {
-  background: var(--wa-paper, #FAF7F2);
-  border: 2px solid var(--wa-border-strong, #C8BFAF);
+  background: var(--wa-paper, #faf7f2);
+  border: 2px solid var(--wa-border-strong, #c8bfaf);
   border-radius: var(--wa-radius-lg, 14px);
   padding: 2rem;
   display: flex;
@@ -426,8 +414,8 @@
   flex-direction: column;
   gap: 0.4rem;
   padding: 1rem;
-  background: var(--wa-white, #FFFFFF);
-  border: 1px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-white, #ffffff);
+  border: 1px solid var(--wa-border, #e6dfd5);
   border-radius: var(--wa-radius-sm, 8px);
 }
 
@@ -437,19 +425,19 @@
   gap: 0.5rem;
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #1a1615);
 }
 
 .pillarText {
   font-size: 0.785rem;
   line-height: 1.45;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #685e5a);
   margin: 0;
 }
 
 .covenantAgreementCard {
-  background: var(--wa-white, #FFFFFF);
-  border: 1.5px solid var(--wa-border, #E6DFD5);
+  background: var(--wa-white, #ffffff);
+  border: 1.5px solid var(--wa-border, #e6dfd5);
   border-radius: var(--wa-radius-md, 10px);
   padding: 1.25rem 1.5rem;
   display: flex;
@@ -460,15 +448,15 @@
 }
 
 .covenantAgreementCard:hover {
-  border-color: var(--wa-crimson, #8B263E);
-  background: var(--wa-crimson-light, #FDF2F4);
+  border-color: var(--wa-crimson, #8b263e);
+  background: var(--wa-crimson-light, #fdf2f4);
 }
 
 .agreementCheckbox {
   width: 20px;
   height: 20px;
   margin-top: 0.15rem;
-  accent-color: var(--wa-crimson, #8B263E);
+  accent-color: var(--wa-crimson, #8b263e);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -482,22 +470,21 @@
 .agreementTitle {
   font-size: 0.925rem;
   font-weight: 700;
-  color: var(--wa-ink, #1A1615);
+  color: var(--wa-ink, #1a1615);
 }
 
 .agreementSubtext {
   font-size: 0.8rem;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #685e5a);
   line-height: 1.4;
 }
 
-/* ── Navigation Footer ───────────────────────────────────────────────────── */
 .folioNav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 1rem;
-  border-top: 1px solid var(--wa-border, #E6DFD5);
+  border-top: 1px solid var(--wa-border, #e6dfd5);
   margin-top: 0.5rem;
 }
 
@@ -505,9 +492,9 @@
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--wa-muted, #685E5A);
+  color: var(--wa-muted, #685e5a);
   background: transparent;
-  border: 1px solid var(--wa-border, #E6DFD5);
+  border: 1px solid var(--wa-border, #e6dfd5);
   padding: 0.75rem 1.5rem;
   border-radius: var(--wa-radius-md, 10px);
   cursor: pointer;
@@ -518,17 +505,17 @@
 }
 
 .backBtn:hover {
-  background: var(--wa-cream-dark, #F2ECE1);
-  color: var(--wa-ink, #1A1615);
-  border-color: var(--wa-border-strong, #C8BFAF);
+  background: var(--wa-cream-dark, #f2ece1);
+  color: var(--wa-ink, #1a1615);
+  border-color: var(--wa-border-strong, #c8bfaf);
 }
 
 .nextBtn {
   font-family: inherit;
   font-size: 0.925rem;
   font-weight: 600;
-  color: #FFFFFF;
-  background: var(--wa-crimson, #8B263E);
+  color: #ffffff;
+  background: var(--wa-crimson, #8b263e);
   border: none;
   padding: 0.75rem 2rem;
   border-radius: var(--wa-radius-md, 10px);
@@ -541,7 +528,7 @@
 }
 
 .nextBtn:hover:not(:disabled) {
-  background: var(--wa-crimson-hover, #731E33);
+  background: var(--wa-crimson-hover, #731e33);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(139, 38, 62, 0.35);
 }
@@ -553,7 +540,6 @@
   transform: none;
 }
 
-/* ── Responsive Behavior ─────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .main {
     padding: 1.5rem 1rem 4rem;

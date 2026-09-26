@@ -43,7 +43,9 @@ export function TruthfulSummary({
           <div className={styles.summaryTopRow}>
             <div className={styles.summaryCard}>
               <span className={styles.summaryLabel}>Sessions Completed</span>
-              <span className={styles.summaryNumber}>{completedSessionsCount}</span>
+              <span className={styles.summaryNumber}>
+                {completedSessionsCount}
+              </span>
               <span className={styles.summaryNote}>Verified peer sessions</span>
             </div>
 
@@ -57,7 +59,15 @@ export function TruthfulSummary({
           <div className={styles.summaryCard}>
             <span className={styles.summaryLabel}>Curriculum Track</span>
             <div style={{ marginTop: "0.25rem" }}>
-              <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--wa-ink, #0F172A)", lineHeight: 1.4, display: "block" }}>
+              <span
+                style={{
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: "var(--wa-ink, #0F172A)",
+                  lineHeight: 1.4,
+                  display: "block",
+                }}
+              >
                 {gradeDisplay}
               </span>
             </div>
@@ -66,8 +76,17 @@ export function TruthfulSummary({
         </div>
 
         <p className={styles.ledgerFooterNote}>
-          <ShieldCheck size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: "6px", color: "#059669" }} />
-          Your study time and completed sessions are confirmed by you and your tutor after each meeting.
+          <ShieldCheck
+            size={14}
+            style={{
+              display: "inline",
+              verticalAlign: "middle",
+              marginRight: "6px",
+              color: "#059669",
+            }}
+          />
+          Your study time and completed sessions are confirmed by you and your
+          tutor after each meeting.
         </p>
       </div>
     </section>

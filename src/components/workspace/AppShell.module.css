@@ -3,7 +3,7 @@
 .shell {
   display: flex;
   min-height: 100vh;
-  background: var(--surface, #FAF9F6);
+  background: var(--surface, #faf9f6);
 }
 
 .mainContainer {
@@ -12,7 +12,7 @@
   flex-direction: column;
   min-width: 0;
   position: relative;
-  background: var(--surface, #FAF9F6);
+  background: var(--surface, #faf9f6);
 }
 
 .content {
@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--surface, #FAF9F6);
+  background: var(--surface, #faf9f6);
 }
 
 .publicContent {

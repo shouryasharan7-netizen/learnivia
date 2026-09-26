@@ -2,7 +2,11 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-user";
-import { sendApplicationApproved, sendApplicationRejected, sendTutorSuspended } from "@/lib/email";
+import {
+  sendApplicationApproved,
+  sendApplicationRejected,
+  sendTutorSuspended,
+} from "@/lib/email";
 import { revalidatePath } from "next/cache";
 import type { Role } from "@prisma/client";
 
@@ -17,20 +21,23 @@ export async function approveApplication(tutorId: string) {
       status: "APPROVED",
       approvedAt: new Date(),
     },
-    include: { user: true }
+    include: { user: true },
   });
 
   // Update user role to TUTOR if they were a STUDENT
   if (profile.user.role === "STUDENT") {
     await prisma.user.update({
       where: { id: profile.userId },
-      data: { role: "TUTOR" }
+      data: { role: "TUTOR" },
     });
   }
 
   if (profile.user.email) {
     try {
-      await sendApplicationApproved(profile.user.email, profile.user.name || "Tutor");
+      await sendApplicationApproved(
+        profile.user.email,
+        profile.user.name || "Tutor",
+      );
     } catch (err) {
       console.error("Non-blocking email error in approveApplication:", err);
     }
@@ -47,12 +54,15 @@ export async function rejectApplication(tutorId: string) {
   const profile = await prisma.tutorProfile.update({
     where: { id: tutorId },
     data: { status: "REJECTED" },
-    include: { user: true }
+    include: { user: true },
   });
 
   if (profile.user.email) {
     try {
-      await sendApplicationRejected(profile.user.email, profile.user.name || "Tutor");
+      await sendApplicationRejected(
+        profile.user.email,
+        profile.user.name || "Tutor",
+      );
     } catch (err) {
       console.error("Non-blocking email error in rejectApplication:", err);
     }
@@ -99,7 +109,8 @@ export async function suspendTutor(tutorId: string) {
     data: {
       status: "CANCELED",
       cancelReason: "Tutor account inactive.",
-      checkUpNote: "Session automatically canceled: tutor is currently unavailable.",
+      checkUpNote:
+        "Session automatically canceled: tutor is currently unavailable.",
     },
   });
 
@@ -112,18 +123,23 @@ export async function suspendTutor(tutorId: string) {
     },
     data: {
       status: "CANCELED",
-      checkUpNote: "Workshop automatically canceled: host is currently unavailable.",
+      checkUpNote:
+        "Workshop automatically canceled: host is currently unavailable.",
     },
   });
 
   const fullUser = await prisma.user.findUnique({
     where: { id: tutor.userId },
-    select: { email: true, name: true }
+    select: { email: true, name: true },
   });
 
   if (fullUser?.email) {
     try {
-      await sendTutorSuspended(fullUser.email, fullUser.name || "Tutor", "Tutor account suspended by administrator review.");
+      await sendTutorSuspended(
+        fullUser.email,
+        fullUser.name || "Tutor",
+        "Tutor account suspended by administrator review.",
+      );
     } catch (err) {
       console.error("Non-blocking email error in suspendTutor:", err);
     }
@@ -165,7 +181,10 @@ export async function reactivateTutor(tutorId: string) {
   revalidatePath("/tutor");
 }
 
-export async function adminUpdateReportCard(tutorId: string, formData: FormData) {
+export async function adminUpdateReportCard(
+  tutorId: string,
+  formData: FormData,
+) {
   await requireAdmin();
 
   const tutor = await prisma.tutorProfile.findUnique({
@@ -174,12 +193,16 @@ export async function adminUpdateReportCard(tutorId: string, formData: FormData)
   });
   if (!tutor) throw new Error("Tutor not found");
 
-  const academicScores = ((formData.get("academicScores") as string) || "").trim() || null;
-  const reportCardLink = ((formData.get("reportCardLink") as string) || "").trim() || null;
+  const academicScores =
+    ((formData.get("academicScores") as string) || "").trim() || null;
+  const reportCardLink =
+    ((formData.get("reportCardLink") as string) || "").trim() || null;
   const reportCardFile = formData.get("reportCardFile") as File | null;
 
   let reportCardUrl: string | null = reportCardLink;
-  let reportCardName: string | null = reportCardLink ? "Academic Report Card Document" : null;
+  let reportCardName: string | null = reportCardLink
+    ? "Academic Report Card Document"
+    : null;
   let reportCardStorageKey: string | null = null;
   let reportCardMimeType: string | null = null;
 
@@ -254,7 +277,9 @@ export async function updateUserRole(userId: string, newRole: Role) {
   });
 
   if (newRole === "TUTOR") {
-    const existing = await prisma.tutorProfile.findUnique({ where: { userId } });
+    const existing = await prisma.tutorProfile.findUnique({
+      where: { userId },
+    });
     if (!existing) {
       await prisma.tutorProfile.create({
         data: {
@@ -303,7 +328,7 @@ export async function deleteUserAccount(userId: string) {
  */
 export async function adminUpdateBookingStatus(
   bookingId: string,
-  newStatus: "CONFIRMED" | "COMPLETED" | "CANCELED"
+  newStatus: "CONFIRMED" | "COMPLETED" | "CANCELED",
 ) {
   await requireAdmin();
 
@@ -320,14 +345,22 @@ export async function adminUpdateBookingStatus(
       where: { id: bookingId },
       data: {
         status: newStatus,
-        ...(newStatus === "COMPLETED" ? { studentAttended: true, studentConfirmedAt: new Date(), hoursCredited: true } : {}),
+        ...(newStatus === "COMPLETED"
+          ? {
+              studentAttended: true,
+              studentConfirmedAt: new Date(),
+              hoursCredited: true,
+            }
+          : {}),
       },
     });
 
     if (newStatus === "COMPLETED" && !booking.hoursCredited) {
       const durationHours = Math.max(
         0.5,
-        (new Date(booking.endTime).getTime() - new Date(booking.startTime).getTime()) / (1000 * 60 * 60)
+        (new Date(booking.endTime).getTime() -
+          new Date(booking.startTime).getTime()) /
+          (1000 * 60 * 60),
       );
       await tx.tutorProfile.update({
         where: { id: booking.tutorId },

@@ -1,18 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendTutorAvailabilityReminder, sendTutorTrainingReminder } from "@/lib/email";
+import {
+  sendTutorAvailabilityReminder,
+  sendTutorTrainingReminder,
+} from "@/lib/email";
 
 export const dynamic = "force-dynamic";
 
 /**
  * Tutor Inactivity, Availability & Training Compliance Audit Job
- * 
+ *
  * Rules:
  * 1. 3-Day Availability Rule:
  *    Tutors with 0 availability slots whose approval/joining date was >= 3 days ago (72 hours)
  *    are deactivated/suspended.
  *    Tutors with 0 availability slots between 1 and 2 days old receive a reminder email.
- * 
+ *
  * 2. 15-Day Mandatory Training Rule:
  *    Tutors who have NOT completed all 5 required training modules within 15 days of joining
  *    are deactivated/suspended.
@@ -28,13 +31,18 @@ export async function GET(request: Request) {
       "ahmedashfaqfarooqui@gmail.com",
     ];
 
-    function isTutorExempt(tutor: { user: { email?: string | null; role?: string | null } }) {
+    function isTutorExempt(tutor: {
+      user: { email?: string | null; role?: string | null };
+    }) {
       if (tutor.user?.role === "ADMIN") return true;
-      if (tutor.user?.email && EXEMPT_EMAILS.includes(tutor.user.email.toLowerCase())) return true;
+      if (
+        tutor.user?.email &&
+        EXEMPT_EMAILS.includes(tutor.user.email.toLowerCase())
+      )
+        return true;
       return false;
     }
 
-    // ── Audit 1: Availability Audit (3-Day Policy) ──────────────────────
     const inactiveAvailabilityTutors = await prisma.tutorProfile.findMany({
       where: {
         status: "APPROVED",
@@ -65,7 +73,8 @@ export async function GET(request: Request) {
       if (isTutorExempt(tutor)) continue;
 
       const refDate = tutor.approvedAt || tutor.createdAt;
-      const daysSinceRef = (nowMs - new Date(refDate).getTime()) / (1000 * 60 * 60 * 24);
+      const daysSinceRef =
+        (nowMs - new Date(refDate).getTime()) / (1000 * 60 * 60 * 24);
 
       // Rule 1: 3-day cutoff -> Suspend / Deactivate
       if (daysSinceRef >= 3) {
@@ -79,14 +88,16 @@ export async function GET(request: Request) {
 
       // Rule 1 Reminder: Day 1 or 2 reminder
       if (daysSinceRef >= 1 && tutor.user.email) {
-        const lastSentMs = tutor.lastReminderSentAt ? new Date(tutor.lastReminderSentAt).getTime() : 0;
+        const lastSentMs = tutor.lastReminderSentAt
+          ? new Date(tutor.lastReminderSentAt).getTime()
+          : 0;
         // Don't spam: at most once every 24 hours
         if (nowMs - lastSentMs >= 24 * 60 * 60 * 1000) {
           const daysRemaining = Math.max(1, Math.ceil(3 - daysSinceRef));
           await sendTutorAvailabilityReminder(
             tutor.user.email,
             tutor.user.name || "Volunteer Educator",
-            daysRemaining
+            daysRemaining,
           );
 
           await prisma.tutorProfile.update({
@@ -99,7 +110,6 @@ export async function GET(request: Request) {
       }
     }
 
-    // ── Audit 2: Training Compliance Audit (15-Day Policy) ──────────────
     const pendingTrainingTutors = await prisma.tutorProfile.findMany({
       where: {
         status: { in: ["APPROVED", "PENDING"] },
@@ -134,7 +144,8 @@ export async function GET(request: Request) {
 
       trainingResults.checked++;
       const refDate = tutor.createdAt;
-      const daysSinceRef = (nowMs - new Date(refDate).getTime()) / (1000 * 60 * 60 * 24);
+      const daysSinceRef =
+        (nowMs - new Date(refDate).getTime()) / (1000 * 60 * 60 * 24);
 
       // Rule 2: 15-day cutoff -> Suspend / Remove
       if (daysSinceRef >= 15) {
@@ -148,7 +159,9 @@ export async function GET(request: Request) {
 
       // Rule 2 Reminder: Day 10 to 14 reminder
       if (daysSinceRef >= 10 && tutor.user.email) {
-        const lastSentMs = tutor.lastReminderSentAt ? new Date(tutor.lastReminderSentAt).getTime() : 0;
+        const lastSentMs = tutor.lastReminderSentAt
+          ? new Date(tutor.lastReminderSentAt).getTime()
+          : 0;
         // At most once every 48 hours
         if (nowMs - lastSentMs >= 48 * 60 * 60 * 1000) {
           const daysRemaining = Math.max(1, Math.ceil(15 - daysSinceRef));
@@ -156,7 +169,7 @@ export async function GET(request: Request) {
             tutor.user.email,
             tutor.user.name || "Volunteer Educator",
             passedCount,
-            daysRemaining
+            daysRemaining,
           );
 
           await prisma.tutorProfile.update({
@@ -180,8 +193,12 @@ export async function GET(request: Request) {
         suspendedForIncompleteTraining: trainingResults.suspended.length,
         trainingRemindersSent: trainingResults.remindersSent.length,
         // Compatibility counters
-        suspendedCount: availabilityResults.suspended.length + trainingResults.suspended.length,
-        remindersSentCount: availabilityResults.remindersSent.length + trainingResults.remindersSent.length,
+        suspendedCount:
+          availabilityResults.suspended.length +
+          trainingResults.suspended.length,
+        remindersSentCount:
+          availabilityResults.remindersSent.length +
+          trainingResults.remindersSent.length,
       },
       details: {
         availability: availabilityResults,
@@ -192,7 +209,7 @@ export async function GET(request: Request) {
     console.error("Tutor compliance cron error:", err);
     return NextResponse.json(
       { success: false, error: err?.message || "Internal error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

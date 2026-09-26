@@ -81,7 +81,14 @@ export function ConfirmDialog({
           gap: "1rem",
         }}
       >
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.5rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            gap: "0.5rem",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
             {isDestructive && (
               <div
@@ -130,11 +137,26 @@ export function ConfirmDialog({
           </button>
         </div>
 
-        <p style={{ fontSize: "0.875rem", color: "var(--wa-text)", margin: 0, lineHeight: 1.5 }}>
+        <p
+          style={{
+            fontSize: "0.875rem",
+            color: "var(--wa-text)",
+            margin: 0,
+            lineHeight: 1.5,
+          }}
+        >
           {description}
         </p>
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "0.65rem", marginTop: "0.5rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: "0.65rem",
+            marginTop: "0.5rem",
+          }}
+        >
           <button
             ref={cancelBtnRef}
             type="button"

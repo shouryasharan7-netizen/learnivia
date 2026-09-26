@@ -14,7 +14,8 @@ const SUPABASE_KEY =
 const cleanUrl = SUPABASE_URL.replace(/^["']|["']$/g, "").trim();
 const cleanKey = SUPABASE_KEY.replace(/^["']|["']$/g, "").trim();
 
-export const REPORT_CARDS_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || "report-cards";
+export const REPORT_CARDS_BUCKET =
+  process.env.SUPABASE_STORAGE_BUCKET || "report-cards";
 
 const ALLOWED_MIME_TYPES = new Set([
   "application/pdf",
@@ -42,7 +43,11 @@ export function getSupabaseStorageClient() {
 /**
  * Validates document MIME type and file size.
  */
-export function validateDocumentFile(file: { size: number; type: string; name?: string }) {
+export function validateDocumentFile(file: {
+  size: number;
+  type: string;
+  name?: string;
+}) {
   if (!file) {
     return { valid: false, error: "No document file provided." };
   }
@@ -62,7 +67,8 @@ export function validateDocumentFile(file: { size: number; type: string; name?: 
     if (!ext || !validExts.includes(ext)) {
       return {
         valid: false,
-        error: "Invalid file format. Only PDF, JPG, and PNG documents are allowed.",
+        error:
+          "Invalid file format. Only PDF, JPG, and PNG documents are allowed.",
       };
     }
   }
@@ -113,7 +119,10 @@ export async function uploadReportCardToStorage({
     return { storageKey: data?.path || storagePath, error: null };
   } catch (err: any) {
     console.error("Storage upload exception:", err);
-    return { storageKey: null, error: err.message || "Failed to upload document" };
+    return {
+      storageKey: null,
+      error: err.message || "Failed to upload document",
+    };
   }
 }
 
@@ -123,7 +132,7 @@ export async function uploadReportCardToStorage({
  */
 export async function getReportCardSignedUrl(
   storageKey: string,
-  expiresInSeconds = 3600
+  expiresInSeconds = 3600,
 ): Promise<{ signedUrl: string | null; error: string | null }> {
   const client = getSupabaseStorageClient();
   if (!client) {
@@ -136,7 +145,10 @@ export async function getReportCardSignedUrl(
       .createSignedUrl(storageKey, expiresInSeconds);
 
     if (error || !data?.signedUrl) {
-      return { signedUrl: null, error: error?.message || "Could not generate signed URL" };
+      return {
+        signedUrl: null,
+        error: error?.message || "Could not generate signed URL",
+      };
     }
 
     return { signedUrl: data.signedUrl, error: null };

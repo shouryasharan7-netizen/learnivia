@@ -35,10 +35,14 @@ export async function loginWithEmail(formData: FormData) {
     if (existingUser) {
       if (!existingUser.password) {
         return {
-          error: "An account with this email exists via Google. Please click 'Continue with Google'.",
+          error:
+            "An account with this email exists via Google. Please click 'Continue with Google'.",
         };
       }
-      return { error: "An account with this email already exists. Please sign in instead." };
+      return {
+        error:
+          "An account with this email already exists. Please sign in instead.",
+      };
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,12 +54,17 @@ export async function loginWithEmail(formData: FormData) {
     const verificationToken = crypto.randomBytes(32).toString("hex");
     const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
-    const baseUrl = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://learnivia-green.vercel.app";
+    const baseUrl =
+      process.env.NEXTAUTH_URL ||
+      process.env.NEXT_PUBLIC_APP_URL ||
+      "https://learnivia-green.vercel.app";
     const verifyUrl = `${baseUrl}/verify-email?token=${verificationToken}`;
 
     if (role === "TUTOR") {
       const school = ((formData.get("school") as string) || "").trim();
-      const educationLevel = ((formData.get("educationLevel") as string) || "").trim();
+      const educationLevel = (
+        (formData.get("educationLevel") as string) || ""
+      ).trim();
 
       await prisma.user.create({
         data: {
@@ -78,16 +87,20 @@ export async function loginWithEmail(formData: FormData) {
 
       // Send verification email non-blockingly
       sendEmailVerification(email, verifyUrl).catch((err) =>
-        console.error("Non-blocking email verification error:", err)
+        console.error("Non-blocking email verification error:", err),
       );
 
       try {
         await signIn("credentials", { email, password, redirect: false });
-        const redirectUrl = (callbackUrl && callbackUrl !== "/dashboard") ? callbackUrl : "/apply";
+        const redirectUrl =
+          callbackUrl && callbackUrl !== "/dashboard" ? callbackUrl : "/apply";
         return { success: true, redirectUrl };
       } catch (error) {
         if (error instanceof AuthError) {
-          return { error: "Tutor account created! Please sign in with your email and password." };
+          return {
+            error:
+              "Tutor account created! Please sign in with your email and password.",
+          };
         }
         throw error;
       }
@@ -95,11 +108,15 @@ export async function loginWithEmail(formData: FormData) {
       // Student registration
       const rawAge = formData.get("age") as string;
       const age = rawAge ? parseInt(rawAge, 10) : undefined;
-      const grade = ((formData.get("grade") as string) || "").trim() || undefined;
-      const curriculum = ((formData.get("curriculum") as string) || "").trim() || undefined;
-      const parentEmail = ((formData.get("parentEmail") as string) || "").trim().toLowerCase() || null;
+      const grade =
+        ((formData.get("grade") as string) || "").trim() || undefined;
+      const curriculum =
+        ((formData.get("curriculum") as string) || "").trim() || undefined;
+      const parentEmail =
+        ((formData.get("parentEmail") as string) || "").trim().toLowerCase() ||
+        null;
 
-      const isMinor = (age !== undefined && !isNaN(age)) ? age < 13 : false;
+      const isMinor = age !== undefined && !isNaN(age) ? age < 13 : false;
 
       await prisma.user.create({
         data: {
@@ -120,7 +137,7 @@ export async function loginWithEmail(formData: FormData) {
 
       // Send verification email non-blockingly
       sendEmailVerification(email, verifyUrl).catch((err) =>
-        console.error("Non-blocking email verification error:", err)
+        console.error("Non-blocking email verification error:", err),
       );
 
       try {
@@ -129,7 +146,10 @@ export async function loginWithEmail(formData: FormData) {
         return { success: true, redirectUrl };
       } catch (error) {
         if (error instanceof AuthError) {
-          return { error: "Student account created! Please sign in with your email and password." };
+          return {
+            error:
+              "Student account created! Please sign in with your email and password.",
+          };
         }
         throw error;
       }
@@ -144,7 +164,8 @@ export async function loginWithEmail(formData: FormData) {
 
   if (existingUser && !existingUser.password) {
     return {
-      error: "This email is registered with Google. Please click 'Continue with Google'.",
+      error:
+        "This email is registered with Google. Please click 'Continue with Google'.",
     };
   }
 
@@ -156,7 +177,10 @@ export async function loginWithEmail(formData: FormData) {
   }
 
   if (existingUser?.lockedUntil && existingUser.lockedUntil > new Date()) {
-    const mins = Math.max(1, Math.ceil((existingUser.lockedUntil.getTime() - Date.now()) / 60000));
+    const mins = Math.max(
+      1,
+      Math.ceil((existingUser.lockedUntil.getTime() - Date.now()) / 60000),
+    );
     return {
       error: `Too many failed login attempts. Account temporarily locked. Please try again in ${mins} minute(s) or use "Forgot password".`,
     };
@@ -188,7 +212,8 @@ export async function loginWithEmail(formData: FormData) {
         });
         if (freshUser?.lockedUntil && freshUser.lockedUntil > new Date()) {
           return {
-            error: "Too many failed login attempts. Account temporarily locked for 15 minutes. Please try again later or reset your password.",
+            error:
+              "Too many failed login attempts. Account temporarily locked for 15 minutes. Please try again later or reset your password.",
           };
         }
         if (freshUser?.failedLoginCount && freshUser.failedLoginCount >= 3) {
@@ -202,7 +227,9 @@ export async function loginWithEmail(formData: FormData) {
         case "CredentialsSignin":
           return { error: "Incorrect email or password. Please try again." };
         default:
-          return { error: "Authentication failed. Please verify your credentials." };
+          return {
+            error: "Authentication failed. Please verify your credentials.",
+          };
       }
     }
     throw error;

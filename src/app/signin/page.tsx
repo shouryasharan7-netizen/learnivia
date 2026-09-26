@@ -4,7 +4,8 @@ import SignInClient from "./SignInClient";
 
 export const metadata = {
   title: "Sign In - Learnivia",
-  description: "Sign in to your Learnivia account to join tutoring sessions and workshops.",
+  description:
+    "Sign in to your Learnivia account to join tutoring sessions and workshops.",
 };
 
 export default async function SignInPage() {

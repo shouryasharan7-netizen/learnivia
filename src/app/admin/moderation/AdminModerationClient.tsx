@@ -6,7 +6,13 @@ import {
   adminDeleteHomeworkRequest,
   adminBroadcastAnnouncement,
 } from "../actions";
-import { Megaphone, MessageSquare, HelpCircle, Trash2, CheckCircle2 } from "lucide-react";
+import {
+  Megaphone,
+  MessageSquare,
+  HelpCircle,
+  Trash2,
+  CheckCircle2,
+} from "lucide-react";
 
 interface MessageItem {
   id: string;
@@ -33,12 +39,17 @@ interface Props {
   initialHomework: HomeworkItem[];
 }
 
-export default function AdminModerationClient({ initialMessages, initialHomework }: Props) {
+export default function AdminModerationClient({
+  initialMessages,
+  initialHomework,
+}: Props) {
   const [messages, setMessages] = useState<MessageItem[]>(initialMessages);
   const [homework, setHomework] = useState<HomeworkItem[]>(initialHomework);
   const [announcementText, setAnnouncementText] = useState("");
   const [isBroadcasting, setIsBroadcasting] = useState(false);
-  const [activeTab, setActiveTab] = useState<"community" | "homework">("community");
+  const [activeTab, setActiveTab] = useState<"community" | "homework">(
+    "community",
+  );
   const [toastMsg, setToastMsg] = useState("");
 
   function showToast(msg: string) {
@@ -89,11 +100,19 @@ export default function AdminModerationClient({ initialMessages, initialHomework
   return (
     <div>
       <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "#0F172A", marginBottom: "0.5rem" }}>
+        <h1
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: 800,
+            color: "#0F172A",
+            marginBottom: "0.5rem",
+          }}
+        >
           Content &amp; Community Moderation
         </h1>
         <p style={{ color: "#64748B", fontSize: "0.95rem", margin: 0 }}>
-          Broadcast official announcements, purge inappropriate posts, and monitor homework inquiries.
+          Broadcast official announcements, purge inappropriate posts, and
+          monitor homework inquiries.
         </p>
       </div>
 
@@ -128,14 +147,40 @@ export default function AdminModerationClient({ initialMessages, initialHomework
           marginBottom: "2rem",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-          <Megaphone size={18} style={{ color: "var(--wa-forest)" }} aria-hidden="true" />
-          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "1.125rem", fontWeight: 700, color: "var(--wa-ink)", margin: 0 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            marginBottom: "0.5rem",
+          }}
+        >
+          <Megaphone
+            size={18}
+            style={{ color: "var(--wa-forest)" }}
+            aria-hidden="true"
+          />
+          <h2
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              color: "var(--wa-ink)",
+              margin: 0,
+            }}
+          >
             Broadcast Official Announcement
           </h2>
         </div>
-        <p style={{ color: "var(--wa-muted)", fontSize: "0.85rem", marginBottom: "1rem" }}>
-          Posts directly to the verified <strong>#Announcements</strong> channel seen by all learners and tutors.
+        <p
+          style={{
+            color: "var(--wa-muted)",
+            fontSize: "0.85rem",
+            marginBottom: "1rem",
+          }}
+        >
+          Posts directly to the verified <strong>#Announcements</strong> channel
+          seen by all learners and tutors.
         </p>
 
         <form onSubmit={handleBroadcast}>
@@ -168,7 +213,10 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                 fontWeight: 600,
                 fontSize: "0.875rem",
                 border: "none",
-                cursor: !announcementText.trim() || isBroadcasting ? "not-allowed" : "pointer",
+                cursor:
+                  !announcementText.trim() || isBroadcasting
+                    ? "not-allowed"
+                    : "pointer",
                 opacity: !announcementText.trim() || isBroadcasting ? 0.6 : 1,
               }}
             >
@@ -184,8 +232,12 @@ export default function AdminModerationClient({ initialMessages, initialHomework
           type="button"
           onClick={() => setActiveTab("community")}
           style={{
-            background: activeTab === "community" ? "var(--wa-forest)" : "var(--wa-white)",
-            color: activeTab === "community" ? "var(--wa-paper)" : "var(--wa-muted)",
+            background:
+              activeTab === "community"
+                ? "var(--wa-forest)"
+                : "var(--wa-white)",
+            color:
+              activeTab === "community" ? "var(--wa-paper)" : "var(--wa-muted)",
             border: "1px solid var(--wa-border)",
             padding: "0.5rem 1rem",
             borderRadius: "6px",
@@ -204,8 +256,10 @@ export default function AdminModerationClient({ initialMessages, initialHomework
           type="button"
           onClick={() => setActiveTab("homework")}
           style={{
-            background: activeTab === "homework" ? "var(--wa-forest)" : "var(--wa-white)",
-            color: activeTab === "homework" ? "var(--wa-paper)" : "var(--wa-muted)",
+            background:
+              activeTab === "homework" ? "var(--wa-forest)" : "var(--wa-white)",
+            color:
+              activeTab === "homework" ? "var(--wa-paper)" : "var(--wa-muted)",
             border: "1px solid var(--wa-border)",
             padding: "0.5rem 1rem",
             borderRadius: "6px",
@@ -224,11 +278,22 @@ export default function AdminModerationClient({ initialMessages, initialHomework
 
       {/* Community Messages Feed */}
       {activeTab === "community" && (
-        <div style={{ background: "#FFFFFF", borderRadius: "14px", border: "1px solid #E2E8F0", padding: "1.5rem" }}>
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: "14px",
+            border: "1px solid #E2E8F0",
+            padding: "1.5rem",
+          }}
+        >
           {messages.length === 0 ? (
-            <p style={{ color: "#64748B", fontStyle: "italic" }}>No community messages found.</p>
+            <p style={{ color: "#64748B", fontStyle: "italic" }}>
+              No community messages found.
+            </p>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            >
               {messages.map((m) => (
                 <div
                   key={m.id}
@@ -244,9 +309,21 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                   }}
                 >
                   <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.35rem", flexWrap: "wrap" }}>
-                      <span style={{ fontWeight: 700, color: "#0F172A" }}>{m.authorName}</span>
-                      <span style={{ fontSize: "0.75rem", color: "#64748B" }}>({m.authorEmail})</span>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        marginBottom: "0.35rem",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <span style={{ fontWeight: 700, color: "#0F172A" }}>
+                        {m.authorName}
+                      </span>
+                      <span style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                        ({m.authorEmail})
+                      </span>
                       <span
                         style={{
                           background: "#E2E8F0",
@@ -260,10 +337,20 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                         #{m.channel}
                       </span>
                       <span style={{ fontSize: "0.75rem", color: "#94A3B8" }}>
-                        {new Date(m.createdAt).toLocaleDateString()} {new Date(m.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {new Date(m.createdAt).toLocaleDateString()}{" "}
+                        {new Date(m.createdAt).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </span>
                     </div>
-                    <div style={{ fontSize: "0.9rem", color: "#334155", whiteSpace: "pre-wrap" }}>
+                    <div
+                      style={{
+                        fontSize: "0.9rem",
+                        color: "#334155",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
                       {m.content}
                     </div>
                   </div>
@@ -299,11 +386,22 @@ export default function AdminModerationClient({ initialMessages, initialHomework
 
       {/* Homework Questions Feed */}
       {activeTab === "homework" && (
-        <div style={{ background: "#FFFFFF", borderRadius: "14px", border: "1px solid #E2E8F0", padding: "1.5rem" }}>
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: "14px",
+            border: "1px solid #E2E8F0",
+            padding: "1.5rem",
+          }}
+        >
           {homework.length === 0 ? (
-            <p style={{ color: "#64748B", fontStyle: "italic" }}>No homework inquiries recorded.</p>
+            <p style={{ color: "#64748B", fontStyle: "italic" }}>
+              No homework inquiries recorded.
+            </p>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            >
               {homework.map((h) => (
                 <div
                   key={h.id}
@@ -319,7 +417,15 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                   }}
                 >
                   <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.35rem", flexWrap: "wrap" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        marginBottom: "0.35rem",
+                        flexWrap: "wrap",
+                      }}
+                    >
                       <span
                         style={{
                           background: "#EAF3ED",
@@ -332,11 +438,15 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                       >
                         {h.subject}
                       </span>
-                      <span style={{ fontWeight: 700, color: "#0F172A" }}>{h.studentName}</span>
+                      <span style={{ fontWeight: 700, color: "#0F172A" }}>
+                        {h.studentName}
+                      </span>
                       <span
                         style={{
-                          background: h.status === "ANSWERED" ? "#D1FAE5" : "#FEF3C7",
-                          color: h.status === "ANSWERED" ? "#065F46" : "#B45309",
+                          background:
+                            h.status === "ANSWERED" ? "#D1FAE5" : "#FEF3C7",
+                          color:
+                            h.status === "ANSWERED" ? "#065F46" : "#B45309",
                           fontSize: "0.7rem",
                           fontWeight: 700,
                           padding: "0.15rem 0.5rem",
@@ -349,7 +459,13 @@ export default function AdminModerationClient({ initialMessages, initialHomework
                         {new Date(h.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <div style={{ fontSize: "0.9rem", color: "#334155", whiteSpace: "pre-wrap" }}>
+                    <div
+                      style={{
+                        fontSize: "0.9rem",
+                        color: "#334155",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
                       {h.question}
                     </div>
                   </div>

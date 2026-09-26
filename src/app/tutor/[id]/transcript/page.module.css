@@ -44,7 +44,9 @@
   border: none;
   cursor: pointer;
   font-size: 0.95rem;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .printBtn:hover {

@@ -1,11 +1,15 @@
 .hero {
-  background: var(--wa-paper, #FAF9F6);
-  border-bottom: 1px solid var(--wa-border, #E2E8F0);
+  background: var(--wa-paper, #faf9f6);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
   padding: var(--space-16) var(--space-6) var(--space-12);
   text-align: center;
 }
 
-.inner { max-width: var(--container-lg); margin: 0 auto; padding-inline: var(--space-6); }
+.inner {
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding-inline: var(--space-6);
+}
 
 .backLink {
   display: inline-block;
@@ -16,9 +20,14 @@
   margin-bottom: var(--space-6);
 }
 
-.backLink:hover { text-decoration: underline; }
+.backLink:hover {
+  text-decoration: underline;
+}
 
-.heroEmoji { font-size: 3rem; margin-bottom: var(--space-4); }
+.heroEmoji {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+}
 
 .title {
   font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
@@ -36,7 +45,12 @@
   margin: 0 auto var(--space-8);
 }
 
-.heroCtas { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+.heroCtas {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 .primaryBtn {
   display: inline-flex;
@@ -49,7 +63,9 @@
   text-decoration: none;
   transition: background-color var(--transition-fast);
 }
-.primaryBtn:hover { background: var(--color-teal-dark); }
+.primaryBtn:hover {
+  background: var(--color-teal-dark);
+}
 
 .secondaryBtn {
   display: inline-flex;
@@ -63,9 +79,14 @@
   text-decoration: none;
   transition: border-color var(--transition-fast);
 }
-.secondaryBtn:hover { border-color: var(--color-navy); }
+.secondaryBtn:hover {
+  border-color: var(--color-navy);
+}
 
-.detailsSection { padding: var(--space-16) 0; background: white; }
+.detailsSection {
+  padding: var(--space-16) 0;
+  background: white;
+}
 
 .detailsGrid {
   display: grid;
@@ -99,15 +120,30 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.detailRow:last-child { border-bottom: none; }
+.detailRow:last-child {
+  border-bottom: none;
+}
 
-.detailLabel { font-size: var(--text-sm); color: var(--color-text-muted); }
+.detailLabel {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
 
-.detailValue { font-size: var(--text-sm); font-weight: 600; color: var(--color-navy); }
+.detailValue {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-navy);
+}
 
-.free { color: var(--color-teal); }
+.free {
+  color: var(--color-teal);
+}
 
-.tagList { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.tagList {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
 
 .tag {
   font-size: var(--text-xs);
@@ -128,7 +164,12 @@
   border: 1px solid var(--color-border);
 }
 
-.outcomeList { list-style: none; display: flex; flex-direction: column; gap: var(--space-3); }
+.outcomeList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
 
 .outcomeItem {
   display: flex;
@@ -138,9 +179,17 @@
   line-height: var(--leading-relaxed);
 }
 
-.outcomeItem span { color: var(--color-teal); font-weight: 700; flex-shrink: 0; }
+.outcomeItem span {
+  color: var(--color-teal);
+  font-weight: 700;
+  flex-shrink: 0;
+}
 
-.faqList { display: flex; flex-direction: column; gap: var(--space-2); }
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
 
 .faqItem {
   border-bottom: 1px solid var(--color-border);
@@ -156,7 +205,9 @@
   list-style: none;
 }
 
-.faqQuestion::-webkit-details-marker { display: none; }
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
 
 .faqAnswer {
   font-size: var(--text-sm);
@@ -166,7 +217,7 @@
 }
 
 .ctaCard {
-  background: var(--wa-navy, #0F172A);
+  background: var(--wa-navy, #0f172a);
   border-radius: 8px;
   padding: var(--space-6);
   display: flex;
@@ -174,11 +225,22 @@
   gap: var(--space-3);
 }
 
-.ctaCard h3 { font-size: var(--text-lg); font-weight: 700; color: white; }
+.ctaCard h3 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: white;
+}
 
-.ctaCard p { font-size: var(--text-sm); color: rgb(255 255 255 / 0.7); }
+.ctaCard p {
+  font-size: var(--text-sm);
+  color: rgb(255 255 255 / 0.7);
+}
 
 @media (max-width: 768px) {
-  .detailsGrid { grid-template-columns: 1fr; }
-  .inner { padding-inline: var(--space-4); }
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+  .inner {
+    padding-inline: var(--space-4);
+  }
 }

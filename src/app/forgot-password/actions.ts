@@ -49,7 +49,8 @@ export async function requestPasswordReset(formData: FormData) {
   } catch (error: any) {
     console.error("Error in requestPasswordReset:", error);
     return {
-      error: "An error occurred while processing your request. Please try again later.",
+      error:
+        "An error occurred while processing your request. Please try again later.",
     };
   }
 }

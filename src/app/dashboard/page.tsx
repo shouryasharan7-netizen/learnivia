@@ -165,7 +165,6 @@ export default async function StudentDashboard() {
 
   return (
     <div className={styles.dashRoot}>
-      {/* ── Featured Hero Banner ── */}
       <div className={styles.heroBanner}>
         <div className={styles.heroContent}>
           <p className={styles.heroKicker}>Learnivia — Free K-10 Tutoring</p>
@@ -186,7 +185,6 @@ export default async function StudentDashboard() {
         </div>
       </div>
 
-      {/* ── Program Cards Row ── */}
       <div className={styles.programRow}>
         {PROGRAMS.map((prog) => (
           <Link key={prog.id} href={prog.href} className={styles.programCard}>
@@ -204,7 +202,6 @@ export default async function StudentDashboard() {
         ))}
       </div>
 
-      {/* ── User Identity + Stats Bar ── */}
       <div className={styles.statsBar}>
         <div className={styles.statsIdentity}>
           <div className={styles.statsAvatar}>{initials}</div>
@@ -247,7 +244,6 @@ export default async function StudentDashboard() {
         </div>
       </div>
 
-      {/* ── Two-Column Content ── */}
       <div className={styles.twoCol}>
         {/* Left column: sessions + quick actions */}
         <div className={styles.colLeft}>
@@ -333,7 +329,10 @@ export default async function StudentDashboard() {
 
         {/* Right column: task cards */}
         <div className={styles.colRight}>
-          <h2 className={styles.sectionTitle} style={{ marginBottom: "0.875rem" }}>
+          <h2
+            className={styles.sectionTitle}
+            style={{ marginBottom: "0.875rem" }}
+          >
             Suggested Next Steps
           </h2>
           <div className={styles.taskList}>

@@ -58,7 +58,10 @@ export async function getSessionChatMessages(bookingId: string) {
   return { success: true, messages: formatted };
 }
 
-export async function sendSessionChatMessage(bookingId: string, content: string) {
+export async function sendSessionChatMessage(
+  bookingId: string,
+  content: string,
+) {
   const session = await auth();
   if (!session?.user?.id) {
     return { success: false, error: "Sign in required" };
@@ -87,7 +90,11 @@ export async function sendSessionChatMessage(bookingId: string, content: string)
   }
 
   const authorName = session.user.name || (isTutor ? "Tutor" : "Student");
-  const authorRole = isTutor ? "Volunteer Tutor" : isAdmin ? "Platform Lead" : "Student";
+  const authorRole = isTutor
+    ? "Volunteer Tutor"
+    : isAdmin
+      ? "Platform Lead"
+      : "Student";
   const authorInitials = authorName
     .split(" ")
     .map((p) => p[0])
@@ -117,7 +124,7 @@ export async function sharePostClassResource(
   bookingId: string,
   title: string,
   urlOrNotes: string,
-  category: string
+  category: string,
 ) {
   const session = await auth();
   if (!session?.user?.id) {
@@ -137,7 +144,10 @@ export async function sharePostClassResource(
   const isAdmin = session.user.role === "ADMIN";
 
   if (!isTutor && !isAdmin) {
-    return { success: false, error: "Only the session tutor can post official study resources" };
+    return {
+      success: false,
+      error: "Only the session tutor can post official study resources",
+    };
   }
 
   const resourcePayload = `[RESOURCE_SHARE]\nCategory: ${category}\nTitle: ${title.trim()}\nDetails: ${urlOrNotes.trim()}`;

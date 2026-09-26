@@ -51,7 +51,10 @@ export function SidebarNav() {
   function toggleCollapse() {
     const nextState = !collapsed;
     setCollapsed(nextState);
-    localStorage.setItem("learnivia_sidebar_collapsed", nextState ? "true" : "false");
+    localStorage.setItem(
+      "learnivia_sidebar_collapsed",
+      nextState ? "true" : "false",
+    );
   }
 
   const userRole = session?.user?.role || "STUDENT";
@@ -59,10 +62,18 @@ export function SidebarNav() {
 
   // Student navigation items
   const studentNavItems: NavItem[] = [
-    { href: "/dashboard", label: "Student Home", icon: <LayoutDashboard size={19} /> },
+    {
+      href: "/dashboard",
+      label: "Student Home",
+      icon: <LayoutDashboard size={19} />,
+    },
     { href: "/sessions", label: "Find a Session", icon: <Compass size={19} /> },
     { href: "/learn", label: "Programs", icon: <GraduationCap size={19} /> },
-    { href: "/homework-help", label: "Homework Help", icon: <MessageSquare size={19} /> },
+    {
+      href: "/homework-help",
+      label: "Homework Help",
+      icon: <MessageSquare size={19} />,
+    },
     { href: "/community", label: "Community", icon: <Users size={19} /> },
     {
       href: "/resources",
@@ -84,10 +95,18 @@ export function SidebarNav() {
 
   // Tutor & Admin navigation items
   const tutorNavItems: NavItem[] = [
-    { href: "/dashboard", label: "Student Home", icon: <LayoutDashboard size={19} /> },
+    {
+      href: "/dashboard",
+      label: "Student Home",
+      icon: <LayoutDashboard size={19} />,
+    },
     { href: "/sessions", label: "Find a Session", icon: <Compass size={19} /> },
     { href: "/learn", label: "Programs", icon: <GraduationCap size={19} /> },
-    { href: "/homework-help", label: "Homework Help", icon: <MessageSquare size={19} /> },
+    {
+      href: "/homework-help",
+      label: "Homework Help",
+      icon: <MessageSquare size={19} />,
+    },
     { href: "/community", label: "Community", icon: <Users size={19} /> },
     {
       href: "/tutor",
@@ -116,7 +135,11 @@ export function SidebarNav() {
 
   function isActive(href: string) {
     if (href === "/dashboard" && pathname === "/dashboard") return true;
-    if (href !== "/dashboard" && (pathname === href || pathname.startsWith(href + "/"))) return true;
+    if (
+      href !== "/dashboard" &&
+      (pathname === href || pathname.startsWith(href + "/"))
+    )
+      return true;
     return false;
   }
 
@@ -159,7 +182,11 @@ export function SidebarNav() {
           <button
             className={styles.collapseToggleBtn}
             onClick={toggleCollapse}
-            aria-label={collapsed ? "Expand sidebar navigation" : "Collapse sidebar to icons"}
+            aria-label={
+              collapsed
+                ? "Expand sidebar navigation"
+                : "Collapse sidebar to icons"
+            }
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {collapsed ? <PanelLeft size={17} /> : <PanelLeftClose size={17} />}
@@ -179,13 +206,17 @@ export function SidebarNav() {
                   <>
                     <button
                       className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
-                      onClick={() => setExpanded(childExpanded ? null : item.href)}
+                      onClick={() =>
+                        setExpanded(childExpanded ? null : item.href)
+                      }
                       aria-expanded={childExpanded}
                       title={item.label}
                     >
                       <span className={styles.navIcon}>{item.icon}</span>
                       <span className={styles.navLabel}>{item.label}</span>
-                      {item.badge && <span className={styles.itemBadge}>{item.badge}</span>}
+                      {item.badge && (
+                        <span className={styles.itemBadge}>{item.badge}</span>
+                      )}
                       <ChevronDown
                         size={15}
                         className={`${styles.expandChevron} ${childExpanded ? styles.expandChevronOpen : ""}`}
@@ -212,8 +243,12 @@ export function SidebarNav() {
                     title={item.label}
                   >
                     <span className={styles.navIcon}>{item.icon}</span>
-                    {!collapsed && <span className={styles.navLabel}>{item.label}</span>}
-                    {!collapsed && item.badge && <span className={styles.itemBadge}>{item.badge}</span>}
+                    {!collapsed && (
+                      <span className={styles.navLabel}>{item.label}</span>
+                    )}
+                    {!collapsed && item.badge && (
+                      <span className={styles.itemBadge}>{item.badge}</span>
+                    )}
                   </Link>
                 )}
               </div>
@@ -225,17 +260,25 @@ export function SidebarNav() {
         {!collapsed && (
           <div className={styles.sidebarFooter}>
             {isTutor ? (
-              <Link href="/tutor#schedule-session" className={styles.hostSessionBtn}>
+              <Link
+                href="/tutor#schedule-session"
+                className={styles.hostSessionBtn}
+              >
                 <CalendarPlus size={18} />
                 <span>Host a Session</span>
               </Link>
             ) : (
               <div className={styles.studentApplyCard}>
                 <div className={styles.applyCardIcon}>
-                  <HeartHandshake size={18} color="var(--wa-crimson, #2563EB)" />
+                  <HeartHandshake
+                    size={18}
+                    color="var(--wa-crimson, #2563EB)"
+                  />
                 </div>
                 <div className={styles.applyCardTitle}>Want to Teach?</div>
-                <p className={styles.applyCardText}>Share your knowledge and earn verified service hours.</p>
+                <p className={styles.applyCardText}>
+                  Share your knowledge and earn verified service hours.
+                </p>
                 <Link href="/apply" className={styles.applyCardLink}>
                   Apply to Tutor →
                 </Link>

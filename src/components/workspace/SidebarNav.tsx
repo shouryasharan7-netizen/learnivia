@@ -36,17 +36,22 @@ export function SidebarNav({
   className,
 }: SidebarNavProps) {
   const pathname = usePathname();
-  const [adminView, setAdminView] = React.useState<"ADMIN" | "TUTOR" | "STUDENT">("ADMIN");
-  
+  const [adminView, setAdminView] = React.useState<
+    "ADMIN" | "TUTOR" | "STUDENT"
+  >("ADMIN");
+
   React.useEffect(() => {
     let active = true;
     if (isAdmin) {
-      const saved = localStorage.getItem("learnivia_admin_view") as "ADMIN" | "TUTOR" | "STUDENT";
+      const saved = localStorage.getItem("learnivia_admin_view") as
+        "ADMIN" | "TUTOR" | "STUDENT";
       if (saved && active) {
         setTimeout(() => setAdminView(saved), 0);
       }
     }
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [isAdmin]);
 
   const handleAdminViewChange = (view: "ADMIN" | "TUTOR" | "STUDENT") => {
@@ -61,35 +66,83 @@ export function SidebarNav({
   const studentItems = [
     { href: ROUTES.learner.home, icon: Home, label: "Home" },
     { href: ROUTES.find, icon: Search, label: "Find Sessions" },
-    { href: ROUTES.learn || "/learn", icon: GraduationCap, label: "Group Workshops" },
-    { href: ROUTES.homeworkHelp || "/homework-help", icon: HelpCircle, label: "Homework Help" },
+    {
+      href: ROUTES.learn || "/learn",
+      icon: GraduationCap,
+      label: "Group Workshops",
+    },
+    {
+      href: ROUTES.homeworkHelp || "/homework-help",
+      icon: HelpCircle,
+      label: "Homework Help",
+    },
     { href: ROUTES.community || "/community", icon: Users, label: "Community" },
-    { href: ROUTES.sessions || "/sessions", icon: BookOpen, label: "My Sessions" },
-    { href: ROUTES.resources || "/resources", icon: FileText, label: "Resources" },
+    {
+      href: ROUTES.sessions || "/sessions",
+      icon: BookOpen,
+      label: "My Sessions",
+    },
+    {
+      href: ROUTES.resources || "/resources",
+      icon: FileText,
+      label: "Resources",
+    },
   ];
 
   const tutorItems = [
     { href: ROUTES.tutor.home, icon: Home, label: "Tutor Home" },
     { href: ROUTES.sessions || "/sessions", icon: BookOpen, label: "Sessions" },
-    { href: ROUTES.tutor.training || "/tutor/training", icon: ShieldCheck, label: "Training" },
-    { href: ROUTES.tutor.transcript || "/tutor/transcript", icon: Award, label: "Service Hours" },
-    { href: ROUTES.homeworkHelp || "/homework-help", icon: HelpCircle, label: "Answer Questions" },
+    {
+      href: ROUTES.tutor.training || "/tutor/training",
+      icon: ShieldCheck,
+      label: "Training",
+    },
+    {
+      href: ROUTES.tutor.transcript || "/tutor/transcript",
+      icon: Award,
+      label: "Service Hours",
+    },
+    {
+      href: ROUTES.homeworkHelp || "/homework-help",
+      icon: HelpCircle,
+      label: "Answer Questions",
+    },
   ];
 
   const adminItems = [
-    { href: ROUTES.admin.home || "/admin", icon: LayoutDashboard, label: "Admin" },
+    {
+      href: ROUTES.admin.home || "/admin",
+      icon: LayoutDashboard,
+      label: "Admin",
+    },
     { href: ROUTES.admin.users || "/admin/users", icon: Users, label: "Users" },
-    { href: ROUTES.admin.sessions || "/admin/sessions", icon: BookOpen, label: "Sessions" },
-    { href: ROUTES.admin.reports || "/admin/reports", icon: AlertTriangle, label: "Reports" },
-    { href: ROUTES.admin.tutors || "/admin/tutors", icon: GraduationCap, label: "Tutors" },
+    {
+      href: ROUTES.admin.sessions || "/admin/sessions",
+      icon: BookOpen,
+      label: "Sessions",
+    },
+    {
+      href: ROUTES.admin.reports || "/admin/reports",
+      icon: AlertTriangle,
+      label: "Reports",
+    },
+    {
+      href: ROUTES.admin.tutors || "/admin/tutors",
+      icon: GraduationCap,
+      label: "Tutors",
+    },
     { href: "/admin/subjects", icon: Settings, label: "Subjects" },
   ];
 
   const navItems = isAdmin
-    ? (adminView === "STUDENT" ? studentItems : adminView === "TUTOR" ? tutorItems : adminItems)
+    ? adminView === "STUDENT"
+      ? studentItems
+      : adminView === "TUTOR"
+        ? tutorItems
+        : adminItems
     : isTutor
-    ? tutorItems
-    : studentItems;
+      ? tutorItems
+      : studentItems;
 
   return (
     <aside
@@ -174,38 +227,88 @@ export function SidebarNav({
 
       {/* Admin View Toggle */}
       {isAdmin && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px", paddingBottom: "16px", alignItems: "center", borderTop: "1px solid var(--border)", width: "100%", paddingTop: "16px" }}>
-          <button 
-            onClick={() => handleAdminViewChange("ADMIN")} 
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            paddingBottom: "16px",
+            alignItems: "center",
+            borderTop: "1px solid var(--border)",
+            width: "100%",
+            paddingTop: "16px",
+          }}
+        >
+          <button
+            onClick={() => handleAdminViewChange("ADMIN")}
             title="Admin View"
             style={{
-              width: 40, height: 40, borderRadius: 8, border: "none", cursor: "pointer",
-              background: adminView === "ADMIN" ? "var(--primary-light, #CCFBF1)" : "transparent",
-              color: adminView === "ADMIN" ? "var(--primary, #0D9488)" : "var(--muted, #64748B)",
-              display: "flex", alignItems: "center", justifyContent: "center"
-            }}>
+              width: 40,
+              height: 40,
+              borderRadius: 8,
+              border: "none",
+              cursor: "pointer",
+              background:
+                adminView === "ADMIN"
+                  ? "var(--primary-light, #CCFBF1)"
+                  : "transparent",
+              color:
+                adminView === "ADMIN"
+                  ? "var(--primary, #0D9488)"
+                  : "var(--muted, #64748B)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <LayoutDashboard size={20} />
           </button>
-          <button 
+          <button
             onClick={() => handleAdminViewChange("TUTOR")}
             title="Tutor View"
             style={{
-              width: 40, height: 40, borderRadius: 8, border: "none", cursor: "pointer",
-              background: adminView === "TUTOR" ? "var(--primary-light, #CCFBF1)" : "transparent",
-              color: adminView === "TUTOR" ? "var(--primary, #0D9488)" : "var(--muted, #64748B)",
-              display: "flex", alignItems: "center", justifyContent: "center"
-            }}>
+              width: 40,
+              height: 40,
+              borderRadius: 8,
+              border: "none",
+              cursor: "pointer",
+              background:
+                adminView === "TUTOR"
+                  ? "var(--primary-light, #CCFBF1)"
+                  : "transparent",
+              color:
+                adminView === "TUTOR"
+                  ? "var(--primary, #0D9488)"
+                  : "var(--muted, #64748B)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <ShieldCheck size={20} />
           </button>
-          <button 
+          <button
             onClick={() => handleAdminViewChange("STUDENT")}
             title="Student View"
             style={{
-              width: 40, height: 40, borderRadius: 8, border: "none", cursor: "pointer",
-              background: adminView === "STUDENT" ? "var(--primary-light, #CCFBF1)" : "transparent",
-              color: adminView === "STUDENT" ? "var(--primary, #0D9488)" : "var(--muted, #64748B)",
-              display: "flex", alignItems: "center", justifyContent: "center"
-            }}>
+              width: 40,
+              height: 40,
+              borderRadius: 8,
+              border: "none",
+              cursor: "pointer",
+              background:
+                adminView === "STUDENT"
+                  ? "var(--primary-light, #CCFBF1)"
+                  : "transparent",
+              color:
+                adminView === "STUDENT"
+                  ? "var(--primary, #0D9488)"
+                  : "var(--muted, #64748B)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <GraduationCap size={20} />
           </button>
         </div>
@@ -241,7 +344,13 @@ interface SidebarItemProps {
   locked?: boolean;
 }
 
-function SidebarItem({ href, icon: Icon, label, active, locked }: SidebarItemProps) {
+function SidebarItem({
+  href,
+  icon: Icon,
+  label,
+  active,
+  locked,
+}: SidebarItemProps) {
   return (
     <Link
       href={locked ? "#" : href}
@@ -283,11 +392,7 @@ function SidebarItem({ href, icon: Icon, label, active, locked }: SidebarItemPro
         }
       }}
     >
-      <Icon
-        size={20}
-        strokeWidth={active ? 2.2 : 1.75}
-        aria-hidden="true"
-      />
+      <Icon size={20} strokeWidth={active ? 2.2 : 1.75} aria-hidden="true" />
     </Link>
   );
 }

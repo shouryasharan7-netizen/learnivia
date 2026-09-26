@@ -9,11 +9,17 @@ interface ShareTranscriptButtonProps {
   token: string;
 }
 
-export default function ShareTranscriptButton({ tutorId, token }: ShareTranscriptButtonProps) {
+export default function ShareTranscriptButton({
+  tutorId,
+  token,
+}: ShareTranscriptButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    const origin = typeof window !== "undefined" ? window.location.origin : "https://learnivia-green.vercel.app";
+    const origin =
+      typeof window !== "undefined"
+        ? window.location.origin
+        : "https://learnivia-green.vercel.app";
     const shareableUrl = `${origin}/tutor/${tutorId}/transcript?token=${token}`;
 
     try {

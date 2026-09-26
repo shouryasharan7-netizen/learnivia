@@ -1,9 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Check, AlertCircle, Loader2, ShieldCheck, X } from "lucide-react";
+import {
+  Mail,
+  Check,
+  AlertCircle,
+  Loader2,
+  ShieldCheck,
+  X,
+} from "lucide-react";
 
-export default function EmailVerificationBanner({ email }: { email?: string | null }) {
+export default function EmailVerificationBanner({
+  email,
+}: {
+  email?: string | null;
+}) {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -84,7 +95,14 @@ export default function EmailVerificationBanner({ email }: { email?: string | nu
         position: "relative",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", maxWidth: "680px" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+          maxWidth: "680px",
+        }}
+      >
         <div
           style={{
             width: "36px",
@@ -101,17 +119,40 @@ export default function EmailVerificationBanner({ email }: { email?: string | nu
           <Mail size={18} />
         </div>
         <div>
-          <strong style={{ fontSize: "0.875rem", color: "var(--wa-ink, #0F172A)", display: "block" }}>
+          <strong
+            style={{
+              fontSize: "0.875rem",
+              color: "var(--wa-ink, #0F172A)",
+              display: "block",
+            }}
+          >
             Please verify your email address
           </strong>
-          <span style={{ fontSize: "0.8125rem", color: "var(--wa-muted, #64748B)", lineHeight: 1.5 }}>
-            Account verification ensures tutoring session safety and unlocks full platform access for{" "}
-            <strong style={{ color: "var(--wa-ink, #0F172A)" }}>{email || "your account"}</strong>.
+          <span
+            style={{
+              fontSize: "0.8125rem",
+              color: "var(--wa-muted, #64748B)",
+              lineHeight: 1.5,
+            }}
+          >
+            Account verification ensures tutoring session safety and unlocks
+            full platform access for{" "}
+            <strong style={{ color: "var(--wa-ink, #0F172A)" }}>
+              {email || "your account"}
+            </strong>
+            .
           </span>
         </div>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.6rem",
+          flexWrap: "wrap",
+        }}
+      >
         {verified ? (
           <span
             style={{

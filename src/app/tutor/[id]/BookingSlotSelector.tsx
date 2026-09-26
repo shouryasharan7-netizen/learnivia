@@ -4,13 +4,21 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Globe, Clock, Check } from "lucide-react";
 import styles from "./booking-slot.module.css";
 
-const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DAYS_OF_WEEK = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 interface AvailabilitySlot {
   id: string;
   dayOfWeek: number;
   startTime: string; // "HH:mm"
-  endTime: string;   // "HH:mm"
+  endTime: string; // "HH:mm"
 }
 
 interface BookingSlotSelectorProps {
@@ -25,7 +33,7 @@ function convertSlotTimes(
   startTime: string,
   endTime: string,
   tutorTz: string,
-  viewerTz: string
+  viewerTz: string,
 ) {
   try {
     // Pick reference week: Sunday 2026-09-13 to Saturday 2026-09-19
@@ -53,7 +61,10 @@ function convertSlotTimes(
     const guessEndUtc = new Date(`${refDateStr}T${endTime}:00Z`).getTime();
     const exactEndUtc = new Date(guessEndUtc - offset);
 
-    const dayFormatter = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: viewerTz });
+    const dayFormatter = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      timeZone: viewerTz,
+    });
     const timeFormatter = new Intl.DateTimeFormat("en-US", {
       hour: "2-digit",
       minute: "2-digit",
@@ -94,7 +105,7 @@ export function BookingSlotSelector({
   defaultViewerTimezone,
 }: BookingSlotSelectorProps) {
   const [viewerTimezone, setViewerTimezone] = useState<string>(
-    defaultViewerTimezone || "UTC"
+    defaultViewerTimezone || "UTC",
   );
   const [mounted, setMounted] = useState(false);
   const [selectedSlotId, setSelectedSlotId] = useState<string>("");
@@ -120,7 +131,7 @@ export function BookingSlotSelector({
         slot.startTime,
         slot.endTime,
         tutorTimezone || "UTC",
-        viewerTimezone
+        viewerTimezone,
       );
       return {
         ...slot,
@@ -168,7 +179,10 @@ export function BookingSlotSelector({
 
         {isChangingTimezone && (
           <div className={styles.timezonePickerDropdown}>
-            <label htmlFor="customTimezoneSelect" className={styles.pickerLabel}>
+            <label
+              htmlFor="customTimezoneSelect"
+              className={styles.pickerLabel}
+            >
               Select your preferred timezone:
             </label>
             <select
@@ -181,7 +195,9 @@ export function BookingSlotSelector({
               className={styles.pickerSelect}
             >
               {!commonTimezones.includes(viewerTimezone) && (
-                <option value={viewerTimezone}>{viewerTimezone} (Detected)</option>
+                <option value={viewerTimezone}>
+                  {viewerTimezone} (Detected)
+                </option>
               )}
               {commonTimezones.map((tz) => (
                 <option key={tz} value={tz}>
@@ -226,10 +242,13 @@ export function BookingSlotSelector({
           <div className={styles.previewItem}>
             <Clock size={14} className={styles.previewIcon} />
             <div className={styles.previewTextGroup}>
-              <span className={styles.previewTitle}>Your Local Session Time</span>
+              <span className={styles.previewTitle}>
+                Your Local Session Time
+              </span>
               <span className={styles.previewTime}>
                 <strong>
-                  {selectedSlot.converted.viewerDay} {selectedSlot.converted.viewerStart} -{" "}
+                  {selectedSlot.converted.viewerDay}{" "}
+                  {selectedSlot.converted.viewerStart} -{" "}
                   {selectedSlot.converted.viewerEnd}
                 </strong>{" "}
                 ({viewerTimezone})
@@ -239,7 +258,8 @@ export function BookingSlotSelector({
           {viewerTimezone !== (tutorTimezone || "UTC") && (
             <div className={styles.tutorTzNote}>
               Tutor&apos;s local time: {selectedSlot.converted.tutorDay}{" "}
-              {selectedSlot.converted.tutorStart} - {selectedSlot.converted.tutorEnd} (
+              {selectedSlot.converted.tutorStart} -{" "}
+              {selectedSlot.converted.tutorEnd} (
               {tutorTimezone || "Tutor Local"})
             </div>
           )}

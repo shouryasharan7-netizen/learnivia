@@ -14,7 +14,13 @@ interface Props {
   onClose: () => void;
 }
 
-export default function RegistrationModal({ workshopId, tutorName, tutorInitials, isOpen, onClose }: Props) {
+export default function RegistrationModal({
+  workshopId,
+  tutorName,
+  tutorInitials,
+  isOpen,
+  onClose,
+}: Props) {
   const router = useRouter();
   const [inputText, setInputText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,7 +33,7 @@ export default function RegistrationModal({ workshopId, tutorName, tutorInitials
       alert("Please type 'I understand' exactly to proceed.");
       return;
     }
-    
+
     setIsSubmitting(true);
     try {
       const formData = new FormData();
@@ -45,31 +51,40 @@ export default function RegistrationModal({ workshopId, tutorName, tutorInitials
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <button className={styles.modalCloseBtn} onClick={onClose}><X size={20} /></button>
-        
+        <button className={styles.modalCloseBtn} onClick={onClose}>
+          <X size={20} />
+        </button>
+
         <h2 className={styles.modalTitle}>Registration Questions</h2>
-        
+
         <div className={styles.modalTutorBadge}>
           <div className={styles.modalAvatar}>{tutorInitials}</div>
-          <span className={styles.modalTutorName}>{tutorName} <span className={styles.tutorLabel}>Tutor</span></span>
+          <span className={styles.modalTutorName}>
+            {tutorName} <span className={styles.tutorLabel}>Tutor</span>
+          </span>
         </div>
 
         <div className={styles.modalQuestionBox}>
-          <p>To complete your registration, please answer a couple of questions!</p>
+          <p>
+            To complete your registration, please answer a couple of questions!
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.modalForm}>
           <div className={styles.policyBox}>
             <div className={styles.policyHeader}>✋ ATTENDANCE POLICY</div>
-            <p className={styles.policyText}>Free to attend or skip any sessions</p>
+            <p className={styles.policyText}>
+              Free to attend or skip any sessions
+            </p>
           </div>
 
           <label className={styles.modalLabel}>
-            Please type &quot;I understand&quot; to acknowledge the above attendance policy. <span className={styles.required}>*</span>
+            Please type &quot;I understand&quot; to acknowledge the above
+            attendance policy. <span className={styles.required}>*</span>
           </label>
-          <input 
-            type="text" 
-            placeholder="I understand" 
+          <input
+            type="text"
+            placeholder="I understand"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             className={styles.modalInput}
@@ -77,7 +92,14 @@ export default function RegistrationModal({ workshopId, tutorName, tutorInitials
           />
 
           <div className={styles.modalActions}>
-            <button type="submit" disabled={isSubmitting || inputText.toLowerCase().trim() !== "i understand"} className={styles.modalSubmitBtn}>
+            <button
+              type="submit"
+              disabled={
+                isSubmitting ||
+                inputText.toLowerCase().trim() !== "i understand"
+              }
+              className={styles.modalSubmitBtn}
+            >
               {isSubmitting ? "Registering..." : "Submit"}
             </button>
           </div>

@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Clock, Play, Pause, RotateCcw, Lightbulb, Shuffle, FileText } from "lucide-react";
+import {
+  Clock,
+  Play,
+  Pause,
+  RotateCcw,
+  Lightbulb,
+  Shuffle,
+  FileText,
+} from "lucide-react";
 import styles from "./page.module.css";
 
 const ICEBREAKERS = [
@@ -79,7 +87,8 @@ export default function TutorToolsPage() {
         <div className={styles.header}>
           <h1 className={styles.title}>Interactive Tutoring Tools</h1>
           <p className={styles.subtitle}>
-            In-session utilities for time management, icebreakers, student engagement, and quick session notes.
+            In-session utilities for time management, icebreakers, student
+            engagement, and quick session notes.
           </p>
         </div>
 
@@ -92,7 +101,9 @@ export default function TutorToolsPage() {
               </span>
               <div>
                 <h2 className={styles.toolTitle}>Session &amp; Focus Timer</h2>
-                <p className={styles.toolDesc}>Keep your 1-on-1 tutoring sessions on track.</p>
+                <p className={styles.toolDesc}>
+                  Keep your 1-on-1 tutoring sessions on track.
+                </p>
               </div>
             </div>
 
@@ -122,10 +133,34 @@ export default function TutorToolsPage() {
             </div>
 
             <div className={styles.timerControls}>
-              <button className={styles.startBtn} onClick={toggleTimer} style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
-                {timerRunning ? <><Pause size={14} /> Pause</> : <><Play size={14} /> Start</>}
+              <button
+                className={styles.startBtn}
+                onClick={toggleTimer}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}
+              >
+                {timerRunning ? (
+                  <>
+                    <Pause size={14} /> Pause
+                  </>
+                ) : (
+                  <>
+                    <Play size={14} /> Start
+                  </>
+                )}
               </button>
-              <button className={styles.resetBtn} onClick={resetTimer} style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+              <button
+                className={styles.resetBtn}
+                onClick={resetTimer}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}
+              >
                 <RotateCcw size={14} /> Reset
               </button>
             </div>
@@ -138,16 +173,31 @@ export default function TutorToolsPage() {
                 <Lightbulb size={22} color="var(--color-ochre, #B18435)" />
               </span>
               <div>
-                <h2 className={styles.toolTitle}>Check-In &amp; Reflection Prompts</h2>
-                <p className={styles.toolDesc}>Kick off the call or wrap up with quick student self-assessments.</p>
+                <h2 className={styles.toolTitle}>
+                  Check-In &amp; Reflection Prompts
+                </h2>
+                <p className={styles.toolDesc}>
+                  Kick off the call or wrap up with quick student
+                  self-assessments.
+                </p>
               </div>
             </div>
 
             <div className={styles.promptBox}>
-              <p className={styles.promptText}>&ldquo;{ICEBREAKERS[currentPromptIdx]}&rdquo;</p>
+              <p className={styles.promptText}>
+                &ldquo;{ICEBREAKERS[currentPromptIdx]}&rdquo;
+              </p>
             </div>
 
-            <button className={styles.nextPromptBtn} onClick={nextPrompt} style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+            <button
+              className={styles.nextPromptBtn}
+              onClick={nextPrompt}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+              }}
+            >
               <Shuffle size={14} /> Next Prompt
             </button>
           </div>
@@ -159,8 +209,13 @@ export default function TutorToolsPage() {
                 <FileText size={22} color="var(--color-forest, #234B3B)" />
               </span>
               <div>
-                <h2 className={styles.toolTitle}>Session Notes &amp; Follow-up Scratchpad</h2>
-                <p className={styles.toolDesc}>Jot down key problems covered, formulas to remember, and next steps.</p>
+                <h2 className={styles.toolTitle}>
+                  Session Notes &amp; Follow-up Scratchpad
+                </h2>
+                <p className={styles.toolDesc}>
+                  Jot down key problems covered, formulas to remember, and next
+                  steps.
+                </p>
               </div>
             </div>
 
@@ -175,7 +230,10 @@ export default function TutorToolsPage() {
             <div className={styles.scratchpadFooter}>
               <span>{notes.length} characters</span>
               {notes.length > 0 && (
-                <button className={styles.clearBtn} onClick={() => setNotes("")}>
+                <button
+                  className={styles.clearBtn}
+                  onClick={() => setNotes("")}
+                >
                   Clear Notes
                 </button>
               )}

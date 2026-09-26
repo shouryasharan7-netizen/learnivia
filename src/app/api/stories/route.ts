@@ -11,7 +11,10 @@ export async function GET() {
     return NextResponse.json({ stories });
   } catch (err) {
     console.error("Failed to fetch stories:", err);
-    return NextResponse.json({ error: "Failed to fetch stories" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch stories" },
+      { status: 500 },
+    );
   }
 }
 
@@ -21,7 +24,7 @@ export async function POST(request: Request) {
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: "Please sign in to submit a community story." },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -30,13 +33,20 @@ export async function POST(request: Request) {
 
     if (!quote || quote.trim().length < 15) {
       return NextResponse.json(
-        { error: "Please share a little more about your experience (at least 15 characters)." },
-        { status: 400 }
+        {
+          error:
+            "Please share a little more about your experience (at least 15 characters).",
+        },
+        { status: 400 },
       );
     }
 
     // Mask name for student privacy (First Name + Last Initial)
-    let rawName = (name?.trim() || session.user.name || "Community Learner").trim();
+    let rawName = (
+      name?.trim() ||
+      session.user.name ||
+      "Community Learner"
+    ).trim();
     const parts = rawName.split(/\s+/);
     let storyName = parts[0];
     if (parts.length > 1) {
@@ -62,6 +72,9 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("Failed to submit story:", err);
-    return NextResponse.json({ error: "Failed to submit story" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to submit story" },
+      { status: 500 },
+    );
   }
 }

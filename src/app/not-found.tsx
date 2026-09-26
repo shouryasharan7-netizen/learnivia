@@ -82,7 +82,8 @@ export default function NotFound() {
             marginBottom: "2rem",
           }}
         >
-          We couldn&apos;t find the learning resource or page you requested. It may have been moved, updated, or does not exist.
+          We couldn&apos;t find the learning resource or page you requested. It
+          may have been moved, updated, or does not exist.
         </p>
 
         <div

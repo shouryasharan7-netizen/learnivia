@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth-user";
-import { getMessages, addMessage, toggleReaction, deleteMessage, checkContentSafety } from "@/lib/community-store";
+import {
+  getMessages,
+  addMessage,
+  toggleReaction,
+  deleteMessage,
+  checkContentSafety,
+} from "@/lib/community-store";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request) {
@@ -14,7 +20,12 @@ export async function POST(request: Request) {
   const user = await getCurrentUser();
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized. Please sign in to participate in the community." }, { status: 401 });
+    return NextResponse.json(
+      {
+        error: "Unauthorized. Please sign in to participate in the community.",
+      },
+      { status: 401 },
+    );
   }
 
   const body = await request.json();
@@ -31,16 +42,25 @@ export async function POST(request: Request) {
           status: "PENDING",
         },
       });
-      return NextResponse.json({ success: true, message: "Report submitted to moderators." });
+      return NextResponse.json({
+        success: true,
+        message: "Report submitted to moderators.",
+      });
     } catch (e) {
       console.error("Failed to file report:", e);
-      return NextResponse.json({ error: "Failed to submit report." }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to submit report." },
+        { status: 500 },
+      );
     }
   }
 
   // Handle New Message
   if (!content || !content.trim()) {
-    return NextResponse.json({ error: "Message content cannot be empty." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Message content cannot be empty." },
+      { status: 400 },
+    );
   }
 
   const targetChannel = channel || "Random";
@@ -48,8 +68,11 @@ export async function POST(request: Request) {
   // Enforce channel permissions: Only admins can post in Announcements
   if (targetChannel.toLowerCase() === "announcements" && !user.isAdmin) {
     return NextResponse.json(
-      { error: "Only platform administrators are permitted to post in #Announcements." },
-      { status: 403 }
+      {
+        error:
+          "Only platform administrators are permitted to post in #Announcements.",
+      },
+      { status: 403 },
     );
   }
 
@@ -67,8 +90,19 @@ export async function POST(request: Request) {
     .join("")
     .toUpperCase();
 
-  const userRole = user.isAdmin ? "COMMUNITY LEAD" : user.isTutor ? "TUTOR" : "STUDENT";
-  const colors = ["#0E8345", "#C9922A", "#1E3A5F", "#D97706", "#DC2626", "#0D9488"];
+  const userRole = user.isAdmin
+    ? "COMMUNITY LEAD"
+    : user.isTutor
+      ? "TUTOR"
+      : "STUDENT";
+  const colors = [
+    "#0E8345",
+    "#C9922A",
+    "#1E3A5F",
+    "#D97706",
+    "#DC2626",
+    "#0D9488",
+  ];
   const color = colors[userName.charCodeAt(0) % colors.length];
 
   const newMsg = await addMessage({
@@ -90,7 +124,10 @@ export async function PUT(request: Request) {
   const { messageId, reactionType } = body;
 
   if (!messageId || !reactionType) {
-    return NextResponse.json({ error: "Missing messageId or reactionType." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing messageId or reactionType." },
+      { status: 400 },
+    );
   }
 
   const updated = await toggleReaction(messageId, reactionType);
@@ -112,22 +149,33 @@ export async function DELETE(request: Request) {
   const messageId = searchParams.get("messageId");
 
   if (!messageId) {
-    return NextResponse.json({ error: "Missing messageId parameter." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing messageId parameter." },
+      { status: 400 },
+    );
   }
 
   // Verify permission: User must be ADMIN or author of the message
-  const msg = await prisma.communityMessage.findUnique({ where: { id: messageId } });
+  const msg = await prisma.communityMessage.findUnique({
+    where: { id: messageId },
+  });
   if (!msg) {
     return NextResponse.json({ error: "Message not found." }, { status: 404 });
   }
 
   if (!user.isAdmin && msg.authorId !== user.id) {
-    return NextResponse.json({ error: "You do not have permission to delete this message." }, { status: 403 });
+    return NextResponse.json(
+      { error: "You do not have permission to delete this message." },
+      { status: 403 },
+    );
   }
 
   const deleted = await deleteMessage(messageId);
   if (!deleted) {
-    return NextResponse.json({ error: "Failed to delete message." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete message." },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ success: true, messageId });

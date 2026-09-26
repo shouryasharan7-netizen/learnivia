@@ -2,7 +2,15 @@
 
 import { useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Search, X, SlidersHorizontal, Users, Video, Layers, RotateCcw } from "lucide-react";
+import {
+  Search,
+  X,
+  SlidersHorizontal,
+  Users,
+  Video,
+  Layers,
+  RotateCcw,
+} from "lucide-react";
 import styles from "./SessionFilterBar.module.css";
 
 const CURRICULUM_OPTIONS = [
@@ -54,7 +62,12 @@ export default function SessionFilterBar({
   const updateFilters = (updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(updates).forEach(([key, val]) => {
-      if (val === null || val === "" || val === "All" || (key === "tab" && val === "all")) {
+      if (
+        val === null ||
+        val === "" ||
+        val === "All" ||
+        (key === "tab" && val === "all")
+      ) {
         params.delete(key);
       } else {
         params.set(key, val);
@@ -104,7 +117,9 @@ export default function SessionFilterBar({
       <form onSubmit={handleSearchSubmit} className={styles.topControlRow}>
         {/* Curriculum Selector with modern styling */}
         <div className={styles.curriculumWrap}>
-          <label htmlFor="curriculum-select" className={styles.visuallyHidden}>Curriculum</label>
+          <label htmlFor="curriculum-select" className={styles.visuallyHidden}>
+            Curriculum
+          </label>
           <select
             id="curriculum-select"
             value={activeCurriculum}
@@ -114,7 +129,9 @@ export default function SessionFilterBar({
           >
             <option value="All">All Curricula</option>
             {CURRICULUM_OPTIONS.filter((c) => c !== "All").map((c) => (
-              <option key={c} value={c}>{c} Curriculum</option>
+              <option key={c} value={c}>
+                {c} Curriculum
+              </option>
             ))}
           </select>
         </div>
@@ -170,7 +187,11 @@ export default function SessionFilterBar({
       </form>
 
       {/* Subject Filter Pills */}
-      <div className={styles.subjectPillsRow} role="tablist" aria-label="Filter sessions by subject">
+      <div
+        className={styles.subjectPillsRow}
+        role="tablist"
+        aria-label="Filter sessions by subject"
+      >
         {SUBJECT_FILTERS.map((f) => {
           const isCurrent = activeSubject.toLowerCase() === f.toLowerCase();
           return (
@@ -190,7 +211,11 @@ export default function SessionFilterBar({
 
       {/* Section View Tabs with Authentic Database Counts */}
       <div className={styles.tabsRow}>
-        <div className={styles.tabsList} role="tablist" aria-label="Session type views">
+        <div
+          className={styles.tabsList}
+          role="tablist"
+          aria-label="Session type views"
+        >
           <button
             type="button"
             role="tab"
@@ -229,7 +254,15 @@ export default function SessionFilterBar({
         </div>
 
         <div className={styles.matchCountLabel}>
-          Showing <strong>{activeTab === "tutors" ? tutorMatches : activeTab === "workshops" ? workshopMatches : totalMatches}</strong> verified opportunities
+          Showing{" "}
+          <strong>
+            {activeTab === "tutors"
+              ? tutorMatches
+              : activeTab === "workshops"
+                ? workshopMatches
+                : totalMatches}
+          </strong>{" "}
+          verified opportunities
         </div>
       </div>
     </div>
