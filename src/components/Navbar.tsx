@@ -502,6 +502,16 @@ export function Navbar() {
               <div className={styles.authSkeleton} aria-hidden="true" />
             ) : (
               <>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                  aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                  className={styles.iconBtn}
+                  style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", marginRight: "1rem" }}
+                >
+                  {theme === "dark" ? <Sun size={18} color="#F59E0B" /> : <Moon size={18} color="#2563EB" />}
+                </button>
                 <Link href="/signin" className={styles.signInBtn}>
                   Sign In
                 </Link>

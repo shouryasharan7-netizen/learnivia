@@ -311,7 +311,7 @@ export default function HomeInteractiveClient({
       {/* ── 2. HERO SECTION ── */}
       <section
         style={{
-          background: "var(--navy, #0C1B33)",
+          background: "#0C1B33",
           color: "#fff",
           padding: "6rem 2rem 5rem",
           position: "relative",
