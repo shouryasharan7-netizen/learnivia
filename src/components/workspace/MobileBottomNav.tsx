@@ -21,10 +21,14 @@ export function MobileBottomNav({
   const [adminView, setAdminView] = React.useState<"ADMIN" | "TUTOR" | "STUDENT">("ADMIN");
 
   React.useEffect(() => {
+    let active = true;
     if (isAdmin) {
       const saved = localStorage.getItem("learnivia_admin_view") as "ADMIN" | "TUTOR" | "STUDENT";
-      if (saved) setAdminView(saved);
+      if (saved && active) {
+        setTimeout(() => setAdminView(saved), 0);
+      }
     }
+    return () => { active = false; };
   }, [isAdmin]);
 
   const studentItems = [

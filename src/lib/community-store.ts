@@ -45,7 +45,7 @@ export async function getMessages(channel?: string): Promise<CommunityMessage[]>
   }
 
   try {
-    const where: any = {};
+    const where: import("@prisma/client").Prisma.CommunityMessageWhereInput = {};
     if (channel && channel !== "Home" && channel !== "All") {
       where.channel = { equals: channel, mode: "insensitive" };
     }
@@ -66,7 +66,7 @@ export async function getMessages(channel?: string): Promise<CommunityMessage[]>
     }
 
     const messages: CommunityMessage[] = rows.map((r) => {
-      const reactions = (r.reactions as any) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
+      const reactions = (r.reactions as Record<string, number>) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
       const timeStr = new Date(r.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
       const dateStr = new Date(r.createdAt).toLocaleDateString([], { month: "short", day: "numeric" });
 
@@ -84,7 +84,7 @@ export async function getMessages(channel?: string): Promise<CommunityMessage[]>
         channel: r.channel,
         authorName: displayName,
         authorEmail: "", // never leak personal email addresses to client
-        authorRole: (r.authorRole as any) || "STUDENT",
+        authorRole: (r.authorRole as "STUDENT" | "TUTOR" | "COMMUNITY LEAD") || "STUDENT",
         authorInitials: r.authorInitials,
         authorColor: r.authorColor,
         content: r.content,
@@ -139,7 +139,7 @@ export async function addMessage(msg: {
     channel: created.channel,
     authorName: created.authorName,
     authorEmail: created.authorEmail || "",
-    authorRole: created.authorRole as any,
+    authorRole: created.authorRole as "STUDENT" | "TUTOR" | "COMMUNITY LEAD",
     authorInitials: created.authorInitials,
     authorColor: created.authorColor,
     content: created.content,
@@ -158,7 +158,7 @@ export async function toggleReaction(
     });
     if (!existing) return null;
 
-    const currentReactions = (existing.reactions as any) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
+    const currentReactions = (existing.reactions as Record<string, number>) || { heart: 0, clap: 0, bulb: 0, fire: 0 };
     currentReactions[reactionType] = (Number(currentReactions[reactionType]) || 0) + 1;
 
     const updated = await prisma.communityMessage.update({
@@ -173,7 +173,7 @@ export async function toggleReaction(
       channel: updated.channel,
       authorName: updated.authorName,
       authorEmail: updated.authorEmail || "",
-      authorRole: updated.authorRole as any,
+      authorRole: updated.authorRole as "STUDENT" | "TUTOR" | "COMMUNITY LEAD",
       authorInitials: updated.authorInitials,
       authorColor: updated.authorColor,
       content: updated.content,

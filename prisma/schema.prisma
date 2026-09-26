@@ -205,6 +205,7 @@ model Availability {
   timezone      String       // The timezone this was created in, fallback to Tutor's timezone
   
   @@unique([tutorId, dayOfWeek, startTime, endTime])
+  @@index([tutorId])
 }
 
 enum BookingStatus {
@@ -245,6 +246,8 @@ model Booking {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
+  @@index([studentId])
+  @@index([tutorId])
   @@index([idempotencyKey])
 }
 
@@ -274,6 +277,8 @@ model ProgramFaq {
   
   programId  String
   program    Program  @relation(fields: [programId], references: [id], onDelete: Cascade)
+  
+  @@index([programId])
 }
 
 model Story {
@@ -299,6 +304,9 @@ model Review {
   comment     String?      
   
   createdAt   DateTime     @default(now())
+  
+  @@index([tutorId])
+  @@index([studentId])
 }
 
 enum WorkshopStatus {
@@ -332,6 +340,8 @@ model Workshop {
   
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
+  
+  @@index([tutorId])
 }
 
 model WorkshopEnrollment {
@@ -344,6 +354,8 @@ model WorkshopEnrollment {
   createdAt   DateTime     @default(now())
   
   @@unique([workshopId, studentId])
+  @@index([workshopId])
+  @@index([studentId])
 }
 
 enum ReportStatus {
@@ -369,6 +381,9 @@ model IncidentReport {
   
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  
+  @@index([reporterId])
+  @@index([reportedUserId])
 }
 
 model HomeworkRequest {
@@ -394,6 +409,9 @@ model HomeworkRequest {
   
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+  
+  @@index([studentId])
+  @@index([tutorId])
 }
 
 model CommunityMessage {
@@ -413,6 +431,8 @@ model CommunityMessage {
   
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+  
+  @@index([authorId])
 }
 
 // ─── Phase 2: Parent-Managed Child Profiles ───────────────────────────────────
@@ -431,6 +451,8 @@ model ChildProfile {
 
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+  
+  @@index([parentId])
 }
 
 // ─── Phase 4: Tutor Training Module Completion ────────────────────────────────
@@ -446,6 +468,7 @@ model TutorTraining {
   quizPassed     Boolean      @default(false)
 
   @@unique([tutorId, moduleId])
+  @@index([tutorId])
 }
 
 // ─── Phase 5: Volunteer Hour Audit Trail ─────────────────────────────────────
@@ -461,6 +484,8 @@ model VolunteerHourAudit {
   reason       String        // Required reason for the adjustment
 
   createdAt    DateTime     @default(now())
+  
+  @@index([tutorId])
 }
 
 

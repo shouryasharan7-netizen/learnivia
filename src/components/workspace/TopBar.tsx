@@ -88,31 +88,34 @@ export function TopBar({ user }: TopBarProps) {
   const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [notifications, setNotifications] = useState(SAMPLE_NOTIFICATIONS);
-  const [notificationsLoaded, setNotificationsLoaded] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let active = true;
     const saved = localStorage.getItem("learnivia-theme") as "light" | "dark" | null;
-    if (saved === "dark" || saved === "light") {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else {
-      setTheme("light");
-      document.documentElement.setAttribute("data-theme", "light");
+    if (active) {
+      if (saved === "dark" || saved === "light") {
+        setTimeout(() => setTheme(saved), 0);
+        document.documentElement.setAttribute("data-theme", saved);
+      } else {
+        setTimeout(() => setTheme("light"), 0);
+        document.documentElement.setAttribute("data-theme", "light");
+      }
     }
     const dismissed = sessionStorage.getItem("announcement-dismissed");
     if (dismissed) setAnnouncementDismissed(true);
 
     const savedNotifs = localStorage.getItem("learnivia-notifications");
-    if (savedNotifs) {
+    if (savedNotifs && active) {
       try {
-        setNotifications(JSON.parse(savedNotifs));
+        setTimeout(() => setNotifications(JSON.parse(savedNotifs)), 0);
       } catch (e) {
         console.error("Error parsing notifications", e);
       }
     }
-    setNotificationsLoaded(true);
+    
+    return () => { active = false; };
   }, []);
 
   // Close dropdowns on outside click
