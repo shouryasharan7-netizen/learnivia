@@ -63,19 +63,6 @@ export function MobileBottomNav({
   return (
     <nav
       aria-label="Mobile bottom navigation"
-      style={{
-        display: "none",
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: "56px",
-        background: "var(--wa-white)",
-        borderTop: "1px solid var(--wa-border)",
-        zIndex: 50,
-        justifyContent: "space-around",
-        alignItems: "center",
-      }}
       className="mobile-bottom-nav"
     >
       {items.map((item) => {
@@ -89,19 +76,7 @@ export function MobileBottomNav({
           <Link
             key={item.href}
             href={item.href}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "2px",
-              flex: 1,
-              height: "100%",
-              textDecoration: "none",
-              color: isActive ? "var(--wa-green)" : "var(--wa-muted)",
-              fontSize: "0.6875rem",
-              fontWeight: isActive ? 700 : 500,
-            }}
+            className={`mobile-bottom-nav-item ${isActive ? "active" : ""}`}
           >
             <Icon size={18} strokeWidth={isActive ? 2.2 : 1.75} aria-hidden="true" />
             <span>{item.label}</span>
