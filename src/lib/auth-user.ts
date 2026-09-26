@@ -2,14 +2,14 @@ import { cache } from "react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { getAdminEmails, isDesignatedAdmin } from "@/auth.config";
-import type { User, TutorProfile, Role, TrainingModule } from "@prisma/client";
+import type { User, TutorProfile, Role, TutorTraining } from "@prisma/client";
 
 export interface AuthenticatedUser extends User {
   role: Role;
   isTutor: boolean;
   isAdmin: boolean;
   isTrainingCompleted: boolean;
-  tutorProfile: (TutorProfile & { trainingModules?: TrainingModule[] }) | null;
+  tutorProfile: (TutorProfile & { trainingModules?: TutorTraining[] }) | null;
 }
 
 /**

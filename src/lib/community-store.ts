@@ -178,7 +178,7 @@ export async function toggleReaction(
       authorColor: updated.authorColor,
       content: updated.content,
       timestamp: `Today at ${timeStr}`,
-      reactions: currentReactions,
+      reactions: currentReactions as { heart: number; clap: number; bulb: number; fire: number; },
     };
   } catch (err) {
     console.error("Failed to toggle reaction:", err);
