@@ -46,13 +46,8 @@ export async function addAvailability(formData: FormData) {
     },
   });
 
-  // Automatically reactivate suspended tutor profile once they set their available time
-  if (tutor.status === "SUSPENDED") {
-    await prisma.tutorProfile.update({
-      where: { id: tutor.id },
-      data: { status: "APPROVED" },
-    });
-  }
+  // Tutors must be manually reactivated by an admin.
+  // We no longer automatically reactivate here.
 
   revalidatePath("/sessions");
   revalidatePath("/dashboard");

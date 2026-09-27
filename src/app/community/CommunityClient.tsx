@@ -56,7 +56,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
     channel: "All",
     icon: MessageSquare,
     description:
-      "Explore peer questions, study routines, and insights from across the student community.",
+      "View all community activity and discussions.",
   },
   {
     id: "general",
@@ -64,7 +64,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
     channel: "General",
     icon: MessageSquare,
     description:
-      "Open academic conversations, peer advice, and daily study reflections.",
+      "General chat, study advice, and hanging out.",
   },
   {
     id: "math-science",
@@ -72,7 +72,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
     channel: "Math & Science Circles",
     icon: Calculator,
     description:
-      "Peer problem-solving for mathematics, chemistry, physics, and biology.",
+      "Ask questions and share knowledge in math and science.",
   },
   {
     id: "homework",
@@ -80,7 +80,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
     channel: "K-10 Homework Help",
     icon: BookOpen,
     description:
-      "Ask questions, share walkthrough steps, and collaborate on assignments.",
+      "Get help with your school assignments.",
   },
   {
     id: "study-circles",
@@ -88,7 +88,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
     channel: "Study Circles",
     icon: Users,
     description:
-      "Connect with study partners, accountability groups, and review tables.",
+      "Find a study partner or group.",
   },
   {
     id: "introductions",
@@ -96,7 +96,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
     channel: "Introductions",
     icon: UserPlus,
     description:
-      "Introduce yourself, share your grade, and outline your study goals.",
+      "Introduce yourself to the community.",
   },
   {
     id: "announcements",
@@ -104,7 +104,7 @@ const TOPIC_FILTERS: TopicFilter[] = [
     channel: "Announcements",
     icon: Megaphone,
     description:
-      "Official community updates, system schedules, and workshops from Learnivia.",
+      "Official updates from the Learnivia team.",
   },
 ];
 
@@ -304,7 +304,7 @@ export default function CommunityClient({
             Community Discussions
           </h1>
           <p className={styles.academicSubtitle}>
-            Ask questions, share study routines, and connect with peers.
+            Ask questions, share resources, and connect with peers.
           </p>
         </div>
 
@@ -439,7 +439,7 @@ export default function CommunityClient({
                         gap: "0.5rem",
                       }}
                     >
-                      <span className={styles.composerPrompt}>Posting to</span>
+                      <span className={styles.composerPrompt}>Posting to:</span>
                       <select
                         value={postChannel}
                         onChange={(e) => setPostChannel(e.target.value)}
@@ -512,7 +512,7 @@ export default function CommunityClient({
 
                 <textarea
                   className={styles.composerTextarea}
-                  placeholder={`Share a concept question, study tip, or reflection on today's learning...`}
+                  placeholder="What's on your mind? Share a question or tip..."
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   rows={3}
@@ -534,9 +534,7 @@ export default function CommunityClient({
                     }}
                   >
                     <ShieldCheck size={14} aria-hidden="true" />
-                    <span>
-                      Safe academic space. Never share phone numbers or personal
-                      contacts.
+                      Keep it safe: Never share personal contact information.
                     </span>
                   </div>
 

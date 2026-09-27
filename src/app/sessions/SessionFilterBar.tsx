@@ -31,6 +31,7 @@ const SUBJECT_FILTERS = [
   "Biology",
   "Chemistry",
   "Social Studies",
+  "Standardised Testing",
   "Learning Support",
   "Homework Help",
 ];

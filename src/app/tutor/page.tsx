@@ -335,10 +335,10 @@ export default async function TutorDashboard() {
             </h1>
             <p className={styles.subtitle} style={{ marginBottom: "1.5rem" }}>
               {isMissingAvailability
-                ? "Your volunteer educator profile has been deactivated because weekly availability hours were not added within 3 days of joining. To reactivate your profile and start mentoring students, simply add your available weekly time below."
+                ? "Your volunteer educator profile has been deactivated because weekly availability hours were not added within 3 days of joining. To request reactivation and start mentoring students, simply add your available weekly time below, and an administrator will review your profile."
                 : isIncompleteTraining
                   ? "Your volunteer application was deactivated because mandatory safeguarding training was not completed within the 15-day onboarding window. Complete all 5 modules to request reactivation."
-                  : "Your tutor profile has been temporarily deactivated for inactivity. Please contact support or add availability to reactivate."}
+                  : "Your tutor profile has been temporarily deactivated for inactivity. Please contact support or add availability to request reactivation."}
             </p>
 
             <div
@@ -383,7 +383,7 @@ export default async function TutorDashboard() {
                       color: "#0F172A",
                     }}
                   >
-                    Set Your Available Hours to Reactivate:
+                    Set Your Available Hours to Request Reactivation:
                   </span>
                   <div
                     style={{
@@ -458,7 +458,7 @@ export default async function TutorDashboard() {
                       justifyContent: "center",
                     }}
                   >
-                    Save Hours &amp; Reactivate Profile
+                    Save Hours
                   </button>
                 </form>
               )}
@@ -524,7 +524,7 @@ export default async function TutorDashboard() {
     const dur = Math.max(
       15,
       (new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) /
-        (1000 * 60),
+        (1000 * 60) || 0,
     );
     return sum + dur;
   }, 0);
@@ -532,7 +532,7 @@ export default async function TutorDashboard() {
     const dur = Math.max(
       15,
       (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) /
-        (1000 * 60),
+        (1000 * 60) || 0,
     );
     return sum + dur;
   }, 0);
@@ -540,7 +540,7 @@ export default async function TutorDashboard() {
   const tutorHours =
     tutor.volunteerHours > 0
       ? tutor.volunteerHours
-      : Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
+      : Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10 || 0;
   const uniqueStudents = new Set(
     completedBookings.map((b) => b?.studentId).filter(Boolean),
   ).size;

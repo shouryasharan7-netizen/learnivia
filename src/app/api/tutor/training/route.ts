@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
@@ -97,7 +98,10 @@ export async function POST(req: NextRequest) {
         where: { id: tutorProfile.id },
         data: { status: "APPROVED" },
       });
+      revalidatePath("/tutor");
+      revalidatePath("/dashboard");
     }
+    revalidatePath("/tutor/training");
 
     return NextResponse.json({
       success: true,
