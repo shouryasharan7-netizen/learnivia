@@ -5,6 +5,7 @@ import { Calendar, CheckCircle2, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 import { enrollInWorkshop } from "@/app/actions/workshops";
+import { PROGRAMS } from "@/lib/programs";
 
 export const dynamic = "force-dynamic";
 
@@ -27,38 +28,31 @@ export default async function LearnPage() {
   let workshops: any[] = [];
 
   if (learnCache && Date.now() - learnCache.timestamp < 60_000) {
-    programs = learnCache.programs;
     workshops = learnCache.workshops;
   } else {
     try {
-      const results = await Promise.all([
-        prisma.program.findMany({
-          orderBy: { createdAt: "asc" },
-        }),
-        prisma.workshop.findMany({
-          where: {
-            status: "UPCOMING",
-            startTime: { gte: new Date() },
-          },
-          include: {
-            tutor: { include: { user: true } },
-            enrollments: true,
-          },
-          orderBy: { startTime: "asc" },
-          take: 6,
-        }),
-      ]);
-      programs = results[0];
-      workshops = results[1];
-      learnCache = { programs, workshops, timestamp: Date.now() };
+      workshops = await prisma.workshop.findMany({
+        where: {
+          status: "UPCOMING",
+          startTime: { gte: new Date() },
+        },
+        include: {
+          tutor: { include: { user: true } },
+          enrollments: true,
+        },
+        orderBy: { startTime: "asc" },
+        take: 6,
+      });
+      learnCache = { programs: PROGRAMS, workshops, timestamp: Date.now() };
     } catch (err) {
       console.warn("Learn page cache fetch fallback:", err);
       if (learnCache) {
-        programs = learnCache.programs;
         workshops = learnCache.workshops;
       }
     }
   }
+  
+  programs = PROGRAMS;
 
   return (
     <main>

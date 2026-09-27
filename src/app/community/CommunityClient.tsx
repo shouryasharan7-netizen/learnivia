@@ -300,31 +300,11 @@ export default function CommunityClient({
       {/* 1. Academic Header */}
       <div className={styles.academicHeader}>
         <div>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              background: "#EFF6FF",
-              color: "#2563EB",
-              padding: "0.2rem 0.6rem",
-              borderRadius: "4px",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-            }}
-          >
-            <ShieldCheck size={13} />
-            <span>Student Discussion &amp; Peer Exchange</span>
-          </div>
           <h1 className={styles.academicTitle}>
-            Student Community Discussions
+            Community Discussions
           </h1>
           <p className={styles.academicSubtitle}>
-            Ask questions, collaborate on problem-solving steps, share study
-            routines, and explore weekly academic topics in a safe,
-            peer-moderated space.
+            Ask questions, share study routines, and connect with peers.
           </p>
         </div>
 
@@ -377,21 +357,6 @@ export default function CommunityClient({
         </div>
       </div>
 
-      {/* Admin Moderation Notice */}
-      {currentUser?.isAdmin && (
-        <div className={styles.adminModerationBanner}>
-          <span className={styles.modBadge}>
-            <ShieldCheck size={16} aria-hidden="true" />
-            <span>
-              <strong>Moderator Oversight Active:</strong> You have full
-              moderation rights to review and remove inappropriate posts.
-            </span>
-          </span>
-          <Link href={ROUTES.admin.reports} className={styles.modLink}>
-            Incident Reports Dashboard →
-          </Link>
-        </div>
-      )}
 
       {/* Toast Notification */}
       {successMsg && (
@@ -447,151 +412,6 @@ export default function CommunityClient({
       <div className={styles.academicGrid}>
         {/* Left / Center: Main Discussion Feed Column */}
         <div className={styles.feedColumn}>
-          {/* Pinned Socratic Roundtable Topic of the Week */}
-          <div
-            style={{
-              background: "var(--wa-green-light, #EFF6FF)",
-              border: "1px solid var(--wa-border, #BFDBFE)",
-              borderRadius: "12px",
-              padding: "1.25rem 1.5rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.75rem",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                gap: "0.5rem",
-              }}
-            >
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <span
-                  style={{
-                    background: "#2563EB",
-                    color: "#FFFFFF",
-                    fontSize: "0.6875rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    padding: "0.2rem 0.55rem",
-                    borderRadius: "4px",
-                    letterSpacing: "0.05em",
-                  }}
-                >
-                  Roundtable Topic of the Week
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "#1E40AF",
-                    fontWeight: 600,
-                  }}
-                >
-                  Curated by Volunteer Mentors
-                </span>
-              </div>
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  color: "#3B82F6",
-                  fontWeight: 600,
-                }}
-              >
-                Weekly Prompt
-              </span>
-            </div>
-
-            <div
-              style={{
-                fontSize: "1.05rem",
-                fontWeight: 700,
-                color: "#1E3A8A",
-                lineHeight: 1.45,
-              }}
-            >
-              &ldquo;When tackling complex multi-step problems in math, science,
-              or essay writing, what is your most effective method to trace
-              errors without starting over?&rdquo;
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                gap: "0.5rem",
-                flexWrap: "wrap",
-                alignItems: "center",
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  setInputText(
-                    "On error tracing: I verify units and signs at each intermediate step: ",
-                  );
-                  setPostChannel("Math & Science Circles");
-                }}
-                style={{
-                  background: "#FFFFFF",
-                  color: "#1E40AF",
-                  border: "1px solid #BFDBFE",
-                  padding: "0.35rem 0.75rem",
-                  borderRadius: "6px",
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                }}
-              >
-                Reply with Unit Tracing
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setInputText(
-                    "My strategy: I explain each equation aloud using the Feynman Technique: ",
-                  );
-                  setPostChannel("General");
-                }}
-                style={{
-                  background: "#FFFFFF",
-                  color: "#1E40AF",
-                  border: "1px solid #BFDBFE",
-                  padding: "0.35rem 0.75rem",
-                  borderRadius: "6px",
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                }}
-              >
-                Reply with Feynman Method
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setInputText(
-                    "I test extreme boundary numbers (0, 1, or extremes) to verify the formula: ",
-                  );
-                  setPostChannel("Math & Science Circles");
-                }}
-                style={{
-                  background: "#FFFFFF",
-                  color: "#1E40AF",
-                  border: "1px solid #BFDBFE",
-                  padding: "0.35rem 0.75rem",
-                  borderRadius: "6px",
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                }}
-              >
-                Reply with Boundary Testing
-              </button>
-            </div>
-          </div>
 
           {/* Interactive Discussion Composer */}
           {currentUser ? (
@@ -957,62 +777,7 @@ export default function CommunityClient({
           className={styles.sideColumn}
           aria-label="Community principles and study tools"
         >
-          {/* Card 1: Discussion Principles */}
-          <div
-            style={{
-              background: "var(--wa-white, #FFFFFF)",
-              border: "1px solid var(--wa-border, #E2E8F0)",
-              borderRadius: "14px",
-              padding: "1.25rem",
-              boxShadow: "var(--wa-shadow-sm)",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                marginBottom: "0.75rem",
-              }}
-            >
-              <ShieldCheck size={18} color="#2563EB" />
-              <h3
-                style={{
-                  fontSize: "0.95rem",
-                  fontWeight: 700,
-                  color: "var(--wa-ink, #0F172A)",
-                  margin: 0,
-                }}
-              >
-                Discussion Principles
-              </h3>
-            </div>
-            <ul
-              style={{
-                margin: 0,
-                paddingLeft: "1.1rem",
-                fontSize: "0.8125rem",
-                color: "var(--wa-muted, #64748B)",
-                lineHeight: 1.6,
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.4rem",
-              }}
-            >
-              <li>
-                <strong>Be Patient &amp; Kind:</strong> Every student learns at
-                their own pace. Encourage fellow peers.
-              </li>
-              <li>
-                <strong>Show Your Work:</strong> Share reasoning and steps, not
-                just the final number or answer.
-              </li>
-              <li>
-                <strong>Protect Your Privacy:</strong> Never share phone
-                numbers, social handles, or physical addresses.
-              </li>
-            </ul>
-          </div>
+
 
           {/* Card 2: Need 1-on-1 Guidance */}
           <div

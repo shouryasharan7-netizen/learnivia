@@ -82,11 +82,6 @@ export function SidebarNav({
       icon: BookOpen,
       label: "My Sessions",
     },
-    {
-      href: ROUTES.resources || "/resources",
-      icon: FileText,
-      label: "Resources",
-    },
   ];
 
   const tutorItems = [

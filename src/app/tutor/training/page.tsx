@@ -418,7 +418,7 @@ export default function TutorTrainingPage() {
               You&apos;ve completed all 3 training modules. You&apos;re now
               eligible to receive your first booking.
             </p>
-            <Link
+            <a
               href="/tutor"
               style={{
                 display: "inline-block",
@@ -432,7 +432,7 @@ export default function TutorTrainingPage() {
               }}
             >
               Go to Tutor Dashboard →
-            </Link>
+            </a>
           </div>
         )}
 
