@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Compass, CalendarCheck, HelpCircle, User } from "lucide-react";
+import { Home, Search, BookOpen, HelpCircle, GraduationCap, Users, CalendarCheck, User } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 
 interface MobileBottomNavProps {
@@ -38,35 +38,35 @@ export function MobileBottomNav({
 
   const studentItems = [
     { href: ROUTES.learner.home, label: "Home", icon: Home },
-    { href: ROUTES.find, label: "Find", icon: Compass },
-    { href: ROUTES.sessions, label: "Sessions", icon: CalendarCheck },
+    { href: ROUTES.find, label: "Find", icon: Search },
+    { href: ROUTES.sessions, label: "Sessions", icon: BookOpen },
     { href: ROUTES.homeworkHelp, label: "Help", icon: HelpCircle },
-    { href: ROUTES.learn || "/learn", label: "Workshops", icon: User },
+    { href: ROUTES.learn || "/learn", label: "Workshops", icon: GraduationCap },
   ];
 
   const tutorItems = [
     { href: ROUTES.tutor.home, label: "Home", icon: Home },
-    { href: ROUTES.sessions, label: "Sessions", icon: CalendarCheck },
+    { href: ROUTES.sessions, label: "Sessions", icon: BookOpen },
     {
       href: ROUTES.tutor.training || "/tutor/training",
       label: "Training",
-      icon: User,
+      icon: GraduationCap,
     },
     {
       href: ROUTES.tutor.transcript || "/tutor/transcript",
       label: "Hours",
-      icon: Compass,
+      icon: Search,
     },
     { href: ROUTES.homeworkHelp, label: "Help", icon: HelpCircle },
   ];
 
   const adminItems = [
     { href: ROUTES.admin.home || "/admin", label: "Admin", icon: Home },
-    { href: ROUTES.admin.users || "/admin/users", label: "Users", icon: User },
+    { href: ROUTES.admin.users || "/admin/users", label: "Users", icon: Users },
     {
       href: ROUTES.admin.sessions || "/admin/sessions",
       label: "Sessions",
-      icon: CalendarCheck,
+      icon: BookOpen,
     },
     {
       href: ROUTES.admin.reports || "/admin/reports",

@@ -97,7 +97,7 @@ export default async function FindSessionsPage({ searchParams }: Props) {
                 : false;
 
               // Get initials for avatar
-              const initials = (w.tutor.user.name || "T")
+              const initials = (w.tutor?.user?.name || "T")
                 .split(" ")
                 .map((n: string) => n[0])
                 .join("")
@@ -145,7 +145,7 @@ export default async function FindSessionsPage({ searchParams }: Props) {
 
                   <div className={styles.cardFooter}>
                     <div className={styles.tutorInfo}>
-                      {w.tutor.user.image ? (
+                      {w.tutor?.user?.image ? (
                         <img
                           src={w.tutor.user.image}
                           alt={w.tutor.user.name || "Tutor"}
@@ -155,7 +155,7 @@ export default async function FindSessionsPage({ searchParams }: Props) {
                         <div className={styles.avatarFallback}>{initials}</div>
                       )}
                       <span className={styles.tutorName}>
-                        {w.tutor.user.name}
+                        {w.tutor?.user?.name || "Unknown Tutor"}
                       </span>
                     </div>
                     <div className={styles.attendance}>

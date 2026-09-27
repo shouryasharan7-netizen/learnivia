@@ -96,7 +96,27 @@ export default function ResourcesPage() {
     <main className={styles.main}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <span className={styles.categoryBadge}>Student Study Hub</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+            <Link
+              href="/dashboard"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.25rem",
+                fontSize: "0.875rem",
+                color: "var(--text-secondary, #475569)",
+                textDecoration: "none",
+                fontWeight: 600,
+                background: "var(--surface-subtle, #F1F5F9)",
+                padding: "0.35rem 0.75rem",
+                borderRadius: "var(--radius-md, 8px)",
+                border: "1px solid var(--border, #E2E8F0)",
+              }}
+            >
+              ← Back
+            </Link>
+            <span className={styles.categoryBadge} style={{ marginBottom: 0 }}>Student Study Hub</span>
+          </div>
           <h1 className={styles.title}>Study Guides &amp; Learning Tools</h1>
           <p className={styles.subtitle}>
             Free study guides, formula cheat sheets, interactive practice tools,

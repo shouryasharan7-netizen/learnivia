@@ -1013,3 +1013,14 @@
   gap: 1.25rem;
   flex-wrap: wrap;
 }
+
+/* Mascot visibility */
+.floatingMascot {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .floatingMascot {
+    display: block !important;
+  }
+}

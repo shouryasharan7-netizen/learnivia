@@ -80,6 +80,13 @@ const DISCIPLINES = [
           "Primary source evaluation, democratic systems, map analysis, and global cultures.",
         href: "/find?subject=Social+Studies",
       },
+      {
+        name: "Standardized Testing & AP",
+        grade: "Grades 9-12",
+        summary:
+          "Targeted support for SAT, ACT, TOEFL, IELTS and AP curriculum exams.",
+        href: "/find?subject=Standardized+Testing",
+      },
     ],
   },
   {
@@ -174,6 +181,33 @@ const DISCIPLINES = [
         summary:
           "Story retelling, character exploration, and expressing ideas in simple sentences.",
         href: "/find?grade=K-2&subject=Reading",
+      },
+    ],
+  },
+  {
+    id: "standardized-testing",
+    label: "Standardized Testing",
+    subjects: [
+      {
+        name: "SAT & ACT Prep",
+        grade: "Grades 9-12",
+        summary:
+          "Math, Reading, and Writing strategies for college entrance exams.",
+        href: "/find?subject=Standardized+Testing",
+      },
+      {
+        name: "TOEFL & IELTS Prep",
+        grade: "Grades 9-12",
+        summary:
+          "English language proficiency preparation for international students.",
+        href: "/find?subject=Standardized+Testing",
+      },
+      {
+        name: "AP Course Support",
+        grade: "Grades 9-12",
+        summary:
+          "Advanced Placement test preparation and coursework assistance.",
+        href: "/find?subject=Standardized+Testing",
       },
     ],
   },
@@ -333,28 +367,29 @@ export default function HomeInteractiveClient({
           {[
             // Left Edge Foxes
             { src: "/images/new_mascots/mascot-1.jpeg", top: "10%", left: "3%", delay: 0 },
-            { src: "/images/new_mascots/mascot-2.jpeg", top: "25%", left: "12%", delay: 1.5 },
-            { src: "/images/new_mascots/mascot-3.jpeg", top: "45%", left: "5%", delay: 0.8 },
-            { src: "/images/new_mascots/mascot-7.jpeg", top: "65%", left: "14%", delay: 2.8 },
+            { src: "/images/new_mascots/mascot-2.jpeg", top: "25%", left: "8%", delay: 1.5 },
+            { src: "/images/new_mascots/mascot-3.jpeg", top: "45%", left: "2%", delay: 0.8 },
+            { src: "/images/new_mascots/mascot-7.jpeg", top: "65%", left: "10%", delay: 2.8 },
             { src: "/images/new_mascots/mascot-8.jpeg", top: "85%", left: "4%", delay: 0.3 },
-            { src: "/images/new_mascots/mascot-11.jpeg", top: "15%", left: "18%", delay: 1.1 },
-            { src: "/images/new_mascots/mascot-1.jpeg", top: "35%", left: "2%", delay: 2.0 },
-            { src: "/images/new_mascots/mascot-2.jpeg", top: "55%", left: "16%", delay: 0.6 },
-            { src: "/images/new_mascots/mascot-3.jpeg", top: "75%", left: "8%", delay: 1.4 },
-            { src: "/images/new_mascots/mascot-7.jpeg", top: "90%", left: "15%", delay: 2.3 },
+            { src: "/images/new_mascots/mascot-11.jpeg", top: "15%", left: "-2%", delay: 1.1 },
+            { src: "/images/new_mascots/mascot-1.jpeg", top: "35%", left: "-5%", delay: 2.0 },
+            { src: "/images/new_mascots/mascot-2.jpeg", top: "55%", left: "8%", delay: 0.6 },
+            { src: "/images/new_mascots/mascot-3.jpeg", top: "75%", left: "-1%", delay: 1.4 },
+            { src: "/images/new_mascots/mascot-7.jpeg", top: "90%", left: "10%", delay: 2.3 },
             // Right Edge Foxes
-            { src: "/images/new_mascots/mascot-4.jpeg", top: "12%", right: "8%", delay: 2.2 },
-            { src: "/images/new_mascots/mascot-5.jpeg", top: "28%", right: "18%", delay: 0.5 },
-            { src: "/images/new_mascots/mascot-6.jpeg", top: "48%", right: "4%", delay: 1.2 },
-            { src: "/images/new_mascots/mascot-9.jpeg", top: "68%", right: "14%", delay: 1.8 },
-            { src: "/images/new_mascots/mascot-10.jpeg", top: "82%", right: "6%", delay: 0.9 },
-            { src: "/images/new_mascots/mascot-12.jpeg", top: "18%", right: "3%", delay: 2.5 },
-            { src: "/images/new_mascots/mascot-4.jpeg", top: "38%", right: "12%", delay: 1.0 },
-            { src: "/images/new_mascots/mascot-5.jpeg", top: "58%", right: "19%", delay: 0.4 },
-            { src: "/images/new_mascots/mascot-6.jpeg", top: "78%", right: "2%", delay: 2.1 },
-            { src: "/images/new_mascots/mascot-9.jpeg", top: "92%", right: "16%", delay: 1.3 },
+            { src: "/images/new_mascots/mascot-4.jpeg", top: "12%", right: "3%", delay: 2.2 },
+            { src: "/images/new_mascots/mascot-5.jpeg", top: "28%", right: "8%", delay: 0.5 },
+            { src: "/images/new_mascots/mascot-6.jpeg", top: "48%", right: "2%", delay: 1.2 },
+            { src: "/images/new_mascots/mascot-9.jpeg", top: "68%", right: "10%", delay: 1.8 },
+            { src: "/images/new_mascots/mascot-10.jpeg", top: "82%", right: "4%", delay: 0.9 },
+            { src: "/images/new_mascots/mascot-12.jpeg", top: "18%", right: "-2%", delay: 2.5 },
+            { src: "/images/new_mascots/mascot-4.jpeg", top: "38%", right: "-5%", delay: 1.0 },
+            { src: "/images/new_mascots/mascot-5.jpeg", top: "58%", right: "8%", delay: 0.4 },
+            { src: "/images/new_mascots/mascot-6.jpeg", top: "78%", right: "-1%", delay: 2.1 },
+            { src: "/images/new_mascots/mascot-9.jpeg", top: "92%", right: "10%", delay: 1.3 },
           ].map((avatar: any, idx) => (
             <motion.img
+              className={styles.floatingMascot}
               key={idx}
               src={avatar.src}
               alt="Mascot Avatar"
@@ -649,111 +684,6 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      <section className={styles.registrySection}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionBadge}>Scholars</span>
-            <h2 className={styles.sectionTitle}>
-              High-achieving scholars giving back
-            </h2>
-            <p className={styles.sectionLead}>
-              Our volunteer tutors represent rigorous secondary schools and
-              university programs. Each is verified, safeguarded, and dedicated
-              to empowering younger peers.
-            </p>
-          </div>
-
-          <div
-            className={styles.tutorCarouselWrapper}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{
-              position: "relative",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "stretch",
-              justifyContent: "center",
-            }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentTutorSlide}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
-                className={styles.tutorCard}
-                style={{ width: "100%", maxWidth: "450px", margin: "0 auto" }}
-              >
-                <div>
-                  <div className={styles.tutorCardHeader}>
-                    <div className={styles.tutorAvatar}>
-                      {TUTOR_ROSTER[currentTutorSlide].avatar}
-                    </div>
-                    <div className={styles.tutorInfo}>
-                      <h3>{TUTOR_ROSTER[currentTutorSlide].name}</h3>
-                      <p className={styles.tutorSchool}>
-                        {TUTOR_ROSTER[currentTutorSlide].school}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className={styles.tutorBadges}>
-                    {TUTOR_ROSTER[currentTutorSlide].subjects.map((s) => (
-                      <span key={s} className={styles.badgePill}>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className={styles.tutorCardFooter}>
-                  <div className={styles.hoursVerified}>
-                    <CheckCircle2 size={14} />
-                    <span>{TUTOR_ROSTER[currentTutorSlide].role}</span>
-                  </div>
-                  <Link href="/find" className={styles.bookTutorBtn}>
-                    <span>Schedule</span>
-                  </Link>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Carousel Dots */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: "-30px",
-                left: 0,
-                right: 0,
-                display: "flex",
-                justifyContent: "center",
-                gap: "8px",
-              }}
-            >
-              {TUTOR_ROSTER.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentTutorSlide(idx)}
-                  style={{
-                    width: "10px",
-                    height: "10px",
-                    borderRadius: "50%",
-                    background:
-                      currentTutorSlide === idx
-                        ? "var(--wa-crimson)"
-                        : "var(--wa-border-strong)",
-                    border: "none",
-                    cursor: "pointer",
-                    transition: "background 0.3s",
-                  }}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className={styles.safeguardSection} id="safety">
         <div className={styles.container}>

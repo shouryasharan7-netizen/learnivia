@@ -163,6 +163,16 @@ export default function TutorTrainingPage() {
   const [quizSubmitted, setQuizSubmitted] = useState<Set<number>>(new Set());
   const [savingModule, setSavingModule] = useState<number | null>(null);
   const [isLockedNotice, setIsLockedNotice] = useState(false);
+  const allDone = completedModules.size === MODULES.length;
+
+  useEffect(() => {
+    if (allDone) {
+      const timeout = setTimeout(() => {
+        window.location.href = "/tutor";
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [allDone]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -226,8 +236,6 @@ export default function TutorTrainingPage() {
     });
     setQuizAnswers((prev) => ({ ...prev, [moduleId]: null }));
   };
-
-  const allDone = completedModules.size === MODULES.length;
 
   return (
     <main
