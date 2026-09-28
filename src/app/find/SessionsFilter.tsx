@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { Search, GraduationCap } from "lucide-react";
 import styles from "./page.module.css";
 
 interface Props {
   currentQ: string;
   currentSubject: string;
+  currentGrade?: string;
   currentSort: string;
   availableSubjects: string[];
 }
@@ -15,23 +16,30 @@ interface Props {
 export default function SessionsFilter({
   currentQ,
   currentSubject,
+  currentGrade = "All",
   currentSort,
   availableSubjects,
 }: Props) {
   const router = useRouter();
   const [search, setSearch] = useState(currentQ);
 
-  const updateFilters = (newQ: string, newSubject: string, newSort: string) => {
+  const updateFilters = (
+    newQ: string,
+    newSubject: string,
+    newGrade: string,
+    newSort: string
+  ) => {
     const params = new URLSearchParams();
     if (newQ) params.set("q", newQ);
     if (newSubject && newSubject !== "All") params.set("subject", newSubject);
+    if (newGrade && newGrade !== "All") params.set("grade", newGrade);
     if (newSort && newSort !== "soon") params.set("sort", newSort);
     router.push(`/find?${params.toString()}`);
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    updateFilters(search, currentSubject, currentSort);
+    updateFilters(search, currentSubject, currentGrade, currentSort);
   };
 
   // Combine standard subjects with DB subjects, keeping "All" first
@@ -42,9 +50,17 @@ export default function SessionsFilter({
     "Standardized Testing",
     "Homework Help",
   ];
-  const allPills = [
+  const allSubjects = [
     "All",
     ...Array.from(new Set([...standardSubjects, ...availableSubjects])),
+  ];
+
+  const gradeBands = [
+    { value: "All", label: "All Grades" },
+    { value: "Elementary", label: "Elementary (K-5)" },
+    { value: "Middle School", label: "Middle School (6-8)" },
+    { value: "High School", label: "High School (9-12)" },
+    { value: "College Prep", label: "College & AP Prep" },
   ];
 
   return (
@@ -54,7 +70,7 @@ export default function SessionsFilter({
           <Search size={20} className={styles.searchIcon} />
           <input
             type="text"
-            placeholder="Search sessions"
+            placeholder="Search sessions by topic, tutor name, or curriculum..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className={styles.searchInput}
@@ -64,29 +80,59 @@ export default function SessionsFilter({
         <select
           value={currentSort}
           onChange={(e) =>
-            updateFilters(search, currentSubject, e.target.value)
+            updateFilters(search, currentSubject, currentGrade, e.target.value)
           }
           className={styles.sortSelect}
         >
-          <option value="soon">Starting Soon</option>
-          <option value="newest">Newly Added</option>
+          <option value="soon">Starting Soonest</option>
+          <option value="newest">Newly Scheduled</option>
         </select>
       </div>
 
-      <div className={styles.pillsRow}>
-        <div className={styles.pillsScroll}>
-          {allPills.map((subject) => (
+      {/* Grade Level Filter Row */}
+      <div className={styles.gradeFilterRow}>
+        <span className={styles.filterSectionLabel}>
+          <GraduationCap size={14} />
+          Grade Band:
+        </span>
+        <div className={styles.gradeChips}>
+          {gradeBands.map((gb) => (
             <button
-              key={subject}
-              onClick={() => updateFilters(search, subject, currentSort)}
-              className={`${styles.pillBtn} ${currentSubject === subject ? styles.pillActive : ""}`}
+              key={gb.value}
+              type="button"
+              onClick={() =>
+                updateFilters(search, currentSubject, gb.value, currentSort)
+              }
+              className={`${styles.gradeChip} ${
+                currentGrade === gb.value ? styles.gradeChipActive : ""
+              }`}
             >
-              {subject}
+              {gb.label}
             </button>
           ))}
-          <button className={styles.pillAddBtn}>+ Add a Subject</button>
+        </div>
+      </div>
+
+      {/* Subject Filter Row */}
+      <div className={styles.pillsRow}>
+        <div className={styles.pillsScroll}>
+          {allSubjects.map((subj) => (
+            <button
+              key={subj}
+              type="button"
+              onClick={() =>
+                updateFilters(search, subj, currentGrade, currentSort)
+              }
+              className={`${styles.pillBtn} ${
+                currentSubject === subj ? styles.pillActive : ""
+              }`}
+            >
+              {subj}
+            </button>
+          ))}
         </div>
       </div>
     </div>
   );
 }
+

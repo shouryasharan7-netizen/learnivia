@@ -677,6 +677,121 @@
   cursor: not-allowed;
 }
 
+.enrolledActionStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.liveJoinBtn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #059669;
+  color: white;
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  transition: background 0.15s ease-in-out;
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
+}
+
+.liveJoinBtn:hover {
+  background: #047857;
+}
+
+.livePulseDot {
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulseLive 1.5s infinite;
+}
+
+@keyframes pulseLive {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+}
+
+.calendarSyncBox {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.calendarSyncTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.calendarButtonsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.calSyncBtn,
+.calSyncBtnSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+}
+
+.calSyncBtn {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.calSyncBtn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.calSyncBtnSecondary {
+  background: transparent;
+  color: #475569;
+  border: 1px dashed #cbd5e1;
+}
+
+.calSyncBtnSecondary:hover {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
 @media (max-width: 768px) {
   .layout {
     grid-template-columns: 1fr;

@@ -173,6 +173,10 @@ export default async function WorkshopDetailPage({
                   tutorInitials={initials}
                   isLive={!!isLive}
                   joinUrl={joinUrl}
+                  title={workshop.title}
+                  description={workshop.description}
+                  startTime={startTimeStr}
+                  endTime={endTimeStr}
                 />
               </div>
             </div>
