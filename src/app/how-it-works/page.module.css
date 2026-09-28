@@ -209,12 +209,17 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 150ms ease;
+  transition: transform 180ms var(--ease-spring), background-color 150ms ease, box-shadow 200ms var(--ease-smooth);
 }
 
 .primaryBtn:hover {
   background-color: #0f766e;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.28);
+}
+
+.primaryBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 .secondaryBtn {
@@ -229,13 +234,17 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 150ms ease;
+  transition: transform 180ms var(--ease-spring), border-color 150ms ease, background-color 150ms ease;
 }
 
 .secondaryBtn:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  border-color: #fff;
-  transform: translateY(-1px);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.secondaryBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 @media (max-width: 768px) {

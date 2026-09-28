@@ -161,15 +161,19 @@
   border-radius: 6px;
   border: 1px solid var(--wa-navy, var(--wa-ink));
   text-decoration: none;
-  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 200ms var(--ease-spring), box-shadow 220ms var(--ease-smooth), background-color 180ms ease;
   box-shadow: 0 2px 4px rgba(15, 23, 42, 0.12);
 }
 
 .btnPrimary:hover {
   background: var(--wa-green, #1e3a8a);
   border-color: var(--wa-green, #1e3a8a);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(30, 58, 138, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
+}
+
+.btnPrimary:active {
+  transform: scale(0.97) translateY(0);
 }
 
 .btnSecondary {
@@ -185,14 +189,19 @@
   border-radius: 6px;
   border: 1px solid var(--wa-border, #e5ddd2);
   text-decoration: none;
-  transition: all 180ms ease;
+  transition: transform 200ms var(--ease-spring), box-shadow 220ms var(--ease-smooth), background-color 180ms ease, border-color 180ms ease;
   box-shadow: var(--wa-shadow-xs);
 }
 
 .btnSecondary:hover {
   background: var(--wa-cream-dark, #f4efe6);
   border-color: var(--wa-border-strong, #c8bfb2);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.btnSecondary:active {
+  transform: scale(0.97) translateY(0);
 }
 
 /* Institutional Standards Row */
@@ -358,11 +367,17 @@
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
-  transition: all 150ms ease;
+  transition: transform 180ms var(--ease-spring), background-color 150ms ease, box-shadow 180ms var(--ease-smooth);
 }
 
 .workshopBtn:hover {
   background: #172554;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+
+.workshopBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 /* Dispatch Stats Ledger */
@@ -419,11 +434,13 @@
   padding: 1.85rem 1.6rem;
   display: flex;
   flex-direction: column;
-  transition: border-color 150ms ease;
+  transition: transform 220ms var(--ease-spring), border-color 180ms ease, box-shadow 220ms var(--ease-smooth);
 }
 
 .stepCard:hover {
-  border-color: var(--wa-cobalt-blue, #2563eb);
+  transform: translateY(-3px);
+  border-color: var(--primary, #0D9488);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
 }
 
 .stepNumber {
@@ -654,11 +671,13 @@
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--wa-shadow-xs);
-  transition: border-color 150ms ease;
+  transition: transform 220ms var(--ease-spring), border-color 160ms ease, box-shadow 220ms var(--ease-smooth);
 }
 
 .tutorCard:hover {
-  border-color: var(--wa-border-strong, #cbd5e1);
+  transform: translateY(-3px);
+  border-color: var(--primary, #0D9488);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
 }
 
 .tutorCardHeader {
@@ -782,11 +801,13 @@
   background: var(--wa-white, var(--wa-white));
   border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 8px;
-  transition: border-color 150ms ease;
+  transition: transform 220ms var(--ease-spring), border-color 160ms ease, box-shadow 220ms var(--ease-smooth);
 }
 
 .safeguardCard:hover {
+  transform: translateY(-2px);
   border-color: var(--wa-border-strong, #cbd5e1);
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.06);
 }
 
 .safeguardIconWrap {
@@ -919,12 +940,18 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 150ms ease;
+  transition: transform 180ms var(--ease-spring), background-color 150ms ease, box-shadow 180ms var(--ease-smooth);
   height: 46px;
 }
 
 .findBtn:hover {
   background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.findBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -949,11 +976,12 @@
   border: 1px solid var(--wa-border, #e2e8f0);
   border-radius: 8px;
   overflow: hidden;
-  transition: border-color 150ms ease;
+  transition: border-color 160ms ease, box-shadow 180ms var(--ease-smooth);
 }
 
 .faqItem:hover {
-  border-color: var(--wa-border-strong, #cbd5e1);
+  border-color: var(--primary, #0D9488);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
 
 .faqQuestion {

@@ -47,7 +47,7 @@
 - [ ] **Step 2: Verify CSS parsing and build**
   - Run: `npm run build`
   - Expected: PASS
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
   - Command: `git add src/app/globals.css && git commit -m "feat(ui): add kinetic spring tokens and blueprint utility styles"`
 
 ---
@@ -62,12 +62,12 @@
 - Consumes: `onChange: (level: 'FOUNDATIONAL' | 'BALANCED' | 'OLYMPIAD') => void`
 - Produces: `<CurriculumScrubber currentLevel={level} onChange={setLevel} />`
 
-- [ ] **Step 1: Write `CurriculumScrubber.tsx`**
+- [x] **Step 1: Write `CurriculumScrubber.tsx`**
   - Implement 3-way tactile slider with soundless haptic feedback visual, indicator bar, and metric tags (`T = 0.1`, `T = 1.0`, `T = 10.0`).
-- [ ] **Step 2: Add styles in `observatory.module.css`**
+- [x] **Step 2: Add styles in `observatory.module.css`**
   - Hairline dashed tracks, pill indicator with spring easing.
-- [ ] **Step 3: Verify component renders and handles click/drag**
-- [ ] **Step 4: Commit**
+- [x] **Step 3: Verify component renders and handles click/drag**
+- [x] **Step 4: Commit**
   - Command: `git add src/app/observatory/CurriculumScrubber.tsx src/app/observatory/observatory.module.css && git commit -m "feat(observatory): add tactile curriculum scrubber component"`
 
 ---
@@ -81,13 +81,13 @@
 - Consumes: Tutor profile data (name, school, verified GPA, AP/IB scores, volunteer hours)
 - Produces: `<CredentialFlipCard tutor={tutor} />`
 
-- [ ] **Step 1: Implement 3D flip card with mouse tilt mechanics**
+- [x] **Step 1: Implement 3D flip card with mouse tilt mechanics**
   - CSS 3D perspective (`preserve-3d`, `backface-visibility: hidden`).
   - Front: Tutor photo, bio, subjects, rating.
   - Back: AI-verified marksheet audit score (`100/100`), 5-point safeguarding stamp, and PVSA certified hours.
   - Keyboard accessible toggle (`tabIndex={0}`, `onKeyDown`).
-- [ ] **Step 2: Verify flip animation and backface display**
-- [ ] **Step 3: Commit**
+- [x] **Step 2: Verify flip animation and backface display**
+- [x] **Step 3: Commit**
   - Command: `git add src/app/observatory/CredentialFlipCard.tsx && git commit -m "feat(observatory): add 3D credential flip card component"`
 
 ---
@@ -101,13 +101,13 @@
 - Consumes: `activeLevel: 'FOUNDATIONAL' | 'BALANCED' | 'OLYMPIAD'`
 - Produces: `<KnowledgeReactorCanvas activeLevel={level} onSelectSubject={handleSelect} />`
 
-- [ ] **Step 1: Implement HTML5 Canvas 2D particle/node simulation**
+- [x] **Step 1: Implement HTML5 Canvas 2D particle/node simulation**
   - Nodes for Core Subjects: Mathematics, Physics, Computer Science, Literature, Biology.
   - Interactive spring connections with animated pulsing packets.
   - Mouse hover repulsion and line highlight.
   - Automatic adaptation when `activeLevel` changes (nodes pulse and rewire connections).
-- [ ] **Step 2: Add window resize and high-DPI retina display scaling**
-- [ ] **Step 3: Commit**
+- [x] **Step 2: Add window resize and high-DPI retina display scaling**
+- [x] **Step 3: Commit**
   - Command: `git add src/app/observatory/KnowledgeReactorCanvas.tsx && git commit -m "feat(observatory): add knowledge reactor physics canvas engine"`
 
 ---
@@ -122,12 +122,12 @@
 - Consumes: Tasks 2, 3, 4 components
 - Produces: Route at `/observatory`
 
-- [ ] **Step 1: Build `ObservatoryClient.tsx`**
+- [x] **Step 1: Build `ObservatoryClient.tsx`**
   - Technical blueprint header (`[ OBSERVATORY • ACTIVE NODES: 42 ]`, `[ UTC-5 EST ]`, live pulse indicator).
   - Integrates `KnowledgeReactorCanvas`, `CurriculumScrubber`, and a showcase grid of `CredentialFlipCard`s.
-- [ ] **Step 2: Build `page.tsx` with SEO metadata**
-- [ ] **Step 3: Verify local route at `http://localhost:3000/observatory`**
-- [ ] **Step 4: Commit**
+- [x] **Step 2: Build `page.tsx` with SEO metadata**
+- [x] **Step 3: Verify local route at `http://localhost:3000/observatory`**
+- [x] **Step 4: Commit**
   - Command: `git add src/app/observatory/ObservatoryClient.tsx src/app/observatory/page.tsx && git commit -m "feat(observatory): assemble academic observatory interactive route"`
 
 ---
@@ -137,9 +137,9 @@
 **Files:**
 - None (system-wide verification)
 
-- [ ] **Step 1: Run production build `npm run build`**
+- [x] **Step 1: Run production build `npm run build`**
   - Verify all 40+ routes compile cleanly.
-- [ ] **Step 2: Test locally on `http://localhost:3000` and `http://localhost:3000/observatory`**
+- [x] **Step 2: Test locally on `http://localhost:3000` and `http://localhost:3000/observatory`**
 - [ ] **Step 3: Commit, push to GitHub `main`, and deploy to Vercel production**
   - `git push origin main`
   - `CI=1 vercel --prod --yes`

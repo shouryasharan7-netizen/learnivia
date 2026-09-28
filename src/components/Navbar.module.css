@@ -154,13 +154,17 @@
   background: var(--wa-paper);
   color: var(--wa-muted);
   cursor: pointer;
-  transition: all 150ms ease;
+  transition: transform 180ms var(--ease-spring), background 150ms ease, border-color 150ms ease, color 150ms ease;
   flex-shrink: 0;
 }
 .themeToggle:hover {
   background: var(--wa-cream-dark);
   color: var(--wa-ink);
   border-color: var(--wa-border-strong);
+  transform: translateY(-1px);
+}
+.themeToggle:active {
+  transform: scale(0.92);
 }
 
 /* Auth Controls */
@@ -178,12 +182,16 @@
   text-decoration: none;
   padding: 0.5rem 0.85rem;
   border-radius: 6px;
-  transition: all 150ms ease;
+  transition: transform 180ms var(--ease-spring), color 150ms ease, background 150ms ease;
   white-space: nowrap;
 }
 .signInBtn:hover {
   color: var(--wa-green);
   background: var(--wa-paper);
+  transform: translateY(-1px);
+}
+.signInBtn:active {
+  transform: scale(0.96) translateY(0);
 }
 
 .signUpBtn {
@@ -198,16 +206,19 @@
   padding: 0.5rem 1.25rem;
   border-radius: 6px;
   text-decoration: none;
-  transition: all 150ms ease;
+  transition: transform 180ms var(--ease-spring), background-color 160ms ease, box-shadow 180ms var(--ease-smooth);
   white-space: nowrap;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 .signUpBtn:hover {
   background: var(--wa-green, #1e3a8a);
   border-color: var(--wa-green, #1e3a8a);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(30, 58, 138, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(30, 58, 138, 0.22);
   color: #ffffff;
+}
+.signUpBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 .megaMenu {

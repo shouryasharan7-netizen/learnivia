@@ -118,14 +118,18 @@
   border: 1px solid var(--wa-border, #e5ddd2);
   color: var(--wa-muted, #556377);
   text-decoration: none;
-  transition: all 140ms ease;
+  transition: transform 180ms var(--ease-spring), background-color 150ms ease, color 150ms ease, border-color 150ms ease;
 }
 
 .socialLink:hover {
   background: var(--wa-forest-light, #f0f5f2);
   color: var(--wa-forest, #1e3a2f);
   border-color: var(--wa-border-strong, #c8bfb2);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+
+.socialLink:active {
+  transform: scale(0.92);
 }
 
 /* Link columns */
@@ -157,12 +161,14 @@
   font-size: 0.875rem;
   color: var(--wa-muted, #556377);
   text-decoration: none;
-  transition: color 120ms ease;
+  transition: color 140ms ease, transform 160ms var(--ease-spring);
   line-height: 1.5;
+  display: inline-block;
 }
 
 .footerLink:hover {
   color: var(--wa-green, #1e3a8a);
+  transform: translateX(2px);
 }
 
 /* Bottom strip */

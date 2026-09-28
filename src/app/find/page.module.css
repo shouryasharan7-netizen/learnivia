@@ -170,12 +170,17 @@
   font-weight: 600;
   color: #334155;
   cursor: pointer;
-  transition: all 0.15s ease-in-out;
+  transition: transform 160ms var(--ease-spring), background 150ms ease, border-color 150ms ease, color 150ms ease;
 }
 
 .gradeChip:hover {
   background: #e2e8f0;
   color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.gradeChip:active {
+  transform: scale(0.96) translateY(0);
 }
 
 .gradeChipActive {
@@ -211,12 +216,17 @@
   color: #334155;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.15s ease-in-out;
+  transition: transform 160ms var(--ease-spring), background 150ms ease, border-color 150ms ease;
 }
 
 .pillBtn:hover {
   background: #f8fafc;
   border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.pillBtn:active {
+  transform: scale(0.96) translateY(0);
 }
 
 .pillActive {

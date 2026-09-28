@@ -126,6 +126,11 @@ const getInvolvedLinks = [
     desc: "Learn about our peer-learning model",
   },
   {
+    href: "/observatory",
+    label: "Academic Observatory",
+    desc: "Interactive knowledge reactor & verified credentials",
+  },
+  {
     href: "/parents",
     label: "For Parents",
     desc: "Safeguarding and guardian guidelines",
@@ -139,6 +144,7 @@ const getInvolvedLinks = [
 
 const mainLinks = [
   { href: "/about", label: "About" },
+  { href: "/observatory", label: "Observatory" },
   { href: "/faq", label: "FAQ & Support" },
 ];
 

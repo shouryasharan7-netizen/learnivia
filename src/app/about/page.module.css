@@ -122,11 +122,17 @@
   font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
-  transition: opacity 0.15s ease;
+  transition: transform 180ms var(--ease-spring), opacity 0.15s ease, box-shadow 180ms var(--ease-smooth);
 }
 
 .primaryBtn:hover {
-  opacity: 0.9;
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.primaryBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 .secondaryBtn {
@@ -140,8 +146,15 @@
   font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
+  transition: transform 180ms var(--ease-spring), background-color 150ms ease, border-color 150ms ease;
 }
 
 .secondaryBtn:hover {
   background-color: var(--wa-paper);
+  border-color: var(--wa-border-strong);
+  transform: translateY(-2px);
+}
+
+.secondaryBtn:active {
+  transform: scale(0.97) translateY(0);
 }
