@@ -1,11 +1,8 @@
-"use client";
-
 import React from "react";
 import { LucideIcon } from "lucide-react";
-import { motion } from "motion/react";
 
 interface EmptyStateProps {
-  icon?: LucideIcon;
+  icon?: LucideIcon | React.ReactNode;
   title: string;
   description: string;
   action?: React.ReactNode;
@@ -14,18 +11,27 @@ interface EmptyStateProps {
 }
 
 export function EmptyState({
-  icon: Icon,
+  icon,
   title,
   description,
   action,
   secondaryAction,
   className = "",
 }: EmptyStateProps) {
+  const renderIcon = () => {
+    if (!icon) return null;
+    if (React.isValidElement(icon)) {
+      return icon;
+    }
+    if (typeof icon === "function") {
+      const IconComponent = icon as any;
+      return <IconComponent size={24} strokeWidth={1.75} />;
+    }
+    return null;
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.97, y: 10 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    <div
       className={className}
       style={{
         display: "flex",
@@ -34,32 +40,29 @@ export function EmptyState({
         justifyContent: "center",
         textAlign: "center",
         padding: "3.5rem 2rem",
-        background: "var(--wa-white)",
-        border: "1px dashed var(--wa-border-strong)",
-        borderRadius: "var(--wa-radius-lg)",
-        boxShadow: "var(--wa-shadow-sm)",
+        background: "var(--wa-white, #FFFFFF)",
+        border: "1px dashed var(--wa-border-strong, #CBD5E1)",
+        borderRadius: "var(--wa-radius-lg, 12px)",
+        boxShadow: "0 1px 3px rgba(15, 23, 42, 0.04)",
       }}
     >
-      {Icon && (
-        <motion.div
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 15 }}
+      {icon && (
+        <div
           style={{
             width: 52,
             height: 52,
             borderRadius: "12px",
-            background: "var(--primary-light)",
+            background: "var(--primary-light, #ECFDF5)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "var(--primary)",
+            color: "var(--primary, #059669)",
             marginBottom: "1.25rem",
           }}
           aria-hidden="true"
         >
-          <Icon size={24} strokeWidth={1.75} />
-        </motion.div>
+          {renderIcon()}
+        </div>
       )}
 
       <h2
@@ -67,7 +70,7 @@ export function EmptyState({
           fontFamily: "var(--font-serif, Newsreader, serif)",
           fontSize: "1.35rem",
           fontWeight: 700,
-          color: "var(--wa-ink)",
+          color: "var(--wa-ink, #0F172A)",
           marginBottom: "0.5rem",
           margin: 0,
         }}
@@ -78,7 +81,7 @@ export function EmptyState({
       <p
         style={{
           fontSize: "0.95rem",
-          color: "var(--wa-muted)",
+          color: "var(--wa-muted, #475569)",
           maxWidth: "420px",
           lineHeight: 1.6,
           marginTop: "0.25rem",
@@ -102,6 +105,6 @@ export function EmptyState({
           {secondaryAction}
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

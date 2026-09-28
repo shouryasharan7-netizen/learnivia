@@ -350,7 +350,7 @@ export default async function FindSessionsPage({ searchParams }: Props) {
           </div>
         ) : (
           <EmptyState
-            icon={Search}
+            icon={<Search size={24} />}
             title="No workshops found matching your filters"
             description="Try switching subjects, expanding grade bands, or using the 30-second matchmaker."
             action={

@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import { Poppins, Playfair_Display, IBM_Plex_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Newsreader, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { AppShell } from "@/components/workspace/AppShell";
 import { Analytics } from "@vercel/analytics/react";
 
-const serif = Playfair_Display({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
+  variable: "--font-sans",
   display: "swap",
   preload: true,
 });
 
-const sans = Poppins({
+const serif = Newsreader({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-sans",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
   preload: true,
 });
@@ -91,10 +91,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={sans.className}
-        style={{ fontFamily: "'Proxima Nova', var(--font-sans)" }}
-      >
+      <body className={sans.className}>
         <Providers>
           <AppShell>
             {children}

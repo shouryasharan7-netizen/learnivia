@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { AlertCircle, RotateCcw } from "lucide-react";
 import Link from "next/link";

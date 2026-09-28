@@ -717,7 +717,7 @@ export default async function TutorDashboard() {
                 <EmptyState
                   title="No upcoming 1-on-1 sessions"
                   description="You do not have any pending appointments. Ensure your weekly availability slots are up to date on the right."
-                  icon={Calendar}
+                  icon={<Calendar size={24} />}
                 />
               ) : (
                 <div className={styles.sessionsList}>
@@ -835,7 +835,7 @@ export default async function TutorDashboard() {
                 <EmptyState
                   title="No active group workshops"
                   description="You haven't scheduled any upcoming workshops yet. Use the form above to publish your next session."
-                  icon={BookOpen}
+                  icon={<BookOpen size={24} />}
                 />
               ) : (
                 <div className={styles.sessionsList}>

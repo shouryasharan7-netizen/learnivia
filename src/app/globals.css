@@ -303,21 +303,30 @@ main {
 h1,
 h2,
 h3 {
-  font-family: var(--font-sans, "Poppins", system-ui, sans-serif);
+  font-family: var(--font-sans, "Plus Jakarta Sans", system-ui, -apple-system, sans-serif);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--wa-ink);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }
 
 h4,
 h5,
 h6 {
-  font-family: var(--font-sans, "Poppins", system-ui, sans-serif);
+  font-family: var(--font-sans, "Plus Jakarta Sans", system-ui, -apple-system, sans-serif);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.35;
   color: var(--wa-ink);
   letter-spacing: -0.01em;
+}
+
+.font-serif,
+.editorial-title {
+  font-family: var(--font-serif, "Newsreader", Georgia, serif) !important;
+}
+
+.font-sans {
+  font-family: var(--font-sans, "Plus Jakarta Sans", system-ui, sans-serif) !important;
 }
 
 /* Technical IDs, verification codes, timestamps - IBM Plex Mono */
