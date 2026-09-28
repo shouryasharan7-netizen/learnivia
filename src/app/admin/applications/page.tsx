@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   AlertTriangle,
 } from "lucide-react";
+import { AICredentialAuditor } from "@/components/admin/AICredentialAuditor";
 
 export default async function AdminApplicationsPage() {
   const pendingTutors = await prisma.tutorProfile.findMany({
@@ -297,6 +298,13 @@ export default async function AdminApplicationsPage() {
                     </div>
                   )}
                 </div>
+
+                <AICredentialAuditor
+                  tutorId={tutor.id}
+                  applicantName={tutor.user?.name || "Applicant"}
+                  hasDocument={Boolean(tutor.reportCardStorageKey || tutor.reportCardUrl)}
+                  academicScores={tutor.academicScores}
+                />
 
                 {/* Admin Quick Attach/Edit Report Card */}
                 <details style={{ marginTop: "0.5rem" }}>

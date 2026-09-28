@@ -20,6 +20,7 @@ import {
   Clock,
   Award,
 } from "lucide-react";
+import { AICredentialAuditor } from "@/components/admin/AICredentialAuditor";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -364,6 +365,13 @@ export default async function AdminTutorsPage() {
                             </span>
                           </div>
                         )}
+
+                        <AICredentialAuditor
+                          tutorId={tutor.id}
+                          applicantName={tutor.user?.name || "Tutor"}
+                          hasDocument={Boolean(tutor.reportCardStorageKey || tutor.reportCardUrl)}
+                          academicScores={tutor.academicScores}
+                        />
 
                         {tutor.gradeLevels.length > 0 && (
                           <div

@@ -166,16 +166,25 @@ export default async function TutorDashboard() {
   ).length;
 
   if (tutor.status === "PENDING" && passedModules >= 3) {
-    // Auto-approve if they have completed all training modules
-    tutor = await prisma.tutorProfile.update({
-      where: { id: tutor.id },
-      data: { status: "APPROVED" },
-      include: {
-        availabilities: true,
-        subjects: true,
-        trainingModules: true,
-      },
-    });
+    try {
+      tutor = await prisma.tutorProfile.update({
+        where: { id: tutor.id },
+        data: { status: "APPROVED", approvedAt: new Date() },
+        include: {
+          availabilities: true,
+          subjects: true,
+          trainingModules: true,
+        },
+      });
+      if (userRole !== "ADMIN") {
+        await prisma.user.update({
+          where: { id: userId },
+          data: { role: "TUTOR" },
+        });
+      }
+    } catch (err) {
+      console.error("Auto-approval error on tutor dashboard:", err);
+    }
   }
 
   if (tutor.status === "PENDING") {
@@ -537,10 +546,13 @@ export default async function TutorDashboard() {
     return sum + dur;
   }, 0);
   // P0-4: Authoritative canonical volunteer hours from database escrow ledger
-  const tutorHours =
+  const rawHours =
+    typeof tutor?.volunteerHours === "number" &&
+    !isNaN(tutor.volunteerHours) &&
     tutor.volunteerHours > 0
       ? tutor.volunteerHours
       : Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10 || 0;
+  const tutorHours = Number(rawHours) || 0;
   const uniqueStudents = new Set(
     completedBookings.map((b) => b?.studentId).filter(Boolean),
   ).size;
