@@ -48,6 +48,7 @@ const publicPaths = [
   "/resources",
   "/apply",
   "/leaderboard",
+  "/observatory",
   "/api/health", // Health check is public
   "/api/auth", // NextAuth callbacks
   "/api/cron", // Cron endpoints (Vercel cron)
