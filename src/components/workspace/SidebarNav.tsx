@@ -105,7 +105,6 @@ export function SidebarNav({
       icon: LayoutDashboard,
       label: "Admin",
     },
-    { href: ROUTES.admin.users || "/admin/users", icon: Users, label: "Users" },
     {
       href: ROUTES.admin.sessions || "/admin/sessions",
       icon: BookOpen,

@@ -16,7 +16,43 @@ export default async function AdminUsersPage() {
     redirect("/dashboard");
   }
 
+  // Automatically purge known mock/test seed accounts from database
+  try {
+    await prisma.user.deleteMany({
+      where: {
+        OR: [
+          {
+            email: {
+              in: [
+                "tutor.test@learnivia.org",
+                "parent.test@learnivia.org",
+                "marcus.vance@learnivia.org",
+                "elena.rostova@learnivia.org",
+              ],
+            },
+          },
+          { name: { in: ["Marcus Vance", "Elena Rostova"] } },
+        ],
+      },
+    });
+  } catch (e) {
+    // Non-blocking if table locked or already deleted
+  }
+
   const users = await prisma.user.findMany({
+    where: {
+      email: {
+        notIn: [
+          "tutor.test@learnivia.org",
+          "parent.test@learnivia.org",
+          "marcus.vance@learnivia.org",
+          "elena.rostova@learnivia.org",
+        ],
+      },
+      name: {
+        notIn: ["Marcus Vance", "Elena Rostova"],
+      },
+    },
     include: {
       tutorProfile: {
         select: { id: true, status: true, volunteerHours: true },

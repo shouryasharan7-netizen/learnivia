@@ -309,10 +309,12 @@ export default function UserManagementClient({
                         <div>
                           {u.curriculum ? `${u.curriculum}` : "General"}
                         </div>
-                        <div style={{ fontSize: "0.75rem", color: "var(--text-secondary, #475569)" }}>
-                          {u.grade ? `Grade ${u.grade}` : "Grade unspecified"}
+                          {u.grade
+                            ? u.grade.toLowerCase().startsWith("grade")
+                              ? u.grade
+                              : `Grade ${u.grade}`
+                            : "Grade unspecified"}
                           {u.age ? ` • Age ${u.age}` : ""}
-                        </div>
                       </td>
 
                       <td style={{ padding: "0.875rem 1rem" }}>

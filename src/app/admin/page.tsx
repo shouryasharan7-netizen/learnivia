@@ -60,6 +60,19 @@ export default async function AdminOverviewPage() {
       prisma.communityMessage.count(),
       prisma.homeworkRequest.count(),
       prisma.user.findMany({
+        where: {
+          email: {
+            notIn: [
+              "tutor.test@learnivia.org",
+              "parent.test@learnivia.org",
+              "marcus.vance@learnivia.org",
+              "elena.rostova@learnivia.org",
+            ],
+          },
+          name: {
+            notIn: ["Marcus Vance", "Elena Rostova"],
+          },
+        },
         orderBy: { id: "desc" },
         take: 5,
         select: { id: true, name: true, email: true, role: true },
