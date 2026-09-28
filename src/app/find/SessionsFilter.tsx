@@ -39,7 +39,7 @@ export default function SessionsFilter({
     "Mathematics",
     "Science",
     "English & Writing",
-    "Standardised Testing",
+    "Standardized Testing",
     "Homework Help",
   ];
   const allPills = [

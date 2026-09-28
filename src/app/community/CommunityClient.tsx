@@ -534,6 +534,7 @@ export default function CommunityClient({
                     }}
                   >
                     <ShieldCheck size={14} aria-hidden="true" />
+                    <span>
                       Keep it safe: Never share personal contact information.
                     </span>
                   </div>

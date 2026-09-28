@@ -213,29 +213,6 @@ const DISCIPLINES = [
   },
 ];
 
-const TUTOR_ROSTER = [
-  {
-    name: "Aiden Chen",
-    school: "Stuyvesant High School",
-    avatar: "AC",
-    subjects: ["AP Calculus BC", "Physics", "Algebra I"],
-    role: "Verified Volunteer Tutor",
-  },
-  {
-    name: "Maya Patel",
-    school: "Bronx High School of Science",
-    avatar: "MP",
-    subjects: ["AP Biology", "PEEL Writing", "Middle School Science"],
-    role: "Verified Volunteer Tutor",
-  },
-  {
-    name: "Julian Rivera",
-    school: "Thomas Jefferson High School",
-    avatar: "JR",
-    subjects: ["Geometry", "Pre-Algebra", "Spanish"],
-    role: "Verified Volunteer Tutor",
-  },
-];
 
 const HOW_IT_WORKS_STEPS = [
   {
@@ -313,18 +290,6 @@ export default function HomeInteractiveClient({
   const [activeTab, setActiveTab] = useState("all");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  // Carousel State
-  const [currentTutorSlide, setCurrentTutorSlide] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Auto-play carousel
-  useEffect(() => {
-    if (isHovered) return;
-    const interval = setInterval(() => {
-      setCurrentTutorSlide((prev) => (prev + 1) % TUTOR_ROSTER.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [isHovered]);
 
   // Concierge Form State
   const [selectedGrade, setSelectedGrade] = useState("all");

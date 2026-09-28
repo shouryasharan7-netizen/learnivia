@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Check, GraduationCap } from "lucide-react";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
+import { getProgramBySlug } from "@/lib/programs";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,13 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const program = await prisma.program.findUnique({ where: { slug } });
+  let program: any = null;
+  try {
+    program = await prisma.program.findUnique({ where: { slug } });
+  } catch {}
+  if (!program) {
+    program = getProgramBySlug(slug);
+  }
   if (!program) return { title: "Program not found" };
   return {
     title: program.title,
@@ -21,12 +28,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProgramDetailPage({ params }: Props) {
   const { slug } = await params;
-  const program = await prisma.program.findUnique({
-    where: { slug },
-    include: { faqs: true },
-  });
+  let program: any = null;
+  try {
+    program = await prisma.program.findUnique({
+      where: { slug },
+      include: { faqs: true },
+    });
+  } catch {}
+
+  if (!program) {
+    const staticProg = getProgramBySlug(slug);
+    if (staticProg) {
+      program = {
+        ...staticProg,
+        faqs: staticProg.faq || [],
+      };
+    }
+  }
 
   if (!program) notFound();
+
+  const faqs = program.faqs || program.faq || [];
 
   return (
     <main>
@@ -79,7 +101,7 @@ export default async function ProgramDetailPage({ params }: Props) {
               <div className={styles.detailCard}>
                 <h2 className={styles.detailTitle}>Subjects covered</h2>
                 <div className={styles.tagList}>
-                  {program.subjects.map((s) => (
+                  {program.subjects.map((s: string) => (
                     <span key={s} className={styles.tag}>
                       {s}
                     </span>
@@ -90,7 +112,7 @@ export default async function ProgramDetailPage({ params }: Props) {
               <div className={styles.detailCard}>
                 <h2 className={styles.detailTitle}>Grade levels</h2>
                 <div className={styles.tagList}>
-                  {program.gradeLevels.map((g) => (
+                  {program.gradeLevels.map((g: string) => (
                     <span key={g} className={styles.gradeTag}>
                       {g}
                     </span>
@@ -104,7 +126,7 @@ export default async function ProgramDetailPage({ params }: Props) {
               <div className={styles.detailCard}>
                 <h2 className={styles.detailTitle}>What you&apos;ll get</h2>
                 <ul className={styles.outcomeList}>
-                  {program.outcomes.map((o) => (
+                  {program.outcomes.map((o: string) => (
                     <li
                       key={o}
                       className={styles.outcomeItem}
@@ -125,11 +147,11 @@ export default async function ProgramDetailPage({ params }: Props) {
                 </ul>
               </div>
 
-              {program.faqs && program.faqs.length > 0 && (
+              {faqs && faqs.length > 0 && (
                 <div className={styles.detailCard}>
                   <h2 className={styles.detailTitle}>Common questions</h2>
                   <div className={styles.faqList}>
-                    {program.faqs.map((q) => (
+                    {faqs.map((q: any) => (
                       <details key={q.question} className={styles.faqItem}>
                         <summary className={styles.faqQuestion}>
                           {q.question}

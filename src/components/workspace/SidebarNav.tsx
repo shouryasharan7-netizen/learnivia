@@ -77,11 +77,6 @@ export function SidebarNav({
       label: "Homework Help",
     },
     { href: ROUTES.community || "/community", icon: Users, label: "Community" },
-    {
-      href: ROUTES.sessions || "/sessions",
-      icon: BookOpen,
-      label: "My Sessions",
-    },
   ];
 
   const tutorItems = [

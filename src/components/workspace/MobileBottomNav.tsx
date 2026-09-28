@@ -39,7 +39,6 @@ export function MobileBottomNav({
   const studentItems = [
     { href: ROUTES.learner.home, label: "Home", icon: Home },
     { href: ROUTES.find, label: "Find", icon: Search },
-    { href: ROUTES.sessions, label: "Sessions", icon: BookOpen },
     { href: ROUTES.homeworkHelp, label: "Help", icon: HelpCircle },
     { href: ROUTES.learn || "/learn", label: "Workshops", icon: GraduationCap },
   ];

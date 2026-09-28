@@ -24,8 +24,15 @@ type Props = {
 };
 
 export default async function FindSessionsPage({ searchParams }: Props) {
-  const session = await auth();
-  const { q, subject, sort } = await searchParams;
+  let session = null;
+  try {
+    session = await auth();
+  } catch (e) {
+    console.error("Session lookup error in /find:", e);
+  }
+
+  const resolvedParams = searchParams ? await searchParams : {};
+  const { q, subject, sort } = resolvedParams;
 
   // Build Workshop Query
   const workshopWhere: any = {
@@ -89,46 +96,59 @@ export default async function FindSessionsPage({ searchParams }: Props) {
         {workshops.length > 0 ? (
           <div className={styles.grid}>
             {workshops.map((w) => {
-              const seatsLeft = w.maxCapacity - w.enrollments.length;
+              const enrollments = Array.isArray(w.enrollments) ? w.enrollments : [];
+              const maxCapacity = w.maxCapacity ?? 10;
+              const seatsLeft = maxCapacity - enrollments.length;
               const isEnrolled = session?.user?.id
-                ? w.enrollments.some(
-                    (e: any) => e.studentId === session.user.id,
+                ? enrollments.some(
+                    (e: any) => e.studentId === session?.user?.id,
                   )
                 : false;
 
-              // Get initials for avatar
-              const initials = (w.tutor?.user?.name || "T")
+              // Tutor info & initials
+              const tutorName = w.tutor?.user?.name || "Tutor";
+              const tutorImage = w.tutor?.user?.image;
+              const initials = tutorName
                 .split(" ")
+                .filter(Boolean)
                 .map((n: string) => n[0])
                 .join("")
                 .substring(0, 2)
-                .toUpperCase();
+                .toUpperCase() || "T";
 
               // Date formatting
-              const startDate = new Date(w.startTime);
-              const dateString = startDate.toLocaleDateString("en-US", {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-              });
-              const timeString = startDate.toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "2-digit",
-              });
-              const displayDate = `Starts ${dateString}, ${timeString}`;
+              const startDate = w.startTime ? new Date(w.startTime) : new Date();
+              const dateString = isNaN(startDate.getTime())
+                ? "Upcoming"
+                : startDate.toLocaleDateString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                  });
+              const timeString = isNaN(startDate.getTime())
+                ? ""
+                : startDate.toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "2-digit",
+                  });
+              const displayDate = timeString
+                ? `Starts ${dateString}, ${timeString}`
+                : `Starts ${dateString}`;
+
+              const description = w.description || "";
+              const descText =
+                description.length > 120
+                  ? description.substring(0, 120) + "..."
+                  : description;
 
               return (
                 <div key={w.id} className={styles.card}>
                   <div className={styles.cardTopBar}></div>
                   <div className={styles.cardContent}>
-                    <h3 className={styles.cardTitle}>{w.title}</h3>
+                    <h3 className={styles.cardTitle}>{w.title || "Untitled Session"}</h3>
                     <p className={styles.cardTime}>{displayDate}</p>
 
-                    <p className={styles.cardDesc}>
-                      {w.description.length > 120
-                        ? w.description.substring(0, 120) + "..."
-                        : w.description}
-                    </p>
+                    <p className={styles.cardDesc}>{descText}</p>
 
                     {/* Action Area */}
                     <div className={styles.cardAction}>
@@ -145,23 +165,21 @@ export default async function FindSessionsPage({ searchParams }: Props) {
 
                   <div className={styles.cardFooter}>
                     <div className={styles.tutorInfo}>
-                      {w.tutor?.user?.image ? (
+                      {tutorImage ? (
                         <img
-                          src={w.tutor.user.image}
-                          alt={w.tutor.user.name || "Tutor"}
+                          src={tutorImage}
+                          alt={tutorName}
                           className={styles.avatar}
                         />
                       ) : (
                         <div className={styles.avatarFallback}>{initials}</div>
                       )}
-                      <span className={styles.tutorName}>
-                        {w.tutor?.user?.name || "Unknown Tutor"}
-                      </span>
+                      <span className={styles.tutorName}>{tutorName}</span>
                     </div>
                     <div className={styles.attendance}>
                       <Users size={16} />
                       <span>
-                        {w.enrollments.length}/{w.maxCapacity}
+                        {enrollments.length}/{maxCapacity}
                       </span>
                     </div>
                   </div>
