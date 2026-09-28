@@ -517,12 +517,17 @@
   border: 1px solid var(--wa-border, #e5ddd2);
   color: var(--wa-text, #283244);
   cursor: pointer;
-  transition: all 150ms ease;
+  transition: transform 140ms var(--ease-spring), background 150ms ease, border-color 150ms ease, color 150ms ease;
 }
 
 .tabBtn:hover {
   background: var(--wa-cream-dark, #f4efe6);
   border-color: var(--wa-border-strong, #c8bfb2);
+  transform: translateY(-1.5px);
+}
+
+.tabBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 .tabBtnActive {
@@ -533,6 +538,7 @@
 
 .tabBtnActive:hover {
   background: var(--wa-navy, var(--wa-ink));
+  transform: translateY(-1.5px);
 }
 
 .syllabusGrid {
@@ -562,15 +568,14 @@
   flex-direction: column;
   justify-content: space-between;
   text-decoration: none;
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+  transition: transform 180ms var(--ease-spring), border-color 160ms ease, box-shadow 200ms var(--ease-smooth);
   box-shadow: var(--wa-shadow-xs);
 }
 
 .subjectCard:hover {
-  border-color: var(--wa-cobalt-blue, #2563eb);
-  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  transform: translateY(-3px);
+  border-color: var(--primary, #0D9488);
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(13, 148, 136, 0.08);
 }
 
 .subjectCardTop {

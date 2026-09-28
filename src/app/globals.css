@@ -69,6 +69,9 @@
   --radius-pill: 9999px;
 
   --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -633,3 +636,92 @@ input, select, textarea {
   color: var(--text-primary, #0c1b33);
   background: var(--surface-raised, #ffffff);
 }
+
+/* ==========================================================================
+   Approach 3: Tactile Spring Micro-Interactions & Blueprint Accents
+   Inspired by OreoAI precision craftsmanship without AI slop
+   ========================================================================== */
+
+/* Tactile Spring Buttons */
+.btn-tactile,
+button:not(:disabled),
+a.btn,
+.action-pill {
+  transition: transform 140ms var(--ease-spring), box-shadow 180ms var(--ease-smooth), background-color 140ms ease, border-color 140ms ease;
+}
+
+.btn-tactile:hover,
+button:not(:disabled):hover:not(.no-hover-lift),
+a.btn:hover {
+  transform: translateY(-1.5px);
+}
+
+.btn-tactile:active,
+button:not(:disabled):active,
+a.btn:active,
+.action-pill:active {
+  transform: scale(0.97) translateY(0);
+  transition-duration: 60ms;
+}
+
+/* Blueprint Card Elevations */
+.card-blueprint,
+.interactive-card {
+  transition: transform 200ms var(--ease-spring), box-shadow 220ms var(--ease-smooth), border-color 180ms ease;
+  will-change: transform;
+}
+
+.card-blueprint:hover,
+.interactive-card:hover {
+  transform: translateY(-2.5px);
+  box-shadow: 0 10px 25px -4px rgba(12, 27, 51, 0.08), 0 3px 8px -2px rgba(13, 148, 136, 0.05);
+  border-color: rgba(13, 148, 136, 0.35) !important;
+}
+
+/* Precision Monospace Technical Tag (OreoAI coordinate annotation inspired) */
+.tag-blueprint {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(13, 148, 136, 0.08);
+  color: #065F46;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.tag-blueprint:hover {
+  background: rgba(13, 148, 136, 0.14);
+  border-color: rgba(13, 148, 136, 0.4);
+}
+
+/* Dashed Blueprint Divider */
+.divider-blueprint {
+  border: 0;
+  border-top: 1px dashed rgba(15, 23, 42, 0.14);
+  margin: 1.5rem 0;
+  width: 100%;
+}
+
+/* Accessibility Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn-tactile:hover,
+  button:not(:disabled):hover,
+  .card-blueprint:hover,
+  .interactive-card:hover {
+    transform: none !important;
+  }
+}
+

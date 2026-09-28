@@ -241,13 +241,14 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
-  transition: all 0.2s ease-in-out;
+  transition: transform 200ms var(--ease-spring), box-shadow 220ms var(--ease-smooth), border-color 180ms ease;
+  will-change: transform;
 }
 
 .card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-  transform: translateY(-2px);
+  border-color: rgba(5, 150, 105, 0.45);
+  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 3px 8px -2px rgba(5, 150, 105, 0.06);
+  transform: translateY(-3px);
 }
 
 .cardHeaderStrip {
@@ -456,11 +457,17 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: background 0.15s ease-in-out;
+  transition: transform 140ms var(--ease-spring), background-color 150ms ease, box-shadow 180ms var(--ease-smooth);
 }
 
 .actionBtn:hover {
   background: #047857;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+}
+
+.actionBtn:active {
+  transform: scale(0.97) translateY(0);
 }
 
 .actionBtnEnrolled {

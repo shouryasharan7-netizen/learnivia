@@ -401,6 +401,48 @@ export default function HomeInteractiveClient({
             gap: "2.5rem",
           }}
         >
+          {/* Technical Blueprint Precision Tag (OreoAI inspired) */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              padding: "0.35rem 0.9rem",
+              borderRadius: "9999px",
+              background: "rgba(13, 148, 136, 0.15)",
+              border: "1px solid rgba(45, 212, 191, 0.35)",
+              boxShadow: "0 0 25px rgba(13, 148, 136, 0.25)",
+              backdropFilter: "blur(8px)",
+              marginBottom: "-1.25rem",
+            }}
+          >
+            <span
+              style={{
+                width: "7px",
+                height: "7px",
+                borderRadius: "50%",
+                background: "#2DD4BF",
+                boxShadow: "0 0 8px #2DD4BF",
+                display: "inline-block",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#E6FFFA",
+              }}
+            >
+              [ 100% VOLUNTEER PEER NETWORK • VERIFIED K-10 MENTORSHIP ]
+            </span>
+          </motion.div>
+
           {/* Centered Headline */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -557,6 +599,29 @@ export default function HomeInteractiveClient({
                     For Educators
                   </Link>
                 </motion.div>
+              </div>
+
+              {/* Technical Accuracy Coordinates Bar (OreoAI-inspired) */}
+              <div
+                style={{
+                  marginTop: "1.75rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  gap: "0.85rem",
+                  fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.04em",
+                  color: "rgba(255, 255, 255, 0.65)",
+                  textTransform: "uppercase",
+                }}
+              >
+                <span>[ 0.00 USD ACCESS FEE ]</span>
+                <span style={{ opacity: 0.3 }}>•</span>
+                <span>[ 5-STAGE VETTING ]</span>
+                <span style={{ opacity: 0.3 }}>•</span>
+                <span>[ PVSA RECOGNIZED ]</span>
               </div>
             </div>
           </motion.div>
