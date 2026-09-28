@@ -140,7 +140,7 @@
 - [x] **Step 1: Run production build `npm run build`**
   - Verify all 40+ routes compile cleanly.
 - [x] **Step 2: Test locally on `http://localhost:3000` and `http://localhost:3000/observatory`**
-- [ ] **Step 3: Commit, push to GitHub `main`, and deploy to Vercel production**
+- [x] **Step 3: Commit, push to GitHub `main`, and deploy to Vercel production**
   - `git push origin main`
   - `CI=1 vercel --prod --yes`
-- [ ] **Step 4: Verify production HTTP 200 on live URL**
+- [x] **Step 4: Verify production HTTP 200 on live URL**
