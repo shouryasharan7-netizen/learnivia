@@ -779,17 +779,49 @@ export default async function SessionsContent({ searchParams }: Props) {
                         style={{
                           flex: 1,
                           textAlign: "center",
-                          background: "var(--wa-forest, #2563EB)",
+                          background: "var(--wa-green, #1B4D3E)",
                           color: "#FFFFFF",
-                          padding: "0.5rem 0.75rem",
+                          padding: "0.55rem 0.85rem",
                           borderRadius: "8px",
                           fontSize: "0.8125rem",
                           fontWeight: 700,
                           textDecoration: "none",
+                          boxShadow: "0 2px 6px rgba(27, 77, 62, 0.2)",
+                          transition: "all 0.15s ease",
                         }}
                       >
                         Enter Study Room
                       </Link>
+                      <a
+                        href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+                          `Learnivia: ${b.subject} with ${partnerName}`
+                        )}&dates=${new Date(b.startTime)
+                          .toISOString()
+                          .replace(/[-:]/g, "")
+                          .replace(/\.\d{3}/, "")}/${new Date(b.endTime)
+                          .toISOString()
+                          .replace(/[-:]/g, "")
+                          .replace(/\.\d{3}/, "")}&details=${encodeURIComponent(
+                          `1-on-1 Learnivia Tutoring Session\nSubject: ${b.subject}\nTopic: ${b.topic || "Practice"}`
+                        )}&location=${encodeURIComponent("https://learnivia-green.vercel.app/sessions/" + b.id)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Add to Google Calendar"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "0.55rem 0.75rem",
+                          borderRadius: "8px",
+                          border: "1px solid var(--wa-border, #E5DFD5)",
+                          background: "#FFFFFF",
+                          color: "var(--wa-green, #1B4D3E)",
+                          textDecoration: "none",
+                          transition: "all 0.15s ease",
+                        }}
+                      >
+                        <CalendarCheck size={15} />
+                      </a>
                       {b.zoomLink && (
                         <a
                           href={b.zoomLink}
@@ -799,10 +831,10 @@ export default async function SessionsContent({ searchParams }: Props) {
                             display: "inline-flex",
                             alignItems: "center",
                             gap: "0.25rem",
-                            background: "var(--wa-paper, #F8FAFC)",
-                            border: "1px solid var(--wa-border, #CBD5E1)",
-                            color: "var(--wa-ink, #1E293B)",
-                            padding: "0.5rem 0.75rem",
+                            background: "var(--wa-contrast, #F3EFE8)",
+                            border: "1px solid var(--wa-border, #E5DFD5)",
+                            color: "var(--wa-ink, #1C1917)",
+                            padding: "0.55rem 0.75rem",
                             borderRadius: "8px",
                             fontSize: "0.8125rem",
                             fontWeight: 600,

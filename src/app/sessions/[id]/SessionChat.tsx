@@ -165,7 +165,7 @@ export function SessionChat({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "var(--wa-green, #2563EB)",
+              color: "var(--wa-green, #1B4D3E)",
             }}
           >
             <MessageSquare size={16} />
@@ -221,7 +221,7 @@ export function SessionChat({
               onClick={() => setShowResourceModal(!showResourceModal)}
               style={{
                 padding: "0.4rem 0.75rem",
-                background: "var(--wa-green, #2563EB)",
+                background: "var(--wa-green, #1B4D3E)",
                 color: "#FFFFFF",
                 border: "none",
                 borderRadius: "6px",
@@ -254,7 +254,7 @@ export function SessionChat({
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-            <FolderOpen size={16} color="var(--wa-green, #2563EB)" />
+            <FolderOpen size={16} color="var(--wa-green, #1B4D3E)" />
             <span
               style={{
                 fontSize: "0.85rem",
@@ -416,7 +416,7 @@ export function SessionChat({
               disabled={isPending}
               style={{
                 padding: "0.4rem 1rem",
-                background: "var(--wa-green, #2563EB)",
+                background: "var(--wa-green, #1B4D3E)",
                 color: "#FFFFFF",
                 border: "none",
                 borderRadius: "6px",
@@ -595,7 +595,7 @@ export function SessionChat({
                       ? "12px 12px 2px 12px"
                       : "12px 12px 12px 2px",
                     background: m.isCurrentUser
-                      ? "var(--wa-green, #2563EB)"
+                      ? "var(--wa-green, #1B4D3E)"
                       : "#F1F5F9",
                     color: m.isCurrentUser
                       ? "#FFFFFF"
@@ -650,7 +650,7 @@ export function SessionChat({
           style={{
             padding: "0.6rem 1.15rem",
             background: inputMessage.trim()
-              ? "var(--wa-green, #2563EB)"
+              ? "var(--wa-green, #1B4D3E)"
               : "#CBD5E1",
             color: "#FFFFFF",
             border: "none",

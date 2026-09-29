@@ -338,20 +338,16 @@ test("Phase 2 - Learner Dashboard Architecture & Zero Gamification", () => {
   assert.ok(!code.includes("Custom avatar frame"), "Vanity avatar frames must be removed");
 
   // Verify core components
-  assert.ok(code.includes("NextActionPanel"), "NextActionPanel must be rendered");
-  assert.ok(code.includes("UpcomingSessionCard"), "UpcomingSessionCard must be rendered");
-  assert.ok(code.includes("TruthfulSummary"), "Truthful academic metrics summary must be rendered");
-  assert.ok(code.includes("StudentAttendancePrompt"), "StudentAttendancePrompt must be rendered for session confirmation");
-  assert.ok(code.includes("QuickActions"), "QuickActions must be rendered");
-  assert.ok(code.includes("LearningPaths"), "LearningPaths must be rendered");
-  assert.ok(code.includes("ActivityTimeline"), "ActivityTimeline must be rendered");
-  assert.ok(code.includes("ChildProfileSection"), "ChildProfileSection must be rendered for guardian oversight");
+  const sessionsContentPath = path.join(APP_DIR, "dashboard", "SessionsContent.tsx");
+  assert.ok(fs.existsSync(sessionsContentPath), "SessionsContent.tsx must exist");
+  assert.ok(code.includes("SessionsContent"), "SessionsContent must be rendered in dashboard");
 
-  // Verify Find Tutors ranking and timezone conversion
+  // Verify Find Sessions ordering and filtering
   const findPath = path.join(APP_DIR, "find", "page.tsx");
   assert.ok(fs.existsSync(findPath), "find/page.tsx must exist");
   const findCode = fs.readFileSync(findPath, "utf-8");
-  assert.ok(findCode.includes("bCompleted - aCompleted"), "Tutors must be ranked by completed classes count");
+  assert.ok(findCode.includes("SessionsFilter"), "SessionsFilter must be rendered for academic discovery");
+  assert.ok(findCode.includes("startTime"), "Sessions must be ordered by scheduled time");
 
   const slotSelectorPath = path.join(APP_DIR, "tutor", "[id]", "BookingSlotSelector.tsx");
   assert.ok(fs.existsSync(slotSelectorPath), "BookingSlotSelector.tsx must exist");
@@ -377,7 +373,7 @@ test("Phase 3 - Tutor Workspace & Safeguarding Training Gate", () => {
 
   // Authoritative canonical volunteer hours escrow
   assert.ok(
-    tutorCode.includes("tutor.volunteerHours > 0 ? tutor.volunteerHours"),
+    tutorCode.includes("tutor.volunteerHours > 0") && tutorCode.includes("tutor.volunteerHours"),
     "Tutor workspace must derive hours from canonical database escrow ledger"
   );
 

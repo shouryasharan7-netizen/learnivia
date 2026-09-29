@@ -486,8 +486,8 @@ export default async function TutorDashboard() {
   }
 
   // Mandatory Safeguarding & Training Gate:
-  // Approved tutors cannot access the dashboard or host sessions until completing all 3 training modules.
-  if (passedModules < 3) {
+  // Approved tutors cannot access the dashboard or host sessions until completing all 5 training modules.
+  if (passedModules < 5) {
     redirect(`${ROUTES.tutor.training}?locked=1`);
   }
 

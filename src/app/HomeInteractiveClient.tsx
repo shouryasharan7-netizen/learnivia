@@ -410,11 +410,11 @@ export default function HomeInteractiveClient({
               display: "inline-flex",
               alignItems: "center",
               gap: "0.6rem",
-              padding: "0.35rem 0.9rem",
+              padding: "0.4rem 1rem",
               borderRadius: "9999px",
-              background: "rgba(13, 148, 136, 0.15)",
-              border: "1px solid rgba(45, 212, 191, 0.35)",
-              boxShadow: "0 0 25px rgba(13, 148, 136, 0.25)",
+              background: "rgba(27, 77, 62, 0.3)",
+              border: "1px solid rgba(52, 211, 153, 0.4)",
+              boxShadow: "0 0 25px rgba(27, 77, 62, 0.35)",
               backdropFilter: "blur(8px)",
               marginBottom: "-1.25rem",
             }}
@@ -424,8 +424,8 @@ export default function HomeInteractiveClient({
                 width: "7px",
                 height: "7px",
                 borderRadius: "50%",
-                background: "#2DD4BF",
-                boxShadow: "0 0 8px #2DD4BF",
+                background: "#34D399",
+                boxShadow: "0 0 8px #34D399",
                 display: "inline-block",
               }}
             />
@@ -436,7 +436,7 @@ export default function HomeInteractiveClient({
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "#E6FFFA",
+                color: "#EAF2EE",
               }}
             >
               [ 100% VOLUNTEER PEER NETWORK • VERIFIED K-10 MENTORSHIP ]
@@ -517,19 +517,20 @@ export default function HomeInteractiveClient({
                     justifyContent: "center",
                     width: "100%",
                     padding: "1.1rem",
-                    background: "var(--primary, #0D9488)",
+                    background: "var(--primary, #1B4D3E)",
                     color: "#fff",
                     borderRadius: "9999px",
                     fontWeight: 700,
                     fontSize: "1.15rem",
                     textDecoration: "none",
-                    transition: "background 150ms",
+                    boxShadow: "0 4px 14px rgba(27, 77, 62, 0.4)",
+                    transition: "all 150ms",
                   }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "#0F766E")
+                    (e.currentTarget.style.background = "#0F2F26")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "#0D9488")
+                    (e.currentTarget.style.background = "#1B4D3E")
                   }
                 >
                   Start Learning!
