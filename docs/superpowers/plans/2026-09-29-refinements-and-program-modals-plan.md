@@ -89,9 +89,9 @@
 
 ### Task 5: Verification, Production Build & Deployment
 - [x] Run `npm run build` to verify all 40+ routes compile cleanly without type or build errors.
-- [ ] Test the user flows:
+- [x] Test the user flows:
   1. Verify Observatory banner is gone from Home.
   2. Click "Explore Programs" in Navbar -> check that detailed info modal opens cleanly with animations.
   3. Visit `/how-it-works` -> confirm real images render in place of empty placeholders.
   4. Visit `/learn` -> confirm symmetrical 3x3 grid with no awkward lone card.
-- [ ] Commit, push to GitHub `main`, deploy to Vercel production, and verify HTTP 200.
+- [x] Commit, push to GitHub `main`, deploy to Vercel production, and verify HTTP 200.
