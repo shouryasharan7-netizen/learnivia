@@ -367,8 +367,8 @@ test("Phase 3 - Tutor Workspace & Safeguarding Training Gate", () => {
 
   // Safeguarding Training Gate: uncompleted tutors redirected to training
   assert.ok(
-    tutorCode.includes("passedModules < 5") && tutorCode.includes("ROUTES.tutor.training"),
-    "Approved tutors with <5 passed modules must be gated and redirected to /tutor/training"
+    tutorCode.includes("passedModules < 3") && tutorCode.includes("ROUTES.tutor.training"),
+    "Approved tutors with <3 passed modules must be gated and redirected to /tutor/training"
   );
 
   // Authoritative canonical volunteer hours escrow

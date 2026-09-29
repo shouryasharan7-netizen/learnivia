@@ -167,7 +167,7 @@ export default async function SessionsPage({ searchParams }: Props) {
   const passedModules = (dbUser?.tutorProfile?.trainingModules || []).filter(
     (m: any) => m.quizPassed,
   ).length;
-  const isTrainingCompleted = passedModules === 5;
+  const isTrainingCompleted = passedModules >= 3;
   const canHost = isTutor && isTrainingCompleted;
 
   // 1b. Fetch user's bookings if signed in

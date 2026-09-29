@@ -74,7 +74,7 @@ export const getCurrentUser = cache(
     const passedModules = (dbUser.tutorProfile?.trainingModules || []).filter(
       (m: any) => m.quizPassed,
     ).length;
-    const isTrainingCompleted = passedModules === 5;
+    const isTrainingCompleted = passedModules >= 3;
 
     return {
       ...dbUser,

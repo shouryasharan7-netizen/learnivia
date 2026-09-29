@@ -346,7 +346,7 @@ export default async function TutorDashboard() {
               {isMissingAvailability
                 ? "Your volunteer educator profile has been deactivated because weekly availability hours were not added within 3 days of joining. To request reactivation and start mentoring students, simply add your available weekly time below, and an administrator will review your profile."
                 : isIncompleteTraining
-                  ? "Your volunteer application was deactivated because mandatory safeguarding training was not completed within the 15-day onboarding window. Complete all 5 modules to request reactivation."
+                  ? "Your volunteer application was deactivated because mandatory safeguarding training was not completed within the 15-day onboarding window. Complete all 3 modules to request reactivation."
                   : "Your tutor profile has been temporarily deactivated for inactivity. Please contact support or add availability to request reactivation."}
             </p>
 
@@ -486,8 +486,8 @@ export default async function TutorDashboard() {
   }
 
   // Mandatory Safeguarding & Training Gate:
-  // Approved tutors cannot access the dashboard or host sessions until completing all 5 training modules.
-  if (passedModules < 5) {
+  // Approved tutors cannot access the dashboard or host sessions until completing all 3 training modules.
+  if (passedModules < 3) {
     redirect(`${ROUTES.tutor.training}?locked=1`);
   }
 

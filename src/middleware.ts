@@ -69,6 +69,83 @@ export default auth(async (req) => {
     "unknown";
 
   if (!(await handleRateLimit(ip, nextUrl.pathname))) {
+    const isHtml = req.headers.get("accept")?.includes("text/html");
+    if (isHtml) {
+      return new NextResponse(
+        `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rate Limit Exceeded - Learnivia</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #FAFAF8;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+    .card {
+      background: #FFFFFF;
+      border: 1px solid #E5DFD5;
+      border-radius: 12px;
+      padding: 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: 1.45rem;
+      color: #1B4D3E;
+      margin: 0 0 0.75rem;
+    }
+    p {
+      color: #64748B;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0 0 1.5rem;
+    }
+    .btn {
+      display: inline-block;
+      background: #1B4D3E;
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">⏳</div>
+    <h1>Too Many Requests</h1>
+    <p>Please wait a moment while we process your request. Your dashboard is ready.</p>
+    <a href="/tutor" class="btn">Proceed to Dashboard</a>
+  </div>
+</body>
+</html>`,
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Retry-After": "60",
+          },
+        }
+      );
+    }
+
     return new NextResponse(
       JSON.stringify({
         error: "Too many requests. Please wait a moment and try again.",

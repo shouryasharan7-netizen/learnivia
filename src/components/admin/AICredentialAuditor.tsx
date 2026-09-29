@@ -207,7 +207,7 @@ export function AICredentialAuditor({
         </div>
       )}
 
-      {/* Spacious, Collision-Free Audit Modal */}
+      {/* Zero-Scroll Dual-Column Audit Modal */}
       {result && isModalOpen && (
         <div
           style={{
@@ -219,7 +219,7 @@ export function AICredentialAuditor({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "1rem",
+            padding: "0.75rem",
           }}
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsModalOpen(false);
@@ -231,22 +231,24 @@ export function AICredentialAuditor({
               borderRadius: "12px",
               border: "1px solid var(--wa-border, #E2E8F0)",
               boxShadow: "0 20px 45px -10px rgba(0, 0, 0, 0.25)",
-              maxWidth: "720px",
-              width: "100%",
-              maxHeight: "88vh",
+              maxWidth: "1000px",
+              width: "95vw",
+              maxHeight: "90vh",
               display: "flex",
               flexDirection: "column",
               overflow: "hidden",
             }}
           >
-            {/* Modal Header */}
+            {/* Modal Header with Prominent Decision Controls */}
             <div
               style={{
-                padding: "1rem 1.25rem",
+                padding: "0.85rem 1.25rem",
                 borderBottom: "1px solid var(--wa-border, #E2E8F0)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                gap: "0.75rem",
+                flexWrap: "wrap",
                 background: "var(--surface-raised, #F8FAFC)",
               }}
             >
@@ -270,528 +272,521 @@ export function AICredentialAuditor({
                   <h3
                     style={{
                       margin: 0,
-                      fontSize: "1rem",
+                      fontSize: "0.95rem",
                       fontWeight: 700,
                       color: "var(--wa-ink, #0F172A)",
                       fontFamily: "var(--font-sans)",
                     }}
                   >
-                    AI Credential &amp; Report Card Audit
+                    AI Marksheet &amp; Credential Audit
                   </h3>
                   <div
                     style={{
-                      fontSize: "0.8rem",
+                      fontSize: "0.775rem",
                       color: "var(--wa-muted, #64748B)",
                       marginTop: "1px",
                     }}
                   >
-                    Applicant: <strong>{applicantName}</strong> • Automated
-                    transcript verification
+                    Applicant: <strong>{applicantName}</strong>
                   </div>
                 </div>
               </div>
 
-              <button
-                onClick={() => setIsModalOpen(false)}
+              {/* Status Badge & Actions in Header (Zero Scroll Required) */}
+              <div
                 style={{
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  color: "var(--wa-muted, #64748B)",
-                  padding: "0.35rem",
-                  borderRadius: "6px",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                }}
-                aria-label="Close dialog"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div
-              style={{
-                padding: "1.25rem",
-                overflowY: "auto",
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-              }}
-            >
-              {/* Verdict Banner (Zero Collision Layout) */}
-              <div
-                style={{
-                  padding: "1rem 1.15rem",
-                  borderRadius: "8px",
-                  background:
-                    result.recommendation === "APPROVE"
-                      ? "rgba(16, 185, 129, 0.08)"
-                      : result.recommendation === "REVIEW"
-                      ? "rgba(245, 158, 11, 0.08)"
-                      : "rgba(239, 68, 68, 0.08)",
-                  border: `1px solid ${
-                    result.recommendation === "APPROVE"
-                      ? "rgba(16, 185, 129, 0.3)"
-                      : result.recommendation === "REVIEW"
-                      ? "rgba(245, 158, 11, 0.3)"
-                      : "rgba(239, 68, 68, 0.3)"
-                  }`,
+                  gap: "0.5rem",
+                  flexWrap: "wrap",
                 }}
               >
+                {/* Recommendation & Score Pill */}
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    gap: "1rem",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {/* Left Column: Recommendation & Summary */}
-                  <div
-                    style={{
-                      flex: "1 1 320px",
-                      minWidth: 0,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                        fontWeight: 800,
-                        fontSize: "0.875rem",
-                        letterSpacing: "0.02em",
-                        color:
-                          result.recommendation === "APPROVE"
-                            ? "#065F46"
-                            : result.recommendation === "REVIEW"
-                            ? "#92400E"
-                            : "#991B1B",
-                      }}
-                    >
-                      {result.recommendation === "APPROVE" ? (
-                        <CheckCircle2 size={18} color="#059669" />
-                      ) : result.recommendation === "REVIEW" ? (
-                        <AlertTriangle size={18} color="#D97706" />
-                      ) : (
-                        <XCircle size={18} color="#DC2626" />
-                      )}
-                      <span>
-                        {result.recommendation === "APPROVE"
-                          ? "AI RECOMMENDATION: APPROVE APPLICANT"
-                          : result.recommendation === "REVIEW"
-                          ? "AI RECOMMENDATION: MANUAL REVIEW REQUIRED"
-                          : "AI RECOMMENDATION: APPLICATION NOT RECOMMENDED"}
-                      </span>
-                    </div>
-
-                    <p
-                      style={{
-                        margin: "0.25rem 0 0",
-                        fontSize: "0.875rem",
-                        lineHeight: 1.55,
-                        color: "var(--wa-ink, #0F172A)",
-                        wordBreak: "break-word",
-                      }}
-                    >
-                      {result.summary}
-                    </p>
-                  </div>
-
-                  {/* Right Column: High-contrast Score Box */}
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "0.65rem 1rem",
-                      borderRadius: "8px",
-                      background: "#FFFFFF",
-                      border: "1px solid rgba(0, 0, 0, 0.08)",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.04)",
-                      flexShrink: 0,
-                      minWidth: "120px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: "1.4rem",
-                        fontWeight: 900,
-                        lineHeight: 1,
-                        color:
-                          result.recommendation === "APPROVE"
-                            ? "#059669"
-                            : result.recommendation === "REVIEW"
-                            ? "#D97706"
-                            : "#DC2626",
-                      }}
-                    >
-                      {result.validityScore}/100
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "0.7rem",
-                        fontWeight: 700,
-                        color: "var(--wa-muted, #64748B)",
-                        textTransform: "uppercase",
-                        marginTop: "0.3rem",
-                        letterSpacing: "0.03em",
-                      }}
-                    >
-                      Score ({result.confidence}% conf.)
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Extracted Academic Credentials */}
-              <div>
-                <div
-                  style={{
-                    fontSize: "0.8rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.35rem",
+                    padding: "0.3rem 0.65rem",
+                    borderRadius: "6px",
+                    fontSize: "0.775rem",
                     fontWeight: 700,
-                    color: "var(--wa-ink, #0F172A)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.04em",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  Detected Academic Credentials
-                </div>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "0.6rem",
-                  }}
-                >
-                  <div
-                    style={{
-                      background: "var(--surface-raised, #F8FAFC)",
-                      border: "1px solid var(--wa-border, #E2E8F0)",
-                      borderRadius: "6px",
-                      padding: "0.6rem 0.85rem",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: "0.725rem",
-                        color: "var(--wa-muted, #64748B)",
-                        textTransform: "uppercase",
-                        fontWeight: 700,
-                      }}
-                    >
-                      Detected GPA / Standing
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "1rem",
-                        fontWeight: 800,
-                        color: "var(--wa-forest, #234B3B)",
-                        marginTop: "2px",
-                      }}
-                    >
-                      {result.extractedScores.gpa || academicScores || "Unspecified"}
-                    </div>
-                  </div>
-
-                  {result.extractedScores.standardizedTests &&
-                    result.extractedScores.standardizedTests.length > 0 && (
-                      <div
-                        style={{
-                          background: "var(--surface-raised, #F8FAFC)",
-                          border: "1px solid var(--wa-border, #E2E8F0)",
-                          borderRadius: "6px",
-                          padding: "0.6rem 0.85rem",
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontSize: "0.725rem",
-                            color: "var(--wa-muted, #64748B)",
-                            textTransform: "uppercase",
-                            fontWeight: 700,
-                          }}
-                        >
-                          Exam Scores
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "0.875rem",
-                            fontWeight: 600,
-                            color: "var(--wa-ink, #0F172A)",
-                            marginTop: "2px",
-                          }}
-                        >
-                          {result.extractedScores.standardizedTests.join(", ")}
-                        </div>
-                      </div>
-                    )}
-
-                  {result.extractedScores.apIbCourses &&
-                    result.extractedScores.apIbCourses.length > 0 && (
-                      <div
-                        style={{
-                          background: "var(--surface-raised, #F8FAFC)",
-                          border: "1px solid var(--wa-border, #E2E8F0)",
-                          borderRadius: "6px",
-                          padding: "0.6rem 0.85rem",
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontSize: "0.725rem",
-                            color: "var(--wa-muted, #64748B)",
-                            textTransform: "uppercase",
-                            fontWeight: 700,
-                          }}
-                        >
-                          AP / IB Coursework
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "0.875rem",
-                            fontWeight: 600,
-                            color: "var(--wa-ink, #0F172A)",
-                            marginTop: "2px",
-                          }}
-                        >
-                          {result.extractedScores.apIbCourses.join(", ")}
-                        </div>
-                      </div>
-                    )}
-                </div>
-              </div>
-
-              {/* 5-Check Safeguarding & Academic Matrix */}
-              <div
-                style={{
-                  background: "#FFFFFF",
-                  border: "1px solid var(--wa-border, #E2E8F0)",
-                  borderRadius: "8px",
-                  padding: "0.85rem 1rem",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    color: "var(--wa-ink, #0F172A)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.04em",
-                    marginBottom: "0.6rem",
-                  }}
-                >
-                  Automated Safeguarding &amp; Academic Checks
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  {result.checks.map((chk) => (
-                    <div
-                      key={chk.id}
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "0.6rem",
-                        fontSize: "0.825rem",
-                      }}
-                    >
-                      {chk.passed ? (
-                        <CheckCircle2
-                          size={16}
-                          color="#059669"
-                          style={{ flexShrink: 0, marginTop: "2px" }}
-                        />
-                      ) : (
-                        <AlertTriangle
-                          size={16}
-                          color="#D97706"
-                          style={{ flexShrink: 0, marginTop: "2px" }}
-                        />
-                      )}
-                      <div style={{ minWidth: 0 }}>
-                        <span
-                          style={{
-                            fontWeight: 700,
-                            color: chk.passed
-                              ? "var(--wa-ink, #0F172A)"
-                              : "#92400E",
-                          }}
-                        >
-                          {chk.name}:{" "}
-                        </span>
-                        <span style={{ color: "var(--wa-muted, #475569)" }}>
-                          {chk.details}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Strengths & Red Flags */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                  gap: "0.75rem",
-                }}
-              >
-                <div
-                  style={{
-                    background: "#F0FDF4",
-                    border: "1px solid #BBF7D0",
-                    borderRadius: "8px",
-                    padding: "0.75rem 1rem",
-                    fontSize: "0.8125rem",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      color: "#166534",
-                      marginBottom: "0.35rem",
-                    }}
-                  >
-                    Key Strengths:
-                  </div>
-                  <ul
-                    style={{
-                      margin: 0,
-                      paddingLeft: "1.1rem",
-                      color: "#15803D",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.25rem",
-                    }}
-                  >
-                    {result.strengths.map((s, idx) => (
-                      <li key={idx}>{s}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div
-                  style={{
-                    background: result.flags.length > 0 ? "#FFFBEB" : "#F8FAFC",
+                    background:
+                      result.recommendation === "APPROVE"
+                        ? "#ECFDF5"
+                        : result.recommendation === "REVIEW"
+                        ? "#FFFBEB"
+                        : "#FEF2F2",
                     border: `1px solid ${
-                      result.flags.length > 0 ? "#FDE68A" : "#E2E8F0"
+                      result.recommendation === "APPROVE"
+                        ? "#A7F3D0"
+                        : result.recommendation === "REVIEW"
+                        ? "#FDE68A"
+                        : "#FECACA"
                     }`,
-                    borderRadius: "8px",
-                    padding: "0.75rem 1rem",
-                    fontSize: "0.8125rem",
+                    color:
+                      result.recommendation === "APPROVE"
+                        ? "#065F46"
+                        : result.recommendation === "REVIEW"
+                        ? "#92400E"
+                        : "#991B1B",
                   }}
                 >
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      color:
-                        result.flags.length > 0 ? "#92400E" : "#475569",
-                      marginBottom: "0.35rem",
-                    }}
-                  >
-                    Review Flags:
-                  </div>
-                  {result.flags.length > 0 ? (
-                    <ul
-                      style={{
-                        margin: 0,
-                        paddingLeft: "1.1rem",
-                        color: "#B45309",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "0.25rem",
-                      }}
-                    >
-                      {result.flags.map((f, idx) => (
-                        <li key={idx}>{f}</li>
-                      ))}
-                    </ul>
+                  {result.recommendation === "APPROVE" ? (
+                    <CheckCircle2 size={14} color="#059669" />
+                  ) : result.recommendation === "REVIEW" ? (
+                    <AlertTriangle size={14} color="#D97706" />
                   ) : (
-                    <span style={{ color: "#64748B" }}>
-                      No flags detected. All safeguarding and academic criteria
-                      satisfied.
-                    </span>
+                    <XCircle size={14} color="#DC2626" />
                   )}
+                  <span>
+                    {result.recommendation}: {result.validityScore}/100 ({result.confidence}% conf.)
+                  </span>
                 </div>
-              </div>
-            </div>
 
-            {/* Modal Actions Footer */}
-            <div
-              style={{
-                padding: "0.85rem 1.25rem",
-                borderTop: "1px solid var(--wa-border, #E2E8F0)",
-                background: "var(--surface-raised, #F8FAFC)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                gap: "0.75rem",
-              }}
-            >
-              <button
-                onClick={() => setIsModalOpen(false)}
-                style={{
-                  background: "#FFFFFF",
-                  border: "1px solid var(--wa-border, #E2E8F0)",
-                  color: "var(--wa-ink, #0F172A)",
-                  padding: "0.5rem 0.9rem",
-                  borderRadius: "6px",
-                  fontSize: "0.8125rem",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                }}
-              >
-                Close
-              </button>
-
-              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                {/* Primary Quick Decision Buttons */}
                 <button
                   onClick={handleReject}
                   disabled={actionLoading}
                   style={{
-                    background: "transparent",
-                    border: "1px solid var(--wa-border, #E2E8F0)",
-                    color: "var(--wa-crimson, #b91c1c)",
-                    padding: "0.5rem 0.9rem",
+                    background: "#FFFFFF",
+                    border: "1px solid #FECACA",
+                    color: "#DC2626",
+                    padding: "0.35rem 0.75rem",
                     borderRadius: "6px",
-                    fontSize: "0.8125rem",
+                    fontSize: "0.775rem",
                     fontWeight: 600,
                     cursor: "pointer",
                   }}
                 >
-                  Reject / Request Details
+                  Reject / Flags
                 </button>
                 <button
                   onClick={handleApprove}
                   disabled={actionLoading}
                   style={{
                     background: "var(--wa-forest, #234B3B)",
-                    color: "#fff",
+                    color: "#FFFFFF",
                     border: "none",
-                    padding: "0.5rem 1.1rem",
+                    padding: "0.35rem 0.85rem",
                     borderRadius: "6px",
-                    fontSize: "0.8125rem",
+                    fontSize: "0.775rem",
                     fontWeight: 600,
                     cursor: "pointer",
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: "0.4rem",
-                    boxShadow: "0 1px 2px rgba(0,0,0,0.08)",
+                    gap: "0.35rem",
                   }}
                 >
-                  <CheckCircle2 size={15} />
-                  <span>Approve Tutor (AI Verified)</span>
+                  <CheckCircle2 size={13} />
+                  <span>Approve Tutor</span>
+                </button>
+
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "var(--wa-muted, #64748B)",
+                    padding: "0.25rem",
+                    borderRadius: "6px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  aria-label="Close dialog"
+                >
+                  <X size={18} />
                 </button>
               </div>
+            </div>
+
+            {/* Modal Body: High-Density Side-by-Side Dual Column (Fits in Viewport) */}
+            <div
+              style={{
+                padding: "1rem 1.25rem",
+                overflowY: "auto",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+                gap: "1rem",
+                alignItems: "start",
+              }}
+            >
+              {/* Left Column: Summary & 5-Check Safeguarding Matrix */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                {/* Executive Verdict Summary */}
+                <div
+                  style={{
+                    padding: "0.75rem 1rem",
+                    borderRadius: "8px",
+                    background:
+                      result.recommendation === "APPROVE"
+                        ? "rgba(16, 185, 129, 0.08)"
+                        : result.recommendation === "REVIEW"
+                        ? "rgba(245, 158, 11, 0.08)"
+                        : "rgba(239, 68, 68, 0.08)",
+                    border: `1px solid ${
+                      result.recommendation === "APPROVE"
+                        ? "rgba(16, 185, 129, 0.25)"
+                        : result.recommendation === "REVIEW"
+                        ? "rgba(245, 158, 11, 0.25)"
+                        : "rgba(239, 68, 68, 0.25)"
+                    }`,
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "0.725rem",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.04em",
+                      color:
+                        result.recommendation === "APPROVE"
+                          ? "#065F46"
+                          : result.recommendation === "REVIEW"
+                          ? "#92400E"
+                          : "#991B1B",
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    AI Audit Assessment
+                  </div>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: "0.825rem",
+                      lineHeight: 1.5,
+                      color: "var(--wa-ink, #0F172A)",
+                    }}
+                  >
+                    {result.summary}
+                  </p>
+                </div>
+
+                {/* Verification Matrix */}
+                <div
+                  style={{
+                    background: "#FFFFFF",
+                    border: "1px solid var(--wa-border, #E2E8F0)",
+                    borderRadius: "8px",
+                    padding: "0.75rem 0.95rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "0.725rem",
+                      fontWeight: 700,
+                      color: "var(--wa-ink, #0F172A)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.04em",
+                      marginBottom: "0.5rem",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span>Safeguarding &amp; Academic Checks</span>
+                    <span style={{ color: "var(--wa-muted, #64748B)" }}>
+                      {result.checks.filter((c) => c.passed).length}/{result.checks.length} Passed
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                    {result.checks.map((chk) => (
+                      <div
+                        key={chk.id}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "0.5rem",
+                          fontSize: "0.8rem",
+                          padding: "0.25rem 0",
+                          borderBottom: "1px solid #F1F5F9",
+                        }}
+                      >
+                        {chk.passed ? (
+                          <CheckCircle2
+                            size={15}
+                            color="#059669"
+                            style={{ flexShrink: 0, marginTop: "1px" }}
+                          />
+                        ) : (
+                          <AlertTriangle
+                            size={15}
+                            color="#D97706"
+                            style={{ flexShrink: 0, marginTop: "1px" }}
+                          />
+                        )}
+                        <div style={{ minWidth: 0, lineHeight: 1.4 }}>
+                          <strong
+                            style={{
+                              color: chk.passed
+                                ? "var(--wa-ink, #0F172A)"
+                                : "#92400E",
+                            }}
+                          >
+                            {chk.name}:{" "}
+                          </strong>
+                          <span style={{ color: "var(--wa-muted, #475569)" }}>
+                            {chk.details}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Extracted Credentials, Strengths & Flags */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                {/* Detected Academic Credentials */}
+                <div
+                  style={{
+                    background: "var(--surface-raised, #F8FAFC)",
+                    border: "1px solid var(--wa-border, #E2E8F0)",
+                    borderRadius: "8px",
+                    padding: "0.75rem 0.95rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "0.725rem",
+                      fontWeight: 700,
+                      color: "var(--wa-ink, #0F172A)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.04em",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    Detected Academic Credentials
+                  </div>
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "#FFFFFF",
+                        border: "1px solid var(--wa-border, #E2E8F0)",
+                        borderRadius: "6px",
+                        padding: "0.5rem 0.75rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "0.675rem",
+                          color: "var(--wa-muted, #64748B)",
+                          textTransform: "uppercase",
+                          fontWeight: 700,
+                        }}
+                      >
+                        GPA / Standing
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.95rem",
+                          fontWeight: 800,
+                          color: "var(--wa-forest, #234B3B)",
+                          marginTop: "2px",
+                        }}
+                      >
+                        {result.extractedScores.gpa || academicScores || "Unspecified"}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        background: "#FFFFFF",
+                        border: "1px solid var(--wa-border, #E2E8F0)",
+                        borderRadius: "6px",
+                        padding: "0.5rem 0.75rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "0.675rem",
+                          color: "var(--wa-muted, #64748B)",
+                          textTransform: "uppercase",
+                          fontWeight: 700,
+                        }}
+                      >
+                        Standardized Tests
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
+                          color: "var(--wa-ink, #0F172A)",
+                          marginTop: "2px",
+                        }}
+                      >
+                        {result.extractedScores.standardizedTests &&
+                        result.extractedScores.standardizedTests.length > 0
+                          ? result.extractedScores.standardizedTests.join(", ")
+                          : "None detected"}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        background: "#FFFFFF",
+                        border: "1px solid var(--wa-border, #E2E8F0)",
+                        borderRadius: "6px",
+                        padding: "0.5rem 0.75rem",
+                        gridColumn: "1 / -1",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "0.675rem",
+                          color: "var(--wa-muted, #64748B)",
+                          textTransform: "uppercase",
+                          fontWeight: 700,
+                        }}
+                      >
+                        AP / IB / Advanced Coursework
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
+                          color: "var(--wa-ink, #0F172A)",
+                          marginTop: "2px",
+                        }}
+                      >
+                        {result.extractedScores.apIbCourses &&
+                        result.extractedScores.apIbCourses.length > 0
+                          ? result.extractedScores.apIbCourses.join(", ")
+                          : "None detected"}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Strengths & Red Flags in Compact Micro-Cards */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      background: "#F0FDF4",
+                      border: "1px solid #BBF7D0",
+                      borderRadius: "6px",
+                      padding: "0.6rem 0.75rem",
+                      fontSize: "0.775rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontWeight: 700,
+                        color: "#166534",
+                        marginBottom: "0.25rem",
+                        fontSize: "0.725rem",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Key Strengths
+                    </div>
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingLeft: "1rem",
+                        color: "#15803D",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.2rem",
+                      }}
+                    >
+                      {result.strengths.slice(0, 3).map((s, idx) => (
+                        <li key={idx}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div
+                    style={{
+                      background: result.flags.length > 0 ? "#FFFBEB" : "#F8FAFC",
+                      border: `1px solid ${
+                        result.flags.length > 0 ? "#FDE68A" : "#E2E8F0"
+                      }`,
+                      borderRadius: "6px",
+                      padding: "0.6rem 0.75rem",
+                      fontSize: "0.775rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontWeight: 700,
+                        color:
+                          result.flags.length > 0 ? "#92400E" : "#475569",
+                        marginBottom: "0.25rem",
+                        fontSize: "0.725rem",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Review Flags
+                    </div>
+                    {result.flags.length > 0 ? (
+                      <ul
+                        style={{
+                          margin: 0,
+                          paddingLeft: "1rem",
+                          color: "#B45309",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.2rem",
+                        }}
+                      >
+                        {result.flags.slice(0, 3).map((f, idx) => (
+                          <li key={idx}>{f}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span style={{ color: "#64748B", fontSize: "0.75rem" }}>
+                        All safeguarding criteria met.
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Bottom Sub-Bar */}
+            <div
+              style={{
+                padding: "0.6rem 1.25rem",
+                borderTop: "1px solid var(--wa-border, #E2E8F0)",
+                background: "var(--surface-raised, #F8FAFC)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                fontSize: "0.75rem",
+                color: "var(--wa-muted, #64748B)",
+              }}
+            >
+              <span>Audit powered by Learnivia AI Verifier • Compliant with FERPA &amp; COPPA guidelines</span>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid var(--wa-border, #E2E8F0)",
+                  color: "var(--wa-ink, #0F172A)",
+                  padding: "0.3rem 0.75rem",
+                  borderRadius: "5px",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
+              >
+                Close View
+              </button>
             </div>
           </div>
         </div>

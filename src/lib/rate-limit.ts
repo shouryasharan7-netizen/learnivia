@@ -11,13 +11,13 @@ const redis = hasRedis ? new Redis({ url: url!, token: token! }) : null;
 // Different limiters for different contexts
 export const rateLimiters = {
   auth: hasRedis
-    ? new Ratelimit({ redis: redis!, limiter: Ratelimit.slidingWindow(10, "1 m"), analytics: true, prefix: "rl:auth" })
+    ? new Ratelimit({ redis: redis!, limiter: Ratelimit.slidingWindow(20, "1 m"), analytics: true, prefix: "rl:auth" })
     : null,
   api: hasRedis
-    ? new Ratelimit({ redis: redis!, limiter: Ratelimit.slidingWindow(20, "1 m"), analytics: true, prefix: "rl:api" })
+    ? new Ratelimit({ redis: redis!, limiter: Ratelimit.slidingWindow(150, "1 m"), analytics: true, prefix: "rl:api" })
     : null,
   global: hasRedis
-    ? new Ratelimit({ redis: redis!, limiter: Ratelimit.slidingWindow(100, "1 m"), analytics: true, prefix: "rl:global" })
+    ? new Ratelimit({ redis: redis!, limiter: Ratelimit.slidingWindow(400, "1 m"), analytics: true, prefix: "rl:global" })
     : null,
 };
 

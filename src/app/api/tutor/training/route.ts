@@ -93,13 +93,23 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (completedCount >= 3 && tutorProfile.status === "PENDING") {
-      await prisma.tutorProfile.update({
-        where: { id: tutorProfile.id },
-        data: { status: "APPROVED" },
-      });
+    if (completedCount >= 3) {
+      if (tutorProfile.status === "PENDING") {
+        await prisma.tutorProfile.update({
+          where: { id: tutorProfile.id },
+          data: { status: "APPROVED", approvedAt: new Date() },
+        });
+      }
+      // Sync user role to TUTOR if not ADMIN
+      if (session.user.role !== "ADMIN") {
+        await prisma.user.update({
+          where: { id: session.user.id },
+          data: { role: "TUTOR" },
+        }).catch(() => {});
+      }
       revalidatePath("/tutor");
       revalidatePath("/dashboard");
+      revalidatePath("/sessions");
     }
     revalidatePath("/tutor/training");
 

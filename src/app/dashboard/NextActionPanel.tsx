@@ -212,7 +212,7 @@ export function NextActionPanel({
             </h2>
             <p className={styles.nextActionDesc}>
               Our academic board is reviewing your application. You can preview
-              the 5 safeguarding and mentorship training modules in the
+              the 3 safeguarding and mentorship training modules in the
               meantime.
             </p>
           </div>

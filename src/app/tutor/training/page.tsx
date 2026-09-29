@@ -167,10 +167,15 @@ export default function TutorTrainingPage() {
 
   useEffect(() => {
     if (allDone) {
-      const timeout = setTimeout(() => {
-        window.location.href = "/tutor";
-      }, 2000);
-      return () => clearTimeout(timeout);
+      if (typeof window !== "undefined") {
+        if (window.location.search) {
+          window.history.replaceState({}, "", "/tutor/training");
+        }
+        const timeout = setTimeout(() => {
+          window.location.replace("/tutor");
+        }, 1500);
+        return () => clearTimeout(timeout);
+      }
     }
   }, [allDone]);
 
@@ -376,7 +381,7 @@ export default function TutorTrainingPage() {
                 }}
               >
                 Tutor Overview, verified service records, upcoming sessions, and
-                student inquiries are locked until all 5 safeguarding training
+                student inquiries are locked until all 3 safeguarding training
                 modules below are passed. Complete each module and pass its
                 short quiz to unlock full access.
               </p>

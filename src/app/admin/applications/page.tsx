@@ -141,20 +141,35 @@ export default async function AdminApplicationsPage() {
                     • Email: {tutor.user.email}
                   </p>
                 </div>
-                <span
+                <div
                   style={{
-                    background: "var(--wa-paper)",
-                    border: "1px solid var(--wa-border)",
-                    color: "var(--wa-ochre)",
-                    padding: "0.25rem 0.75rem",
-                    borderRadius: "4px",
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    flexWrap: "wrap",
                   }}
                 >
-                  Status: PENDING
-                </span>
+                  <AICredentialAuditor
+                    tutorId={tutor.id}
+                    applicantName={tutor.user.name || tutor.user.email || "Applicant"}
+                    hasDocument={Boolean(tutor.reportCardStorageKey || tutor.reportCardUrl)}
+                    academicScores={tutor.academicScores}
+                  />
+                  <span
+                    style={{
+                      background: "var(--wa-paper)",
+                      border: "1px solid var(--wa-border)",
+                      color: "var(--wa-ochre)",
+                      padding: "0.25rem 0.75rem",
+                      borderRadius: "4px",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Status: PENDING
+                  </span>
+                </div>
               </div>
 
               {/* Academic Credentials Section */}
