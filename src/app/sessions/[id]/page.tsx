@@ -587,6 +587,43 @@ export default async function SessionDetailPage({
               Displayed in your local timezone · {durationMinutes}-minute
               verified session
             </div>
+
+            {/* 1-Click Instant Calendar Sync */}
+            <div style={{ marginTop: "0.85rem", display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+              <a
+                href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+                  `Learnivia: ${booking.subject} with ${otherPartyName}`
+                )}&dates=${new Date(booking.startTime)
+                  .toISOString()
+                  .replace(/[-:]/g, "")
+                  .replace(/\.\d{3}/, "")}/${new Date(booking.endTime)
+                  .toISOString()
+                  .replace(/[-:]/g, "")
+                  .replace(/\.\d{3}/, "")}&details=${encodeURIComponent(
+                  `1-on-1 Learnivia Tutoring Session\nSubject: ${booking.subject}\nGrade: ${booking.grade}\nJoin link: ${activeMeetingLink || "https://learnivia-green.vercel.app/sessions/" + booking.id}`
+                )}&location=${encodeURIComponent(activeMeetingLink || "Learnivia Virtual Classroom")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  color: "#1B4D3E",
+                  background: "#FFFFFF",
+                  border: "1px solid #C6DEC6",
+                  padding: "0.45rem 0.85rem",
+                  borderRadius: "6px",
+                  textDecoration: "none",
+                  boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                <Calendar size={13} color="#1B4D3E" />
+                <span>Add to Google Calendar</span>
+              </a>
+            </div>
           </div>
 
           {/* Topic & Learning Goals */}
