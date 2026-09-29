@@ -280,25 +280,34 @@ export function ScheduleWorkshopForm() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "var(--wa-cream)",
-          border: "1px solid var(--wa-border)",
-          padding: "0.5rem 0.85rem",
-          borderRadius: "var(--wa-radius-sm)",
+          flexWrap: "wrap",
+          gap: "0.5rem 1rem",
+          background: "var(--surface-subtle, var(--wa-cream))",
+          border: "1px solid var(--border, var(--wa-border))",
+          padding: "0.6rem 0.95rem",
+          borderRadius: "var(--radius-sm, var(--wa-radius-sm))",
           fontSize: "0.8125rem",
-          color: "var(--wa-muted)",
+          color: "var(--text-muted, var(--wa-muted))",
         }}
       >
         <span
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "0.35rem",
+            gap: "0.45rem",
           }}
         >
-          <Globe size={14} aria-hidden="true" />
-          Timezone: <strong style={{ color: "var(--wa-ink)" }}>{userTz}</strong>
+          <Globe size={15} style={{ color: "var(--primary, #1B4D3E)" }} aria-hidden="true" />
+          <span>
+            Timezone:{" "}
+            <strong style={{ color: "var(--text-primary, var(--wa-ink))" }}>
+              {userTz}
+            </strong>
+          </span>
         </span>
-        <span>Times adjust automatically for learners worldwide</span>
+        <span style={{ fontSize: "0.775rem", color: "var(--text-muted, var(--wa-muted))" }}>
+          Times adjust automatically for learners worldwide
+        </span>
       </div>
 
       <div

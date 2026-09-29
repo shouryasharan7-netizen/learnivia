@@ -80,13 +80,23 @@ export function SidebarNav({
   ];
 
   const tutorItems = [
-    { href: ROUTES.tutor.home, icon: Home, label: "Tutor Home" },
+    { href: ROUTES.learner.home, icon: Home, label: "Home" },
+    ...(isTrainingCompleted
+      ? [
+          {
+            href: ROUTES.tutor.home,
+            icon: LayoutDashboard,
+            label: "Tutor Workspace",
+          },
+        ]
+      : [
+          {
+            href: ROUTES.tutor.training || "/tutor/training",
+            icon: ShieldCheck,
+            label: "Training",
+          },
+        ]),
     { href: ROUTES.sessions || "/sessions", icon: BookOpen, label: "Sessions" },
-    {
-      href: ROUTES.tutor.training || "/tutor/training",
-      icon: ShieldCheck,
-      label: "Training",
-    },
     {
       href: ROUTES.tutor.transcript || "/tutor/transcript",
       icon: Award,

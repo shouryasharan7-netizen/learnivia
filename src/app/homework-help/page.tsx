@@ -588,7 +588,11 @@ export default function HomeworkHelpPage() {
                 item.student?.id &&
                 session.user.id === item.student.id,
               );
-              const isTutorRole = (session?.user as any)?.role === "TUTOR";
+              const isTutorRole =
+                (session?.user as any)?.role === "TUTOR" ||
+                Boolean((session?.user as any)?.isTutor) ||
+                (session?.user as any)?.role === "ADMIN" ||
+                Boolean((session?.user as any)?.isAdmin);
               const isAdmin = Boolean((session?.user as any)?.isAdmin);
 
               return (

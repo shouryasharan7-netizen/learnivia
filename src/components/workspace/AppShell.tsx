@@ -106,6 +106,7 @@ export function AppShell({ children }: AppShellProps) {
           userRole={user.role}
           isTutor={isTutor}
           isAdmin={isAdmin}
+          isTrainingCompleted={isTrainingCompleted}
         />
       </div>
     </div>

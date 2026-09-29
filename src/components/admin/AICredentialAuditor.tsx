@@ -34,19 +34,8 @@ export function AICredentialAuditor({
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CredentialAuditResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
-
-  // Close modal on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isModalOpen) {
-        setIsModalOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen]);
 
   const runAudit = async () => {
     setLoading(true);
@@ -62,7 +51,7 @@ export function AICredentialAuditor({
         throw new Error(data.error || "Failed to audit credentials");
       }
       setResult(data.audit);
-      setIsModalOpen(true);
+      setIsExpanded(true);
     } catch (err: any) {
       setError(err?.message || "Audit failed");
     } finally {
@@ -110,7 +99,7 @@ export function AICredentialAuditor({
   };
 
   return (
-    <div style={{ marginTop: "0.5rem" }}>
+    <div style={{ marginTop: "0.5rem", width: "100%" }}>
       {/* Compact Trigger Bar */}
       <div
         style={{
@@ -145,7 +134,7 @@ export function AICredentialAuditor({
           </button>
         ) : (
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsExpanded(!isExpanded)}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -185,7 +174,7 @@ export function AICredentialAuditor({
               <XCircle size={14} color="#DC2626" />
             )}
             <span>
-              AI Audit: {result.validityScore}/100 ({result.recommendation}) ↗
+              AI Audit: {result.validityScore}/100 ({result.recommendation}) {isExpanded ? "▲ Hide" : "▼ View Inline"}
             </span>
           </button>
         )}
@@ -207,38 +196,21 @@ export function AICredentialAuditor({
         </div>
       )}
 
-      {/* Zero-Scroll Dual-Column Audit Modal */}
-      {result && isModalOpen && (
+      {/* Inline Audit Panel — renders right here inside the card without taking over page */}
+      {result && isExpanded && (
         <div
           style={{
-            position: "fixed",
-            inset: 0,
-            backgroundColor: "rgba(15, 23, 42, 0.65)",
-            backdropFilter: "blur(4px)",
-            zIndex: 9999,
+            marginTop: "0.75rem",
+            background: "var(--surface-raised, #FFFFFF)",
+            borderRadius: "10px",
+            border: "1.5px solid var(--primary, #1B4D3E)",
+            boxShadow: "0 4px 16px rgba(0, 0, 0, 0.06)",
+            width: "100%",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0.75rem",
-          }}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsModalOpen(false);
+            flexDirection: "column",
+            overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              background: "#FFFFFF",
-              borderRadius: "12px",
-              border: "1px solid var(--wa-border, #E2E8F0)",
-              boxShadow: "0 20px 45px -10px rgba(0, 0, 0, 0.25)",
-              maxWidth: "1000px",
-              width: "95vw",
-              maxHeight: "90vh",
-              display: "flex",
-              flexDirection: "column",
-              overflow: "hidden",
-            }}
-          >
             {/* Modal Header with Prominent Decision Controls */}
             <div
               style={{
@@ -383,7 +355,7 @@ export function AICredentialAuditor({
                 </button>
 
                 <button
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => setIsExpanded(false)}
                   style={{
                     background: "transparent",
                     border: "none",
@@ -395,7 +367,8 @@ export function AICredentialAuditor({
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  aria-label="Close dialog"
+                  aria-label="Collapse audit view"
+                  title="Collapse audit view"
                 >
                   <X size={18} />
                 </button>
@@ -773,7 +746,7 @@ export function AICredentialAuditor({
             >
               <span>Audit powered by Learnivia AI Verifier • Compliant with FERPA &amp; COPPA guidelines</span>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsExpanded(false)}
                 style={{
                   background: "#FFFFFF",
                   border: "1px solid var(--wa-border, #E2E8F0)",
@@ -785,12 +758,11 @@ export function AICredentialAuditor({
                   cursor: "pointer",
                 }}
               >
-                Close View
+                Collapse View
               </button>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-}
+        )}
+      </div>
+    );
+  }

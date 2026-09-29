@@ -10,12 +10,14 @@ interface MobileBottomNavProps {
   userRole?: string;
   isTutor?: boolean;
   isAdmin?: boolean;
+  isTrainingCompleted?: boolean;
 }
 
 export function MobileBottomNav({
   userRole,
   isTutor,
   isAdmin,
+  isTrainingCompleted,
 }: MobileBottomNavProps) {
   const pathname = usePathname();
   const [adminView, setAdminView] = React.useState<
@@ -44,13 +46,11 @@ export function MobileBottomNav({
   ];
 
   const tutorItems = [
-    { href: ROUTES.tutor.home, label: "Home", icon: Home },
+    { href: ROUTES.learner.home, label: "Home", icon: Home },
+    ...(isTrainingCompleted
+      ? [{ href: ROUTES.tutor.home, label: "Tutor", icon: GraduationCap }]
+      : [{ href: ROUTES.tutor.training, label: "Training", icon: GraduationCap }]),
     { href: ROUTES.sessions, label: "Sessions", icon: BookOpen },
-    {
-      href: ROUTES.tutor.training || "/tutor/training",
-      label: "Training",
-      icon: GraduationCap,
-    },
     {
       href: ROUTES.tutor.transcript || "/tutor/transcript",
       label: "Hours",

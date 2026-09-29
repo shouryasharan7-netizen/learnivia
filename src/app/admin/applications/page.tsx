@@ -141,36 +141,29 @@ export default async function AdminApplicationsPage() {
                     • Email: {tutor.user.email}
                   </p>
                 </div>
-                <div
+                <span
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    flexWrap: "wrap",
+                    background: "var(--wa-paper)",
+                    border: "1px solid var(--wa-border)",
+                    color: "var(--wa-ochre)",
+                    padding: "0.25rem 0.75rem",
+                    borderRadius: "4px",
+                    fontSize: "0.75rem",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
                   }}
                 >
-                  <AICredentialAuditor
-                    tutorId={tutor.id}
-                    applicantName={tutor.user.name || tutor.user.email || "Applicant"}
-                    hasDocument={Boolean(tutor.reportCardStorageKey || tutor.reportCardUrl)}
-                    academicScores={tutor.academicScores}
-                  />
-                  <span
-                    style={{
-                      background: "var(--wa-paper)",
-                      border: "1px solid var(--wa-border)",
-                      color: "var(--wa-ochre)",
-                      padding: "0.25rem 0.75rem",
-                      borderRadius: "4px",
-                      fontSize: "0.75rem",
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    Status: PENDING
-                  </span>
-                </div>
+                  Status: PENDING
+                </span>
               </div>
+
+              {/* AI Credential & Marksheet Auditor — Inline expansion */}
+              <AICredentialAuditor
+                tutorId={tutor.id}
+                applicantName={tutor.user.name || tutor.user.email || "Applicant"}
+                hasDocument={Boolean(tutor.reportCardStorageKey || tutor.reportCardUrl)}
+                academicScores={tutor.academicScores}
+              />
 
               {/* Academic Credentials Section */}
               <div
@@ -313,13 +306,6 @@ export default async function AdminApplicationsPage() {
                     </div>
                   )}
                 </div>
-
-                <AICredentialAuditor
-                  tutorId={tutor.id}
-                  applicantName={tutor.user?.name || "Applicant"}
-                  hasDocument={Boolean(tutor.reportCardStorageKey || tutor.reportCardUrl)}
-                  academicScores={tutor.academicScores}
-                />
 
                 {/* Admin Quick Attach/Edit Report Card */}
                 <details style={{ marginTop: "0.5rem" }}>

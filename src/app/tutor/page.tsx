@@ -11,6 +11,7 @@ import { ScheduleWorkshopForm } from "./ScheduleWorkshopForm";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { getMeetingUrls } from "@/lib/meetingUrl";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { TutorHomeworkQueue } from "./TutorHomeworkQueue";
 import { ROUTES } from "@/lib/routes";
 import {
   Clock,
@@ -493,6 +494,7 @@ export default async function TutorDashboard() {
 
   let rawWorkshops: any[] = [];
   let rawBookings: any[] = [];
+  let rawHomeworkQuestions: any[] = [];
 
   try {
     const results = await Promise.all([
@@ -508,9 +510,29 @@ export default async function TutorDashboard() {
         include: { student: true },
         orderBy: { startTime: "asc" },
       }),
+      prisma.homeworkRequest.findMany({
+        where: {
+          status: "OPEN",
+          deletedAt: null,
+        },
+        include: {
+          student: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+              grade: true,
+              curriculum: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 25,
+      }),
     ]);
     rawWorkshops = results[0];
     rawBookings = results[1];
+    rawHomeworkQuestions = results[2];
   } catch (dbErr) {
     console.warn("Tutor data fetch fallback:", dbErr);
   }
@@ -691,6 +713,12 @@ export default async function TutorDashboard() {
         <div className={styles.twoColGrid}>
           {/* Left Column: Sessions & Workshops */}
           <div className={styles.leftCol}>
+            {/* Student Homework & Concept Questions Queue */}
+            <TutorHomeworkQueue
+              initialQuestions={rawHomeworkQuestions}
+              tutorName={tutorName}
+            />
+
             {/* Upcoming 1-on-1 Sessions */}
             <section
               className={styles.card}

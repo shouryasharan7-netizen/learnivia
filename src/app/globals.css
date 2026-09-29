@@ -449,11 +449,27 @@ textarea:focus-visible {
 
 :root,
 [data-theme="light"] {
+  --background: #faf8f5;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+
+  --surface: #faf8f5;
+  --surface-raised: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --surface-hover: #f8fafc;
+
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #475569;
+  --sidebar-muted: #94a3b8;
+  --sidebar-active-bg: #eaf2ee;
+
   --wa-paper: #faf8f5;
   --wa-cream: #faf8f5;
   --wa-cream-dark: #f1f5f9;
   --wa-cream-mid: #ede5d8;
   --wa-white: #ffffff;
+  --wa-contrast: #f1f5f9;
 
   --wa-ink: #0f172a;
   --wa-text: #334155;
@@ -506,6 +522,11 @@ textarea:focus-visible {
 }
 
 [data-theme="dark"] {
+  --background: #0d1117;
+  --foreground: #f8fafc;
+  --card: #161b22;
+  --card-foreground: #f8fafc;
+
   --primary: #3b82f6;
   --primary-hover: #60a5fa;
   --primary-dark: #2563eb;
@@ -517,22 +538,37 @@ textarea:focus-visible {
   --surface: #0d1117;
   --surface-raised: #161b22;
   --surface-subtle: #1c2128;
+  --surface-hover: #21262d;
+
+  --sidebar-bg: #161b22;
+  --sidebar-text: #e2e8f0;
+  --sidebar-muted: #94a3b8;
+  --sidebar-active: #3b82f6;
+  --sidebar-active-bg: rgba(59, 130, 246, 0.15);
 
   --text-primary: #f8fafc;
   --text-secondary: #e2e8f0;
   --text-muted: #94a3b8;
   --text-subtle: #64748b;
+  --text-inverse: #0d1117;
 
   --border: #30363d;
   --border-strong: #484f58;
+  --border-hairline: #21262d;
 
   --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --accent-light: rgba(245, 158, 11, 0.15);
+  --accent-muted: rgba(245, 158, 11, 0.1);
 
   --wa-paper: #0d1117;
-  --wa-cream: #11161f;
-  --wa-cream-dark: #171f2c;
-  --wa-cream-mid: #243044;
+  --wa-cream: #0d1117;
+  --wa-cream-dark: #161b22;
+  --wa-cream-mid: #21262d;
   --wa-white: #161b22;
+  --wa-contrast: #1c2128;
+  --wa-slate-paper: #0d1117;
+  --wa-pure-white: #161b22;
 
   --wa-ink: #f8fafc;
   --wa-text: #e2e8f0;
@@ -540,12 +576,26 @@ textarea:focus-visible {
   --wa-subtle: #64748b;
 
   --wa-border: #30363d;
-  --wa-border-hairline: #1b2533;
+  --wa-border-hairline: #21262d;
   --wa-border-strong: #484f58;
 
   --wa-navy: #f8fafc;
   --wa-navy-hover: #e2e8f0;
   --wa-navy-light: #334155;
+
+  --color-bg: #0d1117;
+  --color-bg-card: #161b22;
+  --color-border: #30363d;
+  --color-text: #e2e8f0;
+  --color-navy: #f8fafc;
+
+  --lv-bg: #0d1117;
+  --lv-surface: #161b22;
+  --lv-surface-subtle: #1c2128;
+  --lv-border: #30363d;
+  --lv-heading: #f8fafc;
+  --lv-text: #e2e8f0;
+  --lv-text-muted: #94a3b8;
 
   --sh-nav-bg: #161b22;
   --sh-nav-text: #f8fafc;

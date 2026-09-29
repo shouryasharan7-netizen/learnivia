@@ -27,8 +27,14 @@ export default async function VolunteerTranscriptRedirectPage() {
     const passed = (profile.trainingModules || []).filter(
       (m: any) => m.quizPassed,
     ).length;
-    if (passed < 5) {
+    if (passed < 3) {
       redirect("/tutor/training?locked=1");
+    }
+    if (profile.status === "PENDING" && passed >= 3) {
+      await prisma.tutorProfile.update({
+        where: { id: profile.id },
+        data: { status: "APPROVED", approvedAt: new Date() },
+      });
     }
     // Redirect directly to the tutor's verified transcript
     redirect(`/tutor/${profile.id}/transcript`);
