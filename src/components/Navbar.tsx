@@ -22,10 +22,12 @@ import {
   Sun,
   Moon,
 } from "lucide-react";
+import { ProgramDetailsModal } from "@/components/discovery/ProgramDetailsModal";
 import styles from "./Navbar.module.css";
 
 const megaMenuPrograms = [
   {
+    id: "k-2",
     title: "Early Elementary (K-Grade 2)",
     description:
       "Phonics, early math foundations, and reading comprehension for young learners.",
@@ -47,6 +49,7 @@ const megaMenuPrograms = [
     badge: "Ages 5-8",
   },
   {
+    id: "3-5",
     title: "Elementary (Grades 3-5)",
     description:
       "Math, reading & writing, and general science for growing minds.",
@@ -69,6 +72,7 @@ const megaMenuPrograms = [
     badge: "Ages 8-11",
   },
   {
+    id: "6-8",
     title: "Middle School (Grades 6-8)",
     description:
       "Pre-Algebra, English & Language Arts, Earth & Physical Science.",
@@ -91,6 +95,7 @@ const megaMenuPrograms = [
     badge: "Ages 11-14",
   },
   {
+    id: "9-10",
     title: "Early High School (Grades 9-10)",
     description:
       "Algebra I, Geometry, Biology, Chemistry, and more with 1-on-1 support.",
@@ -126,11 +131,6 @@ const getInvolvedLinks = [
     desc: "Learn about our peer-learning model",
   },
   {
-    href: "/observatory",
-    label: "Academic Observatory",
-    desc: "Interactive knowledge reactor & verified credentials",
-  },
-  {
     href: "/parents",
     label: "For Parents",
     desc: "Safeguarding and guardian guidelines",
@@ -144,7 +144,6 @@ const getInvolvedLinks = [
 
 const mainLinks = [
   { href: "/about", label: "About" },
-  { href: "/observatory", label: "Observatory" },
   { href: "/faq", label: "FAQ & Support" },
 ];
 
@@ -154,6 +153,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
   const [involvedOpen, setInvolvedOpen] = useState(false);
+  const [selectedProgramModal, setSelectedProgramModal] = useState<string | null>(null);
   const exploreRef = useRef<HTMLDivElement>(null);
   const involvedRef = useRef<HTMLDivElement>(null);
 
@@ -759,11 +759,22 @@ export function Navbar() {
 
                   <div className={styles.megaMenuGrid}>
                     {megaMenuPrograms.map((prog) => (
-                      <Link
+                      <button
                         key={prog.title}
-                        href={prog.href}
+                        type="button"
                         className={styles.megaCard}
-                        onClick={() => setExploreOpen(false)}
+                        style={{
+                          textAlign: "left",
+                          width: "100%",
+                          background: "none",
+                          cursor: "pointer",
+                          border: "1px solid var(--wa-border)",
+                          fontFamily: "inherit",
+                        }}
+                        onClick={() => {
+                          setSelectedProgramModal(prog.id);
+                          setExploreOpen(false);
+                        }}
                       >
                         <div className={styles.megaCardTop}>
                           <span className={styles.megaCardIcon}>
@@ -777,7 +788,7 @@ export function Navbar() {
                         <p className={styles.megaCardDesc}>
                           {prog.description}
                         </p>
-                      </Link>
+                      </button>
                     ))}
                   </div>
 
@@ -917,11 +928,22 @@ export function Navbar() {
 
               <p className={styles.mobileSection}>Grade Bands (K-10)</p>
               {megaMenuPrograms.map((prog) => (
-                <Link
+                <button
                   key={prog.title}
-                  href={prog.href}
+                  type="button"
                   className={styles.mobileLink}
-                  onClick={() => setMobileOpen(false)}
+                  style={{
+                    textAlign: "left",
+                    width: "100%",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                  onClick={() => {
+                    setSelectedProgramModal(prog.id);
+                    setMobileOpen(false);
+                  }}
                 >
                   <span>
                     {prog.icon} {prog.title}
@@ -929,7 +951,7 @@ export function Navbar() {
                   <span className={styles.mobileSubtext}>
                     {prog.description}
                   </span>
-                </Link>
+                </button>
               ))}
 
               <div className={styles.mobileDivider} />
@@ -1028,6 +1050,12 @@ export function Navbar() {
           </div>
         </>
       )}
+
+      {/* Interactive Program Details Modal for Families */}
+      <ProgramDetailsModal
+        programId={selectedProgramModal}
+        onClose={() => setSelectedProgramModal(null)}
+      />
     </>
   );
 }

@@ -725,61 +725,7 @@ export default function HomeInteractiveClient({
         </div>
       </section>
 
-      {/* Approach 3 Track A + Link to Academic Observatory Track B */}
-      <section style={{ padding: "0 0 5rem", background: "var(--wa-paper, #faf9f6)" }}>
-        <div className={styles.container}>
-          <div
-            className="card-blueprint"
-            style={{
-              padding: "2.25rem 2.5rem",
-              borderRadius: "12px",
-              border: "1px dashed rgba(13, 148, 136, 0.4)",
-              background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(13, 148, 136, 0.05) 100%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "2rem",
-            }}
-          >
-            <div style={{ flex: "1 1 500px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
-                <span className="tag-blueprint">[ TACTILE OBSERVATORY ]</span>
-                <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.75rem", color: "var(--wa-muted)", textTransform: "uppercase" }}>
-                  KNOWLEDGE REACTOR // RIGOR SCRUBBER T=0.1→10.0
-                </span>
-              </div>
-              <h3 style={{ fontFamily: "var(--font-serif, serif)", fontSize: "1.65rem", fontWeight: 700, margin: "0 0 0.5rem 0", color: "var(--wa-ink)" }}>
-                The Academic Observatory
-              </h3>
-              <p style={{ margin: 0, fontSize: "0.98rem", color: "var(--wa-text)", lineHeight: 1.6 }}>
-                Interact with physics-driven peer learning nodes, adjust curriculum mastery scrubbers, and flip 3D tamper-evident marksheet audit cards.
-              </p>
-            </div>
-            <Link
-              href="/observatory"
-              className="btn-tactile"
-              style={{
-                background: "var(--wa-navy, #0f172a)",
-                color: "#ffffff",
-                padding: "0.95rem 1.85rem",
-                borderRadius: "8px",
-                fontWeight: 600,
-                fontSize: "0.95rem",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.65rem",
-                boxShadow: "0 4px 12px rgba(15, 23, 42, 0.12)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <span>Explore Interactive Prototype</span>
-              <span style={{ fontFamily: "monospace", fontSize: "1rem" }}>→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
+
 
 
       <section className={styles.safeguardSection} id="safety">

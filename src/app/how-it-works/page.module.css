@@ -137,22 +137,41 @@
   align-items: center;
 }
 
-.imagePlaceholder {
+.stepImageCard {
   width: 100%;
+  max-width: 440px;
   aspect-ratio: 4/3;
-  background: var(--wa-paper);
+  background: var(--wa-white);
   border-radius: var(--wa-radius-lg);
   border: 1px solid var(--wa-border);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: var(--wa-shadow-sm);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
   overflow: hidden;
   position: relative;
+  transition: transform 240ms var(--ease-spring), box-shadow 240ms var(--ease-smooth);
 }
-.altSection .imagePlaceholder {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
+
+.stepImageCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.12);
+}
+
+.altSection .stepImageCard {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+}
+
+.stepImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 300ms var(--ease-smooth);
+}
+
+.stepImageCard:hover .stepImg {
+  transform: scale(1.03);
 }
 
 .stepIconWrap {

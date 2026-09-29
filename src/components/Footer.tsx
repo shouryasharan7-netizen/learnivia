@@ -8,7 +8,6 @@ const FOOTER_LINKS = [
     links: [
       { href: "/sessions", label: "Find a Session" },
       { href: "/find", label: "Browse Tutors" },
-      { href: "/observatory", label: "Academic Observatory" },
       { href: "/homework-help", label: "Homework Help" },
       { href: "/community", label: "Community" },
       { href: "/apply", label: "Volunteer as Tutor" },

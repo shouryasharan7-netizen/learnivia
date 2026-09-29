@@ -266,6 +266,66 @@ export const PROGRAMS: Program[] = [
       },
     ],
   },
+  {
+    slug: "reading-literacy",
+    emoji: "",
+    title: "Reading & Literacy",
+    shortDescription:
+      "Phonics, early reader support, vocabulary building, and reading fluency for young students.",
+    longDescription:
+      "Our Reading & Literacy program pairs emergent and intermediate readers with patient student volunteers who love books. Through guided reading, phonics exercises, and interactive storytelling, learners build lifelong reading confidence.",
+    subjects: ["Phonics", "Guided Reading", "Vocabulary", "Spelling", "Comprehension"],
+    gradeLevels: ["Primary (Years 1-6)", "Lower Secondary (Years 7-9)"],
+    format: "One-on-one via Zoom",
+    duration: "30-45 minutes",
+    outcomes: [
+      "Master letter-sound blending and sight words",
+      "Expand expressive and receptive vocabulary",
+      "Develop reading comprehension and text inferencing skills",
+    ],
+    faq: [
+      {
+        question: "Can we read books from my child's school?",
+        answer:
+          "Yes! Tutors are happy to read along with books your student is currently working through in school.",
+      },
+      {
+        question: "Is this suitable for ESL/EAL learners?",
+        answer:
+          "Absolutely. Our tutors adapt pacing and offer bilingual support where available.",
+      },
+    ],
+  },
+  {
+    slug: "coding-logic",
+    emoji: "",
+    title: "Coding & Digital Logic",
+    shortDescription:
+      "Discover algorithms, Python programming, web fundamentals, and computational thinking with tech-savvy mentors.",
+    longDescription:
+      "Coding & Digital Logic introduces learners to the power of technology. From block-based Scratch coding for beginners to Python, web development, and algorithmic logic for secondary students, our mentors guide students through creative projects.",
+    subjects: ["Python", "Scratch & Block Logic", "Web Basics (HTML/CSS)", "Algorithms", "Robotics Foundations"],
+    gradeLevels: ["Primary (Years 4-6)", "Lower Secondary (Years 7-9)", "GCSE / AP"],
+    format: "One-on-one via Zoom",
+    duration: "45-60 minutes",
+    outcomes: [
+      "Write functional code and build interactive projects",
+      "Develop structured logical problem-solving skills",
+      "Prepare for computer science coursework and competitions",
+    ],
+    faq: [
+      {
+        question: "Do I need special software installed?",
+        answer:
+          "No special software is needed. Most sessions use browser-based platforms like Replit, Scratch, or Trinket.",
+      },
+      {
+        question: "Can total beginners join?",
+        answer:
+          "Yes, we have courses and tutors specifically tailored for first-time coders.",
+      },
+    ],
+  },
 ];
 
 export function getProgramBySlug(slug: string): Program | undefined {

@@ -50,15 +50,19 @@
   border-radius: var(--radius-xl);
   text-decoration: none;
   transition:
-    box-shadow var(--transition-base),
-    transform var(--transition-base),
-    border-color var(--transition-base);
+    box-shadow 220ms var(--ease-smooth),
+    transform 220ms var(--ease-spring),
+    border-color 160ms ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(13, 148, 136, 0.08);
   border-color: var(--color-primary);
+}
+
+.card:active {
+  transform: scale(0.98) translateY(-2px);
 }
 
 .emoji {
