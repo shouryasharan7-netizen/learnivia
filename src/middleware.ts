@@ -53,6 +53,7 @@ const publicPaths = [
   "/api/auth", // NextAuth callbacks
   "/api/cron", // Cron endpoints (Vercel cron)
   "/api/admin/secure-rls", // Secured by Bearer secret in route handler
+  "/api/admin/ingest-questions", // Secured by x-learnivia-admin-key in route handler
   "/robots.txt",
   "/sitemap.xml",
 ];
