@@ -12,6 +12,7 @@ import styles from "./AppShell.module.css";
 
 interface AppShellProps {
   children: React.ReactNode;
+  initialSession?: any;
 }
 
 // Routes that should always render the public layout (Navbar only, no workspace shell)
@@ -50,65 +51,74 @@ const WORKSPACE_PREFIXES = [
   "/settings",
 ];
 
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children, initialSession }: AppShellProps) {
   const { data: session } = useSession();
+  const currentSession = session !== undefined ? session : initialSession;
   const pathname = usePathname();
-
-  const isPublicRoute =
-    PUBLIC_ONLY_ROUTES.includes(pathname) ||
-    pathname.startsWith("/blog/") ||
-    pathname.startsWith("/apply");
 
   const isWorkspaceRoute = WORKSPACE_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix),
   );
 
-  // Show public Navbar + Footer for:
-  //   1. Anyone (logged-in or not) on a public marketing route
-  //   2. Unauthenticated users on any route
-  if (isPublicRoute || !session?.user) {
+  // If this is a workspace route, NEVER render public marketing Navbar / Footer
+  if (isWorkspaceRoute) {
+    const user = currentSession?.user;
+    if (!user) {
+      // While session is hydrating, retain the workspace shell container so the page
+      // content renders without flashing public marketing headers or footers
+      return (
+        <div className={styles.shell}>
+          <div className={styles.mainContainer}>
+            <main id="main-content" className={styles.content}>
+              {children}
+            </main>
+          </div>
+        </div>
+      );
+    }
+
+    const isTutor = Boolean((user as any).isTutor);
+    const isAdmin = Boolean((user as any).isAdmin || user.role === "ADMIN");
+    const isTrainingCompleted = Boolean((user as any).isTrainingCompleted);
+
     return (
-      <div className={styles.publicWrapper}>
-        <Navbar />
-        <div className={styles.publicContent}>{children}</div>
-        <Footer />
-      </div>
-    );
-  }
+      <div className={styles.shell}>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
 
-  const user = session.user;
-  const isTutor = Boolean((user as any).isTutor);
-  const isAdmin = Boolean((user as any).isAdmin || user.role === "ADMIN");
-  const isTrainingCompleted = Boolean((user as any).isTrainingCompleted);
-
-  return (
-    <div className={styles.shell}>
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
-
-      {/* Desktop Left Sidebar — role-aware navigation */}
-      <SidebarNav
-        userRole={user.role}
-        isTutor={isTutor}
-        isAdmin={isAdmin}
-        isTrainingCompleted={isTrainingCompleted}
-        className={styles.sidebarDesktop}
-      />
-
-      {/* Main Content Area */}
-      <div className={styles.mainContainer}>
-        <TopBar user={user} />
-        <main id="main-content" className={styles.content}>
-          {children}
-        </main>
-        <MobileBottomNav
+        {/* Desktop Left Sidebar — role-aware navigation */}
+        <SidebarNav
           userRole={user.role}
           isTutor={isTutor}
           isAdmin={isAdmin}
           isTrainingCompleted={isTrainingCompleted}
+          className={styles.sidebarDesktop}
         />
+
+        {/* Main Content Area */}
+        <div className={styles.mainContainer}>
+          <TopBar user={user} />
+          <main id="main-content" className={styles.content}>
+            {children}
+          </main>
+          <MobileBottomNav
+            userRole={user.role}
+            isTutor={isTutor}
+            isAdmin={isAdmin}
+            isTrainingCompleted={isTrainingCompleted}
+          />
+        </div>
       </div>
+    );
+  }
+
+  // Public marketing layout for public routes or unauthenticated visitors
+  return (
+    <div className={styles.publicWrapper}>
+      <Navbar />
+      <div className={styles.publicContent}>{children}</div>
+      <Footer />
     </div>
   );
 }

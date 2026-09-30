@@ -639,6 +639,10 @@ export default async function TutorDashboard() {
           </div>
 
           <div className={styles.headerActions}>
+            <Link href={ROUTES.find} className={styles.secondaryBtn}>
+              <BookOpen size={15} aria-hidden="true" />
+              <span>All Sessions &amp; Workshops</span>
+            </Link>
             <Link href={ROUTES.tutor.training} className={styles.secondaryBtn}>
               <GraduationCap size={15} aria-hidden="true" />
               <span>Training Modules</span>

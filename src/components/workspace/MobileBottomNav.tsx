@@ -42,7 +42,7 @@ export function MobileBottomNav({
     { href: ROUTES.learner.home, label: "Home", icon: Home },
     { href: ROUTES.find, label: "Find", icon: Search },
     { href: ROUTES.homeworkHelp, label: "Help", icon: HelpCircle },
-    { href: ROUTES.learn || "/learn", label: "Workshops", icon: GraduationCap },
+    { href: ROUTES.learn || "/learn", label: "Programs", icon: GraduationCap },
   ];
 
   const tutorItems = [
@@ -50,7 +50,7 @@ export function MobileBottomNav({
     ...(isTrainingCompleted
       ? [{ href: ROUTES.tutor.home, label: "Tutor", icon: GraduationCap }]
       : [{ href: ROUTES.tutor.training, label: "Training", icon: GraduationCap }]),
-    { href: ROUTES.sessions, label: "Sessions", icon: BookOpen },
+    { href: ROUTES.find, label: "Catalog", icon: BookOpen },
     {
       href: ROUTES.tutor.transcript || "/tutor/transcript",
       label: "Hours",

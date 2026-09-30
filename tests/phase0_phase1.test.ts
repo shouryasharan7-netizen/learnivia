@@ -422,3 +422,50 @@ test("Phase 5 - Secondary Views: Sessions, Homework Help & Community Integrity",
   assert.ok(!commCode.includes("🗑️ Delete"), "Emoji trash in delete button must be replaced with Lucide Trash2");
 });
 
+test("Phase 6 - Supabase RLS Lockdown, Instant Workspace Hydration & Navigation Parity", () => {
+  // 1. Supabase RLS migration file exists
+  const rlsMigrationPath = path.join(
+    PROJECT_ROOT,
+    "prisma",
+    "migrations",
+    "20260930_enable_rls",
+    "migration.sql"
+  );
+  assert.ok(fs.existsSync(rlsMigrationPath), "RLS migration file must exist");
+  const rlsSql = fs.readFileSync(rlsMigrationPath, "utf-8");
+  assert.ok(rlsSql.includes("ENABLE ROW LEVEL SECURITY"), "Migration must enable RLS on tables");
+  assert.ok(rlsSql.includes("REVOKE ALL ON ALL TABLES IN SCHEMA public FROM anon"), "Migration must revoke PostgREST public access");
+
+  // 2. Navigation parity: Programs label (Image 5) & Tutor Sessions & Workshops (Image 4)
+  const sidebarNavPath = path.join(
+    PROJECT_ROOT,
+    "src",
+    "components",
+    "workspace",
+    "SidebarNav.tsx"
+  );
+  const sidebarNavCode = fs.readFileSync(sidebarNavPath, "utf-8");
+
+  assert.ok(sidebarNavCode.includes('label: "Programs"'), 'Student nav must label graduation cap as "Programs"');
+  assert.ok(!sidebarNavCode.includes('label: "Group Workshops"'), 'Student nav must not label as "Group Workshops"');
+  assert.ok(sidebarNavCode.includes('label: "Sessions & Workshops"'), 'Tutor nav must link to Sessions & Workshops catalog');
+  assert.ok(sidebarNavCode.includes('href: ROUTES.find || "/find"'), 'Tutor nav must point to find catalog');
+
+  // 3. Instant Workspace Hydration (Images 2 & 3 fix)
+  const layoutPath = path.join(APP_DIR, "layout.tsx");
+  const layoutCode = fs.readFileSync(layoutPath, "utf-8");
+  assert.ok(layoutCode.includes("const session = await auth();"), "RootLayout must fetch server session");
+  assert.ok(layoutCode.includes("<Providers session={session}>"), "RootLayout must pass session to Providers");
+  assert.ok(layoutCode.includes("<AppShell initialSession={session}>"), "RootLayout must pass session to AppShell");
+
+  const appShellPath = path.join(
+    PROJECT_ROOT,
+    "src",
+    "components",
+    "workspace",
+    "AppShell.tsx"
+  );
+  const appShellCode = fs.readFileSync(appShellPath, "utf-8");
+  assert.ok(appShellCode.includes("if (isWorkspaceRoute)"), "AppShell must explicitly guard workspace routes");
+});
+

@@ -69,7 +69,7 @@ export function SidebarNav({
     {
       href: ROUTES.learn || "/learn",
       icon: GraduationCap,
-      label: "Group Workshops",
+      label: "Programs",
     },
     {
       href: ROUTES.homeworkHelp || "/homework-help",
@@ -96,7 +96,11 @@ export function SidebarNav({
             label: "Training",
           },
         ]),
-    { href: ROUTES.sessions || "/sessions", icon: BookOpen, label: "Sessions" },
+    {
+      href: ROUTES.find || "/find",
+      icon: BookOpen,
+      label: "Sessions & Workshops",
+    },
     {
       href: ROUTES.tutor.transcript || "/tutor/transcript",
       icon: Award,
