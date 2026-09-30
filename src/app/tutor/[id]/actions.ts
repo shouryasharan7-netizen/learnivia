@@ -178,3 +178,43 @@ export async function bookSession(formData: FormData) {
   // Redirect to the session detail room with confirmation
   redirect(`/sessions/${booking.id}?booked=true`);
 }
+
+export async function sendTutorInquiry(formData: FormData) {
+  const user = await requireAuth();
+  const tutorId = formData.get("tutorId") as string;
+  const subject = ((formData.get("subject") as string) || "").trim();
+  const message = ((formData.get("message") as string) || "").trim();
+
+  if (!tutorId || !message) {
+    return { success: false, error: "Please enter a message for the tutor." };
+  }
+
+  const tutor = await prisma.tutorProfile.findUnique({
+    where: { id: tutorId },
+    include: { user: true },
+  });
+
+  if (!tutor) {
+    return { success: false, error: "Tutor profile not found." };
+  }
+
+  try {
+    await prisma.communityMessage.create({
+      data: {
+        channel: "Direct Inquiries",
+        authorId: user.id,
+        authorName: user.name || "Student",
+        authorEmail: user.email,
+        authorRole: user.role || "STUDENT",
+        authorInitials: (user.name || "ST").substring(0, 2).toUpperCase(),
+        authorColor: "#15803D",
+        content: `[Direct inquiry for ${tutor.user.name || "Tutor"}] Subject: ${subject || "Session Inquiry"}\n\n${message}`,
+      },
+    });
+  } catch (err) {
+    console.warn("Failed to create inquiry log:", err);
+  }
+
+  return { success: true };
+}
+

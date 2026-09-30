@@ -1,51 +1,68 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 /**
- * GET /api/health
- * P1-15: Health check endpoint for Vercel / uptime monitors.
- * Returns platform version and DB reachability WITHOUT leaking any secrets,
- * connection strings, env var values, or user data.
+ * Production Edge Health Check Endpoint
+ * Measures round-trip ping latency to Supabase PostgreSQL via Edge runtime.
  */
 export async function GET() {
-  const startMs = Date.now();
+  const startTime = Date.now();
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.SUPABASE_URL ||
+    "https://shsgqluaqexqwoxuakzr.supabase.co";
+  const supabaseKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    "";
 
-  // Minimal DB ping - no user data, no secrets
-  let dbOk = false;
-  let dbLatencyMs: number | null = null;
+  let isHealthy = false;
+  let latencyMs = 0;
+
   try {
-    const dbStart = Date.now();
-    await prisma.$queryRaw`SELECT 1`;
-    dbLatencyMs = Date.now() - dbStart;
-    dbOk = true;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 800);
+
+    const pingStart = Date.now();
+    const res = await fetch(`${supabaseUrl}/rest/v1/`, {
+      method: "GET",
+      headers: {
+        apikey: supabaseKey,
+      },
+      signal: controller.signal,
+      cache: "no-store",
+    });
+
+    clearTimeout(timeoutId);
+    latencyMs = Date.now() - pingStart;
+
+    if (res.status < 500 && latencyMs < 800) {
+      isHealthy = true;
+    }
   } catch {
-    // Intentionally swallowed - we only report ok/fail, not the error message
-    dbOk = false;
+    latencyMs = Date.now() - startTime;
+    isHealthy = false;
   }
 
-  const status = dbOk ? "ok" : "degraded";
-  const httpStatus = dbOk ? 200 : 503;
+  const environment =
+    process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production"
+      ? "production"
+      : "development";
+  const statusCode = isHealthy && latencyMs < 800 ? 200 : 503;
 
-  return NextResponse.json(
-    {
-      status,
-      version: process.env.npm_package_version ?? "unknown",
+  return new Response(
+    JSON.stringify({
+      status: isHealthy ? "healthy" : "unhealthy",
       timestamp: new Date().toISOString(),
-      latencyMs: Date.now() - startMs,
-      checks: {
-        database: {
-          status: dbOk ? "ok" : "fail",
-          latencyMs: dbLatencyMs,
-        },
-      },
-      // NOTE: Never add env var values, DB URLs, or secrets here.
-    },
+      latency_ms: latencyMs,
+      service: "learnivia-core",
+      environment,
+    }),
     {
-      status: httpStatus,
+      status: statusCode,
       headers: {
-        // Health checks should not be cached
+        "Content-Type": "application/json",
         "Cache-Control": "no-store, no-cache, must-revalidate",
       },
     },

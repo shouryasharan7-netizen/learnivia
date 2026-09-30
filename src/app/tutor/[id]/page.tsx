@@ -5,6 +5,7 @@ import { bookSession } from "./actions";
 import { auth } from "@/auth";
 import Link from "next/link";
 import { BookingSlotSelector } from "./BookingSlotSelector";
+import { TutorMessageButton } from "./TutorMessageButton";
 import { GraduationCap, Globe, FileCheck, Star } from "lucide-react";
 
 const DAYS_OF_WEEK = [
@@ -27,7 +28,7 @@ export default async function TutorProfilePage({
   const session = await auth();
   const { id } = await params;
 
-  const tutorProfile = await prisma.tutorProfile.findUnique({
+  const tutorProfile: any = await prisma.tutorProfile.findUnique({
     where: { id },
     include: {
       availabilities: true,
@@ -35,40 +36,22 @@ export default async function TutorProfilePage({
         select: {
           id: true,
           name: true,
+          email: true,
           image: true,
           timezone: true,
         },
       },
       subjects: true,
       gradeLevels: true,
-      tutorBookings: {
-        where: { status: "COMPLETED" },
-        select: {
-          id: true,
-          startTime: true,
-          endTime: true,
-        },
-      },
+      tutorBookings: true,
       workshops: {
-        where: { status: "COMPLETED" },
-        select: {
-          id: true,
-          startTime: true,
-          endTime: true,
+        include: {
+          enrollments: true,
         },
       },
       reviews: {
-        select: {
-          id: true,
-          rating: true,
-          comment: true,
-          createdAt: true,
-          student: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
+        include: {
+          student: true,
         },
         orderBy: { createdAt: "desc" },
       },
@@ -88,7 +71,7 @@ export default async function TutorProfilePage({
     currentUserTimezone = dbUser?.timezone || null;
   }
 
-  const bookingMinutes = (tutorProfile.tutorBookings || []).reduce((sum, b) => {
+  const bookingMinutes = (tutorProfile.tutorBookings || []).reduce((sum: number, b: any) => {
     const dur = Math.max(
       15,
       (new Date(b.endTime).getTime() - new Date(b.startTime).getTime()) /
@@ -96,7 +79,7 @@ export default async function TutorProfilePage({
     );
     return sum + dur;
   }, 0);
-  const workshopMinutes = (tutorProfile.workshops || []).reduce((sum, w) => {
+  const workshopMinutes = (tutorProfile.workshops || []).reduce((sum: number, w: any) => {
     const dur = Math.max(
       15,
       (new Date(w.endTime).getTime() - new Date(w.startTime).getTime()) /
@@ -108,12 +91,34 @@ export default async function TutorProfilePage({
     Math.round(((bookingMinutes + workshopMinutes) / 60) * 10) / 10;
 
   const avgRating =
-    tutorProfile.reviews.length > 0
+    tutorProfile.reviews && tutorProfile.reviews.length > 0
       ? (
-          tutorProfile.reviews.reduce((acc, r) => acc + r.rating, 0) /
+          tutorProfile.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) /
           tutorProfile.reviews.length
         ).toFixed(1)
       : null;
+
+  const completedBookings = (tutorProfile.tutorBookings || []).filter(
+    (b: any) => b && b.status === "COMPLETED",
+  );
+  const completedWorkshops = (tutorProfile.workshops || []).filter(
+    (w: any) => w && w.status === "COMPLETED",
+  );
+  const realSessionsHosted = completedBookings.length + completedWorkshops.length;
+
+  const uniqueStudentIds = new Set<string>();
+  for (const b of completedBookings) {
+    if (b.studentId) uniqueStudentIds.add(b.studentId);
+  }
+  for (const w of completedWorkshops) {
+    for (const e of w.enrollments || []) {
+      if (e.studentId) uniqueStudentIds.add(e.studentId);
+    }
+  }
+  const realLearnersHelped = uniqueStudentIds.size;
+  const memberSinceYear = new Date(
+    tutorProfile.createdAt || Date.now(),
+  ).getFullYear();
 
   return (
     <main className={styles.main}>
@@ -126,7 +131,11 @@ export default async function TutorProfilePage({
             <div className={styles.headerInfo}>
               <div className={styles.headerTitleRow}>
                 <h1 className={styles.name}>{tutorProfile.user.name}</h1>
-                <button className={styles.messageBtn}>Message</button>
+                <TutorMessageButton
+                  tutorId={tutorProfile.id}
+                  tutorName={tutorProfile.user.name || "Tutor"}
+                  isSignedIn={Boolean(session?.user?.id)}
+                />
               </div>
 
               <p
@@ -172,17 +181,11 @@ export default async function TutorProfilePage({
           <div className={styles.statsBar}>
             <div className={styles.statItem}>
               <span className={styles.statLabel}>Sessions Hosted</span>
-              <strong className={styles.statValue}>
-                {tutorProfile.tutorBookings.length +
-                  tutorProfile.workshops.length}
-              </strong>
+              <strong className={styles.statValue}>{realSessionsHosted}</strong>
             </div>
             <div className={styles.statItem}>
               <span className={styles.statLabel}>Learners Helped</span>
-              <strong className={styles.statValue}>
-                {tutorProfile.tutorBookings.length +
-                  tutorProfile.workshops.length * 3 || 0}
-              </strong>
+              <strong className={styles.statValue}>{realLearnersHelped}</strong>
             </div>
             {avgRating && (
               <div className={styles.statItem}>
@@ -207,7 +210,7 @@ export default async function TutorProfilePage({
             )}
             <div className={styles.statItem}>
               <span className={styles.statLabel}>Member Since</span>
-              <strong className={styles.statValue}>2024</strong>
+              <strong className={styles.statValue}>{memberSinceYear}</strong>
             </div>
           </div>
         </header>
@@ -265,7 +268,7 @@ export default async function TutorProfilePage({
               <h2>Subjects I Teach</h2>
               <div className={styles.tags}>
                 {tutorProfile.subjects.length > 0 ? (
-                  tutorProfile.subjects.map((s) => (
+                  tutorProfile.subjects.map((s: any) => (
                     <span key={s.id} className={styles.tag}>
                       {s.name}
                     </span>
@@ -280,7 +283,7 @@ export default async function TutorProfilePage({
               <h2>Grade Levels Supported</h2>
               <div className={styles.tags}>
                 {tutorProfile.gradeLevels.length > 0 ? (
-                  tutorProfile.gradeLevels.map((g) => (
+                  tutorProfile.gradeLevels.map((g: any) => (
                     <span
                       key={g.id}
                       className={styles.tag}
@@ -323,7 +326,7 @@ export default async function TutorProfilePage({
                 </p>
               ) : (
                 <div className={styles.reviewsList}>
-                  {tutorProfile.reviews.map((r) => (
+                  {tutorProfile.reviews.map((r: any) => (
                     <div key={r.id} className={styles.reviewItem}>
                       <div className={styles.reviewTop}>
                         <span className={styles.reviewAuthor}>
@@ -390,7 +393,7 @@ export default async function TutorProfilePage({
                     <label htmlFor="subjectSelect">Subject *</label>
                     <select id="subjectSelect" name="subject" required>
                       {tutorProfile.subjects.length > 0 ? (
-                        tutorProfile.subjects.map((s) => (
+                        tutorProfile.subjects.map((s: any) => (
                           <option key={s.id} value={s.name}>
                             {s.name}
                           </option>

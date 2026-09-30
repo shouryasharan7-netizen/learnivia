@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ShieldCheck,
@@ -42,50 +43,57 @@ const DISCIPLINES = [
         name: "Algebra & Analytical Geometry",
         grade: "Grades 7-10",
         summary:
-          "Linear equations, quadratics, Cartesian geometry, and multi-step proofs.",
+          "Linear systems, quadratics, and coordinate proofs with patient mentors.",
         href: "/find?subject=Mathematics",
+        image: "/images/new_mascots/mascot-1.jpeg",
       },
       {
         name: "PEEL Essay Writing & Rhetoric",
         grade: "Grades 4-10",
         summary:
-          "Structured point-evidence-explanation-link arguments and textual analysis.",
+          "Point-Evidence-Explanation structured writing and analytical arguments.",
         href: "/find?subject=Writing",
+        image: "/images/new_mascots/mascot-2.jpeg",
       },
       {
         name: "Foundational Biology & Chemistry",
         grade: "Grades 6-10",
         summary:
-          "Cellular respiration, Mendelian genetics, stoichiometry, and periodic trends.",
+          "Cellular biology, genetics, periodic trends, and core science models.",
         href: "/find?subject=Science",
+        image: "/images/new_mascots/mascot-3.jpeg",
       },
       {
         name: "Elementary Fractions & Reasoning",
         grade: "Grades 3-5",
         summary:
-          "Visual fractions, word problem modeling, multi-digit operations, and fluency.",
+          "Visual fractions, multi-digit operations, and intuitive word problems.",
         href: "/find?subject=Mathematics",
+        image: "/images/new_mascots/mascot-4.jpeg",
       },
       {
         name: "Guided Reading & Phonics Discovery",
         grade: "Grades K-2",
         summary:
-          "Early phonemic awareness, vocabulary decoding, and supported story narration.",
+          "Phonemic awareness, vocabulary decoding, and confidence-building stories.",
         href: "/find?subject=Reading",
+        image: "/images/new_mascots/mascot-5.jpeg",
       },
       {
         name: "World Geography, Civics & History",
         grade: "Grades 4-9",
         summary:
-          "Primary source evaluation, democratic systems, map analysis, and global cultures.",
+          "Primary source evaluation, global maps, and world cultural heritage.",
         href: "/find?subject=Social+Studies",
+        image: "/images/new_mascots/mascot-6.jpeg",
       },
       {
         name: "Standardized Testing & AP",
         grade: "Grades 9-12",
         summary:
-          "Targeted support for SAT, ACT, TOEFL, IELTS and AP curriculum exams.",
+          "Targeted prep for SAT, ACT, TOEFL, IELTS, and AP course exams.",
         href: "/find?subject=Standardized+Testing",
+        image: "/images/new_mascots/mascot-7.jpeg",
       },
     ],
   },
@@ -97,29 +105,33 @@ const DISCIPLINES = [
         name: "Pre-Algebra & Linear Systems",
         grade: "Grades 6-8",
         summary:
-          "Variable equations, integer rules, graphing coordinates, and rate ratios.",
+          "Variable equations, integer operations, and coordinate graphing intuition.",
         href: "/find?grade=6-8&subject=Mathematics",
+        image: "/images/new_mascots/mascot-8.jpeg",
       },
       {
         name: "Algebra I, II & Geometry",
         grade: "Grades 8-10",
         summary:
-          "Polynomial factoring, geometric congruence, functions, and trigonometry basics.",
+          "Factoring polynomials, geometric proofs, and trigonometry fundamentals.",
         href: "/find?grade=9-10&subject=Mathematics",
+        image: "/images/new_mascots/mascot-9.jpeg",
       },
       {
         name: "Cellular Biology & Ecology",
         grade: "Grades 7-10",
         summary:
-          "Mitosis, DNA structure, ecosystem energy pyramids, and scientific hypothesis testing.",
+          "DNA structure, ecosystems, organisms, and hands-on scientific inquiry.",
         href: "/find?subject=Science",
+        image: "/images/new_mascots/mascot-10.jpeg",
       },
       {
         name: "Introductory Chemistry",
         grade: "Grades 9-10",
         summary:
-          "Chemical nomenclature, atomic orbitals, balanced reactions, and solution molarity.",
+          "Atomic models, balanced reactions, solution chemistry, and lab logic.",
         href: "/find?grade=9-10&subject=Science",
+        image: "/images/new_mascots/mascot-11.jpeg",
       },
     ],
   },
@@ -131,29 +143,33 @@ const DISCIPLINES = [
         name: "Analytical PEEL Essay Writing",
         grade: "Grades 5-10",
         summary:
-          "Developing clear thesis statements, integrating quotations, and persuasive rhetoric.",
+          "Persuasive essays, thesis integration, and clear argument structures.",
         href: "/find?subject=Writing",
+        image: "/images/new_mascots/mascot-12.jpeg",
       },
       {
         name: "Reading Comprehension & Critical Thought",
         grade: "Grades 3-8",
         summary:
-          "Theme identification, inferencing, author perspective, and vocabulary in context.",
+          "Theme identification, author perspective, and contextual inference.",
         href: "/find?subject=Reading",
+        image: "/images/new_mascots/mascot-13.jpeg",
       },
       {
         name: "Grammar, Syntax & Sentence Craft",
         grade: "Grades 3-7",
         summary:
-          "Parts of speech, comma rules, clause structures, and active voice precision.",
+          "Punctuation mastery, active voice, and rich sentence structure skills.",
         href: "/find?subject=Writing",
+        image: "/images/new_mascots/mascot-14.jpeg",
       },
       {
         name: "Civics, Government & History",
         grade: "Grades 6-9",
         summary:
-          "Constitutional principles, historical turning points, and document-based questions.",
+          "Constitutional principles, historical milestones, and document analysis.",
         href: "/find?subject=Social+Studies",
+        image: "/images/new_mascots/mascot-15.jpeg",
       },
     ],
   },
@@ -165,22 +181,25 @@ const DISCIPLINES = [
         name: "Phonics & Word Sound Decoding",
         grade: "Kindergarten - Grade 2",
         summary:
-          "Letter-sound blending, sight word fluency, and interactive reading games.",
+          "Letter blends, sight word fluency, and interactive reading exercises.",
         href: "/find?grade=K-2&subject=Reading",
+        image: "/images/new_mascots/mascot-16.jpeg",
       },
       {
         name: "Number Sense & Counting Fluency",
         grade: "Kindergarten - Grade 2",
         summary:
-          "Visual ten-frames, addition/subtraction intuition, shapes, and patterns.",
+          "Visual ten-frames, addition/subtraction intuition, and spatial patterns.",
         href: "/find?grade=K-2&subject=Mathematics",
+        image: "/images/new_mascots/mascot-17.jpeg",
       },
       {
         name: "Guided Narrative Comprehension",
         grade: "Grades 1-3",
         summary:
-          "Story retelling, character exploration, and expressing ideas in simple sentences.",
+          "Story retellings, character exploration, and expressive speaking.",
         href: "/find?grade=K-2&subject=Reading",
+        image: "/images/new_mascots/mascot-18.jpeg",
       },
     ],
   },
@@ -192,22 +211,25 @@ const DISCIPLINES = [
         name: "SAT & ACT Prep",
         grade: "Grades 9-12",
         summary:
-          "Math, Reading, and Writing strategies for college entrance exams.",
+          "Math, Reading, and Writing problem strategies and timing mastery.",
         href: "/find?subject=Standardized+Testing",
+        image: "/images/new_mascots/mascot-19.jpeg",
       },
       {
         name: "TOEFL & IELTS Prep",
         grade: "Grades 9-12",
         summary:
-          "English language proficiency preparation for international students.",
+          "English language proficiency tasks, speaking drills, and test tactics.",
         href: "/find?subject=Standardized+Testing",
+        image: "/images/new_mascots/mascot-20.jpeg",
       },
       {
         name: "AP Course Support",
         grade: "Grades 9-12",
         summary:
-          "Advanced Placement test preparation and coursework assistance.",
+          "Advanced Placement coursework guidance, practice DBQs, and review.",
         href: "/find?subject=Standardized+Testing",
+        image: "/images/new_mascots/mascot-1.jpeg",
       },
     ],
   },
@@ -700,25 +722,76 @@ export default function HomeInteractiveClient({
 
           {/* Subject Cards Grid */}
           <div className={styles.syllabusGrid}>
-            {currentDiscipline.subjects.map((sub, idx) => (
+            {currentDiscipline.subjects.map((sub: any, idx) => (
               <Link
                 key={sub.name}
                 href={sub.href}
                 className={`${styles.subjectCard} card-blueprint`}
               >
                 <div className={styles.subjectCardTop}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: "0.85rem",
+                    }}
+                  >
                     <span className={styles.gradeTag}>{sub.grade}</span>
-                    <span className="tag-blueprint" style={{ fontSize: "0.65rem", padding: "0.15rem 0.4rem" }}>
+                    <span
+                      className="tag-blueprint"
+                      style={{ fontSize: "0.65rem", padding: "0.15rem 0.4rem" }}
+                    >
                       [ MOD-0{idx + 1} ]
                     </span>
                   </div>
-                  <h3 className={styles.subjectName}>{sub.name}</h3>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "0.9rem",
+                      alignItems: "center",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
+                    {sub.image && (
+                      <div
+                        style={{
+                          width: "56px",
+                          height: "56px",
+                          borderRadius: "14px",
+                          overflow: "hidden",
+                          flexShrink: 0,
+                          border: "1px solid rgba(0, 0, 0, 0.08)",
+                          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.06)",
+                          background: "#ffffff",
+                        }}
+                      >
+                        <Image
+                          src={sub.image}
+                          alt={sub.name}
+                          width={56}
+                          height={56}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                    )}
+                    <h3 className={styles.subjectName} style={{ margin: 0 }}>
+                      {sub.name}
+                    </h3>
+                  </div>
+
                   <p className={styles.subjectSummary}>{sub.summary}</p>
                 </div>
                 <div className={styles.subjectCardBottom}>
                   <span>Find a Mentor</span>
-                  <span style={{ fontFamily: "monospace", fontSize: "0.85rem" }}>→</span>
+                  <span style={{ fontFamily: "monospace", fontSize: "0.85rem" }}>
+                    →
+                  </span>
                 </div>
               </Link>
             ))}

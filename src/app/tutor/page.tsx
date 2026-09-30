@@ -643,14 +643,6 @@ export default async function TutorDashboard() {
               <BookOpen size={15} aria-hidden="true" />
               <span>All Sessions &amp; Workshops</span>
             </Link>
-            <Link href={ROUTES.tutor.training} className={styles.secondaryBtn}>
-              <GraduationCap size={15} aria-hidden="true" />
-              <span>Training Modules</span>
-            </Link>
-            <a href="#schedule-session" className={styles.primaryBtn}>
-              <Plus size={15} aria-hidden="true" />
-              <span>Schedule Session</span>
-            </a>
             <Link
               href={`/tutor/${tutor.id}/transcript`}
               className={styles.secondaryBtn}
@@ -658,6 +650,10 @@ export default async function TutorDashboard() {
               <FileText size={15} aria-hidden="true" />
               <span>Service Record</span>
             </Link>
+            <a href="#schedule-session" className={styles.primaryBtn}>
+              <Plus size={15} aria-hidden="true" />
+              <span>Schedule Session</span>
+            </a>
           </div>
         </header>
 

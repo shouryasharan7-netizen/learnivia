@@ -52,27 +52,32 @@
 }
 
 .altSection {
-  background-color: var(--navy);
-  color: #fff;
+  background-color: #f6f8f6;
+  color: var(--navy, #0f172a);
+  border-top: 1px solid var(--wa-border, #e2e8f0);
+  border-bottom: 1px solid var(--wa-border, #e2e8f0);
 }
 .altSection .sectionTitle {
-  color: #fff;
+  color: var(--navy, #0f172a);
 }
 .altSection .sectionLead {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--wa-muted, #4b5563);
 }
 .altSection .stepIconWrap {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: #eaf4ed;
+  color: var(--primary, #0d683b);
+  border: 1px solid rgba(13, 104, 59, 0.18);
 }
 .altSection .stepNumber {
-  color: var(--primary);
+  color: var(--primary, #0d683b);
 }
-.altSection .stepCard h3 {
-  color: #fff;
+.altSection .stepCard h3,
+.altSection h3 {
+  color: var(--navy, #0f172a);
 }
-.altSection .stepCard p {
-  color: rgba(255, 255, 255, 0.8);
+.altSection .stepCard p,
+.altSection p {
+  color: var(--wa-muted, #4b5563);
 }
 
 .sectionHeader {
@@ -156,9 +161,9 @@
 }
 
 .altSection .stepImageCard {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  background: #ffffff;
+  border-color: var(--wa-border, #e2e8f0);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
 }
 
 .stepImg {

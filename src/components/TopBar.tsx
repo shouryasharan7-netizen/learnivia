@@ -32,16 +32,40 @@ export function TopBar() {
       <div className={styles.container}>
         <div className={styles.left}>
           {/* Social Icons */}
-          <a href="#" className={styles.socialLink} aria-label="Twitter">
+          <a
+            href="https://twitter.com/learnivia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.socialLink}
+            aria-label="Learnivia on Twitter (opens in new tab)"
+          >
             <FaTwitter size={14} />
           </a>
-          <a href="#" className={styles.socialLink} aria-label="Instagram">
+          <a
+            href="https://instagram.com/learnivia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.socialLink}
+            aria-label="Learnivia on Instagram (opens in new tab)"
+          >
             <FaInstagram size={14} />
           </a>
-          <a href="#" className={styles.socialLink} aria-label="LinkedIn">
+          <a
+            href="https://linkedin.com/company/learnivia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.socialLink}
+            aria-label="Learnivia on LinkedIn (opens in new tab)"
+          >
             <FaLinkedin size={14} />
           </a>
-          <a href="#" className={styles.socialLink} aria-label="Facebook">
+          <a
+            href="https://facebook.com/learnivia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.socialLink}
+            aria-label="Learnivia on Facebook (opens in new tab)"
+          >
             <FaFacebook size={14} />
           </a>
         </div>

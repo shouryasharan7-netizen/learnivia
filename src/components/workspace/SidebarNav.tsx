@@ -81,7 +81,7 @@ export function SidebarNav({
 
   const tutorItems = [
     { href: ROUTES.learner.home, icon: Home, label: "Home" },
-    ...(isTrainingCompleted
+    ...(isTrainingCompleted || isTutor || userRole === "TUTOR" || userRole === "ADMIN"
       ? [
           {
             href: ROUTES.tutor.home,

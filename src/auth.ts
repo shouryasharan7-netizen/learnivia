@@ -82,9 +82,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               user.tutorProfile && user.tutorProfile.status === "APPROVED",
             );
             const isTrainingDone = Boolean(
-              user.tutorProfile?.trainingModules?.filter(
+              user.tutorProfile?.status === "APPROVED" ||
+              (user.tutorProfile?.trainingModules?.filter(
                 (m: any) => m.quizPassed,
-              ).length === 5,
+              ).length ?? 0) >= 3,
             );
             return {
               id: user.id,
@@ -171,8 +172,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           user.tutorProfile && user.tutorProfile.status === "APPROVED",
         );
         const isTrainingDone = Boolean(
-          user.tutorProfile?.trainingModules?.filter((m: any) => m.quizPassed)
-            .length === 5,
+          user.tutorProfile?.status === "APPROVED" ||
+          (user.tutorProfile?.trainingModules?.filter((m: any) => m.quizPassed)
+            .length ?? 0) >= 3,
         );
 
         if (isAdminUser && user.role !== "ADMIN") {

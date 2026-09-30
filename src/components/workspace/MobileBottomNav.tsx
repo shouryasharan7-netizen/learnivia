@@ -47,7 +47,7 @@ export function MobileBottomNav({
 
   const tutorItems = [
     { href: ROUTES.learner.home, label: "Home", icon: Home },
-    ...(isTrainingCompleted
+    ...(isTrainingCompleted || isTutor || userRole === "TUTOR" || userRole === "ADMIN"
       ? [{ href: ROUTES.tutor.home, label: "Tutor", icon: GraduationCap }]
       : [{ href: ROUTES.tutor.training, label: "Training", icon: GraduationCap }]),
     { href: ROUTES.find, label: "Catalog", icon: BookOpen },
