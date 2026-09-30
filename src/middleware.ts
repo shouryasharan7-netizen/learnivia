@@ -52,6 +52,7 @@ const publicPaths = [
   "/api/health", // Health check is public
   "/api/auth", // NextAuth callbacks
   "/api/cron", // Cron endpoints (Vercel cron)
+  "/api/admin/secure-rls", // Secured by Bearer secret in route handler
   "/robots.txt",
   "/sitemap.xml",
 ];
