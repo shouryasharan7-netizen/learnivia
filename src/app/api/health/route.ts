@@ -7,15 +7,19 @@ export const dynamic = "force-dynamic";
  */
 export async function GET() {
   const startTime = Date.now();
-  const supabaseUrl =
+  const rawUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
     process.env.SUPABASE_URL ||
-    "https://shsgqluaqexqwoxuakzr.supabase.co";
-  const supabaseKey =
+    "https://mydnrdbjzqccheegmvwy.supabase.co";
+  const supabaseUrl = rawUrl.replace(/^["']|["']$/g, "").trim().includes("mydnrdbjzqccheegmvwy")
+    ? rawUrl.replace(/^["']|["']$/g, "").trim()
+    : "https://mydnrdbjzqccheegmvwy.supabase.co";
+  const supabaseKey = (
     process.env.SUPABASE_SERVICE_ROLE_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-    "";
+    ""
+  ).replace(/^["']|["']$/g, "").trim();
 
   let isHealthy = false;
   let latencyMs = 0;

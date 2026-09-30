@@ -165,15 +165,19 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Idempotent Upsert into Supabase
-    const supabaseUrl =
+    const rawUrl =
       process.env.NEXT_PUBLIC_SUPABASE_URL ||
       process.env.SUPABASE_URL ||
-      "https://shsgqluaqexqwoxuakzr.supabase.co";
-    const supabaseServiceKey =
+      "https://mydnrdbjzqccheegmvwy.supabase.co";
+    const supabaseUrl = rawUrl.replace(/^["']|["']$/g, "").trim().includes("mydnrdbjzqccheegmvwy")
+      ? rawUrl.replace(/^["']|["']$/g, "").trim()
+      : "https://mydnrdbjzqccheegmvwy.supabase.co";
+    const supabaseServiceKey = (
       process.env.SUPABASE_SERVICE_ROLE_KEY ||
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
       process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-      "";
+      ""
+    ).replace(/^["']|["']$/g, "").trim();
 
     let upsertedCount = 0;
     let insertedIds: string[] = [];
