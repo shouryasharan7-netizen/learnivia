@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { CommunityMessage } from "@/lib/community-store";
 import { ROUTES } from "@/lib/routes";
@@ -297,15 +298,20 @@ export default function CommunityClient({
 
   return (
     <div className={styles.academicContainer}>
-      {/* 1. Academic Header */}
-      <div className={styles.academicHeader}>
-        <div>
-          <h1 className={styles.academicTitle}>
-            Community Discussions
-          </h1>
-          <p className={styles.academicSubtitle}>
-            Ask questions, share resources, and connect with peers.
-          </p>
+      {/* 1. Academic Header with Illustration */}
+      <div className={styles.academicHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1.5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+          <div style={{ width: 80, height: 80, borderRadius: "14px", overflow: "hidden", flexShrink: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.06)", border: "2px solid #E2E8F0" }}>
+            <Image src="/images/new_mascots/mascot-5.jpeg" alt="Peer Community Mascot" width={80} height={80} style={{ objectFit: "cover" }} />
+          </div>
+          <div>
+            <h1 className={styles.academicTitle}>
+              Community Discussions
+            </h1>
+            <p className={styles.academicSubtitle}>
+              Ask questions, share resources, and connect with peers.
+            </p>
+          </div>
         </div>
 
         <div

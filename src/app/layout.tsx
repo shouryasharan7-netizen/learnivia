@@ -46,8 +46,11 @@ export const metadata: Metadata = {
     "K-10 tutoring",
   ],
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: [
+      { url: "/images/logo.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/images/logo.png",
     apple: "/images/logo.png",
   },
   openGraph: {

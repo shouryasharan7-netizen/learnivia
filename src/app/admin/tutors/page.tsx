@@ -7,6 +7,7 @@ import {
   reactivateTutor,
   approveApplication,
   adminUpdateReportCard,
+  deleteTutorProfile,
 } from "../actions";
 import AdjustHoursButton from "./AdjustHoursButton";
 import RunAvailabilityAuditButton from "./RunAvailabilityAuditButton";
@@ -19,6 +20,7 @@ import {
   Settings,
   Clock,
   Award,
+  Trash2,
 } from "lucide-react";
 import { AICredentialAuditor } from "@/components/admin/AICredentialAuditor";
 import type { Metadata } from "next";
@@ -35,7 +37,45 @@ export default async function AdminTutorsPage() {
     redirect("/dashboard");
   }
 
+  // Automatically purge known mock/test seed accounts from database
+  try {
+    await prisma.user.deleteMany({
+      where: {
+        OR: [
+          {
+            email: {
+              in: [
+                "tutor.test@learnivia.org",
+                "parent.test@learnivia.org",
+                "marcus.vance@learnivia.org",
+                "elena.rostova@learnivia.org",
+              ],
+            },
+          },
+          { name: { in: ["Marcus Vance", "Elena Rostova"] } },
+        ],
+      },
+    });
+  } catch (e) {
+    // Non-blocking if table locked or already deleted
+  }
+
   const tutors = await prisma.tutorProfile.findMany({
+    where: {
+      user: {
+        email: {
+          notIn: [
+            "tutor.test@learnivia.org",
+            "parent.test@learnivia.org",
+            "marcus.vance@learnivia.org",
+            "elena.rostova@learnivia.org",
+          ],
+        },
+        name: {
+          notIn: ["Marcus Vance", "Elena Rostova"],
+        },
+      },
+    },
     include: {
       user: true,
       subjects: true,
@@ -636,6 +676,30 @@ export default async function AdminTutorsPage() {
                           </button>
                         </form>
                       )}
+
+                      <form
+                        action={deleteTutorProfile.bind(null, tutor.id)}
+                        style={{ marginTop: "0.5rem" }}
+                      >
+                        <button
+                          type="submit"
+                          style={{
+                            background: "none",
+                            border: "1px solid #E2E8F0",
+                            color: "#94A3B8",
+                            padding: "0.25rem 0.5rem",
+                            borderRadius: "4px",
+                            fontSize: "0.6875rem",
+                            cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.25rem",
+                            transition: "all 150ms",
+                          }}
+                        >
+                          <Trash2 size={11} /> Remove Tutor
+                        </button>
+                      </form>
                     </td>
                   </tr>
                 );

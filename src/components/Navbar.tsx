@@ -307,11 +307,11 @@ export function Navbar() {
                     </p>
                   </div>
                   <Link
-                    href="/sessions"
+                    href="/messages"
                     className={styles.popoverFooterLink}
                     onClick={() => setActivePopover(null)}
                   >
-                    Browse Sessions &amp; Tutors →
+                    Open My Messages →
                   </Link>
                 </div>
               )}
@@ -367,11 +367,11 @@ export function Navbar() {
                     </p>
                   </div>
                   <Link
-                    href="/dashboard"
+                    href="/calendar"
                     className={styles.popoverFooterLink}
                     onClick={() => setActivePopover(null)}
                   >
-                    View My Dashboard →
+                    View Calendar &amp; Activity →
                   </Link>
                 </div>
               )}
@@ -429,11 +429,11 @@ export function Navbar() {
                     </p>
                   </div>
                   <Link
-                    href="/dashboard"
+                    href="/calendar"
                     className={styles.popoverFooterLink}
                     onClick={() => setActivePopover(null)}
                   >
-                    Go to Full Calendar &amp; Sessions →
+                    Go to My Calendar →
                   </Link>
                 </div>
               )}

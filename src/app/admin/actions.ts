@@ -58,6 +58,39 @@ export async function approveApplication(tutorId: string, formData?: FormData) {
   revalidatePath("/admin");
 }
 
+export async function deleteTutorProfile(tutorId: string) {
+  const admin = await requireAdmin();
+
+  const profile = await prisma.tutorProfile.findUnique({
+    where: { id: tutorId },
+    include: { user: true },
+  });
+
+  if (!profile) {
+    return;
+  }
+
+  // Delete tutor profile and cascade relations
+  await prisma.tutorProfile.delete({
+    where: { id: tutorId },
+  });
+
+  // If user is a test/mock user or student role, update or delete as appropriate
+  if (profile.user.email?.includes("test@learnivia.org") || profile.user.email?.includes("marcus.vance")) {
+    await prisma.user.delete({
+      where: { id: profile.userId },
+    }).catch(() => {});
+  } else if (profile.user.role === "TUTOR") {
+    await prisma.user.update({
+      where: { id: profile.userId },
+      data: { role: "STUDENT" },
+    }).catch(() => {});
+  }
+
+  revalidatePath("/admin/tutors");
+  revalidatePath("/admin");
+}
+
 export async function rejectApplication(tutorId: string, formData?: FormData) {
   const admin = await requireAdmin();
   const reason = formData ? (formData.get("reason") as string)?.trim() : null;

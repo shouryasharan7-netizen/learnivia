@@ -42,43 +42,46 @@ const ANNOUNCEMENT = {
   linkHref: "/find",
 };
 
-// Sample notifications — in production these would come from the API
 const SAMPLE_NOTIFICATIONS = [
   {
     id: "1",
     icon: BookOpen,
     color: "#0D9488",
     title: "Session confirmed",
-    body: "Your Mathematics session is scheduled for tomorrow at 4 PM.",
+    body: "Your 1-on-1 tutoring session is scheduled on your calendar.",
     time: "2 hrs ago",
     unread: true,
+    href: "/calendar",
   },
   {
     id: "2",
     icon: UserPlus,
     color: "#6366F1",
-    title: "New tutor available",
-    body: "Riya Sharma is now accepting bookings for Grade 8 Science.",
+    title: "New tutor message",
+    body: "You have a direct message regarding your study inquiry.",
     time: "Yesterday",
     unread: true,
+    href: "/messages",
   },
   {
     id: "3",
     icon: Star,
     color: "#F59E0B",
-    title: "Leave a review",
-    body: "How was your session with Arjun Mehta? Share your feedback.",
+    title: "Session record updated",
+    body: "Your peer study session has concluded. View service records.",
     time: "3 days ago",
     unread: false,
+    href: "/calendar?tab=past",
   },
   {
     id: "4",
     icon: AlertCircle,
-    color: "#EF4444",
-    title: "Session reminder",
-    body: "You have a pending session request from a student.",
+    color: "#0D9488",
+    title: "Explore peer workshops",
+    body: "New weekend study bootcamps are open for registration.",
     time: "4 days ago",
     unread: false,
+    href: "/find",
   },
 ];
 
@@ -228,7 +231,7 @@ export function TopBar({ user }: TopBarProps) {
         role="banner"
       >
         {/* Icon buttons */}
-        <IconBtn icon={MessageCircle} label="Messages" href="/community" />
+        <IconBtn icon={MessageCircle} label="Messages" href="/messages" />
 
         {/* Notification Bell with dropdown */}
         <div style={{ position: "relative" }} ref={notifRef}>
@@ -372,30 +375,11 @@ export function TopBar({ user }: TopBarProps) {
                   </div>
                 ) : (
                   notifications.map((n) => (
-                    <div
+                    <Link
                       key={n.id}
-                      style={{
-                        display: "flex",
-                        gap: "0.75rem",
-                        padding: "0.75rem 1rem",
-                        borderBottom: "1px solid var(--border, #F1F5F9)",
-                        background: n.unread
-                          ? "var(--primary-subtle, #F0FDFA)"
-                          : "transparent",
-                        cursor: "pointer",
-                        transition: "background 150ms",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.background =
-                          "var(--surface-subtle, #F8FAFC)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.background =
-                          n.unread
-                            ? "var(--primary-subtle, #F0FDFA)"
-                            : "transparent";
-                      }}
+                      href={(n as any).href || "/calendar"}
                       onClick={() => {
+                        setNotifOpen(false);
                         setNotifications((prev) => {
                           const updated = prev.map((item) =>
                             item.id === n.id
@@ -408,6 +392,28 @@ export function TopBar({ user }: TopBarProps) {
                           );
                           return updated;
                         });
+                      }}
+                      style={{
+                        display: "flex",
+                        gap: "0.75rem",
+                        padding: "0.75rem 1rem",
+                        borderBottom: "1px solid var(--border, #F1F5F9)",
+                        background: n.unread
+                          ? "var(--primary-subtle, #F0FDFA)"
+                          : "transparent",
+                        cursor: "pointer",
+                        textDecoration: "none",
+                        transition: "background 150ms",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.background =
+                          "var(--surface-subtle, #F8FAFC)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.background =
+                          n.unread
+                            ? "var(--primary-subtle, #F0FDFA)"
+                            : "transparent";
                       }}
                     >
                       {/* Icon */}
@@ -472,7 +478,7 @@ export function TopBar({ user }: TopBarProps) {
                           }}
                         />
                       )}
-                    </div>
+                    </Link>
                   ))
                 )}
               </div>
@@ -486,7 +492,7 @@ export function TopBar({ user }: TopBarProps) {
                 }}
               >
                 <Link
-                  href="/sessions"
+                  href="/calendar"
                   onClick={() => setNotifOpen(false)}
                   style={{
                     fontSize: "0.8rem",
@@ -495,14 +501,14 @@ export function TopBar({ user }: TopBarProps) {
                     textDecoration: "none",
                   }}
                 >
-                  View all activity →
+                  View calendar schedule →
                 </Link>
               </div>
             </div>
           )}
         </div>
 
-        <IconBtn icon={Calendar} label="Calendar" href="/sessions" />
+        <IconBtn icon={Calendar} label="Calendar" href="/calendar" />
 
         {/* Divider */}
         <div

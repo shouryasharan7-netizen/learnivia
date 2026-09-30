@@ -190,8 +190,8 @@ export default async function StudentDashboard({ searchParams }: { searchParams:
             Find a Tutor
           </Link>
         </div>
-        <div className={styles.heroIllustration} aria-hidden="true">
-          <Image src="/images/logo.png" alt="Learnivia Fox" width={90} height={90} style={{ objectFit: 'contain' }} />
+        <div className={styles.heroIllustration} aria-hidden="true" style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 8px 24px rgba(0,0,0,0.08)", border: "2px solid rgba(255,255,255,0.6)" }}>
+          <Image src="/images/new_mascots/mascot-2.jpeg" alt="Learnivia Learning Mascot" width={130} height={130} style={{ objectFit: 'cover' }} priority />
         </div>
       </div>
 

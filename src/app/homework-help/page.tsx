@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { ROUTES } from "@/lib/routes";
 import {
@@ -219,15 +220,20 @@ export default function HomeworkHelpPage() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {/* Page header with verified live stats */}
-        <div className={styles.header}>
-          <div className={styles.headerText}>
-            <h1 className={styles.title}>Homework Help &amp; Clarifications</h1>
-            <p className={styles.subtitle}>
-              Submit challenging problems, concept questions, or assignment
-              drafts. Certified volunteer tutors provide step-by-step written
-              walkthroughs or live 1-on-1 Zoom sessions.
-            </p>
+        {/* Page header with verified live stats and illustration */}
+        <div className={styles.header} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+            <div style={{ width: 84, height: 84, borderRadius: "14px", overflow: "hidden", flexShrink: 0, boxShadow: "0 4px 14px rgba(0,0,0,0.06)", border: "2px solid #E2E8F0" }}>
+              <Image src="/images/new_mascots/mascot-4.jpeg" alt="Homework Tutor Mascot" width={84} height={84} style={{ objectFit: "cover" }} />
+            </div>
+            <div className={styles.headerText}>
+              <h1 className={styles.title}>Homework Help &amp; Clarifications</h1>
+              <p className={styles.subtitle}>
+                Submit challenging problems, concept questions, or assignment
+                drafts. Certified volunteer tutors provide step-by-step written
+                walkthroughs or live 1-on-1 Zoom sessions.
+              </p>
+            </div>
           </div>
 
           <div className={styles.liveStats}>

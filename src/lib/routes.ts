@@ -47,9 +47,11 @@ export const ROUTES = {
       ? `/tutor/${id}/transcript?token=${encodeURIComponent(token)}`
       : `/tutor/${id}/transcript`,
 
-  // Homework & Community
+  // Homework, Messaging & Community
   homeworkHelp: "/homework-help",
   community: "/community",
+  messages: "/messages",
+  calendar: "/calendar",
 
   // Learner Workspace
   learner: {

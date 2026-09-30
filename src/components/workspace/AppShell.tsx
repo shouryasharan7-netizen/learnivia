@@ -49,6 +49,8 @@ const WORKSPACE_PREFIXES = [
   "/onboarding",
   "/learn",
   "/settings",
+  "/messages",
+  "/calendar",
 ];
 
 export function AppShell({ children, initialSession }: AppShellProps) {
