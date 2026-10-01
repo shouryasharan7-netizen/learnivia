@@ -40,6 +40,7 @@ const PUBLIC_ONLY_ROUTES = [
 const WORKSPACE_PREFIXES = [
   "/dashboard",
   "/tutor",
+  "/tutor-dashboard", // Redirect stub → /tutor
   "/admin",
   "/sessions",
   "/find",
@@ -51,6 +52,11 @@ const WORKSPACE_PREFIXES = [
   "/settings",
   "/messages",
   "/calendar",
+  "/profile",         // Auth-gated user profile page
+  "/live",            // Redirect stub → /sessions
+  "/book",            // Redirect stub → /find
+  "/notifications",
+  "/workshop",
 ];
 
 export function AppShell({ children, initialSession }: AppShellProps) {

@@ -3,6 +3,12 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import type { Metadata } from "next";
+import {
+  SUBJECT_TAXONOMY,
+  CANONICAL_GRADES,
+  ALL_SUBJECTS,
+  SUBJECT_CATEGORY_MAP,
+} from "@/lib/subject-taxonomy";
 
 export const metadata: Metadata = {
   title: "Admin | Subject & Grade Configuration | Learnivia",
@@ -11,7 +17,6 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminSubjectsPage() {
-  // P1-8: Use requireAdmin() - not inline email check - for consistent authorization
   try {
     await requireAdmin();
   } catch {
@@ -23,38 +28,33 @@ export default async function AdminSubjectsPage() {
     prisma.gradeLevel.findMany({ orderBy: { name: "asc" } }),
   ]);
 
-  const K10_SUBJECTS = [
-    "Mathematics",
-    "Reading & Writing",
-    "English Language Arts",
-    "Science",
-    "Biology",
-    "Chemistry",
-    "Social Studies",
-    "Phonics & Reading",
-    "Early Math",
-    "Pre-Algebra",
-    "Algebra I",
-    "Geometry",
-    "Earth Science",
-    "Physical Science",
-    "Learning Support",
-    "Number Sense",
-  ];
+  const dbSubjectNames = subjects.map((s) => s.name);
+  const missingSubjects = ALL_SUBJECTS.filter(
+    (s) => !dbSubjectNames.some((n) => n.toLowerCase() === s.toLowerCase())
+  );
+  const nonCanonical = subjects.filter(
+    (s) => !ALL_SUBJECTS.some((c) => c.toLowerCase() === s.name.toLowerCase())
+  );
 
-  const K10_GRADES = [
-    { name: "Kindergarten", category: "Early Elementary" },
-    { name: "Grade 1", category: "Early Elementary" },
-    { name: "Grade 2", category: "Early Elementary" },
-    { name: "Grade 3", category: "Elementary" },
-    { name: "Grade 4", category: "Elementary" },
-    { name: "Grade 5", category: "Elementary" },
-    { name: "Grade 6", category: "Middle School" },
-    { name: "Grade 7", category: "Middle School" },
-    { name: "Grade 8", category: "Middle School" },
-    { name: "Grade 9", category: "Early High School" },
-    { name: "Grade 10", category: "Early High School" },
-  ];
+  const dbGradeNames = gradeLevels.map((g) => g.name);
+  const missingGrades = CANONICAL_GRADES.filter(
+    (g) => !dbGradeNames.some((n) => n.toLowerCase() === g.name.toLowerCase())
+  );
+
+  const categoryColors: Record<string, { bg: string; border: string; text: string; badge: string; badgeText: string }> = {
+    "Core Academics (K-12)": {
+      bg: "#F0FDF4", border: "#BBF7D0", text: "#0D683B",
+      badge: "#BBF7D0", badgeText: "#065F46",
+    },
+    "Standardized Testing": {
+      bg: "#EFF6FF", border: "#BFDBFE", text: "#1D4ED8",
+      badge: "#BFDBFE", badgeText: "#1E3A5F",
+    },
+    "Advanced Academics (AP)": {
+      bg: "#FDF4FF", border: "#E9D5FF", text: "#7E22CE",
+      badge: "#E9D5FF", badgeText: "#581C87",
+    },
+  };
 
   return (
     <main
@@ -65,22 +65,19 @@ export default async function AdminSubjectsPage() {
         fontFamily: "var(--font-body, Inter, sans-serif)",
       }}
     >
-      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+        {/* Header */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: "1rem",
-            marginBottom: "2rem",
+            marginBottom: "1.5rem",
           }}
         >
           <Link
             href="/admin"
-            style={{
-              color: "#6B7280",
-              textDecoration: "none",
-              fontSize: "0.875rem",
-            }}
+            style={{ color: "#6B7280", textDecoration: "none", fontSize: "0.875rem" }}
           >
             ← Admin Center
           </Link>
@@ -92,254 +89,237 @@ export default async function AdminSubjectsPage() {
               margin: 0,
             }}
           >
-            Subject & Grade Configuration
+            Subject &amp; Grade Configuration
           </h1>
         </div>
 
+        {/* Scope Banner */}
         <div
           style={{
-            background: "var(--warning-bg, #FEF9C3)",
-            border: "1px solid #FDE047",
+            background: "#EFF6FF",
+            border: "1px solid #BFDBFE",
             borderRadius: "0.75rem",
             padding: "1rem 1.25rem",
             marginBottom: "2rem",
             fontSize: "0.875rem",
-            color: "#713F12",
+            color: "#1E3A5F",
           }}
         >
-          <strong>K-10 Scope Lock:</strong> Learnivia exclusively supports
-          Kindergarten through Grade 10. Do not add SAT, ACT, AP, A-Level, or
-          college admissions subjects. Tutor applications listing out-of-scope
-          subjects should be rejected.
+          <strong>Platform Scope:</strong> Learnivia supports <strong>K–12 Core Academics</strong>,{" "}
+          <strong>Standardized Testing (SAT, ACT, TOEFL, IELTS, GRE)</strong>, and{" "}
+          <strong>Advanced Academics (AP courses)</strong>. Tutors may list subjects
+          from all three categories. Run{" "}
+          <code style={{ background: "#DBEAFE", padding: "0.1rem 0.4rem", borderRadius: "4px" }}>
+            npx tsx scripts/seed-subjects-canonical.ts
+          </code>{" "}
+          to sync the database with the canonical taxonomy.
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "2rem",
-          }}
-        >
-          {/* Subjects Panel */}
-          <section
+        {/* Health Summary */}
+        {(missingSubjects.length > 0 || nonCanonical.length > 0 || missingGrades.length > 0) && (
+          <div
             style={{
-              background: "var(--surface-raised, #FFFFFF)",
-              border: "1px solid #E5E7EB",
-              borderRadius: "1rem",
-              padding: "1.5rem",
+              background: "#FFFBEB",
+              border: "1px solid #FDE68A",
+              borderRadius: "0.75rem",
+              padding: "1rem 1.25rem",
+              marginBottom: "2rem",
+              fontSize: "0.875rem",
+              color: "#92400E",
             }}
           >
-            <h2
-              style={{
-                fontSize: "1.125rem",
-                fontWeight: 800,
-                color: "var(--text-primary, #0C1B33)",
-                marginBottom: "1rem",
-              }}
-            >
-              Subjects ({subjects.length} in DB)
-            </h2>
+            <strong>DB Health Warning:</strong>{" "}
+            {missingSubjects.length > 0 && `${missingSubjects.length} canonical subject(s) missing from DB. `}
+            {nonCanonical.length > 0 && `${nonCanonical.length} non-canonical subject(s) in DB (may need cleanup). `}
+            {missingGrades.length > 0 && `${missingGrades.length} grade level(s) missing. `}
+            Run the seed script to resolve.
+          </div>
+        )}
 
-            <div style={{ marginBottom: "1rem" }}>
-              <p
-                style={{
-                  fontSize: "0.8125rem",
-                  color: "#6B7280",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Canonical K-10 subjects (for reference):
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                {K10_SUBJECTS.map((s) => (
-                  <span
-                    key={s}
+        {/* Subject Taxonomy — 3 category sections */}
+        <section
+          style={{
+            background: "var(--surface-raised, #FFFFFF)",
+            border: "1px solid #E5E7EB",
+            borderRadius: "1rem",
+            padding: "1.5rem",
+            marginBottom: "2rem",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "1.125rem",
+              fontWeight: 800,
+              color: "var(--text-primary, #0C1B33)",
+              marginBottom: "0.25rem",
+            }}
+          >
+            Subject Catalog
+          </h2>
+          <p style={{ fontSize: "0.8125rem", color: "#6B7280", marginBottom: "1.5rem" }}>
+            {subjects.length} subjects in DB &bull; {ALL_SUBJECTS.length} canonical subjects &bull; {missingSubjects.length} missing
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+            {(Object.entries(SUBJECT_TAXONOMY) as [string, readonly string[]][]).map(([category, canonicalList]) => {
+              const colors = categoryColors[category] ?? {
+                bg: "#F9FAFB", border: "#E5E7EB", text: "#374151",
+                badge: "#E5E7EB", badgeText: "#374151",
+              };
+              return (
+                <div key={category}>
+                  <h3
                     style={{
-                      padding: "0.25rem 0.65rem",
-                      background: "var(--success-bg, #ECFDF5)",
-                      color: "#0D683B",
-                      borderRadius: "4px",
-                      fontSize: "0.8rem",
-                      fontWeight: 600,
-                      border: "1px solid #BBF7D0",
+                      fontSize: "0.9375rem",
+                      fontWeight: 700,
+                      color: colors.text,
+                      marginBottom: "0.75rem",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
                     }}
                   >
-                    {s}
+                    {category}
+                    <span
+                      style={{
+                        background: colors.badge,
+                        color: colors.badgeText,
+                        padding: "0.1rem 0.5rem",
+                        borderRadius: "9999px",
+                        fontSize: "0.7rem",
+                        fontWeight: 700,
+                      }}
+                    >
+                      {canonicalList.length} subjects
+                    </span>
+                  </h3>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                    {canonicalList.map((subjectName) => {
+                      const inDB = dbSubjectNames.some(
+                        (n) => n.toLowerCase() === subjectName.toLowerCase()
+                      );
+                      return (
+                        <span
+                          key={subjectName}
+                          title={inDB ? "In database" : "Missing from database — run seed"}
+                          style={{
+                            padding: "0.25rem 0.65rem",
+                            background: inDB ? colors.bg : "#FEF9C3",
+                            color: inDB ? colors.text : "#92400E",
+                            borderRadius: "6px",
+                            fontSize: "0.8rem",
+                            fontWeight: 600,
+                            border: `1px solid ${inDB ? colors.border : "#FDE68A"}`,
+                            cursor: "default",
+                          }}
+                        >
+                          {subjectName}
+                          {!inDB && " ⚠"}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Non-canonical subjects in DB */}
+          {nonCanonical.length > 0 && (
+            <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid #F3F4F6" }}>
+              <p style={{ fontSize: "0.8125rem", color: "#DC2626", fontWeight: 700, marginBottom: "0.5rem" }}>
+                Non-canonical subjects in DB (review / cleanup needed):
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                {nonCanonical.map((s) => (
+                  <span
+                    key={s.id}
+                    style={{
+                      padding: "0.25rem 0.65rem",
+                      background: "#FEF2F2",
+                      color: "#DC2626",
+                      borderRadius: "6px",
+                      fontSize: "0.8rem",
+                      fontWeight: 600,
+                      border: "1px solid #FECACA",
+                    }}
+                  >
+                    {s.name} — Unknown
                   </span>
                 ))}
               </div>
             </div>
+          )}
+        </section>
 
-            <div style={{ borderTop: "1px solid #F3F4F6", paddingTop: "1rem" }}>
-              <p
-                style={{
-                  fontSize: "0.8125rem",
-                  color: "#6B7280",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Currently in database:
-              </p>
-              {subjects.length === 0 ? (
-                <p
-                  style={{
-                    color: "#9CA3AF",
-                    fontSize: "0.875rem",
-                    fontStyle: "italic",
-                  }}
-                >
-                  No subjects added yet. Subjects are added when tutors apply
-                  and list their subjects.
-                </p>
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.4rem",
-                  }}
-                >
-                  {subjects.map((s) => {
-                    const isK10 = K10_SUBJECTS.some(
-                      (k) => k.toLowerCase() === s.name.toLowerCase(),
-                    );
-                    return (
-                      <div
-                        key={s.id}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "0.4rem 0.75rem",
-                          background: isK10 ? "#F0FDF4" : "#FEF2F2",
-                          border: `1px solid ${isK10 ? "#BBF7D0" : "#FECACA"}`,
-                          borderRadius: "0.5rem",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: "0.875rem",
-                            fontWeight: 600,
-                            color: isK10 ? "#0D683B" : "#DC2626",
-                          }}
-                        >
-                          {s.name}
-                        </span>
-                        <span
-                          style={{
-                            fontSize: "0.7rem",
-                            padding: "0.15rem 0.5rem",
-                            background: isK10 ? "#BBF7D0" : "#FECACA",
-                            color: isK10 ? "#0D683B" : "#DC2626",
-                            borderRadius: "4px",
-                            fontWeight: 700,
-                          }}
-                        >
-                          {isK10 ? "K-10" : "Out of Scope"}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </section>
-
-          {/* Grade Levels Panel */}
-          <section
+        {/* Grade Levels */}
+        <section
+          style={{
+            background: "var(--surface-raised, #FFFFFF)",
+            border: "1px solid #E5E7EB",
+            borderRadius: "1rem",
+            padding: "1.5rem",
+            marginBottom: "2rem",
+          }}
+        >
+          <h2
             style={{
-              background: "var(--surface-raised, #FFFFFF)",
-              border: "1px solid #E5E7EB",
-              borderRadius: "1rem",
-              padding: "1.5rem",
+              fontSize: "1.125rem",
+              fontWeight: 800,
+              color: "var(--text-primary, #0C1B33)",
+              marginBottom: "0.25rem",
             }}
           >
-            <h2
-              style={{
-                fontSize: "1.125rem",
-                fontWeight: 800,
-                color: "var(--text-primary, #0C1B33)",
-                marginBottom: "1rem",
-              }}
-            >
-              Grade Levels ({gradeLevels.length} in DB)
-            </h2>
+            Grade Levels
+          </h2>
+          <p style={{ fontSize: "0.8125rem", color: "#6B7280", marginBottom: "1.25rem" }}>
+            {gradeLevels.length} in DB &bull; {CANONICAL_GRADES.length} canonical (Kindergarten – Grade 12) &bull; {missingGrades.length} missing
+          </p>
 
-            <div style={{ marginBottom: "1rem" }}>
-              <p
-                style={{
-                  fontSize: "0.8125rem",
-                  color: "#6B7280",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Required K-10 grade levels:
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.3rem",
-                }}
-              >
-                {K10_GRADES.map((g) => {
-                  const existsInDb = gradeLevels.some(
-                    (db) => db.name.toLowerCase() === g.name.toLowerCase(),
-                  );
-                  return (
-                    <div
-                      key={g.name}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "0.35rem 0.75rem",
-                        background: existsInDb ? "#F0FDF4" : "#FEF9C3",
-                        border: `1px solid ${existsInDb ? "#BBF7D0" : "#FDE047"}`,
-                        borderRadius: "0.5rem",
-                      }}
-                    >
-                      <div>
-                        <span
-                          style={{
-                            fontSize: "0.875rem",
-                            fontWeight: 600,
-                            color: "var(--text-primary, #0C1B33)",
-                          }}
-                        >
-                          {g.name}
-                        </span>
-                        <span
-                          style={{
-                            fontSize: "0.75rem",
-                            color: "#6B7280",
-                            marginLeft: "0.4rem",
-                          }}
-                        >
-                          {g.category}
-                        </span>
-                      </div>
-                      <span
-                        style={{
-                          fontSize: "0.7rem",
-                          fontWeight: 700,
-                          color: existsInDb ? "#0D683B" : "#B45309",
-                        }}
-                      >
-                        {existsInDb ? "Active in DB" : "Missing from DB"}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+            {CANONICAL_GRADES.map((g) => {
+              const existsInDb = dbGradeNames.some(
+                (n) => n.toLowerCase() === g.name.toLowerCase()
+              );
+              return (
+                <div
+                  key={g.name}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "0.4rem 0.75rem",
+                    background: existsInDb ? "#F0FDF4" : "#FFFBEB",
+                    border: `1px solid ${existsInDb ? "#BBF7D0" : "#FDE68A"}`,
+                    borderRadius: "0.5rem",
+                  }}
+                >
+                  <div>
+                    <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--text-primary, #0C1B33)" }}>
+                      {g.name}
+                    </span>
+                    <span style={{ fontSize: "0.75rem", color: "#6B7280", marginLeft: "0.5rem" }}>
+                      {g.category}
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      color: existsInDb ? "#0D683B" : "#B45309",
+                    }}
+                  >
+                    {existsInDb ? "Active in DB" : "Missing — run seed"}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
-        {/* Actions */}
+        {/* Seed Command Panel */}
         <div
           style={{
-            marginTop: "2rem",
             background: "var(--surface-raised, #FFFFFF)",
             border: "1px solid #E5E7EB",
             borderRadius: "1rem",
@@ -354,22 +334,15 @@ export default async function AdminSubjectsPage() {
               marginBottom: "0.5rem",
             }}
           >
-            Seed Missing Grade Levels
+            Sync Database with Canonical Taxonomy
           </h2>
-          <p
-            style={{
-              fontSize: "0.875rem",
-              color: "#6B7280",
-              marginBottom: "1rem",
-            }}
-          >
-            If any K-10 grade levels are missing from the database, run the
-            following seed command to add them. This is safe to run multiple
-            times (idempotent).
+          <p style={{ fontSize: "0.875rem", color: "#6B7280", marginBottom: "1rem" }}>
+            Run the following command to upsert all canonical subjects and grade levels
+            (Kindergarten – Grade 12, K-12 academics, standardized tests, AP courses). This is idempotent.
           </p>
           <div
             style={{
-              background: "var(--text-primary, #111827)",
+              background: "#111827",
               color: "#D1FAE5",
               padding: "1rem 1.25rem",
               borderRadius: "0.5rem",
@@ -377,18 +350,8 @@ export default async function AdminSubjectsPage() {
               fontSize: "0.875rem",
             }}
           >
-            npx prisma db seed
+            npx tsx scripts/seed-subjects-canonical.ts
           </div>
-          <p
-            style={{
-              fontSize: "0.8125rem",
-              color: "#9CA3AF",
-              marginTop: "0.75rem",
-            }}
-          >
-            Or contact a developer to run a migration that seeds the canonical
-            K-10 grade levels.
-          </p>
         </div>
       </div>
     </main>

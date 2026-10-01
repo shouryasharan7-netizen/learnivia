@@ -379,15 +379,59 @@ export async function updateUserRole(userId: string, newRole: Role) {
 /**
  * Deletes a user account and associated records permanently.
  */
+/**
+ * DEPRECATED: Hard-delete is no longer permitted.
+ * Use softDeleteUser() instead to preserve audit trail and data integrity.
+ * This stub is kept for backwards-compat; it delegates to soft-delete.
+ */
 export async function deleteUserAccount(userId: string) {
+  return softDeleteUser(userId, "Admin initiated removal (legacy action)");
+}
+
+/**
+ * Soft-delete a user account.
+ * Sets accountSuspended=true and deletedAt timestamp.
+ * The user row is preserved for audit purposes.
+ * Logs the action to AdminAuditLog.
+ */
+export async function softDeleteUser(userId: string, reason: string) {
   const admin = await requireAdmin();
 
   if (userId === admin.id) {
-    throw new Error("You cannot delete your own active administrator account.");
+    throw new Error("You cannot deactivate your own active administrator account.");
   }
 
-  await prisma.user.delete({
+  // Capture before state for audit log
+  const before = await prisma.user.findUnique({
     where: { id: userId },
+    select: { id: true, name: true, email: true, role: true, accountSuspended: true },
+  });
+
+  if (!before) {
+    throw new Error("User not found.");
+  }
+
+  // Soft delete: suspend + timestamp
+  const after = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      accountSuspended: true,
+      suspendedReason: `Admin soft-delete: ${reason}`,
+      deletedAt: new Date(),
+    },
+    select: { id: true, name: true, email: true, role: true, accountSuspended: true, deletedAt: true },
+  });
+
+  // Log to AdminAuditLog
+  await prisma.adminAuditLog.create({
+    data: {
+      adminId: admin.id,
+      action: "USER_SOFT_DELETE",
+      targetId: userId,
+      reason,
+      beforeState: before as any,
+      afterState: after as any,
+    },
   });
 
   revalidatePath("/admin/users");

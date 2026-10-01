@@ -39,7 +39,7 @@ const PROGRAMS = [
   {
     id: "maths",
     label: "Mathematics",
-    sublabel: "Algebra, Geometry & more",
+    sublabel: "Algebra, Geometry & Calculus",
     bg: "#7C3AED",
     abbr: "MTH",
     href: "/find?subject=Mathematics",
@@ -58,7 +58,31 @@ const PROGRAMS = [
     sublabel: "Grammar, essays, comprehension",
     bg: "#2563EB",
     abbr: "ENG",
-    href: "/find?subject=English",
+    href: "/find?subject=English+Language+Arts",
+  },
+  {
+    id: "standardized-testing",
+    label: "Standardized Testing",
+    sublabel: "SAT, ACT, TOEFL, IELTS, GRE",
+    bg: "#DB2777",
+    abbr: "SAT",
+    href: "/find?subject=SAT",
+  },
+  {
+    id: "ap-courses",
+    label: "AP Courses",
+    sublabel: "AP Calc, Physics, CS, History",
+    bg: "#9333EA",
+    abbr: "AP",
+    href: "/find?subject=AP+Calculus+AB",
+  },
+  {
+    id: "homework",
+    label: "Homework Help",
+    sublabel: "Quick subject help, any grade",
+    bg: "#D97706",
+    abbr: "HWK",
+    href: "/homework-help",
   },
   {
     id: "community",
@@ -67,22 +91,6 @@ const PROGRAMS = [
     bg: "#059669",
     abbr: "COM",
     href: "/community",
-  },
-  {
-    id: "homework",
-    label: "Homework Help",
-    sublabel: "Get quick subject help",
-    bg: "#D97706",
-    abbr: "HWK",
-    href: "/homework-help",
-  },
-  {
-    id: "standardized-testing",
-    label: "Standardized Testing",
-    sublabel: "SAT, TOEFL, AP Prep",
-    bg: "#DB2777",
-    abbr: "ST",
-    href: "/find?subject=Standardized+Testing",
   },
 ];
 
@@ -97,7 +105,7 @@ const TASK_CARDS = [
   {
     category: "PROGRAMS",
     color: "#0D9488",
-    title: "Explore K-10 sessions",
+    title: "Explore K-12 & Test Prep programs",
     href: "/learn",
   },
   {

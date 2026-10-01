@@ -20,6 +20,7 @@ import {
   Star,
   AlertCircle,
   Settings as SettingsIcon,
+  LayoutDashboard,
 } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 
@@ -37,7 +38,7 @@ interface TopBarProps {
 
 const ANNOUNCEMENT = {
   show: true,
-  text: "New tutors are available for CBSE & ICSE K-10 sessions this week.",
+  text: "New tutors are available for K-12 academics and standardized test prep (SAT, TOEFL, AP) this week.",
   linkText: "Browse now",
   linkHref: "/find",
 };
@@ -638,10 +639,16 @@ export function TopBar({ user }: TopBarProps) {
                     ? "Administrator"
                     : user.isTutor
                       ? "Verified Tutor"
-                      : "K-10 Learner"}
+                      : "Student"}
                 </span>
               </div>
 
+              <MenuItem
+                href="/profile"
+                icon={User}
+                label="My Profile"
+                onClick={() => setProfileOpen(false)}
+              />
               <MenuItem
                 href={
                   user.isAdmin
@@ -650,7 +657,7 @@ export function TopBar({ user }: TopBarProps) {
                       ? ROUTES.tutor?.home || "/tutor"
                       : ROUTES.learner?.home || "/dashboard"
                 }
-                icon={User}
+                icon={LayoutDashboard}
                 label="My Dashboard"
                 onClick={() => setProfileOpen(false)}
               />

@@ -157,17 +157,18 @@ export async function POST(request: Request) {
       .toUpperCase();
 
     await addMessage({
-      channel: "K-10 Homework Help",
+      channel: "K-12 Homework Help",
       authorId: user.id,
       authorName: maskedAuthor,
       authorEmail: "", // never leak personal email addresses to community store
       authorRole: "STUDENT",
       authorInitials: initials,
       authorColor: "#C9922A",
-      content: `[${subject}] ${question.trim()} (Format: ${preferredFormat === "zoom" ? "Live Zoom Room" : "Chat Discussion"})`,
+      content: `[${subject}] ${question.trim()} (Format: ${preferredFormat === "zoom" ? "Live Platform Room" : "Chat Discussion"})`,
     });
 
     return NextResponse.json({ success: true, homework });
+
   } catch (error) {
     console.error("Failed to create homework request:", error);
     return NextResponse.json(
@@ -194,21 +195,7 @@ export async function PATCH(request: Request) {
       );
     }
 
-    // P1-10: Domain validate zoomLink if provided
-    if (zoomLink) {
-      const urlCheck = validateMeetingUrl(zoomLink);
-      if (!urlCheck.valid) {
-        return NextResponse.json(
-          {
-            error:
-              urlCheck.reason ||
-              "Invalid meeting link. Only approved video providers (Zoom, Google Meet) are permitted.",
-          },
-          { status: 400 },
-        );
-      }
-    }
-
+    // P1-10 / D2: Domain validate zoomLink if provided (after fetching existing, for minor check)
     const existing = await prisma.homeworkRequest.findUnique({
       where: { id },
       include: { tutor: true },
@@ -221,8 +208,30 @@ export async function PATCH(request: Request) {
       );
     }
 
+    // D2: Enforce safeguarding — validate meeting link before allowing update
+    if (zoomLink) {
+      // Look up whether the student is a minor
+      const student = await prisma.user.findUnique({
+        where: { id: existing.studentId },
+        select: { isMinor: true },
+      });
+      const isMinorSession = student?.isMinor === true;
+      const urlCheck = validateMeetingUrl(zoomLink, isMinorSession);
+      if (!urlCheck.valid) {
+        return NextResponse.json(
+          {
+            error:
+              urlCheck.reason ||
+              "Invalid meeting link. Only approved video providers are permitted.",
+          },
+          { status: 400 },
+        );
+      }
+    }
+
     // Enforce role & ownership authorization:
     // Only the student who posted, an approved tutor, or an admin can update the request
+
     const isOwner = existing.studentId === user.id;
     const isTutor = user.isTutor;
     const isAdmin = user.isAdmin;

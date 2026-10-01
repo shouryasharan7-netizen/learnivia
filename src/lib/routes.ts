@@ -62,6 +62,10 @@ export const ROUTES = {
     community: "/community",
     onboarding: "/onboarding",
     leaderboard: "/leaderboard",
+    profile: "/profile",
+    notifications: "/notifications",
+    calendar: "/calendar",
+    messages: "/messages",
   },
 
   // Tutor Workspace

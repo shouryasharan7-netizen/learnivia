@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth-user";
+import { getCanonicalVolunteerHoursBatch } from "@/lib/service-hours";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import {
@@ -92,6 +93,17 @@ export default async function AdminTutorsPage() {
     take: 100,
   });
 
+  // D1: Use canonical volunteer hours (VolunteerHourAudit + Bookings) instead of stale volunteerHours field
+  const canonicalHoursMap = await getCanonicalVolunteerHoursBatch(
+    tutors.map((t) => t.id)
+  );
+
+  // Enrich each tutor with canonical hours
+  const tutorsWithCanonicalHours = tutors.map((t) => ({
+    ...t,
+    canonicalVolunteerHours: canonicalHoursMap.get(t.id) ?? t.volunteerHours,
+  }));
+
   return (
     <div>
       <div
@@ -156,7 +168,7 @@ export default async function AdminTutorsPage() {
               </tr>
             </thead>
             <tbody>
-              {tutors.map((tutor) => {
+              {tutorsWithCanonicalHours.map((tutor) => {
                 const bookingMinutes = (tutor.tutorBookings || []).reduce(
                   (sum, b) => {
                     const dur = Math.max(
@@ -256,7 +268,18 @@ export default async function AdminTutorsPage() {
                       </div>
                     </td>
                     <td style={{ padding: "0.75rem" }}>
-                      <strong>{realVolunteerHours.toFixed(1)} hrs</strong>
+                      <strong style={{ color: "#0D9488" }}>
+                        {tutor.canonicalVolunteerHours.toFixed(1)} hrs
+                      </strong>
+                      <div
+                        style={{
+                          fontSize: "0.7rem",
+                          color: "#6B7280",
+                          marginTop: "2px",
+                        }}
+                      >
+                        canonical (audit-sourced)
+                      </div>
                       <div
                         style={{
                           fontSize: "0.75rem",
@@ -268,9 +291,7 @@ export default async function AdminTutorsPage() {
                       <AdjustHoursButton
                         tutorProfileId={tutor.id}
                         tutorName={tutor.user.name || "Tutor"}
-                        currentHours={
-                          tutor.volunteerHours || realVolunteerHours
-                        }
+                        currentHours={tutor.canonicalVolunteerHours}
                       />
                     </td>
                     <td style={{ padding: "0.75rem" }}>

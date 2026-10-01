@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { updateUserRole, deleteUserAccount } from "../actions";
+import { updateUserRole } from "../actions";
+import { DeleteUserModal } from "./DeleteUserModal";
 import { CheckCircle2, Trash2 } from "lucide-react";
 
 interface SerializedUser {
@@ -37,6 +38,10 @@ export default function UserManagementClient({
   >("ALL");
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState("");
+  const [deleteModal, setDeleteModal] = useState<{
+    userId: string;
+    userName: string | null;
+  } | null>(null);
 
   const filteredUsers = users.filter((u) => {
     const matchesRole = roleFilter === "ALL" || u.role === roleFilter;
@@ -71,29 +76,27 @@ export default function UserManagementClient({
     }
   }
 
-  async function handleDeleteUser(userId: string, userName: string | null) {
-    if (
-      !confirm(
-        `Are you sure you want to permanently delete user "${userName || "User"}"? This will erase all their bookings, points, and records.`,
-      )
-    ) {
-      return;
-    }
+  function handleDeleteUser(userId: string, userName: string | null) {
+    setDeleteModal({ userId, userName });
+  }
 
-    setIsUpdating(userId);
-    try {
-      await deleteUserAccount(userId);
-      setUsers((prev) => prev.filter((u) => u.id !== userId));
-      showToast("User account permanently removed.");
-    } catch (err: any) {
-      alert(err?.message || "Failed to delete user account.");
-    } finally {
-      setIsUpdating(null);
-    }
+  function handleDeleteConfirmed(userId: string) {
+    setUsers((prev) => prev.filter((u) => u.id !== userId));
+    setDeleteModal(null);
+    showToast("Account deactivated and preserved in audit log.");
   }
 
   return (
     <div>
+      {/* Delete confirmation modal */}
+      {deleteModal && (
+        <DeleteUserModal
+          userId={deleteModal.userId}
+          userName={deleteModal.userName}
+          onClose={() => setDeleteModal(null)}
+          onDeleted={() => handleDeleteConfirmed(deleteModal.userId)}
+        />
+      )}
       {/* Header */}
       <div style={{ marginBottom: "2rem" }}>
         <h1

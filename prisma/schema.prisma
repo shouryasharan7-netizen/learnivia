@@ -93,6 +93,7 @@ model User {
   lastLoginAt              DateTime?
   accountSuspended         Boolean   @default(false)
   suspendedReason          String?
+  deletedAt                DateTime? // Soft-delete timestamp (set by admin, account deactivated but row preserved)
 
   accounts      Account[]
   sessions      Session[]
@@ -512,3 +513,20 @@ model ApplicationAuditLog {
   @@index([adminId])
 }
 
+// ─── Admin Audit Log ──────────────────────────────────────────────────────────
+// Records all destructive or sensitive admin actions for accountability.
+
+model AdminAuditLog {
+  id          String   @id @default(cuid())
+  adminId     String
+  action      String   // "USER_SOFT_DELETE" | "ROLE_CHANGE" | "HOURS_ADJUST" | "TUTOR_SUSPEND" | "REPORT_RESOLVE"
+  targetId    String?  // ID of the affected user, tutor, or report
+  reason      String?
+  beforeState Json?
+  afterState  Json?
+  createdAt   DateTime @default(now())
+
+  @@index([adminId])
+  @@index([targetId])
+  @@index([action])
+}

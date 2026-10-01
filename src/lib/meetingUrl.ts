@@ -20,9 +20,13 @@ const APPROVED_MEETING_DOMAINS = [
  * Returns { valid: true } if the URL is from an approved domain.
  * Returns { valid: false, reason: string } otherwise.
  *
- * P1-10: Prevents tutors from inserting malicious or off-platform contact URLs.
+ * P1-10 / D2: Prevents tutors from inserting malicious or off-platform contact URLs.
+ * isMinorSession: When true, personal Zoom links are blocked (only platform-issued URLs allowed).
  */
-export function validateMeetingUrl(url: string | null | undefined): {
+export function validateMeetingUrl(
+  url: string | null | undefined,
+  isMinorSession = false,
+): {
   valid: boolean;
   reason?: string;
 } {
@@ -41,6 +45,20 @@ export function validateMeetingUrl(url: string | null | undefined): {
   try {
     const parsed = new URL(url.trim());
     const hostname = parsed.hostname.toLowerCase();
+    const path = parsed.pathname.toLowerCase();
+
+    // For minor sessions: block personal Zoom meeting links (zoom.us/j/...)
+    if (
+      isMinorSession &&
+      (hostname === "zoom.us" || hostname.endsWith(".zoom.us")) &&
+      path.startsWith("/j/")
+    ) {
+      return {
+        valid: false,
+        reason:
+          "Personal Zoom meeting links are not permitted for sessions with students under 18. Please use a platform-managed room or Google Meet link issued through the platform.",
+      };
+    }
 
     // Check against approved domain list (allow subdomains of approved domains)
     const isApproved = APPROVED_MEETING_DOMAINS.some(
