@@ -15,25 +15,191 @@ import {
   BookOpen,
   CheckCircle2,
   Lock,
+  Sparkles,
+  Globe,
+  Zap,
 } from "lucide-react";
 
 export default function HowItWorksPage() {
   return (
     <main className={styles.main}>
-      <section className={styles.hero}>
-        <motion.div
-          className={styles.heroContent}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <span className={styles.badge}>Three Clear Pathways</span>
-          <h1 className={styles.title}>How Learnivia Works</h1>
-          <p className={styles.subtitle}>
+      {/* VISUAL HERO — gradient + floating pills */}
+      <section
+        style={{
+          background: "linear-gradient(135deg, #0a1628 0%, #112240 40%, #1B4D3E 100%)",
+          padding: "6rem 2rem 5rem",
+          position: "relative",
+          overflow: "hidden",
+          textAlign: "center",
+        }}
+      >
+        {/* Animated glow orbs */}
+        {["#34D399", "#60A5FA", "#F472B6"].map((color, i) => (
+          <motion.div
+            key={i}
+            animate={{ scale: [1, 1.3, 1], opacity: [0.12, 0.2, 0.12] }}
+            transition={{ duration: 6 + i * 2, repeat: Infinity, ease: "easeInOut", delay: i * 1.5 }}
+            style={{
+              position: "absolute",
+              width: ["500px", "400px", "350px"][i],
+              height: ["500px", "400px", "350px"][i],
+              borderRadius: "50%",
+              background: color,
+              filter: "blur(120px)",
+              top: ["−20%", "30%", "60%"][i],
+              left: ["−10%", "60%", "10%"][i],
+              pointerEvents: "none",
+              zIndex: 0,
+            }}
+          />
+        ))}
+
+        {/* Grid texture */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+            pointerEvents: "none",
+            zIndex: 0,
+          }}
+        />
+
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "800px", margin: "0 auto" }}>
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ marginBottom: "1.5rem" }}
+          >
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                fontFamily: "ui-monospace, monospace",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#34D399",
+                background: "rgba(52,211,153,0.1)",
+                border: "1px solid rgba(52,211,153,0.3)",
+                borderRadius: "9999px",
+                padding: "0.35rem 1rem",
+              }}
+            >
+              <Sparkles size={12} />
+              Three Clear Pathways
+            </span>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            style={{
+              fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
+              fontWeight: 800,
+              color: "#fff",
+              lineHeight: 1.05,
+              letterSpacing: "-0.03em",
+              margin: "0 0 1.25rem",
+            }}
+          >
+            How{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #34D399, #60A5FA)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Learnivia
+            </span>{" "}
+            Works
+          </motion.h1>
+
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.18 }}
+            style={{
+              fontSize: "1.2rem",
+              color: "rgba(255,255,255,0.75)",
+              lineHeight: 1.65,
+              maxWidth: "600px",
+              margin: "0 auto 2.5rem",
+            }}
+          >
             A free, volunteer-powered learning commons connecting passionate
-            student tutors with K-10 learners across the globe.
-          </p>
-        </motion.div>
+            student tutors with K-12 learners and test-prep students across the globe.
+          </motion.p>
+
+          {/* Floating subject pills */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem", justifyContent: "center", marginBottom: "2.5rem" }}
+          >
+            {[
+              { label: "📐 Algebra", color: "#34D399" },
+              { label: "📖 Reading", color: "#60A5FA" },
+              { label: "🔬 Science", color: "#F472B6" },
+              { label: "✏️ Essay Writing", color: "#FBBF24" },
+              { label: "🌍 SAT / ACT", color: "#A78BFA" },
+              { label: "🧬 Biology", color: "#34D399" },
+              { label: "🗺️ History", color: "#60A5FA" },
+              { label: "🎯 AP Exams", color: "#F472B6" },
+            ].map((pill, i) => (
+              <motion.span
+                key={pill.label}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 3 + (i % 3) * 0.8, repeat: Infinity, delay: i * 0.25, ease: "easeInOut" }}
+                style={{
+                  padding: "0.4rem 1rem",
+                  borderRadius: "9999px",
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
+                  color: pill.color,
+                  background: `${pill.color}18`,
+                  border: `1px solid ${pill.color}40`,
+                  backdropFilter: "blur(8px)",
+                  cursor: "default",
+                }}
+              >
+                {pill.label}
+              </motion.span>
+            ))}
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            style={{ display: "flex", gap: "2rem", justifyContent: "center", flexWrap: "wrap" }}
+          >
+            {[
+              { icon: <Globe size={14} />, text: "47 countries" },
+              { icon: <Zap size={14} />, text: "12,400+ sessions" },
+              { icon: <ShieldCheck size={14} />, text: "PVSA recognized" },
+            ].map((item) => (
+              <span
+                key={item.text}
+                style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "rgba(255,255,255,0.6)", fontSize: "0.82rem" }}
+              >
+                {item.icon} {item.text}
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* Pathway 1: For Learners */}

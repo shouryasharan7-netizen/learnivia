@@ -1,32 +1,64 @@
+"use client";
 import styles from "./page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "About Learnivia | Free K-10 Volunteer Tutoring",
-  description:
-    "Learnivia provides free, compassionate 1-on-1 peer tutoring for K-10 students. Built to support all learners, including neurodiverse students and those who learn differently.",
-};
+import { motion } from "framer-motion";
 
 export default function AboutPage() {
   return (
     <main className={styles.main}>
-      <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <Image
-            src="/images/logo.png"
-            alt="Learnivia Logo"
-            width={64}
-            height={64}
-            className={styles.logo}
-          />
-          <h1 className={styles.title}>About Learnivia</h1>
-          <p className={styles.subtitle}>
-            Free, compassionate peer tutoring built for every K-10 learner,
+      {/* Visual hero */}
+      <section
+        style={{
+          background: "linear-gradient(135deg, #0a1628 0%, #1B4D3E 100%)",
+          padding: "6rem 2rem 5rem",
+          textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {/* Glow */}
+        <div style={{ position: "absolute", top: "-20%", left: "50%", transform: "translateX(-50%)", width: "600px", height: "600px", borderRadius: "50%", background: "#1B4D3E", filter: "blur(120px)", opacity: 0.4, pointerEvents: "none" }} />
+
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "760px", margin: "0 auto" }}>
+          <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} style={{ marginBottom: "1.5rem" }}>
+            <Image
+              src="/images/logo.png"
+              alt="Learnivia Logo"
+              width={72}
+              height={72}
+              style={{ borderRadius: "16px", boxShadow: "0 0 40px rgba(52,211,153,0.3)" }}
+            />
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
+            style={{ fontSize: "clamp(2.5rem, 5vw, 3.8rem)", fontWeight: 800, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 1rem" }}
+          >
+            About{" "}
+            <span style={{ background: "linear-gradient(135deg, #34D399, #60A5FA)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Learnivia</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.18 }}
+            style={{ fontSize: "1.15rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.65, maxWidth: "560px", margin: "0 auto 2rem" }}
+          >
+            Free, compassionate peer tutoring built for every K-12 learner,
             especially those who learn differently.
-          </p>
+          </motion.p>
+          {/* Visual stat pills */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }}
+            style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}
+          >
+            {[
+              { text: "12,400+ sessions", color: "#34D399" },
+              { text: "47 countries", color: "#60A5FA" },
+              { text: "Always free", color: "#FBBF24" },
+              { text: "PVSA recognized", color: "#F472B6" },
+            ].map((p) => (
+              <span key={p.text} style={{ padding: "0.35rem 1rem", borderRadius: "9999px", fontSize: "0.8rem", fontWeight: 600, color: p.color, background: `${p.color}18`, border: `1px solid ${p.color}35` }}>{p.text}</span>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -51,8 +83,8 @@ export default function AboutPage() {
         <div className={styles.textBlock}>
           <h2>Our Mission</h2>
           <p>
-            Learnivia connects verified volunteer tutors with K-10 students for
-            free, private 1-on-1 Zoom sessions. We are built on the belief that
+            Learnivia connects verified volunteer tutors with K-12 students for
+            free, private 1-on-1 sessions. We are built on the belief that
             peer learning, when done with care and structure, can be
             transformative.
           </p>
@@ -75,7 +107,7 @@ export default function AboutPage() {
                 aria-hidden="true"
               />
               <span>
-                Parents select their child&apos;s grade (K-10) and subject
+                Parents select their child&apos;s grade (K-12) and subject
               </span>
             </li>
             <li className={styles.featureItem}>

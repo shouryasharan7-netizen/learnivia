@@ -19,6 +19,8 @@ import {
   Video,
 } from "lucide-react";
 import styles from "./page.module.css";
+import ImpactStatsBar from "@/components/ImpactStatsBar";
+
 
 interface HomeInteractiveClientProps {
   liveSession?: {
@@ -461,7 +463,7 @@ export default function HomeInteractiveClient({
                 color: "#EAF2EE",
               }}
             >
-              [ 100% VOLUNTEER PEER NETWORK • VERIFIED K-10 MENTORSHIP ]
+              [ 100% VOLUNTEER PEER NETWORK • VERIFIED K-12 MENTORSHIP ]
             </span>
           </motion.div>
 
@@ -661,6 +663,9 @@ export default function HomeInteractiveClient({
         `}</style>
       </section>
 
+      {/* Animated Impact Stats */}
+      <ImpactStatsBar />
+
       <section className={styles.howItWorksSection} id="how-it-works">
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
@@ -701,7 +706,7 @@ export default function HomeInteractiveClient({
             <p className={styles.sectionLead}>
               Every lesson is structured around fundamental reasoning rather
               than rote memorization. Explore our core curriculum for
-              Kindergarten through Grade 10.
+              Kindergarten through Grade 12, plus SAT, ACT, and AP prep.
             </p>
           </div>
 
