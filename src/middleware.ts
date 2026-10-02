@@ -194,10 +194,15 @@ export default auth(async (req) => {
   );
 
   if (isLoggedIn) {
-    const isUserAdmin =
-      req.auth?.user?.role === "ADMIN" ||
-      isDesignatedAdmin(req.auth?.user);
-    const userRole = req.auth?.user?.role;
+    const isUserAdmin = isDesignatedAdmin(req.auth?.user);
+    const userRole = isUserAdmin
+      ? "ADMIN"
+      : req.auth?.user?.role === "ADMIN"
+        ? "STUDENT"
+        : req.auth?.user?.role;
+    const isApprovedTutor =
+      userRole === "TUTOR" &&
+      (req.auth?.user as any)?.tutorStatus === "APPROVED";
 
     // If logged in and visiting home, signin, or signup, immediately redirect at the edge to role workspace
     if (
@@ -207,13 +212,13 @@ export default auth(async (req) => {
     ) {
       const target = isUserAdmin
         ? "/admin"
-        : userRole === "TUTOR"
+        : isApprovedTutor
           ? "/tutor"
           : "/dashboard";
       return NextResponse.redirect(new URL(target, req.url));
     }
 
-    // Admin routes protection
+    // Admin routes protection: Strictly designated admins only
     if (nextUrl.pathname.startsWith("/admin") && !isUserAdmin) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }

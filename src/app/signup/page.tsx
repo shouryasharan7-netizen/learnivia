@@ -12,8 +12,13 @@ export default async function SignUpPage() {
   const session = await auth();
 
   if (session?.user) {
-    if (session.user.role === "TUTOR") redirect("/tutor");
-    if (session.user.role === "ADMIN") redirect("/admin");
+    const { isDesignatedAdmin } = await import("@/auth.config");
+    const isUserAdmin = isDesignatedAdmin(session.user);
+    const isApprovedTutor =
+      session.user.role === "TUTOR" &&
+      (session.user as any)?.tutorStatus === "APPROVED";
+    if (isUserAdmin) redirect("/admin");
+    if (isApprovedTutor) redirect("/tutor");
     redirect("/dashboard");
   }
 

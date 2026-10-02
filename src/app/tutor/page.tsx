@@ -166,28 +166,6 @@ export default async function TutorDashboard() {
     (m: any) => m.quizPassed,
   ).length;
 
-  if (tutor.status === "PENDING" && passedModules >= 3) {
-    try {
-      tutor = await prisma.tutorProfile.update({
-        where: { id: tutor.id },
-        data: { status: "APPROVED", approvedAt: new Date() },
-        include: {
-          availabilities: true,
-          subjects: true,
-          trainingModules: true,
-        },
-      });
-      if (userRole !== "ADMIN") {
-        await prisma.user.update({
-          where: { id: userId },
-          data: { role: "TUTOR" },
-        });
-      }
-    } catch (err) {
-      console.error("Auto-approval error on tutor dashboard:", err);
-    }
-  }
-
   if (tutor.status === "PENDING") {
     return (
       <main className={styles.page}>

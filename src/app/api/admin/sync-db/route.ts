@@ -125,67 +125,31 @@ async function handleSync(request: NextRequest) {
       }
     }
 
-    // Provision or reset demo accounts
-    const hash = await bcrypt.hash("password123", 10);
-    const demoAccounts = [
-      {
-        email: "student@test.com",
-        name: "Alex Chen (Learner)",
-        role: "STUDENT" as const,
-      },
-      {
-        email: "tutor@test.com",
-        name: "Sarah Jenkins (Tutor)",
-        role: "TUTOR" as const,
-      },
-    ];
+    // Sanitize any non-designated admin accounts in DB to role STUDENT
+    let sanitizedNonAdminsCount = 0;
+    try {
+      const updateRes = await prisma.user.updateMany({
+        where: {
+          email: {
+            notIn: ["shouryasharan7@gmail.com", "ahmedashfaqfarooqui@gmail.com"],
+          },
+          role: "ADMIN",
+        },
+        data: { role: "STUDENT" },
+      });
+      sanitizedNonAdminsCount = updateRes.count;
+    } catch (e: any) {
+      console.warn("Notice: admin sanitization error:", e);
+    }
 
-    const demoStatus: string[] = [];
-    for (const demo of demoAccounts) {
+    // Ensure designated admins have role ADMIN
+    for (const adminEmail of ["shouryasharan7@gmail.com", "ahmedashfaqfarooqui@gmail.com"]) {
       try {
-        const existing = await prisma.user.findUnique({
-          where: { email: demo.email },
+        await prisma.user.updateMany({
+          where: { email: adminEmail },
+          data: { role: "ADMIN" },
         });
-
-        if (!existing) {
-          await prisma.user.create({
-            data: {
-              email: demo.email,
-              name: demo.name,
-              password: hash,
-              role: demo.role,
-              onboardingCompleted: true,
-              ...(demo.role === "TUTOR"
-                ? {
-                    tutorProfile: {
-                      create: {
-                        status: "APPROVED",
-                        school: "Stanford University",
-                        currentGrade: "Undergraduate / Sophomore",
-                        bio: "Verified peer mentor in Mathematics & Sciences.",
-                      },
-                    },
-                  }
-                : {}),
-            },
-          });
-          demoStatus.push(`Created ${demo.email}`);
-        } else {
-          await prisma.user.update({
-            where: { id: existing.id },
-            data: {
-              password: hash,
-              failedLoginCount: 0,
-              lockedUntil: null,
-              accountSuspended: false,
-              role: demo.role,
-            },
-          });
-          demoStatus.push(`Updated ${demo.email}`);
-        }
-      } catch (err: any) {
-        demoStatus.push(`Error on ${demo.email}: ${err?.message}`);
-      }
+      } catch (e) {}
     }
 
     // Verify columns on User table
@@ -208,7 +172,7 @@ async function handleSync(request: NextRequest) {
       success: true,
       timestamp: new Date().toISOString(),
       migrationCount: migrationQueries.length,
-      demoStatus,
+      sanitizedNonAdminsCount,
       userColumnsPresent: verifiedColumns,
     });
   } catch (error: any) {

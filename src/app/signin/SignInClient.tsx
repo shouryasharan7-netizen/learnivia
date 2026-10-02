@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { loginWithEmail, loginWithGoogle, loginAsDemo } from "./actions";
+import { signIn as nextAuthSignIn } from "next-auth/react";
+import { loginWithEmail } from "./actions";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -65,7 +66,6 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
   const [studentAge, setStudentAge] = useState<string>("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [demoLoading, setDemoLoading] = useState<string | null>(null);
   const rawCallbackUrl = searchParams.get("callbackUrl");
   const callbackUrl =
     rawCallbackUrl &&
@@ -121,47 +121,23 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     }
   }
 
-  async function handleGoogleSignIn(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleGoogleSignIn() {
     setError("");
+    setLoading(true);
     try {
-      const form = e.currentTarget as HTMLFormElement;
-      const fd = new FormData(form);
-      const result = await loginWithGoogle(fd);
-      if (result?.error) {
-        setError(result.error);
-      }
+      await nextAuthSignIn("google", {
+        callbackUrl: callbackUrl || "/dashboard",
+      });
     } catch (err: any) {
-      console.error("Google sign in error:", err);
-      setError("Google sign in failed. Please try with email and password.");
-    }
-  }
-
-  async function handleDemoLogin(role: "STUDENT" | "TUTOR") {
-    setDemoLoading(role);
-    setError("");
-    try {
-      const result = await loginAsDemo(role);
-      if (result?.error) {
-        setError(result.error);
-      } else if (result?.success) {
-        const fallback = role === "TUTOR" ? "/tutor" : "/dashboard";
-        const dest =
-          result.redirectUrl &&
-          !result.redirectUrl.startsWith("/signin") &&
-          !result.redirectUrl.startsWith("/signup")
-            ? result.redirectUrl
-            : fallback;
-        window.location.href = dest;
+      if (
+        err?.digest?.startsWith?.("NEXT_REDIRECT") ||
+        err?.message?.includes?.("NEXT_REDIRECT")
+      ) {
         return;
-      } else {
-        setError("Unable to complete demo login. Please try again.");
       }
-    } catch (err: any) {
-      console.error("Demo login error:", err);
-      setError("Failed to sign in as demo user. Please try again.");
-    } finally {
-      setDemoLoading(null);
+      console.error("Google sign in error:", err);
+      setError("Google sign in failed. Please try again or use email and password.");
+      setLoading(false);
     }
   }
 
@@ -380,119 +356,42 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
               : "Enter your credentials to continue."}
           </p>
 
-          {/* 1-Click Demo Quick Test Bar */}
-          <div
+          <button
+            type="button"
+            disabled={loading}
+            onClick={handleGoogleSignIn}
             style={{
-              background: "#F0FDFA",
-              border: "1px solid #99F6E4",
-              borderRadius: "12px",
-              padding: "0.85rem 1rem",
-              marginBottom: "1.25rem",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.65rem",
+              padding: "0.75rem 1.5rem",
+              border: "1.5px solid #E2E8F0",
+              borderRadius: "10px",
+              background: "#fff",
+              fontSize: "0.9375rem",
+              fontWeight: 600,
+              color: "#0C1B33",
+              cursor: loading ? "not-allowed" : "pointer",
+              transition: "all 150ms",
             }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "0.55rem",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  color: "#0F766E",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                ⚡ Instant Demo Login
-              </span>
-              <span style={{ fontSize: "0.72rem", color: "#0D9488", fontWeight: 600 }}>
-                1-Click Testing
-              </span>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
-              {(["STUDENT", "TUTOR"] as const).map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  disabled={!!demoLoading || loading}
-                  onClick={() => handleDemoLogin(r)}
-                  style={{
-                    padding: "0.55rem 0.5rem",
-                    borderRadius: "8px",
-                    border: "1px solid #99F6E4",
-                    background: "#ffffff",
-                    fontSize: "0.825rem",
-                    fontWeight: 700,
-                    color: "#0F766E",
-                    cursor: demoLoading ? "not-allowed" : "pointer",
-                    transition: "all 150ms ease",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.35rem",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!demoLoading) {
-                      (e.currentTarget as HTMLElement).style.background = "#CCFBF1";
-                      (e.currentTarget as HTMLElement).style.borderColor = "#0D9488";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!demoLoading) {
-                      (e.currentTarget as HTMLElement).style.background = "#ffffff";
-                      (e.currentTarget as HTMLElement).style.borderColor = "#99F6E4";
-                    }
-                  }}
-                >
-                  {demoLoading === r ? (
-                    "Signing in…"
-                  ) : r === "STUDENT" ? (
-                    "🎒 Learner"
-                  ) : (
-                    "📚 Tutor"
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <form onSubmit={handleGoogleSignIn}>
-            <input type="hidden" name="callbackUrl" value={callbackUrl} />
-            <button
-              type="submit"
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.65rem",
-                padding: "0.75rem 1.5rem",
-                border: "1.5px solid #E2E8F0",
-                borderRadius: "10px",
-                background: "#fff",
-                fontSize: "0.9375rem",
-                fontWeight: 600,
-                color: "#0C1B33",
-                cursor: "pointer",
-                transition: "all 150ms",
-              }}
-              onMouseEnter={(e) => {
+            onMouseEnter={(e) => {
+              if (!loading) {
                 (e.currentTarget as HTMLElement).style.borderColor = "#CBD5E1";
                 (e.currentTarget as HTMLElement).style.background = "#F8FAFC";
-              }}
-              onMouseLeave={(e) => {
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) {
                 (e.currentTarget as HTMLElement).style.borderColor = "#E2E8F0";
                 (e.currentTarget as HTMLElement).style.background = "#fff";
-              }}
-            >
-              <GoogleIcon />
-              Continue with Google
-            </button>
-          </form>
+              }
+            }}
+          >
+            <GoogleIcon />
+            {loading ? "Connecting to Google…" : "Continue with Google"}
+          </button>
 
           <div
             style={{

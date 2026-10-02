@@ -39,21 +39,15 @@ export function isDesignatedAdmin(
 ): boolean {
   if (!user) return false;
   const email = (user.email || "").trim().toLowerCase();
+  if (!email) return false;
 
   const adminEmails = getAdminEmails();
   if (adminEmails.has(email)) return true;
 
-  if (
+  return (
     email === "shouryasharan7@gmail.com" ||
-    email === "shouryasharan27@gmail.com" ||
-    email === "ahmedashfaqfarooqui@gmail.com" ||
-    email.includes("shourya") ||
-    email.includes("ahmed")
-  ) {
-    return true;
-  }
-
-  return false;
+    email === "ahmedashfaqfarooqui@gmail.com"
+  );
 }
 
 const authSecret =

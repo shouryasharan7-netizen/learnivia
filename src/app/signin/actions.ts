@@ -185,8 +185,6 @@ export async function loginWithEmail(formData: FormData) {
     console.warn("Notice: prisma.user.findUnique in loginWithEmail handled:", err);
   }
 
-  const isDemoEmail = ["tutor@test.com", "student@test.com"].includes(email);
-
   // If designated admin does not exist yet, auto-provision
   if (!existingUser && isAdmin) {
     try {
@@ -206,7 +204,7 @@ export async function loginWithEmail(formData: FormData) {
     }
   }
 
-  if (!existingUser && !isDemoEmail) {
+  if (!existingUser) {
     return {
       error:
         "No account found with this email. Please click 'Create free account' below to sign up.",
@@ -269,7 +267,7 @@ export async function loginWithEmail(formData: FormData) {
   }
 
   // Verify normal user credentials
-  if (existingUser?.password && !isDemoEmail && !isAdmin) {
+  if (existingUser?.password && !isAdmin) {
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) {
       const newFailCount = (existingUser.failedLoginCount || 0) + 1;
@@ -297,9 +295,13 @@ export async function loginWithEmail(formData: FormData) {
   }
 
   try {
+    const isApprovedTutor =
+      existingUser?.role === "TUTOR" &&
+      existingUser?.tutorProfile?.status === "APPROVED";
+
     const defaultTarget = isAdmin
       ? "/admin"
-      : existingUser?.role === "TUTOR" || email === "tutor@test.com"
+      : isApprovedTutor
         ? "/tutor"
         : "/dashboard";
 
@@ -328,6 +330,15 @@ export async function loginWithEmail(formData: FormData) {
       redirectUrl === "/dashboard"
     ) {
       redirectUrl = defaultTarget;
+    }
+
+    // Security guard: Non-admins can NEVER be redirected to /admin
+    if (!isAdmin && redirectUrl.startsWith("/admin")) {
+      redirectUrl = "/dashboard";
+    }
+    // Security guard: Unapproved tutors can NEVER be redirected to /tutor
+    if (!isApprovedTutor && !isAdmin && redirectUrl.startsWith("/tutor")) {
+      redirectUrl = "/dashboard";
     }
 
     return { success: true, redirectUrl };
@@ -360,34 +371,4 @@ export async function loginWithGoogle(formData: FormData) {
   await signIn("google", { redirectTo: callbackUrl });
 }
 
-export async function loginAsDemo(role: "STUDENT" | "TUTOR") {
-  if (role !== "STUDENT" && role !== "TUTOR") {
-    return { error: "Demo access is only available for Learner and Tutor." };
-  }
-  try {
-    const targetEmail =
-      role === "TUTOR" ? "tutor@test.com" : "student@test.com";
 
-    const callbackUrl = role === "TUTOR" ? "/tutor" : "/dashboard";
-
-    const res = await signIn("credentials", {
-      email: targetEmail,
-      password: "password123",
-      demoRole: role,
-      redirectTo: callbackUrl,
-      redirect: false,
-    });
-
-    if (
-      typeof res === "string" &&
-      (res.includes("error=") || res.includes("CredentialsSignin"))
-    ) {
-      return { error: "Failed to sign in as demo user." };
-    }
-
-    return { success: true, redirectUrl: callbackUrl };
-  } catch (error) {
-    console.error("Demo login error:", error);
-    return { error: "Failed to sign in as demo user." };
-  }
-}

@@ -130,14 +130,12 @@ export default async function StudentDashboard({ searchParams }: { searchParams:
     redirect(ROUTES.auth.signIn);
   }
 
-  // Redirect admins to Admin Command Center
-  if (user.isAdmin || user.role === "ADMIN") {
-    redirect("/admin");
-  }
-
-  // Redirect tutors to Tutor Workspace
-  if (user.role === "TUTOR" && !user.isAdmin) {
-    redirect("/tutor");
+  // Only redirect approved tutors who are not admins and have no student view
+  if (user.role === "TUTOR" && user.isTutor && !user.isAdmin) {
+    const sp = await searchParams;
+    if (sp?.view !== "student") {
+      redirect("/tutor");
+    }
   }
 
   const now = new Date();
