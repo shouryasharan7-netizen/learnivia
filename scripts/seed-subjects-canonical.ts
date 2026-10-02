@@ -11,6 +11,8 @@
  */
 
 import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
 import {
   SUBJECT_TAXONOMY,
   CANONICAL_GRADES,
@@ -18,7 +20,34 @@ import {
   SUBJECT_CATEGORY_MAP,
 } from "../src/lib/subject-taxonomy";
 
-const prisma = new PrismaClient();
+// Load env from .env.local if running outside Next.js
+import * as fs from "fs";
+import * as path from "path";
+const envPath = path.resolve(__dirname, "../.env.local");
+if (fs.existsSync(envPath)) {
+  const lines = fs.readFileSync(envPath, "utf-8").split("\n");
+  for (const line of lines) {
+    const m = line.match(/^([^#=]+)=(.*)$/);
+    if (m && !process.env[m[1].trim()]) {
+      process.env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, "");
+    }
+  }
+}
+
+const connectionString = process.env.DATABASE_URL || process.env.DIRECT_URL;
+if (!connectionString) throw new Error("DATABASE_URL not set");
+
+const pool = new Pool({
+  connectionString,
+  ssl:
+    connectionString.includes("supabase.co") ||
+    connectionString.includes("supabase.com")
+      ? { rejectUnauthorized: false }
+      : undefined,
+});
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
+
 
 async function main() {
   console.log("--- Learnivia Canonical Subject Seed ---\n");

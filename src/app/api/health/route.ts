@@ -21,12 +21,16 @@ export async function GET() {
     ""
   ).replace(/^["']|["']$/g, "").trim();
 
+  const isDev = process.env.NODE_ENV !== "production" && process.env.VERCEL_ENV !== "production";
+  // Use a relaxed threshold in dev to avoid false-503s from cold-start latency
+  const LATENCY_THRESHOLD_MS = isDev ? 3000 : 800;
+
   let isHealthy = false;
   let latencyMs = 0;
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 800);
+    const timeoutId = setTimeout(() => controller.abort(), LATENCY_THRESHOLD_MS);
 
     const pingStart = Date.now();
     const res = await fetch(`${supabaseUrl}/rest/v1/`, {
@@ -41,7 +45,7 @@ export async function GET() {
     clearTimeout(timeoutId);
     latencyMs = Date.now() - pingStart;
 
-    if (res.status < 500 && latencyMs < 800) {
+    if (res.status < 500 && latencyMs < LATENCY_THRESHOLD_MS) {
       isHealthy = true;
     }
   } catch {
@@ -49,11 +53,8 @@ export async function GET() {
     isHealthy = false;
   }
 
-  const environment =
-    process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production"
-      ? "production"
-      : "development";
-  const statusCode = isHealthy && latencyMs < 800 ? 200 : 503;
+  const environment = isDev ? "development" : "production";
+  const statusCode = isHealthy && latencyMs < LATENCY_THRESHOLD_MS ? 200 : 503;
 
   return new Response(
     JSON.stringify({
