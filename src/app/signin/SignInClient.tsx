@@ -86,40 +86,63 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     setLoading(true);
     setError("");
 
-    const formData = new FormData(e.currentTarget);
-    formData.append("action", isRegister ? "register" : "login");
-    formData.append("callbackUrl", callbackUrl);
-    if (isRegister) formData.append("role", selectedRole);
+    try {
+      const formData = new FormData(e.currentTarget);
+      formData.append("action", isRegister ? "register" : "login");
+      formData.append("callbackUrl", callbackUrl);
+      if (isRegister) formData.append("role", selectedRole);
 
-    const result = await loginWithEmail(formData);
-    if (result?.error) {
-      setError(result.error);
+      const result = await loginWithEmail(formData);
+      if (result?.error) {
+        setError(result.error);
+      } else if (result?.success) {
+        window.location.href = result.redirectUrl || callbackUrl;
+        return;
+      } else {
+        setError("Unable to complete sign in. Please try again.");
+      }
+    } catch (err: any) {
+      console.error("Sign-in submission error:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
       setLoading(false);
-    } else if (result?.success) {
-      window.location.href = result.redirectUrl || callbackUrl;
     }
   }
 
   async function handleGoogleSignIn(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-    const form = e.currentTarget as HTMLFormElement;
-    const fd = new FormData(form);
-    const result = await loginWithGoogle(fd);
-    if (result?.error) {
-      setError(result.error);
+    try {
+      const form = e.currentTarget as HTMLFormElement;
+      const fd = new FormData(form);
+      const result = await loginWithGoogle(fd);
+      if (result?.error) {
+        setError(result.error);
+      }
+    } catch (err: any) {
+      console.error("Google sign in error:", err);
+      setError("Google sign in failed. Please try with email and password.");
     }
   }
 
-  async function handleDemoLogin(role: "STUDENT" | "TUTOR" | "ADMIN") {
+  async function handleDemoLogin(role: "STUDENT" | "TUTOR") {
     setDemoLoading(role);
     setError("");
-    const result = await loginAsDemo(role);
-    if (result?.error) {
-      setError(result.error);
+    try {
+      const result = await loginAsDemo(role);
+      if (result?.error) {
+        setError(result.error);
+      } else if (result?.success) {
+        window.location.href = result.redirectUrl || callbackUrl;
+        return;
+      } else {
+        setError("Unable to complete demo login. Please try again.");
+      }
+    } catch (err: any) {
+      console.error("Demo login error:", err);
+      setError("Failed to sign in as demo user. Please try again.");
+    } finally {
       setDemoLoading(null);
-    } else if (result?.success) {
-      window.location.href = result.redirectUrl || callbackUrl;
     }
   }
 
@@ -371,19 +394,19 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                 1-Click Testing
               </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
-              {(["STUDENT", "TUTOR", "ADMIN"] as const).map((r) => (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
+              {(["STUDENT", "TUTOR"] as const).map((r) => (
                 <button
                   key={r}
                   type="button"
                   disabled={!!demoLoading || loading}
                   onClick={() => handleDemoLogin(r)}
                   style={{
-                    padding: "0.5rem 0.4rem",
+                    padding: "0.55rem 0.5rem",
                     borderRadius: "8px",
                     border: "1px solid #99F6E4",
                     background: "#ffffff",
-                    fontSize: "0.8rem",
+                    fontSize: "0.825rem",
                     fontWeight: 700,
                     color: "#0F766E",
                     cursor: demoLoading ? "not-allowed" : "pointer",
@@ -391,7 +414,7 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: "0.25rem",
+                    gap: "0.35rem",
                   }}
                   onMouseEnter={(e) => {
                     if (!demoLoading) {
@@ -410,10 +433,8 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
                     "Signing in…"
                   ) : r === "STUDENT" ? (
                     "🎒 Learner"
-                  ) : r === "TUTOR" ? (
-                    "📚 Tutor"
                   ) : (
-                    "🛡️ Admin"
+                    "📚 Tutor"
                   )}
                 </button>
               ))}

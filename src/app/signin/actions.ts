@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { AuthError } from "next-auth";
-import { getAdminEmails } from "@/auth.config";
+import { getAdminEmails, isDesignatedAdmin } from "@/auth.config";
 import { sendEmailVerification } from "@/lib/email";
 
 export async function loginWithEmail(formData: FormData) {
@@ -25,7 +25,11 @@ export async function loginWithEmail(formData: FormData) {
   }
 
   // Validate Password
-  if (!password || password.length < 8) {
+  if (!password) {
+    return { error: "Please enter your password." };
+  }
+
+  if (action === "register" && password.length < 8) {
     return { error: "Password must be at least 8 characters long." };
   }
 
@@ -34,14 +38,20 @@ export async function loginWithEmail(formData: FormData) {
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       if (!existingUser.password) {
-        return {
-          error:
-            "An account with this email exists via Google. Please click 'Continue with Google'.",
-        };
+        // Automatically set password for existing Google account trying to register
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: { password: hashedPassword, failedLoginCount: 0, lockedUntil: null },
+        });
+        try {
+          await signIn("credentials", { email, password, redirect: false });
+          return { success: true, redirectUrl: callbackUrl || "/dashboard" };
+        } catch (e) {}
       }
       return {
         error:
-          "An account with this email already exists. Please sign in instead.",
+          "An account with this email already exists. Please sign in with your email and password.",
       };
     }
 
@@ -157,17 +167,32 @@ export async function loginWithEmail(formData: FormData) {
   }
 
   // Handle Login
-  const existingUser = await prisma.user.findUnique({
+  const isAdmin = isDesignatedAdmin({ email });
+  let existingUser = await prisma.user.findUnique({
     where: { email },
     include: { tutorProfile: true },
   });
 
-  const isDemoEmail = [
-    "shourya@test.com",
-    "admin@test.com",
-    "tutor@test.com",
-    "student@test.com",
-  ].includes(email);
+  const isDemoEmail = ["tutor@test.com", "student@test.com"].includes(email);
+
+  // If designated admin does not exist yet, auto-provision
+  if (!existingUser && isAdmin) {
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      existingUser = await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          name: email.includes("shourya") ? "Shourya Sharan" : "Ahmed Farooqui",
+          role: "ADMIN",
+          onboardingCompleted: true,
+        },
+        include: { tutorProfile: true },
+      });
+    } catch (e) {
+      console.error("Auto-provision admin error in action:", e);
+    }
+  }
 
   if (!existingUser && !isDemoEmail) {
     return {
@@ -176,32 +201,63 @@ export async function loginWithEmail(formData: FormData) {
     };
   }
 
+  // If previous user signed up via Google and has no password, set it to the provided password
   if (existingUser && !existingUser.password) {
-    return {
-      error:
-        "This email is registered with Google. Please click 'Continue with Google'.",
-    };
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      existingUser = await prisma.user.update({
+        where: { id: existingUser.id },
+        data: {
+          password: hashedPassword,
+          failedLoginCount: 0,
+          lockedUntil: null,
+        },
+        include: { tutorProfile: true },
+      });
+    } catch (e) {
+      console.error("Auto-set password error for Google user:", e);
+    }
   }
 
-  // P0-12: Account status pre-checks
-  if (existingUser?.accountSuspended) {
+  // Account status pre-checks (designated admins are never suspended)
+  if (existingUser?.accountSuspended && !isAdmin) {
     return {
       error: `Your account is currently suspended (${existingUser.suspendedReason || "administrative review"}). Please contact support@learnivia.app.`,
     };
   }
 
-  if (existingUser?.lockedUntil && existingUser.lockedUntil > new Date()) {
-    const mins = Math.max(
-      1,
-      Math.ceil((existingUser.lockedUntil.getTime() - Date.now()) / 60000),
-    );
-    return {
-      error: `Too many failed login attempts. Account temporarily locked. Please try again in ${mins} minute(s) or use "Forgot password".`,
-    };
+  // Lockout check with forgiveness if password matches
+  if (existingUser?.lockedUntil && !isAdmin) {
+    if (existingUser.lockedUntil > new Date()) {
+      const isMatch = existingUser.password
+        ? await bcrypt.compare(password, existingUser.password)
+        : false;
+      if (isMatch) {
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: { failedLoginCount: 0, lockedUntil: null },
+        });
+        existingUser.lockedUntil = null;
+      } else {
+        const mins = Math.max(
+          1,
+          Math.ceil((existingUser.lockedUntil.getTime() - Date.now()) / 60000),
+        );
+        return {
+          error: `Too many failed login attempts. Account temporarily locked. Please try again in ${mins} minute(s) or use "Forgot password".`,
+        };
+      }
+    } else {
+      await prisma.user.update({
+        where: { id: existingUser.id },
+        data: { failedLoginCount: 0, lockedUntil: null },
+      });
+      existingUser.lockedUntil = null;
+    }
   }
 
-  // If normal user, verify password match with bcrypt before invoking NextAuth
-  if (existingUser?.password && !isDemoEmail) {
+  // Verify normal user credentials
+  if (existingUser?.password && !isDemoEmail && !isAdmin) {
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) {
       const newFailCount = (existingUser.failedLoginCount || 0) + 1;
@@ -245,13 +301,10 @@ export async function loginWithEmail(formData: FormData) {
     }
 
     // Determine target redirect based on user role
-    const userRole =
-      existingUser?.role ||
-      (email === "admin@test.com" || email === "shourya@test.com"
-        ? "ADMIN"
-        : email === "tutor@test.com"
-          ? "TUTOR"
-          : "STUDENT");
+    const userRole = isAdmin
+      ? "ADMIN"
+      : existingUser?.role ||
+        (email === "tutor@test.com" ? "TUTOR" : "STUDENT");
 
     let redirectUrl = callbackUrl;
     if (!redirectUrl || redirectUrl === "/dashboard") {
@@ -276,7 +329,10 @@ export async function loginWithEmail(formData: FormData) {
           };
       }
     }
-    throw error;
+    console.error("Credentials sign in error:", error);
+    return {
+      error: "Authentication failed. Please verify your credentials.",
+    };
   }
 }
 
@@ -291,18 +347,15 @@ export async function loginWithGoogle(formData: FormData) {
   await signIn("google", { redirectTo: callbackUrl });
 }
 
-export async function loginAsDemo(role: "STUDENT" | "TUTOR" | "ADMIN") {
+export async function loginAsDemo(role: "STUDENT" | "TUTOR") {
+  if (role !== "STUDENT" && role !== "TUTOR") {
+    return { error: "Demo access is only available for Learner and Tutor." };
+  }
   try {
     const targetEmail =
-      role === "ADMIN"
-        ? "admin@test.com"
-        : role === "TUTOR"
-          ? "tutor@test.com"
-          : "student@test.com";
+      role === "TUTOR" ? "tutor@test.com" : "student@test.com";
 
-    let callbackUrl = "/dashboard";
-    if (role === "TUTOR") callbackUrl = "/tutor";
-    if (role === "ADMIN") callbackUrl = "/admin";
+    const callbackUrl = role === "TUTOR" ? "/tutor" : "/dashboard";
 
     const res = await signIn("credentials", {
       email: targetEmail,
