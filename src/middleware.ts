@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
+import { authConfig, isDesignatedAdmin } from "./auth.config";
 
 const { auth } = NextAuth(authConfig);
 
@@ -188,19 +188,26 @@ export default auth(async (req) => {
   );
 
   if (isLoggedIn) {
+    const isUserAdmin =
+      req.auth?.user?.role === "ADMIN" ||
+      isDesignatedAdmin(req.auth?.user);
+    const userRole = req.auth?.user?.role;
+
     // If logged in and visiting home, signin, or signup, immediately redirect at the edge to role workspace
     if (
       nextUrl.pathname === "/" ||
       nextUrl.pathname === "/signin" ||
       nextUrl.pathname === "/signup"
     ) {
-      const userRole = req.auth?.user?.role;
-      const target = userRole === "TUTOR" ? "/tutor" : "/dashboard";
+      const target = isUserAdmin
+        ? "/admin"
+        : userRole === "TUTOR"
+          ? "/tutor"
+          : "/dashboard";
       return NextResponse.redirect(new URL(target, req.url));
     }
 
-    // P0-5: Admin check exclusively via session role (set from env var in auth callbacks)
-    const isUserAdmin = req.auth?.user?.role === "ADMIN";
+    // Admin routes protection
     if (nextUrl.pathname.startsWith("/admin") && !isUserAdmin) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
@@ -221,10 +228,15 @@ export default auth(async (req) => {
     if (!isPublicPath) {
       // Preserve the current URL as callbackUrl so user returns here after sign-in
       const signInUrl = new URL("/signin", req.url);
-      signInUrl.searchParams.set(
-        "callbackUrl",
-        nextUrl.pathname + nextUrl.search,
-      );
+      if (
+        !nextUrl.pathname.startsWith("/signin") &&
+        !nextUrl.pathname.startsWith("/signup")
+      ) {
+        signInUrl.searchParams.set(
+          "callbackUrl",
+          nextUrl.pathname + nextUrl.search,
+        );
+      }
       return NextResponse.redirect(signInUrl);
     }
   }

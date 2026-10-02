@@ -285,9 +285,16 @@ export async function loginWithEmail(formData: FormData) {
   }
 
   try {
+    const defaultTarget = isAdmin
+      ? "/admin"
+      : existingUser?.role === "TUTOR" || email === "tutor@test.com"
+        ? "/tutor"
+        : "/dashboard";
+
     const result = await signIn("credentials", {
       email,
       password,
+      redirectTo: defaultTarget,
       redirect: false,
     });
 
@@ -300,21 +307,15 @@ export async function loginWithEmail(formData: FormData) {
       };
     }
 
-    // Determine target redirect based on user role
-    const userRole = isAdmin
-      ? "ADMIN"
-      : existingUser?.role ||
-        (email === "tutor@test.com" ? "TUTOR" : "STUDENT");
-
     let redirectUrl = callbackUrl;
-    if (!redirectUrl || redirectUrl === "/dashboard") {
-      if (userRole === "TUTOR") {
-        redirectUrl = "/tutor";
-      } else if (userRole === "ADMIN") {
-        redirectUrl = "/admin";
-      } else {
-        redirectUrl = "/dashboard";
-      }
+    if (
+      !redirectUrl ||
+      redirectUrl.startsWith("/signin") ||
+      redirectUrl.startsWith("/signup") ||
+      redirectUrl === "/" ||
+      redirectUrl === "/dashboard"
+    ) {
+      redirectUrl = defaultTarget;
     }
 
     return { success: true, redirectUrl };
@@ -361,6 +362,7 @@ export async function loginAsDemo(role: "STUDENT" | "TUTOR") {
       email: targetEmail,
       password: "password123",
       demoRole: role,
+      redirectTo: callbackUrl,
       redirect: false,
     });
 

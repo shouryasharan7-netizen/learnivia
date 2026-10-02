@@ -130,6 +130,16 @@ export default async function StudentDashboard({ searchParams }: { searchParams:
     redirect(ROUTES.auth.signIn);
   }
 
+  // Redirect admins to Admin Command Center
+  if (user.isAdmin || user.role === "ADMIN") {
+    redirect("/admin");
+  }
+
+  // Redirect tutors to Tutor Workspace
+  if (user.role === "TUTOR" && !user.isAdmin) {
+    redirect("/tutor");
+  }
+
   const now = new Date();
   const initials = (user.name || "L")
     .split(" ")

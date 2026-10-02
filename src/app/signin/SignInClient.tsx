@@ -66,7 +66,13 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [demoLoading, setDemoLoading] = useState<string | null>(null);
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const rawCallbackUrl = searchParams.get("callbackUrl");
+  const callbackUrl =
+    rawCallbackUrl &&
+    !rawCallbackUrl.startsWith("/signin") &&
+    !rawCallbackUrl.startsWith("/signup")
+      ? rawCallbackUrl
+      : "";
 
   useEffect(() => {
     const errorParam = searchParams.get("error");
@@ -89,14 +95,20 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     try {
       const formData = new FormData(e.currentTarget);
       formData.append("action", isRegister ? "register" : "login");
-      formData.append("callbackUrl", callbackUrl);
+      if (callbackUrl) formData.append("callbackUrl", callbackUrl);
       if (isRegister) formData.append("role", selectedRole);
 
       const result = await loginWithEmail(formData);
       if (result?.error) {
         setError(result.error);
       } else if (result?.success) {
-        window.location.href = result.redirectUrl || callbackUrl;
+        const dest =
+          result.redirectUrl &&
+          !result.redirectUrl.startsWith("/signin") &&
+          !result.redirectUrl.startsWith("/signup")
+            ? result.redirectUrl
+            : "/dashboard";
+        window.location.href = dest;
         return;
       } else {
         setError("Unable to complete sign in. Please try again.");
@@ -133,7 +145,14 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
       if (result?.error) {
         setError(result.error);
       } else if (result?.success) {
-        window.location.href = result.redirectUrl || callbackUrl;
+        const fallback = role === "TUTOR" ? "/tutor" : "/dashboard";
+        const dest =
+          result.redirectUrl &&
+          !result.redirectUrl.startsWith("/signin") &&
+          !result.redirectUrl.startsWith("/signup")
+            ? result.redirectUrl
+            : fallback;
+        window.location.href = dest;
         return;
       } else {
         setError("Unable to complete demo login. Please try again.");

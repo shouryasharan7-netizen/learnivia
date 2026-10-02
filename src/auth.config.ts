@@ -77,6 +77,7 @@ if (googleClientId && googleClientSecret) {
 export const authConfig = {
   secret: authSecret,
   trustHost: true,
+  session: { strategy: "jwt" as const },
   pages: {
     signIn: "/signin",
     error: "/signin",
@@ -142,7 +143,10 @@ export const authConfig = {
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
+      if (token) {
+        if (!session.user) {
+          session.user = {} as any;
+        }
         session.user.id = ((token.id || token.sub) as string) || "";
         const userAdmin = isDesignatedAdmin({
           email: token.email as string,
@@ -162,15 +166,22 @@ export const authConfig = {
         if (token.email) {
           session.user.email = token.email as string;
         }
+        if (token.name && !session.user.name) {
+          session.user.name = token.name as string;
+        }
       }
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // If the caller provided an explicit callbackUrl (e.g. /dashboard or /admin), honour it
-      // as long as it stays on the same origin.
+      // If the URL is attempting to loop back to signin or signup, redirect to dashboard or admin
+      if (
+        url.includes("/signin") ||
+        url.includes("/signup")
+      ) {
+        return `${baseUrl}/dashboard`;
+      }
       if (url.startsWith(baseUrl)) return url;
       if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Default: let the page-level redirect (page.tsx) handle role routing
       return `${baseUrl}/dashboard`;
     },
   },
