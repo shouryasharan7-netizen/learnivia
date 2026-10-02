@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { loginWithEmail, loginWithGoogle } from "./actions";
+import { loginWithEmail, loginWithGoogle, loginAsDemo } from "./actions";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -65,21 +65,18 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
   const [studentAge, setStudentAge] = useState<string>("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState<string | null>(null);
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   useEffect(() => {
     const errorParam = searchParams.get("error");
     if (errorParam) {
-      if (errorParam === "Configuration") {
+      if (errorParam === "CredentialsSignin") {
         setError(
-          "Sign-in configuration is initializing. Please sign in with your email and password below.",
+          "Incorrect email or password. Please verify your credentials or register below.",
         );
       } else if (errorParam === "AccessDenied") {
         setError("Access was denied. Please try again or sign in with email.");
-      } else {
-        setError(
-          `Authentication note: ${errorParam}. Please sign in with email and password.`,
-        );
       }
     }
   }, [searchParams]);
@@ -114,12 +111,24 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
     }
   }
 
+  async function handleDemoLogin(role: "STUDENT" | "TUTOR" | "ADMIN") {
+    setDemoLoading(role);
+    setError("");
+    const result = await loginAsDemo(role);
+    if (result?.error) {
+      setError(result.error);
+      setDemoLoading(null);
+    } else if (result?.success) {
+      window.location.href = result.redirectUrl || callbackUrl;
+    }
+  }
+
   const features = selectedRole === "TUTOR" ? TUTOR_FEATURES : STUDENT_FEATURES;
 
   return (
     <div
       style={{
-        minHeight: "100vh",
+        minHeight: "calc(100vh - 72px)",
         background: "#F8FAFC",
         display: "flex",
         flexDirection: "column",
@@ -127,62 +136,6 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
           "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif)",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "1rem 2rem",
-          background: "#fff",
-          borderBottom: "1px solid #E2E8F0",
-        }}
-      >
-        <Link
-          href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.6rem",
-            textDecoration: "none",
-          }}
-        >
-          <Image
-            src="/images/logo.png"
-            alt="Learnivia"
-            width={32}
-            height={32}
-            style={{ borderRadius: "8px" }}
-          />
-          <span
-            style={{
-              fontWeight: 800,
-              fontSize: "1.15rem",
-              color: "#0C1B33",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Learnivia
-          </span>
-        </Link>
-        <span style={{ fontSize: "0.875rem", color: "#64748B" }}>
-          {isRegister ? "Already have an account? " : "New to Learnivia? "}
-          <button
-            onClick={() => setIsRegister(!isRegister)}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#0D9488",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontSize: "0.875rem",
-              padding: 0,
-            }}
-          >
-            {isRegister ? "Sign in" : "Create account"}
-          </button>
-        </span>
-      </div>
-
       <div
         style={{
           flex: 1,
@@ -384,6 +337,88 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
               ? "Free forever. No credit card required."
               : "Enter your credentials to continue."}
           </p>
+
+          {/* 1-Click Demo Quick Test Bar */}
+          <div
+            style={{
+              background: "#F0FDFA",
+              border: "1px solid #99F6E4",
+              borderRadius: "12px",
+              padding: "0.85rem 1rem",
+              marginBottom: "1.25rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "0.55rem",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  color: "#0F766E",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                ⚡ Instant Demo Login
+              </span>
+              <span style={{ fontSize: "0.72rem", color: "#0D9488", fontWeight: 600 }}>
+                1-Click Testing
+              </span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
+              {(["STUDENT", "TUTOR", "ADMIN"] as const).map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  disabled={!!demoLoading || loading}
+                  onClick={() => handleDemoLogin(r)}
+                  style={{
+                    padding: "0.5rem 0.4rem",
+                    borderRadius: "8px",
+                    border: "1px solid #99F6E4",
+                    background: "#ffffff",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "#0F766E",
+                    cursor: demoLoading ? "not-allowed" : "pointer",
+                    transition: "all 150ms ease",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.25rem",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!demoLoading) {
+                      (e.currentTarget as HTMLElement).style.background = "#CCFBF1";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#0D9488";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!demoLoading) {
+                      (e.currentTarget as HTMLElement).style.background = "#ffffff";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#99F6E4";
+                    }
+                  }}
+                >
+                  {demoLoading === r ? (
+                    "Signing in…"
+                  ) : r === "STUDENT" ? (
+                    "🎒 Learner"
+                  ) : r === "TUTOR" ? (
+                    "📚 Tutor"
+                  ) : (
+                    "🛡️ Admin"
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <form onSubmit={handleGoogleSignIn}>
             <input type="hidden" name="callbackUrl" value={callbackUrl} />

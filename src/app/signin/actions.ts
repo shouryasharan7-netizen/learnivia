@@ -162,6 +162,20 @@ export async function loginWithEmail(formData: FormData) {
     include: { tutorProfile: true },
   });
 
+  const isDemoEmail = [
+    "shourya@test.com",
+    "admin@test.com",
+    "tutor@test.com",
+    "student@test.com",
+  ].includes(email);
+
+  if (!existingUser && !isDemoEmail) {
+    return {
+      error:
+        "No account found with this email. Please click 'Create free account' below to sign up.",
+    };
+  }
+
   if (existingUser && !existingUser.password) {
     return {
       error:
@@ -186,11 +200,59 @@ export async function loginWithEmail(formData: FormData) {
     };
   }
 
+  // If normal user, verify password match with bcrypt before invoking NextAuth
+  if (existingUser?.password && !isDemoEmail) {
+    const isMatch = await bcrypt.compare(password, existingUser.password);
+    if (!isMatch) {
+      const newFailCount = (existingUser.failedLoginCount || 0) + 1;
+      const willLock = newFailCount >= 5;
+      await prisma.user.update({
+        where: { id: existingUser.id },
+        data: {
+          failedLoginCount: newFailCount,
+          lockedUntil: willLock
+            ? new Date(Date.now() + 15 * 60 * 1000)
+            : null,
+        },
+      });
+
+      if (willLock) {
+        return {
+          error:
+            "Too many failed login attempts. Account temporarily locked for 15 minutes. Please try again later or reset your password.",
+        };
+      }
+      return {
+        error: `Incorrect email or password. ${Math.max(1, 5 - newFailCount)} attempt(s) remaining before temporary lockout.`,
+      };
+    }
+  }
+
   try {
-    await signIn("credentials", { email, password, redirect: false });
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (
+      typeof result === "string" &&
+      (result.includes("error=") || result.includes("CredentialsSignin"))
+    ) {
+      return {
+        error: "Incorrect email or password. Please verify your credentials.",
+      };
+    }
 
     // Determine target redirect based on user role
-    const userRole = existingUser?.role || "STUDENT";
+    const userRole =
+      existingUser?.role ||
+      (email === "admin@test.com" || email === "shourya@test.com"
+        ? "ADMIN"
+        : email === "tutor@test.com"
+          ? "TUTOR"
+          : "STUDENT");
+
     let redirectUrl = callbackUrl;
     if (!redirectUrl || redirectUrl === "/dashboard") {
       if (userRole === "TUTOR") {
@@ -205,24 +267,6 @@ export async function loginWithEmail(formData: FormData) {
     return { success: true, redirectUrl };
   } catch (error) {
     if (error instanceof AuthError) {
-      if (existingUser) {
-        const freshUser = await prisma.user.findUnique({
-          where: { id: existingUser.id },
-          select: { lockedUntil: true, failedLoginCount: true },
-        });
-        if (freshUser?.lockedUntil && freshUser.lockedUntil > new Date()) {
-          return {
-            error:
-              "Too many failed login attempts. Account temporarily locked for 15 minutes. Please try again later or reset your password.",
-          };
-        }
-        if (freshUser?.failedLoginCount && freshUser.failedLoginCount >= 3) {
-          return {
-            error: `Incorrect email or password. Warning: ${Math.max(1, 5 - freshUser.failedLoginCount)} attempt(s) remaining before temporary lockout.`,
-          };
-        }
-      }
-
       switch (error.type) {
         case "CredentialsSignin":
           return { error: "Incorrect email or password. Please try again." };
@@ -249,15 +293,30 @@ export async function loginWithGoogle(formData: FormData) {
 
 export async function loginAsDemo(role: "STUDENT" | "TUTOR" | "ADMIN") {
   try {
+    const targetEmail =
+      role === "ADMIN"
+        ? "admin@test.com"
+        : role === "TUTOR"
+          ? "tutor@test.com"
+          : "student@test.com";
+
     let callbackUrl = "/dashboard";
     if (role === "TUTOR") callbackUrl = "/tutor";
     if (role === "ADMIN") callbackUrl = "/admin";
 
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
+      email: targetEmail,
+      password: "password123",
       demoRole: role,
-      password: "demo-preview",
       redirect: false,
     });
+
+    if (
+      typeof res === "string" &&
+      (res.includes("error=") || res.includes("CredentialsSignin"))
+    ) {
+      return { error: "Failed to sign in as demo user." };
+    }
 
     return { success: true, redirectUrl: callbackUrl };
   } catch (error) {

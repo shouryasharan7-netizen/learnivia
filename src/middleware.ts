@@ -27,7 +27,6 @@ const publicPaths = [
   "/forgot-password",
   "/reset-password",
   "/verify-email",
-  "/find",
   "/how-it-works",
   "/about",
   "/faq",
@@ -42,18 +41,14 @@ const publicPaths = [
   "/terms",
   "/cookies",
   "/learn",
-  "/sessions",
   "/homework-help",
   "/community",
   "/resources",
   "/apply",
   "/leaderboard",
   "/observatory",
-  // Redirect stubs — these redirect internally so unauthenticated users
-  // will be caught by the page-level getCurrentUser() check
+  // Redirect stubs
   "/tutor-dashboard", // → /tutor
-  "/live",            // → /sessions
-  "/book",            // → /find
   "/api/health", // Health check is public
   "/api/auth", // NextAuth callbacks
   "/api/cron", // Cron endpoints (Vercel cron)

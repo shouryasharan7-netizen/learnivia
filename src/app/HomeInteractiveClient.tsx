@@ -19,7 +19,6 @@ import {
   Video,
 } from "lucide-react";
 import styles from "./page.module.css";
-import ImpactStatsBar from "@/components/ImpactStatsBar";
 import MascotSquad from "@/components/MascotSquad";
 
 
@@ -663,9 +662,6 @@ export default function HomeInteractiveClient({
           }
         `}</style>
       </section>
-
-      {/* Animated Impact Stats */}
-      <ImpactStatsBar />
 
       <section className={styles.howItWorksSection} id="how-it-works">
         <div className={styles.container}>

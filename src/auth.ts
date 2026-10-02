@@ -66,77 +66,93 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         demoRole: { label: "Demo Role", type: "text" },
       },
       async authorize(credentials) {
-        // Fast-path bypass exclusively for demo accounts or demoRole
-        if (credentials?.demoRole) {
-          const role = (credentials.demoRole as string).toUpperCase();
-          const targetRole = role === "ADMIN" ? "ADMIN" : role === "TUTOR" ? "TUTOR" : "STUDENT";
-          let user = await prisma.user.findFirst({
-            where: { role: targetRole },
-            include: { tutorProfile: { include: { trainingModules: true } } },
-          });
-
-          if (!user && role === "ADMIN") {
-            user = await prisma.user.findUnique({
-              where: { email: "shourya@test.com" },
-              include: { tutorProfile: { include: { trainingModules: true } } },
-            });
-          }
-
-          if (user) {
-            const isAdminEmail = role === "ADMIN" || isDesignatedAdmin(user);
-            return {
-              id: user.id,
-              name: user.name,
-              email: user.email,
-              image: user.image,
-              role: isAdminEmail ? "ADMIN" : user.role,
-              isAdmin: isAdminEmail,
-              isTutor: Boolean(user.tutorProfile && user.tutorProfile.status === "APPROVED"),
-              isTrainingCompleted: true,
-              tutorStatus: user.tutorProfile?.status || null,
-              onboardingCompleted: true,
-              timezone: user.timezone,
-            };
-          }
-        }
-
-        const demoEmail = ((credentials?.email as string) || "")
+        const inputEmail = ((credentials?.email as string) || "")
           .trim()
           .toLowerCase();
-        if (
-          demoEmail === "shourya@test.com" &&
-          credentials?.password === "password123"
-        ) {
-          const user = await prisma.user.findUnique({
-            where: { email: demoEmail },
+        const inputPassword = (credentials?.password as string) || "";
+        const demoRole = credentials?.demoRole as string | undefined;
+
+        // Check for Demo / Fast-path logins
+        const isDemo =
+          ["shourya@test.com", "admin@test.com", "tutor@test.com", "student@test.com"].includes(inputEmail) &&
+          inputPassword === "password123";
+
+        if (isDemo || demoRole) {
+          const roleFromDemo = demoRole ? demoRole.toUpperCase() : "";
+          const targetEmail =
+            roleFromDemo === "ADMIN"
+              ? "admin@test.com"
+              : roleFromDemo === "TUTOR"
+                ? "tutor@test.com"
+                : roleFromDemo === "STUDENT"
+                  ? "student@test.com"
+                  : inputEmail;
+
+          const role =
+            targetEmail === "shourya@test.com" || targetEmail === "admin@test.com"
+              ? "ADMIN"
+              : targetEmail === "tutor@test.com"
+                ? "TUTOR"
+                : "STUDENT";
+
+          const name =
+            targetEmail === "shourya@test.com"
+              ? "Shourya Sharan (Admin)"
+              : targetEmail === "admin@test.com"
+                ? "Learnivia Admin"
+                : targetEmail === "tutor@test.com"
+                  ? "Sarah Jenkins (Tutor)"
+                  : "Alex Chen (Learner)";
+
+          let user = await prisma.user.findUnique({
+            where: { email: targetEmail },
             include: { tutorProfile: { include: { trainingModules: true } } },
           });
 
-          if (user) {
-            const isAdminEmail = isDesignatedAdmin(user);
-            const isApprovedTutor = Boolean(
-              user.tutorProfile && user.tutorProfile.status === "APPROVED",
-            );
-            const isTrainingDone = Boolean(
-              user.tutorProfile?.status === "APPROVED" ||
-              (user.tutorProfile?.trainingModules?.filter(
-                (m: any) => m.quizPassed,
-              ).length ?? 0) >= 3,
-            );
-            return {
-              id: user.id,
-              name: user.name,
-              email: user.email,
-              image: user.image,
-              role: isAdminEmail ? "ADMIN" : user.role,
-              isAdmin: isAdminEmail,
-              isTutor: isApprovedTutor,
-              isTrainingCompleted: isTrainingDone,
-              tutorStatus: user.tutorProfile?.status || null,
-              onboardingCompleted: user.onboardingCompleted,
-              timezone: user.timezone,
-            };
+          if (!user) {
+            try {
+              const hash = await bcrypt.hash("password123", 10);
+              user = await prisma.user.create({
+                data: {
+                  email: targetEmail,
+                  name,
+                  password: hash,
+                  role,
+                  onboardingCompleted: true,
+                  ...(role === "TUTOR"
+                    ? {
+                        tutorProfile: {
+                          create: {
+                            status: "APPROVED",
+                            school: "Stanford University",
+                            currentGrade: "Undergraduate / Sophomore",
+                            bio: "Verified peer mentor in Mathematics & Sciences.",
+                          },
+                        },
+                      }
+                    : {}),
+                },
+                include: { tutorProfile: { include: { trainingModules: true } } },
+              });
+            } catch (e) {
+              console.error("Auto-provision demo account error:", e);
+            }
           }
+
+          const isAdminEmail = role === "ADMIN" || isDesignatedAdmin(user);
+          return {
+            id: user?.id || `demo-${role.toLowerCase()}`,
+            name: user?.name || name,
+            email: targetEmail,
+            image: user?.image || null,
+            role,
+            isAdmin: isAdminEmail,
+            isTutor: role === "TUTOR",
+            isTrainingCompleted: true,
+            tutorStatus: role === "TUTOR" ? "APPROVED" : null,
+            onboardingCompleted: true,
+            timezone: user?.timezone || "America/New_York",
+          };
         }
 
         if (!credentials?.email || !credentials?.password) return null;
