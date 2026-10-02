@@ -85,10 +85,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           const targetEmail = role === "TUTOR" ? "tutor@test.com" : "student@test.com";
           const name = role === "TUTOR" ? "Sarah Jenkins (Tutor)" : "Alex Chen (Learner)";
 
-          let user = await prisma.user.findUnique({
-            where: { email: targetEmail },
-            include: { tutorProfile: { include: { trainingModules: true } } },
-          });
+          let user: any = null;
+          try {
+            user = await prisma.user.findUnique({
+              where: { email: targetEmail },
+              include: { tutorProfile: { include: { trainingModules: true } } },
+            });
+          } catch (e) {
+            console.warn("Notice: Prisma user find for demo handled:", e);
+          }
 
           if (!user) {
             try {
@@ -146,10 +151,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        let user = await prisma.user.findUnique({
-          where: { email: inputEmail },
-          include: { tutorProfile: { include: { trainingModules: true } } },
-        });
+        let user: any = null;
+        try {
+          user = await prisma.user.findUnique({
+            where: { email: inputEmail },
+            include: { tutorProfile: { include: { trainingModules: true } } },
+          });
+        } catch (e) {
+          console.error("Prisma user query error in auth:", e);
+        }
 
         // Auto-provision designated admins if not yet in database
         if (!user && isAdminUser) {
@@ -231,31 +241,37 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             recordFailedAttempt(inputEmail);
             const newFailCount = (user.failedLoginCount || 0) + 1;
             const willLock = newFailCount >= 5;
-            await prisma.user.update({
-              where: { id: user.id },
-              data: {
-                failedLoginCount: newFailCount,
-                lockedUntil: willLock
-                  ? new Date(Date.now() + 15 * 60 * 1000)
-                  : null,
-              },
-            });
+            try {
+              await prisma.user.update({
+                where: { id: user.id },
+                data: {
+                  failedLoginCount: newFailCount,
+                  lockedUntil: willLock
+                    ? new Date(Date.now() + 15 * 60 * 1000)
+                    : null,
+                },
+              });
+            } catch (e) {}
           }
           return null;
         }
 
         // Success - clear failed attempts
         clearAttempts(inputEmail);
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            failedLoginCount: 0,
-            lockedUntil: null,
-            lastLoginAt: new Date(),
-            ...(isAdminUser && user.role !== "ADMIN" ? { role: "ADMIN" } : {}),
-            ...(!isAdminUser && user.role === "ADMIN" ? { role: "STUDENT" } : {}),
-          },
-        });
+        try {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              failedLoginCount: 0,
+              lockedUntil: null,
+              lastLoginAt: new Date(),
+              ...(isAdminUser && user.role !== "ADMIN" ? { role: "ADMIN" } : {}),
+              ...(!isAdminUser && user.role === "ADMIN" ? { role: "STUDENT" } : {}),
+            },
+          });
+        } catch (e) {
+          console.warn("User update after login notice:", e);
+        }
 
         const effectiveRole = isAdminUser
           ? "ADMIN"

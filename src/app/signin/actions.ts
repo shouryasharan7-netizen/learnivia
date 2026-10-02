@@ -35,15 +35,22 @@ export async function loginWithEmail(formData: FormData) {
 
   if (action === "register") {
     // Check if user exists
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    let existingUser: any = null;
+    try {
+      existingUser = await prisma.user.findUnique({ where: { email } });
+    } catch (err) {
+      console.warn("Notice: prisma.user.findUnique in register:", err);
+    }
     if (existingUser) {
       if (!existingUser.password) {
         // Automatically set password for existing Google account trying to register
         const hashedPassword = await bcrypt.hash(password, 10);
-        await prisma.user.update({
-          where: { id: existingUser.id },
-          data: { password: hashedPassword, failedLoginCount: 0, lockedUntil: null },
-        });
+        try {
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: { password: hashedPassword, failedLoginCount: 0, lockedUntil: null },
+          });
+        } catch (e) {}
         try {
           await signIn("credentials", { email, password, redirect: false });
           return { success: true, redirectUrl: callbackUrl || "/dashboard" };
@@ -168,10 +175,15 @@ export async function loginWithEmail(formData: FormData) {
 
   // Handle Login
   const isAdmin = isDesignatedAdmin({ email });
-  let existingUser = await prisma.user.findUnique({
-    where: { email },
-    include: { tutorProfile: true },
-  });
+  let existingUser: any = null;
+  try {
+    existingUser = await prisma.user.findUnique({
+      where: { email },
+      include: { tutorProfile: true },
+    });
+  } catch (err) {
+    console.warn("Notice: prisma.user.findUnique in loginWithEmail handled:", err);
+  }
 
   const isDemoEmail = ["tutor@test.com", "student@test.com"].includes(email);
 

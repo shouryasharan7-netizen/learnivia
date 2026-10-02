@@ -8,7 +8,12 @@ const { auth } = NextAuth(authConfig);
 import { checkRateLimit } from "@/lib/rate-limit";
 
 // Rate Limit logic uses Upstash Redis for distributed protection across Edge instances
-async function handleRateLimit(ip: string, path: string): Promise<boolean> {
+async function handleRateLimit(ip: string, path: string, method?: string): Promise<boolean> {
+  // Allow all non-API GET page visits to browse freely without getting 429'd
+  if (method === "GET" && !path.startsWith("/api/")) {
+    return true;
+  }
+
   let limiterType: "auth" | "api" | "global" = "global";
   if (path.startsWith("/signin") || path.startsWith("/signup")) {
     limiterType = "auth";
@@ -53,6 +58,7 @@ const publicPaths = [
   "/api/auth", // NextAuth callbacks
   "/api/cron", // Cron endpoints (Vercel cron)
   "/api/admin/secure-rls", // Secured by Bearer secret in route handler
+  "/api/admin/sync-db", // Secured DB schema sync route
   "/api/admin/ingest-questions", // Secured by x-learnivia-admin-key in route handler
   "/robots.txt",
   "/sitemap.xml",
@@ -70,7 +76,7 @@ export default auth(async (req) => {
     req.headers.get("x-real-ip") ||
     "unknown";
 
-  if (!(await handleRateLimit(ip, nextUrl.pathname))) {
+  if (!(await handleRateLimit(ip, nextUrl.pathname, req.method))) {
     const isHtml = req.headers.get("accept")?.includes("text/html");
     if (isHtml) {
       return new NextResponse(
