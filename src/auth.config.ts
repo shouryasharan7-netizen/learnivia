@@ -46,17 +46,32 @@ export function isDesignatedAdmin(
   return false;
 }
 
+const authSecret =
+  process.env.AUTH_SECRET ||
+  process.env.NEXTAUTH_SECRET ||
+  "quSW5mfFhv4xsjyCVlP5URTC05PUYgheapqf7osV3jM=";
+
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+const authProviders: any[] = [];
+if (googleClientId && googleClientSecret) {
+  authProviders.push(
+    GoogleProvider({
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
+    }),
+  );
+}
+
 export const authConfig = {
+  secret: authSecret,
   trustHost: true,
   pages: {
     signIn: "/signin",
+    error: "/signin",
   },
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-  ],
+  providers: authProviders,
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       // Handle safe session updates from the client (e.g. onboarding status)

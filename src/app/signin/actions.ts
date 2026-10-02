@@ -238,6 +238,12 @@ export async function loginWithEmail(formData: FormData) {
 
 export async function loginWithGoogle(formData: FormData) {
   const callbackUrl = (formData.get("callbackUrl") as string) || "/dashboard";
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    return {
+      error:
+        "Google Sign-In is currently being connected to Google Cloud. Please use your email and password to sign in or create an account below.",
+    };
+  }
   await signIn("google", { redirectTo: callbackUrl });
 }
 

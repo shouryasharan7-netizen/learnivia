@@ -28,7 +28,7 @@ interface Mascot {
   role: string;
   motto: string;
   tip: string;
-  stat: string;
+  pedagogyTrait: string;
   subjectQuery: string;
   accent: string;
   accentBg: string;
@@ -45,7 +45,7 @@ const MASCOTS: Mascot[] = [
     role: "Algebra, Calculus & Logic",
     motto: "Every complex formula breaks down into simple, intuitive patterns.",
     tip: "When facing a tough problem, work backwards from the target value. Break the equation down into bite-sized steps!",
-    stat: "3,200+ Problems Solved",
+    pedagogyTrait: "Step-by-Step Logic",
     subjectQuery: "Mathematics",
     accent: "#0284c7",
     accentBg: "#e0f2fe",
@@ -60,7 +60,7 @@ const MASCOTS: Mascot[] = [
     role: "Natural & Physical Sciences",
     motto: "Questions are the fuel of science. Never hesitate to ask 'why'!",
     tip: "Connect abstract formulas to real-world phenomena. Think of energy transfer like rollercoasters and photosynthesis like solar cooking!",
-    stat: "1,850+ Experiments Run",
+    pedagogyTrait: "Inquiry-Based Science",
     subjectQuery: "Science",
     accent: "#059669",
     accentBg: "#ecfdf5",
@@ -75,7 +75,7 @@ const MASCOTS: Mascot[] = [
     role: "Essays & Critical Analysis",
     motto: "Strong words inspire the world. Structure your ideas with pride.",
     tip: "Always use Point-Evidence-Explanation-Link (PEEL). Clear paragraph rhythm makes your argument impossible to ignore.",
-    stat: "2,400+ Essays Polished",
+    pedagogyTrait: "PEEL Essay Framework",
     subjectQuery: "English & Writing",
     accent: "#d97706",
     accentBg: "#fef3c7",
@@ -90,7 +90,7 @@ const MASCOTS: Mascot[] = [
     role: "Python, Web & Computational Logic",
     motto: "Bugs are just creative puzzles waiting for the right solution.",
     tip: "When code doesn't work, don't guess! Print your variable states or step through with a debugger to find where logic branches diverge.",
-    stat: "1,100+ Coding Sessions",
+    pedagogyTrait: "Algorithmic Thinking",
     subjectQuery: "Mathematics",
     accent: "#2563eb",
     accentBg: "#eff6ff",
@@ -105,7 +105,7 @@ const MASCOTS: Mascot[] = [
     role: "Standardized & AP Mastery",
     motto: "Targeted strategy beats endless cramming every single time.",
     tip: "On the digital SAT, eliminate two obviously incorrect answers first. Pacing and composure turn 700s into 800s!",
-    stat: "1,600+ Test Prep Sessions",
+    pedagogyTrait: "Exam Time Strategy",
     subjectQuery: "Standardized Testing",
     accent: "#7c3aed",
     accentBg: "#f5f3ff",
@@ -120,7 +120,7 @@ const MASCOTS: Mascot[] = [
     role: "Live Homework & Concept Reviews",
     motto: "No question is too small to ask. Learning is a shared adventure!",
     tip: "Use 25-minute Pomodoro study bursts. Short, hyper-focused sessions build far deeper long-term recall than 4-hour marathons.",
-    stat: "4,500+ Questions Solved",
+    pedagogyTrait: "Daily Doubt Solving",
     subjectQuery: "Homework Help",
     accent: "#ea580c",
     accentBg: "#fff7ed",
@@ -130,21 +130,16 @@ const MASCOTS: Mascot[] = [
 
 export default function MascotSquad() {
   const [selectedMascot, setSelectedMascot] = useState<Mascot>(MASCOTS[0]);
-  const [cheers, setCheers] = useState<Record<string, number>>({
-    archie: 124,
-    pip: 98,
-    barnaby: 112,
-    sparky: 145,
-    stella: 168,
-    milo: 194,
-  });
+  const [cheeredIds, setCheeredIds] = useState<Set<string>>(new Set());
 
   const handleCheer = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
-    setCheers((prev) => ({
-      ...prev,
-      [id]: (prev[id] || 0) + 1,
-    }));
+    setCheeredIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   };
 
   return (
@@ -174,7 +169,7 @@ export default function MascotSquad() {
           {MASCOTS.map((m, idx) => {
             const isSelected = selectedMascot.id === m.id;
             const Icon = m.icon;
-            const cheerCount = cheers[m.id] || 100;
+            const isCheered = cheeredIds.has(m.id);
 
             return (
               <motion.div
@@ -206,9 +201,22 @@ export default function MascotSquad() {
                     className={styles.cheerBtn}
                     title="Cheer on this mascot"
                     aria-label={`Cheer for ${m.name}`}
+                    style={{
+                      background: isCheered ? m.accentBg : undefined,
+                      borderColor: isCheered ? m.accent : undefined,
+                    }}
                   >
-                    <Heart size={14} className={styles.heartIcon} />
-                    <span>{cheerCount}</span>
+                    <Heart
+                      size={14}
+                      className={styles.heartIcon}
+                      style={{
+                        fill: isCheered ? m.accent : "none",
+                        color: isCheered ? m.accent : undefined,
+                      }}
+                    />
+                    <span style={{ color: isCheered ? m.accent : undefined, fontWeight: isCheered ? 700 : 500 }}>
+                      {isCheered ? "Cheered! ✨" : "Cheer"}
+                    </span>
                   </button>
                 </div>
 
@@ -259,7 +267,7 @@ export default function MascotSquad() {
 
                   <div className={styles.statPill}>
                     <Award size={13} style={{ color: m.accent }} />
-                    <span>{m.stat}</span>
+                    <span>{m.pedagogyTrait}</span>
                   </div>
                 </div>
 

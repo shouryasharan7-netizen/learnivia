@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { loginWithEmail, loginWithGoogle } from "./actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,6 +67,23 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
   const [loading, setLoading] = useState(false);
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
+  useEffect(() => {
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      if (errorParam === "Configuration") {
+        setError(
+          "Sign-in configuration is initializing. Please sign in with your email and password below.",
+        );
+      } else if (errorParam === "AccessDenied") {
+        setError("Access was denied. Please try again or sign in with email.");
+      } else {
+        setError(
+          `Authentication note: ${errorParam}. Please sign in with email and password.`,
+        );
+      }
+    }
+  }, [searchParams]);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -88,9 +105,13 @@ function SignInClientInner({ initialIsRegister = false }: SignInClientProps) {
 
   async function handleGoogleSignIn(e: React.FormEvent) {
     e.preventDefault();
+    setError("");
     const form = e.currentTarget as HTMLFormElement;
     const fd = new FormData(form);
-    await loginWithGoogle(fd);
+    const result = await loginWithGoogle(fd);
+    if (result?.error) {
+      setError(result.error);
+    }
   }
 
   const features = selectedRole === "TUTOR" ? TUTOR_FEATURES : STUDENT_FEATURES;

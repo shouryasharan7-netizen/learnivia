@@ -18,6 +18,8 @@ import {
   Sparkles,
   Globe,
   Zap,
+  FileCheck,
+  AlertCircle,
 } from "lucide-react";
 
 export default function HowItWorksPage() {
@@ -187,9 +189,9 @@ export default function HowItWorksPage() {
             style={{ display: "flex", gap: "2rem", justifyContent: "center", flexWrap: "wrap" }}
           >
             {[
-              { icon: <Globe size={14} />, text: "47 countries" },
-              { icon: <Zap size={14} />, text: "12,400+ sessions" },
-              { icon: <ShieldCheck size={14} />, text: "PVSA recognized" },
+              { icon: <Globe size={14} />, text: "Global Community" },
+              { icon: <Zap size={14} />, text: "100% Free Peer Learning" },
+              { icon: <ShieldCheck size={14} />, text: "PVSA Recognized Org" },
             ].map((item) => (
               <span
                 key={item.text}
@@ -591,6 +593,309 @@ export default function HowItWorksPage() {
               </div>
             </div>
           </motion.div>
+
+          {/* Step 02: Track Milestones & Attendance */}
+          <motion.div
+            className={`${styles.timelineRow} ${styles.reverse}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <FileCheck size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>02</div>
+              <h3>Track Milestones &amp; Attendance</h3>
+              <p>
+                Receive automated attendance confirmations and lesson takeaway summaries
+                directly in your guardian inbox after every completed session. Mentors record
+                key competencies covered, homework suggestions, and recommended practice without
+                any unmonitored private direct messaging.
+              </p>
+            </div>
+            <div className={styles.timelineImage}>
+              <div
+                className={styles.stepImageCard}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "1.75rem",
+                  justifyContent: "space-between",
+                  background: "#ffffff",
+                  border: "1px solid #e2e8f0",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid #e2e8f0",
+                    paddingBottom: "1rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                    <div
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "8px",
+                        background: "rgba(14, 165, 233, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#0284c7",
+                      }}
+                    >
+                      <FileCheck size={20} />
+                    </div>
+                    <div>
+                      <h4 style={{ margin: 0, fontSize: "0.95rem", fontWeight: 700, color: "#0F172A" }}>
+                        Verified Session Report
+                      </h4>
+                      <span style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                        Subject: Linear Equations &amp; Graphs
+                      </span>
+                    </div>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      padding: "0.2rem 0.55rem",
+                      borderRadius: "9999px",
+                      background: "#EFF6FF",
+                      color: "#1D4ED8",
+                      border: "1px solid #BFDBFE",
+                    }}
+                  >
+                    AUDITED LOG
+                  </span>
+                </div>
+
+                <div style={{ padding: "0.85rem 0", display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.65rem 0.85rem",
+                      background: "#F8FAFC",
+                      borderRadius: "6px",
+                      fontSize: "0.85rem",
+                      color: "#334155",
+                    }}
+                  >
+                    <span>Assigned Volunteer Tutor</span>
+                    <span style={{ color: "#0C1B33", fontWeight: 600 }}>Arjun M. (Verified Grade 11)</span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.65rem 0.85rem",
+                      background: "#F8FAFC",
+                      borderRadius: "6px",
+                      fontSize: "0.85rem",
+                      color: "#334155",
+                    }}
+                  >
+                    <span>Session Notes &amp; Practice</span>
+                    <span style={{ color: "#059669", fontWeight: 600 }}>Mastered Slope Formula</span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.65rem 0.85rem",
+                      background: "#F8FAFC",
+                      borderRadius: "6px",
+                      fontSize: "0.85rem",
+                      color: "#334155",
+                    }}
+                  >
+                    <span>Parent Email Receipt</span>
+                    <span style={{ color: "#059669", fontWeight: 600 }}>Delivered ✓</span>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    fontSize: "0.78rem",
+                    color: "#64748B",
+                    paddingTop: "0.6rem",
+                    borderTop: "1px solid #F1F5F9",
+                  }}
+                >
+                  <CheckCircle2 size={13} color="#0284c7" />
+                  <span>Tamper-evident logs preserved for student educational records</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Step 03: Direct Safeguarding & 1-Click Moderation */}
+          <motion.div
+            className={styles.timelineRow}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className={styles.timelineContent}>
+              <div className={styles.stepIconWrap}>
+                <AlertCircle size={26} aria-hidden="true" />
+              </div>
+              <div className={styles.stepNumber}>03</div>
+              <h3>Direct Safeguarding &amp; Moderation</h3>
+              <p>
+                Learnivia is architected with child safety as the first priority.
+                Sessions include an instant emergency stop trigger, direct reporting to our
+                safeguarding committee with guaranteed 24-hour review, and zero third-party
+                tracking or monetization of your family&apos;s data.
+              </p>
+            </div>
+            <div className={styles.timelineImage}>
+              <div
+                className={styles.stepImageCard}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "1.75rem",
+                  justifyContent: "space-between",
+                  background: "#ffffff",
+                  border: "1px solid #e2e8f0",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid #e2e8f0",
+                    paddingBottom: "1rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                    <div
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "8px",
+                        background: "rgba(220, 38, 38, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#DC2626",
+                      }}
+                    >
+                      <AlertCircle size={20} />
+                    </div>
+                    <div>
+                      <h4 style={{ margin: 0, fontSize: "0.95rem", fontWeight: 700, color: "#0F172A" }}>
+                        Safety Protocol Shield
+                      </h4>
+                      <span style={{ fontSize: "0.75rem", color: "#64748B" }}>
+                        Active Youth Protection SLA
+                      </span>
+                    </div>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      padding: "0.2rem 0.55rem",
+                      borderRadius: "9999px",
+                      background: "#FEF2F2",
+                      color: "#DC2626",
+                      border: "1px solid #FECACA",
+                    }}
+                  >
+                    COPPA / FERPA ALIGNED
+                  </span>
+                </div>
+
+                <div style={{ padding: "0.85rem 0", display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.65rem 0.85rem",
+                      background: "#F8FAFC",
+                      borderRadius: "6px",
+                      fontSize: "0.85rem",
+                      color: "#334155",
+                    }}
+                  >
+                    <span>Emergency Stop &amp; Escalate</span>
+                    <span style={{ color: "#DC2626", fontWeight: 600 }}>Instant 1-Click</span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.65rem 0.85rem",
+                      background: "#F8FAFC",
+                      borderRadius: "6px",
+                      fontSize: "0.85rem",
+                      color: "#334155",
+                    }}
+                  >
+                    <span>Safety Committee Response</span>
+                    <span style={{ color: "#059669", fontWeight: 600 }}>&lt; 24h SLA</span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.65rem 0.85rem",
+                      background: "#F8FAFC",
+                      borderRadius: "6px",
+                      fontSize: "0.85rem",
+                      color: "#334155",
+                    }}
+                  >
+                    <span>Commercial Ads / Tracking</span>
+                    <span style={{ color: "#059669", fontWeight: 600 }}>Zero (100% Free)</span>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    fontSize: "0.78rem",
+                    color: "#64748B",
+                    paddingTop: "0.6rem",
+                    borderTop: "1px solid #F1F5F9",
+                  }}
+                >
+                  <ShieldCheck size={13} color="#059669" />
+                  <span>Strict zero-tolerance policy for child welfare violations</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        <div className={styles.ctaWrapper}>
+          <Link href="/parents" className={styles.primaryBtn}>
+            Read Guardian Guide <ArrowRight size={18} />
+          </Link>
+          <Link href="/safety" className={styles.secondaryBtn}>
+            View Safety Charter
+          </Link>
         </div>
       </section>
     </main>

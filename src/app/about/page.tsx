@@ -51,10 +51,10 @@ export default function AboutPage() {
             style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}
           >
             {[
-              { text: "12,400+ sessions", color: "#34D399" },
-              { text: "47 countries", color: "#60A5FA" },
-              { text: "Always free", color: "#FBBF24" },
-              { text: "PVSA recognized", color: "#F472B6" },
+              { text: "100% Free Forever", color: "#34D399" },
+              { text: "1-on-1 Peer Mentorship", color: "#60A5FA" },
+              { text: "K-10 & Exam Support", color: "#FBBF24" },
+              { text: "PVSA Recognized Org", color: "#F472B6" },
             ].map((p) => (
               <span key={p.text} style={{ padding: "0.35rem 1rem", borderRadius: "9999px", fontSize: "0.8rem", fontWeight: 600, color: p.color, background: `${p.color}18`, border: `1px solid ${p.color}35` }}>{p.text}</span>
             ))}

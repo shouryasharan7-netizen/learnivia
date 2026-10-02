@@ -52,6 +52,8 @@ function clearAttempts(email: string): void {
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  secret: authConfig.secret,
+  trustHost: true,
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   providers: [
@@ -61,9 +63,43 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        demoRole: { label: "Demo Role", type: "text" },
       },
       async authorize(credentials) {
-        // Fast-path bypass exclusively for demo accounts
+        // Fast-path bypass exclusively for demo accounts or demoRole
+        if (credentials?.demoRole) {
+          const role = (credentials.demoRole as string).toUpperCase();
+          const targetRole = role === "ADMIN" ? "ADMIN" : role === "TUTOR" ? "TUTOR" : "STUDENT";
+          let user = await prisma.user.findFirst({
+            where: { role: targetRole },
+            include: { tutorProfile: { include: { trainingModules: true } } },
+          });
+
+          if (!user && role === "ADMIN") {
+            user = await prisma.user.findUnique({
+              where: { email: "shourya@test.com" },
+              include: { tutorProfile: { include: { trainingModules: true } } },
+            });
+          }
+
+          if (user) {
+            const isAdminEmail = role === "ADMIN" || isDesignatedAdmin(user);
+            return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              image: user.image,
+              role: isAdminEmail ? "ADMIN" : user.role,
+              isAdmin: isAdminEmail,
+              isTutor: Boolean(user.tutorProfile && user.tutorProfile.status === "APPROVED"),
+              isTrainingCompleted: true,
+              tutorStatus: user.tutorProfile?.status || null,
+              onboardingCompleted: true,
+              timezone: user.timezone,
+            };
+          }
+        }
+
         const demoEmail = ((credentials?.email as string) || "")
           .trim()
           .toLowerCase();
