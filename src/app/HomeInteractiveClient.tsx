@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import styles from "./page.module.css";
 import ImpactStatsBar from "@/components/ImpactStatsBar";
+import MascotSquad from "@/components/MascotSquad";
 
 
 interface HomeInteractiveClientProps {
@@ -931,6 +932,9 @@ export default function HomeInteractiveClient({
           </div>
         </div>
       </section>
+ 
+      {/* Animated Mascot Section between Curriculum/Safeguard and FAQ */}
+      <MascotSquad />
 
       <section className={styles.faqSection} id="faq">
         <div className={styles.container}>

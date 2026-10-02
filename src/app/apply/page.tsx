@@ -20,38 +20,45 @@ export default async function ApplyPage() {
     return (
       <main className={styles.main}>
         <div className={styles.header}>
-          <Image
-            src="/images/become-a-tutor.png"
-            alt=""
-            width={120}
-            height={150}
-            className={styles.mascotImg}
-          />
+          <div className={styles.headerMascotWrap}>
+            <Image
+              src="/images/become-a-tutor.png"
+              alt="Become a Learnivia volunteer tutor"
+              width={130}
+              height={160}
+              className={styles.mascotImg}
+              priority
+            />
+          </div>
+          <div className={styles.scopeBadge}>
+            <span>Volunteer Mentorship Program • K-12 &amp; Standardized Test Scope</span>
+          </div>
           <h1 className={styles.title}>Become a Volunteer Tutor</h1>
           <p className={styles.subtitle}>
-            Help K-10 students learn for free. Earn verified volunteer hours.
-            Make a genuine community impact.
+            Help K-12 students and test prep candidates learn for free. Earn certified volunteer service hours,
+            build leadership credentials, and make a genuine community impact.
           </p>
+
+          <div className={styles.heroPerksRow}>
+            <div className={styles.heroPerkPill}>
+              <span>⏱️ Flexible Hours (1-3 hrs/wk)</span>
+            </div>
+            <div className={styles.heroPerkPill}>
+              <span>📜 Certified Service Transcript</span>
+            </div>
+            <div className={styles.heroPerkPill}>
+              <span>🎓 College &amp; CV Distinction</span>
+            </div>
+            <div className={styles.heroPerkPill}>
+              <span>🛡️ 100% Free Tutor Training</span>
+            </div>
+          </div>
         </div>
 
         <div className={styles.formContainer}>
           <div className={styles.loginPrompt}>
-            <div
-              className={styles.loginPromptIcon}
-              aria-hidden="true"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 56,
-                height: 56,
-                borderRadius: "50%",
-                background: "var(--bg-canvas, #F4F0E8)",
-                color: "var(--color-forest, #234B3B)",
-                margin: "0 auto 1rem auto",
-              }}
-            >
-              <Lock size={28} />
+            <div className={styles.loginPromptIcon} aria-hidden="true">
+              <Lock size={30} />
             </div>
             <h2>Create a free account to apply</h2>
             <p>
@@ -60,28 +67,13 @@ export default async function ApplyPage() {
               and is completely free.
             </p>
             <div className={styles.loginActions}>
-              <Link
-                href="/signup?role=tutor"
-                className={styles.submitBtn}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.4rem",
-                }}
-              >
-                Sign Up as a Volunteer Tutor <ArrowRight size={15} />
+              <Link href="/signup?role=tutor" className={styles.submitBtn}>
+                Sign Up as a Volunteer Tutor <ArrowRight size={16} />
               </Link>
             </div>
             <p className={styles.loginNote}>
               Already have an account?{" "}
-              <Link
-                href="/signin?callbackUrl=/apply"
-                style={{
-                  color: "var(--color-forest, #234B3B)",
-                  fontWeight: 700,
-                }}
-              >
+              <Link href="/signin?callbackUrl=/apply" className={styles.signinInlineLink}>
                 Sign in here
               </Link>
               .
@@ -89,61 +81,23 @@ export default async function ApplyPage() {
           </div>
 
           <div className={styles.benefitsList}>
-            <h3>What volunteer tutors get on Learnivia</h3>
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-              }}
-            >
-              <li
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <CheckCircle2
-                  size={16}
-                  color="var(--color-forest, #234B3B)"
-                  style={{ flexShrink: 0 }}
-                />
-                <span>Verified record of volunteer service hours</span>
+            <h3>What Volunteer Tutors Get on Learnivia</h3>
+            <ul className={styles.benefitsUl}>
+              <li>
+                <CheckCircle2 size={18} color="#1b4d3e" style={{ flexShrink: 0 }} />
+                <span><strong>Official Verified Service Records:</strong> Downloadable PDF transcripts for high school counselors, honor societies, and scholarship boards.</span>
               </li>
-              <li
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <CheckCircle2
-                  size={16}
-                  color="var(--color-forest, #234B3B)"
-                  style={{ flexShrink: 0 }}
-                />
-                <span>
-                  Verified downloadable service record for school counselors
-                  &amp; portfolios
-                </span>
+              <li>
+                <CheckCircle2 size={18} color="#1b4d3e" style={{ flexShrink: 0 }} />
+                <span><strong>Complete Scheduling Autonomy:</strong> Host group workshops or 1-on-1 sessions on your own calendar availability.</span>
               </li>
-              <li
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <CheckCircle2
-                  size={16}
-                  color="var(--color-forest, #234B3B)"
-                  style={{ flexShrink: 0 }}
-                />
-                <span>
-                  Complete schedule freedom, you set your own availability
-                </span>
+              <li>
+                <CheckCircle2 size={18} color="#1b4d3e" style={{ flexShrink: 0 }} />
+                <span><strong>Specialized Teaching Tracks:</strong> Teach core K-12 academics or high-demand test prep (SAT, ACT, AP, TOEFL, IELTS).</span>
               </li>
-              <li
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <CheckCircle2
-                  size={16}
-                  color="var(--color-forest, #234B3B)"
-                  style={{ flexShrink: 0 }}
-                />
-                <span>Free training in safeguarding and online pedagogy</span>
+              <li>
+                <CheckCircle2 size={18} color="#1b4d3e" style={{ flexShrink: 0 }} />
+                <span><strong>Free Certified Pedagogical Training:</strong> 5 comprehensive modules on child safety, active listening, and online workshop facilitation.</span>
               </li>
             </ul>
           </div>
@@ -164,13 +118,19 @@ export default async function ApplyPage() {
   return (
     <main className={styles.main}>
       <div className={styles.header}>
-        <Image
-          src="/images/become-a-tutor.png"
-          alt=""
-          width={120}
-          height={150}
-          className={styles.mascotImg}
-        />
+        <div className={styles.headerMascotWrap}>
+          <Image
+            src="/images/become-a-tutor.png"
+            alt="Learnivia Volunteer Mascot"
+            width={120}
+            height={150}
+            className={styles.mascotImg}
+            priority
+          />
+        </div>
+        <div className={styles.scopeBadge}>
+          <span>Verified Volunteer Portal</span>
+        </div>
         <h1 className={styles.title}>
           {tutorProfile
             ? "Your Volunteer Tutor Application"
@@ -179,8 +139,31 @@ export default async function ApplyPage() {
         <p className={styles.subtitle}>
           {tutorProfile
             ? "Manage your credentials, update your subjects, and view your review status."
-            : "Share what you know with K-10 learners. Complete your application below to get started."}
+            : "Share what you know with K-12 and standardized test prep learners. Complete your application below to get started."}
         </p>
+
+        {/* 4-Step Visual Progress Bar */}
+        <div className={styles.progressBar}>
+          <div className={styles.progressStep}>
+            <div className={`${styles.progressDot} ${styles.progressDotActive}`}>1</div>
+            <span>Personal</span>
+          </div>
+          <div className={`${styles.progressLine} ${styles.progressLineActive}`} />
+          <div className={styles.progressStep}>
+            <div className={`${styles.progressDot} ${styles.progressDotActive}`}>2</div>
+            <span>Academics</span>
+          </div>
+          <div className={`${styles.progressLine} ${styles.progressLineActive}`} />
+          <div className={styles.progressStep}>
+            <div className={`${styles.progressDot} ${styles.progressDotActive}`}>3</div>
+            <span>Subjects</span>
+          </div>
+          <div className={`${styles.progressLine} ${styles.progressLineActive}`} />
+          <div className={styles.progressStep}>
+            <div className={`${styles.progressDot} ${styles.progressDotActive}`}>4</div>
+            <span>Safety Agreement</span>
+          </div>
+        </div>
       </div>
 
       <div className={styles.formContainer}>

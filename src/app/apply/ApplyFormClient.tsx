@@ -43,6 +43,8 @@ const GRADE_OPTIONS = [
   { value: "grade-3-5", label: "Elementary (Grades 3-5)" },
   { value: "grade-6-8", label: "Middle School (Grades 6-8)" },
   { value: "grade-9-10", label: "Early High School (Grades 9-10)" },
+  { value: "grade-11-12", label: "Senior High School (Grades 11-12)" },
+  { value: "test-prep", label: "Standardized & AP Prep (SAT/ACT/AP/TOEFL)" },
 ];
 
 export default function ApplyFormClient({
@@ -607,7 +609,7 @@ export default function ApplyFormClient({
         {/* 3. Grade Bands & Subjects */}
         <div className={styles.formSection}>
           <h2 className={styles.formSectionTitle}>
-            3. What You'll Teach (K-10)
+            3. What You'll Teach (K-12 &amp; Test Prep)
           </h2>
           <div className={styles.formGroup}>
             <label>Grade Levels You Can Support *</label>

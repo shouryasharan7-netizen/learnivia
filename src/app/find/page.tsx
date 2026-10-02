@@ -101,6 +101,26 @@ function getSessionUrgency(startTime: Date, endTime: Date) {
   };
 }
 
+function getSubjectMascot(subject?: string) {
+  const s = (subject || "").toLowerCase();
+  if (s.includes("math") || s.includes("algebra") || s.includes("geom") || s.includes("calc")) {
+    return { src: "/images/new_mascots/mascot-1.jpeg", alt: "Math Mascot", badgeColor: "#0284c7", badgeBg: "#e0f2fe" };
+  }
+  if (s.includes("sci") || s.includes("bio") || s.includes("chem") || s.includes("phys")) {
+    return { src: "/images/new_mascots/mascot-2.jpeg", alt: "Science Mascot", badgeColor: "#059669", badgeBg: "#ecfdf5" };
+  }
+  if (s.includes("eng") || s.includes("writ") || s.includes("read") || s.includes("peel") || s.includes("lit")) {
+    return { src: "/images/new_mascots/mascot-3.jpeg", alt: "English Mascot", badgeColor: "#d97706", badgeBg: "#fef3c7" };
+  }
+  if (s.includes("sat") || s.includes("act") || s.includes("ap") || s.includes("toefl") || s.includes("ielts") || s.includes("standard")) {
+    return { src: "/images/new_mascots/mascot-7.jpeg", alt: "Test Prep Mascot", badgeColor: "#7c3aed", badgeBg: "#f5f3ff" };
+  }
+  if (s.includes("code") || s.includes("program") || s.includes("computer")) {
+    return { src: "/images/new_mascots/mascot-4.jpeg", alt: "Coding Mascot", badgeColor: "#2563eb", badgeBg: "#eff6ff" };
+  }
+  return { src: "/images/new_mascots/mascot-8.jpeg", alt: "Academic Mascot", badgeColor: "#059669", badgeBg: "#ecfdf5" };
+}
+
 export default async function FindSessionsPage({ searchParams }: Props) {
   let session = null;
   try {
@@ -159,26 +179,50 @@ export default async function FindSessionsPage({ searchParams }: Props) {
     allSubjects = uniqueSubjects.map((s) => s.subject).filter(Boolean);
   } catch (err) {}
 
-  // Spotlight Workshop: Next upcoming session
-  const spotlightWorkshop = workshops.length > 0 ? workshops[0] : null;
-
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.container}>
         {/* Editorial Header */}
         <div className={styles.header}>
           <div className={styles.headerTop}>
-            <span className={styles.categoryBadge}>Live Academic Catalog</span>
+            <div className={styles.categoryBadge}>
+              <span className={styles.pulseIndicator} />
+              <span>Live Academic Catalog</span>
+            </div>
             <div className={styles.safetyBadge}>
               <ShieldCheck size={14} />
-              <span>Certified Peer Tutors • 100% Free</span>
+              <span>Certified Peer Tutors • 100% Free Non-Profit</span>
             </div>
           </div>
-          <h1 className={styles.title}>All Academic Sessions & Workshops</h1>
+          <h1 className={styles.title}>All Academic Sessions &amp; Workshops</h1>
           <p className={styles.subtitle}>
             Small-group interactive workshops run by verified Learnivia peer tutors.
-            Drop in for live problem sets, exam reviews, and concept deep-dives.
+            Drop in for live problem sets, exam reviews, SAT/AP masterclasses, and concept deep-dives.
           </p>
+
+          {/* Quick Value Metrics Bar */}
+          <div className={styles.heroStatsStrip}>
+            <div className={styles.heroStatItem}>
+              <span className={styles.heroStatDot} style={{ background: "#10b981" }} />
+              <strong>{workshops.length}</strong>
+              <span>Upcoming Workshops</span>
+            </div>
+            <div className={styles.heroStatItem}>
+              <Users size={14} style={{ color: "#0284c7" }} />
+              <strong>Max 10</strong>
+              <span>Students per Small Group</span>
+            </div>
+            <div className={styles.heroStatItem}>
+              <GraduationCap size={14} style={{ color: "#8b5cf6" }} />
+              <strong>K-12 &amp; Prep</strong>
+              <span>Academic &amp; Standardized</span>
+            </div>
+            <div className={styles.heroStatItem}>
+              <Sparkles size={14} style={{ color: "#f59e0b" }} />
+              <strong>$0 / Free</strong>
+              <span>Zero Cost, Always</span>
+            </div>
+          </div>
         </div>
 
         {/* 30-Second Learner Matchmaker Drawer */}
@@ -207,6 +251,7 @@ export default async function FindSessionsPage({ searchParams }: Props) {
               // Tutor info & initials
               const tutorName = w.tutor?.user?.name || "Peer Tutor";
               const tutorImage = w.tutor?.user?.image;
+              const tutorSchool = w.tutor?.school;
               const initials =
                 tutorName
                   .split(" ")
@@ -226,6 +271,8 @@ export default async function FindSessionsPage({ searchParams }: Props) {
                 description.length > 110
                   ? description.substring(0, 110) + "..."
                   : description;
+
+              const mascot = getSubjectMascot(w.subject);
 
               return (
                 <div key={w.id} className={styles.card}>
@@ -258,7 +305,25 @@ export default async function FindSessionsPage({ searchParams }: Props) {
                   </div>
 
                   <div className={styles.cardContent}>
-                    <span className={styles.cardSubject}>{w.subject}</span>
+                    {/* Subject Row with Mascot Thumbnail */}
+                    <div className={styles.subjectRow}>
+                      <div className={styles.mascotThumbWrap}>
+                        <img
+                          src={mascot.src}
+                          alt={mascot.alt}
+                          className={styles.mascotThumbImg}
+                          width={26}
+                          height={26}
+                        />
+                      </div>
+                      <span
+                        className={styles.cardSubject}
+                        style={{ color: mascot.badgeColor }}
+                      >
+                        {w.subject}
+                      </span>
+                    </div>
+
                     <h3 className={styles.cardTitle}>
                       <Link href={`/workshop/${w.id}`} className={styles.titleLink}>
                         {w.title || "Academic Workshop"}
@@ -277,7 +342,9 @@ export default async function FindSessionsPage({ searchParams }: Props) {
                         {seatsLeft <= 0 ? (
                           <span className={styles.seatsFull}>Session Full</span>
                         ) : seatsLeft <= 2 ? (
-                          <span className={styles.seatsUrgent}>Only {seatsLeft} seat{seatsLeft === 1 ? "" : "s"} left!</span>
+                          <span className={styles.seatsUrgent}>
+                            Only {seatsLeft} seat{seatsLeft === 1 ? "" : "s"} left!
+                          </span>
                         ) : (
                           <span className={styles.seatsAvailable}>{seatsLeft} seats open</span>
                         )}
@@ -331,7 +398,7 @@ export default async function FindSessionsPage({ searchParams }: Props) {
                         <span className={styles.tutorName}>{tutorName}</span>
                         <span className={styles.tutorCred}>
                           <CheckCircle2 size={11} className={styles.verifiedCheck} />
-                          Verified Peer Tutor
+                          {tutorSchool || "Verified Peer Tutor"}
                         </span>
                       </div>
                     </div>
@@ -349,16 +416,30 @@ export default async function FindSessionsPage({ searchParams }: Props) {
             })}
           </div>
         ) : (
-          <EmptyState
-            icon={<Search size={24} />}
-            title="No workshops found matching your filters"
-            description="Try switching subjects, expanding grade bands, or using the 30-second matchmaker."
-            action={
+          <div className={styles.emptyStateContainer}>
+            <div className={styles.emptyStateGraphic}>
+              <img
+                src="/images/find-a-tutor.png"
+                alt="Find a tutor mascot"
+                className={styles.emptyStateMascot}
+                width={140}
+                height={140}
+              />
+            </div>
+            <h3 className={styles.emptyStateTitle}>No workshops match your current filters</h3>
+            <p className={styles.emptyStateText}>
+              We couldn't find any upcoming sessions with these exact criteria. Try broadening your subject,
+              switching grade bands, or clearing your search term.
+            </p>
+            <div className={styles.emptyStateActions}>
               <Link href="/find" className={styles.clearBtn}>
-                Clear All Filters
+                Reset All Filters
               </Link>
-            }
-          />
+              <Link href="/apply" className={styles.requestTopicBtn}>
+                Teach This Subject →
+              </Link>
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -1,105 +1,171 @@
 .main {
   min-height: calc(100vh - 68px);
-  background-color: var(--color-cream);
-  padding-bottom: var(--space-16);
+  background-color: #fafaf8;
+  padding-bottom: 4rem;
 }
 
 .header {
-  background: var(--wa-paper, #faf9f6);
-  padding: var(--space-16) var(--space-6) var(--space-12);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 3.5rem 1.5rem 3rem;
   text-align: center;
-  border-bottom: 1px solid var(--wa-border, #e2e8f0);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.headerMascotWrap {
+  margin-bottom: 1rem;
 }
 
 .mascotImg {
   object-fit: contain;
-  margin: 0 auto var(--space-4);
+  margin: 0 auto;
+}
+
+.scopeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #047857;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
 }
 
 .title {
-  font-size: clamp(var(--text-2xl), 3vw, var(--text-4xl));
-  font-weight: 900;
-  color: var(--color-navy);
-  margin-bottom: var(--space-3);
-  letter-spacing: -0.03em;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  font-size: var(--text-base);
-  color: var(--color-text-muted);
-  max-width: 560px;
+  font-size: 1.05rem;
+  color: #475569;
+  max-width: 640px;
+  margin: 0 auto 1.75rem;
+  line-height: 1.6;
+}
+
+/* Hero Perks Row */
+.heroPerksRow {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  max-width: 800px;
   margin: 0 auto;
-  line-height: var(--leading-relaxed);
+}
+
+.heroPerkPill {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .formContainer {
-  max-width: 680px;
-  margin: var(--space-10) auto 0;
-  padding: 0 var(--space-6);
+  max-width: 720px;
+  margin: 2.5rem auto 0;
+  padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: 2rem;
 }
 
 /* Login Prompt */
 .loginPrompt {
-  background: white;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-10);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
   text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
 .loginPromptIcon {
-  font-size: 2.5rem;
-  margin-bottom: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  color: #1b4d3e;
+  margin: 0 auto 1.25rem auto;
 }
 
 .loginPrompt h2 {
-  font-size: var(--text-xl);
+  font-size: 1.5rem;
   font-weight: 800;
-  color: var(--color-navy);
-  margin-bottom: var(--space-3);
+  color: #0f172a;
+  margin-bottom: 0.65rem;
 }
 
 .loginPrompt p {
-  color: var(--color-text-muted);
-  line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-6);
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .loginActions {
-  margin-bottom: var(--space-4);
+  margin-bottom: 1.25rem;
 }
 
 .loginNote {
-  font-size: var(--text-sm);
-  color: var(--color-text-light);
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.signinInlineLink {
+  color: #1b4d3e;
+  font-weight: 700;
+  text-decoration: underline;
 }
 
 .benefitsList {
-  background: var(--color-sky);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
 }
 
 .benefitsList h3 {
-  font-size: var(--text-base);
-  font-weight: 700;
-  color: var(--color-navy);
-  margin-bottom: var(--space-4);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 1.25rem;
 }
 
-.benefitsList ul {
+.benefitsUl {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
 }
 
-.benefitsList li {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
+.benefitsUl li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.55;
 }
 
 /* Progress */
@@ -108,105 +174,113 @@
   align-items: center;
   justify-content: center;
   gap: 0;
-  padding: var(--space-6) 0;
+  padding: 1.5rem 0 0;
+  max-width: 580px;
+  margin: 0 auto;
 }
 
 .progressStep {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  color: var(--color-text-muted);
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
 }
 
 .progressDot {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-full);
-  background: var(--color-border);
+  border-radius: 50%;
+  background: #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #64748b;
+  transition: all 0.2s ease;
 }
 
 .progressDotActive {
-  background: var(--color-teal);
-  color: white;
+  background: #1b4d3e;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(27, 77, 62, 0.25);
 }
 
 .progressLine {
   flex: 1;
-  height: 2px;
-  background: var(--color-border);
-  max-width: 100px;
-  margin: 0 var(--space-4);
-  margin-top: calc(var(--space-4) * -1);
+  height: 3px;
+  background: #e2e8f0;
+  max-width: 80px;
+  margin: 0 0.5rem;
+  margin-top: -1.25rem;
+}
+
+.progressLineActive {
+  background: #1b4d3e;
 }
 
 /* Form */
 .form {
-  background: white;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-8);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2.25rem;
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
 .formSection {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: 1.25rem;
 }
 
 .formSectionTitle {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--color-navy);
-  padding-bottom: var(--space-3);
-  border-bottom: 2px solid var(--color-border);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f1f5f9;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0.45rem;
 }
 
 .formGroup label {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-navy);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1e293b;
 }
 
 .formGroup input,
 .formGroup select,
 .formGroup textarea {
-  padding: 0.75rem var(--space-4);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
   font-family: inherit;
-  font-size: var(--text-base);
-  color: var(--color-navy);
-  transition:
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+  font-size: 0.95rem;
+  color: #0f172a;
+  transition: all 0.15s ease;
   width: 100%;
-  background: white;
+  background: #ffffff;
 }
 
 .formGroup input:focus,
 .formGroup select:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: var(--color-teal);
-  box-shadow: 0 0 0 3px rgb(57 166 163 / 0.15);
+  border-color: #1b4d3e;
+  box-shadow: 0 0 0 3px rgba(27, 77, 62, 0.15);
 }
 
 .formGroup textarea {
@@ -214,80 +288,87 @@
 }
 
 .disabledInput {
-  background: var(--color-cream) !important;
-  color: var(--color-text-muted) !important;
+  background: #f8fafc !important;
+  color: #64748b !important;
   cursor: not-allowed;
+  border-color: #e2e8f0 !important;
 }
 
 .fieldHint {
-  font-size: var(--text-xs);
-  color: var(--color-text-light);
+  font-size: 0.78rem;
+  color: #64748b;
 }
 
 .checkboxGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 0.75rem;
 }
 
 .checkboxLabel {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: #334155;
   cursor: pointer;
 }
 
 .checkboxLabel input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--color-teal);
+  accent-color: #1b4d3e;
   flex-shrink: 0;
 }
 
 .formNote {
-  background: var(--color-sky);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4) var(--space-5);
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  line-height: var(--leading-relaxed);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  color: #1e40af;
+  line-height: 1.55;
 }
 
 .formNote strong {
-  color: var(--color-navy);
+  color: #172554;
 }
 
 .submitBtn {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   width: 100%;
-  background: var(--color-teal);
-  color: white;
+  background: #1b4d3e;
+  color: #ffffff;
   border: none;
-  padding: 1rem;
-  border-radius: var(--radius-lg);
-  font-size: var(--text-base);
+  padding: 0.9rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  transition: background-color var(--transition-fast);
+  transition: all 0.15s ease;
   font-family: inherit;
+  box-shadow: 0 4px 12px rgba(27, 77, 62, 0.25);
 }
 
 .submitBtn:hover {
-  background: var(--color-teal-dark);
+  background: #0f2f26;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 640px) {
   .formContainer {
-    padding: 0 var(--space-4);
+    padding: 0 1rem;
   }
   .form {
-    padding: var(--space-5);
+    padding: 1.5rem;
   }
   .loginPrompt {
-    padding: var(--space-6);
+    padding: 1.75rem 1.25rem;
   }
 }
